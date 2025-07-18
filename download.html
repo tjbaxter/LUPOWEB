@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUPO - Download</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --accent: #0071e3;
+            --border: rgba(0, 0, 0, 0.08);
+            --success: #34c759;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #f5f5f7;
+                --text-secondary: #a1a1a6;
+                --bg-primary: #000000;
+                --bg-secondary: #161617;
+                --accent: #2997ff;
+                --border: rgba(255, 255, 255, 0.08);
+                --success: #32d74b;
+            }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(255, 255, 255, 0.72);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            nav {
+                background: rgba(0, 0, 0, 0.72);
+            }
+        }
+        
+        .nav-content {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 0 22px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            opacity: 1;
+        }
+        
+        .download-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .download-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        
+        /* Download Hero */
+        .download-hero {
+            padding: 120px 20px 80px;
+            text-align: center;
+        }
+        
+        .download-hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.07143;
+            letter-spacing: -0.005em;
+            margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .download-subtitle {
+            font-size: 21px;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.1s forwards;
+        }
+        
+        /* Download Section */
+        .download-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px 120px;
+        }
+        
+        .download-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 60px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .download-card {
+                box-shadow: 0 4px 16px rgba(255, 255, 255, 0.05);
+            }
+        }
+        
+        .app-icon{
+    width:120px;
+    height:120px;
+    margin:0 auto 32px;
+    /* remove the gradient + box-shadow */
+    background:none;
+    box-shadow:none;
+
+    /* keep the rounded-square look */
+    border-radius:27.4%;
+
+    /* centre the img in case it isn’t square */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;        /* hides any edges that stick out */
+}
+
+.app-icon img{
+    width:100%;
+    height:100%;
+    object-fit:contain;     /* keeps aspect ratio */
+}
+
+        
+        .download-card h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .version-info {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+        
+        .download-main-btn {
+            background: var(--accent);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 500;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin-bottom: 24px;
+        }
+        
+        .download-main-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0, 113, 227, 0.3);
+        }
+        
+        .system-requirements {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        /* Installation Steps */
+        .installation-section {
+            max-width: 720px;
+            margin: 80px auto 0;
+            text-align: left;
+        }
+        
+        .installation-section h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        
+        .installation-steps {
+            list-style: none;
+            counter-reset: step;
+        }
+        
+        .installation-step {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 32px;
+            counter-increment: step;
+        }
+        
+        .installation-step::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--bg-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--accent);
+            border: 2px solid var(--border);
+        }
+        
+        .installation-step h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .installation-step p {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        /* Other Platforms */
+        .other-platforms {
+            max-width: 600px;
+            margin: 80px auto 0;
+            text-align: center;
+            padding: 40px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+        }
+        
+        .other-platforms h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .other-platforms p {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        
+        .waitlist-form {
+            display: flex;
+            gap: 12px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .waitlist-input {
+            flex: 1;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 16px;
+            font-family: inherit;
+            color: var(--text-primary);
+        }
+        
+        .waitlist-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .waitlist-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .waitlist-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer-content {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 24px;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+        
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="logo" onclick="window.location.href='/'">LUPO</div>
+            <ul class="nav-links">
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/#demo">Demo</a></li>
+                <li><a href="/pricing.html">Pricing</a></li>
+            </ul>
+            <button class="download-btn">Download</button>
+        </div>
+    </nav>
+    
+    <!-- Download Hero -->
+    <section class="download-hero">
+        <h1>Download LUPO</h1>
+        <p class="download-subtitle">Your intelligent assistant is one click away.</p>
+    </section>
+    
+    <!-- Download Section -->
+    <div class="download-section">
+        <div class="download-card">
+       <!-- replace the old “L” square -->
+<div class="app-icon">
+    <img src="/lupo_logo.png" alt="LUPO logo">
+  </div>
+  
+            <h2>LUPO for Mac</h2>
+            <p class="version-info">Version 1.0.2 • Released January 2025</p>
+            <a href="#" class="download-main-btn">Download for macOS</a>
+            <p class="system-requirements">Requires macOS 12.0 or later</p>
+            
+            <!-- Installation Steps -->
+            <div class="installation-section">
+                <h3>Quick Installation</h3>
+                <ol class="installation-steps">
+                    <li class="installation-step">
+                        <h4>Download & Open</h4>
+                        <p>Click the download button above and open LUPO.dmg from your Downloads folder.</p>
+                    </li>
+                    <li class="installation-step">
+                        <h4>Drag to Applications</h4>
+                        <p>Drag the LUPO icon to your Applications folder to install.</p>
+                    </li>
+                    <li class="installation-step">
+                        <h4>Launch & Authorize</h4>
+                        <p>Open LUPO and grant screen recording permission when prompted.</p>
+                    </li>
+                    <li class="installation-step">
+                        <h4>Add Your API Key</h4>
+                        <p>Enter your OpenAI API key to enable AI functionality. Get one at platform.openai.com.</p>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Other Platforms -->
+        <div class="other-platforms">
+            <h3>Coming to Windows</h3>
+            <p>Join the waitlist to be notified when LUPO launches on Windows.</p>
+            <form class="waitlist-form" onsubmit="handleWaitlist(event)">
+                <input type="email" class="waitlist-input" placeholder="Enter your email" required>
+                <button type="submit" class="waitlist-btn">Notify Me</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <ul class="footer-links">
+                <li><a href="/privacy.html">Privacy</a></li>
+                <li><a href="/terms.html">Terms</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li><a href="https://twitter.com/lupoai">Twitter</a></li>
+            </ul>
+            <p class="copyright">© 2025 LUPO. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        function handleWaitlist(event) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = form.querySelector('.waitlist-btn');
+            const input = form.querySelector('.waitlist-input');
+            
+            btn.textContent = 'Adding...';
+            btn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                btn.textContent = '✓ Added';
+                btn.style.background = 'var(--success)';
+                input.value = '';
+                
+                setTimeout(() => {
+                    btn.textContent = 'Notify Me';
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 3000);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

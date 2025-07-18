@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUPO - Pricing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --accent: #0071e3;
+            --border: rgba(0, 0, 0, 0.08);
+            --success: #34c759;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #f5f5f7;
+                --text-secondary: #a1a1a6;
+                --bg-primary: #000000;
+                --bg-secondary: #161617;
+                --accent: #2997ff;
+                --border: rgba(255, 255, 255, 0.08);
+                --success: #32d74b;
+            }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(255, 255, 255, 0.72);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            nav {
+                background: rgba(0, 0, 0, 0.72);
+            }
+        }
+        
+        .nav-content {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 0 22px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            opacity: 1;
+        }
+        
+        .download-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .download-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        
+        /* Pricing Hero */
+        .pricing-hero {
+            padding: 120px 20px 60px;
+            text-align: center;
+        }
+        
+        .pricing-hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.07143;
+            letter-spacing: -0.005em;
+            margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .pricing-subtitle {
+            font-size: 21px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.1s forwards;
+        }
+        
+        /* Billing Toggle */
+        .billing-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+        
+        .billing-option {
+            font-size: 17px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .billing-option.active {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .toggle-switch {
+            width: 48px;
+            height: 28px;
+            background: var(--border);
+            border-radius: 14px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .toggle-switch.annual {
+            background: var(--success);
+        }
+        
+        .toggle-knob {
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .toggle-switch.annual .toggle-knob {
+            transform: translateX(20px);
+        }
+        
+        .save-badge {
+            background: var(--success);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+        
+        /* Pricing Cards */
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            margin-bottom: 120px;
+        }
+        
+        .pricing-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 48px 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .pricing-card:nth-child(1) { animation-delay: 0.3s; }
+        .pricing-card:nth-child(2) { animation-delay: 0.4s; }
+        .pricing-card:nth-child(3) { animation-delay: 0.5s; }
+        
+        .pricing-card.featured {
+            border-color: var(--accent);
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(0, 113, 227, 0.15);
+        }
+        
+        .pricing-card.featured::before {
+            content: "Most Popular";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .plan-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .plan-description {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            min-height: 44px;
+        }
+        
+        .price-container {
+            margin-bottom: 32px;
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: 600;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        
+        .price-unit {
+            font-size: 17px;
+            color: var(--text-secondary);
+        }
+        
+        .price-annual {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+        
+        .plan-btn {
+            width: 100%;
+            padding: 14px 24px;
+            border-radius: 25px;
+            border: none;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 32px;
+        }
+        
+        .plan-btn.primary {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .plan-btn.primary:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        
+        .plan-btn.secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+        
+        .plan-btn.secondary:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .plan-btn.contact {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+        
+        .plan-btn.contact:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        
+        /* Features List */
+        .features-list {
+            text-align: left;
+            list-style: none;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+        
+        .check-icon {
+            color: var(--success);
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-top: -2px;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px 120px;
+        }
+        
+        .faq-title {
+            font-size: 40px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 24px 0;
+        }
+        
+        .faq-question {
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            color: var(--accent);
+        }
+        
+        .faq-arrow {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-top: 16px;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer-content {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 24px;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+        
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .pricing-hero h1 {
+                font-size: 40px;
+            }
+            
+            .pricing-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="logo" onclick="window.location.href='/index.html'">LUPO</div>
+            <ul class="nav-links">
+                <li><a href="/index.html#features">Features</a></li>
+                <li><a href="/index.html#demo">Demo</a></li>
+                <li><a href="/pricing.html">Pricing</a></li>
+            </ul>
+            <button class="download-btn" onclick="window.location.href='/download-page.html'">Download</button>
+        </div>
+    </nav>
+    
+    <!-- Pricing Hero -->
+    <section class="pricing-hero">
+        <h1>Choose your plan</h1>
+        <p class="pricing-subtitle">Start free. Upgrade when you're ready.</p>
+        
+        <!-- Billing Toggle -->
+        <div class="billing-toggle">
+            <span class="billing-option active" onclick="toggleBilling('monthly')">Monthly</span>
+            <div class="toggle-switch" onclick="toggleBilling()">
+                <div class="toggle-knob"></div>
+            </div>
+            <span class="billing-option" onclick="toggleBilling('annual')">
+                Annual
+                <span class="save-badge">Save 57%</span>
+            </span>
+        </div>
+    </section>
+    
+    <!-- Pricing Cards -->
+    <div class="pricing-container">
+        <!-- Free Plan -->
+        <div class="pricing-card">
+            <h3 class="plan-name">Free</h3>
+            <p class="plan-description">Perfect for trying out LUPO</p>
+            <div class="price-container">
+                <div class="price">$0</div>
+                <div class="price-unit">forever</div>
+            </div>
+            <button class="plan-btn secondary">Get Started</button>
+            <ul class="features-list">
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>50 queries per day</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Basic screen analysis</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Email & form assistance</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Standard response time</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Community support</span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Pro Plan -->
+        <div class="pricing-card featured">
+            <h3 class="plan-name">Pro</h3>
+            <p class="plan-description">For power users and professionals</p>
+            <div class="price-container">
+                <div class="price" id="proPrice">$19</div>
+                <div class="price-unit" id="proPriceUnit">/month</div>
+                <div class="price-annual" id="proAnnual" style="display: none;">$228 billed annually</div>
+            </div>
+            <button class="plan-btn primary">Upgrade to Pro</button>
+            <ul class="features-list">
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Unlimited queries</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Advanced AI with GPT-4</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Priority response time</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Custom shortcuts</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Export & integration options</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Priority email support</span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Enterprise Plan -->
+        <div class="pricing-card">
+            <h3 class="plan-name">Enterprise</h3>
+            <p class="plan-description">For teams and organizations</p>
+            <div class="price-container">
+                <div class="price">Custom</div>
+                <div class="price-unit">pricing</div>
+            </div>
+            <button class="plan-btn contact">Contact Sales</button>
+            <ul class="features-list">
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Everything in Pro</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Team collaboration</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Admin dashboard</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Custom AI training</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>SSO & advanced security</span>
+                </li>
+                <li class="feature-item">
+                    <span class="check-icon">✓</span>
+                    <span>Dedicated account manager</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <h2 class="faq-title">Frequently asked questions</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <span>How does the free trial work?</span>
+                <span class="faq-arrow">⌄</span>
+            </div>
+            <div class="faq-answer">
+                Start with our free plan - no credit card required. You get 50 queries per day to test LUPO's capabilities. When you're ready for unlimited access, upgrade to Pro anytime.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <span>Can I cancel my subscription anytime?</span>
+                <span class="faq-arrow">⌄</span>
+            </div>
+            <div class="faq-answer">
+                Yes! You can cancel your Pro subscription at any time. You'll continue to have access until the end of your billing period, then you'll automatically switch back to the free plan.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <span>What's the difference between monthly and annual billing?</span>
+                <span class="faq-arrow">⌄</span>
+            </div>
+            <div class="faq-answer">
+                Annual billing saves you 57% compared to monthly. Pay $99/year instead of $228/year. That's like getting 7 months free!
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <span>Is my data secure?</span>
+                <span class="faq-arrow">⌄</span>
+            </div>
+            <div class="faq-answer">
+                Absolutely. LUPO processes everything locally on your device. Screenshots are analyzed in real-time and never stored. Your data never leaves your computer unless you explicitly share it.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+                <span>Do you offer student discounts?</span>
+                <span class="faq-arrow">⌄</span>
+            </div>
+            <div class="faq-answer">
+                Yes! Students get 50% off Pro plans. Contact us at students@lupolabs.ai with your .edu email address to get your discount code.
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <ul class="footer-links">
+                <li><a href="/privacy.html">Privacy</a></li>
+                <li><a href="/terms.html">Terms</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+            <p class="copyright">© 2025 LUPO. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        let billingPeriod = 'monthly';
+        
+        function toggleBilling(period) {
+            if (period) {
+                billingPeriod = period;
+            } else {
+                billingPeriod = billingPeriod === 'monthly' ? 'annual' : 'monthly';
+            }
+            
+            const toggle = document.querySelector('.toggle-switch');
+            const monthlyOption = document.querySelector('.billing-option:first-child');
+            const annualOption = document.querySelector('.billing-option:last-child');
+            const proPrice = document.getElementById('proPrice');
+            const proPriceUnit = document.getElementById('proPriceUnit');
+            const proAnnual = document.getElementById('proAnnual');
+            
+            if (billingPeriod === 'annual') {
+                toggle.classList.add('annual');
+                monthlyOption.classList.remove('active');
+                annualOption.classList.add('active');
+                proPrice.textContent = '$99';
+                proPriceUnit.textContent = '/year';
+                proAnnual.style.display = 'block';
+            } else {
+                toggle.classList.remove('annual');
+                monthlyOption.classList.add('active');
+                annualOption.classList.remove('active');
+                proPrice.textContent = '$19';
+                proPriceUnit.textContent = '/month';
+                proAnnual.style.display = 'none';
+            }
+        }
+        
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            faqItem.classList.toggle('active');
+        }
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
