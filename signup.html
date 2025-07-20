@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - LUPO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --accent: #0071e3;
+            --border: rgba(0, 0, 0, 0.08);
+            --success: #34c759;
+            --error: #ff3b30;
+            --warning: #ff9500;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #f5f5f7;
+                --text-secondary: #a1a1a6;
+                --bg-primary: #000000;
+                --bg-secondary: #161617;
+                --accent: #2997ff;
+                --border: rgba(255, 255, 255, 0.08);
+                --success: #32d74b;
+                --error: #ff453a;
+                --warning: #ff9f0a;
+            }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Logo */
+        .logo-link {
+            position: absolute;
+            top: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .logo-link:hover {
+            opacity: 0.8;
+        }
+        
+        /* Container */
+        .signup-container {
+            width: 100%;
+            max-width: 380px;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Header */
+        .signup-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .signup-header h1 {
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 1.07143;
+            letter-spacing: -0.005em;
+            margin-bottom: 12px;
+        }
+        
+        .signup-header p {
+            font-size: 21px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        
+        /* Social Auth Buttons */
+        .social-auth {
+            margin-bottom: 32px;
+        }
+        
+        .social-button {
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .social-button:hover {
+            background: var(--bg-secondary);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .social-button:active {
+            transform: translateY(0);
+        }
+        
+        .social-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 32px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        
+        .divider span {
+            padding: 0 16px;
+        }
+        
+        /* Form Steps */
+        .form-step {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Form Fields */
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .form-input {
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 17px;
+            font-family: inherit;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            -webkit-appearance: none;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+        
+        .form-input.error {
+            border-color: var(--error);
+        }
+        
+        .error-message {
+            font-size: 14px;
+            color: var(--error);
+            margin-top: 6px;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        /* Password Strength */
+        .password-strength {
+            margin-top: 8px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .password-strength-bar.weak {
+            width: 33%;
+            background: var(--error);
+        }
+        
+        .password-strength-bar.medium {
+            width: 66%;
+            background: var(--warning);
+        }
+        
+        .password-strength-bar.strong {
+            width: 100%;
+            background: var(--success);
+        }
+        
+        /* Buttons */
+        .form-button {
+            width: 100%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 8px;
+        }
+        
+        .form-button:hover {
+            opacity: 0.9;
+            transform: scale(1.01);
+        }
+        
+        .form-button:active {
+            transform: scale(0.99);
+        }
+        
+        .form-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .secondary-button {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            margin-top: 12px;
+        }
+        
+        .secondary-button:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        /* Plan Selection (only for email signups now) */
+        .plan-options {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .plan-option {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .plan-option:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        
+        .plan-option.selected {
+            border-color: var(--accent);
+            background: var(--bg-primary);
+        }
+        
+        .plan-option.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .plan-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .plan-price {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        
+        .plan-features {
+            list-style: none;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .plan-features li {
+            padding: 4px 0;
+        }
+        
+        .plan-features li::before {
+            content: '• ';
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+        
+        .progress-step {
+            width: 32px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active {
+            background: var(--accent);
+            transform: scaleX(1.5);
+        }
+        
+        /* Success State */
+        .success-container {
+            text-align: center;
+            padding: 48px 0;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px;
+            font-size: 40px;
+            color: white;
+            animation: successPop 0.6s ease;
+        }
+        
+        @keyframes successPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Pro Upsell Card */
+        .pro-upsell {
+            background: linear-gradient(135deg, var(--accent), #0051a2);
+            color: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 32px;
+            text-align: left;
+        }
+        
+        .pro-upsell h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .pro-upsell p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+        
+        .pro-upsell-button {
+            background: white;
+            color: var(--accent);
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .pro-upsell-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Footer */
+        .signup-footer {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .signup-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        
+        .signup-footer a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Loading State */
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Processing State */
+        .processing-container {
+            text-align: center;
+            padding: 48px 0;
+        }
+        
+        .processing-icon {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            margin: 0 auto 32px;
+            animation: spin 1s linear infinite;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 15px;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .toast.toast-success {
+            background: var(--success);
+            color: white;
+            border: none;
+        }
+        
+        .toast.toast-error {
+            background: var(--error);
+            color: white;
+            border: none;
+        }
+        
+        /* Mobile Optimization */
+        @media (max-width: 480px) {
+            .signup-header h1 {
+                font-size: 36px;
+            }
+            
+            .signup-header p {
+                font-size: 18px;
+            }
+            
+            .form-input {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="logo-link">LUPO</a>
+    
+    <div class="signup-container">
+        <!-- Progress Steps (hidden initially) -->
+        <div class="progress-steps" style="display: none;" id="progressSteps">
+            <div class="progress-step active" id="step1"></div>
+            <div class="progress-step" id="step2"></div>
+            <div class="progress-step" id="step3"></div>
+        </div>
+        
+        <!-- Step 1: Email or Social -->
+        <div class="form-step active" id="emailStep">
+            <div class="signup-header">
+                <h1>Welcome to LUPO</h1>
+                <p>Start your AI journey today</p>
+            </div>
+            
+            <!-- Social Auth Options -->
+            <div class="social-auth">
+                <button class="social-button" onclick="signUpWithGoogle()">
+                    <span class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M19.8 10.2273C19.8 9.51818 19.7364 8.83636 19.6182 8.18182H10.2V12.05H15.6109C15.3927 13.3 14.6564 14.3591 13.5491 15.0682V17.5773H16.8182C18.7164 15.8364 19.8 13.2727 19.8 10.2273Z" fill="#4285F4"/>
+                            <path d="M10.2 20C12.9 20 15.1727 19.1045 16.8182 17.5773L13.5491 15.0682C12.6091 15.6682 11.4227 16.0227 10.2 16.0227C7.59545 16.0227 5.38636 14.2636 4.58636 11.9H1.22727V14.4909C2.88182 17.7591 6.30909 20 10.2 20Z" fill="#34A853"/>
+                            <path d="M4.58636 11.9C4.38636 11.3 4.27273 10.6636 4.27273 10C4.27273 9.33636 4.38636 8.7 4.58636 8.1V5.50909H1.22727C0.545455 6.85909 0.2 8.38636 0.2 10C0.2 11.6136 0.545455 13.1409 1.22727 14.4909L4.58636 11.9Z" fill="#FBBC05"/>
+                            <path d="M10.2 3.97727C11.5455 3.97727 12.7455 4.42727 13.6955 5.30909L16.8909 2.11364C15.1682 0.5 12.8955 0 10.2 0C6.30909 0 2.88182 2.24091 1.22727 5.50909L4.58636 8.1C5.38636 5.73636 7.59545 3.97727 10.2 3.97727Z" fill="#EA4335"/>
+                        </svg>
+                    </span>
+                    Continue with Google
+                </button>
+                
+                <button class="social-button" onclick="signUpWithGitHub()">
+                    <span class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0110 4.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.137 18.17 20 14.42 20 10c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/>
+                        </svg>
+                    </span>
+                    Continue with GitHub
+                </button>
+            </div>
+            
+            <div class="divider">
+                <span>or</span>
+            </div>
+            
+            <form onsubmit="handleEmailSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label" for="email">Email address</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-input" 
+                        placeholder="name@example.com"
+                        required
+                        autocomplete="email"
+                    >
+                    <div class="error-message" id="emailError"></div>
+                </div>
+                
+                <button type="submit" class="form-button" id="emailButton">
+                    Continue with email
+                </button>
+            </form>
+            
+            <div class="signup-footer">
+                Already have an account? <a href="/login.html">Sign in</a>
+            </div>
+        </div>
+        
+        <!-- Step 2: Password (only for email signups) -->
+        <div class="form-step" id="passwordStep">
+            <div class="signup-header">
+                <h1>Secure your account</h1>
+                <p>Choose a strong password</p>
+            </div>
+            
+            <form onsubmit="handlePasswordSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="form-input" 
+                        placeholder="Enter password"
+                        required
+                        minlength="8"
+                        autocomplete="new-password"
+                        oninput="checkPasswordStrength()"
+                    >
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="strengthBar"></div>
+                    </div>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="confirmPassword">Confirm password</label>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        class="form-input" 
+                        placeholder="Confirm password"
+                        required
+                        autocomplete="new-password"
+                    >
+                    <div class="error-message" id="confirmError"></div>
+                </div>
+                
+                <button type="submit" class="form-button" id="passwordButton">
+                    Continue
+                </button>
+                <button type="button" class="form-button secondary-button" onclick="goBack()">
+                    Back
+                </button>
+            </form>
+        </div>
+        
+        <!-- Step 3: Plan Selection (only for email signups) -->
+        <div class="form-step" id="planStep">
+            <div class="signup-header">
+                <h1>Choose your plan</h1>
+                <p>Start free, upgrade anytime</p>
+            </div>
+            
+            <div class="plan-options">
+                <div class="plan-option selected" onclick="selectPlan('free')" id="freePlan">
+                    <div class="plan-name">Free</div>
+                    <div class="plan-price">$0/month</div>
+                    <ul class="plan-features">
+                        <li>10 AI requests per day</li>
+                        <li>GPT-4 & Perplexity access</li>
+                        <li>Web search</li>
+                    </ul>
+                </div>
+                
+                <div class="plan-option" onclick="selectPlan('pro')" id="proPlan">
+                    <div class="plan-name">Pro</div>
+                    <div class="plan-price">$19/month</div>
+                    <ul class="plan-features">
+                        <li>Unlimited AI requests</li>
+                        <li>Priority processing</li>
+                        <li>No rate limits</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <button class="form-button" onclick="createAccount()" id="createButton">
+                Create Free Account
+            </button>
+            <button type="button" class="form-button secondary-button" onclick="goBack()">
+                Back
+            </button>
+        </div>
+        
+        <!-- Processing State (shown during account creation) -->
+        <div class="form-step" id="processingStep">
+            <div class="processing-container">
+                <div class="processing-icon"></div>
+                <h1>Creating your account...</h1>
+                <p style="font-size: 18px; color: var(--text-secondary); margin-top: 16px;">
+                    Setting up your free LUPO workspace
+                </p>
+            </div>
+        </div>
+        
+        <!-- Success State -->
+        <div class="form-step" id="successStep">
+            <div class="success-container">
+                <div class="success-icon">✓</div>
+                <h1>Welcome to LUPO!</h1>
+                <p style="font-size: 18px; color: var(--text-secondary); margin: 16px 0;">
+                    Your account is ready to use!
+                </p>
+                
+                <button class="form-button" onclick="openApp()">
+                    Open LUPO
+                </button>
+                
+                <!-- Only show for free users -->
+                <div class="pro-upsell" id="proUpsell" style="display: none;">
+                    <h3>🚀 Upgrade to Pro</h3>
+                    <p>Get unlimited AI requests for $19/month</p>
+                    <button class="pro-upsell-button" onclick="window.location.href='/pricing'">
+                        Upgrade Now
+                    </button>
+                </div>
+                
+                <p style="margin-top: 24px; font-size: 15px; color: var(--text-secondary);">
+                    If LUPO doesn't open automatically, please open it manually from your Applications folder.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentStep = 1;
+        let userData = {
+            email: '',
+            password: '',
+            plan: 'free',
+            provider: 'email' // 'email', 'google', or 'github'
+        };
+        
+        // Toast functionality
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            requestAnimationFrame(() => {
+                toast.classList.add('show');
+            });
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
+        // Open app function
+        function openApp() {
+            // Try to open the app
+            window.location.href = 'lupo://authenticated';
+            
+            // Show a message after a delay
+            setTimeout(() => {
+                showToast('LUPO should now be opening. If not, please open it manually.');
+            }, 2000);
+        }
+        
+        // Social Auth Functions
+        async function signUpWithGoogle() {
+            try {
+                // Redirect to your backend OAuth endpoint
+                const redirectUrl = window.location.origin + '/auth/callback.html';
+                window.location.href = 'https://lupo-backend.fly.dev/auth/google?redirect=' + encodeURIComponent(redirectUrl);
+            } catch (err) {
+                console.error('Google auth error:', err);
+                alert('Failed to connect to Google. Please try again.');
+            }
+        }
+        
+        async function signUpWithGitHub() {
+            try {
+                // Redirect to your backend OAuth endpoint
+                const redirectUrl = window.location.origin + '/auth/callback.html';
+                window.location.href = 'https://lupo-backend.fly.dev/auth/github?redirect=' + encodeURIComponent(redirectUrl);
+            } catch (err) {
+                console.error('GitHub auth error:', err);
+                alert('Failed to connect to GitHub. Please try again.');
+            }
+        }
+        
+        // Check for OAuth callback
+        window.addEventListener('load', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isOAuth = urlParams.get('oauth') === 'true';
+            const provider = urlParams.get('provider');
+            
+            if (isOAuth && provider) {
+                // Coming from OAuth callback
+                // Try localStorage first, then sessionStorage as fallback
+                const authData = JSON.parse(localStorage.getItem('lupo_oauth_temp') || sessionStorage.getItem('authData') || '{}');
+                
+                if (authData.email && authData.token) {
+                    // OAuth successful - auto-create free account
+                    userData.provider = provider;
+                    userData.token = authData.token;
+                    userData.email = authData.email;
+                    userData.name = authData.name;
+                    userData.plan = 'free'; // Always free for OAuth
+                    
+                    // Show processing state
+                    showProcessingState();
+                    
+                    // Auto-create the account
+                    setTimeout(() => autoCreateAccount(), 500); // Small delay for UX
+                } else {
+                    // No auth data, redirect to start
+                    console.error('No auth data found in storage');
+                    window.location.href = '/signup.html';
+                }
+            } else {
+                // Normal flow
+                const emailInput = document.getElementById('email');
+                if (emailInput) emailInput.focus();
+            }
+        });
+        
+        // Auto-create account for OAuth users
+        async function autoCreateAccount() {
+            try {
+                // Try localStorage first, then sessionStorage as fallback
+                const authData = JSON.parse(localStorage.getItem('lupo_oauth_temp') || sessionStorage.getItem('authData') || '{}');
+                
+                console.log('Auth data from storage:', authData);
+                
+                // Check if we have the required data
+                if (!authData.token || !authData.email) {
+                    console.error('Missing auth data:', authData);
+                    throw new Error('No authentication data found');
+                }
+                
+                // OAuth users are already created during the callback
+                // Store session in localStorage
+                localStorage.setItem('lupo_session', authData.token);
+                
+                // Store user data
+                const userData = authData.user || {
+                    email: authData.email,
+                    name: authData.name,
+                    tier: 'free'
+                };
+                localStorage.setItem('lupo_user', JSON.stringify(userData));
+                
+                // Clear temporary storage
+                localStorage.removeItem('lupo_oauth_temp');
+                sessionStorage.removeItem('authData');
+                
+                // Show success
+                showSuccessState();
+                
+                // Show upgrade option for free users
+                if (userData.tier === 'free') {
+                    document.getElementById('proUpsell').style.display = 'block';
+                }
+                
+                // Try to open the app
+                setTimeout(openApp, 1000);
+                
+            } catch (err) {
+                console.error('Account setup error:', err);
+                console.error('LocalStorage contents:', localStorage.getItem('lupo_oauth_temp'));
+                console.error('SessionStorage contents:', sessionStorage.getItem('authData'));
+                
+                // Show a more helpful error message
+                const container = document.querySelector('.signup-container');
+                container.innerHTML = `
+                    <div class="signup-header">
+                        <h1>Setup Error</h1>
+                        <p>We couldn't complete your sign-up. Please try again.</p>
+                    </div>
+                    <button class="form-button" onclick="window.location.href='/signup.html'">
+                        Start Over
+                    </button>
+                    <div class="signup-footer" style="margin-top: 24px;">
+                        <p>If this problem persists, please contact support.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function handleEmailSubmit(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const emailError = document.getElementById('emailError');
+            
+            // Validate email
+            if (!isValidEmail(email)) {
+                emailError.textContent = 'Please enter a valid email address';
+                emailError.classList.add('show');
+                document.getElementById('email').classList.add('error');
+                return;
+            }
+            
+            userData.email = email;
+            emailError.classList.remove('show');
+            document.getElementById('email').classList.remove('error');
+            
+            // Show progress steps
+            document.getElementById('progressSteps').style.display = 'flex';
+            
+            // Move to password step
+            nextStep();
+        }
+        
+        function handlePasswordSubmit(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const passwordError = document.getElementById('passwordError');
+            const confirmError = document.getElementById('confirmError');
+            
+            // Reset errors
+            passwordError.classList.remove('show');
+            confirmError.classList.remove('show');
+            document.getElementById('password').classList.remove('error');
+            document.getElementById('confirmPassword').classList.remove('error');
+            
+            // Validate password
+            if (password.length < 8) {
+                passwordError.textContent = 'Password must be at least 8 characters';
+                passwordError.classList.add('show');
+                document.getElementById('password').classList.add('error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                confirmError.textContent = 'Passwords do not match';
+                confirmError.classList.add('show');
+                document.getElementById('confirmPassword').classList.add('error');
+                return;
+            }
+            
+            userData.password = password;
+            
+            // Move to plan step
+            nextStep();
+        }
+        
+        function selectPlan(plan) {
+            userData.plan = plan;
+            document.querySelectorAll('.plan-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.getElementById(plan + 'Plan').classList.add('selected');
+            
+            // Update button text
+            const createButton = document.getElementById('createButton');
+            createButton.textContent = plan === 'pro' ? 'Continue to Payment' : 'Create Free Account';
+        }
+        
+        async function createAccount() {
+            const button = document.getElementById('createButton');
+            button.disabled = true;
+            button.innerHTML = 'Creating account<span class="loading-spinner"></span>';
+            
+            try {
+                // Call auth/signup endpoint
+                const response = await fetch('https://lupo-backend.fly.dev/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: userData.email,
+                        password: userData.password,
+                        provider: userData.provider
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Store session in localStorage
+                    localStorage.setItem('lupo_session', data.token);
+                    localStorage.setItem('lupo_user', JSON.stringify(data.user));
+                    
+                    if (userData.plan === 'pro' && data.checkoutUrl) {
+                        // Redirect to Stripe for Pro plan
+                        window.location.href = data.checkoutUrl;
+                    } else {
+                        // Show success
+                        showSuccessState();
+                        
+                        // Show upgrade option for free users
+                        if (data.user.tier === 'free') {
+                            document.getElementById('proUpsell').style.display = 'block';
+                        }
+                        
+                        // Try to open the app
+                        setTimeout(openApp, 1000);
+                    }
+                } else {
+                    throw new Error(data.error || 'Failed to create account');
+                }
+            } catch (err) {
+                button.disabled = false;
+                button.innerHTML = userData.plan === 'pro' ? 'Continue to Payment' : 'Create Free Account';
+                alert('Error: ' + err.message);
+            }
+        }
+        
+        function showProcessingState() {
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById('processingStep').classList.add('active');
+        }
+        
+        function showSuccessState() {
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById('successStep').classList.add('active');
+        }
+        
+        function showPlanStep() {
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById('planStep').classList.add('active');
+        }
+        
+        function nextStep() {
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            currentStep++;
+            updateProgress();
+            
+            switch(currentStep) {
+                case 2:
+                    if (userData.provider === 'email') {
+                        document.getElementById('passwordStep').classList.add('active');
+                        document.getElementById('password').focus();
+                    } else {
+                        // OAuth users skip to success
+                        showProcessingState();
+                        setTimeout(() => autoCreateAccount(), 500);
+                    }
+                    break;
+                case 3:
+                    showPlanStep();
+                    break;
+                case 4:
+                    showSuccessState();
+                    break;
+            }
+        }
+        
+        function goBack() {
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            currentStep--;
+            updateProgress();
+            
+            switch(currentStep) {
+                case 1:
+                    document.getElementById('emailStep').classList.add('active');
+                    document.getElementById('progressSteps').style.display = 'none';
+                    break;
+                case 2:
+                    document.getElementById('passwordStep').classList.add('active');
+                    break;
+            }
+        }
+        
+        function updateProgress() {
+            document.querySelectorAll('.progress-step').forEach((step, index) => {
+                if (index < currentStep) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+        }
+        
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthBar = document.getElementById('strengthBar');
+            
+            strengthBar.classList.remove('weak', 'medium', 'strong');
+            
+            if (password.length === 0) {
+                strengthBar.style.width = '0%';
+                return;
+            }
+            
+            let strength = 0;
+            
+            // Length check
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            
+            // Complexity checks
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[^a-zA-Z\d]/.test(password)) strength++;
+            
+            if (strength <= 2) {
+                strengthBar.classList.add('weak');
+            } else if (strength <= 4) {
+                strengthBar.classList.add('medium');
+            } else {
+                strengthBar.classList.add('strong');
+            }
+        }
+        
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+    </script>
+</body>
+</html>

@@ -360,6 +360,150 @@
             margin-top: -2px;
         }
         
+        /* Signup Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        
+        .modal-overlay.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 48px;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            background: var(--bg-secondary);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+        
+        .close-modal:hover {
+            background: var(--border);
+        }
+        
+        .modal-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .modal-subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .form-input {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            font-size: 16px;
+            font-family: inherit;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+        
+        .submit-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .submit-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .success-message {
+            text-align: center;
+            padding: 32px;
+        }
+        
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+        }
+        
+        .api-key-display {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 24px 0;
+            font-family: monospace;
+            font-size: 14px;
+            word-break: break-all;
+            user-select: all;
+        }
+        
+        .copy-key-btn {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-right: 12px;
+        }
+        
         /* FAQ Section */
         .faq-section {
             max-width: 800px;
@@ -508,23 +652,23 @@
                 <div class="price">$0</div>
                 <div class="price-unit">forever</div>
             </div>
-            <button class="plan-btn secondary">Get Started</button>
+            <button class="plan-btn secondary" onclick="showSignupModal('free')">Get Started</button>
             <ul class="features-list">
                 <li class="feature-item">
                     <span class="check-icon">✓</span>
-                    <span>50 queries per day</span>
+                    <span>10 AI requests per day</span>
                 </li>
                 <li class="feature-item">
                     <span class="check-icon">✓</span>
-                    <span>Basic screen analysis</span>
+                    <span>GPT-4 & Perplexity access</span>
                 </li>
                 <li class="feature-item">
                     <span class="check-icon">✓</span>
-                    <span>Email & form assistance</span>
+                    <span>Screen analysis</span>
                 </li>
                 <li class="feature-item">
                     <span class="check-icon">✓</span>
-                    <span>Standard response time</span>
+                    <span>Web search</span>
                 </li>
                 <li class="feature-item">
                     <span class="check-icon">✓</span>
@@ -540,33 +684,29 @@
             <div class="price-container">
                 <div class="price" id="proPrice">$19</div>
                 <div class="price-unit" id="proPriceUnit">/month</div>
-                <div class="price-annual" id="proAnnual" style="display: none;">$228 billed annually</div>
+                <div class="price-annual" id="proAnnual" style="display: none;">Billed annually</div>
             </div>
-            <button class="plan-btn primary">Upgrade to Pro</button>
+            <button class="plan-btn primary" onclick="showSignupModal('pro')">Upgrade to Pro</button>
             <ul class="features-list">
                 <li class="feature-item">
                     <span class="check-icon">✓</span>
-                    <span>Unlimited queries</span>
+                    <span>Unlimited AI requests</span>
                 </li>
                 <li class="feature-item">
                     <span class="check-icon">✓</span>
-                    <span>Advanced AI with GPT-4</span>
+                    <span>Priority processing</span>
                 </li>
                 <li class="feature-item">
                     <span class="check-icon">✓</span>
-                    <span>Priority response time</span>
+                    <span>Advanced models</span>
                 </li>
                 <li class="feature-item">
                     <span class="check-icon">✓</span>
-                    <span>Custom shortcuts</span>
+                    <span>No rate limits</span>
                 </li>
                 <li class="feature-item">
                     <span class="check-icon">✓</span>
-                    <span>Export & integration options</span>
-                </li>
-                <li class="feature-item">
-                    <span class="check-icon">✓</span>
-                    <span>Priority email support</span>
+                    <span>Priority support</span>
                 </li>
             </ul>
         </div>
@@ -579,7 +719,7 @@
                 <div class="price">Custom</div>
                 <div class="price-unit">pricing</div>
             </div>
-            <button class="plan-btn contact">Contact Sales</button>
+            <button class="plan-btn contact" onclick="window.location.href='/contact.html'">Contact Sales</button>
             <ul class="features-list">
                 <li class="feature-item">
                     <span class="check-icon">✓</span>
@@ -595,17 +735,23 @@
                 </li>
                 <li class="feature-item">
                     <span class="check-icon">✓</span>
-                    <span>Custom AI training</span>
+                    <span>Custom integrations</span>
                 </li>
                 <li class="feature-item">
                     <span class="check-icon">✓</span>
-                    <span>SSO & advanced security</span>
-                </li>
-                <li class="feature-item">
-                    <span class="check-icon">✓</span>
-                    <span>Dedicated account manager</span>
+                    <span>SLA & support</span>
                 </li>
             </ul>
+        </div>
+    </div>
+    
+    <!-- Signup Modal -->
+    <div class="modal-overlay" id="signupModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">×</button>
+            <div id="modalContent">
+                <!-- Dynamic content will be inserted here -->
+            </div>
         </div>
     </div>
     
@@ -615,31 +761,31 @@
         
         <div class="faq-item">
             <div class="faq-question" onclick="toggleFAQ(this)">
-                <span>How does the free trial work?</span>
+                <span>How does LUPO work with my API keys?</span>
                 <span class="faq-arrow">⌄</span>
             </div>
             <div class="faq-answer">
-                Start with our free plan - no credit card required. You get 50 queries per day to test LUPO's capabilities. When you're ready for unlimited access, upgrade to Pro anytime.
+                LUPO provides the infrastructure and interface. You bring your own OpenAI API key for the AI functionality. This keeps your costs transparent and under your control.
             </div>
         </div>
         
         <div class="faq-item">
             <div class="faq-question" onclick="toggleFAQ(this)">
-                <span>Can I cancel my subscription anytime?</span>
+                <span>Can I upgrade or downgrade anytime?</span>
                 <span class="faq-arrow">⌄</span>
             </div>
             <div class="faq-answer">
-                Yes! You can cancel your Pro subscription at any time. You'll continue to have access until the end of your billing period, then you'll automatically switch back to the free plan.
+                Yes! You can upgrade to Pro instantly or downgrade at the end of your billing period. No questions asked.
             </div>
         </div>
         
         <div class="faq-item">
             <div class="faq-question" onclick="toggleFAQ(this)">
-                <span>What's the difference between monthly and annual billing?</span>
+                <span>What happens if I hit my free tier limit?</span>
                 <span class="faq-arrow">⌄</span>
             </div>
             <div class="faq-answer">
-                Annual billing saves you 57% compared to monthly. Pay $99/year instead of $228/year. That's like getting 7 months free!
+                You'll see a friendly reminder to upgrade to Pro for unlimited access. Your limit resets daily at midnight.
             </div>
         </div>
         
@@ -649,17 +795,7 @@
                 <span class="faq-arrow">⌄</span>
             </div>
             <div class="faq-answer">
-                Absolutely. LUPO processes everything locally on your device. Screenshots are analyzed in real-time and never stored. Your data never leaves your computer unless you explicitly share it.
-            </div>
-        </div>
-        
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFAQ(this)">
-                <span>Do you offer student discounts?</span>
-                <span class="faq-arrow">⌄</span>
-            </div>
-            <div class="faq-answer">
-                Yes! Students get 50% off Pro plans. Contact us at students@lupolabs.ai with your .edu email address to get your discount code.
+                Absolutely. LUPO processes everything locally on your device. We never see your screen content or queries.
             </div>
         </div>
     </section>
@@ -678,6 +814,17 @@
     
     <script>
         let billingPeriod = 'monthly';
+        let selectedPlan = 'free';
+        
+        // Check if coming from app
+        const urlParams = new URLSearchParams(window.location.search);
+        const fromApp = urlParams.get('from') === 'app';
+        const requestedPlan = urlParams.get('plan') || 'pro';
+        
+        if (fromApp && window.location.hash === '#upgrade') {
+            // Auto-show upgrade modal if coming from app
+            setTimeout(() => showSignupModal(requestedPlan), 500);
+        }
         
         function toggleBilling(period) {
             if (period) {
@@ -710,20 +857,125 @@
             }
         }
         
+        function showSignupModal(plan) {
+            selectedPlan = plan;
+            const modal = document.getElementById('signupModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            if (plan === 'free') {
+                modalContent.innerHTML = `
+                    <h2 class="modal-title">Create Free Account</h2>
+                    <p class="modal-subtitle">Get started with 10 AI requests per day</p>
+                    <form class="signup-form" onsubmit="handleSignup(event)">
+                        <input type="email" class="form-input" placeholder="Email address" required>
+                        <button type="submit" class="submit-btn">Create Free Account</button>
+                    </form>
+                    <p style="text-align: center; color: var(--text-secondary); font-size: 14px; margin-top: 24px;">
+                        No credit card required
+                    </p>
+                `;
+            } else {
+                modalContent.innerHTML = `
+                    <h2 class="modal-title">Upgrade to Pro</h2>
+                    <p class="modal-subtitle">Unlimited AI requests for $${billingPeriod === 'annual' ? '99/year' : '19/month'}</p>
+                    <form class="signup-form" onsubmit="handleSignup(event)">
+                        <input type="email" class="form-input" placeholder="Email address" required>
+                        <input type="text" class="form-input" placeholder="Card number" required>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <input type="text" class="form-input" placeholder="MM/YY" required>
+                            <input type="text" class="form-input" placeholder="CVC" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Start Pro Subscription</button>
+                    </form>
+                    <p style="text-align: center; color: var(--text-secondary); font-size: 14px; margin-top: 24px;">
+                        Secure payment powered by Stripe
+                    </p>
+                `;
+            }
+            
+            modal.classList.add('show');
+        }
+        
+        function closeModal() {
+            document.getElementById('signupModal').classList.remove('show');
+        }
+        
+        async function handleSignup(event) {
+            event.preventDefault();
+            const form = event.target;
+            const submitBtn = form.querySelector('.submit-btn');
+            const email = form.querySelector('input[type="email"]').value;
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+            
+            try {
+                // Call your backend API
+                const response = await fetch('https://lupo-backend.fly.dev/create-customer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Show success with API key
+                    document.getElementById('modalContent').innerHTML = `
+                        <div class="success-message">
+                            <div class="success-icon">✅</div>
+                            <h2 class="modal-title">Welcome to LUPO!</h2>
+                            <p class="modal-subtitle">Your API key:</p>
+                            <div class="api-key-display">${data.apiKey}</div>
+                            <div style="text-align: center;">
+                                <button class="copy-key-btn" onclick="copyApiKey('${data.apiKey}')">Copy API Key</button>
+                                <button class="submit-btn" onclick="openInApp('${data.apiKey}')">Open in LUPO</button>
+                            </div>
+                            <p style="text-align: center; color: var(--text-secondary); font-size: 14px; margin-top: 24px;">
+                                Save this key! You'll need it to activate LUPO.
+                            </p>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(data.error || 'Signup failed');
+                }
+            } catch (err) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = selectedPlan === 'free' ? 'Create Free Account' : 'Start Pro Subscription';
+                alert('Error: ' + err.message);
+            }
+        }
+        
+        function copyApiKey(apiKey) {
+            navigator.clipboard.writeText(apiKey).then(() => {
+                const btn = event.target;
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = 'Copy API Key';
+                }, 2000);
+            });
+        }
+        
+        function openInApp(apiKey) {
+            // Try to open in LUPO app with deep link
+            window.location.href = `lupo://activate?key=${apiKey}`;
+            
+            // Fallback message after 2 seconds
+            setTimeout(() => {
+                alert('Please open LUPO and paste your API key in Settings.');
+            }, 2000);
+        }
+        
         function toggleFAQ(element) {
             const faqItem = element.parentElement;
             faqItem.classList.toggle('active');
         }
         
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
+        // Close modal on background click
+        document.getElementById('signupModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeModal();
+            }
         });
     </script>
 </body>
