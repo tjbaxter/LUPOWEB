@@ -64,7 +64,7 @@
         }
         
         .nav-content {
-            max-width: 1024px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 22px;
             height: 52px;
@@ -73,17 +73,26 @@
             justify-content: space-between;
         }
         
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
         .logo {
             font-size: 21px;
             font-weight: 600;
             letter-spacing: 0.2px;
             cursor: pointer;
+            text-decoration: none;
+            color: var(--text-primary);
         }
         
         .nav-links {
             display: flex;
-            gap: 40px;
+            gap: 32px;
             list-style: none;
+            margin: 0;
         }
         
         .nav-links a {
@@ -98,21 +107,139 @@
             opacity: 1;
         }
         
-        .download-btn {
+        /* Auth Buttons Container */
+        .nav-auth {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        /* Login Button - Subtle Text Style */
+        .login-btn {
+            background: none;
+            color: var(--text-secondary);
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .login-btn:hover {
+            color: var(--text-primary);
+        }
+        
+        /* Sign Up Button - Prominent Primary Style */
+        .signup-btn {
             background: var(--accent);
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
+            padding: 10px 24px;
+            border-radius: 24px;
+            font-size: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: 500;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.2);
         }
         
-        .download-btn:hover {
-            opacity: 0.9;
-            transform: scale(1.02);
+        .signup-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(0, 113, 227, 0.3);
+        }
+        
+        .signup-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* User Menu (when logged in) */
+        .user-menu {
+            position: relative;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        
+        .user-avatar:hover {
+            opacity: 0.8;
+        }
+        
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 8px 0;
+            min-width: 200px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .user-dropdown.show {
+            display: block;
+        }
+        
+        .user-dropdown a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+        
+        .user-dropdown a:hover {
+            background: var(--bg-secondary);
+        }
+        
+        .user-dropdown .tier-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--accent);
+            color: white;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-left: 8px;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .nav-auth {
+                gap: 8px;
+            }
+            
+            .login-btn {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
+            .signup-btn {
+                padding: 8px 18px;
+                font-size: 14px;
+            }
         }
         
         /* Hero Section */
@@ -454,13 +581,20 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-content">
-            <div class="logo" onclick="window.location.href='/'">LUPO</div>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#demo">Demo</a></li>
-                <li><a href="/pricing.html">Pricing</a></li>
-            </ul>
-            <button class="download-btn" onclick="window.location.href='/download-page.html'">Download</button>
+            <div class="nav-left">
+                <a href="/" class="logo">LUPO</a>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                    <li><a href="/pricing.html">Pricing</a></li>
+                    <li><a href="/download.html">Download</a></li>
+                </ul>
+            </div>
+            
+            <!-- Authentication Section -->
+            <div class="nav-auth" id="navAuth">
+                <!-- This will be populated by JavaScript -->
+            </div>
         </div>
     </nav>
     
@@ -557,6 +691,101 @@
     </footer>
     
     <script>
+        // Check authentication status
+        async function checkAuth() {
+            const token = localStorage.getItem('lupo_session');
+            const navAuth = document.getElementById('navAuth');
+            
+            if (token) {
+                // User is logged in
+                try {
+                    const response = await fetch('https://lupo-backend.fly.dev/auth/me', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        const user = data.user;
+                        
+                        // Show user menu
+                        navAuth.innerHTML = `
+                            <div class="user-menu">
+                                <div class="user-avatar" onclick="toggleUserMenu()">
+                                    ${user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
+                                </div>
+                                <div class="user-dropdown" id="userDropdown">
+                                    <a href="/dashboard">Dashboard</a>
+                                    <a href="/account">
+                                        Account
+                                        <span class="tier-badge">${user.tier.toUpperCase()}</span>
+                                    </a>
+                                    ${user.tier === 'free' ? '<a href="/pricing">Upgrade to Pro</a>' : ''}
+                                    <a href="#" onclick="signOut()">Sign Out</a>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // Token invalid
+                        localStorage.removeItem('lupo_session');
+                        showAuthButtons();
+                    }
+                } catch (err) {
+                    console.error('Auth check failed:', err);
+                    showAuthButtons();
+                }
+            } else {
+                // User not logged in
+                showAuthButtons();
+            }
+        }
+        
+        function showAuthButtons() {
+            const navAuth = document.getElementById('navAuth');
+            navAuth.innerHTML = `
+                <a href="/signup.html" class="login-btn">Login</a>
+                <a href="/signup.html" class="signup-btn">Sign Up</a>
+            `;
+        }
+        
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+            
+            // Close on outside click
+            document.addEventListener('click', function closeMenu(e) {
+                if (!e.target.closest('.user-menu')) {
+                    dropdown.classList.remove('show');
+                    document.removeEventListener('click', closeMenu);
+                }
+            });
+        }
+        
+        async function signOut() {
+            const token = localStorage.getItem('lupo_session');
+            
+            if (token) {
+                try {
+                    await fetch('https://lupo-backend.fly.dev/auth/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                } catch (err) {
+                    console.error('Logout failed:', err);
+                }
+            }
+            
+            localStorage.removeItem('lupo_session');
+            localStorage.removeItem('lupo_user');
+            window.location.href = '/';
+        }
+        
+        // Check auth on page load
+        checkAuth();
+        
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {

@@ -786,14 +786,58 @@
         
         // Open app function
         function openApp() {
-            // Try to open the app
-            window.location.href = 'lupo://authenticated';
+    const token = localStorage.getItem('lupo_session');
+    const user = localStorage.getItem('lupo_user');
+    
+    if (token && user) {
+        try {
+            const userData = JSON.parse(user);
             
-            // Show a message after a delay
+            // Create auth data that matches what the app expects
+            const authData = {
+                token: token,
+                user: {
+                    email: userData.email,
+                    name: userData.name,
+                    tier: userData.tier || userData.subscriptionTier || 'free',
+                    usage: userData.usage || { daily: 0 }
+                },
+                timestamp: Date.now()
+            };
+            
+            // Encode the data
+            const encodedData = btoa(JSON.stringify(authData));
+            
+            // IMPORTANT: Copy to clipboard for the polling mechanism
+            const clipboardData = `LUPO_AUTH:${encodedData}`;
+            navigator.clipboard.writeText(clipboardData).then(() => {
+                console.log('Auth data copied to clipboard');
+                showToast('Authentication data ready. Opening LUPO...', 'success');
+            }).catch(err => {
+                console.error('Failed to copy auth data:', err);
+                // Fallback - show the token for manual copy
+                showToast('Please copy this and paste in LUPO: ' + clipboardData.substring(0, 20) + '...', 'info');
+            });
+            
+            // Try to open the app (this won't work in dev mode)
             setTimeout(() => {
-                showToast('LUPO should now be opening. If not, please open it manually.');
+                const deepLink = `lupo://authenticate?data=${encodedData}`;
+                window.location.href = deepLink;
+            }, 500);
+            
+            // Show instructions
+            setTimeout(() => {
+                showToast('LUPO should detect your login automatically. If not, try copying and pasting your credentials.', 'info');
             }, 2000);
+            
+        } catch (err) {
+            console.error('Failed to prepare auth data:', err);
+            showToast('Error preparing authentication. Please try again.', 'error');
         }
+    } else {
+        showToast('No authentication data found. Please log in again.', 'error');
+    }
+}
         
         // Social Auth Functions
         async function signUpWithGoogle() {
