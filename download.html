@@ -334,6 +334,14 @@
             margin-bottom: 40px;
         }
         
+        .download-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        
         .download-main-btn {
             background: var(--accent);
             color: white;
@@ -344,12 +352,31 @@
             font-weight: 500;
             display: inline-block;
             transition: all 0.3s ease;
-            margin-bottom: 24px;
+            min-width: 200px;
+            text-align: center;
         }
         
         .download-main-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 8px 24px rgba(0, 113, 227, 0.3);
+        }
+        
+        .download-main-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        
+        .download-main-btn.secondary:hover {
+            background: var(--bg-primary);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 600px) {
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
         }
         
         .system-requirements {
@@ -550,10 +577,22 @@
                 <img src="/lupo_logo.png" alt="LUPO logo">
             </div>
             
-            <h2>LUPO for Mac</h2>
-            <p class="version-info">Version 1.0.2 • Released January 2025</p>
-            <a href="#" class="download-main-btn">Download for macOS</a>
-            <p class="system-requirements">Requires macOS 12.0 or later</p>
+            <h2>LUPO Desktop</h2>
+            <p class="version-info">Version 1.6.1 • Released January 2025</p>
+            
+            <!-- Platform Detection Buttons -->
+            <div class="download-buttons">
+                <a href="https://github.com/LUPOLABS/lupo/releases/download/v1.6.1/LUPO-1.6.1.dmg" class="download-main-btn mac-download" id="macDownload">
+                    Download for macOS
+                </a>
+                <a href="https://github.com/LUPOLABS/lupo/releases/download/v1.6.1/LUPO.Setup.1.6.1.exe" class="download-main-btn win-download" id="winDownload">
+                    Download for Windows
+                </a>
+            </div>
+            
+            <p class="system-requirements" id="systemReqs">
+                Requires macOS 12.0 or later • Windows 10 or later
+            </p>
             
             <!-- Installation Steps -->
             <div class="installation-section">
@@ -579,14 +618,10 @@
             </div>
         </div>
         
-        <!-- Other Platforms -->
+        <!-- Additional Info -->
         <div class="other-platforms">
-            <h3>Coming to Windows</h3>
-            <p>Join the waitlist to be notified when LUPO launches on Windows.</p>
-            <form class="waitlist-form" onsubmit="handleWaitlist(event)">
-                <input type="email" class="waitlist-input" placeholder="Enter your email" required>
-                <button type="submit" class="waitlist-btn">Notify Me</button>
-            </form>
+            <h3>Need Help?</h3>
+            <p>Having trouble with installation? Check our <a href="/contact.html">support page</a> or reach out to our team.</p>
         </div>
     </div>
     
@@ -696,8 +731,46 @@
             window.location.href = '/';
         }
         
+        // Platform detection and smart download
+        function detectPlatform() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const macDownload = document.getElementById('macDownload');
+            const winDownload = document.getElementById('winDownload');
+            const systemReqs = document.getElementById('systemReqs');
+            
+            if (userAgent.includes('mac')) {
+                // User is on Mac - highlight Mac download
+                winDownload.classList.add('secondary');
+                systemReqs.textContent = 'Requires macOS 12.0 or later';
+            } else if (userAgent.includes('win')) {
+                // User is on Windows - highlight Windows download
+                macDownload.classList.add('secondary');
+                systemReqs.textContent = 'Requires Windows 10 or later';
+            } else {
+                // Unknown platform - show both equally
+                systemReqs.textContent = 'Requires macOS 12.0 or later • Windows 10 or later';
+            }
+        }
+        
+        // Track downloads
+        function trackDownload(platform) {
+            try {
+                // Simple analytics
+                fetch('/api/track-download', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ platform, version: '1.6.1' })
+                }).catch(() => {}); // Fail silently
+            } catch (e) {}
+        }
+        
+        // Add click tracking to download buttons
+        document.getElementById('macDownload').addEventListener('click', () => trackDownload('mac'));
+        document.getElementById('winDownload').addEventListener('click', () => trackDownload('windows'));
+        
         // Check auth on page load
         checkAuth();
+        detectPlatform();
         
         function handleWaitlist(event) {
             event.preventDefault();
