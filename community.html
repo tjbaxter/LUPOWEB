@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - LUPO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --accent: #0071e3;
+            --accent-hover: #0077ed;
+            --border: rgba(0, 0, 0, 0.08);
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --success: #34c759;
+            --discord: #5865f2;
+            --github: #333;
+            --twitter: #1da1f2;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #f5f5f7;
+                --text-secondary: #a1a1a6;
+                --bg-primary: #000000;
+                --bg-secondary: #161617;
+                --accent: #2997ff;
+                --accent-hover: #409cff;
+                --border: rgba(255, 255, 255, 0.08);
+                --github: #f0f6fc;
+            }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 21px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Community Stats */
+        .stats-section {
+            padding: 60px 0;
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            margin: 40px 0 80px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Community Platforms */
+        .platforms-section {
+            margin: 80px 0;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+        }
+
+        .platform-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .platform-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+        }
+
+        .discord .platform-icon { background: var(--discord); }
+        .github .platform-icon { background: var(--github); }
+        .twitter .platform-icon { background: var(--twitter); }
+
+        .platform-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .platform-card p {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .platform-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+            font-size: 16px;
+        }
+
+        .platform-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.05);
+        }
+
+        .discord .platform-btn { background: var(--discord); }
+        .github .platform-btn { background: var(--github); }
+        .twitter .platform-btn { background: var(--twitter); }
+
+        .discord .platform-btn:hover { background: #4752c4; }
+        .github .platform-btn:hover { background: #2d333b; }
+        .twitter .platform-btn:hover { background: #1a8cd8; }
+
+        /* Community Guidelines */
+        .guidelines-section {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            padding: 60px;
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .guidelines-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .guidelines-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .guideline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .guideline-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .guideline-content h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .guideline-content p {
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Events Section */
+        .events-section {
+            margin: 80px 0;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 32px;
+        }
+
+        .event-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+        }
+
+        .event-date {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .event-card h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .event-card p {
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .platforms-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .guidelines-section {
+                padding: 40px 24px;
+            }
+
+            .guidelines-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">LUPO</a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/docs.html">Docs</a></li>
+                        <li><a href="/support.html">Support</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="hero-section">
+                <h1 class="hero-title">Join the Community</h1>
+                <p class="hero-subtitle">
+                    Connect with other LUPO users, share feedback, get help, and stay updated on the latest developments.
+                </p>
+            </div>
+
+            <div class="stats-section">
+                <div class="container">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">2.5K+</div>
+                            <div class="stat-label">Community Members</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">450+</div>
+                            <div class="stat-label">GitHub Stars</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">120+</div>
+                            <div class="stat-label">Beta Testers</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Community Support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="platforms-section">
+                <h2 class="section-title">Connect With Us</h2>
+                
+                <div class="platforms-grid">
+                    <div class="platform-card discord">
+                        <div class="platform-icon">💬</div>
+                        <h3>Discord Community</h3>
+                        <p>Join our active Discord server for real-time discussions, support, feature requests, and community events. Get help from other users and the LUPO team.</p>
+                        <a href="https://discord.gg/lupo" class="platform-btn">Join Discord</a>
+                    </div>
+
+                    <div class="platform-card github">
+                        <div class="platform-icon">⚡</div>
+                        <h3>GitHub Repository</h3>
+                        <p>Follow our development progress, report bugs, request features, and contribute to the project. Star the repo to stay updated on releases.</p>
+                        <a href="https://github.com/lupo-ai" class="platform-btn">View on GitHub</a>
+                    </div>
+
+                    <div class="platform-card twitter">
+                        <div class="platform-icon">🐦</div>
+                        <h3>Twitter Updates</h3>
+                        <p>Follow @lupoai for product announcements, feature highlights, behind-the-scenes content, and community spotlights.</p>
+                        <a href="https://twitter.com/lupoai" class="platform-btn">Follow on Twitter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guidelines-section">
+                <h3 class="guidelines-title">Community Guidelines</h3>
+                <p>Our community thrives on respect, collaboration, and shared learning. Here's how we keep it awesome:</p>
+                
+                <div class="guidelines-list">
+                    <div class="guideline-item">
+                        <div class="guideline-icon">🤝</div>
+                        <div class="guideline-content">
+                            <h4>Be Respectful</h4>
+                            <p>Treat everyone with kindness and respect. We welcome users of all backgrounds and experience levels.</p>
+                        </div>
+                    </div>
+
+                    <div class="guideline-item">
+                        <div class="guideline-icon">💡</div>
+                        <div class="guideline-content">
+                            <h4>Share Knowledge</h4>
+                            <p>Help others by sharing your experiences, tips, and solutions. Everyone benefits when we learn together.</p>
+                        </div>
+                    </div>
+
+                    <div class="guideline-item">
+                        <div class="guideline-icon">🎯</div>
+                        <div class="guideline-content">
+                            <h4>Stay On Topic</h4>
+                            <p>Keep discussions relevant to LUPO and AI assistance. This helps maintain quality conversations.</p>
+                        </div>
+                    </div>
+
+                    <div class="guideline-item">
+                        <div class="guideline-icon">🔍</div>
+                        <div class="guideline-content">
+                            <h4>Search First</h4>
+                            <p>Before asking questions, search previous discussions. Someone might have already found the answer.</p>
+                        </div>
+                    </div>
+
+                    <div class="guideline-item">
+                        <div class="guideline-icon">🚫</div>
+                        <div class="guideline-content">
+                            <h4>No Spam</h4>
+                            <p>Avoid repetitive posts, excessive self-promotion, or off-topic content that clutters discussions.</p>
+                        </div>
+                    </div>
+
+                    <div class="guideline-item">
+                        <div class="guideline-icon">🛡️</div>
+                        <div class="guideline-content">
+                            <h4>Report Issues</h4>
+                            <p>Help us maintain a safe space by reporting inappropriate content or behavior to moderators.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="events-section">
+                <h2 class="section-title">Upcoming Events</h2>
+                
+                <div class="events-grid">
+                    <div class="event-card">
+                        <div class="event-date">Monthly - First Tuesday</div>
+                        <h4>Community Office Hours</h4>
+                        <p>Join the LUPO team for live Q&A sessions, feature demos, and feedback discussions. Every first Tuesday of the month.</p>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="event-date">Quarterly</div>
+                        <h4>Beta User Meetup</h4>
+                        <p>Exclusive meetups for beta users to share experiences, provide feedback, and influence the product roadmap.</p>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="event-date">Weekly - Fridays</div>
+                        <h4>Feature Friday</h4>
+                        <p>Weekly showcases of new features, tips, and user-generated content shared in our Discord community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

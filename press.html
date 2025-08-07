@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUPO - Press Kit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --accent: #0071e3;
+            --border: rgba(0, 0, 0, 0.08);
+            --success: #34c759;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #f5f5f7;
+                --text-secondary: #a1a1a6;
+                --bg-primary: #000000;
+                --bg-secondary: #161617;
+                --accent: #2997ff;
+                --border: rgba(255, 255, 255, 0.08);
+                --success: #32d74b;
+            }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(255, 255, 255, 0.72);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            nav {
+                background: rgba(0, 0, 0, 0.72);
+            }
+        }
+        
+        .nav-content {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 0 22px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            opacity: 1;
+        }
+        
+        .download-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .download-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        /* Press Hero */
+        .press-hero {
+            padding: 120px 20px 80px;
+            text-align: center;
+            background: var(--bg-secondary);
+        }
+        
+        .press-hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.07143;
+            letter-spacing: -0.005em;
+            margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .press-subtitle {
+            font-size: 21px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.1s forwards;
+        }
+
+        /* Press Kit Download */
+        .press-kit-section {
+            max-width: 1024px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .press-kit-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .press-kit-card h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .press-kit-card p {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .download-kit-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 25px;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .download-kit-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        /* Media Resources Grid */
+        .media-section h2 {
+            font-size: 40px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 80px;
+        }
+
+        .media-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .media-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .media-card:hover {
+                box-shadow: 0 12px 24px rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        .media-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .media-card p {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .media-items {
+            list-style: none;
+        }
+
+        .media-items li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .media-items li:last-child {
+            border-bottom: none;
+        }
+
+        .media-name {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .media-format {
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: var(--bg-secondary);
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+
+        /* Company Info */
+        .company-info {
+            background: var(--bg-secondary);
+            padding: 80px 20px;
+            margin-top: 80px;
+        }
+
+        .company-info-content {
+            max-width: 1024px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+        }
+
+        .info-section h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .info-section p,
+        .info-section ul {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .info-section ul {
+            list-style: none;
+        }
+
+        .info-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer-content {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 24px;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+        
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .press-hero h1 {
+                font-size: 40px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="logo" onclick="window.location.href='/index.html'">LUPO</div>
+            <ul class="nav-links">
+                <li><a href="/index.html#features">Features</a></li>
+                <li><a href="/index.html#demo">Demo</a></li>
+                <li><a href="/pricing.html">Pricing</a></li>
+            </ul>
+            <button class="download-btn" onclick="window.location.href='/download.html'">Download</button>
+        </div>
+    </nav>
+    
+    <!-- Press Hero -->
+    <section class="press-hero">
+        <h1>Press Kit</h1>
+        <p class="press-subtitle">Everything you need to tell the LUPO story</p>
+    </section>
+    
+    <!-- Press Kit Download -->
+    <section class="press-kit-section">
+        <div class="press-kit-card">
+            <h2>Complete Press Kit</h2>
+            <p>Download our complete press kit containing logos, screenshots, product information, and company details. Updated January 2025.</p>
+            <a href="#" class="download-kit-btn">Download Press Kit (ZIP)</a>
+        </div>
+
+        <!-- Media Resources -->
+        <div class="media-section">
+            <h2>Media Resources</h2>
+            <div class="media-grid">
+                <div class="media-card">
+                    <h3>🎨 Brand Assets</h3>
+                    <p>Logos, brand colors, and visual identity guidelines</p>
+                    <ul class="media-items">
+                        <li>
+                            <span class="media-name">LUPO Logo (Dark)</span>
+                            <span class="media-format">PNG</span>
+                        </li>
+                        <li>
+                            <span class="media-name">LUPO Logo (Light)</span>
+                            <span class="media-format">PNG</span>
+                        </li>
+                        <li>
+                            <span class="media-name">Icon Set</span>
+                            <span class="media-format">SVG</span>
+                        </li>
+                        <li>
+                            <span class="media-name">Brand Guidelines</span>
+                            <span class="media-format">PDF</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="media-card">
+                    <h3>📱 Screenshots</h3>
+                    <p>High-resolution application screenshots and interface elements</p>
+                    <ul class="media-items">
+                        <li>
+                            <span class="media-name">Main Interface</span>
+                            <span class="media-format">PNG</span>
+                        </li>
+                        <li>
+                            <span class="media-name">Dashboard View</span>
+                            <span class="media-format">PNG</span>
+                        </li>
+                        <li>
+                            <span class="media-name">Mobile App</span>
+                            <span class="media-format">PNG</span>
+                        </li>
+                        <li>
+                            <span class="media-name">Feature Gallery</span>
+                            <span class="media-format">ZIP</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="media-card">
+                    <h3>👥 Team Photos</h3>
+                    <p>Professional headshots and team photos for editorial use</p>
+                    <ul class="media-items">
+                        <li>
+                            <span class="media-name">CEO Headshot</span>
+                            <span class="media-format">JPG</span>
+                        </li>
+                        <li>
+                            <span class="media-name">Co-founder Photo</span>
+                            <span class="media-format">JPG</span>
+                        </li>
+                        <li>
+                            <span class="media-name">Team Photo</span>
+                            <span class="media-format">JPG</span>
+                        </li>
+                        <li>
+                            <span class="media-name">Office Space</span>
+                            <span class="media-format">JPG</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Information -->
+    <section class="company-info">
+        <div class="company-info-content">
+            <div class="info-section">
+                <h3>Company Overview</h3>
+                <p>LUPO is an AI assistant that breaks out of the browser, delivering ultra-low latency intelligence for technical professionals and sales teams. Founded by Cambridge University alumni in 2024, we're revolutionizing how people interact with AI.</p>
+                <p><strong>Founded:</strong> January 2024</p>
+                <p><strong>Headquarters:</strong> Cambridge, UK</p>
+                <p><strong>Team Size:</strong> 15</p>
+                <p><strong>Mission:</strong> Break AI out of the browser</p>
+            </div>
+
+            <div class="info-section">
+                <h3>Key Statistics</h3>
+                <ul>
+                    <li>• 10K+ active users</li>
+                    <li>• 50ms average response time</li>
+                    <li>• 99.9% uptime</li>
+                    <li>• 4.9/5 user rating</li>
+                    <li>• Real-time AI assistance</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>Media Contacts</h3>
+                <p><strong>Press Inquiries:</strong><br>
+                press@lupo.ai</p>
+                
+                <p><strong>General Inquiries:</strong><br>
+                hello@lupo.ai</p>
+                
+                <p><strong>Location:</strong><br>
+                Cambridge Science Park<br>
+                Cambridge CB4 0WG, UK</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <ul class="footer-links">
+                <li><a href="/privacy.html">Privacy</a></li>
+                <li><a href="/terms.html">Terms</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li><a href="/press.html">Press</a></li>
+                <li><a href="/security.html">Security</a></li>
+                <li><a href="/compliance.html">Compliance</a></li>
+            </ul>
+            <p class="copyright">© 2025 LUPO. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

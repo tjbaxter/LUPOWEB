@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developers - LUPO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --accent: #0071e3;
+            --accent-hover: #0077ed;
+            --border: rgba(0, 0, 0, 0.08);
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --success: #34c759;
+            --warning: #ff9500;
+            --code-bg: #f6f8fa;
+            --code-border: #d1d9e0;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #f5f5f7;
+                --text-secondary: #a1a1a6;
+                --bg-primary: #000000;
+                --bg-secondary: #161617;
+                --accent: #2997ff;
+                --accent-hover: #409cff;
+                --border: rgba(255, 255, 255, 0.08);
+                --code-bg: #161b22;
+                --code-border: #30363d;
+            }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 21px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .beta-badge {
+            background: var(--warning);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 32px;
+        }
+
+        /* Quick Start */
+        .quick-start {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0 80px;
+        }
+
+        .quick-start h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 12px;
+            padding: 24px;
+            font-family: 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .code-lang {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .copy-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        /* API Sections */
+        .api-section {
+            margin: 80px 0;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .api-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+        }
+
+        .api-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: transform 0.2s ease;
+        }
+
+        .api-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .api-card h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+
+        .api-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .api-endpoint {
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'SF Mono', monospace;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .method {
+            color: var(--success);
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .method.post { color: #ff9500; }
+        .method.delete { color: #ff3b30; }
+        .method.put { color: #5856d6; }
+
+        .learn-more {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .learn-more:hover {
+            color: var(--accent-hover);
+        }
+
+        /* SDK Section */
+        .sdk-section {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            padding: 60px;
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .sdk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .sdk-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .sdk-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .sdk-card h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .sdk-status {
+            font-size: 14px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .coming-soon {
+            background: rgba(255, 149, 0, 0.1);
+            color: var(--warning);
+        }
+
+        .available {
+            background: rgba(52, 199, 89, 0.1);
+            color: var(--success);
+        }
+
+        .beta {
+            background: rgba(0, 113, 227, 0.1);
+            color: var(--accent);
+        }
+
+        /* Rate Limits */
+        .rate-limits {
+            margin: 80px 0;
+        }
+
+        .limits-table {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .table-header {
+            background: var(--accent);
+            color: white;
+            padding: 20px;
+            font-weight: 600;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-cell {
+            font-size: 14px;
+        }
+
+        .table-cell.plan {
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .sdk-section,
+            .quick-start {
+                padding: 40px 24px;
+            }
+
+            .table-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .table-cell::before {
+                content: attr(data-label) ': ';
+                font-weight: 600;
+                display: inline-block;
+                width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">LUPO</a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/docs.html">Docs</a></li>
+                        <li><a href="/support.html">Support</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="hero-section">
+                <div class="beta-badge">Developer Preview</div>
+                <h1 class="hero-title">LUPO API</h1>
+                <p class="hero-subtitle">
+                    Integrate LUPO's visual AI capabilities into your applications with our powerful API. 
+                    Currently in developer preview for select partners.
+                </p>
+            </div>
+
+            <div class="quick-start">
+                <h3>Quick Start</h3>
+                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 24px;">
+                    Get started with the LUPO API in minutes
+                </p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">cURL</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code># Authenticate with your API key
+curl -X POST https://api.lupo.ai/v1/analyze \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "image": "base64_encoded_image",
+    "prompt": "What do you see in this screenshot?",
+    "context": "user_interface"
+  }'</code></pre>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h2 class="section-title">API Endpoints</h2>
+                <p class="section-description">
+                    Our REST API provides endpoints for visual analysis, context understanding, and AI assistance.
+                </p>
+                
+                <div class="api-grid">
+                    <div class="api-card">
+                        <h4>Visual Analysis</h4>
+                        <p>Analyze screenshots, images, and visual content with advanced computer vision.</p>
+                        <div class="api-endpoint">
+                            <span class="method">POST</span>/v1/analyze
+                        </div>
+                        <a href="#" class="learn-more">Learn more →</a>
+                    </div>
+
+                    <div class="api-card">
+                        <h4>Context Chat</h4>
+                        <p>Start contextual conversations based on visual input and user queries.</p>
+                        <div class="api-endpoint">
+                            <span class="method post">POST</span>/v1/chat
+                        </div>
+                        <a href="#" class="learn-more">Learn more →</a>
+                    </div>
+
+                    <div class="api-card">
+                        <h4>Screen Capture</h4>
+                        <p>Capture and process screen content with privacy-first approach.</p>
+                        <div class="api-endpoint">
+                            <span class="method post">POST</span>/v1/capture
+                        </div>
+                        <a href="#" class="learn-more">Learn more →</a>
+                    </div>
+
+                    <div class="api-card">
+                        <h4>User Sessions</h4>
+                        <p>Manage user sessions and maintain conversation context across requests.</p>
+                        <div class="api-endpoint">
+                            <span class="method">GET</span>/v1/sessions
+                        </div>
+                        <a href="#" class="learn-more">Learn more →</a>
+                    </div>
+
+                    <div class="api-card">
+                        <h4>Webhooks</h4>
+                        <p>Receive real-time notifications for events and processing results.</p>
+                        <div class="api-endpoint">
+                            <span class="method post">POST</span>/v1/webhooks
+                        </div>
+                        <a href="#" class="learn-more">Learn more →</a>
+                    </div>
+
+                    <div class="api-card">
+                        <h4>Usage Analytics</h4>
+                        <p>Track API usage, performance metrics, and billing information.</p>
+                        <div class="api-endpoint">
+                            <span class="method">GET</span>/v1/usage
+                        </div>
+                        <a href="#" class="learn-more">Learn more →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sdk-section">
+                <h2 class="section-title">SDKs & Libraries</h2>
+                <p class="section-description">
+                    Official SDKs and libraries to integrate LUPO into your favorite programming languages.
+                </p>
+                
+                <div class="sdk-grid">
+                    <div class="sdk-card">
+                        <div class="sdk-icon">🐍</div>
+                        <h4>Python SDK</h4>
+                        <div class="sdk-status beta">Beta</div>
+                        <p>Full-featured Python library with async support</p>
+                    </div>
+
+                    <div class="sdk-card">
+                        <div class="sdk-icon">⚡</div>
+                        <h4>Node.js SDK</h4>
+                        <div class="sdk-status beta">Beta</div>
+                        <p>TypeScript-first SDK for Node.js applications</p>
+                    </div>
+
+                    <div class="sdk-card">
+                        <div class="sdk-icon">🦀</div>
+                        <h4>Rust SDK</h4>
+                        <div class="sdk-status coming-soon">Coming Soon</div>
+                        <p>High-performance Rust library for system integration</p>
+                    </div>
+
+                    <div class="sdk-card">
+                        <div class="sdk-icon">☕</div>
+                        <h4>Java SDK</h4>
+                        <div class="sdk-status coming-soon">Coming Soon</div>
+                        <p>Enterprise-ready Java library with Spring support</p>
+                    </div>
+
+                    <div class="sdk-card">
+                        <div class="sdk-icon">🔷</div>
+                        <h4>Go SDK</h4>
+                        <div class="sdk-status coming-soon">Coming Soon</div>
+                        <p>Lightweight Go package for cloud services</p>
+                    </div>
+
+                    <div class="sdk-card">
+                        <div class="sdk-icon">💎</div>
+                        <h4>Ruby SDK</h4>
+                        <div class="sdk-status coming-soon">Coming Soon</div>
+                        <p>Ruby gem with Rails integration support</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rate-limits">
+                <h2 class="section-title">Rate Limits & Pricing</h2>
+                <p class="section-description">
+                    Developer-friendly pricing with generous free tiers and transparent usage-based billing.
+                </p>
+                
+                <div class="limits-table">
+                    <div class="table-header">
+                        <div class="table-row">
+                            <div class="table-cell">Plan</div>
+                            <div class="table-cell">Requests/Hour</div>
+                            <div class="table-cell">Price</div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="table-cell plan" data-label="Plan">Developer</div>
+                        <div class="table-cell" data-label="Requests/Hour">100</div>
+                        <div class="table-cell" data-label="Price">Free</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="table-cell plan" data-label="Plan">Startup</div>
+                        <div class="table-cell" data-label="Requests/Hour">1,000</div>
+                        <div class="table-cell" data-label="Price">$29/month</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="table-cell plan" data-label="Plan">Professional</div>
+                        <div class="table-cell" data-label="Requests/Hour">10,000</div>
+                        <div class="table-cell" data-label="Price">$99/month</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="table-cell plan" data-label="Plan">Enterprise</div>
+                        <div class="table-cell" data-label="Requests/Hour">Custom</div>
+                        <div class="table-cell" data-label="Price">Contact Sales</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('code').textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

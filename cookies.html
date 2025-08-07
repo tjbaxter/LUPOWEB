@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Policy - LUPO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --accent: #0071e3;
+            --accent-hover: #0077ed;
+            --border: rgba(0, 0, 0, 0.08);
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --success: #34c759;
+            --warning: #ff9500;
+            --danger: #ff3b30;
+            --info: #007aff;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #f5f5f7;
+                --text-secondary: #a1a1a6;
+                --bg-primary: #000000;
+                --bg-secondary: #161617;
+                --accent: #2997ff;
+                --accent-hover: #409cff;
+                --border: rgba(255, 255, 255, 0.08);
+            }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 21px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 24px;
+        }
+
+        .last-updated {
+            font-size: 16px;
+            color: var(--text-secondary);
+            background: var(--bg-secondary);
+            padding: 12px 24px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        /* Content */
+        .content-section {
+            margin: 60px 0;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .section-content {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin-bottom: 40px;
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+        }
+
+        .section-content strong {
+            font-weight: 600;
+        }
+
+        /* Cookie Types */
+        .cookie-types {
+            display: grid;
+            gap: 24px;
+            margin: 40px 0;
+        }
+
+        .cookie-type {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .cookie-type h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+
+        .cookie-type p {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .cookie-examples {
+            list-style: none;
+            padding: 0;
+        }
+
+        .cookie-examples li {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .cookie-examples li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Cookie Table */
+        .cookie-table {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin: 40px 0;
+        }
+
+        .table-header {
+            background: var(--accent);
+            color: white;
+            padding: 20px;
+            font-weight: 600;
+            display: grid;
+            grid-template-columns: 2fr 3fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 2fr 3fr 1fr 1fr;
+            gap: 20px;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-cell {
+            color: var(--text-primary);
+        }
+
+        .table-cell.purpose {
+            color: var(--text-secondary);
+        }
+
+        .table-cell.duration {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .table-cell.type {
+            font-weight: 500;
+        }
+
+        /* Controls Section */
+        .controls-section {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin-top: 32px;
+        }
+
+        .control-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .control-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin: 0 auto 16px;
+        }
+
+        .control-item h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .control-item p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .contact-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.2s ease;
+            margin-top: 16px;
+        }
+
+        .contact-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section-content {
+                font-size: 16px;
+            }
+
+            .table-header,
+            .table-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .table-cell::before {
+                content: attr(data-label) ': ';
+                font-weight: 600;
+                display: inline-block;
+                width: 100px;
+            }
+
+            .controls-section,
+            .contact-section {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">LUPO</a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/privacy.html">Privacy</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="hero-section">
+                <h1 class="hero-title">Cookie Policy</h1>
+                <p class="hero-subtitle">
+                    Learn how LUPO uses cookies and similar technologies to improve your experience and protect your privacy.
+                </p>
+                <div class="last-updated">
+                    <strong>Last updated:</strong> January 15, 2025
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">What Are Cookies</h2>
+                <div class="section-content">
+                    <p>
+                        Cookies are small text files that are stored on your device when you visit our website or use our applications. 
+                        They help us provide you with a better experience by remembering your preferences, analyzing how you use our service, 
+                        and ensuring our platform works securely and efficiently.
+                    </p>
+                    <p>
+                        <strong>LUPO takes a privacy-first approach to cookies.</strong> We only use cookies that are necessary for our service 
+                        to function or that you have explicitly consented to. We never sell cookie data to third parties or use it for 
+                        intrusive advertising.
+                    </p>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">Types of Cookies We Use</h2>
+                
+                <div class="cookie-types">
+                    <div class="cookie-type">
+                        <h4>Essential Cookies</h4>
+                        <p>These cookies are necessary for our website and application to function properly. They enable core functionality such as security, authentication, and basic navigation.</p>
+                        <ul class="cookie-examples">
+                            <li>Authentication tokens to keep you logged in</li>
+                            <li>Security cookies to protect against attacks</li>
+                            <li>Session management for application state</li>
+                            <li>Load balancing for optimal performance</li>
+                        </ul>
+                    </div>
+
+                    <div class="cookie-type">
+                        <h4>Functional Cookies</h4>
+                        <p>These cookies enhance your experience by remembering your preferences and settings. You can opt out, but some features may not work as expected.</p>
+                        <ul class="cookie-examples">
+                            <li>Theme preferences (light/dark mode)</li>
+                            <li>Language and region settings</li>
+                            <li>UI customization choices</li>
+                            <li>Feature usage preferences</li>
+                        </ul>
+                    </div>
+
+                    <div class="cookie-type">
+                        <h4>Analytics Cookies</h4>
+                        <p>These cookies help us understand how you use LUPO so we can improve our service. All data is anonymized and aggregated.</p>
+                        <ul class="cookie-examples">
+                            <li>Page views and user journeys</li>
+                            <li>Feature usage statistics</li>
+                            <li>Performance metrics</li>
+                            <li>Error tracking and debugging</li>
+                        </ul>
+                    </div>
+
+                    <div class="cookie-type">
+                        <h4>Performance Cookies</h4>
+                        <p>These cookies help us optimize LUPO's performance and ensure fast, reliable service delivery.</p>
+                        <ul class="cookie-examples">
+                            <li>CDN optimization</li>
+                            <li>Caching preferences</li>
+                            <li>Load time measurements</li>
+                            <li>Server selection optimization</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">Cookie Details</h2>
+                <p class="section-content">
+                    Below is a detailed list of cookies used by LUPO, their purpose, and how long they remain on your device:
+                </p>
+                
+                <div class="cookie-table">
+                    <div class="table-header">
+                        <div class="table-cell">Cookie Name</div>
+                        <div class="table-cell">Purpose</div>
+                        <div class="table-cell">Duration</div>
+                        <div class="table-cell">Type</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="table-cell">lupo_session</div>
+                        <div class="table-cell purpose">Maintains your login session and application state</div>
+                        <div class="table-cell duration">Session</div>
+                        <div class="table-cell type">Essential</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="table-cell">lupo_auth</div>
+                        <div class="table-cell purpose">Authentication token for secure API access</div>
+                        <div class="table-cell duration">30 days</div>
+                        <div class="table-cell type">Essential</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="table-cell">lupo_preferences</div>
+                        <div class="table-cell purpose">Stores your UI preferences and settings</div>
+                        <div class="table-cell duration">1 year</div>
+                        <div class="table-cell type">Functional</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="table-cell">lupo_analytics</div>
+                        <div class="table-cell purpose">Anonymized usage analytics and feature metrics</div>
+                        <div class="table-cell duration">90 days</div>
+                        <div class="table-cell type">Analytics</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="table-cell">lupo_performance</div>
+                        <div class="table-cell purpose">Performance monitoring and optimization data</div>
+                        <div class="table-cell duration">7 days</div>
+                        <div class="table-cell type">Performance</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <h3>Your Cookie Controls</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 0;">
+                    You have full control over how cookies are used. Choose the option that works best for you.
+                </p>
+                
+                <div class="controls-grid">
+                    <div class="control-item">
+                        <div class="control-icon">⚙️</div>
+                        <h4>Browser Settings</h4>
+                        <p>Configure cookie preferences directly in your browser settings to control all websites.</p>
+                    </div>
+
+                    <div class="control-item">
+                        <div class="control-icon">🎛️</div>
+                        <h4>LUPO Preferences</h4>
+                        <p>Manage cookie settings specifically for LUPO in your account preferences panel.</p>
+                    </div>
+
+                    <div class="control-item">
+                        <div class="control-icon">🚫</div>
+                        <h4>Opt-Out Tools</h4>
+                        <p>Use browser extensions or privacy tools to block non-essential cookies automatically.</p>
+                    </div>
+
+                    <div class="control-item">
+                        <div class="control-icon">🔄</div>
+                        <h4>Clear Data</h4>
+                        <p>Delete existing cookies and start fresh by clearing your browser data and cache.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">Third-Party Services</h2>
+                <div class="section-content">
+                    <p>
+                        LUPO integrates with select third-party services that may set their own cookies. We carefully vet all partners 
+                        to ensure they meet our privacy standards:
+                    </p>
+                    <p>
+                        <strong>Content Delivery Network (CDN):</strong> We use CloudFlare to deliver our service quickly and securely worldwide. 
+                        CloudFlare may set performance and security cookies.
+                    </p>
+                    <p>
+                        <strong>Error Monitoring:</strong> We use privacy-focused error tracking to improve our service reliability. 
+                        No personal data is shared with these services.
+                    </p>
+                    <p>
+                        <strong>Analytics:</strong> We use privacy-preserving analytics that don't track individuals or create user profiles. 
+                        All data is anonymized and aggregated.
+                    </p>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">Updates to This Policy</h2>
+                <div class="section-content">
+                    <p>
+                        We may update this Cookie Policy from time to time to reflect changes in our practices or legal requirements. 
+                        When we make significant changes, we'll notify you through the LUPO application or by email.
+                    </p>
+                    <p>
+                        We encourage you to review this policy periodically to stay informed about how we use cookies. 
+                        Your continued use of LUPO after changes indicates your acceptance of the updated policy.
+                    </p>
+                </div>
+            </div>
+
+            <div class="contact-section">
+                <h3>Questions About Cookies?</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                    If you have questions about our cookie practices or need help managing your cookie preferences, 
+                    our privacy team is here to help.
+                </p>
+                <a href="mailto:privacy@lupo.ai" class="contact-btn">Contact Privacy Team</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
