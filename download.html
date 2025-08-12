@@ -578,21 +578,27 @@
             </div>
             
             <h2>LUPO Desktop</h2>
-            <p class="version-info">Version 1.6.1 • Released January 2025</p>
-            
+            <p class="version-info">Version 1.7.7 • Released August 2025</p>
+
             <!-- Platform Detection Buttons -->
             <div class="download-buttons">
-                <a href="https://github.com/LUPOLABS/lupo/releases/download/v1.6.1/LUPO-1.6.1.dmg" class="download-main-btn mac-download" id="macDownload">
-                    Download for macOS
+                <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-1.7.7-arm64.dmg" class="download-main-btn mac-download" id="macARMDownload" onclick="trackDownload('mac-arm64')">
+                    Download for Mac (2020 or newer)
+                    <small style="display: block; font-size: 12px; opacity: 0.8; margin-top: 4px;">M1, M2, M3, M4 chips</small>
                 </a>
-                <a href="https://github.com/LUPOLABS/lupo/releases/download/v1.6.1/LUPO.Setup.1.6.1.exe" class="download-main-btn win-download" id="winDownload">
+                <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-1.7.7.dmg" class="download-main-btn mac-download" id="macDownload" onclick="trackDownload('mac-intel')">
+                    Download for Mac (2019 or older)
+                    <small style="display: block; font-size: 12px; opacity: 0.8; margin-top: 4px;">Intel chips</small>
+                </a>
+                <a href="https://github.com/LUPOLABS/lupo/releases/download/v1.6.7/LUPO.Setup.1.6.7.exe" class="download-main-btn win-download" id="winDownload" onclick="trackDownload('windows')">
                     Download for Windows
                 </a>
             </div>
-            
-            <p class="system-requirements" id="systemReqs">
-                Requires macOS 12.0 or later • Windows 10 or later
-            </p>
+
+<!-- Add this helper text below the buttons -->
+<p style="text-align: center; margin-top: 10px; color: #666; font-size: 14px;">
+    Not sure which Mac version? Click Apple menu → About This Mac → Check the year
+</p>
             
             <!-- Installation Steps -->
             <div class="installation-section">
@@ -735,19 +741,41 @@
         function detectPlatform() {
             const userAgent = navigator.userAgent.toLowerCase();
             const macDownload = document.getElementById('macDownload');
+            const macARMDownload = document.getElementById('macARMDownload');
             const winDownload = document.getElementById('winDownload');
             const systemReqs = document.getElementById('systemReqs');
             
             if (userAgent.includes('mac')) {
-                // User is on Mac - highlight Mac download
+                // User is on Mac
                 winDownload.classList.add('secondary');
-                systemReqs.textContent = 'Requires macOS 12.0 or later';
+                
+                // Try to detect Apple Silicon vs Intel
+                if (window.navigator.userAgentData) {
+                    navigator.userAgentData.getHighEntropyValues(['architecture']).then(ua => {
+                        if (ua.architecture === 'arm') {
+                            // Apple Silicon Mac
+                            macDownload.classList.add('secondary');
+                            systemReqs.textContent = 'Detected: macOS Apple Silicon (M1/M2/M3) • Requires macOS 12.0 or later';
+                        } else {
+                            // Intel Mac
+                            macARMDownload.classList.add('secondary');
+                            systemReqs.textContent = 'Detected: macOS Intel • Requires macOS 12.0 or later';
+                        }
+                    }).catch(() => {
+                        // Detection failed, show both Mac options
+                        systemReqs.textContent = 'Choose your Mac type: Intel or Apple Silicon • Requires macOS 12.0 or later';
+                    });
+                } else {
+                    // Can't detect architecture, show both Mac options
+                    systemReqs.textContent = 'Choose your Mac type: Intel or Apple Silicon • Requires macOS 12.0 or later';
+                }
             } else if (userAgent.includes('win')) {
-                // User is on Windows - highlight Windows download
+                // User is on Windows - hide Mac downloads
                 macDownload.classList.add('secondary');
+                macARMDownload.classList.add('secondary');
                 systemReqs.textContent = 'Requires Windows 10 or later';
             } else {
-                // Unknown platform - show both equally
+                // Unknown platform - show all options
                 systemReqs.textContent = 'Requires macOS 12.0 or later • Windows 10 or later';
             }
         }
@@ -759,7 +787,7 @@
                 fetch('/api/track-download', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ platform, version: '1.6.1' })
+                    body: JSON.stringify({ platform, version: '1.7.2' })
                 }).catch(() => {}); // Fail silently
             } catch (e) {}
         }

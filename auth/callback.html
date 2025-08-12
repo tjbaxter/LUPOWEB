@@ -136,6 +136,38 @@
             background: var(--accent);
             color: white;
         }
+        
+        /* Authentication instructions box */
+        .auth-instructions {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.95;
+                transform: scale(1.02);
+            }
+        }
+        
+        /* Manual auth modal */
+        .manual-auth-modal {
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
     </style>
 </head>
 <body>
@@ -230,20 +262,60 @@
                         user: userData
                     }));
                     
-                    // Show success briefly
-                    container.innerHTML = `
-                        <div style="width: 60px; height: 60px; background: var(--success); 
-                                    border-radius: 50%; display: flex; align-items: center; 
-                                    justify-content: center; margin: 0 auto 24px; 
-                                    font-size: 30px; color: white;">✓</div>
-                        <h1 class="callback-title">Success!</h1>
-                        <p class="callback-message">Completing setup...</p>
-                    `;
+                    // Prepare auth for clipboard instead of relying on URL params
+                    const authPackage = {
+                        token: data.token,
+                        user: userData,
+                        timestamp: Date.now(),
+                        source: 'oauth_callback',
+                        provider: provider
+                    };
                     
-                    // Redirect to signup page
-                    setTimeout(() => {
-                        window.location.href = `/signup.html?oauth=true&provider=${provider}`;
-                    }, 1000);
+                    const encodedAuth = btoa(JSON.stringify(authPackage));
+                    const clipboardData = `LUPO_AUTH:${encodedAuth}`;
+                    
+                    // Try to copy to clipboard first
+                    navigator.clipboard.writeText(clipboardData).then(() => {
+                        console.log('✅ Auth data prepared in clipboard');
+                        
+                        // Show success message
+                        container.innerHTML = `
+                            <div style="width: 60px; height: 60px; background: var(--success); 
+                                        border-radius: 50%; display: flex; align-items: center; 
+                                        justify-content: center; margin: 0 auto 24px; 
+                                        font-size: 30px; color: white;">✓</div>
+                            <h1 class="callback-title">Success!</h1>
+                            <p class="callback-message">Authentication complete!</p>
+                            <div style="margin-top: 20px; padding: 20px; background: rgba(0, 113, 227, 0.1); 
+                                        border-radius: 12px; border: 2px solid var(--accent);">
+                                <p style="margin: 0; font-weight: 600; color: var(--accent);">
+                                    Switch to the LUPO app to complete login
+                                </p>
+                                <p style="margin: 8px 0 0 0; font-size: 14px; color: var(--text-secondary);">
+                                    LUPO will automatically detect your authentication.
+                                </p>
+                            </div>
+                            <button class="action-button" onclick="window.close()" style="margin-top: 20px;">
+                                Close This Window
+                            </button>
+                        `;
+                        
+                        // Try to focus the LUPO app window (won't launch new instance)
+                        window.blur();
+                        
+                    }).catch(err => {
+                        console.error('Clipboard write failed:', err);
+                        
+                        // Fallback: Still redirect but warn user
+                        container.innerHTML = `
+                            <div class="error-icon">⚠️</div>
+                            <h1 class="callback-title">Manual Step Required</h1>
+                            <p class="callback-message">Please complete login in LUPO</p>
+                            <a href="/signup.html?oauth=true&provider=${provider}" class="action-button">
+                                Continue
+                            </a>
+                        `;
+                    });
                     
                 } else {
                     console.error('Backend returned error:', data);

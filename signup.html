@@ -547,6 +547,54 @@
             border: none;
         }
         
+        /* Authentication instructions box */
+        .auth-instructions {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.95;
+                transform: scale(1.02);
+            }
+        }
+        
+        /* Manual auth modal */
+        .manual-auth-modal {
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+        
+        /* Toast improvements */
+        .toast {
+            animation: toastSlideIn 0.3s ease;
+        }
+        
+        @keyframes toastSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        
         /* Mobile Optimization */
         @media (max-width: 480px) {
             .signup-header h1 {
@@ -769,75 +817,181 @@
         
         // Toast functionality
         function showToast(message, type = 'info') {
+            // Remove any existing toasts
+            document.querySelectorAll('.toast').forEach(t => t.remove());
+            
             const toast = document.createElement('div');
             toast.className = `toast toast-${type}`;
             toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%) translateY(100px);
+                background: ${type === 'success' ? '#34c759' : type === 'error' ? '#ff3b30' : '#0071e3'};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 15px;
+                transition: transform 0.3s ease;
+                z-index: 10000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
             document.body.appendChild(toast);
             
             requestAnimationFrame(() => {
-                toast.classList.add('show');
+                toast.style.transform = 'translateX(-50%) translateY(0)';
             });
             
             setTimeout(() => {
-                toast.classList.remove('show');
+                toast.style.transform = 'translateX(-50%) translateY(100px)';
                 setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            }, 4000);
         }
         
         // Open app function
         function openApp() {
-    const token = localStorage.getItem('lupo_session');
-    const user = localStorage.getItem('lupo_user');
-    
-    if (token && user) {
-        try {
-            const userData = JSON.parse(user);
+            console.log('🚀 openApp called - using clipboard authentication');
             
-            // Create auth data that matches what the app expects
-            const authData = {
-                token: token,
-                user: {
-                    email: userData.email,
-                    name: userData.name,
-                    tier: userData.tier || userData.subscriptionTier || 'free',
-                    usage: userData.usage || { daily: 0 }
-                },
-                timestamp: Date.now()
-            };
+            const token = localStorage.getItem('lupo_session');
+            const user = localStorage.getItem('lupo_user');
             
-            // Encode the data
-            const encodedData = btoa(JSON.stringify(authData));
+            if (!token || !user) {
+                console.error('❌ No authentication data found');
+                showToast('No authentication data found. Please log in again.', 'error');
+                return;
+            }
             
-            // IMPORTANT: Copy to clipboard for the polling mechanism
-            const clipboardData = `LUPO_AUTH:${encodedData}`;
-            navigator.clipboard.writeText(clipboardData).then(() => {
-                console.log('Auth data copied to clipboard');
-                showToast('Authentication data ready. Opening LUPO...', 'success');
-            }).catch(err => {
-                console.error('Failed to copy auth data:', err);
-                // Fallback - show the token for manual copy
-                showToast('Please copy this and paste in LUPO: ' + clipboardData.substring(0, 20) + '...', 'info');
-            });
-            
-            // Try to open the app (this won't work in dev mode)
-            setTimeout(() => {
-                const deepLink = `lupo://authenticate?data=${encodedData}`;
-                window.location.href = deepLink;
-            }, 500);
-            
-            // Show instructions
-            setTimeout(() => {
-                showToast('LUPO should detect your login automatically. If not, try copying and pasting your credentials.', 'info');
-            }, 2000);
-            
-        } catch (err) {
-            console.error('Failed to prepare auth data:', err);
-            showToast('Error preparing authentication. Please try again.', 'error');
+            try {
+                const userData = JSON.parse(user);
+                console.log('📦 User data found:', { email: userData.email, tier: userData.tier });
+                
+                // Create auth data package
+                const authData = {
+                    token: token,
+                    user: {
+                        email: userData.email,
+                        name: userData.name || userData.email.split('@')[0],
+                        tier: userData.tier || userData.subscriptionTier || 'free',
+                        usage: userData.usage || { daily: 0, limit: 10 }
+                    },
+                    timestamp: Date.now(),
+                    source: 'web_signup'
+                };
+                
+                // Encode the data
+                const encodedData = btoa(JSON.stringify(authData));
+                const clipboardData = `LUPO_AUTH:${encodedData}`;
+                
+                console.log('📋 Copying auth to clipboard, length:', clipboardData.length);
+                
+                // Copy to clipboard for the LUPO app to poll
+                navigator.clipboard.writeText(clipboardData).then(() => {
+                    console.log('✅ Auth data copied to clipboard successfully');
+                    
+                    // Show success message with clear instructions
+                    showToast('✅ Authentication ready! Switch to LUPO to complete.', 'success');
+                    
+                    // Update the UI to show clear instructions
+                    const successStep = document.getElementById('successStep');
+                    if (successStep) {
+                        const instructionsDiv = document.createElement('div');
+                        instructionsDiv.className = 'auth-instructions';
+                        instructionsDiv.style.cssText = `
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            border-radius: 12px;
+                            padding: 20px;
+                            margin: 20px 0;
+                            color: white;
+                            animation: pulse 2s infinite;
+                        `;
+                        instructionsDiv.innerHTML = `
+                            <h3 style="margin: 0 0 10px 0; font-size: 18px;">
+                                ✨ Almost done!
+                            </h3>
+                            <p style="margin: 0; font-size: 15px; opacity: 0.95;">
+                                Your authentication is ready. Please switch to the LUPO app window to start using it.
+                            </p>
+                            <p style="margin: 10px 0 0 0; font-size: 13px; opacity: 0.8;">
+                                The LUPO app will automatically detect your login within a few seconds.
+                            </p>
+                        `;
+                        
+                        // Insert after the success message
+                        const successContainer = successStep.querySelector('.success-container');
+                        if (successContainer) {
+                            successContainer.appendChild(instructionsDiv);
+                        }
+                    }
+                    
+                    // Try to indicate to the user to switch windows
+                    // This won't launch a new instance, just attempts focus
+                    setTimeout(() => {
+                        // Try to blur current window to hint user to switch
+                        window.blur();
+                        
+                        // Show another reminder
+                        showToast('📱 Switch to the LUPO app window now', 'info');
+                    }, 2000);
+                    
+                    // Set up a timeout to clear clipboard after 5 minutes for security
+                    setTimeout(() => {
+                        navigator.clipboard.writeText('').catch(() => {});
+                        console.log('🔒 Cleared clipboard after 5 minutes');
+                    }, 5 * 60 * 1000);
+                    
+                }).catch(err => {
+                    console.error('❌ Failed to copy auth data to clipboard:', err);
+                    
+                    // Fallback: Show the auth data for manual copy
+                    const modal = document.createElement('div');
+                    modal.className = 'manual-auth-modal';
+                    modal.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background: white;
+                        padding: 30px;
+                        border-radius: 12px;
+                        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                        z-index: 10000;
+                        max-width: 500px;
+                    `;
+                    modal.innerHTML = `
+                        <h3>Manual Authentication</h3>
+                        <p>Automatic authentication failed. Please copy this code:</p>
+                        <textarea readonly style="width: 100%; height: 100px; font-family: monospace; font-size: 12px;">${clipboardData}</textarea>
+                        <button onclick="navigator.clipboard.writeText('${clipboardData}'); this.textContent='Copied!'" 
+                                style="margin-top: 10px; padding: 10px 20px; background: #0071e3; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                            Copy Code
+                        </button>
+                        <p style="margin-top: 10px; font-size: 13px; color: #666;">
+                            After copying, switch to LUPO and it will automatically log you in.
+                        </p>
+                        <button onclick="this.parentElement.remove()" 
+                                style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">
+                            ×
+                        </button>
+                    `;
+                    document.body.appendChild(modal);
+                });
+                
+            } catch (err) {
+                console.error('❌ Failed to prepare auth data:', err);
+                showToast('Error preparing authentication. Please try again.', 'error');
+                
+                // Show retry button
+                const successStep = document.getElementById('successStep');
+                if (successStep) {
+                    successStep.innerHTML += `
+                        <button class="form-button" onclick="window.location.reload()">
+                            Try Again
+                        </button>
+                    `;
+                }
+            }
         }
-    } else {
-        showToast('No authentication data found. Please log in again.', 'error');
-    }
-}
         
         // Social Auth Functions
         async function signUpWithGoogle() {
@@ -863,33 +1017,85 @@
         }
         
         // Check for OAuth callback
-        window.addEventListener('load', () => {
+        window.addEventListener('load', async () => {
             const urlParams = new URLSearchParams(window.location.search);
             const isOAuth = urlParams.get('oauth') === 'true';
             const provider = urlParams.get('provider');
             
             if (isOAuth && provider) {
-                // Coming from OAuth callback
-                // Try localStorage first, then sessionStorage as fallback
-                const authData = JSON.parse(localStorage.getItem('lupo_oauth_temp') || sessionStorage.getItem('authData') || '{}');
+                console.log('📱 OAuth callback detected, provider:', provider);
                 
-                if (authData.email && authData.token) {
-                    // OAuth successful - auto-create free account
+                // Check multiple storage locations for auth data
+                let authData = null;
+                
+                // Try localStorage first
+                try {
+                    const stored = localStorage.getItem('lupo_oauth_temp');
+                    if (stored) {
+                        authData = JSON.parse(stored);
+                        console.log('✅ Found auth in localStorage');
+                    }
+                } catch (e) {
+                    console.error('localStorage parse error:', e);
+                }
+                
+                // Fallback to sessionStorage
+                if (!authData) {
+                    try {
+                        const stored = sessionStorage.getItem('authData');
+                        if (stored) {
+                            authData = JSON.parse(stored);
+                            console.log('✅ Found auth in sessionStorage');
+                        }
+                    } catch (e) {
+                        console.error('sessionStorage parse error:', e);
+                    }
+                }
+                
+                // Check clipboard as last resort
+                if (!authData) {
+                    try {
+                        const clipboardText = await navigator.clipboard.readText();
+                        if (clipboardText.startsWith('LUPO_AUTH:')) {
+                            const encoded = clipboardText.replace('LUPO_AUTH:', '');
+                            authData = JSON.parse(atob(encoded));
+                            console.log('✅ Found auth in clipboard');
+                        }
+                    } catch (e) {
+                        console.error('Clipboard read error:', e);
+                    }
+                }
+                
+                if (authData && authData.email && authData.token) {
+                    console.log('🔐 Auth data found, processing...');
+                    
                     userData.provider = provider;
                     userData.token = authData.token;
                     userData.email = authData.email;
                     userData.name = authData.name;
-                    userData.plan = 'free'; // Always free for OAuth
+                    userData.plan = 'free';
                     
                     // Show processing state
                     showProcessingState();
                     
                     // Auto-create the account
-                    setTimeout(() => autoCreateAccount(), 500); // Small delay for UX
+                    setTimeout(() => autoCreateAccount(), 500);
                 } else {
-                    // No auth data, redirect to start
-                    console.error('No auth data found in storage');
-                    window.location.href = '/signup.html';
+                    console.error('❌ No valid auth data found');
+                    
+                    // Show error with helpful message
+                    document.querySelector('.signup-container').innerHTML = `
+                        <div class="signup-header">
+                            <h1>Authentication Issue</h1>
+                            <p>We couldn't complete your sign-up. Please try again.</p>
+                        </div>
+                        <button class="form-button" onclick="window.location.href='/signup.html'">
+                            Start Over
+                        </button>
+                        <div class="signup-footer" style="margin-top: 24px;">
+                            <p>If this problem persists, try logging in directly in the LUPO app.</p>
+                        </div>
+                    `;
                 }
             } else {
                 // Normal flow
@@ -931,13 +1137,111 @@
                 // Show success
                 showSuccessState();
                 
-                // Show upgrade option for free users
+                // Show upgrade option for free users  
                 if (userData.tier === 'free') {
                     document.getElementById('proUpsell').style.display = 'block';
                 }
                 
-                // Try to open the app
-                setTimeout(openApp, 1000);
+                // CRITICAL: Use clipboard auth instead of trying to launch app
+                console.log('🔄 Setting up clipboard authentication...');
+                
+                // Prepare auth data
+                const authPackage = {
+                    token: authData.token,
+                    user: userData,
+                    timestamp: Date.now(),
+                    source: 'oauth_callback'
+                };
+                
+                const encodedData = btoa(JSON.stringify(authPackage));
+                const clipboardData = `LUPO_AUTH:${encodedData}`;
+                
+                // Copy to clipboard for LUPO polling
+                navigator.clipboard.writeText(clipboardData).then(() => {
+                    console.log('✅ OAuth auth data copied to clipboard');
+                    
+                    // Update the success UI with clear instructions
+                    const successContainer = document.querySelector('.success-container');
+                    if (successContainer) {
+                        // Add instruction box
+                        const instructionBox = document.createElement('div');
+                        instructionBox.style.cssText = `
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            color: white;
+                            padding: 20px;
+                            border-radius: 12px;
+                            margin: 20px auto;
+                            max-width: 400px;
+                            text-align: center;
+                            animation: slideIn 0.5s ease;
+                        `;
+                        instructionBox.innerHTML = `
+                            <h3 style="margin: 0 0 10px 0; font-size: 20px;">🎉 Success!</h3>
+                            <p style="margin: 0 0 15px 0; font-size: 16px;">
+                                Your account is ready to use!
+                            </p>
+                            <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px;">
+                                <p style="margin: 0; font-size: 14px; font-weight: 600;">
+                                    Next Step: Switch to the LUPO app
+                                </p>
+                                <p style="margin: 8px 0 0 0; font-size: 13px; opacity: 0.9;">
+                                    The LUPO desktop app will automatically log you in when you switch to it.
+                                </p>
+                            </div>
+                        `;
+                        
+                        // Add animation
+                        const style = document.createElement('style');
+                        style.textContent = `
+                            @keyframes slideIn {
+                                from {
+                                    opacity: 0;
+                                    transform: translateY(20px);
+                                }
+                                to {
+                                    opacity: 1;
+                                    transform: translateY(0);
+                                }
+                            }
+                            @keyframes pulse {
+                                0%, 100% {
+                                    transform: scale(1);
+                                    opacity: 1;
+                                }
+                                50% {
+                                    transform: scale(1.02);
+                                    opacity: 0.9;
+                                }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                        
+                        successContainer.appendChild(instructionBox);
+                    }
+                    
+                    // Don't try to open app - just notify
+                    showToast('✅ Authentication complete! Switch to LUPO to start.', 'success');
+                    
+                }).catch(err => {
+                    console.error('❌ Failed to set auth clipboard:', err);
+                    
+                    // Show manual fallback
+                    showToast('⚠️ Automatic authentication failed. Please try logging in directly in LUPO.', 'error');
+                    
+                    // Add retry button
+                    const successContainer = document.querySelector('.success-container');
+                    if (successContainer) {
+                        const retryBtn = document.createElement('button');
+                        retryBtn.className = 'form-button secondary-button';
+                        retryBtn.textContent = 'Open LUPO Login';
+                        retryBtn.style.marginTop = '20px';
+                        retryBtn.onclick = () => {
+                            // Just open the signup page, don't try deep link
+                            window.location.href = 'https://lupolabs.ai/login';
+                        };
+                        successContainer.appendChild(retryBtn);
+                    }
+                });
                 
             } catch (err) {
                 console.error('Account setup error:', err);
