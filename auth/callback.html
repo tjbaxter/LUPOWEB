@@ -194,6 +194,14 @@
             return 'unknown';
         }
         
+        // CRITICAL FIX: Safe base64 encoding that handles Unicode
+        function safeBase64Encode(str) {
+            // Convert string to UTF-8 bytes, then to base64
+            const utf8Bytes = new TextEncoder().encode(str);
+            const binaryString = String.fromCharCode(...utf8Bytes);
+            return btoa(binaryString);
+        }
+        
         // Handle OAuth callback
         async function handleCallback() {
             const container = document.getElementById('callbackContainer');
@@ -253,6 +261,17 @@
                         tier: data.tier || 'free'
                     };
                     
+                    // Clean up CV data if it exists to avoid encoding issues
+                    // Remove or simplify CV data that might contain problematic characters
+                    if (userData.cv) {
+                        // Keep only essential CV fields, remove raw text with special characters
+                        userData.cv = {
+                            filename: userData.cv.filename,
+                            uploadedAt: userData.cv.uploadedAt,
+                            // Don't include rawText or analysis with special characters
+                        };
+                    }
+                    
                     // Store in localStorage (more reliable than sessionStorage)
                     localStorage.setItem('lupo_oauth_temp', JSON.stringify({
                         email: userData.email,
@@ -262,17 +281,42 @@
                         user: userData
                     }));
                     
-                    // Prepare auth for clipboard instead of relying on URL params
+                    // Prepare auth for clipboard
                     const authPackage = {
                         token: data.token,
-                        user: userData,
+                        user: {
+                            email: userData.email,
+                            name: userData.name,
+                            tier: userData.tier || 'free'
+                            // Don't include CV data in clipboard auth to avoid encoding issues
+                        },
                         timestamp: Date.now(),
                         source: 'oauth_callback',
                         provider: provider
                     };
                     
-                    const encodedAuth = btoa(JSON.stringify(authPackage));
-                    const clipboardData = `LUPO_AUTH:${encodedAuth}`;
+                    // Use safe encoding for clipboard data
+                    let clipboardData;
+                    try {
+                        const encodedAuth = safeBase64Encode(JSON.stringify(authPackage));
+                        clipboardData = `LUPO_AUTH:${encodedAuth}`;
+                    } catch (encodeErr) {
+                        console.error('Encoding error:', encodeErr);
+                        // Fallback: Use minimal auth data
+                        const minimalAuth = {
+                            token: data.token,
+                            user: {
+                                email: userData.email,
+                                name: userData.name || userData.email.split('@')[0],
+                                tier: userData.tier || 'free'
+                            },
+                            timestamp: Date.now(),
+                            source: 'oauth_callback',
+                            provider: provider
+                        };
+                        const encodedAuth = safeBase64Encode(JSON.stringify(minimalAuth));
+                        clipboardData = `LUPO_AUTH:${encodedAuth}`;
+                    }
                     
                     // Try to copy to clipboard first
                     navigator.clipboard.writeText(clipboardData).then(() => {
@@ -300,6 +344,11 @@
                             </button>
                         `;
                         
+                        // Also redirect to signup page as backup
+                        setTimeout(() => {
+                            window.location.href = `/signup.html?oauth=true&provider=${provider}`;
+                        }, 2000);
+                        
                         // Try to focus the LUPO app window (won't launch new instance)
                         window.blur();
                         
@@ -315,6 +364,11 @@
                                 Continue
                             </a>
                         `;
+                        
+                        // Auto-redirect after a moment
+                        setTimeout(() => {
+                            window.location.href = `/signup.html?oauth=true&provider=${provider}`;
+                        }, 2000);
                     });
                     
                 } else {
