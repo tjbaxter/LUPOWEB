@@ -499,43 +499,109 @@
         
         // Initialize
         async function init() {
+            // Support both JWT token and API key authentication
             const token = localStorage.getItem('lupo_session');
-            if (!token) {
+            const apiKey = new URLSearchParams(window.location.search).get('key');
+            
+            // Store API key globally if provided
+            if (apiKey) {
+                window.salesApiKey = apiKey;
+            }
+            
+            // Check if we have any authentication
+            if (!token && !apiKey) {
+                console.error('No authentication found');
                 window.location.href = '/login.html';
                 return;
             }
             
-            await loadUserInfo();
-            await loadProspects();
+            // Load data with error handling
+            try {
+                await loadUserInfo();
+            } catch (err) {
+                console.error('User info load failed, continuing anyway:', err);
+            }
+            
+            try {
+                await loadProspects();
+            } catch (err) {
+                console.error('Prospects load failed:', err);
+                // Show error state
+                document.getElementById('prospectList').innerHTML = 
+                    '<div style="padding: 1rem; color: var(--text-dim);">Failed to load prospects. Please refresh.</div>';
+            }
         }
         
         // Load user info
         async function loadUserInfo() {
             const token = localStorage.getItem('lupo_session');
+            const apiKey = new URLSearchParams(window.location.search).get('key');
+            
             try {
+                const headers = {};
+                if (token) {
+                    headers['Authorization'] = `Bearer ${token}`;
+                } else if (apiKey) {
+                    headers['X-API-Key'] = apiKey;
+                }
+                
                 const response = await fetch('https://lupo-backend.fly.dev/api/sales/me', {
-                    headers: { 'Authorization': `Bearer ${token}` }
+                    headers: headers
                 });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const data = await response.json();
                 
-                document.getElementById('userName').textContent = data.user.name || data.user.email;
-                document.getElementById('orgName').textContent = data.org.companyName;
+                // Update UI with fallbacks
+                document.getElementById('userName').textContent = 
+                    data.user?.name || data.user?.email || 'Sales Rep';
+                document.getElementById('orgName').textContent = 
+                    data.org?.companyName || 'Enterprise';
             } catch (err) {
                 console.error('Failed to load user info:', err);
+                // Set default values on error
+                document.getElementById('userName').textContent = 'Sales Rep';
+                document.getElementById('orgName').textContent = 'Enterprise';
             }
         }
         
         // Load prospects
         async function loadProspects() {
             const token = localStorage.getItem('lupo_session');
+            const apiKey = new URLSearchParams(window.location.search).get('key');
+            
             try {
+                const headers = {};
+                if (token) {
+                    headers['Authorization'] = `Bearer ${token}`;
+                } else if (apiKey) {
+                    headers['X-API-Key'] = apiKey;
+                }
+                
                 const response = await fetch('https://lupo-backend.fly.dev/api/sales/prospects', {
-                    headers: { 'Authorization': `Bearer ${token}` }
+                    headers: headers
                 });
-                prospects = await response.json();
+                
+                const data = await response.json();
+                
+                // Handle both response formats - API returns {prospects: [...], pagination: {...}}
+                prospects = data.prospects || data;
+                
+                // Ensure prospects is an array
+                if (!Array.isArray(prospects)) {
+                    prospects = [];
+                    console.error('Unexpected prospects format:', data);
+                }
+                
                 renderProspects(prospects);
             } catch (err) {
                 console.error('Failed to load prospects:', err);
+                // Show empty state on error
+                prospects = [];
+                renderProspects(prospects);
             }
         }
         
@@ -577,14 +643,37 @@
         // Load calls for prospect
         async function loadCalls(prospectId) {
             const token = localStorage.getItem('lupo_session');
+            const apiKey = new URLSearchParams(window.location.search).get('key');
+            
             try {
+                const headers = {};
+                if (token) {
+                    headers['Authorization'] = `Bearer ${token}`;
+                } else if (apiKey) {
+                    headers['X-API-Key'] = apiKey;
+                }
+                
                 const response = await fetch(`https://lupo-backend.fly.dev/api/sales/calls?prospectId=${prospectId}`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
+                    headers: headers
                 });
-                calls = await response.json();
+                
+                const data = await response.json();
+                
+                // Handle both response formats - API returns {calls: [...], pagination: {...}}
+                calls = data.calls || data;
+                
+                // Ensure calls is an array
+                if (!Array.isArray(calls)) {
+                    calls = [];
+                    console.error('Unexpected calls format:', data);
+                }
+                
                 renderCalls(calls);
             } catch (err) {
                 console.error('Failed to load calls:', err);
+                // Show empty state on error
+                calls = [];
+                renderCalls(calls);
             }
         }
         
@@ -609,7 +698,7 @@
                         <div class="call-duration">${formatDuration(call.duration)}</div>
                     </div>
                     <div class="call-summary">
-                        ${call.analysis?.summary || 'Call summary not available'}
+                        ${call.analysis?.callSummary || call.analysis?.summary || 'Call summary not available'}
                     </div>
                     <div class="call-metrics">
                         <div class="metric">
@@ -621,7 +710,7 @@
                             <div class="metric-label">Questions</div>
                         </div>
                         <div class="metric">
-                            <div class="metric-value">${call.analysis?.objectionHandled || 0}</div>
+                            <div class="metric-value">${call.analysis?.objectionsHandled || 0}</div>
                             <div class="metric-label">Objections</div>
                         </div>
                     </div>
@@ -713,17 +802,27 @@
         // View transcript
         async function viewTranscript(callId) {
             const call = calls.find(c => c._id === callId);
-            if (!call) return;
+            if (!call) {
+                alert('Call not found');
+                return;
+            }
             
             const modal = document.getElementById('transcriptModal');
             const body = document.getElementById('transcriptBody');
             
-            body.innerHTML = call.transcript.map(t => `
-                <div class="transcript-line">
-                    <div class="speaker ${t.speaker}">${t.speaker}</div>
-                    <div>${t.text}</div>
-                </div>
-            `).join('');
+            // Check if transcript exists and is an array
+            if (!call.transcript || !Array.isArray(call.transcript)) {
+                body.innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-dim);">Transcript not available for this call</div>';
+            } else if (call.transcript.length === 0) {
+                body.innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-dim);">No transcript recorded</div>';
+            } else {
+                body.innerHTML = call.transcript.map(t => `
+                    <div class="transcript-line">
+                        <div class="speaker ${t.speaker || 'unknown'}">${t.speaker || 'unknown'}</div>
+                        <div>${t.text || ''}</div>
+                    </div>
+                `).join('');
+            }
             
             modal.classList.add('show');
         }
@@ -746,13 +845,46 @@
                 return;
             }
             
-            // This would integrate with your email drafting logic
+            // Try to get AI-generated email
+            const token = localStorage.getItem('lupo_session');
+            const apiKey = new URLSearchParams(window.location.search).get('key');
+            
+            try {
+                const headers = { 'Content-Type': 'application/json' };
+                if (token) {
+                    headers['Authorization'] = `Bearer ${token}`;
+                } else if (apiKey) {
+                    headers['X-API-Key'] = apiKey;
+                }
+                
+                const response = await fetch('https://lupo-backend.fly.dev/api/sales/generate-email', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({
+                        prospectId: currentProspect._id,
+                        callId: lastCall._id,
+                        type: 'follow-up'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const emailDraft = `Subject: ${data.subject}\n\n${data.body}`;
+                    navigator.clipboard.writeText(emailDraft);
+                    alert('AI-generated email copied to clipboard!');
+                    return;
+                }
+            } catch (err) {
+                console.error('Failed to generate AI email:', err);
+            }
+            
+            // Fallback to template
             const emailDraft = `
 Hi ${currentProspect.name?.split(' ')[0] || 'there'},
 
 Following up on our conversation ${formatDate(lastCall.startTime)}.
 
-${lastCall.analysis?.summary || ''}
+${lastCall.analysis?.callSummary || lastCall.analysis?.summary || 'We had a productive discussion about your needs.'}
 
 Next steps:
 ${currentProspect.callSummary?.nextSteps || '- Schedule follow-up call'}
@@ -761,7 +893,6 @@ Best regards,
 ${document.getElementById('userName').textContent}
             `.trim();
             
-            // Copy to clipboard
             navigator.clipboard.writeText(emailDraft);
             alert('Email draft copied to clipboard!');
         }
@@ -796,6 +927,25 @@ ${document.getElementById('userName').textContent}
             );
             renderProspects(filtered);
         });
+        
+        // Global error handling
+        window.addEventListener('unhandledrejection', event => {
+            console.error('Unhandled promise rejection:', event.reason);
+        });
+
+        // Auto-refresh if authentication expires
+        window.addEventListener('error', (event) => {
+            if (event.message && event.message.includes('401')) {
+                console.error('Authentication expired, redirecting to login');
+                window.location.href = '/login.html';
+            }
+        });
+
+        // Handle API key in URL for bookmarking
+        if (window.location.search.includes('key=')) {
+            // Save the current URL for easy bookmarking
+            console.log('Dashboard URL with API key:', window.location.href);
+        }
         
         // Initialize on load
         init();
