@@ -811,18 +811,74 @@
         
         // Initialize dashboard
         async function init() {
-            const token = localStorage.getItem('lupo_session');
-            const apiKey = new URLSearchParams(window.location.search).get('key');
+            console.log('Initializing dashboard...');
             
-            if (!token && !apiKey) {
-                window.location.href = '/login.html';
+            // Check authentication method
+            const urlParams = new URLSearchParams(window.location.search);
+            const apiKey = urlParams.get('key');
+            
+            // Check if we're in Electron (LUPO app)
+            const isElectron = typeof window !== 'undefined' && 
+                              window.process && 
+                              window.process.type === 'renderer';
+            
+            // Check for LUPO session token
+            let hasLupoSession = false;
+            let sessionToken = null;
+            
+            if (isElectron) {
+                // Try to get session from Electron IPC
+                try {
+                    const { ipcRenderer } = require('electron');
+                    const sessionData = await ipcRenderer.invoke('check-session');
+                    if (sessionData && sessionData.hasSession && sessionData.user) {
+                        hasLupoSession = true;
+                        sessionToken = sessionData.user.sessionToken;
+                        console.log('Found LUPO session for:', sessionData.user.email);
+                    }
+                } catch (err) {
+                    console.log('Not in Electron environment or IPC failed:', err);
+                }
+            }
+            
+            // Try localStorage as fallback
+            if (!hasLupoSession) {
+                sessionToken = localStorage.getItem('lupo_session');
+                if (sessionToken) {
+                    hasLupoSession = true;
+                    console.log('Found session token in localStorage');
+                }
+            }
+            
+            // Validate we have some form of authentication
+            if (!apiKey && !hasLupoSession) {
+                console.error('No authentication found');
+                showToast('Authentication required. Please login.', 'error');
+                
+                // Redirect to login after 2 seconds
+                setTimeout(() => {
+                    if (isElectron) {
+                        // In Electron, send message to main process
+                        const { ipcRenderer } = require('electron');
+                        ipcRenderer.send('open-signin');
+                    } else {
+                        window.location.href = '/login.html';
+                    }
+                }, 2000);
                 return;
+            }
+            
+            // Store the session token globally if we have it
+            if (sessionToken) {
+                window.lupoSessionToken = sessionToken;
             }
             
             // Store API key if provided
             if (apiKey) {
                 window.salesApiKey = apiKey;
             }
+            
+            console.log('Authentication method:', hasLupoSession ? 'LUPO Session' : 'API Key');
             
             // Load initial data
             await loadOrgData();
@@ -835,22 +891,81 @@
             refreshInterval = setInterval(() => {
                 loadDashboardData();
             }, 30000);
-        }
-        
+        }// Replace the getAuthHeaders function in manager-dashboard.html with this updated version:
+
+function getAuthHeaders() {
+    const headers = {};
+    
+    // Priority 1: Check URL for token parameter (from Electron app)
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenFromUrl = urlParams.get('token');
+    
+    if (tokenFromUrl) {
+        console.log('Using session token from URL parameter');
+        headers['Authorization'] = `Bearer ${tokenFromUrl}`;
+        // Store it for future requests in this session
+        window.lupoSessionToken = tokenFromUrl;
+        return headers;
+    }
+    
+    // Priority 2: Check for previously stored LUPO session token
+    if (window.lupoSessionToken) {
+        console.log('Using stored LUPO session token');
+        headers['Authorization'] = `Bearer ${window.lupoSessionToken}`;
+        return headers;
+    }
+    
+    // Priority 3: API key from URL (for managers without LUPO accounts)
+    const apiKey = urlParams.get('key');
+    
+    if (apiKey) {
+        console.log('Using API key from URL');
+        headers['X-API-Key'] = apiKey;
+        window.salesApiKey = apiKey;
+        return headers;
+    }
+    
+    // Priority 4: Previously stored API key
+    if (window.salesApiKey) {
+        console.log('Using stored API key');
+        headers['X-API-Key'] = window.salesApiKey;
+        return headers;
+    }
+    
+    // Priority 5: Try localStorage session token as last resort
+    const storedToken = localStorage.getItem('lupo_session');
+    if (storedToken) {
+        console.log('Using localStorage session token');
+        headers['Authorization'] = `Bearer ${storedToken}`;
+        window.lupoSessionToken = storedToken;
+        return headers;
+    }
+    
+    console.error('No authentication headers available');
+    return headers;
+}
         // Load organization data
         async function loadOrgData() {
             try {
+                console.log('Loading org data...');
                 const headers = getAuthHeaders();
+                console.log('Request headers:', Object.keys(headers));
+                
                 const response = await fetch('https://lupo-backend.fly.dev/sales/org', {
+                    method: 'GET',
                     headers: headers
                 });
                 
+                console.log('Org response status:', response.status);
+                
                 if (response.ok) {
                     orgData = await response.json();
+                    console.log('Org data loaded:', orgData.companyName);
                     document.getElementById('orgName').textContent = orgData.companyName || 'Enterprise';
                     loadPromptContent();
                 } else {
-                    // Fallback
+                    const errorText = await response.text();
+                    console.error('Failed to load org data:', response.status, errorText);
                     document.getElementById('orgName').textContent = 'Enterprise';
                 }
             } catch (error) {
@@ -862,20 +977,30 @@
         // Load dashboard data
         async function loadDashboardData() {
             try {
+                console.log('Loading dashboard data...');
                 const headers = getAuthHeaders();
+                console.log('Using headers:', Object.keys(headers));
                 
                 // Get analytics data
-                const analyticsResponse = await fetch(
-                    `https://lupo-backend.fly.dev/sales/analytics?period=${currentPeriod}`,
-                    { headers }
-                );
+                const analyticsUrl = `https://lupo-backend.fly.dev/sales/analytics?period=${currentPeriod}`;
+                console.log('Fetching:', analyticsUrl);
+                
+                const analyticsResponse = await fetch(analyticsUrl, { 
+                    method: 'GET',
+                    headers 
+                });
+                
+                console.log('Analytics response status:', analyticsResponse.status);
                 
                 if (!analyticsResponse.ok) {
-                    throw new Error('Failed to load analytics');
+                    const errorText = await analyticsResponse.text();
+                    console.error('Analytics failed:', analyticsResponse.status, errorText);
+                    throw new Error(`Failed to load analytics: ${analyticsResponse.status}`);
                 }
                 
                 const analytics = await analyticsResponse.json();
                 salesData = analytics;
+                console.log('Analytics data loaded');
                 
                 // Update metrics
                 updateMetrics(analytics);
@@ -949,62 +1074,77 @@
             // Similar for other charts...
         }
         
-        // Load objections list
-        async function loadObjections() {
-            try {
-                const objectionsList = document.getElementById('objectionsList');
-                
-                // Mock data - replace with actual API call
-                const objections = [
-                    { 
-                        type: 'Price Objection', 
-                        trigger: 'too expensive',
-                        count: 38, 
-                        handleRate: 82,
-                        response: 'I understand price is important. Most clients see ROI within 3 months...'
-                    },
-                    { 
-                        type: 'Timing Concern', 
-                        trigger: 'not the right time',
-                        count: 24, 
-                        handleRate: 91,
-                        response: 'I appreciate that timing matters. When would be better to revisit?'
-                    },
-                    { 
-                        type: 'Competition', 
-                        trigger: 'using competitor',
-                        count: 19, 
-                        handleRate: 67,
-                        response: 'Great that you have a solution. Many switched because of our unique...'
-                    },
-                    { 
-                        type: 'Authority', 
-                        trigger: 'need approval',
-                        count: 15, 
-                        handleRate: 88,
-                        response: 'Of course. Who else should be involved in evaluating this?'
-                    }
-                ];
-                
-                objectionsList.innerHTML = objections.map(obj => `
-                    <div class="objection-item">
-                        <div class="objection-info">
-                            <div class="objection-type">${obj.type}</div>
-                            <div class="objection-response">${obj.response}</div>
-                        </div>
-                        <div class="objection-stats">
-                            <span class="objection-count">${obj.count}</span>
-                            <span class="objection-rate ${obj.handleRate > 80 ? '' : obj.handleRate > 60 ? 'medium' : 'low'}">
-                                ${obj.handleRate}%
-                            </span>
-                        </div>
+async function loadObjections() {
+    try {
+        const objectionsList = document.getElementById('objectionsList');
+        
+        // Check if we have real objection data from analytics
+        const realObjections = salesData.objections?.topObjections || [];
+        
+        if (realObjections.length > 0) {
+            // Use real data
+            objectionsList.innerHTML = realObjections.map(obj => `
+                <div class="objection-item">
+                    <div class="objection-info">
+                        <div class="objection-type">${obj.type || obj.category || 'Objection'}</div>
+                        <div class="objection-response">${obj.response || obj.handler || 'No standard response set'}</div>
                     </div>
-                `).join('');
-                
-            } catch (error) {
-                console.error('Failed to load objections:', error);
-            }
+                    <div class="objection-stats">
+                        <span class="objection-count">${obj.count || 0}</span>
+                        <span class="objection-rate ${obj.handleRate > 80 ? '' : obj.handleRate > 60 ? 'medium' : 'low'}">
+                            ${obj.handleRate || 0}%
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        } else {
+            // Show placeholder when no objections recorded yet
+            objectionsList.innerHTML = `
+                <div style="text-align: center; padding: 2rem; color: var(--text-dim);">
+                    No objections recorded yet. They will appear here as your team handles calls.
+                </div>
+            `;
         }
+        
+    } catch (error) {
+        console.error('Failed to load objections:', error);
+    }
+}
+
+// Also update loadComplianceFlags to check for real data:
+
+async function loadComplianceFlags() {
+    try {
+        const complianceList = document.getElementById('complianceList');
+        
+        // Check for real compliance data
+        const realFlags = salesData.compliance?.recentFlags || [];
+        
+        if (realFlags.length > 0) {
+            // Use real compliance data
+            complianceList.innerHTML = realFlags.map(flag => `
+                <div class="compliance-item ${flag.severity === 'warning' ? 'warning' : flag.status === 'resolved' ? 'resolved' : ''}">
+                    <div class="compliance-header">
+                        <span class="compliance-type ${flag.severity === 'warning' ? 'warning' : flag.status === 'resolved' ? 'resolved' : ''}">${flag.type}</span>
+                        <span class="compliance-time">${flag.time || 'Recently'}</span>
+                    </div>
+                    <div class="compliance-details">${flag.details || flag.description}</div>
+                    <div class="compliance-rep">Rep: ${flag.repName || flag.salesRep || 'Unknown'}</div>
+                </div>
+            `).join('');
+        } else {
+            // Show message when no compliance issues
+            complianceList.innerHTML = `
+                <div style="text-align: center; padding: 2rem; color: var(--success);">
+                    ✓ No compliance issues detected. Great job maintaining standards!
+                </div>
+            `;
+        }
+        
+    } catch (error) {
+        console.error('Failed to load compliance flags:', error);
+    }
+}
         
         // Load compliance flags
         async function loadComplianceFlags() {
@@ -1055,80 +1195,87 @@
             }
         }
         
-        // Load team performance table
-        async function loadTeamPerformance() {
-            try {
-                const tableBody = document.getElementById('teamTableBody');
-                
-                // Mock data - replace with actual API call
-                const teamData = [
-                    {
-                        name: 'John Smith',
-                        status: 'active',
-                        callsToday: 12,
-                        assistRate: 85,
-                        objectionsHandled: 8,
-                        complianceScore: 98,
-                        qualityScore: 92
-                    },
-                    {
-                        name: 'Sarah Johnson',
-                        status: 'active',
-                        callsToday: 15,
-                        assistRate: 92,
-                        objectionsHandled: 11,
-                        complianceScore: 100,
-                        qualityScore: 95
-                    },
-                    {
-                        name: 'Mike Davis',
-                        status: 'idle',
-                        callsToday: 8,
-                        assistRate: 78,
-                        objectionsHandled: 5,
-                        complianceScore: 95,
-                        qualityScore: 88
-                    },
-                    {
-                        name: 'Lisa Chen',
-                        status: 'active',
-                        callsToday: 10,
-                        assistRate: 88,
-                        objectionsHandled: 9,
-                        complianceScore: 100,
-                        qualityScore: 91
-                    }
-                ];
-                
-                tableBody.innerHTML = teamData.map(rep => `
-                    <tr>
-                        <td>
-                            <span class="rep-status ${rep.status === 'idle' ? 'idle' : ''}"></span>
-                            <span class="rep-name">${rep.name}</span>
-                        </td>
-                        <td>${rep.status === 'active' ? 'On Call' : 'Available'}</td>
-                        <td>${rep.callsToday}</td>
-                        <td>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${rep.assistRate}%"></div>
-                            </div>
-                            ${rep.assistRate}%
-                        </td>
-                        <td>${rep.objectionsHandled}</td>
-                        <td style="color: ${rep.complianceScore === 100 ? 'var(--success)' : rep.complianceScore < 95 ? 'var(--warning)' : 'var(--text)'}">
-                            ${rep.complianceScore}%
-                        </td>
-                        <td>${rep.qualityScore}/100</td>
-                        <td>
-                            <button class="btn" onclick="coachRep('${rep.name}')">Coach</button>
-                        </td>
-                    </tr>
-                `).join('');
-                
-            } catch (error) {
-                console.error('Failed to load team performance:', error);
-            }
+async function loadTeamPerformance() {
+    try {
+        const tableBody = document.getElementById('teamTableBody');
+        
+        // Use REAL data from the analytics response
+        const teamData = salesData.teamPerformance || [];
+        
+        if (teamData.length === 0) {
+            // Show message when no team data available
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 2rem; color: var(--text-dim);">
+                        No team activity recorded yet. Team members will appear here once they start making calls.
+                    </td>
+                </tr>
+            `;
+            return;
         }
+        
+        // Use the actual team performance data from the API
+        tableBody.innerHTML = teamData.map(rep => {
+            // Extract data from the API response format
+            const name = rep.name || rep.salesRepName || rep._id || 'Unknown';
+            const calls = rep.calls || rep.totalCalls || 0;
+            const wonDeals = rep.wonDeals || 0;
+            const revenue = rep.revenue || '$0';
+            const winRate = rep.winRate || '0%';
+            const qualityScore = rep.avgQualityScore || rep.qualityScore || 0;
+            
+            // Calculate assist rate if not provided
+            const assistRate = rep.assistRate || 
+                (calls > 0 && rep.assistedCalls ? 
+                    Math.round((rep.assistedCalls / calls) * 100) : 0);
+            
+            // Calculate compliance score if not provided
+            const complianceScore = rep.complianceScore || 
+                (rep.complianceFlags === 0 ? 100 : 
+                 rep.complianceFlags < 2 ? 95 : 90);
+            
+            // Determine status based on activity
+            const status = calls > 0 ? 'active' : 'idle';
+            
+            return `
+                <tr>
+                    <td>
+                        <span class="rep-status ${status === 'idle' ? 'idle' : ''}"></span>
+                        <span class="rep-name">${name}</span>
+                    </td>
+                    <td>${status === 'active' ? 'Active' : 'No Activity'}</td>
+                    <td>${calls}</td>
+                    <td>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${assistRate}%"></div>
+                        </div>
+                        ${assistRate}%
+                    </td>
+                    <td>${rep.objectionsHandled || wonDeals}</td>
+                    <td style="color: ${complianceScore === 100 ? 'var(--success)' : complianceScore < 95 ? 'var(--warning)' : 'var(--text)'}">
+                        ${complianceScore}%
+                    </td>
+                    <td>${qualityScore}/100</td>
+                    <td>
+                        <button class="btn" onclick="coachRep('${name}')">Coach</button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+        
+    } catch (error) {
+        console.error('Failed to load team performance:', error);
+        const tableBody = document.getElementById('teamTableBody');
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="8" style="text-align: center; padding: 2rem; color: var(--danger);">
+                    Failed to load team data. Please refresh the page.
+                </td>
+            </tr>
+        `;
+    }
+}
+
         
         // Load prompt content based on tab
         function loadPromptContent() {
@@ -1283,7 +1430,6 @@ ROI Close:
                 // Show loading state
                 showToast('Saving changes...', 'info');
                 
-                // Here you would call the API to save
                 const headers = getAuthHeaders();
                 headers['Content-Type'] = 'application/json';
                 
@@ -1383,31 +1529,6 @@ ROI Close:
             // Navigate to history view
         }
         
-   // Get auth headers - SUPPORTS BOTH METHODS
-function getAuthHeaders() {
-    const headers = {};
-    
-    // Method 1: API key from URL (for managers without LUPO accounts)
-    const urlParams = new URLSearchParams(window.location.search);
-    const apiKey = urlParams.get('key');
-    
-    // Method 2: LUPO session token (for enterprise users using LUPO app)
-    const token = localStorage.getItem('lupo_session');
-    
-    if (apiKey) {
-        headers['X-API-Key'] = apiKey;
-        // Store it globally for future use
-        window.salesApiKey = apiKey;
-    } else if (token) {
-        // This is for LUPO enterprise users accessing through the app
-        headers['Authorization'] = `Bearer ${token}`;
-    } else if (window.salesApiKey) {
-        // Use previously stored API key
-        headers['X-API-Key'] = window.salesApiKey;
-    }
-    
-    return headers;
-}
         // Show toast notification
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
