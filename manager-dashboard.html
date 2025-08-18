@@ -1146,68 +1146,36 @@ async function loadComplianceFlags() {
     }
 }
         
-        // Load compliance flags
-        async function loadComplianceFlags() {
-            try {
-                const complianceList = document.getElementById('complianceList');
-                
-                // Mock data - replace with actual API call
-                const flags = [
-                    {
-                        type: 'UNAPPROVED CLAIM',
-                        severity: 'high',
-                        time: '10 mins ago',
-                        details: 'Rep mentioned "guaranteed results" during demo call',
-                        rep: 'John Smith',
-                        status: 'active'
-                    },
-                    {
-                        type: 'OFF-LABEL',
-                        severity: 'warning',
-                        time: '2 hours ago',
-                        details: 'Discussed use case outside approved guidelines',
-                        rep: 'Sarah Johnson',
-                        status: 'active'
-                    },
-                    {
-                        type: 'RESOLVED',
-                        severity: 'resolved',
-                        time: 'Yesterday',
-                        details: 'Price comparison issue - coaching provided',
-                        rep: 'Mike Davis',
-                        status: 'resolved'
-                    }
-                ];
-                
-                complianceList.innerHTML = flags.map(flag => `
-                    <div class="compliance-item ${flag.severity === 'warning' ? 'warning' : flag.status === 'resolved' ? 'resolved' : ''}">
-                        <div class="compliance-header">
-                            <span class="compliance-type ${flag.severity === 'warning' ? 'warning' : flag.status === 'resolved' ? 'resolved' : ''}">${flag.type}</span>
-                            <span class="compliance-time">${flag.time}</span>
-                        </div>
-                        <div class="compliance-details">${flag.details}</div>
-                        <div class="compliance-rep">Rep: ${flag.rep}</div>
-                    </div>
-                `).join('');
-                
-            } catch (error) {
-                console.error('Failed to load compliance flags:', error);
-            }
-        }
         
 async function loadTeamPerformance() {
     try {
         const tableBody = document.getElementById('teamTableBody');
-        
-        // Use REAL data from the analytics response
         const teamData = salesData.teamPerformance || [];
         
         if (teamData.length === 0) {
-            // Show message when no team data available
+            // Show correct onboarding message for LUPO
             tableBody.innerHTML = `
                 <tr>
-                    <td colspan="8" style="text-align: center; padding: 2rem; color: var(--text-dim);">
-                        No team activity recorded yet. Team members will appear here once they start making calls.
+                    <td colspan="8" style="text-align: center; padding: 2rem;">
+                        <div style="color: var(--text-dim);">
+                            <div style="font-size: 1.25rem; margin-bottom: 1rem;">📊 No team activity recorded yet</div>
+                            <div style="margin-bottom: 1.5rem;">Get your sales team started with LUPO:</div>
+                            <ol style="text-align: left; display: inline-block; margin: 0 auto; line-height: 1.8;">
+                                <li>Have team members download the LUPO desktop app</li>
+                                <li>They sign in with their enterprise account</li>
+                                <li>LUPO automatically detects and coaches their calls</li>
+                                <li>Real-time analytics appear here as calls happen</li>
+                            </ol>
+                            <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg); border-radius: 6px;">
+                                <div style="font-size: 0.875rem; margin-bottom: 0.5rem;">Team Access Code:</div>
+                                <code style="font-size: 1.125rem; color: var(--accent);">
+                                    ${orgData?.teamCode || 'Loading...'}
+                                </code>
+                            </div>
+                            <button class="btn btn-primary" style="margin-top: 1rem;" onclick="copyInviteLink()">
+                                📋 Copy Invite Link
+                            </button>
+                        </div>
                     </td>
                 </tr>
             `;
@@ -1303,26 +1271,33 @@ Response: "Of course, I understand you need to involve others. Who else would ne
                 battlecard: `[SALES BATTLECARD]
 
 Product: ${orgData?.salesContext?.productName || 'LUPO Sales AI'}
-Description: ${orgData?.salesContext?.productDescription || 'Real-time sales coaching AI'}
-Pricing: ${orgData?.salesContext?.pricing || 'Contact for pricing'}
+Description: ${orgData?.salesContext?.productDescription || 'Desktop overlay providing real-time AI sales coaching'}
+Pricing: ${orgData?.salesContext?.pricing || 'Per-seat enterprise pricing'}
+
+HOW LUPO WORKS:
+• Runs as overlay on sales rep's screen
+• Captures audio from ALL calls (Zoom, Teams, phone apps)
+• Shows real-time coaching suggestions
+• Works with any communication platform
 
 VALUE PROPOSITIONS:
 • Increase win rates by 26-50%
-• Reduce ramp time for new reps by 70%
-• Ensure 100% compliance on every call
-• Real-time objection handling
+• Works with YOUR existing tools (no integration needed)
+• Sub-100ms real-time coaching
+• 100% compliance on every call
 
 KEY DIFFERENTIATORS:
-• Sub-100ms response time (10x faster than competitors)
-• Works with existing phone systems
-• No training required - works day one
-• Compliance-first design for regulated industries
+• Desktop app - not a phone system
+• Works with ANY calling platform
+• No CRM integration required
+• Real-time visual coaching overlay
+• Enterprise-grade security
 
 DISCOVERY QUESTIONS:
-1. "How long does it take to ramp new sales reps today?"
-2. "What % of deals do you lose to 'no decision'?"
-3. "How do you ensure compliance on calls currently?"
-4. "What's your average deal size and sales cycle?"`,
+1. "What tools does your team use for calls? (Zoom, Teams, etc.)"
+2. "How do you currently coach reps during calls?"
+3. "What % of deals do you lose to poor objection handling?"
+4. "How do you ensure compliance across all communication channels?"`,
                 
                 compliance: `[COMPLIANCE RULES]
 
@@ -1493,10 +1468,35 @@ ROI Close:
             }
         }
         
-        // Coach specific rep
+        // Function to copy team invite link
+        function copyInviteLink() {
+            const inviteUrl = `https://lupolabs.ai/download?team=${orgData?.teamCode || ''}&org=${orgData?.companyName || ''}`;
+            
+            navigator.clipboard.writeText(inviteUrl).then(() => {
+                showToast('✅ Invite link copied! Share with your team.', 'success');
+            }).catch(() => {
+                // Fallback for browsers that don't support clipboard API
+                const input = document.createElement('input');
+                input.value = inviteUrl;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                showToast('✅ Invite link copied!', 'success');
+            });
+        }
+
+        // Function to view rep details
+        function viewRepDetails(repId) {
+            // Open detailed view for specific rep
+            window.location.href = `/rep-details.html?id=${repId}`;
+        }
+
+        // Update the coach rep function to be more appropriate
         function coachRep(repName) {
-            alert(`Opening coaching session for ${repName}...`);
-            // Here you would navigate to rep-specific coaching view
+            // Since LUPO provides real-time coaching, this opens historical coaching data
+            showToast(`Loading coaching history for ${repName}...`, 'info');
+            // Could open a modal or navigate to coaching history
         }
         
         // View all objections
