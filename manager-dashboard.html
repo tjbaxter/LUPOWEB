@@ -809,91 +809,80 @@
         let orgData = null;
         let refreshInterval = null;
         
-        // Initialize dashboard
         async function init() {
-            console.log('Initializing dashboard...');
-            
-            // Check authentication method
-            const urlParams = new URLSearchParams(window.location.search);
-            const apiKey = urlParams.get('key');
-            
-            // Check if we're in Electron (LUPO app)
-            const isElectron = typeof window !== 'undefined' && 
-                              window.process && 
-                              window.process.type === 'renderer';
-            
-            // Check for LUPO session token
-            let hasLupoSession = false;
-            let sessionToken = null;
-            
-            if (isElectron) {
-                // Try to get session from Electron IPC
-                try {
-                    const { ipcRenderer } = require('electron');
-                    const sessionData = await ipcRenderer.invoke('check-session');
-                    if (sessionData && sessionData.hasSession && sessionData.user) {
-                        hasLupoSession = true;
-                        sessionToken = sessionData.user.sessionToken;
-                        console.log('Found LUPO session for:', sessionData.user.email);
-                    }
-                } catch (err) {
-                    console.log('Not in Electron environment or IPC failed:', err);
-                }
+    console.log('Initializing dashboard...');
+    console.log('Current URL:', window.location.href);
+    
+    // Extract and decode token immediately
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenFromUrl = urlParams.get('token');
+    
+    if (tokenFromUrl) {
+        // Decode the token (it was encoded when passed in URL)
+        window.lupoSessionToken = decodeURIComponent(tokenFromUrl);
+        console.log('✅ Found and decoded token from URL');
+        console.log('Token preview:', window.lupoSessionToken.substring(0, 20) + '...');
+    }
+    
+    // Get API key if present
+    const apiKey = urlParams.get('key');
+    if (apiKey) {
+        window.salesApiKey = apiKey;
+        console.log('✅ Found API key from URL');
+    }
+    
+    // Check localStorage as fallback
+    if (!window.lupoSessionToken && !window.salesApiKey) {
+        const storedToken = localStorage.getItem('lupo_session');
+        if (storedToken) {
+            window.lupoSessionToken = storedToken;
+            console.log('✅ Found token in localStorage');
+        }
+    }
+    
+    // Validate we have some form of authentication
+    if (!window.lupoSessionToken && !window.salesApiKey) {
+        console.error('❌ No authentication found');
+        showToast('Authentication required. Please login through LUPO app.', 'error');
+        
+        // Don't redirect immediately - give user time to read the message
+        setTimeout(() => {
+            // Close the window or redirect
+            if (window.opener) {
+                window.close();
+            } else {
+                window.location.href = 'https://lupolabs.ai/login';
             }
-            
-            // Try localStorage as fallback
-            if (!hasLupoSession) {
-                sessionToken = localStorage.getItem('lupo_session');
-                if (sessionToken) {
-                    hasLupoSession = true;
-                    console.log('Found session token in localStorage');
-                }
-            }
-            
-            // Validate we have some form of authentication
-            if (!apiKey && !hasLupoSession) {
-                console.error('No authentication found');
-                showToast('Authentication required. Please login.', 'error');
-                
-                // Redirect to login after 2 seconds
-                setTimeout(() => {
-                    if (isElectron) {
-                        // In Electron, send message to main process
-                        const { ipcRenderer } = require('electron');
-                        ipcRenderer.send('open-signin');
-                    } else {
-                        window.location.href = '/login.html';
-                    }
-                }, 2000);
-                return;
-            }
-            
-            // Store the session token globally if we have it
-            if (sessionToken) {
-                window.lupoSessionToken = sessionToken;
-            }
-            
-            // Store API key if provided
-            if (apiKey) {
-                window.salesApiKey = apiKey;
-            }
-            
-            console.log('Authentication method:', hasLupoSession ? 'LUPO Session' : 'API Key');
-            
-            // Load initial data
-            await loadOrgData();
-            await loadDashboardData();
-            
-            // Setup event listeners
-            setupEventListeners();
-            
-            // Auto-refresh every 30 seconds
-            refreshInterval = setInterval(() => {
-                loadDashboardData();
-            }, 30000);
-        }// Replace the getAuthHeaders function in manager-dashboard.html with this updated version:
-
-function getAuthHeaders() {
+        }, 3000);
+        return;
+    }
+    
+    console.log('✅ Authentication ready, loading dashboard...');
+    
+    // Load initial data
+    try {
+        await loadOrgData();
+        await loadDashboardData();
+        
+        // Setup event listeners
+        setupEventListeners();
+        
+        // Auto-refresh every 30 seconds
+        refreshInterval = setInterval(() => {
+            loadDashboardData();
+        }, 30000);
+        
+        console.log('✅ Dashboard fully initialized');
+    } catch (error) {
+        console.error('❌ Failed to initialize dashboard:', error);
+        showToast('Failed to load dashboard data. Please check your connection.', 'error');
+    }
+}
+        
+        
+        
+        // Replace the getAuthHeaders function in manager-dashboard.html with this updated version:
+        function getAuthHeaders() {
     const headers = {};
     
     // Priority 1: Check URL for token parameter (from Electron app)
@@ -902,9 +891,11 @@ function getAuthHeaders() {
     
     if (tokenFromUrl) {
         console.log('Using session token from URL parameter');
-        headers['Authorization'] = `Bearer ${tokenFromUrl}`;
+        // IMPORTANT: Decode the token since it was encoded in the URL
+        const decodedToken = decodeURIComponent(tokenFromUrl);
+        headers['Authorization'] = `Bearer ${decodedToken}`;
         // Store it for future requests in this session
-        window.lupoSessionToken = tokenFromUrl;
+        window.lupoSessionToken = decodedToken;
         return headers;
     }
     

@@ -1983,6 +1983,1130 @@
         display: none;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* Enterprise Styles */
+.enterprise-hero {
+    padding: 120px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, 
+        var(--bg-primary) 0%, 
+        var(--bg-secondary) 100%);
+}
+
+.enterprise-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 20% 50%, 
+        rgba(99, 102, 241, 0.08) 0%, 
+        transparent 50%),
+        radial-gradient(circle at 80% 80%, 
+        rgba(139, 92, 246, 0.06) 0%, 
+        transparent 50%);
+    animation: enterpriseGlow 20s ease-in-out infinite;
+}
+
+@keyframes enterpriseGlow {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+}
+
+.enterprise-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.enterprise-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, 
+        rgba(99, 102, 241, 0.1) 0%, 
+        rgba(139, 92, 246, 0.1) 100%);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    margin-bottom: 24px;
+}
+
+.enterprise-icon {
+    font-size: 16px;
+}
+
+.enterprise-title {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.enterprise-subtitle {
+    font-size: 24px;
+    color: var(--text-secondary);
+    margin-bottom: 60px;
+    line-height: 1.4;
+}
+
+.latency-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(52, 211, 153, 0.1);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #34d399;
+    margin-left: 8px;
+}
+
+.enterprise-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.05) 0%, 
+        rgba(255, 255, 255, 0.02) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 32px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .stat-card {
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.03) 0%, 
+            rgba(255, 255, 255, 0.01) 100%);
+    }
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.1);
+}
+
+.stat-number {
+    font-size: 42px;
+    font-weight: 700;
+    background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Enterprise Features */
+.enterprise-feature {
+    background: var(--bg-primary);
+}
+
+.enterprise-label {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.enterprise-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 32px;
+}
+
+.enterprise-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: rgba(99, 102, 241, 0.05);
+    border-radius: 16px;
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    transition: all 0.3s ease;
+}
+
+.enterprise-feature-item:hover {
+    background: rgba(99, 102, 241, 0.08);
+    transform: translateX(8px);
+}
+
+.feature-icon {
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 12px;
+}
+
+.enterprise-feature-item strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+}
+
+.enterprise-feature-item span {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* Sales HUD Visual */
+.sales-hud {
+    background: #0a0a0f;
+    border: 2px solid rgba(99, 102, 241, 0.2);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 
+        0 0 80px rgba(99, 102, 241, 0.2),
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.sales-hud::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(99, 102, 241, 0.5) 50%, 
+        transparent 100%);
+    animation: hudScan 3s ease-in-out infinite;
+}
+
+@keyframes hudScan {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+}
+
+.hud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.hud-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #34d399;
+}
+
+.hud-indicator {
+    width: 8px;
+    height: 8px;
+    background: #34d399;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.8);
+    animation: hudPulse 2s ease-in-out infinite;
+}
+
+@keyframes hudPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.2); }
+}
+
+.hud-metrics {
+    display: flex;
+    gap: 20px;
+}
+
+.metric {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.positive {
+    color: #34d399;
+    font-weight: 600;
+}
+
+.optimal {
+    color: #60a5fa;
+    font-weight: 600;
+}
+
+.hud-display {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.prospect-speech {
+    margin-bottom: 20px;
+}
+
+.speaker-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #60a5fa;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.speech-content {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    padding: 12px;
+    background: rgba(96, 165, 250, 0.05);
+    border-left: 2px solid #60a5fa;
+    border-radius: 8px;
+}
+
+.lupo-response {
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.response-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.response-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #8b5cf6;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.response-time {
+    font-size: 11px;
+    color: #34d399;
+    font-weight: 600;
+    padding: 2px 8px;
+    background: rgba(52, 211, 153, 0.1);
+    border-radius: 12px;
+}
+
+.response-content {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.response-text {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.response-text strong {
+    color: #60a5fa;
+    font-weight: 600;
+}
+
+.response-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.meta-tag {
+    font-size: 11px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.hud-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+
+.compliance-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #34d399;
+}
+
+.compliance-icon {
+    font-size: 16px;
+}
+
+.deal-intelligence {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Compliance Dashboard */
+.enterprise-dark {
+    background: #0a0a0f;
+}
+
+.compliance-dashboard {
+    background: linear-gradient(135deg, 
+        rgba(24, 24, 27, 0.95) 0%, 
+        rgba(10, 10, 11, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 
+        0 24px 48px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.dashboard-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(52, 211, 153, 0.1);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+    border-radius: 20px;
+    font-size: 12px;
+    color: #34d399;
+}
+
+.status-dot.active {
+    width: 8px;
+    height: 8px;
+    background: #34d399;
+    border-radius: 50%;
+    animation: statusBlink 2s ease-in-out infinite;
+}
+
+.compliance-rules {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.rule-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.rule-item.safe {
+    border-color: rgba(52, 211, 153, 0.2);
+}
+
+.rule-item.warning {
+    border-color: rgba(251, 191, 36, 0.3);
+    background: rgba(251, 191, 36, 0.05);
+}
+
+.rule-status {
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.rule-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 4px;
+}
+
+.rule-desc {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.intervention-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 12px;
+}
+
+.alert-icon {
+    font-size: 20px;
+}
+
+.alert-content strong {
+    display: block;
+    font-size: 14px;
+    color: #ef4444;
+    margin-bottom: 4px;
+}
+
+.alert-content p {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.compliance-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+}
+
+.compliance-feature {
+    text-align: center;
+    padding: 24px;
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.compliance-feature:hover {
+    transform: translateY(-4px);
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.2);
+}
+
+.cf-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+}
+
+.compliance-feature h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.compliance-feature p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Context Display */
+.context-display {
+    background: linear-gradient(135deg, #1e1e2e 0%, #151521 100%);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.context-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.context-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8b5cf6;
+}
+
+.context-company {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+}
+
+.context-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.context-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.3s ease;
+}
+
+.context-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+.context-card.highlight {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.2);
+}
+
+.card-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 12px;
+}
+
+.data-point {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.dp-label {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.dp-value {
+    color: white;
+    font-weight: 600;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.timeline-dot {
+    width: 6px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+}
+
+.timeline-item.active .timeline-dot {
+    background: #60a5fa;
+    box-shadow: 0 0 8px rgba(96, 165, 250, 0.6);
+}
+
+.insight {
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: white;
+}
+
+.battlecard-preview {
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.battlecard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 12px;
+}
+
+.battlecard-match {
+    padding: 2px 8px;
+    background: rgba(52, 211, 153, 0.1);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+    border-radius: 12px;
+    color: #34d399;
+    font-weight: 600;
+}
+
+.battlecard-content {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+}
+
+/* Integration Grid */
+.integration-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.integration-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.integration-item:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+}
+
+.integration-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.integration-item span {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* ROI Section */
+.enterprise-roi {
+    padding: 100px 20px;
+    background: linear-gradient(135deg, 
+        var(--bg-secondary) 0%, 
+        var(--bg-primary) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.enterprise-roi::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 70%, 
+        rgba(99, 102, 241, 0.05) 0%, 
+        transparent 50%);
+}
+
+.roi-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.roi-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.roi-header h2 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.roi-header p {
+    font-size: 20px;
+    color: var(--text-secondary);
+}
+
+.roi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.roi-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.roi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        #6366f1 0%, 
+        #8b5cf6 50%, 
+        #ec4899 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.roi-card:hover::before {
+    opacity: 1;
+}
+
+.roi-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.roi-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.roi-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.roi-card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.roi-metric {
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.metric-value {
+    display: block;
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+}
+
+.metric-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Enterprise CTA */
+.enterprise-cta-section {
+    padding: 120px 20px;
+    text-align: center;
+    background: #0a0a0f;
+    position: relative;
+    overflow: hidden;
+}
+
+.enterprise-cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, 
+        rgba(99, 102, 241, 0.1) 0%, 
+        transparent 70%);
+    animation: ctaPulse 4s ease-in-out infinite;
+}
+
+@keyframes ctaPulse {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+.enterprise-cta-container {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #8b5cf6;
+    margin-bottom: 24px;
+}
+
+.cta-title {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    color: white;
+}
+
+.cta-description {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 60px;
+}
+
+.enterprise-demo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 18px 32px;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+}
+
+.enterprise-demo-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+}
+
+.btn-arrow {
+    transition: transform 0.3s ease;
+}
+
+.enterprise-demo-btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+.enterprise-contact-btn {
+    padding: 18px 32px;
+    background: transparent;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.enterprise-contact-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.enterprise-trust {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+}
+
+.trust-badges {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.trust-badge {
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .enterprise-stats {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+    }
+    
+    .compliance-features {
+        grid-template-columns: 1fr;
+    }
+    
+    .roi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .integration-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .context-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .enterprise-title {
+        font-size: 36px;
+    }
+    
+    .enterprise-subtitle {
+        font-size: 18px;
+    }
+    
+    .roi-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+    }
+    
+    .trust-badges {
+        flex-wrap: wrap;
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
     </style>
 </head>
 <body>
@@ -2289,19 +3413,389 @@
     </div>
     
     <!-- Sales Features Coming Soon -->
-    <div id="salesFeatures" class="coming-soon-section">
-        <div class="coming-soon-content">
-            <h2 class="coming-soon-title">Sales Intelligence.<br>Coming Soon.</h2>
-            <p class="coming-soon-description">
-                Real-time objection handling, competitor insights, and deal intelligence. 
-                Transform your sales team into closing machines with AI that understands every conversation.
+
+<!-- Enterprise Sales Features -->
+<div id="salesFeatures" style="display: none;">
+    <!-- Enterprise Hero -->
+    <section class="enterprise-hero">
+        <div class="enterprise-hero-content">
+            <div class="enterprise-badge">
+                <span class="enterprise-icon">🏢</span>
+                <span>ENTERPRISE SALES</span>
+            </div>
+            <h2 class="enterprise-title">
+                Precision Conversation Intelligence<br>
+                <span class="gradient-text">for Enterprise Revenue Teams</span>
+            </h2>
+            <p class="enterprise-subtitle">
+                Glass-overlay intelligence that guides every call to perfect execution. 
+                <span class="latency-badge"><200ms latency</span>
             </p>
-            <form class="notify-form" onsubmit="handleNotify(event)">
-                <input type="email" class="notify-input" placeholder="Enter your email" required>
-                <button type="submit" class="notify-btn">Notify Me</button>
-            </form>
+            
+            <div class="enterprise-stats">
+                <div class="stat-card">
+                    <div class="stat-number">47%</div>
+                    <div class="stat-label">Higher Close Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3.2x</div>
+                    <div class="stat-label">Faster Ramp Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Compliance Coverage</div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Real-time Sales Intelligence -->
+    <section class="feature-section enterprise-feature">
+        <div class="feature-container">
+            <div class="feature-content scroll-animate">
+                <div class="feature-label enterprise-label">REAL-TIME GUIDANCE</div>
+                <h2 class="feature-title">Every objection handled.<br>Every opportunity captured.</h2>
+                <p class="feature-description">
+                    LUPO operates like a fighter pilot's HUD — delivering word-for-word responses in under 200ms. 
+                    Your reps never fumble, never stall, never miss.
+                </p>
+                <div class="enterprise-features-list">
+                    <div class="enterprise-feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <div>
+                            <strong>Ultra-low latency</strong>
+                            <span>Responses feel instantaneous, not scripted</span>
+                        </div>
+                    </div>
+                    <div class="enterprise-feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <div>
+                            <strong>Prospect-only intelligence</strong>
+                            <span>Reacts to buyers, monitors reps for compliance</span>
+                        </div>
+                    </div>
+                    <div class="enterprise-feature-item">
+                        <div class="feature-icon">🔐</div>
+                        <div>
+                            <strong>Zero-knowledge architecture</strong>
+                            <span>Your data never leaves your infrastructure</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-visual scroll-animate">
+                <div class="sales-hud">
+                    <div class="hud-header">
+                        <div class="hud-status">
+                            <div class="hud-indicator active"></div>
+                            <span>LIVE CALL - ENTERPRISE DEAL</span>
+                        </div>
+                        <div class="hud-metrics">
+                            <span class="metric">Sentiment: <span class="positive">+0.82</span></span>
+                            <span class="metric">Talk Ratio: <span class="optimal">38%</span></span>
+                        </div>
+                    </div>
+                    <div class="hud-display">
+                        <div class="prospect-speech">
+                            <div class="speaker-label">PROSPECT</div>
+                            <div class="speech-content">
+                                "We're concerned about the implementation timeline. Our Q4 is critical and we can't afford disruption..."
+                            </div>
+                        </div>
+                        <div class="lupo-response">
+                            <div class="response-header">
+                                <span class="response-label">LUPO GUIDANCE</span>
+                                <span class="response-time">127ms</span>
+                            </div>
+                            <div class="response-content">
+                                <div class="response-text">
+                                    "I completely understand the Q4 concern. We've successfully deployed for 12 enterprise clients during their peak seasons using our <strong>Zero-Disruption Protocol</strong>. Here's how it works: We run parallel systems for 2 weeks, gradually shifting load with automatic rollback capabilities. <strong>Acme Corp saw zero downtime</strong> during their Black Friday deployment last year."
+                                </div>
+                                <div class="response-meta">
+                                    <span class="meta-tag">✓ Battlecard: Q4 Implementation</span>
+                                    <span class="meta-tag">✓ Case Study: Acme Corp</span>
+                                    <span class="meta-tag">✓ Compliance: Approved</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hud-footer">
+                        <div class="compliance-status">
+                            <span class="compliance-icon">🛡️</span>
+                            <span>All statements compliant</span>
+                        </div>
+                        <div class="deal-intelligence">
+                            <span>Deal Stage: Negotiation</span>
+                            <span>•</span>
+                            <span>Probability: 78%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compliance & Brand Protection -->
+    <section class="feature-section enterprise-dark">
+        <div class="feature-container">
+            <div class="feature-visual scroll-animate">
+                <div class="compliance-dashboard">
+                    <div class="dashboard-header">
+                        <h3>Real-time Compliance Engine</h3>
+                        <div class="status-indicator">
+                            <div class="status-dot active"></div>
+                            <span>Active Monitoring</span>
+                        </div>
+                    </div>
+                    <div class="compliance-rules">
+                        <div class="rule-item safe">
+                            <div class="rule-status">✓</div>
+                            <div class="rule-content">
+                                <div class="rule-title">Pricing Guidelines</div>
+                                <div class="rule-desc">Stayed within approved discount range</div>
+                            </div>
+                        </div>
+                        <div class="rule-item warning">
+                            <div class="rule-status">⚠️</div>
+                            <div class="rule-content">
+                                <div class="rule-title">Feature Promise</div>
+                                <div class="rule-desc">Rep approaching roadmap boundary</div>
+                            </div>
+                        </div>
+                        <div class="rule-item safe">
+                            <div class="rule-status">✓</div>
+                            <div class="rule-content">
+                                <div class="rule-title">Legal Terms</div>
+                                <div class="rule-desc">All statements within legal framework</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="intervention-alert">
+                        <div class="alert-icon">🚨</div>
+                        <div class="alert-content">
+                            <strong>Auto-Intervention Triggered</strong>
+                            <p>LUPO prevented unauthorized commitment outside SLA boundaries</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-content scroll-animate">
+                <div class="feature-label enterprise-label">COMPLIANCE & GOVERNANCE</div>
+                <h2 class="feature-title">Protect your brand.<br>On every single call.</h2>
+                <p class="feature-description">
+                    Define the rules. LUPO enforces them in real-time. No more rogue promises, 
+                    pricing violations, or regulatory risks. Every word aligned with your standards.
+                </p>
+                <div class="compliance-features">
+                    <div class="compliance-feature">
+                        <div class="cf-icon">🛡️</div>
+                        <h4>Custom Compliance Rules</h4>
+                        <p>Set boundaries for pricing, features, timelines, and legal terms</p>
+                    </div>
+                    <div class="compliance-feature">
+                        <div class="cf-icon">⚡</div>
+                        <h4>Instant Intervention</h4>
+                        <p>Stop violations before they happen with real-time alerts</p>
+                    </div>
+                    <div class="compliance-feature">
+                        <div class="cf-icon">📊</div>
+                        <h4>Full Audit Trail</h4>
+                        <p>Every conversation recorded, transcribed, and compliance-checked</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enterprise Context Engine -->
+    <section class="feature-section">
+        <div class="feature-container">
+            <div class="feature-content scroll-animate">
+                <div class="feature-label enterprise-label">CONTEXTUAL INTELLIGENCE</div>
+                <h2 class="feature-title">Deep context.<br>Delivered instantly.</h2>
+                <p class="feature-description">
+                    LUPO integrates your entire revenue stack — CRM, battlecards, pricing matrices, 
+                    and deal history. Your reps sound like they've prepared for hours, every time.
+                </p>
+                <div class="integration-grid">
+                    <div class="integration-item">
+                        <img src="data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' rx='8' fill='%2300A1E0'/%3E%3Cpath d='M20 12L12 20L20 28L28 20L20 12Z' fill='white'/%3E%3C/svg%3E" alt="Salesforce">
+                        <span>Salesforce</span>
+                    </div>
+                    <div class="integration-item">
+                        <img src="data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' rx='8' fill='%23FF6900'/%3E%3Cpath d='M20 10C14.48 10 10 14.48 10 20C10 25.52 14.48 30 20 30C25.52 30 30 25.52 30 20C30 14.48 25.52 10 20 10Z' fill='white'/%3E%3C/svg%3E" alt="HubSpot">
+                        <span>HubSpot</span>
+                    </div>
+                    <div class="integration-item">
+                        <img src="data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' rx='8' fill='%235E5CE6'/%3E%3Cpath d='M25 15L20 20L15 15' stroke='white' stroke-width='2'/%3E%3Cpath d='M25 25L20 20L15 25' stroke='white' stroke-width='2'/%3E%3C/svg%3E" alt="Gong">
+                        <span>Gong</span>
+                    </div>
+                    <div class="integration-item">
+                        <img src="data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' rx='8' fill='%234A154B'/%3E%3Cpath d='M15 15H25V25H15V15Z' fill='white'/%3E%3C/svg%3E" alt="Slack">
+                        <span>Slack</span>
+                    </div>
+                    <div class="integration-item">
+                        <img src="data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' rx='8' fill='%23F25022'/%3E%3Crect x='12' y='12' width='7' height='7' fill='white'/%3E%3Crect x='21' y='12' width='7' height='7' fill='white'/%3E%3Crect x='12' y='21' width='7' height='7' fill='white'/%3E%3Crect x='21' y='21' width='7' height='7' fill='white'/%3E%3C/svg%3E" alt="Teams">
+                        <span>Teams</span>
+                    </div>
+                    <div class="integration-item">
+                        <img src="data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' rx='8' fill='%23059669'/%3E%3Cpath d='M20 12V28M12 20H28' stroke='white' stroke-width='2'/%3E%3C/svg%3E" alt="Custom">
+                        <span>Your Stack</span>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-visual scroll-animate">
+                <div class="context-display">
+                    <div class="context-header">
+                        <span class="context-label">PROSPECT INTELLIGENCE</span>
+                        <span class="context-company">Acme Corporation</span>
+                    </div>
+                    <div class="context-grid">
+                        <div class="context-card">
+                            <div class="card-label">Company Profile</div>
+                            <div class="card-content">
+                                <div class="data-point">
+                                    <span class="dp-label">Industry:</span>
+                                    <span class="dp-value">Financial Services</span>
+                                </div>
+                                <div class="data-point">
+                                    <span class="dp-label">Revenue:</span>
+                                    <span class="dp-value">$2.3B</span>
+                                </div>
+                                <div class="data-point">
+                                    <span class="dp-label">Employees:</span>
+                                    <span class="dp-value">12,000+</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="context-card">
+                            <div class="card-label">Deal History</div>
+                            <div class="card-content">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <span>3 demos completed</span>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <span>Security review passed</span>
+                                </div>
+                                <div class="timeline-item active">
+                                    <div class="timeline-dot"></div>
+                                    <span>Pricing negotiation</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="context-card highlight">
+                            <div class="card-label">Key Insights</div>
+                            <div class="card-content">
+                                <div class="insight">
+                                    💡 Decision maker: CFO (met 2x)
+                                </div>
+                                <div class="insight">
+                                    🎯 Pain point: Manual processes
+                                </div>
+                                <div class="insight">
+                                    ⚡ Competitor: Currently using Legacy Co
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="battlecard-preview">
+                        <div class="battlecard-header">
+                            <span>📋 Active Battlecard</span>
+                            <span class="battlecard-match">98% Match</span>
+                        </div>
+                        <div class="battlecard-content">
+                            "When they mention Legacy Co, emphasize our 3x faster implementation and 24/7 support advantage..."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Section -->
+    <section class="enterprise-roi">
+        <div class="roi-container">
+            <div class="roi-header">
+                <h2>The LUPO Advantage</h2>
+                <p>Transform every rep into your best rep. Instantly.</p>
+            </div>
+            <div class="roi-grid">
+                <div class="roi-card">
+                    <div class="roi-icon">📈</div>
+                    <h3>Close More Deals</h3>
+                    <p>Never fumble an objection or miss an opportunity. Every response is perfect, every time.</p>
+                    <div class="roi-metric">
+                        <span class="metric-value">+47%</span>
+                        <span class="metric-label">win rate increase</span>
+                    </div>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-icon">⚡</div>
+                    <h3>Compress Ramp Time</h3>
+                    <p>New reps perform like veterans from day one. No more 6-month ramp periods.</p>
+                    <div class="roi-metric">
+                        <span class="metric-value">3.2x</span>
+                        <span class="metric-label">faster to quota</span>
+                    </div>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-icon">🛡️</div>
+                    <h3>Protect Your Brand</h3>
+                    <p>Every statement aligns with compliance and messaging. Zero risk, total control.</p>
+                    <div class="roi-metric">
+                        <span class="metric-value">100%</span>
+                        <span class="metric-label">compliance rate</span>
+                    </div>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-icon">🎯</div>
+                    <h3>Perfect Execution</h3>
+                    <p>LUPO ensures every call happens at the highest professional standard.</p>
+                    <div class="roi-metric">
+                        <span class="metric-value"><200ms</span>
+                        <span class="metric-label">response time</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enterprise CTA -->
+    <section class="enterprise-cta-section">
+        <div class="enterprise-cta-container">
+            <div class="cta-badge">ENTERPRISE READY</div>
+            <h2 class="cta-title">
+                Your revenue team's unfair advantage<br>
+                <span class="gradient-text">starts with a conversation</span>
+            </h2>
+            <p class="cta-description">
+                LUPO isn't a copilot. It's the instrument panel for revenue — making sure every sales call 
+                happens at the highest professional standard, with zero tolerance for missed opportunity or risk.
+            </p>
+            <div class="cta-buttons">
+                <a href="/enterprise-demo" class="enterprise-demo-btn">
+                    Schedule Enterprise Demo
+                    <span class="btn-arrow">→</span>
+                </a>
+                <a href="/enterprise-contact" class="enterprise-contact-btn">
+                    Contact Sales
+                </a>
+            </div>
+            <div class="enterprise-trust">
+                <span>Trusted by Fortune 500 sales teams</span>
+                <div class="trust-badges">
+                    <span class="trust-badge">SOC 2</span>
+                    <span class="trust-badge">GDPR</span>
+                    <span class="trust-badge">HIPAA</span>
+                    <span class="trust-badge">ISO 27001</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
     
     <!-- Footer -->
     <footer>
