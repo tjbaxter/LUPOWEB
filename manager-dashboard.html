@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard - LUPO Enterprise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --surface-hover: #1a1a1a;
+            --border: #222;
+            --text: #fff;
+            --text-dim: #888;
+            --text-muted: #666;
+            --accent: #3b82f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Header */
+        header {
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--surface);
+        }
+        
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        
+        .header-info {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .header-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .header-stat-label {
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+        }
+        
+        .header-stat-value {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        
+        /* Main Container */
+        .container {
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        /* Dashboard Title */
+        .dashboard-header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .time-filter {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.15s;
+        }
+        
+        .filter-btn:hover {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+        
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--text);
+        }
+        
+        /* Core Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .metric-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.15s;
+        }
+        
+        .metric-card:hover {
+            background: var(--surface-hover);
+            transform: translateY(-2px);
+        }
+        
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .metric-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+        }
+        
+        .metric-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--bg);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+        }
+        
+        .metric-chart {
+            margin-top: 1rem;
+            height: 40px;
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+        }
+        
+        .chart-bar {
+            flex: 1;
+            background: var(--accent);
+            opacity: 0.3;
+            border-radius: 2px 2px 0 0;
+            transition: opacity 0.15s;
+        }
+        
+        .chart-bar:hover {
+            opacity: 0.8;
+        }
+        
+        /* Main Dashboard Sections */
+        .dashboard-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .section-action {
+            font-size: 0.75rem;
+            color: var(--accent);
+            cursor: pointer;
+            transition: opacity 0.15s;
+        }
+        
+        .section-action:hover {
+            opacity: 0.8;
+        }
+        
+        /* Objections List */
+        .objections-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .objection-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: var(--bg);
+            border-radius: 6px;
+            transition: background 0.15s;
+        }
+        
+        .objection-item:hover {
+            background: var(--surface-hover);
+        }
+        
+        .objection-info {
+            flex: 1;
+        }
+        
+        .objection-type {
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .objection-response {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .objection-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .objection-count {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .objection-rate {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--success);
+            color: white;
+            border-radius: 4px;
+        }
+        
+        .objection-rate.low {
+            background: var(--danger);
+        }
+        
+        .objection-rate.medium {
+            background: var(--warning);
+        }
+        
+        /* Compliance Alerts */
+        .compliance-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .compliance-item {
+            padding: 0.75rem;
+            background: var(--bg);
+            border-radius: 6px;
+            border-left: 3px solid var(--danger);
+        }
+        
+        .compliance-item.warning {
+            border-left-color: var(--warning);
+        }
+        
+        .compliance-item.resolved {
+            border-left-color: var(--success);
+            opacity: 0.6;
+        }
+        
+        .compliance-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .compliance-type {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--danger);
+        }
+        
+        .compliance-type.warning {
+            color: var(--warning);
+        }
+        
+        .compliance-type.resolved {
+            color: var(--success);
+        }
+        
+        .compliance-time {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+        
+        .compliance-details {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .compliance-rep {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+        
+        /* Prompt Control Section */
+        .prompt-section {
+            grid-column: 1 / -1;
+        }
+        
+        .prompt-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+        
+        .prompt-tab {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.15s;
+        }
+        
+        .prompt-tab:hover {
+            background: var(--surface-hover);
+        }
+        
+        .prompt-tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+        
+        .prompt-editor {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+        }
+        
+        .prompt-textarea {
+            width: 100%;
+            min-height: 200px;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            resize: vertical;
+            outline: none;
+        }
+        
+        .prompt-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .char-count {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+        
+        .char-count.warning {
+            color: var(--warning);
+        }
+        
+        .char-count.error {
+            color: var(--danger);
+        }
+        
+        .prompt-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        
+        .btn:hover {
+            background: var(--surface-hover);
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+        
+        .btn-success {
+            background: var(--success);
+            border-color: var(--success);
+        }
+        
+        /* Team Performance Table */
+        .team-section {
+            grid-column: 1 / -1;
+        }
+        
+        .team-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .team-table th {
+            text-align: left;
+            padding: 0.75rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .team-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .team-table tbody tr {
+            transition: background 0.15s;
+        }
+        
+        .team-table tbody tr:hover {
+            background: var(--surface-hover);
+        }
+        
+        .rep-name {
+            font-weight: 500;
+        }
+        
+        .rep-status {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        
+        .rep-status.idle {
+            background: var(--text-dim);
+        }
+        
+        .progress-bar {
+            width: 100px;
+            height: 4px;
+            background: var(--bg);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        /* Loading State */
+        .loading {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .dashboard-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+        
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            display: none;
+            align-items: center;
+            gap: 1rem;
+            min-width: 300px;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            display: flex;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .toast-message {
+            flex: 1;
+        }
+        
+        .toast.success {
+            border-color: var(--success);
+        }
+        
+        .toast.error {
+            border-color: var(--danger);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">LUPO Manager Dashboard</div>
+        <div class="header-info">
+            <div class="header-stat">
+                <span class="header-stat-label">Organization</span>
+                <span class="header-stat-value" id="orgName">Loading...</span>
+            </div>
+            <div class="header-stat">
+                <span class="header-stat-label">Active Reps</span>
+                <span class="header-stat-value" id="activeReps">0</span>
+            </div>
+            <div class="header-stat">
+                <span class="header-stat-label">Compliance Status</span>
+                <span class="header-stat-value" id="complianceStatus" style="color: var(--success);">✓ Clear</span>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Team Performance Overview</h1>
+            <div class="time-filter">
+                <button class="filter-btn active" data-period="today">Today</button>
+                <button class="filter-btn" data-period="week">This Week</button>
+                <button class="filter-btn" data-period="month">This Month</button>
+                <button class="filter-btn" data-period="quarter">Quarter</button>
+            </div>
+        </div>
+        
+        <!-- Core Metrics -->
+        <div class="metrics-grid">
+            <!-- Team Usage -->
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">Team Usage</span>
+                    <div class="metric-icon">📊</div>
+                </div>
+                <div class="metric-value" id="totalCalls">0</div>
+                <div class="metric-subtitle">
+                    <span id="assistRate">0%</span> assist rate
+                </div>
+                <div class="metric-chart" id="usageChart">
+                    <!-- Dynamically filled -->
+                </div>
+            </div>
+            
+            <!-- Top Objections -->
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">Objections Handled</span>
+                    <div class="metric-icon">🎯</div>
+                </div>
+                <div class="metric-value" id="objectionCount">0</div>
+                <div class="metric-subtitle">
+                    <span id="handleRate">0%</span> success rate
+                </div>
+                <div class="metric-chart" id="objectionChart">
+                    <!-- Dynamically filled -->
+                </div>
+            </div>
+            
+            <!-- Compliance Flags -->
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">Compliance Alerts</span>
+                    <div class="metric-icon">⚠️</div>
+                </div>
+                <div class="metric-value" id="complianceCount">0</div>
+                <div class="metric-subtitle">
+                    <span id="complianceTrend">↓ 12%</span> vs last period
+                </div>
+                <div class="metric-chart" id="complianceChart">
+                    <!-- Dynamically filled -->
+                </div>
+            </div>
+            
+            <!-- AI Adoption -->
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">AI Adoption</span>
+                    <div class="metric-icon">🤖</div>
+                </div>
+                <div class="metric-value" id="adoptionRate">0%</div>
+                <div class="metric-subtitle">
+                    <span id="suggestionsUsed">0</span> suggestions used
+                </div>
+                <div class="metric-chart" id="adoptionChart">
+                    <!-- Dynamically filled -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Dashboard Sections -->
+        <div class="dashboard-main">
+            <!-- Top Objections Section -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2 class="section-title">Top Objections & Responses</h2>
+                    <span class="section-action" onclick="viewAllObjections()">View All →</span>
+                </div>
+                <div class="objections-list" id="objectionsList">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+            
+            <!-- Compliance Alerts Section -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Compliance Flags</h2>
+                    <span class="section-action" onclick="exportCompliance()">Export Report →</span>
+                </div>
+                <div class="compliance-list" id="complianceList">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Prompt Control Section -->
+        <div class="dashboard-section prompt-section">
+            <div class="section-header">
+                <h2 class="section-title">AI Playbook Control</h2>
+                <span class="section-action" onclick="viewHistory()">View History →</span>
+            </div>
+            
+            <div class="prompt-tabs">
+                <button class="prompt-tab active" data-tab="objections">Objection Handlers</button>
+                <button class="prompt-tab" data-tab="battlecard">Sales Battlecard</button>
+                <button class="prompt-tab" data-tab="compliance">Compliance Rules</button>
+                <button class="prompt-tab" data-tab="closers">Closing Scripts</button>
+            </div>
+            
+            <div class="prompt-editor">
+                <textarea class="prompt-textarea" id="promptTextarea" maxlength="2000" placeholder="Loading playbook..."></textarea>
+                <div class="prompt-footer">
+                    <span class="char-count" id="charCount">0 / 2000 characters</span>
+                    <div class="prompt-actions">
+                        <button class="btn" onclick="resetPrompt()">Reset to Default</button>
+                        <button class="btn" onclick="testPrompt()">Test Response</button>
+                        <button class="btn btn-primary" onclick="savePrompt()">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Team Performance Table -->
+        <div class="dashboard-section team-section">
+            <div class="section-header">
+                <h2 class="section-title">Team Performance Details</h2>
+                <span class="section-action" onclick="exportTeamData()">Export CSV →</span>
+            </div>
+            
+            <table class="team-table">
+                <thead>
+                    <tr>
+                        <th>Rep Name</th>
+                        <th>Status</th>
+                        <th>Calls Today</th>
+                        <th>Avg Assist Rate</th>
+                        <th>Objections Handled</th>
+                        <th>Compliance Score</th>
+                        <th>Quality Score</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="teamTableBody">
+                    <!-- Dynamically populated -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">✓</div>
+        <div class="toast-message" id="toastMessage">Changes saved successfully</div>
+    </div>
+    
+    <script>
+        // Global state
+        let currentPeriod = 'today';
+        let currentTab = 'objections';
+        let salesData = {};
+        let orgData = null;
+        let refreshInterval = null;
+        
+        // Initialize dashboard
+        async function init() {
+            const token = localStorage.getItem('lupo_session');
+            const apiKey = new URLSearchParams(window.location.search).get('key');
+            
+            if (!token && !apiKey) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            // Store API key if provided
+            if (apiKey) {
+                window.salesApiKey = apiKey;
+            }
+            
+            // Load initial data
+            await loadOrgData();
+            await loadDashboardData();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Auto-refresh every 30 seconds
+            refreshInterval = setInterval(() => {
+                loadDashboardData();
+            }, 30000);
+        }
+        
+        // Load organization data
+        async function loadOrgData() {
+            try {
+                const headers = getAuthHeaders();
+                const response = await fetch('https://lupo-backend.fly.dev/sales/org', {
+                    headers: headers
+                });
+                
+                if (response.ok) {
+                    orgData = await response.json();
+                    document.getElementById('orgName').textContent = orgData.companyName || 'Enterprise';
+                    loadPromptContent();
+                } else {
+                    // Fallback
+                    document.getElementById('orgName').textContent = 'Enterprise';
+                }
+            } catch (error) {
+                console.error('Failed to load org data:', error);
+                document.getElementById('orgName').textContent = 'Enterprise';
+            }
+        }
+        
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                const headers = getAuthHeaders();
+                
+                // Get analytics data
+                const analyticsResponse = await fetch(
+                    `https://lupo-backend.fly.dev/sales/analytics?period=${currentPeriod}`,
+                    { headers }
+                );
+                
+                if (!analyticsResponse.ok) {
+                    throw new Error('Failed to load analytics');
+                }
+                
+                const analytics = await analyticsResponse.json();
+                salesData = analytics;
+                
+                // Update metrics
+                updateMetrics(analytics);
+                
+                // Load detailed data
+                await Promise.all([
+                    loadObjections(),
+                    loadComplianceFlags(),
+                    loadTeamPerformance()
+                ]);
+                
+            } catch (error) {
+                console.error('Failed to load dashboard:', error);
+                showToast('Failed to load dashboard data', 'error');
+            }
+        }
+        
+        // Update metric cards
+        function updateMetrics(data) {
+            // Team Usage
+            document.getElementById('totalCalls').textContent = data.summary?.totalCalls || 0;
+            const assistRate = data.summary?.assistRate || 
+                (data.summary?.totalCalls > 0 ? 
+                    Math.round((data.summary?.assistedCalls / data.summary?.totalCalls) * 100) : 0);
+            document.getElementById('assistRate').textContent = `${assistRate}%`;
+            
+            // Active reps
+            document.getElementById('activeReps').textContent = 
+                data.teamPerformance?.length || 0;
+            
+            // Objections
+            const totalObjections = data.objections?.total || 0;
+            const handledObjections = data.objections?.handled || 0;
+            document.getElementById('objectionCount').textContent = totalObjections;
+            const handleRate = totalObjections > 0 ? 
+                Math.round((handledObjections / totalObjections) * 100) : 0;
+            document.getElementById('handleRate').textContent = `${handleRate}%`;
+            
+            // Compliance
+            const complianceFlags = data.compliance?.flagsThisPeriod || 0;
+            document.getElementById('complianceCount').textContent = complianceFlags;
+            
+            if (complianceFlags > 5) {
+                document.getElementById('complianceStatus').textContent = '⚠️ Review Needed';
+                document.getElementById('complianceStatus').style.color = 'var(--warning)';
+            } else if (complianceFlags > 0) {
+                document.getElementById('complianceStatus').textContent = '✓ Monitoring';
+                document.getElementById('complianceStatus').style.color = 'var(--success)';
+            }
+            
+            // AI Adoption
+            const adoptionRate = data.aiAdoption?.rate || 0;
+            document.getElementById('adoptionRate').textContent = `${adoptionRate}%`;
+            document.getElementById('suggestionsUsed').textContent = 
+                data.aiAdoption?.suggestionsUsed || 0;
+            
+            // Update mini charts
+            updateMiniCharts(data);
+        }
+        
+        // Update mini bar charts
+        function updateMiniCharts(data) {
+            // Usage chart (last 7 days)
+            const usageChart = document.getElementById('usageChart');
+            if (data.dailyUsage) {
+                usageChart.innerHTML = data.dailyUsage.slice(-7).map(val => 
+                    `<div class="chart-bar" style="height: ${Math.min(100, val/10)}%"></div>`
+                ).join('');
+            }
+            
+            // Similar for other charts...
+        }
+        
+        // Load objections list
+        async function loadObjections() {
+            try {
+                const objectionsList = document.getElementById('objectionsList');
+                
+                // Mock data - replace with actual API call
+                const objections = [
+                    { 
+                        type: 'Price Objection', 
+                        trigger: 'too expensive',
+                        count: 38, 
+                        handleRate: 82,
+                        response: 'I understand price is important. Most clients see ROI within 3 months...'
+                    },
+                    { 
+                        type: 'Timing Concern', 
+                        trigger: 'not the right time',
+                        count: 24, 
+                        handleRate: 91,
+                        response: 'I appreciate that timing matters. When would be better to revisit?'
+                    },
+                    { 
+                        type: 'Competition', 
+                        trigger: 'using competitor',
+                        count: 19, 
+                        handleRate: 67,
+                        response: 'Great that you have a solution. Many switched because of our unique...'
+                    },
+                    { 
+                        type: 'Authority', 
+                        trigger: 'need approval',
+                        count: 15, 
+                        handleRate: 88,
+                        response: 'Of course. Who else should be involved in evaluating this?'
+                    }
+                ];
+                
+                objectionsList.innerHTML = objections.map(obj => `
+                    <div class="objection-item">
+                        <div class="objection-info">
+                            <div class="objection-type">${obj.type}</div>
+                            <div class="objection-response">${obj.response}</div>
+                        </div>
+                        <div class="objection-stats">
+                            <span class="objection-count">${obj.count}</span>
+                            <span class="objection-rate ${obj.handleRate > 80 ? '' : obj.handleRate > 60 ? 'medium' : 'low'}">
+                                ${obj.handleRate}%
+                            </span>
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Failed to load objections:', error);
+            }
+        }
+        
+        // Load compliance flags
+        async function loadComplianceFlags() {
+            try {
+                const complianceList = document.getElementById('complianceList');
+                
+                // Mock data - replace with actual API call
+                const flags = [
+                    {
+                        type: 'UNAPPROVED CLAIM',
+                        severity: 'high',
+                        time: '10 mins ago',
+                        details: 'Rep mentioned "guaranteed results" during demo call',
+                        rep: 'John Smith',
+                        status: 'active'
+                    },
+                    {
+                        type: 'OFF-LABEL',
+                        severity: 'warning',
+                        time: '2 hours ago',
+                        details: 'Discussed use case outside approved guidelines',
+                        rep: 'Sarah Johnson',
+                        status: 'active'
+                    },
+                    {
+                        type: 'RESOLVED',
+                        severity: 'resolved',
+                        time: 'Yesterday',
+                        details: 'Price comparison issue - coaching provided',
+                        rep: 'Mike Davis',
+                        status: 'resolved'
+                    }
+                ];
+                
+                complianceList.innerHTML = flags.map(flag => `
+                    <div class="compliance-item ${flag.severity === 'warning' ? 'warning' : flag.status === 'resolved' ? 'resolved' : ''}">
+                        <div class="compliance-header">
+                            <span class="compliance-type ${flag.severity === 'warning' ? 'warning' : flag.status === 'resolved' ? 'resolved' : ''}">${flag.type}</span>
+                            <span class="compliance-time">${flag.time}</span>
+                        </div>
+                        <div class="compliance-details">${flag.details}</div>
+                        <div class="compliance-rep">Rep: ${flag.rep}</div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Failed to load compliance flags:', error);
+            }
+        }
+        
+        // Load team performance table
+        async function loadTeamPerformance() {
+            try {
+                const tableBody = document.getElementById('teamTableBody');
+                
+                // Mock data - replace with actual API call
+                const teamData = [
+                    {
+                        name: 'John Smith',
+                        status: 'active',
+                        callsToday: 12,
+                        assistRate: 85,
+                        objectionsHandled: 8,
+                        complianceScore: 98,
+                        qualityScore: 92
+                    },
+                    {
+                        name: 'Sarah Johnson',
+                        status: 'active',
+                        callsToday: 15,
+                        assistRate: 92,
+                        objectionsHandled: 11,
+                        complianceScore: 100,
+                        qualityScore: 95
+                    },
+                    {
+                        name: 'Mike Davis',
+                        status: 'idle',
+                        callsToday: 8,
+                        assistRate: 78,
+                        objectionsHandled: 5,
+                        complianceScore: 95,
+                        qualityScore: 88
+                    },
+                    {
+                        name: 'Lisa Chen',
+                        status: 'active',
+                        callsToday: 10,
+                        assistRate: 88,
+                        objectionsHandled: 9,
+                        complianceScore: 100,
+                        qualityScore: 91
+                    }
+                ];
+                
+                tableBody.innerHTML = teamData.map(rep => `
+                    <tr>
+                        <td>
+                            <span class="rep-status ${rep.status === 'idle' ? 'idle' : ''}"></span>
+                            <span class="rep-name">${rep.name}</span>
+                        </td>
+                        <td>${rep.status === 'active' ? 'On Call' : 'Available'}</td>
+                        <td>${rep.callsToday}</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${rep.assistRate}%"></div>
+                            </div>
+                            ${rep.assistRate}%
+                        </td>
+                        <td>${rep.objectionsHandled}</td>
+                        <td style="color: ${rep.complianceScore === 100 ? 'var(--success)' : rep.complianceScore < 95 ? 'var(--warning)' : 'var(--text)'}">
+                            ${rep.complianceScore}%
+                        </td>
+                        <td>${rep.qualityScore}/100</td>
+                        <td>
+                            <button class="btn" onclick="coachRep('${rep.name}')">Coach</button>
+                        </td>
+                    </tr>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Failed to load team performance:', error);
+            }
+        }
+        
+        // Load prompt content based on tab
+        function loadPromptContent() {
+            const textarea = document.getElementById('promptTextarea');
+            
+            const prompts = {
+                objections: `[OBJECTION HANDLERS]
+
+Price Objection:
+Trigger: "too expensive" | "cost too much" | "over budget"
+Response: "I understand price is a consideration. Let me show you the ROI - most clients see payback within 3 months when you factor in the time savings and increased efficiency. Would you like to see the numbers?"
+
+Timing Objection:
+Trigger: "not the right time" | "too busy" | "maybe later"
+Response: "I appreciate that timing is important. When would be a better time to revisit this? In the meantime, I can send you some case studies showing the cost of waiting."
+
+Competition:
+Trigger: "using competitor" | "happy with current"
+Response: "That's great that you have a solution in place. Many of our customers switched from [competitor] because of [specific advantage]. Would you be open to seeing how we compare?"
+
+Authority:
+Trigger: "need approval" | "check with boss" | "not decision maker"
+Response: "Of course, I understand you need to involve others. Who else would need to be part of this evaluation? I'd be happy to provide materials or join a call with them."`,
+                
+                battlecard: `[SALES BATTLECARD]
+
+Product: ${orgData?.salesContext?.productName || 'LUPO Sales AI'}
+Description: ${orgData?.salesContext?.productDescription || 'Real-time sales coaching AI'}
+Pricing: ${orgData?.salesContext?.pricing || 'Contact for pricing'}
+
+VALUE PROPOSITIONS:
+• Increase win rates by 26-50%
+• Reduce ramp time for new reps by 70%
+• Ensure 100% compliance on every call
+• Real-time objection handling
+
+KEY DIFFERENTIATORS:
+• Sub-100ms response time (10x faster than competitors)
+• Works with existing phone systems
+• No training required - works day one
+• Compliance-first design for regulated industries
+
+DISCOVERY QUESTIONS:
+1. "How long does it take to ramp new sales reps today?"
+2. "What % of deals do you lose to 'no decision'?"
+3. "How do you ensure compliance on calls currently?"
+4. "What's your average deal size and sales cycle?"`,
+                
+                compliance: `[COMPLIANCE RULES]
+
+FORBIDDEN PHRASES:
+• "Guaranteed results"
+• "FDA approved" (unless verified)
+• "Better than [competitor]" (without data)
+• "Everyone is using this"
+• "Limited time offer" (unless true)
+• "Risk-free"
+
+REQUIRED DISCLOSURES:
+• Mention data privacy policy
+• Clarify any performance claims
+• State actual contract terms
+• Disclose all fees upfront
+
+AUDIT TRIGGERS:
+• Off-label use discussions
+• Unapproved medical claims
+• Misleading comparisons
+• Pressure tactics
+• False urgency
+
+SAFE LANGUAGE:
+• "Many clients see..."
+• "Based on our data..."
+• "You may experience..."
+• "Results vary but typically..."`,
+                
+                closers: `[CLOSING SCRIPTS]
+
+Assumptive Close:
+"Based on what you've shared, we could have you up and running by Monday. Should we look at the implementation schedule?"
+
+Alternative Close:
+"Would you prefer to start with the full platform or begin with a pilot program?"
+
+Urgency Close (when appropriate):
+"We have implementation slots opening next week. If we can get the agreement signed by Friday, you'll be in that cohort."
+
+Social Proof Close:
+"[Similar company] started with a pilot last month and already expanded to their full team. Would you like to follow a similar path?"
+
+ROI Close:
+"If we can save your team just 2 hours per week, that's roughly $X per year. Should we run the numbers for your specific situation?"`
+            };
+            
+            textarea.value = prompts[currentTab] || '';
+            updateCharCount();
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Time filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentPeriod = e.target.dataset.period;
+                    loadDashboardData();
+                });
+            });
+            
+            // Prompt tabs
+            document.querySelectorAll('.prompt-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    document.querySelectorAll('.prompt-tab').forEach(t => t.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentTab = e.target.dataset.tab;
+                    loadPromptContent();
+                });
+            });
+            
+            // Textarea character counter
+            const textarea = document.getElementById('promptTextarea');
+            textarea.addEventListener('input', updateCharCount);
+        }
+        
+        // Update character count
+        function updateCharCount() {
+            const textarea = document.getElementById('promptTextarea');
+            const charCount = document.getElementById('charCount');
+            const length = textarea.value.length;
+            
+            charCount.textContent = `${length} / 2000 characters`;
+            
+            if (length > 1900) {
+                charCount.classList.add('error');
+                charCount.classList.remove('warning');
+            } else if (length > 1700) {
+                charCount.classList.add('warning');
+                charCount.classList.remove('error');
+            } else {
+                charCount.classList.remove('warning', 'error');
+            }
+        }
+        
+        // Save prompt changes
+        async function savePrompt() {
+            try {
+                const textarea = document.getElementById('promptTextarea');
+                const content = textarea.value;
+                
+                // Show loading state
+                showToast('Saving changes...', 'info');
+                
+                // Here you would call the API to save
+                const headers = getAuthHeaders();
+                headers['Content-Type'] = 'application/json';
+                
+                const response = await fetch('https://lupo-backend.fly.dev/sales/prompts', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({
+                        type: currentTab,
+                        content: content
+                    })
+                });
+                
+                if (response.ok) {
+                    showToast('Changes saved successfully', 'success');
+                } else {
+                    throw new Error('Failed to save');
+                }
+            } catch (error) {
+                console.error('Failed to save prompt:', error);
+                showToast('Failed to save changes', 'error');
+            }
+        }
+        
+        // Test prompt response
+        async function testPrompt() {
+            const testInput = prompt('Enter a test customer statement:');
+            if (!testInput) return;
+            
+            try {
+                showToast('Generating test response...', 'info');
+                
+                const headers = getAuthHeaders();
+                headers['Content-Type'] = 'application/json';
+                
+                const response = await fetch('https://lupo-backend.fly.dev/sales/coaching/suggest', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({
+                        customerSaid: testInput,
+                        context: document.getElementById('promptTextarea').value
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    alert(`AI Response:\n\n${data.suggestion}`);
+                } else {
+                    throw new Error('Failed to generate response');
+                }
+            } catch (error) {
+                console.error('Test failed:', error);
+                showToast('Failed to generate test response', 'error');
+            }
+        }
+        
+        // Reset prompt to default
+        function resetPrompt() {
+            if (confirm('Reset to default content? This will discard your changes.')) {
+                loadPromptContent();
+                showToast('Reset to default', 'success');
+            }
+        }
+        
+        // Coach specific rep
+        function coachRep(repName) {
+            alert(`Opening coaching session for ${repName}...`);
+            // Here you would navigate to rep-specific coaching view
+        }
+        
+        // View all objections
+        function viewAllObjections() {
+            // Navigate to detailed objections view
+            window.location.href = '/objections-detail.html';
+        }
+        
+        // Export compliance report
+        function exportCompliance() {
+            showToast('Generating compliance report...', 'info');
+            // Here you would trigger CSV/PDF export
+            setTimeout(() => {
+                showToast('Report downloaded', 'success');
+            }, 2000);
+        }
+        
+        // Export team data
+        function exportTeamData() {
+            showToast('Exporting team data...', 'info');
+            // Here you would trigger CSV export
+            setTimeout(() => {
+                showToast('Data exported', 'success');
+            }, 2000);
+        }
+        
+        // View prompt history
+        function viewHistory() {
+            alert('Opening prompt history...');
+            // Navigate to history view
+        }
+        
+   // Get auth headers - SUPPORTS BOTH METHODS
+function getAuthHeaders() {
+    const headers = {};
+    
+    // Method 1: API key from URL (for managers without LUPO accounts)
+    const urlParams = new URLSearchParams(window.location.search);
+    const apiKey = urlParams.get('key');
+    
+    // Method 2: LUPO session token (for enterprise users using LUPO app)
+    const token = localStorage.getItem('lupo_session');
+    
+    if (apiKey) {
+        headers['X-API-Key'] = apiKey;
+        // Store it globally for future use
+        window.salesApiKey = apiKey;
+    } else if (token) {
+        // This is for LUPO enterprise users accessing through the app
+        headers['Authorization'] = `Bearer ${token}`;
+    } else if (window.salesApiKey) {
+        // Use previously stored API key
+        headers['X-API-Key'] = window.salesApiKey;
+    }
+    
+    return headers;
+}
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast show ${type}`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Handle errors
+        window.addEventListener('unhandledrejection', event => {
+            console.error('Unhandled promise rejection:', event.reason);
+            showToast('An error occurred', 'error');
+        });
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+        });
+        
+        // Initialize dashboard on load
+        init();
+    </script>
+</body>
+</html>
