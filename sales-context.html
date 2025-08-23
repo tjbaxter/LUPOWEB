@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Context - LUPO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg: #000000;
+            --surface: #1a1a1a;
+            --border: #444444;
+            --text: #ffffff;
+            --text-dim: #aaaaaa;
+            --accent: #0066ff;
+            --success: #00c896;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            height: calc(100vh - 4rem);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .header {
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+        
+        .back-button:hover {
+            color: var(--text);
+        }
+        
+        .page-info h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        
+        .page-info p {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            margin-top: 0.25rem;
+        }
+        
+        .char-count {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+        
+        /* Main Editor Box */
+        .editor-box {
+            flex: 1;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .editor-textarea {
+            flex: 1;
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 2rem;
+            color: var(--text);
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            overflow-y: auto;
+        }
+        
+        .editor-textarea::placeholder {
+            color: #888888;
+        }
+        
+        /* Upload Button */
+        .upload-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .upload-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border-color: var(--accent);
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        /* Bottom Actions */
+        .actions {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .save-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-dim);
+        }
+        
+        .save-status.saved {
+            color: var(--success);
+        }
+        
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+        
+        .btn {
+            padding: 0.75rem 2rem;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            background: #0052cc;
+            transform: translateY(-1px);
+        }
+        
+        /* Drop Overlay */
+        .drop-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 102, 255, 0.1);
+            border: 2px dashed var(--accent);
+            border-radius: 12px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        .drop-overlay.active {
+            display: flex;
+        }
+        
+        .drop-content {
+            text-align: center;
+        }
+        
+        .drop-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .drop-text {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .drop-subtext {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+        
+        /* Processing Modal */
+        .processing {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            display: none;
+            z-index: 100;
+        }
+        
+        .processing.active {
+            display: block;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--surface);
+            border: 1px solid var(--success);
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <a href="/manager-dashboard.html" class="back-button">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Back to Dashboard
+                </a>
+                <div class="page-info">
+                    <h1>Sales Context</h1>
+                    <p>Everything LUPO needs to know about your product</p>
+                </div>
+            </div>
+            <div class="char-count" id="charCount">0 characters</div>
+        </div>
+        
+        <div class="editor-box">
+            <textarea class="editor-textarea" id="context" placeholder="PRODUCT:
+We sell [product name] - it's a [description]
+Price: $X per month
+Target market: [who buys this]
+
+KEY FEATURES:
+- Feature 1: [what it does]
+- Feature 2: [what it does]  
+- Feature 3: [what it does]
+
+COMPETITORS:
+- [Competitor 1]: We're better because [reason]
+- [Competitor 2]: We're better because [reason]
+
+COMMON OBJECTIONS:
+Price: [how to handle]
+Timing: [how to handle]
+Authority: [how to handle]
+Features: [what to say]
+Integration: [how to address]
+
+SUCCESS STORIES:
+- [Company A] achieved [result]
+- [Company B] saved [amount]
+- [Company C] increased [metric]
+
+TALK TRACKS:
+Opening: [what to say]
+Discovery: [questions to ask]
+Demo: [what to show]
+Close: [how to close]
+
+DISCOUNTS:
+Up to 10%: Rep can offer
+10-20%: Need manager approval
+20%+: VP approval only
+
+PRICING TIERS:
+Starter: $X/month (features)
+Professional: $Y/month (features)
+Enterprise: Custom (features)
+
+DON'T:
+- Never guarantee specific results
+- Never mention [competitor X] unless they do
+- Never offer more than 30% discount
+- Never promise features not on roadmap
+
+QUALIFYING QUESTIONS:
+- What's your current process?
+- What's your budget?
+- Who's the decision maker?
+- What's your timeline?
+
+NOTES:
+[Any other context that helps]"></textarea>
+            
+            <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 10V12.5C2 13.3284 2.67157 14 3.5 14H12.5C13.3284 14 14 13.3284 14 12.5V10M11 5L8 2M8 2L5 5M8 2V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Upload Doc
+            </button>
+            <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt" onchange="handleFile(event)">
+            
+            <div class="drop-overlay" id="dropOverlay">
+                <div class="drop-content">
+                    <div class="drop-icon">📄</div>
+                    <div class="drop-text">Drop your document here</div>
+                    <div class="drop-subtext">PDF, Word, or text files • We'll extract the relevant info</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <div class="save-status" id="saveStatus">
+                <span class="status-dot"></span>
+                <span>Ready to save</span>
+            </div>
+            <button class="btn" onclick="saveContext()">Save Changes</button>
+        </div>
+    </div>
+    
+    <div class="processing" id="processing">
+        <div class="spinner"></div>
+        <div>Extracting information from document...</div>
+    </div>
+    
+    <div class="toast" id="toast">Context saved successfully</div>
+    
+    <script>
+        let authHeaders = {};
+        let autoSaveTimer;
+        
+        // Init
+        async function init() {
+            const token = localStorage.getItem('lupo_token');
+            const apiKey = localStorage.getItem('lupo_apikey');
+            
+            if (!apiKey && !token) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            if (token) authHeaders['Authorization'] = `Bearer ${token}`;
+            if (apiKey) authHeaders['X-API-Key'] = apiKey;
+            
+            await loadContext();
+            setupDragDrop();
+            
+            // Track character count
+            const textarea = document.getElementById('context');
+            const updateCharCount = () => {
+                const count = textarea.value.length;
+                document.getElementById('charCount').textContent = `${count.toLocaleString()} characters`;
+            };
+            
+            // Auto-save on changes
+            textarea.addEventListener('input', () => {
+                updateCharCount();
+                document.getElementById('saveStatus').innerHTML = '<span class="status-dot"></span><span>Unsaved changes</span>';
+                document.getElementById('saveStatus').classList.remove('saved');
+                
+                clearTimeout(autoSaveTimer);
+                autoSaveTimer = setTimeout(saveContext, 2000);
+            });
+            
+            updateCharCount();
+        }
+        
+        // Setup drag & drop
+        function setupDragDrop() {
+            const box = document.querySelector('.editor-box');
+            const overlay = document.getElementById('dropOverlay');
+            
+            box.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                overlay.classList.add('active');
+            });
+            
+            box.addEventListener('dragleave', (e) => {
+                if (e.target === box) {
+                    overlay.classList.remove('active');
+                }
+            });
+            
+            box.addEventListener('drop', (e) => {
+                e.preventDefault();
+                overlay.classList.remove('active');
+                
+                const file = e.dataTransfer.files[0];
+                if (file) {
+                    processFile(file);
+                }
+            });
+        }
+        
+        // Handle file upload
+        function handleFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                processFile(file);
+            }
+        }
+        
+        // Process uploaded file
+        async function processFile(file) {
+            const processing = document.getElementById('processing');
+            processing.classList.add('active');
+            
+            // Simulate processing
+            setTimeout(() => {
+                processing.classList.remove('active');
+                
+                const textarea = document.getElementById('context');
+                const extractedText = `\n\n--- Extracted from ${file.name} ---\n\n[AI will extract key product info, features, pricing, etc. from your document and add it here]\n\n`;
+                
+                textarea.value += extractedText;
+                textarea.scrollTop = textarea.scrollHeight;
+                
+                document.getElementById('saveStatus').innerHTML = '<span class="status-dot"></span><span>Document processed - unsaved changes</span>';
+                document.getElementById('saveStatus').classList.remove('saved');
+                
+                showToast('Document processed! Review and edit the extracted information.');
+            }, 2000);
+        }
+        
+        async function loadContext() {
+            try {
+                const response = await fetch('https://lupo-backend.fly.dev/sales/context', {
+                    headers: authHeaders
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.content) {
+                        document.getElementById('context').value = data.content;
+                        document.getElementById('charCount').textContent = `${data.content.length.toLocaleString()} characters`;
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load:', error);
+            }
+        }
+        
+        async function saveContext() {
+            const content = document.getElementById('context').value;
+            
+            try {
+                const response = await fetch('https://lupo-backend.fly.dev/sales/context', {
+                    method: 'POST',
+                    headers: {
+                        ...authHeaders,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ content })
+                });
+                
+                if (response.ok) {
+                    document.getElementById('saveStatus').innerHTML = '<span class="status-dot"></span><span>All changes saved</span>';
+                    document.getElementById('saveStatus').classList.add('saved');
+                    
+                    showToast('Context saved successfully');
+                }
+            } catch (error) {
+                console.error('Failed to save:', error);
+            }
+        }
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+        
+        init();
+    </script>
+</body>
+</html>
