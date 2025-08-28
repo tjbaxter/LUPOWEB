@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Calls - LUPO Sales Dashboard</title>
+    <title>Calls - LUPO</title>
     <style>
         * {
             margin: 0;
@@ -11,450 +11,392 @@
             box-sizing: border-box;
         }
         
-        :root {
-            --bg: #0a0a0a;
-            --surface: #111111;
-            --border: #222;
-            --text: #fff;
-            --text-dim: #888;
-            --accent: #3b82f6;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-        }
-        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
         }
         
-        /* Minimal Header */
-        header {
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
+        /* Header */
+        .header {
+            height: 52px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
         
         .logo {
-            font-size: 1.25rem;
             font-weight: 600;
+            font-size: 28px;
             letter-spacing: -0.5px;
         }
         
         .user-info {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            color: var(--text-dim);
-            font-size: 0.875rem;
+            gap: 16px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
         }
         
         /* Main Layout */
-        .container {
-            display: grid;
-            grid-template-columns: 400px 1fr;
-            height: calc(100vh - 65px);
+        .main-container {
+            display: flex;
+            height: calc(100vh - 52px);
         }
         
-        /* Calls List Panel */
-        .calls-panel {
-            border-right: 1px solid var(--border);
-            overflow-y: auto;
-            background: var(--surface);
+        /* Sidebar */
+        .sidebar {
+            width: 380px;
+            background: #050505;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
         }
         
-        .panel-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            background: var(--surface);
-            z-index: 10;
-        }
-        
-        .panel-title {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-dim);
-            margin-bottom: 1rem;
+        .search-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
         
         .search-box {
             width: 100%;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            color: var(--text);
-            font-size: 0.875rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.2s;
         }
         
-        .filter-buttons {
+        .search-box:focus {
+            outline: none;
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+        }
+        
+        .search-box::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+        
+        .filters {
+            padding: 0 20px 16px;
             display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
+            gap: 8px;
         }
         
         .filter-btn {
-            padding: 0.25rem 0.75rem;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            color: var(--text-dim);
-            font-size: 0.75rem;
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
             cursor: pointer;
-            transition: all 0.15s;
+            transition: all 0.2s;
         }
         
         .filter-btn:hover {
-            background: var(--border);
-            color: var(--text);
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.9);
         }
         
         .filter-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: var(--text);
+            background: rgba(59,130,246,0.2);
+            border-color: #3b82f6;
+            color: #3b82f6;
         }
         
+        /* Calls List */
         .calls-list {
-            padding: 0.5rem;
+            flex: 1;
+            overflow-y: auto;
         }
         
         .call-item {
-            padding: 1rem;
-            border-radius: 6px;
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
             cursor: pointer;
             transition: background 0.15s;
-            margin-bottom: 0.5rem;
-            border: 1px solid transparent;
+            position: relative;
         }
         
         .call-item:hover {
-            background: var(--bg);
-            border-color: var(--border);
+            background: rgba(255,255,255,0.02);
         }
         
         .call-item.active {
-            background: var(--bg);
-            border-color: var(--accent);
+            background: rgba(59,130,246,0.1);
         }
         
-        .call-header-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 0.5rem;
+        .call-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #3b82f6;
         }
         
         .call-customer {
+            font-size: 14px;
             font-weight: 500;
-            margin-bottom: 0.25rem;
+            margin-bottom: 4px;
         }
         
-        .call-company {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-        
-        .call-time {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-        
-        .call-meta {
+        .call-details {
             display: flex;
-            gap: 1rem;
-            margin-top: 0.5rem;
+            gap: 12px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
         }
         
-        .call-meta-item {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-        
-        .call-outcome {
-            display: inline-block;
-            padding: 0.125rem 0.5rem;
-            background: var(--bg);
-            border-radius: 3px;
-            font-size: 0.625rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .call-outcome.won { background: rgba(16, 185, 129, 0.2); color: #10b981; }
-        .call-outcome.demo { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
-        .call-outcome.follow-up { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
-        .call-outcome.lost { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
-        
-        /* Call Analysis Panel */
-        .analysis-panel {
+        /* Content Area */
+        .content-area {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            position: relative;
         }
         
-        .analysis-empty {
+        /* Transcript View */
+        .transcript-view {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px 40px;
+            padding-bottom: 140px;
+            background: #000;
+        }
+        
+        .empty-state {
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100%;
-            color: var(--text-dim);
-            text-align: center;
-            padding: 2rem;
-        }
-        
-        .call-details {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1.5rem;
-        }
-        
-        .call-info-header {
-            margin-bottom: 2rem;
-        }
-        
-        .call-info-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        
-        .call-info-subtitle {
-            color: var(--text-dim);
-        }
-        
-        /* Call Metrics */
-        .metrics-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .metric-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1rem;
-        }
-        
-        .metric-value {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-        
-        .metric-label {
-            font-size: 0.625rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-dim);
-        }
-        
-        /* Transcript Section */
-        .transcript-section {
-            margin-bottom: 2rem;
-        }
-        
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .section-title {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-dim);
-        }
-        
-        .transcript-container {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem;
-            max-height: 400px;
-            overflow-y: auto;
+            color: rgba(255,255,255,0.3);
+            font-size: 14px;
         }
         
         .transcript-line {
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+            max-width: 720px;
+            animation: fadeIn 0.3s ease;
         }
-        
-        .transcript-line:last-child {
-            border-bottom: none;
-        }
-        
-        .speaker {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 0.25rem;
-        }
-        
-        .speaker.rep { color: var(--accent); }
-        .speaker.customer { color: var(--success); }
         
         .transcript-text {
-            font-size: 0.875rem;
-            line-height: 1.5;
+            font-size: 15px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.85);
         }
         
-        .timestamp {
-            font-size: 0.625rem;
-            color: var(--text-dim);
-            margin-left: 0.5rem;
+        .transcript-time {
+            font-size: 10px;
+            color: rgba(255,255,255,0.3);
+            margin-top: 6px;
         }
         
-        /* AI Assistant Section */
-        .ai-section {
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 1.5rem;
+        /* AI Panel */
+        .ai-panel {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to bottom, rgba(10,10,10,0) 0%, rgba(10,10,10,0.95) 20%, rgba(10,10,10,0.98) 100%);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding: 24px 40px;
+            transform: translateY(0);
+            transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
         }
         
-        .ai-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .ai-title {
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-        
-        .ai-status {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: var(--success);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        .ai-prompt-area {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .ai-input {
-            flex: 1;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0.75rem;
-            color: var(--text);
-            font-size: 0.875rem;
-            resize: none;
-            min-height: 80px;
+        .ai-panel.expanded {
+            transform: translateY(-200px);
         }
         
         .ai-suggestions {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            gap: 8px;
+            margin-bottom: 12px;
         }
         
         .suggestion-chip {
-            padding: 0.25rem 0.75rem;
-            background: var(--bg);
-            border: 1px solid var(--border);
+            padding: 7px 16px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
             cursor: pointer;
-            transition: all 0.15s;
+            transition: all 0.2s;
+            white-space: nowrap;
         }
         
         .suggestion-chip:hover {
-            background: var(--accent);
-            border-color: var(--accent);
+            background: rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.95);
+            border-color: rgba(255,255,255,0.2);
         }
         
-        .ai-response {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1rem;
-            min-height: 100px;
-            max-height: 300px;
-            overflow-y: auto;
+        .ai-input-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
         }
         
-        .ai-response-empty {
-            color: var(--text-dim);
-            font-style: italic;
-            text-align: center;
-            padding: 2rem;
+        .ai-input {
+            flex: 1;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 14px;
+            resize: none;
+            height: 44px;
+            font-family: inherit;
+            transition: all 0.2s;
         }
         
-        .ai-response-content {
-            font-size: 0.875rem;
-            line-height: 1.6;
-            white-space: pre-wrap;
+        .ai-input:focus {
+            outline: none;
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.25);
         }
         
-        /* Buttons */
-        .btn {
-            padding: 0.5rem 1rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text);
-            font-size: 0.875rem;
+        .ai-input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+        
+        .ai-send {
+            width: 44px;
+            height: 44px;
+            background: #3b82f6;
+            border: none;
+            border-radius: 10px;
+            color: white;
             cursor: pointer;
-            transition: all 0.15s;
-        }
-        
-        .btn:hover {
-            background: var(--border);
-        }
-        
-        .btn-primary {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-        
-        .btn-primary:hover {
-            opacity: 0.9;
-        }
-        
-        .btn-icon {
-            padding: 0.5rem;
-            width: 36px;
-            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: opacity 0.2s;
+        }
+        
+        .ai-send:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+        
+        .ai-send:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        /* AI Response Overlay */
+        .ai-response-overlay {
+            position: absolute;
+            bottom: 80px;
+            left: 40px;
+            right: 40px;
+            max-width: 720px;
+            background: rgba(20,20,20,0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 24px;
+            display: none;
+            animation: slideUp 0.3s cubic-bezier(0.4,0,0.2,1);
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        .ai-response-overlay.show {
+            display: block;
+        }
+        
+        .ai-response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .ai-response-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.4);
+        }
+        
+        .ai-close {
+            width: 24px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .ai-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .ai-response-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .ai-response-content p {
+            margin-bottom: 12px;
+        }
+        
+        .ai-response-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .ai-response-content strong {
+            color: white;
+            font-weight: 500;
         }
         
         /* Loading */
         .loading {
             display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid var(--border);
-            border-top-color: var(--accent);
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-top-color: #3b82f6;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
@@ -463,488 +405,348 @@
             to { transform: rotate(360deg); }
         }
         
-        /* Stats Summary */
-        .stats-summary {
-            display: flex;
-            gap: 2rem;
-            padding: 1rem;
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .stat-item {
-            text-align: center;
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .stat-value {
-            font-size: 1.25rem;
-            font-weight: 600;
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
         
-        .stat-label {
-            font-size: 0.625rem;
-            text-transform: uppercase;
-            color: var(--text-dim);
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.15);
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">LUPO Call Analysis</div>
+    <div class="header">
+        <div class="logo">LUPO</div>
         <div class="user-info">
             <span id="userName">Loading...</span>
-            <span>•</span>
-            <span id="callsToday">0 calls today</span>
+            <div class="user-avatar" id="userAvatar">?</div>
         </div>
-    </header>
+    </div>
     
-    <div class="container">
-        <!-- Calls List -->
-        <aside class="calls-panel">
-            <div class="panel-header">
-                <div class="panel-title">My Call History</div>
-                <input type="text" class="search-box" placeholder="Search by customer or company..." id="callSearch">
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all">All Calls</button>
-                    <button class="filter-btn" data-filter="today">Today</button>
-                    <button class="filter-btn" data-filter="week">This Week</button>
-                    <button class="filter-btn" data-filter="won">Won</button>
-                    <button class="filter-btn" data-filter="lost">Lost</button>
-                </div>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="search-header">
+                <input type="text" class="search-box" placeholder="Search calls..." id="searchInput">
             </div>
-            
-            <div class="stats-summary">
-                <div class="stat-item">
-                    <div class="stat-value" id="totalCalls">0</div>
-                    <div class="stat-label">Total Calls</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="winRate">0%</div>
-                    <div class="stat-label">Win Rate</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="avgQuality">0</div>
-                    <div class="stat-label">Avg Quality</div>
-                </div>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="today">Today</button>
+                <button class="filter-btn" data-filter="week">Week</button>
+                <button class="filter-btn" data-filter="month">Month</button>
             </div>
-            
             <div class="calls-list" id="callsList">
-                <!-- Populated dynamically -->
+                <!-- Calls loaded here -->
             </div>
-        </aside>
+        </div>
         
-        <!-- Call Analysis -->
-        <main class="analysis-panel" id="analysisPanel">
-            <div class="analysis-empty">
-                Select a call to view transcript and analysis
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="transcript-view" id="transcriptView">
+                <div class="empty-state">Select a call to view transcript</div>
             </div>
-        </main>
+            
+            <!-- AI Panel -->
+            <div class="ai-panel" id="aiPanel">
+                <div class="ai-suggestions">
+                    <button class="suggestion-chip" onclick="quickAsk('Summarize the key points from this call')">Summarize</button>
+                    <button class="suggestion-chip" onclick="quickAsk('What objections were raised?')">Objections</button>
+                    <button class="suggestion-chip" onclick="quickAsk('What are the next steps?')">Next steps</button>
+                    <button class="suggestion-chip" onclick="quickAsk('Draft a follow-up email')">Email draft</button>
+                    <button class="suggestion-chip" onclick="quickAsk('What questions did they ask?')">Questions</button>
+                </div>
+                <div class="ai-input-container">
+                    <input type="text" class="ai-input" id="aiInput" placeholder="Ask anything about this call...">
+                    <button class="ai-send" id="aiSend" onclick="submitAI()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- AI Response Overlay -->
+            <div class="ai-response-overlay" id="aiResponse">
+                <div class="ai-response-header">
+                    <div class="ai-response-title">AI Analysis</div>
+                    <button class="ai-close" onclick="closeAI()">×</button>
+                </div>
+                <div class="ai-response-content" id="aiContent"></div>
+            </div>
+        </div>
     </div>
     
     <script>
         let currentCall = null;
         let calls = [];
-        let aiProcessing = false;
+        let currentFilter = 'all';
         
         // Initialize
         async function init() {
-            // Get token from URL params
-            const urlParams = new URLSearchParams(window.location.search);
-            const tokenFromUrl = urlParams.get('token');
-            const apiKey = urlParams.get('key');
-            
-            // Also check localStorage as fallback
-            const token = tokenFromUrl || localStorage.getItem('lupo_session');
-            
-            if (!token && !apiKey) {
-                console.error('No authentication found');
-                window.location.href = '/login.html';
-                return;
-            }
-            
-            // Store token if provided in URL
-            if (tokenFromUrl) {
-                window.lupoSessionToken = tokenFromUrl;
-            }
-            
-            if (apiKey) {
-                window.salesApiKey = apiKey;
-            }
-            
             await loadUserInfo();
-            await loadMyCalls();
+            await loadCalls();
             setupEventListeners();
         }
         
-        // Get auth headers helper function
+        // Auth headers
         function getAuthHeaders() {
-            const headers = {};
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token') || localStorage.getItem('lupo_session');
+            const apiKey = urlParams.get('key');
             
-            // Priority 1: Token from URL or stored
-            const token = window.lupoSessionToken || localStorage.getItem('lupo_session');
+            const headers = {};
             if (token) {
                 headers['Authorization'] = `Bearer ${token}`;
-                return headers;
-            }
-            
-            // Priority 2: API key
-            const apiKey = window.salesApiKey || new URLSearchParams(window.location.search).get('key');
-            if (apiKey) {
+            } else if (apiKey) {
                 headers['X-API-Key'] = apiKey;
-                return headers;
             }
-            
             return headers;
         }
         
-        // Load user info - FIXED URL
+        // Load user info
         async function loadUserInfo() {
             try {
                 const headers = getAuthHeaders();
-                
-
                 const response = await fetch('https://lupo-backend.fly.dev/sales/me', {
                     headers: headers
                 });
                 
                 if (response.ok) {
                     const data = await response.json();
-                    document.getElementById('userName').textContent = 
-                        data.user?.name || data.user?.email || 'Sales Rep';
+                    const userName = document.getElementById('userName');
+                    const userAvatar = document.getElementById('userAvatar');
+                    
+                    userName.textContent = data.user?.name || data.user?.email || 'User';
+                    userAvatar.textContent = (data.user?.name || data.user?.email || 'U').charAt(0).toUpperCase();
                 }
             } catch (err) {
                 console.error('Failed to load user info:', err);
-                document.getElementById('userName').textContent = 'Sales Rep';
             }
         }
         
-        // Load calls - FIXED URL
-        async function loadMyCalls(filter = 'all') {
+        // Load calls
+        async function loadCalls(filter = 'all') {
             try {
                 const headers = getAuthHeaders();
+                let url = 'https://lupo-backend.fly.dev/sales/calls?limit=100';
                 
-                // Calculate date filters
-                let queryParams = '?limit=100';
+                // Add date filters
                 const now = new Date();
-                
                 if (filter === 'today') {
                     const startOfDay = new Date(now.setHours(0,0,0,0));
-                    queryParams += `&startDate=${startOfDay.toISOString()}`;
+                    url += `&startDate=${startOfDay.toISOString()}`;
                 } else if (filter === 'week') {
                     const weekAgo = new Date(now.setDate(now.getDate() - 7));
-                    queryParams += `&startDate=${weekAgo.toISOString()}`;
-                } else if (filter === 'won') {
-                    queryParams += '&outcome=closed_won';
-                } else if (filter === 'lost') {
-                    queryParams += '&outcome=closed_lost';
+                    url += `&startDate=${weekAgo.toISOString()}`;
+                } else if (filter === 'month') {
+                    const monthAgo = new Date(now.setMonth(now.getMonth() - 1));
+                    url += `&startDate=${monthAgo.toISOString()}`;
                 }
                 
-          
-                const response = await fetch(`https://lupo-backend.fly.dev/sales/calls${queryParams}`, {
-                    headers: headers
-                });
+                const response = await fetch(url, { headers });
                 
                 if (!response.ok) throw new Error('Failed to load calls');
                 
                 const data = await response.json();
                 calls = data.calls || [];
-                
-                updateStats();
                 renderCalls(calls);
-                
-                // Update calls today count
-                const todaysCalls = calls.filter(c => {
-                    const callDate = new Date(c.date);
-                    const today = new Date();
-                    return callDate.toDateString() === today.toDateString();
-                }).length;
-                
-                document.getElementById('callsToday').textContent = `${todaysCalls} calls today`;
                 
             } catch (err) {
                 console.error('Failed to load calls:', err);
-                renderCalls([]);
+                document.getElementById('callsList').innerHTML = 
+                    '<div style="padding: 20px; color: rgba(255,255,255,0.3); font-size: 13px; text-align: center;">No calls found</div>';
             }
         }
         
-        // Update statistics
-        function updateStats() {
-            document.getElementById('totalCalls').textContent = calls.length;
-            
-            const wonCalls = calls.filter(c => c.outcome === 'closed_won').length;
-            const completedCalls = calls.filter(c => c.outcome && c.outcome !== 'ongoing').length;
-            const winRate = completedCalls > 0 ? Math.round((wonCalls / completedCalls) * 100) : 0;
-            document.getElementById('winRate').textContent = `${winRate}%`;
-            
-            const avgQuality = calls.reduce((sum, c) => sum + (c.qualityScore || 0), 0) / (calls.length || 1);
-            document.getElementById('avgQuality').textContent = Math.round(avgQuality);
-        }
-        
-        // Render calls list
+        // Render calls
         function renderCalls(callsList) {
             const container = document.getElementById('callsList');
             
             if (callsList.length === 0) {
-                container.innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-dim);">No calls found</div>';
+                container.innerHTML = '<div style="padding: 20px; color: rgba(255,255,255,0.3); font-size: 13px; text-align: center;">No calls yet</div>';
                 return;
             }
             
-            container.innerHTML = callsList.map(call => {
-                const outcomeClass = call.outcome === 'closed_won' ? 'won' : 
-                                   call.outcome === 'closed_lost' ? 'lost' :
-                                   call.outcome === 'scheduled_demo' ? 'demo' : 'follow-up';
-                
-                return `
-                    <div class="call-item" onclick="selectCall('${call.id}')">
-                        <div class="call-header-info">
-                            <div>
-                                <div class="call-customer">${call.customer || 'Unknown'}</div>
-                                <div class="call-company">${call.company || 'No company'}</div>
-                            </div>
-                            <div class="call-time">${formatDate(call.date)}</div>
-                        </div>
-                        <div class="call-meta">
-                            <span class="call-meta-item">${call.duration || '0:00'}</span>
-                            <span class="call-outcome ${outcomeClass}">${formatOutcome(call.outcome)}</span>
-                            ${call.qualityScore ? `<span class="call-meta-item">Quality: ${call.qualityScore}/100</span>` : ''}
-                        </div>
+            container.innerHTML = callsList.map(call => `
+                <div class="call-item" onclick="selectCall('${call.id}')" data-id="${call.id}">
+                    <div class="call-customer">${call.customer || 'Unknown'}</div>
+                    <div class="call-details">
+                        <span>${formatDate(call.date)}</span>
+                        <span>•</span>
+                        <span>${call.duration || '0:00'}</span>
+                        ${call.company ? `<span>•</span><span>${call.company}</span>` : ''}
                     </div>
-                `;
-            }).join('');
-        }
-        
-        // Select and load call details
-        async function selectCall(callId) {
-            currentCall = calls.find(c => c.id === callId);
-            if (!currentCall) return;
-            
-            // Update UI
-            document.querySelectorAll('.call-item').forEach(el => el.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-            
-            // Load full call details with transcript
-            await loadCallDetails(callId);
-        }
-        
-        // Load call details with transcript - FIXED URL
-        async function loadCallDetails(callId) {
-            try {
-                const headers = getAuthHeaders();
-    
-                const response = await fetch(`https://lupo-backend.fly.dev/sales/calls/${callId}`, {
-                    headers: headers
-                });
-                
-                if (!response.ok) throw new Error('Failed to load call details');
-                
-                const data = await response.json();
-                renderCallAnalysis(data);
-                
-            } catch (err) {
-                console.error('Failed to load call details:', err);
-                document.getElementById('analysisPanel').innerHTML = `
-                    <div class="analysis-empty">Failed to load call details</div>
-                `;
-            }
-        }
-        
-        // Render call analysis view
-        function renderCallAnalysis(data) {
-            const panel = document.getElementById('analysisPanel');
-            
-            panel.innerHTML = `
-                <div class="call-details">
-                    <div class="call-info-header">
-                        <div class="call-info-title">${data.call.customerName || 'Unknown Customer'}</div>
-                        <div class="call-info-subtitle">
-                            ${data.call.customerCompany || ''} • ${formatDate(data.call.startTime)} • ${data.call.duration || 'Unknown duration'}
-                        </div>
-                    </div>
-                    
-                    <div class="metrics-row">
-                        <div class="metric-card">
-                            <div class="metric-value">${data.analysis?.qualityScore || 0}</div>
-                            <div class="metric-label">Quality Score</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-value">${data.analysis?.talkRatio ? Math.round(data.analysis.talkRatio * 100) + '%' : 'N/A'}</div>
-                            <div class="metric-label">Talk Ratio</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-value">${data.analysis?.objectionsHandled || 0}/${data.analysis?.objectionsRaised || 0}</div>
-                            <div class="metric-label">Objections Handled</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-value">${data.analysis?.winProbability || 0}%</div>
-                            <div class="metric-label">Win Probability</div>
-                        </div>
-                    </div>
-                    
-                    <div class="transcript-section">
-                        <div class="section-header">
-                            <div class="section-title">Call Transcript</div>
-                            <button class="btn btn-icon" onclick="toggleTranscript()" title="Toggle view">📄</button>
-                        </div>
-                        <div class="transcript-container" id="transcriptContainer">
-                            ${renderTranscript(data.transcript)}
-                        </div>
-                    </div>
-                    
-                    ${data.keyMoments && data.keyMoments.length > 0 ? `
-                        <div class="transcript-section">
-                            <div class="section-header">
-                                <div class="section-title">Key Moments</div>
-                            </div>
-                            <div class="transcript-container">
-                                ${data.keyMoments.map(m => `
-                                    <div class="transcript-line">
-                                        <div class="speaker ${m.handled ? 'rep' : 'customer'}">${m.type.replace(/_/g, ' ')}</div>
-                                        <div class="transcript-text">${m.text || m.context}</div>
-                                        ${m.response ? `<div style="margin-top: 0.5rem; padding-left: 1rem; border-left: 2px solid var(--accent);"><small>Response: ${m.response}</small></div>` : ''}
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    ` : ''}
-                </div>
-                
-                <div class="ai-section">
-                    <div class="ai-header">
-                        <span class="ai-status"></span>
-                        <span class="ai-title">AI Call Assistant</span>
-                    </div>
-                    
-                    <div class="ai-suggestions">
-                        <div class="suggestion-chip" onclick="askAI('Summarize this call in 3 bullet points')">📝 Summarize</div>
-                        <div class="suggestion-chip" onclick="askAI('Draft a follow-up email based on this call')">✉️ Draft Email</div>
-                        <div class="suggestion-chip" onclick="askAI('What could I have done better in this call?')">💡 Coaching Tips</div>
-                        <div class="suggestion-chip" onclick="askAI('What is the likelihood of this prospect buying?')">📊 Win Probability</div>
-                        <div class="suggestion-chip" onclick="askAI('What are the next steps I should take?')">➡️ Next Steps</div>
-                        <div class="suggestion-chip" onclick="askAI('List all objections raised and how they were handled')">🎯 Objections</div>
-                    </div>
-                    
-                    <div class="ai-prompt-area">
-                        <textarea class="ai-input" id="aiInput" placeholder="Ask anything about this call... e.g., 'What pain points did the customer mention?' or 'Generate a proposal outline based on their needs'"></textarea>
-                        <button class="btn btn-primary" onclick="submitAIQuery()" id="aiSubmitBtn">Ask AI</button>
-                    </div>
-                    
-                    <div class="ai-response" id="aiResponse">
-                        <div class="ai-response-empty">Ask a question to get AI insights about this call</div>
-                    </div>
-                </div>
-            `;
-            
-            // Store call data for AI queries
-            window.currentCallData = data;
-        }
-        
-        // Render transcript
-        function renderTranscript(transcript) {
-            if (!transcript || transcript.length === 0) {
-                return '<div style="padding: 2rem; text-align: center; color: var(--text-dim);">No transcript available</div>';
-            }
-            
-            return transcript.map(line => `
-                <div class="transcript-line">
-                    <div class="speaker ${line.speaker === 'rep' ? 'rep' : 'customer'}">
-                        ${line.speaker === 'rep' ? 'You' : 'Customer'}
-                        ${line.timestamp ? `<span class="timestamp">${formatTimestamp(line.timestamp)}</span>` : ''}
-                    </div>
-                    <div class="transcript-text">${line.text}</div>
                 </div>
             `).join('');
         }
         
-        // AI Query Functions
-        async function askAI(question) {
-            document.getElementById('aiInput').value = question;
-            await submitAIQuery();
+        // Select call
+        async function selectCall(callId) {
+            document.querySelectorAll('.call-item').forEach(el => el.classList.remove('active'));
+            document.querySelector(`[data-id="${callId}"]`)?.classList.add('active');
+            
+            // Clear AI response
+            closeAI();
+            
+            // Show loading
+            document.getElementById('transcriptView').innerHTML = 
+                '<div class="empty-state"><div class="loading"></div></div>';
+            
+            try {
+                const headers = getAuthHeaders();
+                const response = await fetch(`https://lupo-backend.fly.dev/sales/calls/${callId}`, {
+                    headers: headers
+                });
+                
+                if (!response.ok) throw new Error('Failed to load call');
+                
+                const data = await response.json();
+                currentCall = data;
+                renderTranscript(data);
+                
+            } catch (err) {
+                console.error('Failed to load call:', err);
+                document.getElementById('transcriptView').innerHTML = 
+                    '<div class="empty-state">Failed to load transcript</div>';
+            }
         }
         
-        async function submitAIQuery() {
-            const question = document.getElementById('aiInput').value.trim();
-            if (!question || !window.currentCallData) return;
+        // Render transcript
+        function renderTranscript(data) {
+            const container = document.getElementById('transcriptView');
             
-            if (aiProcessing) return;
-            aiProcessing = true;
+            if (!data.transcript || data.transcript.length === 0) {
+                container.innerHTML = '<div class="empty-state">No transcript available</div>';
+                return;
+            }
             
+            const filtered = data.transcript.filter(msg => {
+                const text = msg.text || '';
+                return text !== 'RESPONSE_COMPLETE' && 
+                       text !== 'INTERRUPTED' && 
+                       text !== 'USER_READING_MODE' &&
+                       text.trim().length > 0;
+            });
+            
+            container.innerHTML = filtered.map((msg, i) => {
+                const timestamp = msg.timestamp ? formatTime(msg.timestamp) : '';
+                return `
+                    <div class="transcript-line">
+                        <div class="transcript-text">${msg.text}</div>
+                        ${timestamp ? `<div class="transcript-time">${timestamp}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            container.scrollTop = 0;
+        }
+        
+        // Quick ask
+        function quickAsk(question) {
+            document.getElementById('aiInput').value = question;
+            submitAI();
+        }
+        
+        // Submit AI question
+        async function submitAI() {
+            const input = document.getElementById('aiInput');
+            const question = input.value.trim();
+            
+            if (!question || !currentCall) return;
+            
+            const sendBtn = document.getElementById('aiSend');
             const responseDiv = document.getElementById('aiResponse');
-            const submitBtn = document.getElementById('aiSubmitBtn');
+            const contentDiv = document.getElementById('aiContent');
             
-            // Show loading state
-            responseDiv.innerHTML = '<div style="padding: 2rem; text-align: center;"><div class="loading"></div> Analyzing call...</div>';
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="loading"></span>';
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<div class="loading" style="width: 16px; height: 16px;"></div>';
+            
+            responseDiv.classList.add('show');
+            contentDiv.innerHTML = '<div class="loading"></div> Analyzing...';
             
             try {
                 const headers = getAuthHeaders();
                 headers['Content-Type'] = 'application/json';
                 
-                // Prepare call context
-                const callContext = {
-                    customer: window.currentCallData.call.customerName,
-                    company: window.currentCallData.call.customerCompany,
-                    date: window.currentCallData.call.startTime,
-                    duration: window.currentCallData.call.duration,
-                    outcome: window.currentCallData.call.outcome,
-                    transcript: window.currentCallData.transcript?.map(t => 
-                        `${t.speaker === 'rep' ? 'Rep' : 'Customer'}: ${t.text}`
-                    ).join('\n'),
-                    keyMoments: window.currentCallData.keyMoments,
-                    analysis: window.currentCallData.analysis,
-                    nextSteps: window.currentCallData.nextSteps
-                };
-                
-          
                 const response = await fetch('https://lupo-backend.fly.dev/sales/ai/analyze', {
                     method: 'POST',
                     headers: headers,
                     body: JSON.stringify({
                         question: question,
-                        callContext: callContext
+                        callContext: {
+                            customer: currentCall.call?.customerName,
+                            company: currentCall.call?.customerCompany,
+                            date: currentCall.call?.startTime,
+                            duration: currentCall.call?.duration,
+                            transcript: currentCall.transcript?.map(t => t.text).join('\n'),
+                            analysis: currentCall.analysis
+                        }
                     })
                 });
                 
-                if (!response.ok) throw new Error('AI analysis failed');
+                if (!response.ok) throw new Error('Analysis failed');
                 
                 const data = await response.json();
-                
-                // Display response
-                responseDiv.innerHTML = `<div class="ai-response-content">${formatAIResponse(data.answer || data.response)}</div>`;
-                
-                // Clear input
-                document.getElementById('aiInput').value = '';
+                contentDiv.innerHTML = formatResponse(data.answer || data.response);
+                input.value = '';
                 
             } catch (err) {
-                console.error('AI query failed:', err);
-                responseDiv.innerHTML = `<div style="padding: 1rem; color: var(--danger);">Failed to get AI response. Please try again.</div>`;
+                console.error('AI analysis failed:', err);
+                contentDiv.innerHTML = 'Analysis failed. Please try again.';
             } finally {
-                aiProcessing = false;
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Ask AI';
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                `;
             }
         }
         
-        // Format AI response
-        function formatAIResponse(response) {
-            // Convert markdown-style formatting
-            return response
+        // Close AI response
+        function closeAI() {
+            document.getElementById('aiResponse').classList.remove('show');
+        }
+        
+        // Format response
+        function formatResponse(text) {
+            return text
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
                 .replace(/\n\n/g, '</p><p>')
                 .replace(/^/, '<p>')
-                .replace(/$/, '</p>')
-                .replace(/•/g, '▸');
+                .replace(/$/, '</p>');
         }
         
         // Setup event listeners
         function setupEventListeners() {
             // Search
-            document.getElementById('callSearch').addEventListener('input', (e) => {
+            document.getElementById('searchInput').addEventListener('input', (e) => {
                 const query = e.target.value.toLowerCase();
                 const filtered = calls.filter(c => 
-                    c.customer?.toLowerCase().includes(query) || 
-                    c.company?.toLowerCase().includes(query)
+                    (c.customer || '').toLowerCase().includes(query) ||
+                    (c.company || '').toLowerCase().includes(query)
                 );
                 renderCalls(filtered);
             });
@@ -954,20 +756,21 @@
                 btn.addEventListener('click', (e) => {
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     e.target.classList.add('active');
-                    loadMyCalls(e.target.dataset.filter);
+                    currentFilter = e.target.dataset.filter;
+                    loadCalls(currentFilter);
                 });
             });
             
-            // AI input enter key
-            document.getElementById('aiInput')?.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
+            // AI input enter
+            document.getElementById('aiInput').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
                     e.preventDefault();
-                    submitAIQuery();
+                    submitAI();
                 }
             });
         }
         
-        // Helper functions
+        // Helpers
         function formatDate(date) {
             const d = new Date(date);
             const now = new Date();
@@ -975,28 +778,27 @@
             
             if (diff === 0) return 'Today';
             if (diff === 1) return 'Yesterday';
-            if (diff < 7) return `${diff} days ago`;
+            if (diff < 7) return `${diff}d ago`;
             
-            return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            return d.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric' 
+            });
         }
         
-        function formatOutcome(outcome) {
-            if (!outcome) return 'Ongoing';
-            return outcome.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        function formatTime(timestamp) {
+            if (typeof timestamp === 'number' && timestamp < 10000) {
+                const mins = Math.floor(timestamp / 60);
+                const secs = timestamp % 60;
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+            return new Date(timestamp).toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit'
+            });
         }
         
-        function formatTimestamp(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            return `${mins}:${secs.toString().padStart(2, '0')}`;
-        }
-        
-        function toggleTranscript() {
-            const container = document.getElementById('transcriptContainer');
-            container.style.maxHeight = container.style.maxHeight === 'none' ? '400px' : 'none';
-        }
-        
-        // Initialize on load
+        // Initialize
         init();
     </script>
 </body>
