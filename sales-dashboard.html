@@ -174,6 +174,24 @@
             color: rgba(255,255,255,0.4);
         }
         
+        .search-match-preview {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+            margin-top: 6px;
+            font-style: italic;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .search-match-preview mark {
+            background: rgba(251, 191, 36, 0.3);
+            color: #fbbf24;
+            font-style: normal;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
         /* Content Area */
         .content-area {
             flex: 1;
@@ -206,10 +224,25 @@
             animation: fadeIn 0.3s ease;
         }
         
+        .transcript-line.highlighted {
+            background: rgba(251, 191, 36, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            margin-left: -12px;
+            margin-right: -12px;
+        }
+        
         .transcript-text {
             font-size: 15px;
             line-height: 1.7;
             color: rgba(255,255,255,0.85);
+        }
+        
+        .transcript-text mark {
+            background: rgba(251, 191, 36, 0.4);
+            color: #fbbf24;
+            padding: 2px 4px;
+            border-radius: 3px;
         }
         
         .transcript-time {
@@ -447,7 +480,7 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="search-header">
-                <input type="text" class="search-box" placeholder="Search calls..." id="searchInput">
+                <input type="text" class="search-box" placeholder="Search calls and transcripts..." id="searchInput">
             </div>
             <div class="filters">
                 <button class="filter-btn active" data-filter="all">All</button>
@@ -500,7 +533,9 @@
     <script>
         let currentCall = null;
         let calls = [];
+        let callsWithTranscripts = new Map(); // Store full data for each call
         let currentFilter = 'all';
+        let currentSearchQuery = '';
         
         // Initialize
         async function init() {
@@ -570,6 +605,10 @@
                 
                 const data = await response.json();
                 calls = data.calls || [];
+                
+                // Load transcripts for search functionality
+                await loadTranscriptsForSearch(calls.slice(0, 20)); // Load first 20 for performance
+                
                 renderCalls(calls);
                 
             } catch (err) {
@@ -579,30 +618,135 @@
             }
         }
         
-        // Render calls
+        // Load transcripts for search
+        async function loadTranscriptsForSearch(callsList) {
+            const headers = getAuthHeaders();
+            
+            for (const call of callsList) {
+                if (!callsWithTranscripts.has(call.id)) {
+                    try {
+                        const response = await fetch(`https://lupo-backend.fly.dev/sales/calls/${call.id}`, { headers });
+                        if (response.ok) {
+                            const data = await response.json();
+                            callsWithTranscripts.set(call.id, data);
+                        }
+                    } catch (err) {
+                        console.error(`Failed to load transcript for ${call.id}:`, err);
+                    }
+                }
+            }
+        }
+        
+        // Search through calls and transcripts
+        function searchCalls(query) {
+            if (!query) return calls;
+            
+            const lowerQuery = query.toLowerCase();
+            const results = [];
+            
+            for (const call of calls) {
+                let match = null;
+                let matchScore = 0;
+                
+                // Check basic call info
+                if ((call.customer || '').toLowerCase().includes(lowerQuery)) {
+                    matchScore = 3;
+                    match = { type: 'customer', text: call.customer };
+                } else if ((call.company || '').toLowerCase().includes(lowerQuery)) {
+                    matchScore = 2;
+                    match = { type: 'company', text: call.company };
+                } else if ((call.context || '').toLowerCase().includes(lowerQuery)) {
+                    matchScore = 2;
+                    match = { type: 'context', text: call.context };
+                }
+                
+                // Check transcript if loaded
+                const fullData = callsWithTranscripts.get(call.id);
+                if (fullData && fullData.transcript && !match) {
+                    for (const msg of fullData.transcript) {
+                        if (msg.text && msg.text.toLowerCase().includes(lowerQuery)) {
+                            matchScore = 1;
+                            // Find the part of text with the match
+                            const startIdx = Math.max(0, msg.text.toLowerCase().indexOf(lowerQuery) - 30);
+                            const endIdx = Math.min(msg.text.length, startIdx + 100);
+                            let excerpt = msg.text.substring(startIdx, endIdx);
+                            if (startIdx > 0) excerpt = '...' + excerpt;
+                            if (endIdx < msg.text.length) excerpt = excerpt + '...';
+                            
+                            match = { 
+                                type: 'transcript', 
+                                text: excerpt,
+                                messageIndex: fullData.transcript.indexOf(msg)
+                            };
+                            break;
+                        }
+                    }
+                }
+                
+                if (match) {
+                    results.push({ ...call, match, matchScore });
+                }
+            }
+            
+            // Sort by match score (higher is better)
+            results.sort((a, b) => b.matchScore - a.matchScore);
+            
+            return results;
+        }
+        
+        // Render calls with search highlights
         function renderCalls(callsList) {
             const container = document.getElementById('callsList');
             
             if (callsList.length === 0) {
-                container.innerHTML = '<div style="padding: 20px; color: rgba(255,255,255,0.3); font-size: 13px; text-align: center;">No calls yet</div>';
+                if (currentSearchQuery) {
+                    container.innerHTML = '<div style="padding: 20px; color: rgba(255,255,255,0.3); font-size: 13px; text-align: center;">No matching calls found</div>';
+                } else {
+                    container.innerHTML = '<div style="padding: 20px; color: rgba(255,255,255,0.3); font-size: 13px; text-align: center;">No calls yet</div>';
+                }
                 return;
             }
             
-            container.innerHTML = callsList.map(call => `
-                <div class="call-item" onclick="selectCall('${call.id}')" data-id="${call.id}">
-                    <div class="call-customer">${call.customer || 'Unknown'}</div>
-                    <div class="call-details">
-                        <span>${formatDate(call.date)}</span>
-                        <span>•</span>
-                        <span>${call.duration || '0:00'}</span>
-                        ${call.company ? `<span>•</span><span>${call.company}</span>` : ''}
+            container.innerHTML = callsList.map(call => {
+                // Build display text
+                let displayText;
+                if (call.customer && call.customer !== 'Unknown') {
+                    if (call.context && call.context !== 'Sales call') {
+                        displayText = `${call.context} with ${call.customer}`;
+                    } else {
+                        displayText = call.customer;
+                    }
+                } else {
+                    displayText = call.context || 'Sales call';
+                }
+                
+                // Add search match preview if available
+                let matchPreview = '';
+                if (call.match && currentSearchQuery) {
+                    const highlightedText = call.match.text.replace(
+                        new RegExp(currentSearchQuery, 'gi'),
+                        match => `<mark>${match}</mark>`
+                    );
+                    matchPreview = `<div class="search-match-preview">${highlightedText}</div>`;
+                }
+                
+                return `
+                    <div class="call-item" onclick="selectCall('${call.id}', ${call.match?.messageIndex || 'null'})" data-id="${call.id}">
+                        <div class="call-customer">${displayText}</div>
+                        <div class="call-details">
+                            <span>${formatDate(call.date)}</span>
+                            <span>•</span>
+                            <span>${call.duration || '0:00'}</span>
+                            ${call.company ? `<span>•</span><span>${call.company}</span>` : ''}
+                        </div>
+                        ${matchPreview}
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
         
-        // Select call
-        async function selectCall(callId) {
+        // Select call with optional scroll to match
+        async function selectCall(callId, messageIndex = null) {
             document.querySelectorAll('.call-item').forEach(el => el.classList.remove('active'));
             document.querySelector(`[data-id="${callId}"]`)?.classList.add('active');
             
@@ -614,16 +758,22 @@
                 '<div class="empty-state"><div class="loading"></div></div>';
             
             try {
-                const headers = getAuthHeaders();
-                const response = await fetch(`https://lupo-backend.fly.dev/sales/calls/${callId}`, {
-                    headers: headers
-                });
+                let data = callsWithTranscripts.get(callId);
                 
-                if (!response.ok) throw new Error('Failed to load call');
+                if (!data) {
+                    const headers = getAuthHeaders();
+                    const response = await fetch(`https://lupo-backend.fly.dev/sales/calls/${callId}`, {
+                        headers: headers
+                    });
+                    
+                    if (!response.ok) throw new Error('Failed to load call');
+                    
+                    data = await response.json();
+                    callsWithTranscripts.set(callId, data);
+                }
                 
-                const data = await response.json();
                 currentCall = data;
-                renderTranscript(data);
+                renderTranscript(data, messageIndex);
                 
             } catch (err) {
                 console.error('Failed to load call:', err);
@@ -632,8 +782,8 @@
             }
         }
         
-        // Render transcript
-        function renderTranscript(data) {
+        // Render transcript with optional highlight
+        function renderTranscript(data, scrollToIndex = null) {
             const container = document.getElementById('transcriptView');
             
             if (!data.transcript || data.transcript.length === 0) {
@@ -651,15 +801,37 @@
             
             container.innerHTML = filtered.map((msg, i) => {
                 const timestamp = msg.timestamp ? formatTime(msg.timestamp) : '';
+                let text = msg.text;
+                
+                // Highlight search terms if searching
+                if (currentSearchQuery) {
+                    text = text.replace(
+                        new RegExp(currentSearchQuery, 'gi'),
+                        match => `<mark>${match}</mark>`
+                    );
+                }
+                
+                const isHighlighted = scrollToIndex !== null && i === scrollToIndex;
+                
                 return `
-                    <div class="transcript-line">
-                        <div class="transcript-text">${msg.text}</div>
+                    <div class="transcript-line ${isHighlighted ? 'highlighted' : ''}" data-index="${i}">
+                        <div class="transcript-text">${text}</div>
                         ${timestamp ? `<div class="transcript-time">${timestamp}</div>` : ''}
                     </div>
                 `;
             }).join('');
             
-            container.scrollTop = 0;
+            // Scroll to matched message if specified
+            if (scrollToIndex !== null) {
+                setTimeout(() => {
+                    const element = container.querySelector(`[data-index="${scrollToIndex}"]`);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 100);
+            } else {
+                container.scrollTop = 0;
+            }
         }
         
         // Quick ask
@@ -741,14 +913,21 @@
         
         // Setup event listeners
         function setupEventListeners() {
-            // Search
+            // Enhanced search
+            let searchTimeout;
             document.getElementById('searchInput').addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase();
-                const filtered = calls.filter(c => 
-                    (c.customer || '').toLowerCase().includes(query) ||
-                    (c.company || '').toLowerCase().includes(query)
-                );
-                renderCalls(filtered);
+                clearTimeout(searchTimeout);
+                currentSearchQuery = e.target.value.trim();
+                
+                // Debounce search
+                searchTimeout = setTimeout(() => {
+                    if (currentSearchQuery) {
+                        const filtered = searchCalls(currentSearchQuery);
+                        renderCalls(filtered);
+                    } else {
+                        renderCalls(calls);
+                    }
+                }, 300);
             });
             
             // Filters
@@ -757,6 +936,8 @@
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     e.target.classList.add('active');
                     currentFilter = e.target.dataset.filter;
+                    currentSearchQuery = ''; // Clear search when changing filters
+                    document.getElementById('searchInput').value = '';
                     loadCalls(currentFilter);
                 });
             });
