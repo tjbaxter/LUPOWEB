@@ -521,6 +521,11 @@
             animation: slideIn 0.3s ease;
         }
         
+        .toast.error {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
@@ -559,7 +564,7 @@
         <div class="header-info">
             <div class="header-stat">
                 <div class="header-stat-label">Organization</div>
-                <div class="header-stat-value skeleton" id="orgName" style="width: 100px; height: 1.5rem;"></div>
+                <div class="header-stat-value skeleton" id="orgName" style="min-width: 100px; height: 1.5rem; white-space: nowrap;"></div>
             </div>
             <div class="header-stat">
                 <div class="header-stat-label">Active Reps</div>
@@ -703,36 +708,139 @@
         let salesData = {};
         let currentFilter = null;
         let isFirstLoad = true;
+        let refreshTokenInterval = null;
         
-        // Init
-        async function init() {
-            // Check localStorage first
-            let token = localStorage.getItem('lupo_token');
-            let apiKey = localStorage.getItem('lupo_apikey');
+        // Auth helpers
+        async function refreshAccessToken() {
+            const refreshToken = localStorage.getItem('lupo_refresh');
+            if (!refreshToken) {
+                console.log('No refresh token available');
+                return null;
+            }
             
-            // Fallback to URL params (one-time use)
-            const urlParams = new URLSearchParams(window.location.search);
-            if (!token && !apiKey) {
-                token = urlParams.get('token');
-                apiKey = urlParams.get('key');
+            try {
+                console.log('Refreshing access token...');
+                const response = await fetch('https://lupo-backend.fly.dev/auth/refresh', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ refreshToken })
+                });
                 
-                if (token || apiKey) {
-                    // Store and clean URL
-                    if (token) localStorage.setItem('lupo_token', token);
-                    if (apiKey) localStorage.setItem('lupo_apikey', apiKey);
-                    window.history.replaceState({}, '', window.location.pathname);
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('lupo_token', data.token);
+                    console.log('Token refreshed successfully');
+                    return data.token;
+                } else {
+                    console.error('Failed to refresh token:', response.status);
+                    // Clear invalid refresh token
+                    localStorage.removeItem('lupo_refresh');
+                    return null;
+                }
+            } catch (err) {
+                console.error('Token refresh error:', err);
+                return null;
+            }
+        }
+        
+        async function apiCall(url, options = {}) {
+            // First attempt with current token
+            let response = await fetch(url, options);
+            
+            // If 401, try to refresh and retry
+            if (response.status === 401) {
+                console.log('Got 401, attempting token refresh...');
+                const newToken = await refreshAccessToken();
+                
+                if (newToken) {
+                    // Update headers with new token
+                    options.headers = {
+                        ...options.headers,
+                        'Authorization': `Bearer ${newToken}`
+                    };
+                    window.authHeaders['Authorization'] = `Bearer ${newToken}`;
+                    
+                    // Retry the request
+                    response = await fetch(url, options);
+                } else {
+                    // Refresh failed, redirect to login
+                    redirectToLogin();
+                    throw new Error('Authentication failed');
                 }
             }
             
-            if (!apiKey && !token) {
-                window.location.href = '/login.html';
+            return response;
+        }
+        
+        function redirectToLogin() {
+            // Save current URL to return after login
+            localStorage.setItem('post_login_redirect', window.location.href);
+            window.location.href = '/login.html?redirect=manager';
+        }
+        
+        // Init
+        async function init() {
+            // Try multiple auth sources
+            let token = null;
+            let refreshToken = null;
+            let apiKey = null;
+            
+            // 1. Check URL params (from Electron or fresh login)
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlToken = urlParams.get('token');
+            const urlRefresh = urlParams.get('refresh');
+            const urlApiKey = urlParams.get('key');
+            
+            // 2. Check localStorage (from previous session)
+            const storedToken = localStorage.getItem('lupo_token');
+            const storedRefresh = localStorage.getItem('lupo_refresh');
+            const storedApiKey = localStorage.getItem('lupo_apikey');
+            
+            // Prioritize URL params (fresh from Electron/login)
+            if (urlToken) {
+                token = urlToken;
+                refreshToken = urlRefresh;
+                apiKey = urlApiKey;
+                
+                // Store for future use
+                localStorage.setItem('lupo_token', token);
+                if (refreshToken) localStorage.setItem('lupo_refresh', refreshToken);
+                if (apiKey) localStorage.setItem('lupo_apikey', apiKey);
+                
+                // Clean URL
+                window.history.replaceState({}, '', window.location.pathname);
+            } else if (storedToken || storedApiKey) {
+                // Use stored credentials
+                token = storedToken;
+                refreshToken = storedRefresh;
+                apiKey = storedApiKey;
+                
+                // If we have a refresh token but no URL token, try to get fresh access token
+                if (refreshToken && !urlToken) {
+                    console.log('Attempting to refresh token on init...');
+                    const freshToken = await refreshAccessToken();
+                    if (freshToken) {
+                        token = freshToken;
+                    } else if (!apiKey) {
+                        // Refresh failed and no API key, need to login
+                        redirectToLogin();
+                        return;
+                    }
+                }
+            }
+            
+            // Check if we have any valid auth
+            if (!token && !apiKey) {
+                redirectToLogin();
                 return;
             }
             
+            // Set up auth headers
             window.authHeaders = {};
             if (token) window.authHeaders['Authorization'] = `Bearer ${token}`;
             if (apiKey) window.authHeaders['X-API-Key'] = apiKey;
             
+            // Load initial data
             await loadData();
             setupListeners();
             
@@ -742,17 +850,29 @@
                 isFirstLoad = false;
             }, 500);
             
-            // Refresh every 30s
+            // Set up periodic data refresh
             setInterval(loadData, 30000);
+            
+            // Set up token refresh every 20 minutes (before 30 min expiry)
+            if (refreshToken) {
+                refreshTokenInterval = setInterval(async () => {
+                    console.log('Periodic token refresh...');
+                    const newToken = await refreshAccessToken();
+                    if (newToken) {
+                        window.authHeaders['Authorization'] = `Bearer ${newToken}`;
+                    }
+                }, 20 * 60 * 1000);
+            }
         }
         
-        // Load all data
+        // Load all data with error handling
         async function loadData() {
             try {
                 // Get org info
-                const orgRes = await fetch('https://lupo-backend.fly.dev/sales/org', {
+                const orgRes = await apiCall('https://lupo-backend.fly.dev/sales/org', {
                     headers: window.authHeaders
                 });
+                
                 if (orgRes.ok) {
                     const org = await orgRes.json();
                     const orgEl = document.getElementById('orgName');
@@ -761,15 +881,22 @@
                 }
                 
                 // Get analytics
-                const dataRes = await fetch(`https://lupo-backend.fly.dev/sales/analytics?period=${currentPeriod}`, {
+                const dataRes = await apiCall(`https://lupo-backend.fly.dev/sales/analytics?period=${currentPeriod}`, {
                     headers: window.authHeaders
                 });
+                
                 if (dataRes.ok) {
                     salesData = await dataRes.json();
                     updateDashboard();
+                } else {
+                    console.error('Failed to load analytics:', dataRes.status);
+                    showToast('Failed to load data', 'error');
                 }
             } catch (error) {
                 console.error('Load failed:', error);
+                if (error.message !== 'Authentication failed') {
+                    showToast('Connection error', 'error');
+                }
             }
         }
         
@@ -1007,24 +1134,41 @@
         
         // Actions
         function openPlaybook() {
-            const params = window.location.search;
-            window.location.href = '/sales-context.html' + params;
+            // Preserve auth in URL for navigation
+            const token = localStorage.getItem('lupo_token');
+            const refresh = localStorage.getItem('lupo_refresh');
+            const params = new URLSearchParams();
+            if (token) params.set('token', token);
+            if (refresh) params.set('refresh', refresh);
+            window.location.href = '/sales-context.html?' + params.toString();
         }
         
         function openCompliance() {
-            const params = window.location.search;
-            window.location.href = '/compliance-rules.html' + params;
+            const token = localStorage.getItem('lupo_token');
+            const refresh = localStorage.getItem('lupo_refresh');
+            const params = new URLSearchParams();
+            if (token) params.set('token', token);
+            if (refresh) params.set('refresh', refresh);
+            window.location.href = '/compliance-rules.html?' + params.toString();
         }
         
         function viewReports() {
-            const params = window.location.search;
-            window.location.href = '/reports.html' + params;
+            const token = localStorage.getItem('lupo_token');
+            const refresh = localStorage.getItem('lupo_refresh');
+            const params = new URLSearchParams();
+            if (token) params.set('token', token);
+            if (refresh) params.set('refresh', refresh);
+            window.location.href = '/reports.html?' + params.toString();
         }
         
         function viewRep(repId) {
-            const params = window.location.search;
-            window.location.href = `/rep-details.html?id=${repId}` + 
-                (params ? '&' + params.substring(1) : '');
+            const token = localStorage.getItem('lupo_token');
+            const refresh = localStorage.getItem('lupo_refresh');
+            const params = new URLSearchParams();
+            params.set('id', repId);
+            if (token) params.set('token', token);
+            if (refresh) params.set('refresh', refresh);
+            window.location.href = '/rep-details.html?' + params.toString();
         }
         
         function exportData() {
@@ -1049,12 +1193,27 @@
             showToast('Exported');
         }
         
-        function showToast(message) {
+        function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             document.getElementById('toastMessage').textContent = message;
+            
+            // Add error class if needed
+            if (type === 'error') {
+                toast.classList.add('error');
+            } else {
+                toast.classList.remove('error');
+            }
+            
             toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2000);
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            if (refreshTokenInterval) {
+                clearInterval(refreshTokenInterval);
+            }
+        });
         
         // Start
         init();
