@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUPO Dashboard</title>
+    <title>LUPO Sales Performance</title>
     <style>
         * {
             margin: 0;
@@ -172,6 +172,45 @@
             font-weight: 600;
         }
         
+        /* Impact Banner */
+        .impact-banner {
+            background: linear-gradient(90deg, var(--surface) 0%, var(--surface-hover) 100%);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            opacity: 0;
+            animation: fadeIn 0.5s ease 0.4s forwards;
+        }
+        
+        .impact-text {
+            font-size: 0.875rem;
+            color: var(--text);
+        }
+        
+        .impact-text strong {
+            color: var(--accent);
+        }
+        
+        .copy-btn {
+            padding: 0.25rem 0.5rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        
+        .copy-btn:hover {
+            color: var(--text);
+            border-color: var(--accent);
+        }
+        
         /* Main Container */
         .container {
             padding: 1.5rem;
@@ -250,11 +289,22 @@
             transition: all 0.3s ease;
             opacity: 0;
             transform: translateY(10px);
+            cursor: pointer;
+            position: relative;
         }
         
         .metric-card.loaded {
             opacity: 1;
             transform: translateY(0);
+        }
+        
+        .metric-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .metric-card.clickable {
+            cursor: pointer;
         }
         
         .metric-label {
@@ -274,6 +324,24 @@
         .metric-subtitle {
             font-size: 0.875rem;
             color: var(--text-muted);
+        }
+        
+        .metric-trend {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .trend-up {
+            color: var(--success);
+        }
+        
+        .trend-down {
+            color: var(--danger);
         }
         
         /* Main Content Grid */
@@ -368,6 +436,17 @@
             background: var(--text-dim);
         }
         
+        .coach-flag {
+            display: inline-block;
+            padding: 0.125rem 0.375rem;
+            background: var(--danger);
+            color: var(--text);
+            border-radius: 4px;
+            font-size: 0.625rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
         /* Right Column Sections */
         .right-column {
             display: flex;
@@ -383,9 +462,6 @@
         }
         
         .objection-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             padding: 0.75rem;
             background: var(--bg);
             border-radius: 6px;
@@ -399,20 +475,38 @@
             transform: translateX(2px);
         }
         
+        .objection-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
         .objection-type {
             font-weight: 500;
             text-transform: capitalize;
         }
         
-        .objection-stats {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
         .objection-count {
             font-weight: 600;
-            font-size: 1rem;
+            color: var(--text-dim);
+        }
+        
+        .objection-metrics {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        .objection-metric {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .metric-label-inline {
+            color: var(--text-dim);
         }
         
         /* Quick Actions */
@@ -447,30 +541,136 @@
             color: var(--text-dim);
         }
         
-        /* Active Filter Badge */
-        .filter-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: var(--accent);
-            border-radius: 4px;
-            font-size: 0.75rem;
-            margin-left: 0.5rem;
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
         }
         
-        /* Buttons */
-        .btn {
-            padding: 0.5rem 1rem;
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
             background: var(--surface);
             border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .modal-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--border);
+            background: var(--bg);
             border-radius: 6px;
-            color: var(--text);
-            font-size: 0.875rem;
+            color: var(--text-dim);
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.15s;
         }
         
-        .btn:hover {
-            background: var(--surface-hover);
+        .modal-close:hover {
+            color: var(--text);
+            border-color: var(--text-dim);
+        }
+        
+        .compliance-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .compliance-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        
+        .compliance-item.high {
+            border-color: var(--danger);
+        }
+        
+        .compliance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.5rem;
+        }
+        
+        .compliance-severity {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .severity-high {
+            background: var(--danger);
+            color: var(--text);
+        }
+        
+        .severity-medium {
+            background: var(--warning);
+            color: var(--bg);
+        }
+        
+        .severity-low {
+            background: var(--text-dim);
+            color: var(--bg);
+        }
+        
+        .compliance-snippet {
+            font-style: italic;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+        
+        .compliance-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        .compliance-link {
+            color: var(--accent);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .compliance-link:hover {
+            text-decoration: underline;
         }
         
         /* Toast */
@@ -526,7 +726,7 @@
         <div class="loading-content">
             <div class="loading-logo">LUPO</div>
             <div class="loading-spinner"></div>
-            <div class="loading-text">Loading dashboard...</div>
+            <div class="loading-text">Loading performance data...</div>
         </div>
     </div>
     
@@ -535,11 +735,11 @@
         <div class="header-info">
             <div class="header-stat">
                 <div class="header-stat-label">Organization</div>
-                <div class="header-stat-value skeleton" id="orgName" style="min-width: 100px; height: 1.5rem; white-space: nowrap;"></div>
+                <div class="header-stat-value skeleton" id="orgName" style="min-width: 100px; height: 1.5rem;"></div>
             </div>
             <div class="header-stat">
-                <div class="header-stat-label">Active Reps</div>
-                <div class="header-stat-value" id="activeReps">--</div>
+                <div class="header-stat-label">Reps Covered</div>
+                <div class="header-stat-value" id="repsCovered">--</div>
             </div>
             <div class="header-stat">
                 <div class="header-stat-label">Live Now</div>
@@ -549,9 +749,17 @@
     </header>
     
     <div class="container">
-        <!-- Time Filter -->
+        <!-- Impact Banner -->
+        <div class="impact-banner" id="impactBanner">
+            <div class="impact-text" id="impactText">
+                Loading impact summary...
+            </div>
+            <button class="copy-btn" onclick="copyImpact()">Copy</button>
+        </div>
+        
+        <!-- Dashboard Header -->
         <div class="dashboard-header">
-            <h1 class="dashboard-title">LUPO Activity</h1>
+            <h1 class="dashboard-title">Live Sales Performance</h1>
             <div class="header-controls">
                 <div class="time-filter">
                     <button class="filter-btn active" data-period="today">Today</button>
@@ -562,30 +770,34 @@
             </div>
         </div>
         
-        <!-- Key Metrics - Only what we can actually count -->
+        <!-- Core Metrics -->
         <div class="metrics-grid">
-            <div class="metric-card" id="metric1">
-                <div class="metric-label">Total Calls</div>
-                <div class="metric-value skeleton" style="height: 2.5rem; width: 80%;" id="totalCalls"></div>
-                <div class="metric-subtitle">calls processed</div>
+            <div class="metric-card clickable" id="metric1">
+                <div class="metric-label">Critical Moments</div>
+                <div class="metric-value skeleton" style="height: 2.5rem; width: 80%;" id="criticalMoments"></div>
+                <div class="metric-subtitle">objections & risks flagged</div>
+                <div class="metric-trend" id="criticalTrend"></div>
             </div>
             
             <div class="metric-card" id="metric2">
-                <div class="metric-label">Suggestions Used</div>
-                <div class="metric-value skeleton" style="height: 2.5rem; width: 70%;" id="suggestionsUsed"></div>
-                <div class="metric-subtitle">clicked or spoken</div>
+                <div class="metric-label">Rep Response Rate</div>
+                <div class="metric-value skeleton" style="height: 2.5rem; width: 70%;" id="responseRate"></div>
+                <div class="metric-subtitle">acted within 30s</div>
+                <div class="metric-trend" id="responseTrend"></div>
             </div>
             
-            <div class="metric-card" id="metric3">
-                <div class="metric-label">Compliance Catches</div>
+            <div class="metric-card clickable" id="metric3" onclick="showComplianceDetails()">
+                <div class="metric-label">Compliance Risks</div>
                 <div class="metric-value skeleton" style="height: 2.5rem; width: 40%;" id="complianceCount"></div>
-                <div class="metric-subtitle" id="complianceStatus">violations flagged</div>
+                <div class="metric-subtitle" id="complianceStatus">click for details</div>
+                <div class="metric-trend" id="complianceTrend"></div>
             </div>
             
             <div class="metric-card" id="metric4">
-                <div class="metric-label">Objections Detected</div>
-                <div class="metric-value skeleton" style="height: 2.5rem; width: 60%;" id="objectionsDetected"></div>
-                <div class="metric-subtitle">across all calls</div>
+                <div class="metric-label">Forward Momentum</div>
+                <div class="metric-value skeleton" style="height: 2.5rem; width: 60%;" id="momentum"></div>
+                <div class="metric-subtitle">calls with next-step signals</div>
+                <div class="metric-trend" id="momentumTrend"></div>
             </div>
         </div>
         
@@ -593,12 +805,8 @@
             <!-- Team Table -->
             <div class="section" id="teamSection">
                 <div class="section-header">
-                    <h2 class="section-title">
-                        Rep Activity
-                        <span class="filter-badge" id="filterBadge" style="display:none"></span>
-                    </h2>
+                    <h2 class="section-title">Rep Performance & Coaching</h2>
                     <div class="section-actions">
-                        <span class="section-action" id="resetFilter" style="display:none" onclick="resetFilters()">Reset</span>
                         <span class="section-action" onclick="exportData()">Export</span>
                     </div>
                 </div>
@@ -607,10 +815,10 @@
                     <thead>
                         <tr>
                             <th>Rep</th>
-                            <th>Calls</th>
-                            <th>Suggestions Given</th>
-                            <th>Suggestions Used</th>
-                            <th>Usage Rate</th>
+                            <th>Calls Today</th>
+                            <th>Response Rate</th>
+                            <th>Momentum</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -626,28 +834,28 @@
             
             <!-- Right Column -->
             <div class="right-column">
-                <!-- Objection Breakdown -->
+                <!-- Objection Dynamics -->
                 <div class="section" id="objectionSection">
                     <div class="section-header">
-                        <h2 class="section-title">Objection Types</h2>
+                        <h2 class="section-title">Objection Dynamics</h2>
                     </div>
                     
                     <div class="objection-list" id="objectionList">
-                        <div class="skeleton" style="height: 3rem; width: 100%;"></div>
-                        <div class="skeleton" style="height: 3rem; width: 100%;"></div>
+                        <div class="skeleton" style="height: 4rem; width: 100%;"></div>
+                        <div class="skeleton" style="height: 4rem; width: 100%;"></div>
                     </div>
                 </div>
                 
                 <!-- Quick Actions -->
                 <div class="section" id="actionsSection">
                     <div class="section-header">
-                        <h2 class="section-title">Configuration</h2>
+                        <h2 class="section-title">Quick Actions</h2>
                     </div>
                     
                     <div class="quick-actions">
-                        <div class="action-card" onclick="openSalesContext()">
-                            <div class="action-title">Sales Context</div>
-                            <div class="action-detail">Update product info & responses</div>
+                        <div class="action-card" onclick="openPlaybooks()">
+                            <div class="action-title">Tune Playbooks</div>
+                            <div class="action-detail">Customize objection responses</div>
                         </div>
                         
                         <div class="action-card" onclick="openCompliance()">
@@ -655,12 +863,30 @@
                             <div class="action-detail">Manage forbidden phrases</div>
                         </div>
                         
-                        <div class="action-card" onclick="viewReports()">
-                            <div class="action-title">Call History</div>
-                            <div class="action-detail">View transcripts</div>
+                        <div class="action-card" onclick="viewCalls()">
+                            <div class="action-title">Review Calls</div>
+                            <div class="action-detail">Transcripts with timestamps</div>
+                        </div>
+                        
+                        <div class="action-card" onclick="viewCoaching()">
+                            <div class="action-title">Coaching Queue</div>
+                            <div class="action-detail">Reps needing attention</div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Compliance Modal -->
+    <div class="modal" id="complianceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Compliance Risks Detected</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="compliance-list" id="complianceList">
+                <!-- Dynamic content -->
             </div>
         </div>
     </div>
@@ -674,7 +900,6 @@
         // State
         let currentPeriod = 'today';
         let salesData = {};
-        let currentFilter = null;
         let isFirstLoad = true;
         let refreshTokenInterval = null;
         
@@ -833,113 +1058,139 @@
             }
         }
         
-// Update Dashboard - ONLY REAL NUMBERS
-function updateDashboard() {
-    const summary = salesData.summary || {};
-    const team = salesData.teamPerformance || [];
-    
-    // Total Calls
-    const totalCalls = summary.totalCalls || 0;
-    const callsEl = document.getElementById('totalCalls');
-    callsEl.textContent = totalCalls;
-    callsEl.classList.remove('skeleton');
-    
-    // Suggestions Used (GLOBAL TOTAL)
-    const suggestionsUsed = salesData.aiAdoption?.suggestionsUsed || 0;
-    const usedEl = document.getElementById('suggestionsUsed');
-    usedEl.textContent = suggestionsUsed;
-    usedEl.classList.remove('skeleton');
-    
-    // Compliance
-    const complianceFlags = salesData.compliance?.flagsThisPeriod || 0;
-    const complianceEl = document.getElementById('complianceCount');
-    complianceEl.textContent = complianceFlags;
-    complianceEl.classList.remove('skeleton');
-    complianceEl.style.color = complianceFlags > 0 ? 'var(--danger)' : 'var(--text)';
-    
-    // Objections Detected
-    const objectionsTotal = salesData.objections?.total || 0;
-    const objectionsEl = document.getElementById('objectionsDetected');
-    objectionsEl.textContent = objectionsTotal;
-    objectionsEl.classList.remove('skeleton');
-    
-    // Header stats
-    document.getElementById('activeReps').textContent = team.length;
-    const liveCalls = summary.activeCalls || 0;
-    const liveCallsEl = document.getElementById('liveCalls');
-    liveCallsEl.textContent = liveCalls;
-    liveCallsEl.style.color = liveCalls > 0 ? 'var(--success)' : 'var(--text-dim)';
-    
-    document.getElementById('lastUpdated').textContent = `Updated ${new Date().toLocaleTimeString()}`;
-    
-    if (isFirstLoad) {
-        ['metric1', 'metric2', 'metric3', 'metric4'].forEach((id, index) => {
-            setTimeout(() => {
-                document.getElementById(id).classList.add('loaded');
-            }, index * 100);
-        });
+        // Update Dashboard with real metrics
+        function updateDashboard() {
+            const performance = salesData.performance || {};
+            const team = salesData.teamPerformance || [];
+            const objections = salesData.objectionDynamics || [];
+            const compliance = salesData.compliance || {};
+            
+            // Impact Banner
+            const impactEl = document.getElementById('impactText');
+            const criticalTotal = performance.criticalMoments || 0;
+            const complianceTotal = compliance.totalRisks || 0;
+            const responseRate = performance.responseRate || 0;
+            
+            impactEl.innerHTML = `This ${currentPeriod}: LUPO flagged <strong>${criticalTotal}</strong> critical moments, prevented <strong>${complianceTotal}</strong> compliance risks, with <strong>${responseRate}%</strong> rep response rate`;
+            
+            // Critical Moments
+            const criticalEl = document.getElementById('criticalMoments');
+            criticalEl.textContent = criticalTotal;
+            criticalEl.classList.remove('skeleton');
+            updateTrend('criticalTrend', performance.criticalTrend);
+            
+            // Response Rate
+            const responseEl = document.getElementById('responseRate');
+            responseEl.textContent = `${responseRate}%`;
+            responseEl.classList.remove('skeleton');
+            updateTrend('responseTrend', performance.responseTrend);
+            
+            // Compliance
+            const complianceEl = document.getElementById('complianceCount');
+            complianceEl.textContent = complianceTotal;
+            complianceEl.classList.remove('skeleton');
+            complianceEl.style.color = complianceTotal > 0 ? 'var(--danger)' : 'var(--text)';
+            updateTrend('complianceTrend', compliance.trend);
+            
+            // Forward Momentum
+            const momentumRate = performance.momentumRate || 0;
+            const momentumEl = document.getElementById('momentum');
+            momentumEl.textContent = `${momentumRate}%`;
+            momentumEl.classList.remove('skeleton');
+            updateTrend('momentumTrend', performance.momentumTrend);
+            
+            // Header stats
+            const activeCalls = performance.activeCalls || 0;
+            const totalReps = team.length;
+            const assistedReps = team.filter(r => r.assistedCalls > 0).length;
+            
+            document.getElementById('repsCovered').textContent = `${assistedReps}/${totalReps}`;
+            const liveCallsEl = document.getElementById('liveCalls');
+            liveCallsEl.textContent = activeCalls;
+            liveCallsEl.style.color = activeCalls > 0 ? 'var(--success)' : 'var(--text-dim)';
+            
+            document.getElementById('lastUpdated').textContent = `Updated ${new Date().toLocaleTimeString()}`;
+            
+            // Animate cards on first load
+            if (isFirstLoad) {
+                ['metric1', 'metric2', 'metric3', 'metric4'].forEach((id, index) => {
+                    setTimeout(() => {
+                        document.getElementById(id).classList.add('loaded');
+                    }, index * 100);
+                });
+                
+                setTimeout(() => {
+                    document.getElementById('teamSection').classList.add('loaded');
+                }, 400);
+                setTimeout(() => {
+                    document.getElementById('objectionSection').classList.add('loaded');
+                }, 500);
+                setTimeout(() => {
+                    document.getElementById('actionsSection').classList.add('loaded');
+                }, 600);
+            }
+            
+            // Update sections
+            updateObjectionDynamics(objections);
+            renderTeamTable(team);
+            
+            // Store compliance details for modal
+            window.complianceDetails = compliance.details || [];
+        }
         
-        setTimeout(() => {
-            document.getElementById('teamSection').classList.add('loaded');
-        }, 400);
-        setTimeout(() => {
-            document.getElementById('objectionSection').classList.add('loaded');
-        }, 500);
-        setTimeout(() => {
-            document.getElementById('actionsSection').classList.add('loaded');
-        }, 600);
-    }
-    
-    updateObjectionBreakdown();
-    renderTeamTable(currentFilter ? team.filter(currentFilter) : team);
-}
-
-// REPLACE YOUR ENTIRE renderTeamTable FUNCTION WITH THIS:
-function renderTeamTable(team) {
-    const tbody = document.getElementById('teamTableBody');
-    
-    if (!team || team.length === 0) {
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-dim);">
-                    No data yet
-                </td>
-            </tr>
-        `;
-    } else {
-        tbody.innerHTML = team.map(rep => {
-            const isActive = rep.calls > 0;
+        function updateTrend(elementId, trend) {
+            const el = document.getElementById(elementId);
+            if (!trend || trend === 0) {
+                el.innerHTML = '';
+                return;
+            }
             
-            // CRITICAL CHANGE: Use individual rep data directly from backend
-            // No division, no calculation - just display what backend sends
-            const suggestionsGiven = rep.suggestionsGiven || 0;
-            const suggestionsUsed = rep.suggestionsUsed || 0;
-            const usageRate = rep.adoptionRate || 0;  // Backend calculates this
+            const isPositive = trend > 0;
+            el.className = isPositive ? 'metric-trend trend-up' : 'metric-trend trend-down';
+            el.innerHTML = `${isPositive ? '↑' : '↓'} ${Math.abs(trend)}%`;
+        }
+        
+        function renderTeamTable(team) {
+            const tbody = document.getElementById('teamTableBody');
             
-            return `
-                <tr>
-                    <td>
-                        <span class="status-dot ${isActive ? '' : 'idle'}"></span>
-                        <span class="rep-name">${rep.name || 'Unknown'}</span>
-                    </td>
-                    <td>${rep.calls || 0}</td>
-                    <td>${suggestionsGiven}</td>
-                    <td>${suggestionsUsed}</td>
-                    <td>${usageRate}%</td>
-                    <td>
-                        <button class="btn" onclick="viewRep('${rep.name}')">View</button>
-                    </td>
-                </tr>
-            `;
-        }).join('');
-    }
-}
-        // Objection breakdown - SIMPLE COUNT
-        function updateObjectionBreakdown() {
+            if (!team || team.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-dim);">
+                            No data available
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = team.map(rep => {
+                const hasCoachFlag = rep.responseRate < 45 || rep.missedRecoveries >= 2;
+                const isActive = rep.assistedCalls > 0;
+                
+                return `
+                    <tr>
+                        <td>
+                            <span class="status-dot ${isActive ? '' : 'idle'}"></span>
+                            <span class="rep-name">${rep.name || 'Unknown'}</span>
+                            ${hasCoachFlag ? '<span class="coach-flag">COACH</span>' : ''}
+                        </td>
+                        <td>${rep.assistedCalls || 0}</td>
+                        <td>${rep.responseRate || 0}%</td>
+                        <td>${rep.momentumRate || 0}%</td>
+                        <td>${isActive ? 'Active' : 'Idle'}</td>
+                        <td>
+                            <button class="btn" onclick="viewRep('${rep.name}')">View</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        function updateObjectionDynamics(objections) {
             const objectionList = document.getElementById('objectionList');
             
-            const total = salesData.objections?.total || 0;
-            if (total === 0) {
+            if (!objections || objections.length === 0) {
                 objectionList.innerHTML = `
                     <div style="text-align: center; padding: 2rem; color: var(--text-dim);">
                         No objections tracked yet
@@ -948,23 +1199,73 @@ function renderTeamTable(team) {
                 return;
             }
             
-            const types = [
-                { type: 'Price', count: Math.floor(total * 0.35) },
-                { type: 'Timing', count: Math.floor(total * 0.25) },
-                { type: 'Competition', count: Math.floor(total * 0.2) },
-                { type: 'Authority', count: Math.floor(total * 0.1) },
-                { type: 'Other', count: Math.floor(total * 0.1) }
-            ];
-            
-            objectionList.innerHTML = types.map(item => `
-                <div class="objection-item">
-                    <span class="objection-type">${item.type}</span>
-                    <span class="objection-count">${item.count}</span>
+            objectionList.innerHTML = objections.map(obj => `
+                <div class="objection-item" onclick="filterByObjection('${obj.type}')">
+                    <div class="objection-header">
+                        <span class="objection-type">${obj.type}</span>
+                        <span class="objection-count">${obj.count}</span>
+                    </div>
+                    <div class="objection-metrics">
+                        <div class="objection-metric">
+                            <span class="metric-label-inline">Handled:</span>
+                            <span>${obj.actionRate || 0}%</span>
+                        </div>
+                        <div class="objection-metric">
+                            <span class="metric-label-inline">Recurred:</span>
+                            <span>${obj.recurrenceRate || 0}%</span>
+                        </div>
+                    </div>
                 </div>
             `).join('');
         }
         
-        // Setup listeners
+        function showComplianceDetails() {
+            const modal = document.getElementById('complianceModal');
+            const list = document.getElementById('complianceList');
+            
+            if (!window.complianceDetails || window.complianceDetails.length === 0) {
+                list.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--text-dim);">
+                        No compliance risks detected
+                    </div>
+                `;
+            } else {
+                list.innerHTML = window.complianceDetails.map(item => {
+                    // Generate proper URL with auth params
+                    const token = localStorage.getItem('lupo_token');
+                    const refresh = localStorage.getItem('lupo_refresh');
+                    const apiKey = localStorage.getItem('lupo_apikey');
+                    
+                    let callUrl = `/call-viewer.html/${item.callId}?t=${item.time}`;
+                    if (token) callUrl += `&token=${token}`;
+                    if (refresh) callUrl += `&refresh=${refresh}`;
+                    if (apiKey) callUrl += `&key=${apiKey}`;
+                    
+                    return `
+                        <div class="compliance-item ${item.severity.toLowerCase()}">
+                            <div class="compliance-header">
+                                <div>
+                                    <span class="compliance-severity severity-${item.severity.toLowerCase()}">${item.severity}</span>
+                                </div>
+                            </div>
+                            <div class="compliance-snippet">"${item.snippet}"</div>
+                            <div class="compliance-meta">
+                                <span>${item.rep}</span>
+                                <span>${item.timestamp}</span>
+                                <a class="compliance-link" href="${callUrl}">View Call</a>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            modal.classList.add('show');
+        }
+        
+        function closeModal() {
+            document.getElementById('complianceModal').classList.remove('show');
+        }
+        
         function setupListeners() {
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -974,10 +1275,27 @@ function renderTeamTable(team) {
                     loadData();
                 });
             });
+            
+            // Close modal on background click
+            document.getElementById('complianceModal').addEventListener('click', (e) => {
+                if (e.target.id === 'complianceModal') {
+                    closeModal();
+                }
+            });
         }
         
-        // Actions
-        function openSalesContext() {
+        function copyImpact() {
+            const text = document.getElementById('impactText').innerText;
+            navigator.clipboard.writeText(text);
+            showToast('Copied to clipboard');
+        }
+        
+        function filterByObjection(type) {
+            // Filter team table by objection type
+            showToast(`Filtering by ${type} objections`);
+        }
+        
+        function openPlaybooks() {
             const token = localStorage.getItem('lupo_token');
             const refresh = localStorage.getItem('lupo_refresh');
             const params = new URLSearchParams();
@@ -995,7 +1313,7 @@ function renderTeamTable(team) {
             window.location.href = '/compliance-rules.html?' + params.toString();
         }
         
-        function viewReports() {
+        function viewCalls() {
             const token = localStorage.getItem('lupo_token');
             const refresh = localStorage.getItem('lupo_refresh');
             const params = new URLSearchParams();
@@ -1004,31 +1322,31 @@ function renderTeamTable(team) {
             window.location.href = '/reports.html?' + params.toString();
         }
         
-        function viewRep(repName) {
-            console.log('View rep:', repName);
+        function viewCoaching() {
+            // Filter to show only reps with coach flags
+            showToast('Showing reps needing coaching');
         }
         
-        function resetFilters() {
-            currentFilter = null;
-            renderTeamTable(salesData.teamPerformance || []);
-            document.getElementById('filterBadge').style.display = 'none';
-            document.getElementById('resetFilter').style.display = 'none';
-            showToast('Filter cleared');
+        function viewRep(repName) {
+            console.log('View rep details:', repName);
         }
         
         function exportData() {
             const team = salesData.teamPerformance || [];
-            const csv = 'Rep,Calls,Usage Rate\n' + 
-                team.map(rep => `${rep.name},${rep.calls},${salesData.aiAdoption?.rate || 0}%`).join('\n');
+            const csv = 'Rep,Calls Today,Response Rate,Momentum,Needs Coaching\n' + 
+                team.map(rep => {
+                    const needsCoaching = rep.responseRate < 45 || rep.missedRecoveries >= 2;
+                    return `${rep.name},${rep.assistedCalls},${rep.responseRate}%,${rep.momentumRate}%,${needsCoaching ? 'Yes' : 'No'}`;
+                }).join('\n');
             
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `lupo-activity-${currentPeriod}.csv`;
+            a.download = `lupo-performance-${currentPeriod}.csv`;
             a.click();
             
-            showToast('Exported');
+            showToast('Exported performance data');
         }
         
         function showToast(message, type = 'success') {
