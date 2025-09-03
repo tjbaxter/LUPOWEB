@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - LUPO</title>
+    <title>Calls - LUPO</title>
     <style>
         * {
             margin: 0;
@@ -11,1673 +11,1543 @@
             box-sizing: border-box;
         }
         
-        :root {
-            --text-primary: #1d1d1f;
-            --text-secondary: #86868b;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f5f5f7;
-            --bg-tertiary: #fbfbfd;
-            --accent: #0071e3;
-            --border: rgba(0, 0, 0, 0.08);
-            --success: #34c759;
-            --error: #ff3b30;
-            --warning: #ff9500;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
-        }
-        
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --text-primary: #f5f5f7;
-                --text-secondary: #a1a1a6;
-                --bg-primary: #000000;
-                --bg-secondary: #161617;
-                --bg-tertiary: #1c1c1e;
-                --accent: #2997ff;
-                --border: rgba(255, 255, 255, 0.08);
-                --success: #32d74b;
-                --error: #ff453a;
-                --warning: #ff9f0a;
-                --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-                --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-                --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-            }
-        }
-        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
         }
         
-        /* Navigation */
-        nav {
-            background: var(--bg-primary);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-        
-        .nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-            height: 64px;
+        /* Header */
+        .header {
+            height: 52px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 0 24px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: relative;
+            z-index: 100;
         }
         
         .logo {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: 0.2px;
-            text-decoration: none;
-            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 28px;
+            letter-spacing: -0.5px;
         }
         
-        .user-menu {
+        .user-info {
             display: flex;
             align-items: center;
             gap: 16px;
-        }
-        
-        .tier-badge {
-            background: var(--accent);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
             font-size: 13px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: rgba(255,255,255,0.6);
         }
         
-        .tier-badge.free {
-            background: var(--text-secondary);
-        }
-        
-        .sign-out-btn {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .sign-out-btn:hover {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-        }
-        
-        /* Dashboard Layout */
-        .dashboard {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 48px 24px;
-        }
-        
-        /* Welcome Section */
-        .welcome-section {
-            margin-bottom: 48px;
-        }
-        
-        .welcome-section h1 {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .welcome-section p {
-            font-size: 20px;
-            color: var(--text-secondary);
-        }
-        
-        /* Cards Grid */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 24px;
-            margin-bottom: 48px;
-        }
-        
-        .card {
-            background: var(--bg-primary);
-            border-radius: 16px;
-            padding: 32px;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
-            border: 1px solid var(--border);
-        }
-        
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-        
-        .card h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .card p {
-            color: var(--text-secondary);
-            font-size: 15px;
-            line-height: 1.6;
-        }
-        
-        /* Profile Section */
-        .profile-section {
-            background: var(--bg-primary);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 32px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-        }
-        
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 32px;
-        }
-        
-        .section-title {
-            font-size: 28px;
-            font-weight: 600;
-        }
-        
-        .profile-content {
-            display: grid;
-            grid-template-columns: 180px 1fr;
-            gap: 48px;
-            align-items: start;
-        }
-        
-        .avatar-section {
-            text-align: center;
-        }
-        
-        .avatar-container {
-            position: relative;
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 16px;
-        }
-        
-        .avatar {
-            width: 100%;
-            height: 100%;
+        .user-avatar {
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 72px;
+            font-size: 11px;
             font-weight: 600;
-            color: var(--accent);
-            overflow: hidden;
-            position: relative;
-            border: 3px solid var(--border);
+            color: white;
         }
         
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* Navigation Sidebar */
+        .nav-sidebar {
+            position: fixed;
+            left: 0;
+            top: 52px;
+            height: calc(100vh - 52px);
+            width: 60px;
+            background: rgba(5,5,5,0.95);
+            border-right: 1px solid rgba(255,255,255,0.08);
+            transition: width 0.2s ease;
+            z-index: 100;
+            overflow: visible;
         }
         
-        .avatar-upload {
+        .nav-sidebar.expanded {
+            width: 200px;
+        }
+        
+        .nav-toggle {
             position: absolute;
-            bottom: 10px;
-            right: 10px;
-            width: 44px;
-            height: 44px;
-            background: var(--accent);
+            right: -12px;
+            top: 20px;
+            width: 24px;
+            height: 24px;
+            background: rgba(20,20,20,0.95);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: transform 0.2s ease;
-            box-shadow: var(--shadow-md);
-            border: 3px solid var(--bg-primary);
+            transition: all 0.2s;
+            z-index: 10000;
         }
         
-        .avatar-upload:hover {
-            transform: scale(1.1);
+        .nav-toggle:hover {
+            background: rgba(30,30,30,0.95);
+            border-color: rgba(255,255,255,0.2);
         }
         
-        .avatar-upload svg {
+        .nav-toggle svg {
+            width: 12px;
+            height: 12px;
+            stroke: rgba(255,255,255,0.5);
+            transition: transform 0.2s;
+        }
+        
+        .nav-sidebar.expanded .nav-toggle svg {
+            transform: rotate(180deg);
+        }
+        
+        .nav-menu {
+            padding: 20px 0;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        .nav-item:hover:not(.disabled) {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .nav-item.active {
+            background: rgba(59,130,246,0.15);
+        }
+        
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #3b82f6;
+        }
+        
+        .nav-item.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .nav-icon {
             width: 20px;
             height: 20px;
+            min-width: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+        }
+        
+        .nav-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            fill: none;
+        }
+        
+        .nav-label {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .nav-sidebar.expanded .nav-label {
+            opacity: 1;
+        }
+        
+        .nav-item.disabled .nav-label {
+            color: rgba(255,255,255,0.4);
+        }
+        
+        .nav-coming-soon {
+            font-size: 10px;
+            color: rgba(255,255,255,0.3);
+            margin-left: 8px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .nav-sidebar.expanded .nav-coming-soon {
+            opacity: 1;
+        }
+        
+        /* Main Layout with nav offset */
+        .main-wrapper {
+            display: flex;
+            height: calc(100vh - 52px);
+            margin-left: 60px;
+            transition: margin-left 0.2s ease;
+        }
+        
+        .nav-sidebar.expanded ~ .main-wrapper {
+            margin-left: 200px;
+        }
+        
+        /* Main Container */
+        .main-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 380px;
+            background: #050505;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .search-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        .search-box {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 10px 16px;
             color: white;
+            font-size: 14px;
+            transition: all 0.2s;
         }
         
-        .profile-form {
-            display: grid;
-            gap: 24px;
+        .search-box:focus {
+            outline: none;
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
         }
         
-        .form-group {
-            display: grid;
+        .search-box::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+        
+        .filters {
+            padding: 0 20px 16px;
+            display: flex;
             gap: 8px;
         }
         
-        .form-label {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-secondary);
-        }
-        
-        .form-input {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 12px 16px;
-            font-size: 16px;
-            font-family: inherit;
-            color: var(--text-primary);
-            transition: all 0.2s ease;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
-        }
-        
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-        
-        /* CV Upload Section */
-        .cv-section {
-            background: var(--bg-primary);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 32px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-        }
-        
-        .cv-benefits {
-            background: var(--bg-tertiary);
-            border-radius: 16px;
-            padding: 32px;
-            margin-bottom: 32px;
-            border: 1px solid var(--border);
-        }
-        
-        .cv-benefits h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .cv-benefits h3::before {
-            content: '🎯';
-            font-size: 24px;
-        }
-        
-        .benefit-list {
-            display: grid;
-            gap: 16px;
-        }
-        
-        .benefit-item {
-            display: flex;
-            gap: 16px;
-            align-items: start;
-        }
-        
-        .benefit-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--accent);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        
-        .benefit-content h4 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        
-        .benefit-content p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-        
-        .cv-upload-area {
-            background: var(--bg-tertiary);
-            border: 2px dashed var(--border);
-            border-radius: 16px;
-            padding: 48px;
-            text-align: center;
-            transition: all 0.3s ease;
+        .filter-btn {
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .filter-btn:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .filter-btn.active {
+            background: rgba(59,130,246,0.2);
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        
+        /* Calls List */
+        .calls-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .call-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: background 0.15s;
             position: relative;
         }
         
-        .cv-upload-area:hover {
-            border-color: var(--accent);
-            background: var(--bg-secondary);
+        .call-item:hover {
+            background: rgba(255,255,255,0.02);
         }
         
-        .cv-upload-area.dragover {
-            border-color: var(--accent);
-            background: var(--bg-secondary);
-            transform: scale(1.02);
+        .call-item.active {
+            background: rgba(59,130,246,0.1);
         }
         
-        .cv-upload-area.uploading {
-            cursor: not-allowed;
-            opacity: 0.7;
+        .call-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #3b82f6;
         }
         
-        .upload-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--accent);
-            border-radius: 50%;
+        .call-customer {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .call-details {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 24px;
-            font-size: 32px;
-            color: white;
+            gap: 12px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
         }
         
-        .upload-title {
-            font-size: 20px;
+        .search-match-preview {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+            margin-top: 6px;
+            font-style: italic;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .search-match-preview mark {
+            background: rgba(251, 191, 36, 0.3);
+            color: #fbbf24;
+            font-style: normal;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        /* Context View (hidden by default) */
+        .context-view {
+            display: none;
+            flex: 1;
+            padding: 40px;
+            background: #000;
+            overflow-y: auto;
+        }
+        
+        .context-view.active {
+            display: block;
+        }
+        
+        .context-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .context-header {
+            margin-bottom: 32px;
+        }
+        
+        .context-title {
+            font-size: 24px;
             font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        
+        .context-subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        .context-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        
+        .context-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+        
+        .context-card:hover {
+            border-color: rgba(255,255,255,0.15);
+        }
+        
+        .card-header {
+            margin-bottom: 20px;
+        }
+        
+        .card-title h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+        
+        .card-title p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        .context-textarea {
+            width: 100%;
+            min-height: 300px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 16px;
+            color: #fff;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            resize: vertical;
+            transition: all 0.2s;
+        }
+        
+        .context-textarea:focus {
+            outline: none;
+            border-color: rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.7);
+        }
+        
+        .upload-area {
+            border: 2px dashed rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 48px 32px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: rgba(255,255,255,0.02);
+        }
+        
+        .upload-area:hover {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.04);
+        }
+        
+        .upload-area.dragover {
+            border-color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.08);
+        }
+        
+        .upload-text {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
             margin-bottom: 8px;
         }
         
-        .upload-subtitle {
-            color: var(--text-secondary);
-            font-size: 16px;
-            margin-bottom: 24px;
+        .upload-hint {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
         }
         
-        .upload-btn {
-            background: var(--accent);
+        .btn {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
             color: white;
-            border: none;
-            padding: 12px 32px;
-            border-radius: 10px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
+            margin-top: 16px;
         }
         
-        .upload-btn:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-md);
+        .btn:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.3);
         }
         
-        .upload-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.6;
-            transform: none;
+        @media (max-width: 768px) {
+            .context-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
-        .cv-uploaded {
-            background: var(--success);
-            color: white;
-            padding: 16px 24px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 24px;
+        /* Transcript View */
+        .transcript-view {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px 40px;
+            padding-bottom: 140px;
+            background: #000;
+            display: block;
         }
         
-        .cv-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .transcript-view.hidden {
+            display: none;
         }
         
-        .cv-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+        .empty-state {
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        
-        .cv-details h4 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-        
-        .cv-details p {
+            height: 100%;
+            color: rgba(255,255,255,0.3);
             font-size: 14px;
+        }
+        
+        .transcript-line {
+            margin-bottom: 24px;
+            max-width: 720px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .transcript-line.highlighted {
+            background: rgba(251, 191, 36, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            margin-left: -12px;
+            margin-right: -12px;
+        }
+        
+        .transcript-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .transcript-text mark {
+            background: rgba(251, 191, 36, 0.4);
+            color: #fbbf24;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .transcript-time {
+            font-size: 10px;
+            color: rgba(255,255,255,0.3);
+            margin-top: 6px;
+        }
+        
+        /* AI Panel */
+        .ai-panel {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to bottom, rgba(10,10,10,0) 0%, rgba(10,10,10,0.95) 20%, rgba(10,10,10,0.98) 100%);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding: 24px 40px;
+            transform: translateY(0);
+            transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
+        }
+        
+        .ai-panel.expanded {
+            transform: translateY(-200px);
+        }
+        
+        .ai-suggestions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .suggestion-chip {
+            padding: 7px 16px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .suggestion-chip:hover {
+            background: rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.95);
+            border-color: rgba(255,255,255,0.2);
+        }
+        
+        .ai-input-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .ai-input {
+            flex: 1;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 14px;
+            resize: none;
+            height: 44px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        
+        .ai-input:focus {
+            outline: none;
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.25);
+        }
+        
+        .ai-input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+        
+        .ai-send {
+            width: 44px;
+            height: 44px;
+            background: #3b82f6;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s;
+        }
+        
+        .ai-send:hover:not(:disabled) {
             opacity: 0.9;
         }
         
-        .remove-cv {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background 0.2s ease;
+        .ai-send:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
         }
         
-        .remove-cv:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        .cv-analysis {
-            background: var(--bg-tertiary);
-            border-radius: 16px;
-            padding: 24px;
-            margin-top: 24px;
-            border: 1px solid var(--border);
-        }
-        
-        .cv-analysis h4 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .cv-analysis h4::before {
-            content: '✨';
-        }
-        
-        .analysis-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-        
-        .analysis-item {
-            background: var(--bg-primary);
-            padding: 16px;
+        /* AI Response Overlay */
+        .ai-response-overlay {
+            position: absolute;
+            bottom: 80px;
+            left: 40px;
+            right: 40px;
+            max-width: 720px;
+            background: rgba(20,20,20,0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 12px;
-            border: 1px solid var(--border);
+            padding: 24px;
+            display: none;
+            animation: slideUp 0.3s cubic-bezier(0.4,0,0.2,1);
+            max-height: 60vh;
+            overflow-y: auto;
         }
         
-        .analysis-label {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
+        .ai-response-overlay.show {
+            display: block;
         }
         
-        .analysis-value {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--accent);
-        }
-        
-        .skills-list {
+        .ai-response-header {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
-        }
-        
-        .skill-tag {
-            background: var(--accent);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 16px;
-            font-size: 13px;
-            font-weight: 500;
-        }
-        
-        /* Subscription Section */
-        .subscription-section {
-            background: var(--bg-primary);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 32px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-        }
-        
-        .subscription-card {
-            background: linear-gradient(135deg, var(--accent) 0%, #0051a2 100%);
-            color: white;
-            border-radius: 16px;
-            padding: 32px;
-            margin-bottom: 32px;
-        }
-        
-        .subscription-header {
-            display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 24px;
-        }
-        
-        .subscription-tier {
-            font-size: 32px;
-            font-weight: 700;
-        }
-        
-        .subscription-price {
-            font-size: 24px;
-            font-weight: 600;
-        }
-        
-        .subscription-features {
-            display: grid;
-            gap: 12px;
-        }
-        
-        .feature-item {
-            display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 16px;
+            margin-bottom: 16px;
         }
         
-        .feature-check {
+        .ai-response-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.4);
+        }
+        
+        .ai-close {
             width: 24px;
             height: 24px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s;
         }
         
-        .subscription-actions {
-            display: flex;
-            gap: 16px;
-            margin-top: 32px;
+        .ai-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.8);
         }
         
-        .action-btn {
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: none;
-        }
-        
-        .action-btn.primary {
-            background: white;
-            color: var(--accent);
-        }
-        
-        .action-btn.secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            backdrop-filter: blur(10px);
-        }
-        
-        .action-btn:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-md);
-        }
-        
-        /* Usage Stats */
-        .usage-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 24px;
-            margin-bottom: 48px;
-        }
-        
-        .stat-card {
-            background: var(--bg-primary);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-        }
-        
-        .stat-value {
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 8px;
-        }
-        
-        .stat-label {
+        .ai-response-content {
             font-size: 14px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.85);
         }
         
-        /* Save Button */
-        .save-changes-btn {
-            background: var(--accent);
+        .ai-response-content p {
+            margin-bottom: 12px;
+        }
+        
+        .ai-response-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .ai-response-content strong {
             color: white;
-            border: none;
-            padding: 16px 32px;
-            border-radius: 12px;
-            font-size: 17px;
             font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: block;
-            margin: 48px auto 0;
         }
         
-        .save-changes-btn:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .save-changes-btn:active {
-            transform: scale(0.98);
-        }
-        
-        /* Loading States */
+        /* Loading */
         .loading {
             display: inline-block;
             width: 16px;
             height: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-top-color: #3b82f6;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            margin-left: 8px;
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
         
-        /* Toast Notifications */
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px 24px;
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            z-index: 1000;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .toast.show {
-            transform: translateX(0);
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .toast.success {
-            border-color: var(--success);
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
         
-        .toast.error {
-            border-color: var(--error);
+        ::-webkit-scrollbar-track {
+            background: transparent;
         }
         
-        .toast-icon {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
         }
         
-        .toast.success .toast-icon {
-            background: var(--success);
-            color: white;
-        }
-        
-        .toast.error .toast-icon {
-            background: var(--error);
-            color: white;
-        }
-        
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        
-        .modal-overlay.show {
-            display: flex;
-        }
-        
-        .modal {
-            background: var(--bg-primary);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 480px;
-            width: 90%;
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .modal h3 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-        
-        .modal p {
-            color: var(--text-secondary);
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 32px;
-        }
-        
-        .modal-actions {
-            display: flex;
-            gap: 16px;
-            justify-content: flex-end;
-        }
-        
-        .modal-btn {
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: none;
-        }
-        
-        .modal-btn.cancel {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-        }
-        
-        .modal-btn.confirm {
-            background: var(--error);
-            color: white;
-        }
-        
-        .modal-btn:hover {
-            transform: scale(1.05);
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .dashboard {
-                padding: 24px 16px;
-            }
-            
-            .welcome-section h1 {
-                font-size: 32px;
-            }
-            
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .profile-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .subscription-actions {
-                flex-direction: column;
-            }
-            
-            .modal-actions {
-                flex-direction: column-reverse;
-            }
-            
-            .analysis-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* File input hidden */
-        input[type="file"] {
-            display: none;
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.15);
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-content">
-            <a href="/" class="logo">LUPO</a>
-            <div class="user-menu">
-                <span class="tier-badge" id="userTier">FREE</span>
-                <button class="sign-out-btn" onclick="signOut()">Sign Out</button>
+    <div class="header">
+        <div class="logo">LUPO</div>
+        <div class="user-info">
+            <span id="userName">Loading...</span>
+            <div class="user-avatar" id="userAvatar">?</div>
+        </div>
+    </div>
+    
+    <!-- Navigation Sidebar -->
+    <nav class="nav-sidebar" id="navSidebar">
+        <div class="nav-toggle" onclick="toggleNav()">
+            <svg viewBox="0 0 24 24" fill="none">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </div>
+        <div class="nav-menu">
+            <div class="nav-item active" onclick="switchView('sales')">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </div>
+                <span class="nav-label">Sales Calls</span>
+            </div>
+            <div class="nav-item" onclick="switchView('context')">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                </div>
+                <span class="nav-label">Context</span>
+            </div>
+            <div class="nav-item disabled">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <span class="nav-label">Interview Calls</span>
+                    <span class="nav-coming-soon">coming soon</span>
+                </div>
             </div>
         </div>
     </nav>
     
-    <!-- Dashboard -->
-    <div class="dashboard">
-        <!-- Welcome Section -->
-        <div class="welcome-section">
-            <h1 id="welcomeMessage">Welcome back!</h1>
-            <p>Manage your profile and settings</p>
-        </div>
-        
-        <!-- Usage Stats -->
-        <div class="usage-stats">
-            <div class="stat-card">
-                <div class="stat-value" id="dailyRequests">0</div>
-                <div class="stat-label">Daily Requests</div>
+    <div class="main-wrapper">
+        <div class="main-container">
+            <!-- Sidebar -->
+            <div class="sidebar" id="salesSidebar">
+                <div class="search-header">
+                    <input type="text" class="search-box" placeholder="Search calls and transcripts..." id="searchInput">
+                </div>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="today">Today</button>
+                    <button class="filter-btn" data-filter="week">Week</button>
+                    <button class="filter-btn" data-filter="month">Month</button>
+                </div>
+                <div class="calls-list" id="callsList">
+                    <!-- Calls loaded here -->
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-value" id="interviewsCount">0</div>
-                <div class="stat-label">Interviews</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="successRate">0%</div>
-                <div class="stat-label">Success Rate</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="timesSaved">0h</div>
-                <div class="stat-label">Time Saved</div>
-            </div>
-        </div>
-        
-        <!-- Quick Actions -->
-        <div class="cards-grid">
-            <div class="card">
-                <div class="card-icon">🚀</div>
-                <h3>Quick Start</h3>
-                <p>Launch LUPO and start your interview preparation with AI-powered assistance.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">📚</div>
-                <h3>Interview Tips</h3>
-                <p>Access our library of interview best practices and common questions.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">💬</div>
-                <h3>Support</h3>
-                <p>Get help from our team or browse frequently asked questions.</p>
-            </div>
-        </div>
-        
-        <!-- Profile Section -->
-        <div class="profile-section">
-            <div class="section-header">
-                <h2 class="section-title">Profile Information</h2>
-            </div>
-            <div class="profile-content">
-                <div class="avatar-section">
-                    <div class="avatar-container">
-                        <div class="avatar" id="avatarContainer">
-                            <span id="avatarInitial">U</span>
+            
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Sales Transcript View -->
+                <div class="transcript-view" id="transcriptView">
+                    <div class="empty-state">Select a call to view transcript</div>
+                </div>
+                
+                <!-- Context View -->
+                <div class="context-view" id="contextView">
+                    <div class="context-container">
+                        <div class="context-header">
+                            <h1 class="context-title">Context Configuration</h1>
+                            <p class="context-subtitle">Manage sales context and interview settings</p>
                         </div>
-                        <label for="avatarUpload" class="avatar-upload">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
-                                <circle cx="12" cy="13" r="4"/>
+                        
+                        <div class="context-grid">
+                            <!-- Sales Context Card -->
+                            <div class="context-card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h3>Sales Context</h3>
+                                        <p>Define your product, pricing, and sales boundaries</p>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <textarea class="context-textarea" id="salesContext" placeholder="Enter your sales context...
+COMPANY FACTS:
+Product: [Your Product Name]
+Description: [What your product does]
+Price: [Pricing structure]
+Target Market: [Your ideal customers]
+
+KEY CAPABILITIES:
+- [Feature 1]
+- [Feature 2]
+- [Feature 3]
+
+DIFFERENTIATORS:
+- [What makes you unique]
+- [Competitive advantages]
+
+SUCCESS METRICS:
+- [Customer success stories]
+- [ROI data]
+
+COMPLIANCE & BOUNDARIES:
+- [What not to promise]
+- [Discount limits]
+- [Legal boundaries]"></textarea>
+                                    <button class="btn" onclick="saveSalesContext()">Save Context</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Interview Mode Card -->
+                            <div class="context-card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h3>Interview Mode</h3>
+                                        <p>Upload CV for AI-powered interview assistance</p>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="upload-area" id="uploadArea" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                        <div class="upload-text">Drop CV here or click to upload</div>
+                                        <div class="upload-hint">Supports PDF, DOC, DOCX formats</div>
+                                        <input type="file" id="fileInput" accept=".pdf,.doc,.docx" style="display: none;" onchange="handleFileSelect(event)">
+                                    </div>
+                                    <button class="btn" onclick="document.getElementById('fileInput').click()">Choose File</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Panel -->
+                <div class="ai-panel" id="aiPanel">
+                    <div class="ai-suggestions">
+                        <button class="suggestion-chip" onclick="quickAsk('Summarize the key points from this call')">Summarize</button>
+                        <button class="suggestion-chip" onclick="quickAsk('What objections were raised?')">Objections</button>
+                        <button class="suggestion-chip" onclick="quickAsk('What are the next steps?')">Next steps</button>
+                        <button class="suggestion-chip" onclick="quickAsk('Draft a follow-up email')">Email draft</button>
+                        <button class="suggestion-chip" onclick="quickAsk('What questions did they ask?')">Questions</button>
+                    </div>
+                    <div class="ai-input-container">
+                        <input type="text" class="ai-input" id="aiInput" placeholder="Ask anything about this call...">
+                        <button class="ai-send" id="aiSend" onclick="submitAI()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                             </svg>
-                        </label>
-                        <input type="file" id="avatarUpload" accept="image/*" onchange="handleAvatarUpload(event)">
+                        </button>
                     </div>
                 </div>
-                <div class="profile-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">First Name</label>
-                            <input type="text" class="form-input" id="firstName" placeholder="John">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Last Name</label>
-                            <input type="text" class="form-input" id="lastName" placeholder="Doe">
-                        </div>
+                
+                <!-- AI Response Overlay -->
+                <div class="ai-response-overlay" id="aiResponse">
+                    <div class="ai-response-header">
+                        <div class="ai-response-title">AI Analysis</div>
+                        <button class="ai-close" onclick="closeAI()">×</button>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="email" placeholder="john@example.com" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Job Title</label>
-                        <input type="text" class="form-input" id="jobTitle" placeholder="Software Engineer">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Bio</label>
-                        <textarea class="form-input" id="bio" rows="3" placeholder="Tell us about yourself..."></textarea>
-                    </div>
+                    <div class="ai-response-content" id="aiContent"></div>
                 </div>
             </div>
         </div>
-        
-        <!-- CV Upload Section -->
-        <div class="cv-section">
-            <div class="section-header">
-                <h2 class="section-title">Your Resume/CV</h2>
-            </div>
-            
-            <!-- CV Benefits -->
-            <div class="cv-benefits">
-                <h3>Why Upload Your CV?</h3>
-                <div class="benefit-list">
-                    <div class="benefit-item">
-                        <div class="benefit-icon">✨</div>
-                        <div class="benefit-content">
-                            <h4>Personalized Interview Answers</h4>
-                            <p>LUPO tailors every response based on your actual experience, making your answers authentic and compelling.</p>
-                        </div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">🎯</div>
-                        <div class="benefit-content">
-                            <h4>Real-Time Context</h4>
-                            <p>During interviews, LUPO instantly references your skills, projects, and achievements to craft perfect responses.</p>
-                        </div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">🔒</div>
-                        <div class="benefit-content">
-                            <h4>Secure & Private</h4>
-                            <p>Your CV is encrypted and stored securely. We never share your data and you can delete it anytime.</p>
-                        </div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">🚀</div>
-                        <div class="benefit-content">
-                            <h4>Better Interview Performance</h4>
-                            <p>With your background loaded, LUPO helps you tell your story confidently and handle any question with ease.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="cvUploadArea" class="cv-upload-area" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
-                <div class="upload-icon">📄</div>
-                <h3 class="upload-title">Upload Your CV</h3>
-                <p class="upload-subtitle">Drag & drop your CV here or click to browse</p>
-                <button class="upload-btn" id="uploadBtn" onclick="document.getElementById('cvUpload').click()">Choose File</button>
-                <input type="file" id="cvUpload" accept=".pdf,.doc,.docx" onchange="handleCVUpload(event)">
-            </div>
-            
-            <div id="cvUploaded" class="cv-uploaded" style="display: none;">
-                <div class="cv-info">
-                    <div class="cv-icon">✓</div>
-                    <div class="cv-details">
-                        <h4 id="cvFileName">Resume.pdf</h4>
-                        <p id="cvFileSize">2.3 MB • Uploaded just now</p>
-                    </div>
-                </div>
-                <button class="remove-cv" onclick="removeCV()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-            
-            <!-- CV Analysis Display -->
-            <div id="cvAnalysis" class="cv-analysis" style="display: none;">
-                <h4>What LUPO Learned About You</h4>
-                <div class="analysis-grid">
-                    <div class="analysis-item">
-                        <div class="analysis-label">Experience</div>
-                        <div class="analysis-value" id="experienceCount">0 years</div>
-                    </div>
-                    <div class="analysis-item">
-                        <div class="analysis-label">Skills Found</div>
-                        <div class="analysis-value" id="skillsCount">0</div>
-                    </div>
-                    <div class="analysis-item">
-                        <div class="analysis-label">Education</div>
-                        <div class="analysis-value" id="educationLevel">-</div>
-                    </div>
-                </div>
-                <div class="skills-list" id="topSkills"></div>
-                <p style="margin-top: 16px; color: var(--text-secondary); font-size: 14px;">
-                    ✅ LUPO is now ready to provide personalized interview answers based on your background!
-                </p>
-            </div>
-        </div>
-        
-        <!-- Subscription Section -->
-        <div class="subscription-section">
-            <div class="section-header">
-                <h2 class="section-title">Subscription</h2>
-            </div>
-            <div class="subscription-card" id="subscriptionCard">
-                <div class="subscription-header">
-                    <div class="subscription-tier" id="subscriptionTier">Free Plan</div>
-                    <div class="subscription-price" id="subscriptionPrice">$0/month</div>
-                </div>
-                <div class="subscription-features">
-                    <div class="feature-item">
-                        <div class="feature-check">✓</div>
-                        <span id="feature1">10 AI requests per day</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-check">✓</div>
-                        <span id="feature2">Interview assistance</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-check">✓</div>
-                        <span id="feature3">Basic analytics</span>
-                    </div>
-                </div>
-                <div class="subscription-actions">
-                    <button class="action-btn primary" id="upgradeBtn" onclick="handleUpgrade()">Upgrade to Pro</button>
-                    <button class="action-btn secondary" id="manageBtn" onclick="handleManageSubscription()" style="display: none;">Manage Subscription</button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Save Button -->
-        <button class="save-changes-btn" onclick="saveChanges()">Save Changes</button>
-    </div>
-    
-    <!-- Cancel Subscription Modal -->
-    <div class="modal-overlay" id="cancelModal">
-        <div class="modal">
-            <h3>Cancel Subscription?</h3>
-            <p>Are you sure you want to cancel your Pro subscription? You'll lose access to unlimited AI requests and premium features at the end of your billing period.</p>
-            <div class="modal-actions">
-                <button class="modal-btn cancel" onclick="closeCancelModal()">Keep Subscription</button>
-                <button class="modal-btn confirm" onclick="confirmCancel()">Cancel Subscription</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">
-        <div class="toast-icon" id="toastIcon">✓</div>
-        <span id="toastMessage">Changes saved successfully!</span>
     </div>
     
     <script>
-        // User data
-        let userData = {
-            email: '',
-            name: '',
-            firstName: '',
-            lastName: '',
-            jobTitle: '',
-            bio: '',
-            tier: 'free',
-            avatar: null,
-            cv: null,
-            cvAnalysis: null,
-            usage: { daily: 0 }
-        };
+        let currentCall = null;
+        let calls = [];
+        let callsWithTranscripts = new Map();
+        let currentFilter = 'all';
+        let currentSearchQuery = '';
+        let currentView = 'sales';
         
-        // Initialize dashboard
-        async function initDashboard() {
-            const token = localStorage.getItem('lupo_session');
+        // Toggle navigation sidebar
+        function toggleNav() {
+            const sidebar = document.getElementById('navSidebar');
+            sidebar.classList.toggle('expanded');
+        }
+        
+        // Switch views
+        function switchView(view) {
+            if (view === 'interview') return; // Disabled
             
-            if (!token) {
-                window.location.href = '/login.html';
-                return;
-            }
+            currentView = view;
             
-            // Load saved CV data from localStorage
-            const savedCVData = localStorage.getItem('lupo_cv_data');
-            if (savedCVData) {
-                const cvData = JSON.parse(savedCVData);
-                userData.cv = cvData.cv;
-                userData.cvAnalysis = cvData.analysis;
-            }
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
             
-            try {
-                // Fetch user data
-                const response = await fetch('https://lupo-backend.fly.dev/auth/me', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Failed to fetch user data');
-                }
-                
-                const data = await response.json();
-                userData = { ...userData, ...data.user };
-                
-                // Fetch CV data from backend if available
-                if (!userData.cv) {
-                    await fetchCVData();
-                }
-                
-                // Update UI
-                updateUI();
-                
-            } catch (err) {
-                console.error('Dashboard init error:', err);
-                showToast('Failed to load user data', 'error');
+            // Toggle views
+            const salesSidebar = document.getElementById('salesSidebar');
+            const transcriptView = document.getElementById('transcriptView');
+            const contextView = document.getElementById('contextView');
+            const aiPanel = document.getElementById('aiPanel');
+            
+            if (view === 'sales') {
+                salesSidebar.style.display = 'flex';
+                transcriptView.classList.remove('hidden');
+                contextView.classList.remove('active');
+                aiPanel.style.display = 'block';
+            } else if (view === 'context') {
+                salesSidebar.style.display = 'none';
+                transcriptView.classList.add('hidden');
+                contextView.classList.add('active');
+                aiPanel.style.display = 'none';
+                loadSalesContext();
             }
         }
         
-        // Fetch CV data from backend
-        async function fetchCVData() {
-            const token = localStorage.getItem('lupo_session');
-            
+        // Load sales context
+        async function loadSalesContext() {
             try {
-                const response = await fetch('https://lupo-backend.fly.dev/user/cv', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
+                const headers = getAuthHeaders();
+                const response = await fetch('https://lupo-backend.fly.dev/sales/context', {
+                    headers: headers
                 });
                 
                 if (response.ok) {
                     const data = await response.json();
-                    if (data.cv) {
-                        userData.cv = data.cv;
-                        userData.cvAnalysis = data.cv.analysis;
-                        
-                        // Save to localStorage
-                        localStorage.setItem('lupo_cv_data', JSON.stringify({
-                            cv: userData.cv,
-                            analysis: userData.cvAnalysis
-                        }));
+                    if (data.content) {
+                        document.getElementById('salesContext').value = data.content;
                     }
                 }
             } catch (err) {
-                console.error('Failed to fetch CV data:', err);
+                console.error('Failed to load context:', err);
             }
         }
         
-        // Update UI with user data
-        function updateUI() {
-            // Welcome message
-            const firstName = userData.firstName || userData.name?.split(' ')[0] || 'there';
-            document.getElementById('welcomeMessage').textContent = `Welcome back, ${firstName}!`;
-            
-            // Tier badge
-            const tierBadge = document.getElementById('userTier');
-            tierBadge.textContent = userData.tier.toUpperCase();
-            tierBadge.className = `tier-badge ${userData.tier}`;
-            
-            // Avatar
-            const avatarInitial = document.getElementById('avatarInitial');
-            const avatarContainer = document.getElementById('avatarContainer');
-            
-            if (userData.avatar) {
-                avatarContainer.innerHTML = `<img src="${userData.avatar}" alt="Profile">`;
-            } else {
-                const initial = (userData.firstName || userData.email || 'U')[0].toUpperCase();
-                avatarInitial.textContent = initial;
-            }
-            
-            // Profile fields
-            document.getElementById('firstName').value = userData.firstName || '';
-            document.getElementById('lastName').value = userData.lastName || '';
-            document.getElementById('email').value = userData.email || '';
-            document.getElementById('jobTitle').value = userData.jobTitle || '';
-            document.getElementById('bio').value = userData.bio || '';
-            
-            // Usage stats
-            document.getElementById('dailyRequests').textContent = userData.usage?.daily || 0;
-            document.getElementById('interviewsCount').textContent = userData.stats?.interviews || 0;
-            document.getElementById('successRate').textContent = (userData.stats?.successRate || 0) + '%';
-            document.getElementById('timesSaved').textContent = (userData.stats?.timeSaved || 0) + 'h';
-            
-            // Subscription
-            updateSubscriptionUI();
-            
-            // CV
-            if (userData.cv) {
-                showUploadedCV(userData.cv);
-                if (userData.cvAnalysis) {
-                    showCVAnalysis(userData.cvAnalysis);
-                }
-            }
-        }
-        
-        // Update subscription UI
-        function updateSubscriptionUI() {
-            const isPro = userData.tier === 'pro';
-            const card = document.getElementById('subscriptionCard');
-            
-            document.getElementById('subscriptionTier').textContent = isPro ? 'Pro Plan' : 'Free Plan';
-            document.getElementById('subscriptionPrice').textContent = isPro ? '$19/month' : '$0/month';
-            
-            // Update features
-            if (isPro) {
-                document.getElementById('feature1').textContent = 'Unlimited AI requests';
-                document.getElementById('feature2').textContent = 'Priority processing';
-                document.getElementById('feature3').textContent = 'Advanced analytics';
-                card.style.background = 'linear-gradient(135deg, #0071e3 0%, #0051a2 100%)';
-            } else {
-                document.getElementById('feature1').textContent = '10 AI requests per day';
-                document.getElementById('feature2').textContent = 'Interview assistance';
-                document.getElementById('feature3').textContent = 'Basic analytics';
-                card.style.background = 'linear-gradient(135deg, var(--accent) 0%, #0051a2 100%)';
-            }
-            
-            // Update buttons
-            document.getElementById('upgradeBtn').style.display = isPro ? 'none' : 'block';
-            document.getElementById('manageBtn').style.display = isPro ? 'block' : 'none';
-        }
-        
-        // Handle avatar upload
-        function handleAvatarUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            if (!file.type.startsWith('image/')) {
-                showToast('Please upload an image file', 'error');
-                return;
-            }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                userData.avatar = e.target.result;
-                document.getElementById('avatarContainer').innerHTML = `<img src="${e.target.result}" alt="Profile">`;
-                showToast('Profile picture updated', 'success');
-            };
-            reader.readAsDataURL(file);
-        }
-        
-        // Handle CV upload
-        async function handleCVUpload(event) {
-            const file = event.target.files[0];
-            await handleFileUpload(file);
-        }
-        
-        // Handle drag and drop
-        function handleDrop(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            
-            const uploadArea = document.getElementById('cvUploadArea');
-            uploadArea.classList.remove('dragover');
-            
-            const file = event.dataTransfer.files[0];
-            handleFileUpload(file);
-        }
-        
-        function handleDragOver(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            
-            const uploadArea = document.getElementById('cvUploadArea');
-            uploadArea.classList.add('dragover');
-        }
-        
-        function handleDragLeave(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            
-            const uploadArea = document.getElementById('cvUploadArea');
-            uploadArea.classList.remove('dragover');
-        }
-        
-        // Handle file upload
-        async function handleFileUpload(file) {
-            if (!file) return;
-            
-            const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-            if (!validTypes.includes(file.type)) {
-                showToast('Please upload a PDF or Word document', 'error');
-                return;
-            }
-            
-            if (file.size > 10 * 1024 * 1024) { // 10MB limit
-                showToast('File size must be less than 10MB', 'error');
-                return;
-            }
-            
-            // Show uploading state
-            const uploadArea = document.getElementById('cvUploadArea');
-            const uploadBtn = document.getElementById('uploadBtn');
-            uploadArea.classList.add('uploading');
-            uploadBtn.disabled = true;
-            uploadBtn.innerHTML = 'Uploading<span class="loading"></span>';
-            
-            const token = localStorage.getItem('lupo_session');
+        // Save sales context
+        async function saveSalesContext() {
+            const content = document.getElementById('salesContext').value;
+            const headers = getAuthHeaders();
+            headers['Content-Type'] = 'application/json';
             
             try {
-                // Convert file to base64
-                const base64 = await fileToBase64(file);
-                
-                // Upload to backend
-                const response = await fetch('https://lupo-backend.fly.dev/user/upload-cv', {
+                const response = await fetch('https://lupo-backend.fly.dev/sales/context', {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        file: base64,
-                        filename: file.name,
-                        mimeType: file.type
-                    })
+                    headers: headers,
+                    body: JSON.stringify({ content })
                 });
                 
-                if (!response.ok) {
-                    throw new Error('Upload failed');
+                if (response.ok) {
+                    showNotification('Context saved successfully');
                 }
-                
-                const data = await response.json();
-                
-                // Store CV info
-                userData.cv = {
-                    name: file.name,
-                    size: file.size,
-                    type: file.type,
-                    uploadedAt: new Date().toISOString()
-                };
-                
-                userData.cvAnalysis = data.analysis;
-                
-                // Save to localStorage
-                localStorage.setItem('lupo_cv_data', JSON.stringify({
-                    cv: userData.cv,
-                    analysis: userData.cvAnalysis
-                }));
-                
-                showUploadedCV(userData.cv);
-                showCVAnalysis(userData.cvAnalysis);
-                showToast('CV uploaded and analyzed successfully!', 'success');
-                
             } catch (err) {
-                console.error('CV upload error:', err);
-                showToast('Failed to upload CV. Please try again.', 'error');
-            } finally {
-                uploadArea.classList.remove('uploading');
-                uploadBtn.disabled = false;
-                uploadBtn.innerHTML = 'Choose File';
+                console.error('Failed to save context:', err);
+                showNotification('Failed to save context', 'error');
             }
         }
         
-        // Convert file to base64
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
+        // File upload handlers
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('uploadArea').classList.add('dragover');
         }
         
-        // Show uploaded CV
-        function showUploadedCV(cvData) {
-            document.getElementById('cvUploadArea').style.display = 'none';
-            document.getElementById('cvUploaded').style.display = 'flex';
-            document.getElementById('cvFileName').textContent = cvData.name;
-            
-            const size = (cvData.size / (1024 * 1024)).toFixed(1);
-            const date = new Date(cvData.uploadedAt);
-            const timeAgo = getTimeAgo(date);
-            document.getElementById('cvFileSize').textContent = `${size} MB • Uploaded ${timeAgo}`;
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('uploadArea').classList.remove('dragover');
         }
         
-        // Show CV analysis
-        function showCVAnalysis(analysis) {
-            if (!analysis) return;
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('uploadArea').classList.remove('dragover');
             
-            document.getElementById('cvAnalysis').style.display = 'block';
-            
-            // Experience
-            const experienceYears = analysis.experience?.length || 0;
-            document.getElementById('experienceCount').textContent = 
-                experienceYears > 0 ? `${experienceYears} positions` : 'Entry level';
-            
-            // Skills count
-            const skillsCount = analysis.skills?.length || 0;
-            document.getElementById('skillsCount').textContent = skillsCount;
-            
-            // Education
-            const education = analysis.education?.[0];
-            if (education) {
-                document.getElementById('educationLevel').textContent = 
-                    education.degree || education.qualification || 'Degree';
-            }
-            
-            // Top skills
-            const topSkillsEl = document.getElementById('topSkills');
-            topSkillsEl.innerHTML = '';
-            
-            if (analysis.skills && analysis.skills.length > 0) {
-                const topSkills = analysis.skills.slice(0, 8);
-                topSkills.forEach(skill => {
-                    const tag = document.createElement('span');
-                    tag.className = 'skill-tag';
-                    tag.textContent = skill;
-                    topSkillsEl.appendChild(tag);
-                });
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
             }
         }
         
-        // Remove CV
-        async function removeCV() {
-            const token = localStorage.getItem('lupo_session');
-            
-            try {
-                const response = await fetch('https://lupo-backend.fly.dev/user/remove-cv', {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Failed to remove CV');
-                }
-                
-                // Clear local data
-                userData.cv = null;
-                userData.cvAnalysis = null;
-                localStorage.removeItem('lupo_cv_data');
-                
-                // Reset UI
-                document.getElementById('cvUploadArea').style.display = 'block';
-                document.getElementById('cvUploaded').style.display = 'none';
-                document.getElementById('cvAnalysis').style.display = 'none';
-                
-                showToast('CV removed successfully', 'success');
-                
-            } catch (err) {
-                console.error('Remove CV error:', err);
-                showToast('Failed to remove CV', 'error');
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
             }
         }
         
-        // Get time ago string
-        function getTimeAgo(date) {
-            const seconds = Math.floor((new Date() - date) / 1000);
+        function handleFile(file) {
+            const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
             
-            if (seconds < 60) return 'just now';
-            if (seconds < 3600) return Math.floor(seconds / 60) + ' minutes ago';
-            if (seconds < 86400) return Math.floor(seconds / 3600) + ' hours ago';
-            return Math.floor(seconds / 86400) + ' days ago';
-        }
-        
-        // Save changes
-        async function saveChanges() {
-            const token = localStorage.getItem('lupo_session');
-            const btn = document.querySelector('.save-changes-btn');
-            
-            // Show loading state
-            btn.innerHTML = 'Saving<span class="loading"></span>';
-            btn.disabled = true;
-            
-            // Collect form data
-            userData.firstName = document.getElementById('firstName').value;
-            userData.lastName = document.getElementById('lastName').value;
-            userData.jobTitle = document.getElementById('jobTitle').value;
-            userData.bio = document.getElementById('bio').value;
-            userData.name = `${userData.firstName} ${userData.lastName}`.trim();
-            
-            try {
-                // TODO: Send to backend
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-                
-                // Update local storage
-                localStorage.setItem('lupo_user', JSON.stringify(userData));
-                
-                showToast('Changes saved successfully!', 'success');
-                
-            } catch (err) {
-                console.error('Save error:', err);
-                showToast('Failed to save changes', 'error');
-            } finally {
-                btn.innerHTML = 'Save Changes';
-                btn.disabled = false;
-            }
-        }
-        
-        // Handle upgrade
-        function handleUpgrade() {
-            const token = localStorage.getItem('lupo_session');
-            if (token && userData) {
-                const authData = {
-                    token: token,
-                    user: userData,
-                    timestamp: Date.now()
-                };
-                
-                const encodedAuth = btoa(JSON.stringify(authData));
-                window.location.href = `/pricing?auth=${encodedAuth}&from=dashboard#upgrade`;
-            } else {
-                window.location.href = '/pricing';
-            }
-        }
-        
-        // Handle manage subscription
-        function handleManageSubscription() {
-            document.getElementById('cancelModal').classList.add('show');
-        }
-        
-        // Close cancel modal
-        function closeCancelModal() {
-            document.getElementById('cancelModal').classList.remove('show');
-        }
-        
-        // Confirm cancel subscription
-        async function confirmCancel() {
-            const token = localStorage.getItem('lupo_session');
-            
-            try {
-                // TODO: Call backend to cancel subscription
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-                
-                userData.tier = 'free';
-                updateSubscriptionUI();
-                closeCancelModal();
-                showToast('Subscription cancelled. You have access until the end of your billing period.', 'success');
-                
-            } catch (err) {
-                console.error('Cancel error:', err);
-                showToast('Failed to cancel subscription', 'error');
-            }
-        }
-        
-        // Sign out
-        async function signOut() {
-            const token = localStorage.getItem('lupo_session');
-            
-            if (token) {
-                try {
-                    await fetch('https://lupo-backend.fly.dev/auth/logout', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    });
-                } catch (err) {
-                    console.error('Logout error:', err);
-                }
+            if (!validTypes.includes(file.type)) {
+                showNotification('Please upload a PDF or Word document', 'error');
+                return;
             }
             
-            localStorage.removeItem('lupo_session');
-            localStorage.removeItem('lupo_user');
-            localStorage.removeItem('lupo_cv_data');
-            window.location.href = '/';
+            // Update UI
+            const uploadArea = document.getElementById('uploadArea');
+            uploadArea.innerHTML = `
+                <div class="upload-text">${file.name}</div>
+                <div class="upload-hint">File ready for interview mode</div>
+            `;
+            
+            showNotification('CV uploaded successfully');
         }
         
-        // Show toast notification
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            const toastIcon = document.getElementById('toastIcon');
-            const toastMessage = document.getElementById('toastMessage');
-            
-            toast.className = `toast ${type}`;
-            toastIcon.textContent = type === 'success' ? '✓' : '✕';
-            toastMessage.textContent = message;
-            
-            toast.classList.add('show');
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                background: ${type === 'error' ? 'rgba(255,0,0,0.1)' : 'rgba(59,130,246,0.2)'};
+                border: 1px solid ${type === 'error' ? 'rgba(255,0,0,0.3)' : '#3b82f6'};
+                color: white;
+                border-radius: 8px;
+                font-size: 14px;
+                z-index: 10000;
+                animation: fadeIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
             
             setTimeout(() => {
-                toast.classList.remove('show');
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 300);
             }, 3000);
         }
         
-        // Initialize on load
-        window.addEventListener('load', initDashboard);
+        // Initialize
+        async function init() {
+            await loadUserInfo();
+            await loadCalls();
+            setupEventListeners();
+        }
+        
+        // Auth headers
+        function getAuthHeaders() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token') || localStorage.getItem('lupo_session');
+            const apiKey = urlParams.get('key');
+            
+            const headers = {};
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            } else if (apiKey) {
+                headers['X-API-Key'] = apiKey;
+            }
+            return headers;
+        }
+        
+        // Load user info
+        async function loadUserInfo() {
+            try {
+                const headers = getAuthHeaders();
+                const response = await fetch('https://lupo-backend.fly.dev/sales/me', {
+                    headers: headers
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const userName = document.getElementById('userName');
+                    const userAvatar = document.getElementById('userAvatar');
+                    
+                    userName.textContent = data.user?.name || data.user?.email || 'User';
+                    userAvatar.textContent = (data.user?.name || data.user?.email || 'U').charAt(0).toUpperCase();
+                }
+            } catch (err) {
+                console.error('Failed to load user info:', err);
+            }
+        }
+        
+        // Load calls
+        async function loadCalls(filter = 'all') {
+            try {
+                const headers = getAuthHeaders();
+                let url = 'https://lupo-backend.fly.dev/sales/calls?limit=100';
+                
+                // Add date filters
+                const now = new Date();
+                if (filter === 'today') {
+                    const startOfDay = new Date(now.setHours(0,0,0,0));
+                    url += `&startDate=${startOfDay.toISOString()}`;
+                } else if (filter === 'week') {
+                    const weekAgo = new Date(now.setDate(now.getDate() - 7));
+                    url += `&startDate=${weekAgo.toISOString()}`;
+                } else if (filter === 'month') {
+                    const monthAgo = new Date(now.setMonth(now.getMonth() - 1));
+                    url += `&startDate=${monthAgo.toISOString()}`;
+                }
+                
+                const response = await fetch(url, { headers });
+                
+                if (!response.ok) throw new Error('Failed to load calls');
+                
+                const data = await response.json();
+                calls = data.calls || [];
+                
+                // Load transcripts for search functionality
+                await loadTranscriptsForSearch(calls.slice(0, 20));
+                
+                renderCalls(calls);
+                
+            } catch (err) {
+                console.error('Failed to load calls:', err);
+                document.getElementById('callsList').innerHTML = 
+                    '<div style="padding: 20px; color: rgba(255,255,255,0.3); font-size: 13px; text-align: center;">No calls found</div>';
+            }
+        }
+        
+        // Load transcripts for search
+        async function loadTranscriptsForSearch(callsList) {
+            const headers = getAuthHeaders();
+            
+            for (const call of callsList) {
+                if (!callsWithTranscripts.has(call.id)) {
+                    try {
+                        const response = await fetch(`https://lupo-backend.fly.dev/sales/calls/${call.id}`, { headers });
+                        if (response.ok) {
+                            const data = await response.json();
+                            callsWithTranscripts.set(call.id, data);
+                        }
+                    } catch (err) {
+                        console.error(`Failed to load transcript for ${call.id}:`, err);
+                    }
+                }
+            }
+        }
+        
+        // Search through calls and transcripts
+        function searchCalls(query) {
+            if (!query) return calls;
+            
+            const lowerQuery = query.toLowerCase();
+            const results = [];
+            
+            for (const call of calls) {
+                let match = null;
+                let matchScore = 0;
+                
+                // Check basic call info
+                if ((call.customer || '').toLowerCase().includes(lowerQuery)) {
+                    matchScore = 3;
+                    match = { type: 'customer', text: call.customer };
+                } else if ((call.company || '').toLowerCase().includes(lowerQuery)) {
+                    matchScore = 2;
+                    match = { type: 'company', text: call.company };
+                } else if ((call.context || '').toLowerCase().includes(lowerQuery)) {
+                    matchScore = 2;
+                    match = { type: 'context', text: call.context };
+                }
+                
+                // Check transcript if loaded
+                const fullData = callsWithTranscripts.get(call.id);
+                if (fullData && fullData.transcript && !match) {
+                    for (const msg of fullData.transcript) {
+                        if (msg.text && msg.text.toLowerCase().includes(lowerQuery)) {
+                            matchScore = 1;
+                            // Find the part of text with the match
+                            const startIdx = Math.max(0, msg.text.toLowerCase().indexOf(lowerQuery) - 30);
+                            const endIdx = Math.min(msg.text.length, startIdx + 100);
+                            let excerpt = msg.text.substring(startIdx, endIdx);
+                            if (startIdx > 0) excerpt = '...' + excerpt;
+                            if (endIdx < msg.text.length) excerpt = excerpt + '...';
+                            
+                            match = { 
+                                type: 'transcript', 
+                                text: excerpt,
+                                messageIndex: fullData.transcript.indexOf(msg)
+                            };
+                            break;
+                        }
+                    }
+                }
+                
+                if (match) {
+                    results.push({ ...call, match, matchScore });
+                }
+            }
+            
+            // Sort by match score
+            results.sort((a, b) => b.matchScore - a.matchScore);
+            
+            return results;
+        }
+        
+        // Render calls with search highlights
+        function renderCalls(callsList) {
+            const container = document.getElementById('callsList');
+            
+            if (callsList.length === 0) {
+                if (currentSearchQuery) {
+                    container.innerHTML = '<div style="padding: 20px; color: rgba(255,255,255,0.3); font-size: 13px; text-align: center;">No matching calls found</div>';
+                } else {
+                    container.innerHTML = '<div style="padding: 20px; color: rgba(255,255,255,0.3); font-size: 13px; text-align: center;">No calls yet</div>';
+                }
+                return;
+            }
+            
+            container.innerHTML = callsList.map(call => {
+                // Build display text
+                let displayText;
+                if (call.customer && call.customer !== 'Unknown') {
+                    if (call.context && call.context !== 'Sales call') {
+                        displayText = `${call.context} with ${call.customer}`;
+                    } else {
+                        displayText = call.customer;
+                    }
+                } else {
+                    displayText = call.context || 'Sales call';
+                }
+                
+                // Add search match preview if available
+                let matchPreview = '';
+                if (call.match && currentSearchQuery) {
+                    const highlightedText = call.match.text.replace(
+                        new RegExp(currentSearchQuery, 'gi'),
+                        match => `<mark>${match}</mark>`
+                    );
+                    matchPreview = `<div class="search-match-preview">${highlightedText}</div>`;
+                }
+                
+                return `
+                    <div class="call-item" onclick="selectCall('${call.id}', ${call.match?.messageIndex || 'null'})" data-id="${call.id}">
+                        <div class="call-customer">${displayText}</div>
+                        <div class="call-details">
+                            <span>${formatDate(call.date)}</span>
+                            <span>•</span>
+                            <span>${call.duration || '0:00'}</span>
+                            ${call.company ? `<span>•</span><span>${call.company}</span>` : ''}
+                        </div>
+                        ${matchPreview}
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Select call with optional scroll to match
+        async function selectCall(callId, messageIndex = null) {
+            document.querySelectorAll('.call-item').forEach(el => el.classList.remove('active'));
+            document.querySelector(`[data-id="${callId}"]`)?.classList.add('active');
+            
+            // Clear AI response
+            closeAI();
+            
+            // Show loading
+            document.getElementById('transcriptView').innerHTML = 
+                '<div class="empty-state"><div class="loading"></div></div>';
+            
+            try {
+                let data = callsWithTranscripts.get(callId);
+                
+                if (!data) {
+                    const headers = getAuthHeaders();
+                    const response = await fetch(`https://lupo-backend.fly.dev/sales/calls/${callId}`, {
+                        headers: headers
+                    });
+                    
+                    if (!response.ok) throw new Error('Failed to load call');
+                    
+                    data = await response.json();
+                    callsWithTranscripts.set(callId, data);
+                }
+                
+                currentCall = data;
+                renderTranscript(data, messageIndex);
+                
+            } catch (err) {
+                console.error('Failed to load call:', err);
+                document.getElementById('transcriptView').innerHTML = 
+                    '<div class="empty-state">Failed to load transcript</div>';
+            }
+        }
+        
+        // Render transcript with optional highlight
+        function renderTranscript(data, scrollToIndex = null) {
+            const container = document.getElementById('transcriptView');
+            
+            if (!data.transcript || data.transcript.length === 0) {
+                container.innerHTML = '<div class="empty-state">No transcript available</div>';
+                return;
+            }
+            
+            const filtered = data.transcript.filter(msg => {
+                const text = msg.text || '';
+                return text !== 'RESPONSE_COMPLETE' && 
+                       text !== 'INTERRUPTED' && 
+                       text !== 'USER_READING_MODE' &&
+                       text.trim().length > 0;
+            });
+            
+            container.innerHTML = filtered.map((msg, i) => {
+                const timestamp = msg.timestamp ? formatTime(msg.timestamp) : '';
+                let text = msg.text;
+                
+                // Highlight search terms if searching
+                if (currentSearchQuery) {
+                    text = text.replace(
+                        new RegExp(currentSearchQuery, 'gi'),
+                        match => `<mark>${match}</mark>`
+                    );
+                }
+                
+                const isHighlighted = scrollToIndex !== null && i === scrollToIndex;
+                
+                return `
+                    <div class="transcript-line ${isHighlighted ? 'highlighted' : ''}" data-index="${i}">
+                        <div class="transcript-text">${text}</div>
+                        ${timestamp ? `<div class="transcript-time">${timestamp}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            // Scroll to matched message if specified
+            if (scrollToIndex !== null) {
+                setTimeout(() => {
+                    const element = container.querySelector(`[data-index="${scrollToIndex}"]`);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 100);
+            } else {
+                container.scrollTop = 0;
+            }
+        }
+        
+        // Quick ask
+        function quickAsk(question) {
+            document.getElementById('aiInput').value = question;
+            submitAI();
+        }
+        
+        // Submit AI question
+        async function submitAI() {
+            const input = document.getElementById('aiInput');
+            const question = input.value.trim();
+            
+            if (!question || !currentCall) return;
+            
+            const sendBtn = document.getElementById('aiSend');
+            const responseDiv = document.getElementById('aiResponse');
+            const contentDiv = document.getElementById('aiContent');
+            
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<div class="loading" style="width: 16px; height: 16px;"></div>';
+            
+            responseDiv.classList.add('show');
+            contentDiv.innerHTML = '<div class="loading"></div> Analyzing...';
+            
+            try {
+                const headers = getAuthHeaders();
+                headers['Content-Type'] = 'application/json';
+                
+                const response = await fetch('https://lupo-backend.fly.dev/sales/ai/analyze', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({
+                        question: question,
+                        callContext: {
+                            customer: currentCall.call?.customerName,
+                            company: currentCall.call?.customerCompany,
+                            date: currentCall.call?.startTime,
+                            duration: currentCall.call?.duration,
+                            transcript: currentCall.transcript?.map(t => t.text).join('\n'),
+                            analysis: currentCall.analysis
+                        }
+                    })
+                });
+                
+                if (!response.ok) throw new Error('Analysis failed');
+                
+                const data = await response.json();
+                contentDiv.innerHTML = formatResponse(data.answer || data.response);
+                input.value = '';
+                
+            } catch (err) {
+                console.error('AI analysis failed:', err);
+                contentDiv.innerHTML = 'Analysis failed. Please try again.';
+            } finally {
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                `;
+            }
+        }
+        
+        // Close AI response
+        function closeAI() {
+            document.getElementById('aiResponse').classList.remove('show');
+        }
+        
+        // Format response
+        function formatResponse(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/^/, '<p>')
+                .replace(/$/, '</p>');
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Enhanced search
+            let searchTimeout;
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                currentSearchQuery = e.target.value.trim();
+                
+                // Debounce search
+                searchTimeout = setTimeout(() => {
+                    if (currentSearchQuery) {
+                        const filtered = searchCalls(currentSearchQuery);
+                        renderCalls(filtered);
+                    } else {
+                        renderCalls(calls);
+                    }
+                }, 300);
+            });
+            
+            // Filters
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentFilter = e.target.dataset.filter;
+                    currentSearchQuery = ''; // Clear search when changing filters
+                    document.getElementById('searchInput').value = '';
+                    loadCalls(currentFilter);
+                });
+            });
+            
+            // AI input enter
+            document.getElementById('aiInput').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    submitAI();
+                }
+            });
+        }
+        
+        // Helpers
+        function formatDate(date) {
+            const d = new Date(date);
+            const now = new Date();
+            const diff = Math.floor((now - d) / (1000 * 60 * 60 * 24));
+            
+            if (diff === 0) return 'Today';
+            if (diff === 1) return 'Yesterday';
+            if (diff < 7) return `${diff}d ago`;
+            
+            return d.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+        
+        function formatTime(timestamp) {
+            if (typeof timestamp === 'number' && timestamp < 10000) {
+                const mins = Math.floor(timestamp / 60);
+                const secs = timestamp % 60;
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+            return new Date(timestamp).toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+        }
+        
+        // Initialize
+        init();
     </script>
 </body>
 </html>

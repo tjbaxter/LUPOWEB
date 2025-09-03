@@ -23,6 +23,8 @@
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
+            --compliance: #4a5568;
+            --compliance-active: #718096;
         }
         
         body {
@@ -72,6 +74,186 @@
         .header-stat-value {
             font-size: 1.125rem;
             font-weight: 600;
+        }
+        
+        /* Compliance Tile - Minimal and sophisticated */
+        .compliance-tile {
+            position: fixed;
+            top: 5.5rem;
+            left: 1.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            width: 240px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 100;
+            display: none;
+        }
+        
+        .compliance-tile.visible {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .compliance-tile:hover {
+            border-color: var(--compliance-active);
+            background: var(--surface-hover);
+        }
+        
+        .compliance-tile.has-activity {
+            border-color: var(--compliance);
+        }
+        
+        .compliance-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+        
+        .compliance-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .compliance-indicator {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--compliance);
+            transition: all 0.3s ease;
+        }
+        
+        .compliance-indicator.active {
+            background: var(--compliance-active);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        
+        .compliance-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .info-btn {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.625rem;
+            transition: all 0.15s;
+        }
+        
+        .info-btn:hover {
+            border-color: var(--compliance);
+            color: var(--text);
+        }
+        
+        .compliance-value {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text);
+        }
+        
+        .compliance-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        
+        .compliance-detail {
+            font-size: 0.625rem;
+            color: var(--text-dim);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .compliance-trend {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        /* Info Tooltip */
+        .info-tooltip {
+            position: absolute;
+            top: -10px;
+            left: 100%;
+            margin-left: 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.75rem;
+            width: 280px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-tooltip.show {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+        
+        .info-tooltip h4 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        
+        .info-tooltip p {
+            font-size: 0.625rem;
+            color: var(--text-dim);
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-tooltip ul {
+            font-size: 0.625rem;
+            color: var(--text-muted);
+            margin-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-tooltip .config-link {
+            font-size: 0.625rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 0.25rem;
+        }
+        
+        .info-tooltip .config-link:hover {
+            text-decoration: underline;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
         
         /* Main Container */
@@ -231,6 +413,132 @@
             box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
         }
         
+        /* Modal - Refined compliance details */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .modal-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .modal-close {
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            border-radius: 6px;
+            color: var(--text-dim);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+        
+        .modal-close:hover {
+            color: var(--text);
+            border-color: var(--text-dim);
+        }
+        
+        .compliance-summary {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: var(--bg);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+        
+        .compliance-stat {
+            font-size: 0.875rem;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+        
+        .compliance-stat strong {
+            color: var(--compliance-active);
+        }
+        
+        .compliance-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .redirect-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.75rem;
+            font-size: 0.875rem;
+            border-left: 3px solid var(--compliance);
+        }
+        
+        .redirect-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .redirect-icon {
+            color: var(--compliance-active);
+            font-size: 0.75rem;
+        }
+        
+        .redirect-type {
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .redirect-detail {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-left: 1.25rem;
+        }
+        
+        .redirect-time {
+            font-size: 0.625rem;
+            color: var(--text-dim);
+            margin-left: 1.25rem;
+            margin-top: 0.25rem;
+        }
+        
         /* Loading State */
         .skeleton {
             background: linear-gradient(90deg, var(--surface) 25%, var(--surface-hover) 50%, var(--surface) 75%);
@@ -253,6 +561,20 @@
             .kpi-value {
                 font-size: 3rem;
             }
+            
+            .compliance-tile {
+                position: static;
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .info-tooltip {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                margin-left: 0;
+            }
         }
     </style>
 </head>
@@ -274,6 +596,39 @@
             </div>
         </div>
     </header>
+    
+    <!-- Compliance Tile -->
+    <div class="compliance-tile" id="complianceTile" onclick="showComplianceDetails(event)">
+        <div class="compliance-header">
+            <div class="compliance-title-group">
+                <span class="compliance-indicator" id="complianceIndicator"></span>
+                <span class="compliance-label">Compliance Active</span>
+            </div>
+            <button class="info-btn" onclick="toggleInfoTooltip(event)" aria-label="Info">i</button>
+        </div>
+        <div class="compliance-value" id="complianceCount">--</div>
+        <div class="compliance-subtitle" id="complianceSubtitle">interventions today</div>
+        <div class="compliance-detail">
+            <span id="complianceRule">--</span>
+            <span class="compliance-trend" id="complianceTrend"></span>
+        </div>
+        
+        <!-- Info Tooltip -->
+        <div class="info-tooltip" id="infoTooltip">
+            <h4>How LUPO keeps reps compliant</h4>
+            <p>Real-time monitoring ensures your team stays within legal and policy boundaries:</p>
+            <ul>
+                <li>Corrects pricing and discount offers</li>
+                <li>Prevents unverified claims</li>
+                <li>Blocks promises that could lead to lawsuits</li>
+                <li>Ensures regulatory compliance</li>
+            </ul>
+            <p style="margin-top: 0.75rem;">Configure your compliance rules in Sales Context to match your organization's policies.</p>
+            <a href="#" class="config-link" id="configLink">
+                Configure in Sales Context →
+            </a>
+        </div>
+    </div>
     
     <div class="container">
         <!-- Time Filter -->
@@ -324,8 +679,32 @@
         </div>
     </div>
     
+    <!-- Compliance Details Modal -->
+    <div class="modal" id="complianceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Compliance Interventions</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            
+            <div class="compliance-summary">
+                <div class="compliance-stat">
+                    <strong id="modalCount">0</strong> compliance corrections made
+                </div>
+                <div class="compliance-stat" style="font-size: 0.75rem; color: var(--text-muted);">
+                    LUPO automatically guided reps to stay compliant
+                </div>
+            </div>
+            
+            <div class="compliance-list" id="complianceList">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+    
     <script>
         let currentPeriod = 'today';
+        let complianceDetails = [];
         
         async function init() {
             // Auth setup (simplified)
@@ -341,8 +720,10 @@
             if (token) window.authHeaders['Authorization'] = `Bearer ${token}`;
             if (apiKey) window.authHeaders['X-API-Key'] = apiKey;
             
-            // Setup context button
-            document.getElementById('contextBtn').href = `/sales-context.html?${token ? 'token=' + token : ''}`;
+            // Setup context button and config link
+            const contextUrl = `/sales-context.html?${token ? 'token=' + token : ''}`;
+            document.getElementById('contextBtn').href = contextUrl;
+            document.getElementById('configLink').href = contextUrl;
             
             await loadData();
             setupListeners();
@@ -379,13 +760,13 @@
         }
         
         function updateDashboard(metrics) {
-            // Main KPI - Show raw count with gradient effect
+            // Main KPI
             const countEl = document.getElementById('criticalCount');
             countEl.textContent = metrics.criticalMoments || '0';
             countEl.classList.remove('skeleton');
             countEl.style = '';
             
-            // Trend with percentage change
+            // Trend
             const trendEl = document.getElementById('criticalTrend');
             if (metrics.criticalTrend && metrics.criticalTrend !== 0) {
                 const isPositive = metrics.criticalTrend > 0;
@@ -398,17 +779,14 @@
                 trendEl.innerHTML = '<span>No change from previous period</span>';
             }
             
-            // LUPO Coverage - show as percentage
-            const usageEl = document.getElementById('callsWithLUPO');
-            usageEl.textContent = `${metrics.usageRate || 0}%`;
-            usageEl.classList.remove('skeleton');
-            usageEl.style = '';
+            // Metrics
+            document.getElementById('callsWithLUPO').textContent = `${metrics.usageRate || 0}%`;
+            document.getElementById('callsWithLUPO').classList.remove('skeleton');
+            document.getElementById('callsWithLUPO').style = '';
             
-            // Forward Momentum - show as percentage
-            const momentumEl = document.getElementById('momentumRate');
-            momentumEl.textContent = `${metrics.momentumRate || 0}%`;
-            momentumEl.classList.remove('skeleton');
-            momentumEl.style = '';
+            document.getElementById('momentumRate').textContent = `${metrics.momentumRate || 0}%`;
+            document.getElementById('momentumRate').classList.remove('skeleton');
+            document.getElementById('momentumRate').style = '';
             
             // Top Objection
             const objectionEl = document.getElementById('topObjection');
@@ -423,7 +801,6 @@
             objectionEl.classList.remove('skeleton');
             objectionEl.style = '';
             
-            // Total Calls
             document.getElementById('totalCalls').textContent = metrics.totalCalls || 0;
             document.getElementById('totalCalls').classList.remove('skeleton');
             document.getElementById('totalCalls').style = '';
@@ -432,6 +809,152 @@
             document.getElementById('repsActive').textContent = metrics.totalReps || 0;
             document.getElementById('liveCalls').textContent = metrics.activeCalls || 0;
             document.getElementById('liveCalls').style.color = metrics.activeCalls > 0 ? 'var(--success)' : 'var(--text-dim)';
+            
+            // Compliance tile
+            updateComplianceTile(metrics.compliance);
+        }
+        
+        function updateComplianceTile(compliance) {
+            const tile = document.getElementById('complianceTile');
+            const indicator = document.getElementById('complianceIndicator');
+            
+            const shouldShow = compliance?.rulesConfigured || 
+                              (compliance?.totalIncidents ?? 0) > 0 || 
+                              compliance?.regulated;
+            
+            if (!shouldShow) {
+                tile.classList.remove('visible');
+                return;
+            }
+            
+            tile.classList.add('visible');
+            
+            const incidents = compliance?.totalIncidents || 0;
+            const countEl = document.getElementById('complianceCount');
+            const subtitleEl = document.getElementById('complianceSubtitle');
+            const ruleEl = document.getElementById('complianceRule');
+            const trendEl = document.getElementById('complianceTrend');
+            
+            countEl.textContent = incidents;
+            
+            if (incidents > 0) {
+                tile.classList.add('has-activity');
+                indicator.classList.add('active');
+                subtitleEl.textContent = `intervention${incidents !== 1 ? 's' : ''} ${currentPeriod}`;
+            } else {
+                tile.classList.remove('has-activity');
+                indicator.classList.remove('active');
+                subtitleEl.textContent = 'fully compliant';
+            }
+            
+            // Most common intervention
+            if (compliance?.topRule) {
+                ruleEl.textContent = `Most: ${compliance.topRule.name}`;
+            } else {
+                ruleEl.textContent = incidents > 0 ? 'Multiple types' : 'No issues';
+            }
+            
+            // Trend
+            if (compliance?.trendPct) {
+                const isUp = compliance.trendPct > 0;
+                trendEl.textContent = `${isUp ? '↑' : '↓'} ${Math.abs(compliance.trendPct)}%`;
+            } else {
+                trendEl.textContent = '';
+            }
+            
+            complianceDetails = compliance?.details || [];
+        }
+        
+        function toggleInfoTooltip(event) {
+            event.stopPropagation();
+            const tooltip = document.getElementById('infoTooltip');
+            tooltip.classList.toggle('show');
+        }
+        
+        function showComplianceDetails(event) {
+    // Don't open modal if clicking info button
+    if (event.target.classList.contains('info-btn')) return;
+    
+    const modal = document.getElementById('complianceModal');
+    const list = document.getElementById('complianceList');
+    const modalCount = document.getElementById('modalCount');
+    
+    // Get the total count from the tile
+    const tileCount = document.getElementById('complianceCount').textContent;
+    modalCount.textContent = tileCount;
+    
+    if (complianceDetails.length === 0) {
+        list.innerHTML = `
+            <div style="text-align: center; padding: 2rem; color: var(--text-dim);">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">✓</div>
+                <div>Perfect compliance this period</div>
+                <div style="font-size: 0.75rem; margin-top: 0.5rem;">No corrections needed</div>
+            </div>
+        `;
+    } else {
+        const incidentTypes = {};
+        
+        complianceDetails.forEach(item => {
+            const type = item.rule || 'Policy Violation';
+            if (!incidentTypes[type]) {
+                incidentTypes[type] = {
+                    count: 0,
+                    times: []
+                };
+            }
+            incidentTypes[type].count++;
+            incidentTypes[type].times.push(item.timestamp);
+        });
+        
+        // Sort by count (highest first)
+        const sortedTypes = Object.entries(incidentTypes).sort((a, b) => b[1].count - a[1].count);
+        
+        // Build the list HTML
+        let listHTML = sortedTypes.map(([type, data]) => {
+            const mostRecent = new Date(Math.max(...data.times.map(t => new Date(t))));
+            const timeAgo = getTimeAgo(mostRecent);
+            
+            return `
+                <div class="redirect-item">
+                    <div class="redirect-header">
+                        <span class="redirect-icon">•</span>
+                        <span class="redirect-type">${type}</span>
+                    </div>
+                    <div class="redirect-detail">
+                        ${data.count} recent occurrence${data.count !== 1 ? 's' : ''}
+                    </div>
+                    <div class="redirect-time">Last: ${timeAgo}</div>
+                </div>
+            `;
+        }).join('');
+        
+        // Add note about showing recent sample
+        listHTML += `
+            <div style="margin-top: 1rem; padding: 0.75rem; background: var(--bg); 
+                        border-radius: 6px; border: 1px solid var(--border);">
+                <div style="font-size: 0.75rem; color: var(--text-dim); text-align: center;">
+                    Showing most recent interventions
+                </div>
+            </div>
+        `;
+        
+        list.innerHTML = listHTML;
+    }
+    
+    modal.classList.add('show');
+}
+        
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            
+            if (seconds < 60) return 'just now';
+            if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+            if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+            return `${Math.floor(seconds / 86400)}d ago`;
+        }
+        
+        function closeModal() {
+            document.getElementById('complianceModal').classList.remove('show');
         }
         
         function setupListeners() {
@@ -442,6 +965,20 @@
                     currentPeriod = e.target.dataset.period;
                     loadData();
                 });
+            });
+            
+            // Close modal on background click
+            document.getElementById('complianceModal').addEventListener('click', (e) => {
+                if (e.target.id === 'complianceModal') {
+                    closeModal();
+                }
+            });
+            
+            // Close tooltip when clicking elsewhere
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.compliance-tile')) {
+                    document.getElementById('infoTooltip').classList.remove('show');
+                }
             });
         }
         
