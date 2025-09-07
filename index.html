@@ -80,7 +80,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 100px 20px;
+            padding: 100px 20px 60px;
             position: relative;
             overflow: hidden;
         }
@@ -180,6 +180,118 @@
             animation: fadeInUp 1s ease 0.2s forwards;
         }
         
+        /* Download Section - Premium Minimalistic Pills */
+        .download-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 60px;
+            margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+        
+        .download-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+        
+        .download-buttons {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .download-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            min-width: 200px;
+            justify-content: center;
+        }
+        
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--accent), #764ba2);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(41, 151, 255, 0.3);
+            border-color: var(--accent);
+        }
+        
+        .download-btn:hover::before {
+            opacity: 0.1;
+        }
+        
+        .download-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+        
+        .download-btn svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+        }
+        
+        .download-btn.primary {
+            background: linear-gradient(135deg, var(--accent), #5090ff);
+            color: white;
+            border: none;
+            box-shadow: 0 10px 30px rgba(41, 151, 255, 0.3);
+        }
+        
+        .download-btn.primary:hover {
+            box-shadow: 0 15px 40px rgba(41, 151, 255, 0.5);
+        }
+        
+        .download-version {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 12px;
+            color: var(--text-secondary);
+        }
+        
+        /* Platform Detection Message */
+        .platform-detection {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 16px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
         /* Feature Preview Cards */
         .preview-grid {
             display: grid;
@@ -197,8 +309,26 @@
         }
         
         @media (max-width: 768px) {
+            h1 {
+                font-size: 48px;
+            }
+            
+            .subtitle {
+                font-size: 20px;
+            }
+            
             .preview-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .download-btn {
+                width: 100%;
             }
         }
         
@@ -314,145 +444,7 @@
             opacity: 0.8;
         }
         
-        /* Live Demo Preview */
-        .demo-preview {
-            background: linear-gradient(145deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
-            border-radius: 24px;
-            padding: 40px;
-            border: 1px solid var(--border);
-            margin-bottom: 60px;
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.8s forwards;
-        }
-        
-        .demo-preview::after {
-            content: 'PREVIEW';
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            color: var(--text-secondary);
-            opacity: 0.5;
-        }
-        
-        .live-call-simulation {
-            background: rgba(0, 0, 0, 0.03);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: left;
-        }
-        
-        @media (prefers-color-scheme: dark) {
-            .live-call-simulation {
-                background: rgba(255, 255, 255, 0.03);
-            }
-        }
-        
-        .call-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            background: rgba(255, 59, 48, 0.1);
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--danger);
-        }
-        
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--danger);
-            border-radius: 50%;
-            animation: livePulse 1.5s ease-in-out infinite;
-        }
-        
-        @keyframes livePulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-        
-        .call-timer {
-            font-size: 14px;
-            color: var(--text-secondary);
-            font-variant-numeric: tabular-nums;
-        }
-        
-        .ai-suggestion {
-            background: var(--gradient-sales);
-            color: white;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            line-height: 1.6;
-            margin-top: 16px;
-        }
-        
-        .customer-quote {
-            font-size: 15px;
-            color: var(--text-secondary);
-            font-style: italic;
-            margin-bottom: 12px;
-            padding-left: 16px;
-            border-left: 3px solid var(--border);
-        }
-        
-        /* Footer */
-        .simple-footer {
-            text-align: center;
-            padding: 40px 20px;
-            border-top: 1px solid var(--border);
-            background: var(--bg-secondary);
-        }
-        
-        .footer-logo {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-        }
-        
-        .footer-text {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 48px;
-            }
-            
-            .subtitle {
-                font-size: 20px;
-            }
-            
-            .preview-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .notify-form {
-                flex-direction: column;
-            }
-            
-            .demo-preview {
-                padding: 24px;
-            }
-        }
-        
-        /* LUPO Glass Interface Styles */
+        /* LUPO Window Styles */
         .lupo-window {
             background: linear-gradient(to bottom,
                 rgba(0, 0, 0, 0.05) 0%,
@@ -479,7 +471,6 @@
             }
         }
         
-        /* LUPO header */
         .lupo-header {
             padding: 16px 16px 12px 16px;
             background: rgba(255, 255, 255, 0.02);
@@ -539,7 +530,6 @@
             50% { opacity: 0.8; box-shadow: 0 0 0 4px rgba(52, 199, 89, 0); }
         }
         
-        /* Question display area */
         .question-area {
             padding: 16px;
             min-height: 60px;
@@ -566,7 +556,6 @@
             }
         }
         
-        /* Answer area */
         .answer-area {
             padding: 0 16px 16px;
             max-height: 320px;
@@ -587,7 +576,6 @@
             color: rgba(255, 255, 255, 0.95);
         }
         
-        /* Bullet point styling for LUPO suggestions */
         .lupo-bullets {
             display: flex;
             flex-direction: column;
@@ -621,7 +609,6 @@
             color: rgba(147, 197, 253, 0.9);
         }
         
-        /* Processing animation */
         .processing-indicator {
             display: flex;
             align-items: center;
@@ -659,7 +646,6 @@
             }
         }
         
-        /* Scrollbar styling */
         .answer-area::-webkit-scrollbar {
             width: 4px;
         }
@@ -672,7 +658,7 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 2px;
         }
-        /* Loading Animation */
+        
         .loading-dots {
             display: inline-flex;
             gap: 4px;
@@ -700,6 +686,26 @@
                 transform: translateY(-10px);
                 opacity: 0.5;
             }
+        }
+        
+        /* Footer */
+        .simple-footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+        
+        .footer-logo {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-secondary);
         }
     </style>
 </head>
@@ -738,6 +744,44 @@
                 Real-time objection handling, competitor insights, and deal intelligence. 
                 Transform your sales team into closing machines with AI that listens, understands, and guides every conversation.
             </p>
+            
+            <!-- Download Section -->
+            <div class="download-section">
+                <div class="download-title">Get LUPO Desktop Now</div>
+                <div class="download-buttons">
+                    <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-1.9.4-arm64.dmg" 
+                       class="download-btn primary" 
+                       id="macARMDownload"
+                       onclick="trackDownload('mac-arm64')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+                        </svg>
+                        Download for Mac
+                    </a>
+                    <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-1.9.4.dmg" 
+                       class="download-btn" 
+                       id="macIntelDownload"
+                       onclick="trackDownload('mac-intel')"
+                       style="display: none;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+                        </svg>
+                        Mac (Intel)
+                    </a>
+                    <a href="https://github.com/LUPOLABS/lupo-releases/releases/download/v1.9.4/LUPO.Setup.1.9.4.exe"                       class="download-btn" 
+                       id="winDownload"
+                       onclick="trackDownload('windows')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="12" y1="3" x2="12" y2="21"></line>
+                        </svg>
+                        Download for Windows
+                    </a>
+                </div>
+                <div class="download-version">Version 1.9.4 • Released September 2025</div>
+                <div class="platform-detection" id="platformMessage" style="display: none;"></div>
+            </div>
             
             <!-- Feature Preview Cards -->
             <div class="preview-grid">
@@ -857,7 +901,7 @@
                     </div>
                 </div>
                 
-                <!-- LUPO UI Container - Fixed in place -->
+                <!-- LUPO UI Container -->
                 <div style="
                     max-width: 420px;
                     margin: 0 auto;
@@ -931,7 +975,6 @@
                     class="notify-form" 
                     onsubmit="handleNotify(event)"
                 >
-                    <!-- Honeypot field for spam protection (hidden) -->
                     <input type="hidden" name="form-name" value="sales-early-access">
                     <p style="display:none;">
                         <label>Don't fill this out: <input name="bot-field"></label>
@@ -961,20 +1004,78 @@
     </footer>
     
     <script>
+        // Platform detection and button management
+        function detectPlatform() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const macARMBtn = document.getElementById('macARMDownload');
+            const macIntelBtn = document.getElementById('macIntelDownload');
+            const winBtn = document.getElementById('winDownload');
+            const platformMsg = document.getElementById('platformMessage');
+            
+            if (userAgent.includes('mac')) {
+                // Mac detected
+                winBtn.style.opacity = '0.7';
+                
+                // Try to detect Apple Silicon
+                if (navigator.userAgentData) {
+                    navigator.userAgentData.getHighEntropyValues(['architecture']).then(ua => {
+                        if (ua.architecture === 'arm') {
+                            // Apple Silicon
+                            platformMsg.textContent = 'Apple Silicon Mac detected • M1/M2/M3/M4 chip';
+                            platformMsg.style.display = 'block';
+                        } else {
+                            // Intel Mac - show both Mac options
+                            macIntelBtn.style.display = 'inline-flex';
+                            platformMsg.textContent = 'Intel Mac detected • Choose your version';
+                            platformMsg.style.display = 'block';
+                        }
+                    }).catch(() => {
+                        // Can't detect, show both Mac options
+                        macIntelBtn.style.display = 'inline-flex';
+                        platformMsg.textContent = 'Mac detected • Choose Apple Silicon (M1-M4) or Intel version';
+                        platformMsg.style.display = 'block';
+                    });
+                } else {
+                    // Can't detect architecture, show both options
+                    macIntelBtn.style.display = 'inline-flex';
+                    platformMsg.textContent = 'Mac detected • Choose your processor type';
+                    platformMsg.style.display = 'block';
+                }
+            } else if (userAgent.includes('win')) {
+                // Windows detected
+                macARMBtn.style.opacity = '0.7';
+                macIntelBtn.style.display = 'inline-flex';
+                macIntelBtn.style.opacity = '0.7';
+                winBtn.classList.add('primary');
+                macARMBtn.classList.remove('primary');
+                platformMsg.textContent = 'Windows detected • Requires Windows 10 or later';
+                platformMsg.style.display = 'block';
+            } else {
+                // Unknown platform - show all
+                macIntelBtn.style.display = 'inline-flex';
+                platformMsg.textContent = 'Select your operating system';
+                platformMsg.style.display = 'block';
+            }
+        }
+        
+        // Track downloads
+        function trackDownload(platform) {
+            console.log('Download initiated:', platform, 'v1.9.4');
+            // Analytics tracking can be added here
+        }
+        
         // LUPO Showcase Animation
         function animateLupoShowcase() {
             const questionEl = document.getElementById('questionText');
             const processingEl = document.getElementById('processingIndicator');
             const answerArea = document.getElementById('answerArea');
             
-            // Show processing after a delay
             setTimeout(() => {
                 if (processingEl) {
                     processingEl.style.display = 'flex';
                 }
             }, 1000);
             
-            // Show answer after processing
             setTimeout(() => {
                 if (processingEl) {
                     processingEl.style.display = 'none';
@@ -985,9 +1086,6 @@
             }, 2500);
         }
         
-        // Start showcase animation after page loads
-        setTimeout(animateLupoShowcase, 2000);
-        
         // Handle form submission
         function handleNotify(e) {
             e.preventDefault();
@@ -996,18 +1094,15 @@
             const button = form.querySelector('button');
             const originalText = button.textContent;
             
-            // Show loading state
             button.textContent = 'Adding...';
             button.disabled = true;
             
-            // Submit to Netlify Forms
             fetch('/', {
                 method: 'POST',
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams(new FormData(form)).toString()
             })
             .then(() => {
-                // Success
                 button.textContent = '✓ You\'re on the list!';
                 button.style.background = 'var(--success)';
                 form.reset();
@@ -1019,7 +1114,6 @@
                 }, 3000);
             })
             .catch((error) => {
-                // Error
                 console.error('Form submission error:', error);
                 button.textContent = 'Error - Please try again';
                 button.style.background = 'var(--danger)';
@@ -1032,27 +1126,7 @@
             });
         }
         
-        // Animate call timer
-        function updateTimer() {
-            const timer = document.querySelector('.call-timer');
-            if (timer) {
-                const parts = timer.textContent.split(':');
-                let minutes = parseInt(parts[0]);
-                let seconds = parseInt(parts[1]);
-                
-                seconds++;
-                if (seconds >= 60) {
-                    seconds = 0;
-                    minutes++;
-                }
-                
-                timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }
-        }
-        
-        setInterval(updateTimer, 1000);
-        
-        // Add floating particles effect
+        // Create floating particles
         function createParticle() {
             const particle = document.createElement('div');
             particle.style.cssText = `
@@ -1087,8 +1161,11 @@
             }).onfinish = () => particle.remove();
         }
         
-        // Create particles periodically
-        setInterval(createParticle, 500);
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            setTimeout(animateLupoShowcase, 2000);
+            setInterval(createParticle, 500);
+        });
     </script>
 </body>
 </html>
