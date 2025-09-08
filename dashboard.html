@@ -1224,17 +1224,21 @@ COMPLIANCE & BOUNDARIES:
             const transcriptView = document.getElementById('transcriptView');
             const contextView = document.getElementById('contextView');
             const aiPanel = document.getElementById('aiPanel');
+            const aiResponse = document.getElementById('aiResponse');
             
             if (view === 'sales') {
                 salesSidebar.style.display = 'flex';
                 transcriptView.classList.remove('hidden');
                 contextView.classList.remove('active');
                 aiPanel.style.display = 'block';
+                // AI response overlay can be visible in sales view
             } else if (view === 'context') {
                 salesSidebar.style.display = 'none';
                 transcriptView.classList.add('hidden');
                 contextView.classList.add('active');
                 aiPanel.style.display = 'none';
+                // Hide AI response overlay when switching to context view
+                aiResponse.classList.remove('show');
                 loadSalesContext();
             }
         }
