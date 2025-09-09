@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(ls:*)",
-      "Bash(open:*)"
+      "Bash(open:*)",
+      "Read(//Users/tombaxter/**)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
