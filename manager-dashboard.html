@@ -576,9 +576,129 @@
                 margin-left: 0;
             }
         }
+        
+        /* Authentication Overlay Styles */
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease;
+        }
+        
+        .auth-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .auth-message {
+            text-align: center;
+            padding: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            max-width: 400px;
+        }
+        
+        .auth-message h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .auth-message p {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+        
+        .auth-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .auth-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .auth-error-title {
+            color: var(--danger);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .auth-error-message {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+        }
+        
+        .auth-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .auth-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .auth-btn.secondary {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
     </style>
 </head>
 <body>
+    <!-- Authentication Overlay -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-message">
+            <div class="auth-spinner" id="authSpinner"></div>
+            <h2 id="authTitle">Authenticating...</h2>
+            <p id="authMessage">Verifying your access to the manager dashboard</p>
+            <div class="auth-error hidden" id="authError">
+                <div class="auth-error-title">Authentication Failed</div>
+                <div class="auth-error-message" id="authErrorMessage">Your session has expired</div>
+            </div>
+            <div class="auth-actions hidden" id="authActions">
+                <a href="#" class="auth-btn" id="loginBtn">Sign In Again</a>
+                <button class="auth-btn secondary" onclick="retryAuth()">Retry</button>
+            </div>
+        </div>
+    </div>
+    
     <header>
         <div class="logo">LUPO</div>
         <div class="header-info">
@@ -703,59 +823,247 @@
     </div>
     
     <script>
+        // Authentication configuration
+        const AUTH_CONFIG = {
+            apiUrl: 'https://lupo-backend.fly.dev',
+            loginUrl: 'https://lupolabs.ai/login',
+            maxRetries: 3,
+            retryDelay: 1000
+        };
+        
+        // Global state
+        let authToken = null;
+        let authHeaders = {};
         let currentPeriod = 'today';
         let complianceDetails = [];
+        let retryCount = 0;
         
-        async function init() {
-            // Auth setup (simplified)
-            const token = localStorage.getItem('lupo_token');
-            const apiKey = localStorage.getItem('lupo_apikey');
+        // Authentication functions
+        async function authenticateUser() {
+            const overlay = document.getElementById('authOverlay');
+            const spinner = document.getElementById('authSpinner');
+            const title = document.getElementById('authTitle');
+            const message = document.getElementById('authMessage');
+            const errorDiv = document.getElementById('authError');
+            const errorMessage = document.getElementById('authErrorMessage');
+            const actions = document.getElementById('authActions');
+            const loginBtn = document.getElementById('loginBtn');
             
-            if (!token && !apiKey) {
-                window.location.href = '/login.html?redirect=manager';
+            try {
+                // Get token from URL or localStorage
+                const urlParams = new URLSearchParams(window.location.search);
+                const urlToken = urlParams.get('token');
+                const storedToken = localStorage.getItem('lupo_manager_token');
+                const storedExpiry = localStorage.getItem('lupo_token_expiry');
+                
+                // Check if stored token is expired
+                if (storedToken && storedExpiry) {
+                    const expiry = new Date(storedExpiry);
+                    if (expiry < new Date()) {
+                        console.log('Stored token expired, clearing...');
+                        localStorage.removeItem('lupo_manager_token');
+                        localStorage.removeItem('lupo_token_expiry');
+                    }
+                }
+                
+                authToken = urlToken || storedToken;
+                
+                if (!authToken) {
+                    throw new Error('NO_TOKEN');
+                }
+                
+                // Update UI
+                title.textContent = 'Validating Token...';
+                message.textContent = 'Checking your enterprise credentials';
+                
+                // Validate token with API
+                authHeaders = { 'Authorization': `Bearer ${authToken}` };
+                
+                const response = await fetch(`${AUTH_CONFIG.apiUrl}/auth/me`, {
+                    headers: authHeaders,
+                    cache: 'no-cache'
+                });
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('TOKEN_EXPIRED');
+                    }
+                    throw new Error(`AUTH_FAILED_${response.status}`);
+                }
+                
+                const data = await response.json();
+                const user = data.user;
+                
+                // Verify user has manager access
+                if (user.accountType !== 'enterprise_admin') {
+                    throw new Error('ACCESS_DENIED');
+                }
+                
+                // Store valid token
+                if (urlToken) {
+                    localStorage.setItem('lupo_manager_token', urlToken);
+                    
+                    // Calculate and store expiry (7 days from now)
+                    const expiry = new Date();
+                    expiry.setDate(expiry.getDate() + 7);
+                    localStorage.setItem('lupo_token_expiry', expiry.toISOString());
+                    
+                    // Clean URL
+                    const cleanUrl = window.location.origin + window.location.pathname;
+                    window.history.replaceState({}, document.title, cleanUrl);
+                }
+                
+                // Success - hide overlay and start dashboard
+                console.log('✅ Authentication successful:', user.email);
+                overlay.classList.add('hidden');
+                
+                // Initialize dashboard
+                await initializeDashboard();
+                
+            } catch (error) {
+                console.error('Authentication error:', error);
+                
+                // Hide spinner
+                spinner.style.display = 'none';
+                
+                // Show error based on type
+                errorDiv.classList.remove('hidden');
+                actions.classList.remove('hidden');
+                
+                if (error.message === 'NO_TOKEN') {
+                    title.textContent = 'Authentication Required';
+                    message.textContent = 'Please sign in to access the manager dashboard';
+                    errorMessage.textContent = 'No authentication token found';
+                    loginBtn.href = `${AUTH_CONFIG.loginUrl}?redirect=manager`;
+                    
+                } else if (error.message === 'TOKEN_EXPIRED') {
+                    title.textContent = 'Session Expired';
+                    message.textContent = 'Your session has expired. Please sign in again.';
+                    errorMessage.textContent = 'Authentication token has expired';
+                    
+                    // Clear stored token
+                    localStorage.removeItem('lupo_manager_token');
+                    localStorage.removeItem('lupo_token_expiry');
+                    
+                    loginBtn.href = `${AUTH_CONFIG.loginUrl}?redirect=manager&reason=expired`;
+                    
+                } else if (error.message === 'ACCESS_DENIED') {
+                    title.textContent = 'Access Denied';
+                    message.textContent = 'You need enterprise admin privileges to access this dashboard';
+                    errorMessage.textContent = 'Insufficient permissions';
+                    loginBtn.href = `${AUTH_CONFIG.loginUrl}`;
+                    
+                } else if (error.message.startsWith('AUTH_FAILED_')) {
+                    const status = error.message.split('_')[2];
+                    title.textContent = 'Authentication Failed';
+                    message.textContent = 'Unable to verify your credentials';
+                    errorMessage.textContent = `Server returned error ${status}`;
+                    loginBtn.href = `${AUTH_CONFIG.loginUrl}?redirect=manager&reason=error`;
+                    
+                } else {
+                    // Network or other error
+                    title.textContent = 'Connection Error';
+                    message.textContent = 'Unable to connect to LUPO servers';
+                    errorMessage.textContent = error.message || 'Please check your connection and try again';
+                    loginBtn.href = `${AUTH_CONFIG.loginUrl}?redirect=manager`;
+                }
+            }
+        }
+        
+        async function retryAuth() {
+            retryCount++;
+            
+            if (retryCount > AUTH_CONFIG.maxRetries) {
+                console.log('Max retries reached, redirecting to login...');
+                window.location.href = `${AUTH_CONFIG.loginUrl}?redirect=manager&reason=max_retries`;
                 return;
             }
             
-            window.authHeaders = {};
-            if (token) window.authHeaders['Authorization'] = `Bearer ${token}`;
-            if (apiKey) window.authHeaders['X-API-Key'] = apiKey;
+            // Reset UI
+            const overlay = document.getElementById('authOverlay');
+            const spinner = document.getElementById('authSpinner');
+            const errorDiv = document.getElementById('authError');
+            const actions = document.getElementById('authActions');
             
-            // Setup context button and config link
-            const contextUrl = `/sales-context.html?${token ? 'token=' + token : ''}`;
+            spinner.style.display = 'block';
+            errorDiv.classList.add('hidden');
+            actions.classList.add('hidden');
+            
+            // Wait before retry
+            await new Promise(resolve => setTimeout(resolve, AUTH_CONFIG.retryDelay));
+            
+            // Retry authentication
+            await authenticateUser();
+        }
+        
+        async function initializeDashboard() {
+            // Setup context button
+            const contextUrl = `/sales-context.html?token=${encodeURIComponent(authToken)}`;
             document.getElementById('contextBtn').href = contextUrl;
             document.getElementById('configLink').href = contextUrl;
             
+            // Load initial data
             await loadData();
+            
+            // Setup event listeners
             setupListeners();
             
-            // Refresh every 30 seconds
-            setInterval(loadData, 30000);
+            // Start auto-refresh
+            setInterval(async () => {
+                try {
+                    await loadData();
+                } catch (error) {
+                    console.error('Data refresh error:', error);
+                    
+                    // If 401, token might be expired
+                    if (error.status === 401) {
+                        console.log('Token expired during refresh, re-authenticating...');
+                        localStorage.removeItem('lupo_manager_token');
+                        localStorage.removeItem('lupo_token_expiry');
+                        window.location.reload();
+                    }
+                }
+            }, 30000);
         }
         
         async function loadData() {
             try {
-                // Load org info
-                const orgRes = await fetch('https://lupo-backend.fly.dev/sales/org', {
-                    headers: window.authHeaders
+                // Load org info with error handling
+                const orgRes = await fetch(`${AUTH_CONFIG.apiUrl}/sales/org`, {
+                    headers: authHeaders,
+                    cache: 'no-cache'
                 });
                 
-                if (orgRes.ok) {
-                    const org = await orgRes.json();
-                    document.getElementById('orgName').textContent = org.companyName || 'Enterprise';
-                    document.getElementById('orgName').classList.remove('skeleton');
+                if (!orgRes.ok) {
+                    throw { status: orgRes.status, message: 'Failed to load org data' };
                 }
                 
-                // Load global analytics
-                const dataRes = await fetch(`https://lupo-backend.fly.dev/sales/global-analytics?period=${currentPeriod}`, {
-                    headers: window.authHeaders
+                const org = await orgRes.json();
+                document.getElementById('orgName').textContent = org.companyName || 'Enterprise';
+                document.getElementById('orgName').classList.remove('skeleton');
+                
+                // Load analytics with error handling
+                const dataRes = await fetch(`${AUTH_CONFIG.apiUrl}/sales/global-analytics?period=${currentPeriod}`, {
+                    headers: authHeaders,
+                    cache: 'no-cache'
                 });
                 
-                if (dataRes.ok) {
-                    const data = await dataRes.json();
-                    updateDashboard(data.metrics);
+                if (!dataRes.ok) {
+                    throw { status: dataRes.status, message: 'Failed to load analytics' };
                 }
+                
+                const data = await dataRes.json();
+                updateDashboard(data.metrics);
+                
             } catch (error) {
-                console.error('Load failed:', error);
+                console.error('Load data error:', error);
+                
+                // Show error toast if available
+                if (window.showToast) {
+                    window.showToast('Failed to load dashboard data', 'error');
+                }
+                
+                throw error; // Re-throw for caller to handle
             }
         }
         
@@ -982,8 +1290,32 @@
             });
         }
         
-        // Start
-        init();
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            authenticateUser();
+        });
+        
+        // Handle visibility change (tab switching)
+        document.addEventListener('visibilitychange', async () => {
+            if (!document.hidden && authToken) {
+                try {
+                    // Quick token validation when tab becomes visible
+                    const response = await fetch(`${AUTH_CONFIG.apiUrl}/auth/me`, {
+                        headers: authHeaders,
+                        cache: 'no-cache'
+                    });
+                    
+                    if (!response.ok) {
+                        console.log('Token invalid on visibility change, re-authenticating...');
+                        localStorage.removeItem('lupo_manager_token');
+                        localStorage.removeItem('lupo_token_expiry');
+                        window.location.reload();
+                    }
+                } catch (error) {
+                    console.error('Visibility check error:', error);
+                }
+            }
+        });
     </script>
 </body>
 </html>
