@@ -659,52 +659,69 @@ PILOT PROGRAM:
         let authHeaders = {};
         let autoSaveTimer;
         let hasUserEdited = false;
-        
         async function init() {
-            const token = localStorage.getItem('lupo_token');
-            const apiKey = localStorage.getItem('lupo_apikey');
-            
-            if (!apiKey && !token) {
-                window.location.href = '/login.html';
-                return;
+    // First check URL for token
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlToken = urlParams.get('token');
+    
+    // Then check localStorage
+    const storedToken = localStorage.getItem('lupo_token');
+    const apiKey = localStorage.getItem('lupo_apikey');
+    
+    // Use URL token if available, otherwise stored token
+    const token = urlToken || storedToken;
+    
+    if (!apiKey && !token) {
+        window.location.href = '/login.html';
+        return;
+    }
+    
+    // Store the URL token for future use if provided
+    if (urlToken && !storedToken) {
+        localStorage.setItem('lupo_token', urlToken);
+        
+        // Calculate and store expiry (7 days from now)
+        const expiry = new Date();
+        expiry.setDate(expiry.getDate() + 7);
+        localStorage.setItem('lupo_token_expiry', expiry.toISOString());
+    }
+    
+    if (token) authHeaders['Authorization'] = `Bearer ${token}`;
+    if (apiKey) authHeaders['X-API-Key'] = apiKey;
+    
+    await loadContext();
+    
+    const textarea = document.getElementById('context');
+    const updateCharCount = () => {
+        const count = textarea.value.length;
+        document.getElementById('charCount').textContent = `${count.toLocaleString()} chars`;
+    };
+    
+    textarea.addEventListener('input', () => {
+        hasUserEdited = true;
+        updateCharCount();
+        document.getElementById('saveStatus').innerHTML = '<span class="status-dot"></span><span>Unsaved</span>';
+        document.getElementById('saveStatus').classList.remove('saved');
+        
+        if (hasUserEdited) {
+            const notice = document.getElementById('templateNotice');
+            if (notice) {
+                notice.style.display = 'none';
             }
-            
-            if (token) authHeaders['Authorization'] = `Bearer ${token}`;
-            if (apiKey) authHeaders['X-API-Key'] = apiKey;
-            
-            await loadContext();
-            
-            const textarea = document.getElementById('context');
-            const updateCharCount = () => {
-                const count = textarea.value.length;
-                document.getElementById('charCount').textContent = `${count.toLocaleString()} chars`;
-            };
-            
-            textarea.addEventListener('input', () => {
-                hasUserEdited = true;
-                updateCharCount();
-                document.getElementById('saveStatus').innerHTML = '<span class="status-dot"></span><span>Unsaved</span>';
-                document.getElementById('saveStatus').classList.remove('saved');
-                
-                if (hasUserEdited) {
-                    const notice = document.getElementById('templateNotice');
-                    if (notice) {
-                        notice.style.display = 'none';
-                    }
-                }
-                
-                clearTimeout(autoSaveTimer);
-                autoSaveTimer = setTimeout(saveContext, 3000);
-            });
-            
-            document.getElementById('companyUrl').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    analyzeWebsite();
-                }
-            });
-            
-            updateCharCount();
         }
+        
+        clearTimeout(autoSaveTimer);
+        autoSaveTimer = setTimeout(saveContext, 3000);
+    });
+    
+    document.getElementById('companyUrl').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            analyzeWebsite();
+        }
+    });
+    
+    updateCharCount();
+}
         async function analyzeWebsite() {
     const urlInput = document.getElementById('companyUrl');
     let url = urlInput.value.trim();

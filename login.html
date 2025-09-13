@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - LUPO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --accent: #0071e3;
+            --border: rgba(0, 0, 0, 0.08);
+            --success: #34c759;
+            --error: #ff3b30;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #f5f5f7;
+                --text-secondary: #a1a1a6;
+                --bg-primary: #000000;
+                --bg-secondary: #161617;
+                --accent: #2997ff;
+                --border: rgba(255, 255, 255, 0.08);
+                --success: #32d74b;
+                --error: #ff453a;
+            }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Logo */
+        .logo-link {
+            position: absolute;
+            top: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .logo-link:hover {
+            opacity: 0.8;
+        }
+        
+        /* Container */
+        .login-container {
+            width: 100%;
+            max-width: 380px;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Header */
+        .login-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .login-header h1 {
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 1.07143;
+            letter-spacing: -0.005em;
+            margin-bottom: 12px;
+        }
+        
+        .login-header p {
+            font-size: 21px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        
+        /* Form */
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .form-input {
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 17px;
+            font-family: inherit;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            -webkit-appearance: none;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+        
+        .form-input.error {
+            border-color: var(--error);
+        }
+        
+        .error-message {
+            font-size: 14px;
+            color: var(--error);
+            margin-top: 6px;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin-top: -16px;
+            margin-bottom: 24px;
+        }
+        
+        .forgot-password a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            transition: opacity 0.2s ease;
+        }
+        
+        .forgot-password a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Buttons */
+        .form-button {
+            width: 100%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .form-button:hover {
+            opacity: 0.9;
+            transform: scale(1.01);
+        }
+        
+        .form-button:active {
+            transform: scale(0.99);
+        }
+        
+        .form-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Social Auth Buttons */
+        .social-button {
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .social-button:hover {
+            background: var(--bg-secondary);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .social-icon {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 32px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        
+        .divider span {
+            padding: 0 16px;
+        }
+        
+        /* Footer */
+        .login-footer {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .login-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        
+        .login-footer a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Loading State */
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Success/Error Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: transform 0.3s ease;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .toast.success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .toast.error {
+            background: var(--error);
+            color: white;
+        }
+        
+        .toast.info {
+            background: var(--accent);
+            color: white;
+        }
+        
+        @media (max-width: 480px) {
+            .login-header h1 {
+                font-size: 36px;
+            }
+            
+            .login-header p {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="logo-link">LUPO</a>
+    
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Welcome back</h1>
+            <p>Sign in to continue</p>
+        </div>
+        
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label class="form-label" for="email">Email address</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    class="form-input" 
+                    placeholder="name@example.com"
+                    required
+                    autocomplete="email"
+                >
+                <div class="error-message" id="emailError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    class="form-input" 
+                    placeholder="Enter your password"
+                    required
+                    autocomplete="current-password"
+                    minlength="6"
+                >
+                <div class="error-message" id="passwordError"></div>
+            </div>
+            
+            <div class="forgot-password">
+                <a href="/forgot-password.html">Forgot password?</a>
+            </div>
+            
+            <button type="submit" class="form-button" id="loginButton">
+                Sign In
+            </button>
+        </form>
+        
+        <div class="divider">
+            <span>or</span>
+        </div>
+        
+        <!-- Social Auth Options -->
+        <div class="social-auth">
+            <button class="social-button" onclick="signInWithGoogle()">
+                <svg class="social-icon" viewBox="0 0 20 20" fill="none">
+                    <path d="M19.8 10.2273C19.8 9.51818 19.7364 8.83636 19.6182 8.18182H10.2V12.05H15.6109C15.3927 13.3 14.6564 14.3591 13.5491 15.0682V17.5773H16.8182C18.7164 15.8364 19.8 13.2727 19.8 10.2273Z" fill="#4285F4"/>
+                    <path d="M10.2 20C12.9 20 15.1727 19.1045 16.8182 17.5773L13.5491 15.0682C12.6091 15.6682 11.4227 16.0227 10.2 16.0227C7.59545 16.0227 5.38636 14.2636 4.58636 11.9H1.22727V14.4909C2.88182 17.7591 6.30909 20 10.2 20Z" fill="#34A853"/>
+                    <path d="M4.58636 11.9C4.38636 11.3 4.27273 10.6636 4.27273 10C4.27273 9.33636 4.38636 8.7 4.58636 8.1V5.50909H1.22727C0.545455 6.85909 0.2 8.38636 0.2 10C0.2 11.6136 0.545455 13.1409 1.22727 14.4909L4.58636 11.9Z" fill="#FBBC05"/>
+                    <path d="M10.2 3.97727C11.5455 3.97727 12.7455 4.42727 13.6955 5.30909L16.8909 2.11364C15.1682 0.5 12.8955 0 10.2 0C6.30909 0 2.88182 2.24091 1.22727 5.50909L4.58636 8.1C5.38636 5.73636 7.59545 3.97727 10.2 3.97727Z" fill="#EA4335"/>
+                </svg>
+                Continue with Google
+            </button>
+            
+            <button class="social-button" onclick="signInWithGitHub()">
+                <svg class="social-icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0110 4.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.137 18.17 20 14.42 20 10c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/>
+                </svg>
+                Continue with GitHub
+            </button>
+        </div>
+        
+        <div class="login-footer">
+            Don't have an account? <a href="/signup.html">Sign up</a>
+        </div>
+    </div>
+    
+    <script>
+        // Toast notification
+        function showToast(message, type = 'info') {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            requestAnimationFrame(() => {
+                toast.classList.add('show');
+            });
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+        
+        // Handle login form submission
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const button = document.getElementById('loginButton');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            
+            // Reset errors
+            emailError.classList.remove('show');
+            passwordError.classList.remove('show');
+            document.getElementById('email').classList.remove('error');
+            document.getElementById('password').classList.remove('error');
+            
+            // Disable button
+            button.disabled = true;
+            button.innerHTML = 'Signing in<span class="loading-spinner"></span>';
+            
+            try {
+                const response = await fetch('https://lupo-backend.fly.dev/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Store session
+                    localStorage.setItem('lupo_session', data.token);
+                    localStorage.setItem('lupo_user', JSON.stringify(data.user));
+                    
+                    showToast('✅ Signed in successfully!', 'success');
+                    
+                    // Prepare auth for clipboard (for LUPO app)
+                    const authPackage = {
+                        token: data.token,
+                        user: data.user,
+                        timestamp: Date.now(),
+                        source: 'web_login'
+                    };
+                    
+                    const encodedData = btoa(JSON.stringify(authPackage));
+                    const clipboardData = `LUPO_AUTH:${encodedData}`;
+                    
+                    // Try to copy to clipboard
+                    try {
+                        await navigator.clipboard.writeText(clipboardData);
+                        console.log('✅ Auth copied to clipboard');
+                    } catch (err) {
+                        console.log('Clipboard write failed:', err);
+                    }
+                    
+                    // Check if coming from app
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const fromApp = urlParams.get('from') === 'app';
+                    
+                    if (fromApp) {
+                        // Show success and instructions to return to app
+                        button.innerHTML = '✓ Success - Return to LUPO';
+                        showToast('Switch back to LUPO to continue', 'info');
+                    } else {
+                        // Redirect to dashboard or home
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 1000);
+                    }
+                    
+                } else {
+                    // Handle errors
+                    if (data.error?.includes('Invalid credentials')) {
+                        passwordError.textContent = 'Invalid email or password';
+                        passwordError.classList.add('show');
+                        document.getElementById('password').classList.add('error');
+                    } else if (data.error?.includes('sign in with')) {
+                        emailError.textContent = data.error;
+                        emailError.classList.add('show');
+                        document.getElementById('email').classList.add('error');
+                    } else {
+                        throw new Error(data.error || 'Login failed');
+                    }
+                    
+                    button.disabled = false;
+                    button.textContent = 'Sign In';
+                }
+                
+            } catch (err) {
+                console.error('Login error:', err);
+                showToast('Error: ' + err.message, 'error');
+                button.disabled = false;
+                button.textContent = 'Sign In';
+            }
+        }
+        
+        // OAuth sign in functions
+        function signInWithGoogle() {
+            const redirectUrl = window.location.origin + '/auth/callback.html';
+            window.location.href = 'https://lupo-backend.fly.dev/auth/google?redirect=' + encodeURIComponent(redirectUrl);
+        }
+        
+        function signInWithGitHub() {
+            const redirectUrl = window.location.origin + '/auth/callback.html';
+            window.location.href = 'https://lupo-backend.fly.dev/auth/github?redirect=' + encodeURIComponent(redirectUrl);
+        }
+        
+        // Check if coming from app
+        window.addEventListener('load', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const fromApp = urlParams.get('from') === 'app';
+            
+            if (fromApp) {
+                showToast('Sign in to continue with LUPO', 'info');
+            }
+            
+            // Focus email field
+            document.getElementById('email').focus();
+        });
+    </script>
+</body>
+</html>

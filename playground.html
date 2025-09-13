@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUPO Sandbox - Try Instant AI Sales Intelligence</title>
+    <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
+    
+    <!-- Your combined CSS file with all LUPO styles -->
+    <link rel="stylesheet" href="sandbox.css">
+    
+    <style>
+        /* Sandbox-specific wrapper styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .sandbox-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(96, 165, 250, 0.05) 0%, transparent 50%);
+            animation: bgFloat 30s ease-in-out infinite;
+            z-index: 0;
+        }
+        
+        @keyframes bgFloat {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
+        }
+        
+        .sandbox-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1400px;
+            padding: 40px 20px;
+        }
+        
+        .sandbox-header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .sandbox-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .sandbox-subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 40px;
+        }
+        
+        .demo-stage {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            justify-content: center;
+            margin-bottom: 60px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .lupo-main-wrapper {
+            flex-shrink: 0;
+        }
+        
+        .insights-wrapper-container {
+            flex-shrink: 0;
+        }
+        
+        /* Scenario selector */
+        .scenario-selector {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        
+        .scenario-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scenario-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        
+        .scenario-btn.active {
+            background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%);
+            border-color: transparent;
+            color: #fff;
+        }
+        
+        /* Demo controls */
+        .demo-controls {
+            text-align: center;
+            margin-top: 40px;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+        
+        .start-demo-btn {
+            padding: 16px 48px;
+            background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%);
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
+        }
+        
+        .start-demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(96, 165, 250, 0.4);
+        }
+        
+        .start-demo-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Instructions */
+        .instructions {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            animation: fadeInUp 0.8s ease 0.8s both;
+        }
+        
+        .instructions h3 {
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .instructions ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .instructions li {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+        
+        .instructions li:before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #60A5FA;
+        }
+        
+        /* Download CTA */
+        .download-cta {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.1), rgba(167, 139, 250, 0.05));
+            border-radius: 24px;
+            animation: fadeInUp 0.8s ease 1s both;
+        }
+        
+        .download-cta h3 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+        
+        .download-cta p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 24px;
+        }
+        
+        .download-links {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+        
+        .download-link {
+            padding: 12px 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .download-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="sandbox-bg"></div>
+    
+    <div class="sandbox-container">
+        <div class="sandbox-header">
+            <h1 class="sandbox-title">LUPO Sandbox</h1>
+            <p class="sandbox-subtitle">Experience instant AI sales intelligence - no download required</p>
+        </div>
+        
+        <!-- Scenario Selector -->
+        <div class="scenario-selector">
+            <button class="scenario-btn active" data-scenario="objection">
+                🎯 Handle Objection
+            </button>
+            <button class="scenario-btn" data-scenario="competitor">
+                ⚔️ Competitor Mentioned
+            </button>
+            <button class="scenario-btn" data-scenario="closing">
+                💰 Closing Signal
+            </button>
+        </div>
+        
+        <!-- Main Demo Stage -->
+        <div class="demo-stage">
+            <!-- LUPO Main Window -->
+            <div class="lupo-main-wrapper">
+                <div class="glass-container expanded" id="sandboxMainContainer" style="position: relative; width: 400px;">
+                    <div class="header">
+                        <div class="header-left">
+                            <div class="button-group">
+                                <span class="ask-text">Ask</span>
+                                <button class="control-btn">
+                                    <span class="hotkey">
+                                        <span>⌘</span><span>⏎</span>
+                                    </span>
+                                </button>
+                            </div>
+                            
+                            <div class="listen-button-group">
+                                <button class="listen-btn sales-active" id="sandboxListenBtn">
+                                    <span class="listen-text">Listen</span>
+                                    <div class="volume-bars">
+                                        <div class="volume-bar"></div>
+                                        <div class="volume-bar"></div>
+                                        <div class="volume-bar"></div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="header-right">
+                            <div class="monitor-indicator">
+                                <div class="monitor-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-wrapper">
+                        <div class="input-section">
+                            <div class="input-container">
+                                <input id="sandboxInput" class="search-input" placeholder=" " disabled>
+                                <div class="animated-placeholder">
+                                    <div class="placeholder-carousel">
+                                        <div class="placeholder-item">
+                                            <span>Listening to your call...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-area" id="sandboxContent">
+                            <div id="sandboxDisplay" style="padding: 20px; text-align: center;">
+                                <div class="sales-listening-state">
+                                    <div class="listening-icon">
+                                        <div class="sound-wave">
+                                            <div class="wave-bar"></div>
+                                            <div class="wave-bar"></div>
+                                            <div class="wave-bar"></div>
+                                            <div class="wave-bar"></div>
+                                            <div class="wave-bar"></div>
+                                        </div>
+                                    </div>
+                                    <div class="listening-text">Sales Mode Active</div>
+                                    <div class="listening-subtitle">Real-time coaching enabled</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Live Insights Window -->
+            <div class="insights-wrapper-container">
+                <div class="insights-wrapper" style="width: 300px; height: 500px;">
+                    <div class="insights-header-minimal">
+                        <span class="insights-title">REAL-TIME SIGNALS</span>
+                    </div>
+                    
+                    <div class="insights-container" id="sandboxInsights">
+                        <!-- Insights will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Demo Controls -->
+        <div class="demo-controls">
+            <button class="start-demo-btn" id="startDemoBtn">
+                🎬 Start Live Demo
+            </button>
+        </div>
+        
+        <!-- Instructions -->
+        <div class="instructions">
+            <h3>Try it yourself:</h3>
+            <ul>
+                <li>Click "Start Live Demo" to simulate a sales call</li>
+                <li>Watch LUPO detect objections and provide instant responses</li>
+                <li>See real-time insights appear in the side panel</li>
+                <li>Click different scenarios to see various situations</li>
+            </ul>
+        </div>
+        
+        <!-- Download CTA -->
+        <div class="download-cta">
+            <h3>Ready for the real thing?</h3>
+            <p>Download LUPO desktop and transform your sales calls today</p>
+            <div class="download-links">
+                <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-2.2.5-arm64.dmg" class="download-link">
+                    📱 Mac (Apple Silicon)
+                </a>
+                <a href="https://github.com/LUPOLABS/lupo-releases/releases/download/v2.2.5/LUPO.Setup.2.2.5.exe" class="download-link">
+                    💻 Windows
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Demo scenarios
+        const scenarios = {
+            objection: {
+                trigger: "It's too expensive compared to our current solution",
+                insights: [
+                    { type: 'objection', text: 'Price objection detected', confidence: 95 },
+                    { type: 'suggestion', text: 'Ask about their current costs', confidence: 88 },
+                    { type: 'closing', text: 'Offer payment plan option', confidence: 82 }
+                ],
+                response: `
+                    <div class="coaching-card urgent">
+                        <div class="card-header">
+                            <span class="card-icon">⚠️</span>
+                            <span class="card-title">PRICE OBJECTION</span>
+                        </div>
+                        <div class="objection-text">"It's too expensive..."</div>
+                        <div class="suggested-response">
+                            <div class="response-label">Suggested Response:</div>
+                            <div class="response-content">
+                                "I understand price is important. What are you currently paying? 
+                                Our clients typically save 30% in the first year through automation alone."
+                            </div>
+                        </div>
+                        <div class="quick-tips">
+                            <div class="tip">• Get specific numbers</div>
+                            <div class="tip">• Show ROI calculation</div>
+                            <div class="tip">• Offer payment terms</div>
+                        </div>
+                    </div>
+                `
+            },
+            competitor: {
+                trigger: "We're already using Salesforce for this",
+                insights: [
+                    { type: 'competitor', text: 'Salesforce mentioned', confidence: 100 },
+                    { type: 'objection', text: 'Status quo bias detected', confidence: 78 },
+                    { type: 'suggestion', text: 'Highlight integration capabilities', confidence: 91 }
+                ],
+                response: `
+                    <div class="coaching-card warning">
+                        <div class="card-header">
+                            <span class="card-icon">⚔️</span>
+                            <span class="card-title">COMPETITOR: SALESFORCE</span>
+                        </div>
+                        <div class="coaching-content">
+                            <strong>Key Differentiators:</strong><br>
+                            • We integrate seamlessly with Salesforce<br>
+                            • 10x faster implementation (days vs months)<br>
+                            • No coding required vs complex setup<br>
+                            • 80% lower total cost of ownership<br><br>
+                            
+                            <strong>Response:</strong><br>
+                            "Many of our best customers use Salesforce too! We actually enhance it 
+                            with real-time intelligence. Takes 10 minutes to connect."
+                        </div>
+                    </div>
+                `
+            },
+            closing: {
+                trigger: "What would implementation look like for our team?",
+                insights: [
+                    { type: 'buying_signal', text: 'Implementation question - HIGH INTENT', confidence: 94 },
+                    { type: 'closing', text: 'Move to close now', confidence: 89 },
+                    { type: 'suggestion', text: 'Propose pilot program', confidence: 85 }
+                ],
+                response: `
+                    <div class="coaching-card info">
+                        <div class="card-header">
+                            <span class="card-icon">🎯</span>
+                            <span class="card-title">BUYING SIGNAL DETECTED</span>
+                        </div>
+                        <div class="coaching-content">
+                            <strong>🔥 They're ready to move forward!</strong><br><br>
+                            
+                            Next steps to close:<br>
+                            1. "We can start with a 5-seat pilot next Monday"<br>
+                            2. "Takes 30 minutes to onboard your team"<br>
+                            3. "I'll include premium support at no extra cost"<br>
+                            4. "Should I send the agreement to you directly?"<br><br>
+                            
+                            <div style="padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; margin-top: 12px;">
+                                💰 <strong>Close probability: 87%</strong><br>
+                                Push for commitment TODAY
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+        
+        let currentScenario = 'objection';
+        let demoRunning = false;
+        
+        // Scenario selection
+        document.querySelectorAll('.scenario-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentScenario = this.dataset.scenario;
+                
+                // Reset demo if running
+                if (demoRunning) {
+                    resetDemo();
+                }
+            });
+        });
+        
+        // Start demo
+        document.getElementById('startDemoBtn').addEventListener('click', function() {
+            if (demoRunning) {
+                resetDemo();
+                this.textContent = '🎬 Start Live Demo';
+            } else {
+                runDemo();
+                this.textContent = '⏹ Stop Demo';
+            }
+        });
+        
+        function runDemo() {
+            demoRunning = true;
+            const scenario = scenarios[currentScenario];
+            const insightsContainer = document.getElementById('sandboxInsights');
+            const contentArea = document.getElementById('sandboxDisplay');
+            
+            // Clear previous content
+            insightsContainer.innerHTML = '';
+            
+            // Simulate customer speaking (after 1 second)
+            setTimeout(() => {
+                // Add customer speech indicator
+                contentArea.innerHTML = `
+                    <div style="padding: 20px;">
+                        <div style="color: rgba(255, 255, 255, 0.5); font-size: 12px; margin-bottom: 8px;">
+                            CUSTOMER SPEAKING:
+                        </div>
+                        <div style="color: rgba(255, 255, 255, 0.9); font-size: 16px; font-style: italic;">
+                            "${scenario.trigger}"
+                        </div>
+                    </div>
+                `;
+                
+                // Add insights one by one
+                scenario.insights.forEach((insight, index) => {
+                    setTimeout(() => {
+                        addInsight(insight);
+                    }, 500 + (index * 300));
+                });
+                
+                // Show LUPO response after insights
+                setTimeout(() => {
+                    contentArea.innerHTML = scenario.response;
+                    
+                    // Add animation
+                    const card = contentArea.querySelector('.coaching-card');
+                    if (card) {
+                        card.style.animation = 'fadeIn 0.5s ease';
+                    }
+                }, 2000);
+                
+            }, 1000);
+        }
+        
+        function addInsight(insight) {
+            const insightsContainer = document.getElementById('sandboxInsights');
+            
+            const bubble = document.createElement('div');
+            bubble.className = `insight-bubble ${insight.type} entering`;
+            bubble.innerHTML = `
+                <div class="insight-type">
+                    <span class="insight-type-icon">
+                        ${insight.type === 'objection' ? '⚠️' : 
+                          insight.type === 'competitor' ? '⚔️' : 
+                          insight.type === 'buying_signal' ? '💚' :
+                          insight.type === 'closing' ? '🎯' : '💡'}
+                    </span>
+                    ${insight.type.replace('_', ' ').toUpperCase()}
+                </div>
+                <div class="insight-trigger">${insight.text}</div>
+                <div class="insight-time">Just now • ${insight.confidence}% confidence</div>
+            `;
+            
+            insightsContainer.insertBefore(bubble, insightsContainer.firstChild);
+            
+            // Remove entering class after animation
+            setTimeout(() => {
+                bubble.classList.remove('entering');
+            }, 300);
+        }
+        
+        function resetDemo() {
+            demoRunning = false;
+            document.getElementById('sandboxInsights').innerHTML = '';
+            document.getElementById('sandboxDisplay').innerHTML = `
+                <div class="sales-listening-state">
+                    <div class="listening-icon">
+                        <div class="sound-wave">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                    </div>
+                    <div class="listening-text">Sales Mode Active</div>
+                    <div class="listening-subtitle">Ready for demo</div>
+                </div>
+            `;
+        }
+        
+        // Auto-start demo after 2 seconds
+        setTimeout(() => {
+            document.getElementById('startDemoBtn').click();
+        }, 2000);
+    </script>
+</body>
+</html>
