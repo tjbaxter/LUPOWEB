@@ -245,6 +245,131 @@
             gap: 16px;
         }
         
+        /* Sales listening state with sophisticated thin wave animation */
+        .sales-listening-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+            min-height: 400px;
+        }
+
+        .listening-icon {
+            margin-bottom: 35px;
+        }
+
+        .sound-wave {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            height: 60px;
+        }
+
+        .wave-bar {
+            width: 2px;
+            background: linear-gradient(to top, 
+                rgba(96, 165, 250, 0.4) 0%, 
+                rgba(96, 165, 250, 0.9) 50%, 
+                rgba(96, 165, 250, 0.4) 100%);
+            border-radius: 1px;
+            animation: soundWave 1.4s ease-in-out infinite;
+            opacity: 0.8;
+        }
+
+        .wave-bar:nth-child(1) {
+            height: 25px;
+            animation-delay: 0s;
+        }
+
+        .wave-bar:nth-child(2) {
+            height: 35px;
+            animation-delay: 0.1s;
+        }
+
+        .wave-bar:nth-child(3) {
+            height: 45px;
+            animation-delay: 0.2s;
+        }
+
+        .wave-bar:nth-child(4) {
+            height: 55px;
+            animation-delay: 0.3s;
+        }
+
+        .wave-bar:nth-child(5) {
+            height: 60px;
+            animation-delay: 0.4s;
+        }
+
+        .wave-bar:nth-child(6) {
+            height: 55px;
+            animation-delay: 0.5s;
+        }
+
+        .wave-bar:nth-child(7) {
+            height: 45px;
+            animation-delay: 0.6s;
+        }
+
+        .wave-bar:nth-child(8) {
+            height: 35px;
+            animation-delay: 0.7s;
+        }
+
+        .wave-bar:nth-child(9) {
+            height: 25px;
+            animation-delay: 0.8s;
+        }
+
+        @keyframes soundWave {
+            0%, 100% {
+                transform: scaleY(0.6);
+                opacity: 0.4;
+            }
+            50% {
+                transform: scaleY(1);
+                opacity: 0.9;
+            }
+        }
+
+        .listening-text {
+            font-size: 22px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 10px;
+            letter-spacing: 0.3px;
+        }
+
+        .listening-subtitle {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 0.2px;
+            font-weight: 400;
+        }
+
+        .lupo-content .empty-state {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            padding: 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
         .question-area {
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -553,23 +678,6 @@
             margin-top: 4px;
         }
         
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-secondary);
-        }
-        
-        .empty-icon {
-            font-size: 48px;
-            opacity: 0.3;
-            margin-bottom: 16px;
-        }
-        
-        .empty-text {
-            font-size: 14px;
-        }
-        
         /* Integration Section */
         .integration-section {
             text-align: center;
@@ -809,9 +917,22 @@
                 </div>
                 <div class="lupo-content">
                     <div class="empty-state" id="emptyState">
-                        <div class="empty-icon">🎯</div>
-                        <div class="empty-text">
-                            Click any signal on the right to see LUPO's response
+                        <div class="sales-listening-state">
+                            <div class="listening-icon">
+                                <div class="sound-wave">
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                </div>
+                            </div>
+                            <div class="listening-text">Sales Intelligence On</div>
+                            <div class="listening-subtitle">Detecting opportunities & objections</div>
                         </div>
                     </div>
                     <div class="question-area" id="questionArea">
@@ -845,8 +966,8 @@
             </div>
         </div>
         
-        <!-- Integration Logos Section -->
-        <div class="integration-section">
+         <!-- Integration Logos Section -->
+         <div class="integration-section">
             <h3 class="integration-title">Works Where You Sell</h3>
             <div class="logos-container">
                 <div class="logo-item">
