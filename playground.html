@@ -570,6 +570,124 @@
             font-size: 14px;
         }
         
+        /* Integration Section */
+        .integration-section {
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 60px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .integration-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmerLine 8s infinite;
+        }
+        
+        @keyframes shimmerLine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .integration-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 40px;
+            letter-spacing: -0.5px;
+        }
+        
+        .logos-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .logos-container {
+                gap: 30px;
+            }
+        }
+        
+        .logo-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            animation: fadeInLogo 0.5s ease forwards;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-item:nth-child(1) { animation-delay: 0.1s; }
+        .logo-item:nth-child(2) { animation-delay: 0.2s; }
+        .logo-item:nth-child(3) { animation-delay: 0.3s; }
+        .logo-item:nth-child(4) { animation-delay: 0.4s; }
+        .logo-item:nth-child(5) { animation-delay: 0.5s; }
+        
+        @keyframes fadeInLogo {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .integration-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            filter: brightness(0.9);
+            transition: all 0.3s ease;
+        }
+        
+        .logo-item:hover .integration-logo {
+            filter: brightness(1.1);
+            transform: scale(1.1);
+        }
+        
+        .logo-name {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .logo-item:hover .logo-name {
+            opacity: 1;
+        }
+        
+        .integration-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: 30px;
+            letter-spacing: -0.2px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
         /* CTA Section */
         .cta-section {
             text-align: center;
@@ -653,20 +771,20 @@
             <div class="scenario-label">Choose Your Sales Scenario</div>
             <div class="scenario-buttons">
                 <button class="scenario-btn active" data-scenario="saas">
-                    <div>SaaS Sales</div>
+                    <div>B2B SaaS</div>
                     <div class="scenario-description">Enterprise software objections</div>
                 </button>
                 <button class="scenario-btn" data-scenario="insurance">
-                    <div>Insurance</div>
-                    <div class="scenario-description">Policy & coverage concerns</div>
+                    <div>Insurance / Financial</div>
+                    <div class="scenario-description">Coverage & compliance concerns</div>
                 </button>
-                <button class="scenario-btn" data-scenario="real-estate">
-                    <div>Real Estate</div>
-                    <div class="scenario-description">Property & investment questions</div>
+                <button class="scenario-btn" data-scenario="telecom">
+                    <div>Telecom / Energy</div>
+                    <div class="scenario-description">Plan, price & contract objections</div>
                 </button>
-                <button class="scenario-btn" data-scenario="automotive">
-                    <div>Automotive</div>
-                    <div class="scenario-description">Vehicle purchase objections</div>
+                <button class="scenario-btn" data-scenario="logistics">
+                    <div>Logistics / Freight</div>
+                    <div class="scenario-description">Rates, lanes & capacity</div>
                 </button>
             </div>
         </div>
@@ -725,6 +843,38 @@
                     <!-- Signals will be dynamically added here -->
                 </div>
             </div>
+        </div>
+        
+        <!-- Integration Logos Section -->
+        <div class="integration-section">
+            <h3 class="integration-title">Works Where You Sell</h3>
+            <div class="logos-container">
+                <div class="logo-item">
+                    <img src="logos/zoom1-logo.png" alt="Zoom" class="integration-logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:60px;height:60px;background:#2D8CFF;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;\'>Zoom</div>'">
+                </div>
+                <div class="logo-item">
+                    <img src="logos/teams-logo.png" alt="Microsoft Teams" class="integration-logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:60px;height:60px;background:#5059C9;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:11px;text-align:center;\'>Teams</div>'">
+                </div>
+                <div class="logo-item">
+                    <img src="logos/meet-logo.png" alt="Google Meet" class="integration-logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:60px;height:60px;background:#00897B;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:11px;\'>Meet</div>'">
+                </div>
+                <div class="logo-item">
+                    <img src="logos/webex-logo.png" alt="Webex" class="integration-logo" style="width:80px;height:80px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:80px;height:80px;background:#07C160;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;\'>Webex</div>'">
+                </div>
+                <div class="logo-item">
+                    <img src="logos/ringcentral-logo.png" alt="RingCentral" class="integration-logo" style="width:130px;height:130px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:80px;height:80px;background:#FF7A00;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:12px;\'>Ring<br>Central</div>'">
+                </div>
+                <div class="logo-item">
+                    <img src="logos/dialpad1-logo.png" alt="Dialpad" class="integration-logo" style="width:130px;height:130px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:600px;height:600px;background:#6B46C1;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:110px;\'>Dialpad</div>'">
+                </div>
+                <div class="logo-item">
+                    <img src="logos/aircall2-logo.png" alt="Aircall" class="integration-logo" style="width:130px;height:130px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:600px;height:600px;background:#00C896;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:110px;\'>Aircall</div>'">
+                </div>
+                <div class="logo-item">
+                    <img src="logos/8x8-logo.png" alt="8x8" class="integration-logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:60px;height:60px;background:#0066CC;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;\'>8x8</div>'">
+                </div>
+            </div>
+            <p class="integration-subtitle">Works with the platforms that run most sales calls.</p>
         </div>
         
         <!-- CTA Section -->
@@ -842,86 +992,146 @@
                             ]
                         },
                         time: '6 seconds ago'
+                    },
+                    {
+                        type: 'compliance',
+                        trigger: '"Are you licensed in my state?"',
+                        response: {
+                            bullets: [
+                                { action: 'Confirm credentials:', phrase: '"Yes, I\'m fully licensed in [state] and all our policies comply with state regulations."' },
+                                { action: 'Provide verification:', phrase: '"I can send you my license number right now if you\'d like to verify with the state department."' },
+                                { action: 'Build trust:', phrase: '"We\'ve been operating in [state] for 15 years with an A+ rating from the insurance commission."' }
+                            ]
+                        },
+                        time: '9 seconds ago'
                     }
                 ]
             },
-            'real-estate': {
+            'telecom': {
                 signals: [
                     {
                         type: 'objection',
-                        trigger: '"We\'re not ready to make an offer yet"',
+                        trigger: '"Your rate\'s higher than my current provider"',
                         response: {
                             bullets: [
-                                { action: 'Understand hesitation:', phrase: '"I completely understand - this is a big decision. What information would help you feel more confident?"' },
-                                { action: 'Create scarcity:', phrase: '"Just so you know, we have two other showings scheduled this week. Properties in this area typically go under contract within 10 days."' },
-                                { action: 'Suggest next step:', phrase: '"Would it help to do a second walkthrough this weekend? Sometimes that clarity helps."' }
+                                { action: 'Reframe:', phrase: '"Fair—are you on a promo that expires? What happens to your bill after month 12?"' },
+                                { action: 'Contrast:', phrase: '"Our average net over 12 months is lower once fees/surcharges are included."' },
+                                { action: 'Next step:', phrase: '"Can I run your exact usage and email a side-by-side today?"' }
                             ]
                         },
                         time: 'Just now'
                     },
                     {
                         type: 'buying-signal',
-                        trigger: '"What\'s the neighborhood like?"',
+                        trigger: '"How fast can we switch?"',
                         response: {
                             bullets: [
-                                { action: 'Paint the picture:', phrase: '"It\'s fantastic - highly rated schools, walkable to restaurants, and the neighbors are mostly young professionals and families."' },
-                                { action: 'Provide proof:', phrase: '"Crime rates are 40% below city average and property values have increased 8% annually for the past 5 years."' },
-                                { action: 'Encourage exploration:', phrase: '"Why don\'t we grab coffee at the local cafe after the showing? You can get a real feel for the area."' }
+                                { action: 'Speed to value:', phrase: '"Install window this week; zero-downtime cutover; we handle the paperwork."' },
+                                { action: 'Create urgency:', phrase: '"Earliest slot is Thursday—want me to hold it?"' },
+                                { action: 'Remove friction:', phrase: '"We\'ll port your numbers and handle cancellation with your current provider - you don\'t have to do anything."' }
                             ]
                         },
-                        time: '4 seconds ago'
+                        time: '3 seconds ago'
                     },
                     {
-                        type: 'competitor',
-                        trigger: '"We saw a similar house for less on Maple Street"',
+                        type: 'objection',
+                        trigger: '"Just send me the information"',
                         response: {
                             bullets: [
-                                { action: 'Acknowledge smartly:', phrase: '"You\'re right to compare - that\'s a good comp. The key difference is this one has been fully renovated with permits."' },
-                                { action: 'Highlight advantages:', phrase: '"This property also has 500 more square feet and a newer roof - that\'s about $50K in immediate value."' },
-                                { action: 'Reframe perspective:', phrase: '"Would you prefer the move-in ready option, or are you open to renovation projects?"' }
+                                { action: 'Qualify intent:', phrase: '"Happy to! What specific details would be most helpful - pricing, coverage maps, or contract terms?"' },
+                                { action: 'Create value:', phrase: '"I can send generic info, but a 2-minute assessment gets you custom pricing that\'s usually 20% lower."' },
+                                { action: 'Soft close:', phrase: '"While I have you, what\'s your current monthly spend? I\'ll make sure our quote beats it."' }
+                            ]
+                        },
+                        time: '5 seconds ago'
+                    },
+                    {
+                        type: 'compliance',
+                        trigger: '"Do you record consent?"',
+                        response: {
+                            bullets: [
+                                { action: 'Immediate assurance:', phrase: '"Yes—call recording + documented LoA; I can send our policy after this call."' },
+                                { action: 'Build confidence:', phrase: '"We exceed FCC requirements and have never had a compliance issue in 10 years."' },
+                                { action: 'Offer proof:', phrase: '"Your legal team can review our compliance package - would that help move forward?"' }
                             ]
                         },
                         time: '7 seconds ago'
+                    },
+                    {
+                        type: 'objection',
+                        trigger: '"We\'re locked in a contract"',
+                        response: {
+                            bullets: [
+                                { action: 'Explore options:', phrase: '"When does it end? We often buy out the last 3 months if the savings justify it."' },
+                                { action: 'Plant seed:', phrase: '"Let\'s schedule a follow-up 60 days before expiration - you\'ll have leverage to negotiate."' },
+                                { action: 'Find workaround:', phrase: '"Can we start with your overflow traffic or new locations not under contract?"' }
+                            ]
+                        },
+                        time: '10 seconds ago'
                     }
                 ]
             },
-            'automotive': {
+            'logistics': {
                 signals: [
                     {
                         type: 'objection',
-                        trigger: '"I need to think about it"',
+                        trigger: '"Your rate\'s too high for this lane"',
                         response: {
                             bullets: [
-                                { action: 'Uncover concern:', phrase: '"Of course - it\'s an important decision. What specific aspects would you like to think through?"' },
-                                { action: 'Address directly:', phrase: '"Many customers want to sleep on it. Just know that this model has only 3 units left in this color."' },
-                                { action: 'Offer incentive:', phrase: '"If we can address your concerns today, I can include the extended warranty at no charge - that\'s a $1,200 value."' }
+                                { action: 'Probe:', phrase: '"Totally—are you optimizing for speed or cost on this pickup?"' },
+                                { action: 'Social proof:', phrase: '"We cover this lane daily; 96% on-time last quarter."' },
+                                { action: 'Close:', phrase: '"If I match transit at $X all-in, can we lock this load now?"' }
                             ]
                         },
                         time: 'Just now'
                     },
                     {
-                        type: 'buying-signal',
-                        trigger: '"What are the financing options?"',
+                        type: 'competitor',
+                        trigger: '"Our current broker handles it"',
                         response: {
                             bullets: [
-                                { action: 'Show enthusiasm:', phrase: '"Excellent question! We have 0% APR for 60 months if you qualify, or competitive rates starting at 3.9%."' },
-                                { action: 'Make it easy:', phrase: '"I can get you pre-approved in about 10 minutes with just a soft credit check - no impact to your score."' },
-                                { action: 'Assume the sale:', phrase: '"While we run those numbers, should we start the paperwork on your preferred color and trim?"' }
+                                { action: 'Contrast:', phrase: '"When they miss a pickup, what\'s the escalation? We offer a hot-shot backup within 2 hours."' },
+                                { action: 'Proof:', phrase: '"I can share OTIF metrics for 3 shippers your size on this corridor."' },
+                                { action: 'Test offer:', phrase: '"Give us one load to prove ourselves - no commitment beyond that. Fair?"' }
                             ]
                         },
                         time: '2 seconds ago'
                     },
                     {
-                        type: 'objection',
-                        trigger: '"The monthly payment is too high"',
+                        type: 'buying-signal',
+                        trigger: '"Can you do recurring weekly pickups?"',
                         response: {
                             bullets: [
-                                { action: 'Explore options:', phrase: '"I hear you. Would extending the term to lower the payment help, or should we look at certified pre-owned options?"' },
-                                { action: 'Show total value:', phrase: '"Remember, this includes the warranty and maintenance package - that saves about $3,000 over 3 years."' },
-                                { action: 'Find middle ground:', phrase: '"What monthly payment would work for your budget? Let me see what I can structure."' }
+                                { action: 'Lock it in:', phrase: '"We\'ll set a standing order, shared tracking, and backup carrier—want a pilot for the next 2 Fridays?"' },
+                                { action: 'Sweeten deal:', phrase: '"For recurring volume, I can drop the rate 8% and guarantee the same driver."' },
+                                { action: 'Fast commitment:', phrase: '"I can reserve your preferred pickup window for the next month - should I lock it in?"' }
                             ]
                         },
-                        time: '5 seconds ago'
+                        time: '4 seconds ago'
+                    },
+                    {
+                        type: 'objection',
+                        trigger: '"What if the carrier doesn\'t show?"',
+                        response: {
+                            bullets: [
+                                { action: 'Guarantee:', phrase: '"We have a 2-hour hot-shot guarantee - if our primary fails, backup is already lined up."' },
+                                { action: 'Track record:', phrase: '"In Q4, we had 3 no-shows out of 1,847 loads - that\'s 99.8% reliability."' },
+                                { action: 'Risk reversal:', phrase: '"If we miss a pickup window, we cover the difference in expedited shipping. It\'s in writing."' }
+                            ]
+                        },
+                        time: '6 seconds ago'
+                    },
+                    {
+                        type: 'buying-signal',
+                        trigger: '"When can you pick up?"',
+                        response: {
+                            bullets: [
+                                { action: 'Immediate availability:', phrase: '"I have a truck available for pickup as early as 2pm today - does that work?"' },
+                                { action: 'Lock commitment:', phrase: '"To guarantee that window, I need confirmation in the next 15 minutes. Should I reserve it?"' },
+                                { action: 'Handle logistics:', phrase: '"I\'ll send the rate confirmation now and driver info within the hour. What\'s your dock number?"' }
+                            ]
+                        },
+                        time: '8 seconds ago'
                     }
                 ]
             }
