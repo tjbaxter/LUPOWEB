@@ -721,7 +721,10 @@
     <!-- Simple Navigation -->
     <nav>
         <div class="nav-content">
-            <a href="#" class="logo">LUPO</a>
+            <a href="#" class="logo" style="display: flex; align-items: center; gap: 12px;">
+                <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 40px; width: auto;">
+                <span style="font-size: 24px; font-weight: 600; color: var(--text-primary);">LUPO</span>
+            </a>
         </div>
     </nav>
     
@@ -754,7 +757,7 @@
             <div class="download-section">
                 <div class="download-title">Get LUPO Desktop Now</div>
                 <div class="download-buttons">
-                    <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-2.2.5-arm64.dmg" 
+                    <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-2.3.1-arm64.dmg" 
                        class="download-btn primary" 
                        id="macARMDownload"
                        onclick="trackDownload('mac-arm64')">
@@ -763,7 +766,7 @@
                         </svg>
                         Download for Mac
                     </a>
-                    <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-2.2.5.dmg" 
+                    <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-2.3.1.dmg" 
                        class="download-btn" 
                        id="macIntelDownload"
                        onclick="trackDownload('mac-intel')"
@@ -773,7 +776,7 @@
                         </svg>
                         Mac (Intel)
                     </a>
-                    <a href="https://github.com/LUPOLABS/lupo-releases/releases/download/v2.2.5/LUPO.Setup.2.2.5.exe"                       class="download-btn" 
+                    <a href="https://github.com/LUPOLABS/lupo-releases/releases/download/v2.3.1/LUPO.Setup.2.3.1.exe"                       class="download-btn" 
                        id="winDownload"
                        onclick="trackDownload('windows')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -784,7 +787,7 @@
                         Download for Windows
                     </a>
                 </div>
-                <div class="download-version">Version 2.2.5 • Released September 2025</div>
+                <div class="download-version">Version 2.3.1 • Released September 2025</div>
                 <div class="platform-detection" id="platformMessage" style="display: none;"></div>
             </div>
             
@@ -1091,9 +1094,57 @@
     </div>
     
     <!-- Simple Footer -->
-    <footer class="simple-footer">
-        <div class="footer-logo">LUPO</div>
-        <p class="footer-text">© 2025 LUPO AI, Inc. All rights reserved.</p>
+    <footer class="simple-footer" style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 40px;
+        border-top: 1px solid var(--border);
+        background: var(--bg-secondary);
+    ">
+        <!-- Left side: Status and Badges -->
+        <div style="
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        ">
+            <!-- All Systems Operational -->
+            <div style="
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            ">
+                <div style="
+                    width: 6px;
+                    height: 6px;
+                    background: #34c759;
+                    border-radius: 50%;
+                    box-shadow: 0 0 6px rgba(52, 199, 89, 0.6);
+                    animation: statusPulse 2s ease-in-out infinite;
+                "></div>
+                <span style="
+                    font-size: 11px;
+                    color: rgba(255, 255, 255, 0.6);
+                    font-weight: 400;
+                ">All Systems Operational</span>
+            </div>
+            
+            <!-- GDPR/CCPA Compliance Badge -->
+            <img src="compliancelogos/gdpr-compliant.png" alt="GDPR & CCPA Compliant" style="
+                height: 120px;
+                width: 120px;
+                object-fit: contain;
+                opacity: 0.7;
+                transition: opacity 0.3s ease;
+                cursor: pointer;
+            " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'" title="GDPR & CCPA Compliant">
+        </div>
+        
+        <!-- Center/Right: Copyright -->
+        <div style="text-align: right;">
+            <div class="footer-logo">LUPO</div>
+            <p class="footer-text">© 2025 LUPO — a product of Flair Technologies Ltd. All rights reserved.</p>
+        </div>
     </footer>
     
     <script>
@@ -1153,7 +1204,7 @@
         
         // Track downloads
         function trackDownload(platform) {
-            console.log('Download initiated:', platform, 'v2.2.5');
+            console.log('Download initiated:', platform, 'v2.3.1');
             // Analytics tracking can be added here
         }
         

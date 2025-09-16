@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUPO Enterprise — Real-time AI for Sales Teams</title>
+    <meta name="description" content="Start a 5-seat pilot ($1,000/mo, 7-day refund). $200/seat/month expansion. Real-time objection handling, compliance guardrails, and manager analytics.">
+    <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
+    <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            /* Force dark mode colors */
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --bg-primary: #000000;
+            --bg-secondary: #161617;
+            --accent: #2997ff;
+            --accent-hover: #409cff;
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #34c759;
+            --danger: #ff3b30;
+            --gradient-sales: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Simple Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(0, 0, 0, 0.72);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 22px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        /* Main Container */
+        .main-container {
+            flex: 1;
+            padding: 100px 20px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Background Animation */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.03;
+            background: radial-gradient(circle at 20% 50%, var(--accent) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, #667eea 0%, transparent 50%);
+            animation: bgShift 30s ease-in-out infinite;
+        }
+        
+        @keyframes bgShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            33% { transform: rotate(120deg) scale(1.1); }
+            66% { transform: rotate(240deg) scale(0.9); }
+        }
+        
+        /* Content Container */
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+        
+        .enterprise-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, rgba(41, 151, 255, 0.2), rgba(41, 151, 255, 0.1));
+            border: 1px solid var(--accent);
+            border-radius: 30px;
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 32px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(41, 151, 255, 0.3); }
+            50% { transform: scale(1.02); box-shadow: 0 6px 30px rgba(41, 151, 255, 0.5); }
+        }
+        
+        h1 {
+            font-size: 72px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.005em;
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .gradient-text {
+            background: var(--gradient-sales);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 28px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.4;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+        
+        .value-prop {
+            font-size: 20px;
+            color: var(--text-primary);
+            margin-bottom: 40px;
+            font-weight: 500;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+        
+        /* Pricing Cards */
+        .pricing-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 700px;
+            margin: 0 auto 48px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s forwards;
+        }
+        
+        .pricing-card {
+            padding: 24px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card.primary {
+            border-color: var(--accent);
+            background: linear-gradient(145deg, rgba(41, 151, 255, 0.1), rgba(41, 151, 255, 0.05));
+        }
+        
+        .pricing-card.primary::before {
+            content: 'RECOMMENDED';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent);
+            background: rgba(41, 151, 255, 0.2);
+            padding: 4px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+        
+        .pricing-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .pricing-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        
+        .pricing-detail {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        /* CTA Buttons */
+        .cta-container {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 80px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+        
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 18px 40px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 17px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(41, 151, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(41, 151, 255, 0.5);
+        }
+        
+        .link-secondary {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 17px;
+            transition: all 0.3s ease;
+            padding: 10px;
+        }
+        
+        .link-secondary:hover {
+            color: var(--text-primary);
+        }
+        
+        /* Feature Cards Grid */
+        .features-section {
+            margin-bottom: 100px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .section-header h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+        
+        .feature-card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-sales);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            border-color: rgba(41, 151, 255, 0.3);
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gradient-sales);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        
+        .feature-description {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .feature-highlight {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        /* Process Steps */
+        .process-section {
+            margin-bottom: 100px;
+        }
+        
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+        
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+        
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: calc(100% - 4px);
+            width: 32px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent));
+            opacity: 0.5;
+        }
+        
+        .process-step:last-child::after {
+            display: none;
+        }
+        
+        .step-number {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 16px;
+            background: var(--gradient-sales);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        }
+        
+        .step-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .step-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        /* Live Demo Preview */
+        .demo-section {
+            margin-bottom: 100px;
+            padding: 60px 40px;
+            background: linear-gradient(145deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .demo-badge {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(255, 59, 48, 0.1);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--danger);
+        }
+        
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: livePulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4); }
+            50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(255, 59, 48, 0); }
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            margin-bottom: 100px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .faq-grid {
+            display: grid;
+            gap: 12px;
+            margin-top: 48px;
+        }
+        
+        .faq-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(41, 151, 255, 0.3);
+        }
+        
+        .faq-question {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 24px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: rgba(41, 151, 255, 0.05);
+        }
+        
+        .faq-question-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+        
+        .faq-indicator {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-indicator {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 0 24px 24px 24px;
+        }
+        
+        .faq-footer {
+            text-align: center;
+            margin-top: 32px;
+            padding: 24px;
+            background: rgba(41, 151, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(41, 151, 255, 0.2);
+        }
+        
+        .faq-footer p {
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+        
+        .faq-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .faq-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Footer CTA */
+        .footer-cta {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer-cta-text {
+            font-size: 32px;
+            color: var(--text-primary);
+            margin-bottom: 32px;
+            font-weight: 600;
+        }
+        
+        /* Simple Footer */
+        .simple-footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--bg-secondary);
+        }
+        
+        .footer-logo {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-steps {
+                grid-template-columns: repeat(2, 1fr);
+                row-gap: 48px;
+            }
+            
+            .process-step::after {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 48px;
+            }
+            
+            .subtitle {
+                font-size: 20px;
+            }
+            
+            .section-header h2 {
+                font-size: 32px;
+            }
+            
+            .cta-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .pricing-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="animated-bg"></div>
+    
+    <!-- Simple Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="/" class="logo" style="display: flex; align-items: center; gap: 12px;">
+                <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 40px; width: auto;">
+                <span style="font-size: 24px; font-weight: 600; color: var(--text-primary);">LUPO</span>
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="content-wrapper">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <h1 style="font-size: 56px; margin-bottom: 20px;">
+                    <span class="gradient-text">Enterprise Pricing</span>
+                </h1>
+                
+                <p style="font-size: 20px; color: var(--text-secondary); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">
+                    Start with a 5-seat pilot. Scale to your entire sales team. 
+                    Full refund within 7 days if you're not closing more deals.
+                </p>
+                
+                <!-- Pricing Cards -->
+                <div class="pricing-container">
+                    <div class="pricing-card primary">
+                        <div class="pricing-title">Pilot Program</div>
+                        <div class="pricing-price">$1,000/month</div>
+                        <div class="pricing-detail">5 seats included<br>7-day full refund guarantee</div>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="pricing-title">Seat Expansion</div>
+                        <div class="pricing-price">$200/seat</div>
+                        <div class="pricing-detail">Add anytime<br>Minimum 5 seats total</div>
+                    </div>
+                </div>
+                
+                <!-- CTAs -->
+                <div class="cta-container">
+                    <a href="#CALENDLY_LINK#" 
+                       class="btn-primary" 
+                       id="cta-book-pilot" 
+                       data-track="enterprise_book_pilot_top">
+                        Book a Pilot Call
+                    </a>
+                    <a href="mailto:sales@lupo.ai" 
+                       class="link-secondary" 
+                       id="cta-email" 
+                       data-track="enterprise_email_sales">
+                        Email sales@lupo.ai
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Features Section -->
+            <div class="features-section">
+                <div class="section-header">
+                    <h2>What You Get</h2>
+                    <p class="section-subtitle">Everything your sales team needs to close more deals</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                            </svg>
+                        </div>
+                        <div class="feature-title">Unlimited Objection Handling</div>
+                        <div class="feature-description">
+                            Real-time responses in ~200ms. Your reps never stumble on objections again. 
+                            Every rebuttal, perfectly timed, perfectly delivered.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                                <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                                <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                            </svg>
+                        </div>
+                        <div class="feature-title">Real-time Audio Streaming</div>
+                        <div class="feature-description">
+                            LUPO listens to every call, understands context, and delivers insights 
+                            instantly. No delays, no missed opportunities.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                        </div>
+                        <div class="feature-title">Compliance Guardrails</div>
+                        <div class="feature-description">
+                            Prevents risky promises and unauthorized discounts. 
+                            Stay compliant while closing aggressively.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="20" x2="12" y2="10"></line>
+                                <line x1="18" y1="20" x2="18" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="16"></line>
+                            </svg>
+                        </div>
+                        <div class="feature-title">Analytics Dashboards</div>
+                        <div class="feature-description">
+                            Manager view for team performance and usage tracking. 
+                            Rep view for self-review and AI coaching on their calls.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                        </div>
+                        <div class="feature-title">Custom Sales Playbook</div>
+                        <div class="feature-description">
+                            Upload your sales methodology, objection responses, and competitive positioning. 
+                            LUPO uses your playbook in real-time.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <div class="feature-title">Instant Rep Onboarding</div>
+                        <div class="feature-description">
+                            New reps close like veterans from day one. 
+                            Works with any video conferencing tool - install and go.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Process Section -->
+            <div class="process-section">
+                <div class="section-header">
+                    <h2>How the Pilot Works</h2>
+                    <p class="section-subtitle">From sign-up to scale in 30 days</p>
+                </div>
+                
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Start with 5 seats</div>
+                        <div class="step-description">$1,000/month gets your team started immediately</div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Run live for 30 days</div>
+                        <div class="step-description">LUPO works on real calls from day one</div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-title">7-day guarantee</div>
+                        <div class="step-description">Full refund if not impressed within first week</div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-title">Scale seamlessly</div>
+                        <div class="step-description">Add seats anytime at $200/seat/month</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Try Demo Link -->
+            <div style="
+                text-align: center;
+                margin-bottom: 80px;
+                padding: 32px;
+                background: linear-gradient(135deg, rgba(96, 165, 250, 0.03), rgba(167, 139, 250, 0.03));
+                border-radius: 16px;
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            ">
+                <p style="
+                    font-size: 16px;
+                    color: var(--text-secondary);
+                    margin-bottom: 16px;
+                ">
+                    Want to see LUPO handle objections in real-time?
+                </p>
+                <a href="/playground.html" style="
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 16px;
+                    font-weight: 500;
+                    transition: all 0.3s ease;
+                " onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                    Try the live demo
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+            
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <div class="section-header">
+                    <h2>Frequently Asked Questions</h2>
+                    <p class="section-subtitle">Everything you need to know about LUPO Enterprise</p>
+                </div>
+                
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Why a pilot instead of a free trial?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Pilots create real adoption and outcomes. Free trials rarely get reps using the product. 
+                            To keep it risk-free, we offer a 7-day full refund.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Can we start with more than 5 seats?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Yes. 5 seats ($1,000/mo) is the minimum. Start with 10, 20, or more at $200/seat/month.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">What happens if we add seats mid-month?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Stripe automatically prorates the billing. You only pay for the remaining days in the current billing cycle for new seats.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Does LUPO support compliance-heavy industries?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Today we prevent risky promises and unauthorized discounts. Deeper rulebook integrations 
+                            (insurance, pharma, finance) are coming via the LUPO Compliance Engine.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-footer">
+                    <p>Still have questions? Email us at <a href="mailto:sales@lupo.ai">sales@lupo.ai</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer CTA -->
+    <div class="footer-cta">
+        <p class="footer-cta-text">Ready to put LUPO on real calls this week?</p>
+        <a href="#CALENDLY_LINK#" 
+           class="btn-primary" 
+           id="cta-book-pilot-footer" 
+           data-track="enterprise_book_pilot_footer">
+            Book a Pilot Call
+        </a>
+    </div>
+    
+    <!-- Simple Footer -->
+    <footer class="simple-footer">
+        <div class="footer-logo">LUPO</div>
+        <p class="footer-text">© 2025 LUPO — a product of Flair Technologies Ltd. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Toggle FAQ items
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const allFaqItems = document.querySelectorAll('.faq-item');
+            
+            // Close all other FAQ items
+            allFaqItems.forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle current FAQ item
+            faqItem.classList.toggle('active');
+        }
+        
+        // Create floating particles (reused from index.html)
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: ${Math.random() * 4 + 2}px;
+                height: ${Math.random() * 4 + 2}px;
+                background: var(--accent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+                opacity: ${Math.random() * 0.5 + 0.1};
+            `;
+            
+            const startX = Math.random() * window.innerWidth;
+            const startY = window.innerHeight + 10;
+            
+            particle.style.left = startX + 'px';
+            particle.style.top = startY + 'px';
+            
+            document.body.appendChild(particle);
+            
+            const duration = Math.random() * 20000 + 10000;
+            const horizontalMovement = (Math.random() - 0.5) * 100;
+            
+            particle.animate([
+                { transform: `translate(0, 0)`, opacity: 0 },
+                { transform: `translate(${horizontalMovement}px, -${window.innerHeight + 20}px)`, opacity: particle.style.opacity },
+                { transform: `translate(${horizontalMovement * 2}px, -${window.innerHeight * 2}px)`, opacity: 0 }
+            ], {
+                duration: duration,
+                easing: 'linear'
+            }).onfinish = () => particle.remove();
+        }
+        
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            setInterval(createParticle, 500);
+        });
+    </script>
+</body>
+</html>
