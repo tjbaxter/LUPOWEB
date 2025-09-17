@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUPO Sales AI - Real-time Sales Intelligence Coming Soon</title>
+    <title>LUPO Sales AI - Enterprise Pilot Program Available</title>
     <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
     <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
     <style>
@@ -733,7 +733,7 @@
         <div class="content-wrapper">
             <!-- Coming Soon Badge -->
             <div class="coming-soon-badge">
-                <span>Coming Q3 2025</span>
+                <span>Live Pilot Program</span>
                 <div class="loading-dots">
                     <div class="loading-dot"></div>
                     <div class="loading-dot"></div>
@@ -756,6 +756,13 @@
             <!-- Download Section -->
             <div class="download-section">
                 <div class="download-title">Get LUPO Desktop Now</div>
+                <p style="
+                    font-size: 13px;
+                    color: var(--text-secondary);
+                    margin-bottom: 8px;
+                ">
+                    Test individually or start an enterprise pilot with your team
+                </p>
                 <div class="download-buttons">
                     <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-2.3.3-arm64.dmg" 
                        class="download-btn primary" 
@@ -1061,34 +1068,99 @@
                 </div>
             </div>
             
-            <!-- Email Signup -->
-            <div class="notify-section">
-                <form 
-                    name="sales-early-access" 
-                    method="POST" 
-                    data-netlify="true"
-                    netlify-honeypot="bot-field"
-                    class="notify-form" 
-                    onsubmit="handleNotify(event)"
-                >
-                    <input type="hidden" name="form-name" value="sales-early-access">
-                    <p style="display:none;">
-                        <label>Don't fill this out: <input name="bot-field"></label>
-                    </p>
-                    
-                    <input 
-                        type="email" 
-                        name="email"
-                        class="notify-input" 
-                        placeholder="Enter your email" 
-                        required
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                    >
-                    <button type="submit" class="notify-btn">Get Early Access</button>
-                </form>
-                <p class="privacy-note">
-                    Be among the first sales teams to use LUPO. Enter your email to reserve your invitation.
+            <!-- Pilot CTA Section -->
+            <div class="pilot-section" style="
+                margin: 60px 0;
+                padding: 48px;
+                background: linear-gradient(135deg, rgba(41, 151, 255, 0.08), rgba(41, 151, 255, 0.03));
+                border-radius: 24px;
+                border: 1px solid rgba(41, 151, 255, 0.2);
+                text-align: center;
+            ">
+                <h2 style="
+                    font-size: 36px;
+                    font-weight: 600;
+                    color: var(--text-primary);
+                    margin-bottom: 16px;
+                ">Ready to Deploy LUPO?</h2>
+                
+                <p style="
+                    font-size: 18px;
+                    color: var(--text-secondary);
+                    margin-bottom: 32px;
+                    max-width: 600px;
+                    margin-left: auto;
+                    margin-right: auto;
+                ">
+                    Start your 5-seat pilot for $1,000/month. Your reps will be closing more deals within days.
                 </p>
+                
+                <div style="
+                    display: flex;
+                    gap: 16px;
+                    align-items: center;
+                    justify-content: center;
+                    flex-wrap: wrap;
+                    margin-bottom: 24px;
+                ">
+                    <a href="https://calendly.com/tjpbaxter/30min" 
+                       style="
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 18px 40px;
+                        background: var(--accent);
+                        color: white;
+                        border: none;
+                        border-radius: 30px;
+                        font-size: 17px;
+                        font-weight: 600;
+                        text-decoration: none;
+                        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        box-shadow: 0 10px 30px rgba(41, 151, 255, 0.3);
+                    "
+                    onmouseover="this.style.transform='translateY(-2px) scale(1.02)'; this.style.boxShadow='0 15px 40px rgba(41, 151, 255, 0.5)'"
+                    onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 30px rgba(41, 151, 255, 0.3)'">
+                        Book Your Pilot Call
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    
+                    <a href="/enterprise" 
+                       style="
+                        color: var(--text-secondary);
+                        text-decoration: none;
+                        font-size: 17px;
+                        transition: all 0.3s ease;
+                        padding: 10px;
+                    "
+                    onmouseover="this.style.color='var(--text-primary)'"
+                    onmouseout="this.style.color='var(--text-secondary)'">
+                        View Enterprise Pricing →
+                    </a>
+                </div>
+                
+                <div style="
+                    display: flex;
+                    gap: 32px;
+                    justify-content: center;
+                    padding-top: 24px;
+                    border-top: 1px solid var(--border);
+                ">
+                    <div style="text-align: center;">
+                        <div style="font-size: 24px; font-weight: 700; color: var(--accent);">5 seats</div>
+                        <div style="font-size: 13px; color: var(--text-secondary);">minimum</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 24px; font-weight: 700; color: var(--success);">7 days</div>
+                        <div style="font-size: 13px; color: var(--text-secondary);">full refund</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 24px; font-weight: 700; color: var(--text-primary);">$200</div>
+                        <div style="font-size: 13px; color: var(--text-secondary);">per additional seat</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1230,45 +1302,6 @@
             }, 2500);
         }
         
-        // Handle form submission
-        function handleNotify(e) {
-            e.preventDefault();
-            const form = e.target;
-            const email = form.querySelector('input[name="email"]').value;
-            const button = form.querySelector('button');
-            const originalText = button.textContent;
-            
-            button.textContent = 'Adding...';
-            button.disabled = true;
-            
-            fetch('/', {
-                method: 'POST',
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(new FormData(form)).toString()
-            })
-            .then(() => {
-                button.textContent = '✓ You\'re on the list!';
-                button.style.background = 'var(--success)';
-                form.reset();
-                
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.disabled = false;
-                    button.style.background = '';
-                }, 3000);
-            })
-            .catch((error) => {
-                console.error('Form submission error:', error);
-                button.textContent = 'Error - Please try again';
-                button.style.background = 'var(--danger)';
-                
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.disabled = false;
-                    button.style.background = '';
-                }, 3000);
-            });
-        }
         
         // Create floating particles
         function createParticle() {
