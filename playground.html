@@ -35,6 +35,124 @@
             overflow-x: hidden;
             min-height: 100vh;
         }
+
+        /* Premium Animated Background */
+        .premium-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -2;
+            overflow: hidden;
+            background: var(--bg-primary);
+        }
+
+        /* Gradient Mesh Background */
+        .gradient-mesh {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(41, 151, 255, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(102, 126, 234, 0.02) 0%, transparent 50%);
+            animation: meshShift 30s ease-in-out infinite;
+        }
+
+        @keyframes meshShift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-20px, -20px) scale(1.1); }
+            66% { transform: translate(20px, -10px) scale(0.95); }
+        }
+
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: floatOrb 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .orb1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(41, 151, 255, 0.3) 0%, transparent 70%);
+            top: 10%;
+            left: 10%;
+            animation-duration: 25s;
+        }
+
+        .orb2 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.3) 0%, transparent 70%);
+            bottom: 20%;
+            right: 15%;
+            animation-duration: 30s;
+            animation-delay: -10s;
+        }
+
+        .orb3 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            animation-duration: 35s;
+            animation-delay: -5s;
+        }
+
+        @keyframes floatOrb {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            50% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+            75% {
+                transform: translate(-30px, -20px) scale(1.05);
+            }
+        }
+
+        /* Subtle Grid Pattern */
+        .grid-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 60s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Noise Texture Overlay */
+        .noise-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.02;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.03) 2px,
+                    rgba(255, 255, 255, 0.03) 4px
+                );
+            pointer-events: none;
+        }
         
         /* Nav */
         nav {
@@ -94,6 +212,8 @@
         
         /* Header Section */
         .playground-header {
+            position: relative;
+            z-index: 1;
             text-align: center;
             margin-bottom: 40px;
         }
@@ -112,6 +232,10 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 4px 16px rgba(52, 199, 89, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         
         .live-dot {
@@ -136,6 +260,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
         }
         
         .playground-subtitle {
@@ -163,19 +288,47 @@
         
         /* LUPO Main Window */
         .lupo-main-window {
-            background: linear-gradient(to bottom,
-                rgba(0, 0, 0, 0.05) 0%,
-                rgba(0, 0, 0, 0.02) 100%);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: linear-gradient(
+                145deg,
+                rgba(0, 0, 0, 0.4) 0%,
+                rgba(0, 0, 0, 0.2) 100%
+            );
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            box-shadow: 
+                0 24px 48px rgba(0, 0, 0, 0.25),
+                0 8px 16px rgba(0, 0, 0, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1),
+                0 0 80px rgba(41, 151, 255, 0.05);
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 
-                0 24px 48px rgba(0, 0, 0, 0.15),
-                0 12px 24px rgba(0, 0, 0, 0.15),
-                inset 0 1px 1px rgba(255, 255, 255, 0.1);
             min-height: 500px;
+        }
+
+        .lupo-main-window::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(
+                135deg,
+                rgba(41, 151, 255, 0.2),
+                transparent 40%,
+                transparent 60%,
+                rgba(118, 75, 162, 0.2)
+            );
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .lupo-main-window:hover::before {
+            opacity: 1;
         }
         
         .lupo-header {
@@ -502,15 +655,20 @@
         
         /* Real-time Signals Window */
         .signals-window {
-            background: rgba(20, 20, 20, 0.92);
+            background: linear-gradient(
+                145deg,
+                rgba(20, 20, 20, 0.95) 0%,
+                rgba(20, 20, 20, 0.85) 100%
+            );
+            box-shadow:
+                0 4px 16px rgba(0, 0, 0, 0.4),
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 60px rgba(102, 126, 234, 0.03);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             border: 1px solid var(--border);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow:
-                0 2px 8px rgba(0, 0, 0, 0.35),
-                0 8px 28px rgba(0, 0, 0, 0.45);
             position: sticky;
             top: 80px;
         }
@@ -548,10 +706,19 @@
             border-radius: 8px;
             padding: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             opacity: 0;
             animation: slideIn 0.3s ease forwards;
+        }
+
+        .insight-bubble:hover {
+            transform: translateX(-2px);
+            background: rgba(26, 26, 26, 0.9);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(41, 151, 255, 0.1);
         }
         
         @keyframes slideIn {
@@ -625,11 +792,19 @@
         
         /* Scenario Selector */
         .scenario-selector {
-            background: var(--bg-secondary);
+            background: linear-gradient(
+                145deg,
+                rgba(22, 22, 24, 0.6) 0%,
+                rgba(22, 22, 24, 0.4) 100%
+            );
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
             border-radius: 16px;
             padding: 24px;
             margin-bottom: 30px;
-            border: 1px solid var(--border);
         }
         
         .scenario-label {
@@ -648,8 +823,15 @@
         }
         
         .scenario-btn {
+            background: linear-gradient(
+                145deg,
+                rgba(255, 255, 255, 0.05) 0%,
+                rgba(255, 255, 255, 0.02) 100%
+            );
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
             padding: 12px 20px;
-            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
             border-radius: 10px;
             color: var(--text-primary);
@@ -659,6 +841,26 @@
             transition: all 0.2s ease;
             text-align: left;
         }
+
+        .scenario-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: left 0.5s ease;
+        }
+
+        .scenario-btn:hover::before {
+            left: 100%;
+        }
         
         .scenario-btn:hover {
             background: rgba(255, 255, 255, 0.08);
@@ -667,7 +869,10 @@
         }
         
         .scenario-btn.active {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent), #5090ff);
+            box-shadow: 
+                0 4px 16px rgba(41, 151, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
             border-color: var(--accent);
             color: white;
         }
@@ -798,11 +1003,36 @@
         
         /* CTA Section */
         .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 -20px 40px rgba(102, 126, 234, 0.1),
+                0 20px 40px rgba(118, 75, 162, 0.1);
             text-align: center;
             padding: 40px;
-            background: var(--gradient-sales);
             border-radius: 20px;
             margin-top: 60px;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(
+                circle,
+                rgba(255, 255, 255, 0.1) 0%,
+                transparent 70%
+            );
+            animation: rotateBg 30s linear infinite;
+        }
+
+        @keyframes rotateBg {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         .cta-title {
@@ -851,6 +1081,16 @@
     </style>
 </head>
 <body>
+    <!-- Premium Background Elements -->
+    <div class="premium-bg">
+        <div class="gradient-mesh"></div>
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+        <div class="grid-pattern"></div>
+        <div class="noise-overlay"></div>
+    </div>
+    
     <!-- Navigation -->
     <nav>
         <div class="nav-content">
@@ -1425,6 +1665,44 @@
         function formatType(type) {
             return type.replace(/-/g, ' ').replace(/_/g, ' ').toUpperCase();
         }
+        
+        // Create floating particles (from index.html)
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: ${Math.random() * 4 + 2}px;
+                height: ${Math.random() * 4 + 2}px;
+                background: var(--accent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+                opacity: ${Math.random() * 0.5 + 0.1};
+            `;
+            
+            const startX = Math.random() * window.innerWidth;
+            const startY = window.innerHeight + 10;
+            
+            particle.style.left = startX + 'px';
+            particle.style.top = startY + 'px';
+            
+            document.body.appendChild(particle);
+            
+            const duration = Math.random() * 20000 + 10000;
+            const horizontalMovement = (Math.random() - 0.5) * 100;
+            
+            particle.animate([
+                { transform: `translate(0, 0)`, opacity: 0 },
+                { transform: `translate(${horizontalMovement}px, -${window.innerHeight + 20}px)`, opacity: particle.style.opacity },
+                { transform: `translate(${horizontalMovement * 2}px, -${window.innerHeight * 2}px)`, opacity: 0 }
+            ], {
+                duration: duration,
+                easing: 'linear'
+            }).onfinish = () => particle.remove();
+        }
+        
+        // Start particle animation
+        setInterval(createParticle, 500);
     </script>
 </body>
 </html>
