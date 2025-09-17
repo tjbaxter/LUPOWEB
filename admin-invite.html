@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUPO - Send Manager Invite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: #888;
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            display: none;
+        }
+        
+        .message.success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+            display: block;
+        }
+        
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            display: block;
+        }
+        
+        .admin-login {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: #1a1a1a;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+        
+        .admin-login h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #888;
+        }
+        
+        .logged-in {
+            color: #10b981;
+            font-size: 0.875rem;
+        }
+        
+        .divider {
+            border-top: 1px solid #333;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Send Manager Invite</h2>
+        
+        <!-- Admin Login Section -->
+        <div class="admin-login">
+            <h3>Step 1: Admin Login</h3>
+            <div id="loginSection">
+                <div class="form-group">
+                    <label>Your Admin Email</label>
+                    <input type="email" id="adminEmail" value="tjpb2@cantab.ac.uk">
+                </div>
+                <div class="form-group">
+                    <label>Your Password</label>
+                    <input type="password" id="adminPassword" placeholder="Enter your password">
+                </div>
+                <button onclick="adminLogin()">Login as Admin</button>
+            </div>
+            <div id="loggedInSection" style="display: none;">
+                <p class="logged-in">✓ Logged in as admin</p>
+            </div>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <!-- Send Invite Section -->
+        <div id="inviteSection" style="opacity: 0.5; pointer-events: none;">
+            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: #888;">Step 2: Manager Details</h3>
+            <div class="form-group">
+                <label>Manager's Email</label>
+                <input type="email" id="managerEmail" placeholder="manager@company.com">
+            </div>
+            <div class="form-group">
+                <label>Manager's Name</label>
+                <input type="text" id="managerName" placeholder="John Smith">
+            </div>
+            <button id="sendButton" onclick="sendInvite()">Send Invite</button>
+        </div>
+        
+        <div id="message" class="message"></div>
+    </div>
+    
+    <script>
+        let adminToken = null;
+        const API_URL = 'https://lupo-backend.fly.dev';
+        
+        async function adminLogin() {
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            const message = document.getElementById('message');
+            
+            if (!password) {
+                showMessage('Please enter your password', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    adminToken = data.token;
+                    
+                    // Update UI
+                    document.getElementById('loginSection').style.display = 'none';
+                    document.getElementById('loggedInSection').style.display = 'block';
+                    document.getElementById('inviteSection').style.opacity = '1';
+                    document.getElementById('inviteSection').style.pointerEvents = 'auto';
+                    
+                    showMessage('Logged in successfully! Now enter manager details.', 'success');
+                } else {
+                    showMessage(data.error || 'Login failed', 'error');
+                }
+            } catch (error) {
+                showMessage('Connection error. Please try again.', 'error');
+            }
+        }
+        
+        async function sendInvite() {
+            const managerEmail = document.getElementById('managerEmail').value;
+            const managerName = document.getElementById('managerName').value;
+            const button = document.getElementById('sendButton');
+            
+            if (!adminToken) {
+                showMessage('Please login first', 'error');
+                return;
+            }
+            
+            if (!managerEmail || !managerName) {
+                showMessage('Please enter both email and name', 'error');
+                return;
+            }
+            
+            button.disabled = true;
+            button.textContent = 'Sending...';
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/admin/send-manager-invite`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${adminToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ managerEmail, managerName })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    showMessage(`✓ Invite sent to ${managerEmail}`, 'success');
+                    
+                    // Clear fields for next invite
+                    document.getElementById('managerEmail').value = '';
+                    document.getElementById('managerName').value = '';
+                } else {
+                    showMessage(data.error || 'Failed to send invite', 'error');
+                }
+            } catch (error) {
+                showMessage('Failed to send invite. Please try again.', 'error');
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Send Invite';
+            }
+        }
+        
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = `message ${type}`;
+            
+            // Auto-hide success messages after 5 seconds
+            if (type === 'success') {
+                setTimeout(() => {
+                    message.className = 'message';
+                }, 5000);
+            }
+        }
+        
+        // Allow Enter key to submit
+        document.getElementById('adminPassword').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') adminLogin();
+        });
+        
+        document.getElementById('managerName').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && adminToken) sendInvite();
+        });
+    </script>
+</body>
+</html>

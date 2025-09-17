@@ -76,6 +76,20 @@
             font-weight: 600;
         }
         
+        /* Access Indicator */
+        .access-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-right: 1rem;
+        }
+        
         /* Compliance Tile - Minimal and sophisticated */
         .compliance-tile {
             position: fixed;
@@ -638,6 +652,11 @@
             padding: 1rem;
             border-radius: 8px;
             margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .auth-error.show {
+            display: block;
         }
         
         .auth-error-title {
@@ -655,6 +674,11 @@
             display: flex;
             gap: 1rem;
             justify-content: center;
+            display: none;
+        }
+        
+        .auth-actions.show {
+            display: flex;
         }
         
         .auth-btn {
@@ -688,11 +712,11 @@
             <div class="auth-spinner" id="authSpinner"></div>
             <h2 id="authTitle">Authenticating...</h2>
             <p id="authMessage">Verifying your access to the manager dashboard</p>
-            <div class="auth-error hidden" id="authError">
+            <div class="auth-error" id="authError">
                 <div class="auth-error-title">Authentication Failed</div>
                 <div class="auth-error-message" id="authErrorMessage">Your session has expired</div>
             </div>
-            <div class="auth-actions hidden" id="authActions">
+            <div class="auth-actions" id="authActions">
                 <a href="#" class="auth-btn" id="loginBtn">Sign In Again</a>
                 <button class="auth-btn secondary" onclick="retryAuth()">Retry</button>
             </div>
@@ -701,7 +725,7 @@
     
     <header>
         <div class="logo">LUPO</div>
-        <div class="header-info">
+        <div class="header-info" id="headerInfo">
             <div class="header-stat">
                 <div class="header-stat-label">Organization</div>
                 <div class="header-stat-value" id="orgName">--</div>
@@ -826,7 +850,7 @@
         // Authentication configuration
         const AUTH_CONFIG = {
             apiUrl: 'https://lupo-backend.fly.dev',
-            loginUrl: 'https://lupolabs.ai/login',
+            loginUrl: '/manager-login.html',
             maxRetries: 3,
             retryDelay: 1000
         };
@@ -834,49 +858,122 @@
         // Global state
         let authToken = null;
         let authHeaders = {};
+        let accessMethod = null; // 'electron', 'web', or null
         let currentPeriod = 'today';
         let complianceDetails = [];
-        let retryCount = 0;
         
-        // Authentication functions
+        // Main authentication function that handles both methods
         async function authenticateUser() {
             const overlay = document.getElementById('authOverlay');
             const spinner = document.getElementById('authSpinner');
             const title = document.getElementById('authTitle');
             const message = document.getElementById('authMessage');
-            const errorDiv = document.getElementById('authError');
-            const errorMessage = document.getElementById('authErrorMessage');
-            const actions = document.getElementById('authActions');
-            const loginBtn = document.getElementById('loginBtn');
             
             try {
-                // Get token from URL or localStorage
+                // METHOD 1: Check if opened from Electron app (URL parameter)
                 const urlParams = new URLSearchParams(window.location.search);
                 const urlToken = urlParams.get('token');
-                const storedToken = localStorage.getItem('lupo_manager_token');
-                const storedExpiry = localStorage.getItem('lupo_token_expiry');
                 
-                // Check if stored token is expired
-                if (storedToken && storedExpiry) {
-                    const expiry = new Date(storedExpiry);
-                    if (expiry < new Date()) {
-                        console.log('Stored token expired, clearing...');
-                        localStorage.removeItem('lupo_manager_token');
-                        localStorage.removeItem('lupo_token_expiry');
+                if (urlToken) {
+                    console.log('📱 Detected Electron app access');
+                    accessMethod = 'electron';
+                    authToken = urlToken;
+                    
+                    // Clean URL to hide token
+                    const cleanUrl = window.location.origin + window.location.pathname;
+                    window.history.replaceState({}, document.title, cleanUrl);
+                    
+                    // Store temporarily in session (not localStorage) for this session only
+                    sessionStorage.setItem('lupo_electron_token', urlToken);
+                    sessionStorage.setItem('lupo_access_method', 'electron');
+                }
+                
+                // METHOD 2: Check for existing Electron session (page refresh)
+                if (!authToken) {
+                    const sessionToken = sessionStorage.getItem('lupo_electron_token');
+                    const sessionMethod = sessionStorage.getItem('lupo_access_method');
+                    
+                    if (sessionToken && sessionMethod === 'electron') {
+                        console.log('📱 Restored Electron session');
+                        accessMethod = 'electron';
+                        authToken = sessionToken;
                     }
                 }
                 
-                authToken = urlToken || storedToken;
-                
+                // METHOD 3: Check for web-based login (localStorage)
                 if (!authToken) {
-                    throw new Error('NO_TOKEN');
+                    const webToken = localStorage.getItem('lupo_manager_token');
+                    const webExpiry = localStorage.getItem('lupo_manager_expiry');
+                    
+                    if (webToken && webExpiry) {
+                        const expiryDate = new Date(webExpiry);
+                        if (expiryDate > new Date()) {
+                            console.log('🌐 Detected web-based login');
+                            accessMethod = 'web';
+                            authToken = webToken;
+                        } else {
+                            // Token expired, try refresh
+                            const refreshToken = localStorage.getItem('lupo_refresh_token');
+                            if (refreshToken) {
+                                console.log('🔄 Attempting token refresh...');
+                                try {
+                                    const refreshResponse = await fetch(`${AUTH_CONFIG.apiUrl}/auth/refresh-token`, {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ refreshToken })
+                                    });
+                                    
+                                    if (refreshResponse.ok) {
+                                        const data = await refreshResponse.json();
+                                        authToken = data.token;
+                                        accessMethod = 'web';
+                                        
+                                        // Update stored token
+                                        const newExpiry = new Date();
+                                        newExpiry.setSeconds(newExpiry.getSeconds() + data.expiresIn);
+                                        localStorage.setItem('lupo_manager_token', authToken);
+                                        localStorage.setItem('lupo_manager_expiry', newExpiry.toISOString());
+                                        
+                                        console.log('✅ Token refreshed successfully');
+                                    }
+                                } catch (refreshError) {
+                                    console.error('Token refresh failed:', refreshError);
+                                }
+                            }
+                        }
+                    }
                 }
                 
-                // Update UI
-                title.textContent = 'Validating Token...';
-                message.textContent = 'Checking your enterprise credentials';
+                // METHOD 4: Check sessionStorage for web session (tab-only)
+                if (!authToken) {
+                    const sessionWebToken = sessionStorage.getItem('lupo_manager_token');
+                    if (sessionWebToken) {
+                        console.log('🌐 Detected web session (tab-only)');
+                        accessMethod = 'web';
+                        authToken = sessionWebToken;
+                    }
+                }
                 
-                // Validate token with API
+                // No token found from any method
+                if (!authToken) {
+                    console.log('❌ No authentication found');
+                    
+                    // Show friendly message before redirecting
+                    title.textContent = 'Sign In Required';
+                    message.textContent = 'Redirecting to login page...';
+                    spinner.style.display = 'none';
+                    
+                    setTimeout(() => {
+                        window.location.href = AUTH_CONFIG.loginUrl;
+                    }, 1500);
+                    return;
+                }
+                
+                // Validate the token with backend
+                console.log(`🔐 Validating ${accessMethod} token...`);
+                title.textContent = 'Validating Access...';
+                message.textContent = `Checking your ${accessMethod === 'electron' ? 'LUPO app' : 'manager'} credentials`;
+                
                 authHeaders = { 'Authorization': `Bearer ${authToken}` };
                 
                 const response = await fetch(`${AUTH_CONFIG.apiUrl}/auth/me`, {
@@ -894,30 +991,22 @@
                 const data = await response.json();
                 const user = data.user;
                 
-                // Verify user has manager access
-                if (user.accountType !== 'enterprise_admin') {
+                // Verify manager access (allow both enterprise_admin and team_member)
+                if (user.accountType !== 'enterprise_admin' && user.accountType !== 'team_member') {
                     throw new Error('ACCESS_DENIED');
                 }
                 
-                // Store valid token
-                if (urlToken) {
-                    localStorage.setItem('lupo_manager_token', urlToken);
-                    
-                    // Calculate and store expiry (7 days from now)
-                    const expiry = new Date();
-                    expiry.setDate(expiry.getDate() + 7);
-                    localStorage.setItem('lupo_token_expiry', expiry.toISOString());
-                    
-                    // Clean URL
-                    const cleanUrl = window.location.origin + window.location.pathname;
-                    window.history.replaceState({}, document.title, cleanUrl);
-                }
+                // Success! Hide overlay and start dashboard
+                console.log(`✅ Authentication successful:`, {
+                    email: user.email,
+                    method: accessMethod,
+                    accountType: user.accountType
+                });
                 
-                // Success - hide overlay and start dashboard
-                console.log('✅ Authentication successful:', user.email);
+                // Add access method indicator to header
+                addAccessIndicator(accessMethod);
+                
                 overlay.classList.add('hidden');
-                
-                // Initialize dashboard
                 await initializeDashboard();
                 
             } catch (error) {
@@ -926,68 +1015,136 @@
                 // Hide spinner
                 spinner.style.display = 'none';
                 
-                // Show error based on type
-                errorDiv.classList.remove('hidden');
-                actions.classList.remove('hidden');
+                // Show error
+                const errorDiv = document.getElementById('authError');
+                const errorMessage = document.getElementById('authErrorMessage');
+                const actions = document.getElementById('authActions');
+                const loginBtn = document.getElementById('loginBtn');
                 
-                if (error.message === 'NO_TOKEN') {
-                    title.textContent = 'Authentication Required';
-                    message.textContent = 'Please sign in to access the manager dashboard';
-                    errorMessage.textContent = 'No authentication token found';
-                    loginBtn.href = `${AUTH_CONFIG.loginUrl}?redirect=manager`;
-                    
-                } else if (error.message === 'TOKEN_EXPIRED') {
-                    title.textContent = 'Session Expired';
-                    message.textContent = 'Your session has expired. Please sign in again.';
-                    errorMessage.textContent = 'Authentication token has expired';
-                    
-                    // Clear stored token
+                errorDiv.classList.add('show');
+                actions.classList.add('show');
+                
+                // Clear invalid tokens
+                if (accessMethod === 'electron') {
+                    sessionStorage.removeItem('lupo_electron_token');
+                    sessionStorage.removeItem('lupo_access_method');
+                } else {
                     localStorage.removeItem('lupo_manager_token');
-                    localStorage.removeItem('lupo_token_expiry');
-                    
-                    loginBtn.href = `${AUTH_CONFIG.loginUrl}?redirect=manager&reason=expired`;
-                    
+                    localStorage.removeItem('lupo_manager_expiry');
+                    localStorage.removeItem('lupo_refresh_token');
+                    sessionStorage.removeItem('lupo_manager_token');
+                }
+                
+                // Show error and redirect
+                if (error.message === 'TOKEN_EXPIRED') {
+                    title.textContent = 'Session Expired';
+                    message.textContent = 'Please sign in again. Redirecting...';
+                    errorMessage.textContent = 'Authentication token has expired';
                 } else if (error.message === 'ACCESS_DENIED') {
                     title.textContent = 'Access Denied';
-                    message.textContent = 'You need enterprise admin privileges to access this dashboard';
+                    message.textContent = 'Manager privileges required. Redirecting...';
                     errorMessage.textContent = 'Insufficient permissions';
-                    loginBtn.href = `${AUTH_CONFIG.loginUrl}`;
-                    
-                } else if (error.message.startsWith('AUTH_FAILED_')) {
-                    const status = error.message.split('_')[2];
-                    title.textContent = 'Authentication Failed';
-                    message.textContent = 'Unable to verify your credentials';
-                    errorMessage.textContent = `Server returned error ${status}`;
-                    loginBtn.href = `${AUTH_CONFIG.loginUrl}?redirect=manager&reason=error`;
-                    
                 } else {
-                    // Network or other error
-                    title.textContent = 'Connection Error';
-                    message.textContent = 'Unable to connect to LUPO servers';
-                    errorMessage.textContent = error.message || 'Please check your connection and try again';
-                    loginBtn.href = `${AUTH_CONFIG.loginUrl}?redirect=manager`;
+                    title.textContent = 'Authentication Failed';
+                    message.textContent = 'Unable to verify credentials. Redirecting...';
+                    errorMessage.textContent = 'Please try again';
                 }
+                
+                loginBtn.href = `${AUTH_CONFIG.loginUrl}?error=${error.message.toLowerCase()}`;
+                
+                setTimeout(() => {
+                    window.location.href = `${AUTH_CONFIG.loginUrl}?error=${error.message.toLowerCase()}`;
+                }, 3000);
             }
         }
         
-        async function retryAuth() {
-            retryCount++;
+        // Add visual indicator showing how user accessed
+        function addAccessIndicator(method) {
+            const headerInfo = document.getElementById('headerInfo');
+            if (!headerInfo) return;
             
-            if (retryCount > AUTH_CONFIG.maxRetries) {
-                console.log('Max retries reached, redirecting to login...');
-                window.location.href = `${AUTH_CONFIG.loginUrl}?redirect=manager&reason=max_retries`;
-                return;
+            const indicator = document.createElement('div');
+            indicator.className = 'access-indicator';
+            indicator.id = 'accessIndicator';
+            
+            if (method === 'electron') {
+                indicator.innerHTML = `
+                    <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
+                    <span>LUPO App</span>
+                `;
+                
+                // Add button to open LUPO if in app
+                if (window.electronAPI) {
+                    const openLupoBtn = document.createElement('button');
+                    openLupoBtn.textContent = 'Open LUPO';
+                    openLupoBtn.style.cssText = `
+                        margin-left: 0.5rem;
+                        padding: 0.25rem 0.5rem;
+                        background: var(--accent);
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        font-size: 0.625rem;
+                        cursor: pointer;
+                    `;
+                    openLupoBtn.onclick = () => {
+                        if (window.electronAPI) {
+                            window.electronAPI.showLupo();
+                        }
+                    };
+                    indicator.appendChild(openLupoBtn);
+                }
+                
+            } else {
+                indicator.innerHTML = `
+                    <span style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%;"></span>
+                    <span>Web Access</span>
+                `;
+                
+                // Add sign out button for web users
+                const signOutBtn = document.createElement('button');
+                signOutBtn.textContent = 'Sign Out';
+                signOutBtn.style.cssText = `
+                    margin-left: 0.5rem;
+                    padding: 0.25rem 0.5rem;
+                    background: transparent;
+                    color: var(--text-dim);
+                    border: 1px solid var(--border);
+                    border-radius: 4px;
+                    font-size: 0.625rem;
+                    cursor: pointer;
+                    transition: all 0.15s;
+                `;
+                signOutBtn.onmouseover = () => {
+                    signOutBtn.style.borderColor = 'var(--accent)';
+                    signOutBtn.style.color = 'var(--text)';
+                };
+                signOutBtn.onmouseout = () => {
+                    signOutBtn.style.borderColor = 'var(--border)';
+                    signOutBtn.style.color = 'var(--text-dim)';
+                };
+                signOutBtn.onclick = () => {
+                    if (confirm('Sign out of manager dashboard?')) {
+                        localStorage.clear();
+                        sessionStorage.clear();
+                        window.location.href = AUTH_CONFIG.loginUrl;
+                    }
+                };
+                indicator.appendChild(signOutBtn);
             }
             
+            headerInfo.insertBefore(indicator, headerInfo.firstChild);
+        }
+        
+        async function retryAuth() {
             // Reset UI
-            const overlay = document.getElementById('authOverlay');
             const spinner = document.getElementById('authSpinner');
             const errorDiv = document.getElementById('authError');
             const actions = document.getElementById('authActions');
             
             spinner.style.display = 'block';
-            errorDiv.classList.add('hidden');
-            actions.classList.add('hidden');
+            errorDiv.classList.remove('show');
+            actions.classList.remove('show');
             
             // Wait before retry
             await new Promise(resolve => setTimeout(resolve, AUTH_CONFIG.retryDelay));
@@ -997,10 +1154,20 @@
         }
         
         async function initializeDashboard() {
-            // Setup context button
-            const contextUrl = `/sales-context.html?token=${encodeURIComponent(authToken)}`;
-            document.getElementById('contextBtn').href = contextUrl;
-            document.getElementById('configLink').href = contextUrl;
+            // Setup context button - different behavior based on access method
+            const contextBtn = document.getElementById('contextBtn');
+            const configLink = document.getElementById('configLink');
+            
+            if (accessMethod === 'electron') {
+                // For Electron users, pass token in URL (they're already authenticated)
+                const contextUrl = `/sales-context.html?token=${encodeURIComponent(authToken)}`;
+                contextBtn.href = contextUrl;
+                configLink.href = contextUrl;
+            } else {
+                // For web users, use regular link (they'll use cookies/localStorage)
+                contextBtn.href = '/sales-context.html';
+                configLink.href = '/sales-context.html';
+            }
             
             // Load initial data
             await loadData();
@@ -1018,8 +1185,14 @@
                     // If 401, token might be expired
                     if (error.status === 401) {
                         console.log('Token expired during refresh, re-authenticating...');
-                        localStorage.removeItem('lupo_manager_token');
-                        localStorage.removeItem('lupo_token_expiry');
+                        
+                        // Clear based on access method
+                        if (accessMethod === 'electron') {
+                            sessionStorage.clear();
+                        } else {
+                            localStorage.clear();
+                        }
+                        
                         window.location.reload();
                     }
                 }
@@ -1057,12 +1230,6 @@
                 
             } catch (error) {
                 console.error('Load data error:', error);
-                
-                // Show error toast if available
-                if (window.showToast) {
-                    window.showToast('Failed to load dashboard data', 'error');
-                }
-                
                 throw error; // Re-throw for caller to handle
             }
         }
@@ -1180,77 +1347,77 @@
         }
         
         function showComplianceDetails(event) {
-    // Don't open modal if clicking info button
-    if (event.target.classList.contains('info-btn')) return;
-    
-    const modal = document.getElementById('complianceModal');
-    const list = document.getElementById('complianceList');
-    const modalCount = document.getElementById('modalCount');
-    
-    // Get the total count from the tile
-    const tileCount = document.getElementById('complianceCount').textContent;
-    modalCount.textContent = tileCount;
-    
-    if (complianceDetails.length === 0) {
-        list.innerHTML = `
-            <div style="text-align: center; padding: 2rem; color: var(--text-dim);">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">✓</div>
-                <div>Perfect compliance this period</div>
-                <div style="font-size: 0.75rem; margin-top: 0.5rem;">No corrections needed</div>
-            </div>
-        `;
-    } else {
-        const incidentTypes = {};
-        
-        complianceDetails.forEach(item => {
-            const type = item.rule || 'Policy Violation';
-            if (!incidentTypes[type]) {
-                incidentTypes[type] = {
-                    count: 0,
-                    times: []
-                };
-            }
-            incidentTypes[type].count++;
-            incidentTypes[type].times.push(item.timestamp);
-        });
-        
-        // Sort by count (highest first)
-        const sortedTypes = Object.entries(incidentTypes).sort((a, b) => b[1].count - a[1].count);
-        
-        // Build the list HTML
-        let listHTML = sortedTypes.map(([type, data]) => {
-            const mostRecent = new Date(Math.max(...data.times.map(t => new Date(t))));
-            const timeAgo = getTimeAgo(mostRecent);
+            // Don't open modal if clicking info button
+            if (event.target.classList.contains('info-btn')) return;
             
-            return `
-                <div class="redirect-item">
-                    <div class="redirect-header">
-                        <span class="redirect-icon">•</span>
-                        <span class="redirect-type">${type}</span>
+            const modal = document.getElementById('complianceModal');
+            const list = document.getElementById('complianceList');
+            const modalCount = document.getElementById('modalCount');
+            
+            // Get the total count from the tile
+            const tileCount = document.getElementById('complianceCount').textContent;
+            modalCount.textContent = tileCount;
+            
+            if (complianceDetails.length === 0) {
+                list.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--text-dim);">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">✓</div>
+                        <div>Perfect compliance this period</div>
+                        <div style="font-size: 0.75rem; margin-top: 0.5rem;">No corrections needed</div>
                     </div>
-                    <div class="redirect-detail">
-                        ${data.count} recent occurrence${data.count !== 1 ? 's' : ''}
+                `;
+            } else {
+                const incidentTypes = {};
+                
+                complianceDetails.forEach(item => {
+                    const type = item.rule || 'Policy Violation';
+                    if (!incidentTypes[type]) {
+                        incidentTypes[type] = {
+                            count: 0,
+                            times: []
+                        };
+                    }
+                    incidentTypes[type].count++;
+                    incidentTypes[type].times.push(item.timestamp);
+                });
+                
+                // Sort by count (highest first)
+                const sortedTypes = Object.entries(incidentTypes).sort((a, b) => b[1].count - a[1].count);
+                
+                // Build the list HTML
+                let listHTML = sortedTypes.map(([type, data]) => {
+                    const mostRecent = new Date(Math.max(...data.times.map(t => new Date(t))));
+                    const timeAgo = getTimeAgo(mostRecent);
+                    
+                    return `
+                        <div class="redirect-item">
+                            <div class="redirect-header">
+                                <span class="redirect-icon">•</span>
+                                <span class="redirect-type">${type}</span>
+                            </div>
+                            <div class="redirect-detail">
+                                ${data.count} recent occurrence${data.count !== 1 ? 's' : ''}
+                            </div>
+                            <div class="redirect-time">Last: ${timeAgo}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                // Add note about showing recent sample
+                listHTML += `
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: var(--bg); 
+                                border-radius: 6px; border: 1px solid var(--border);">
+                        <div style="font-size: 0.75rem; color: var(--text-dim); text-align: center;">
+                            Showing most recent interventions
+                        </div>
                     </div>
-                    <div class="redirect-time">Last: ${timeAgo}</div>
-                </div>
-            `;
-        }).join('');
-        
-        // Add note about showing recent sample
-        listHTML += `
-            <div style="margin-top: 1rem; padding: 0.75rem; background: var(--bg); 
-                        border-radius: 6px; border: 1px solid var(--border);">
-                <div style="font-size: 0.75rem; color: var(--text-dim); text-align: center;">
-                    Showing most recent interventions
-                </div>
-            </div>
-        `;
-        
-        list.innerHTML = listHTML;
-    }
-    
-    modal.classList.add('show');
-}
+                `;
+                
+                list.innerHTML = listHTML;
+            }
+            
+            modal.classList.add('show');
+        }
         
         function getTimeAgo(date) {
             const seconds = Math.floor((new Date() - date) / 1000);
@@ -1307,8 +1474,14 @@
                     
                     if (!response.ok) {
                         console.log('Token invalid on visibility change, re-authenticating...');
-                        localStorage.removeItem('lupo_manager_token');
-                        localStorage.removeItem('lupo_token_expiry');
+                        
+                        // Clear based on access method
+                        if (accessMethod === 'electron') {
+                            sessionStorage.clear();
+                        } else {
+                            localStorage.clear();
+                        }
+                        
                         window.location.reload();
                     }
                 } catch (error) {
