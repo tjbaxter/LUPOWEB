@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUPO Sales AI - Real-Time Objection Handling for Enterprise Sales Teams</title>
+    <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
+    <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
+    <meta name="description" content="Transform your sales team with AI that listens to every call and provides instant objection handling, competitor insights, and deal intelligence. Start your pilot today.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --bg-primary: #000000;
+            --bg-secondary: #161617;
+            --accent: #2997ff;
+            --accent-hover: #409cff;
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #34c759;
+            --danger: #ff3b30;
+            --warning: #f59e0b;
+            --gradient-sales: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(0, 0, 0, 0.72);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 22px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        /* Main Container */
+        .main-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.03;
+            background: radial-gradient(circle at 20% 50%, var(--accent) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, #667eea 0%, transparent 50%);
+            animation: bgShift 30s ease-in-out infinite;
+        }
+        
+        @keyframes bgShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            33% { transform: rotate(120deg) scale(1.1); }
+            66% { transform: rotate(240deg) scale(0.9); }
+        }
+        
+        /* Content */
+        .content-wrapper {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Badge */
+        .coming-soon-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: var(--gradient-sales);
+            border-radius: 30px;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 32px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3); }
+            50% { transform: scale(1.02); box-shadow: 0 6px 30px rgba(102, 126, 234, 0.5); }
+        }
+        
+        /* Headlines */
+        h1 {
+            font-size: 80px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.005em;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+        
+        .gradient-text {
+            background: var(--gradient-sales);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            line-height: 1.4;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+        
+        /* Download Section */
+        .download-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 60px;
+            margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+        
+        .download-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+        
+        .download-buttons {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .download-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            min-width: 200px;
+            justify-content: center;
+        }
+        
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--accent), #764ba2);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(41, 151, 255, 0.3);
+            border-color: var(--accent);
+        }
+        
+        .download-btn:hover::before {
+            opacity: 0.1;
+        }
+        
+        .download-btn.primary {
+            background: linear-gradient(135deg, var(--accent), #5090ff);
+            color: white;
+            border: none;
+            box-shadow: 0 10px 30px rgba(41, 151, 255, 0.3);
+        }
+        
+        .download-version {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 12px;
+            color: var(--text-secondary);
+        }
+        
+        /* Enhanced Live Demo Section */
+        .demo-showcase {
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(145deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            position: relative;
+            min-height: 600px;
+        }
+        
+        /* Call Context Header */
+        .call-context {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+        
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(255, 59, 48, 0.1);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--danger);
+            margin-bottom: 20px;
+        }
+        
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: livePulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes livePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(255, 59, 48, 0); }
+        }
+        
+        .call-timer {
+            opacity: 0.7;
+        }
+        
+        /* Customer Speech Bubble */
+        .customer-speech {
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-style: italic;
+            line-height: 1.6;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border-left: 3px solid var(--danger);
+            min-height: 80px;
+            text-align: left;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .customer-label {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--bg-primary);
+            padding: 0 8px;
+            font-size: 11px;
+            color: var(--danger);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-style: normal;
+        }
+        
+        .typing-text {
+            display: inline;
+        }
+        
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 20px;
+            background: var(--text-secondary);
+            animation: blink 1s infinite;
+            margin-left: 2px;
+            vertical-align: text-bottom;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* Demo Layout Grid */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+            align-items: start;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            h1 {
+                font-size: 48px;
+            }
+            
+            .subtitle {
+                font-size: 20px;
+            }
+        }
+        
+        /* LUPO Main Window */
+        .lupo-window {
+            background: linear-gradient(to bottom,
+                rgba(0, 0, 0, 0.05) 0%,
+                rgba(0, 0, 0, 0.02) 100%);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 
+                0 24px 48px rgba(0, 0, 0, 0.15),
+                0 12px 24px rgba(0, 0, 0, 0.15),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            animation: slideInLeft 0.6s ease 0.5s forwards;
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .lupo-header {
+            padding: 16px 16px 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .lupo-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .lupo-ask {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .lupo-hotkey {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 4px 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 6px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .lupo-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+        }
+        
+        .lupo-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: #34c759;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(52, 199, 89, 0.6);
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.4); }
+            50% { opacity: 0.8; box-shadow: 0 0 0 4px rgba(52, 199, 89, 0); }
+        }
+        
+        .question-area {
+            padding: 16px;
+            min-height: 60px;
+            position: relative;
+            display: none;
+        }
+        
+        .question-area.active {
+            display: block;
+        }
+        
+        .question-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 12px;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeInSlide 0.5s ease forwards;
+        }
+        
+        @keyframes fadeInSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .processing-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 11px;
+        }
+        
+        .processing-indicator.active {
+            display: flex;
+        }
+        
+        .processing-dots {
+            display: flex;
+            gap: 3px;
+        }
+        
+        .processing-dot {
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: processingWave 1.4s ease-in-out infinite;
+        }
+        
+        .processing-dot:nth-child(1) { animation-delay: 0s; }
+        .processing-dot:nth-child(2) { animation-delay: 0.1s; }
+        .processing-dot:nth-child(3) { animation-delay: 0.2s; }
+        
+        @keyframes processingWave {
+            0%, 60%, 100% {
+                transform: scale(1);
+                opacity: 0.4;
+            }
+            30% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+        }
+        
+        .answer-area {
+            padding: 0 16px 16px;
+            max-height: 320px;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .answer-area.active {
+            display: block;
+        }
+        
+        .answer-content {
+            font-size: 13px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .lupo-bullets {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .lupo-bullet {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            opacity: 0;
+            animation: bulletFadeIn 0.4s ease forwards;
+        }
+        
+        .lupo-bullet:nth-child(1) { animation-delay: 0.1s; }
+        .lupo-bullet:nth-child(2) { animation-delay: 0.2s; }
+        .lupo-bullet:nth-child(3) { animation-delay: 0.3s; }
+        
+        @keyframes bulletFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .bullet-marker {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        
+        .bullet-content {
+            flex: 1;
+            color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .bullet-action {
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .bullet-phrase {
+            color: rgba(147, 197, 253, 0.9);
+        }
+        
+        /* Insights Panel */
+        .insights-panel {
+            background: linear-gradient(to bottom,
+                rgba(22, 22, 22, 0.9) 0%,
+                rgba(22, 22, 22, 0.7) 100%);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 
+                0 12px 24px rgba(0, 0, 0, 0.2),
+                inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            animation: slideInRight 0.6s ease 0.7s forwards;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .insights-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .insights-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .insights-count {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .insights-container {
+            padding: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .insight-bubble {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            opacity: 0;
+            animation: insightSlide 0.3s ease forwards;
+        }
+        
+        @keyframes insightSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .insight-bubble:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateX(-2px);
+        }
+        
+        .insight-bubble.objection {
+            border-left: 3px solid #ef4444;
+        }
+        
+        .insight-bubble.buying-signal {
+            border-left: 3px solid #10b981;
+        }
+        
+        .insight-bubble.competitor {
+            border-left: 3px solid #f59e0b;
+        }
+        
+        .insight-bubble.compliance {
+            border-left: 3px solid #8b5cf6;
+        }
+        
+        .insight-type {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 4px;
+        }
+        
+        .insight-text {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+        }
+        
+        .insight-time {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-top: 4px;
+        }
+        
+        /* Scenario Progress Bar */
+        .scenario-progress {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .progress-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+        
+        .progress-indicators {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .progress-dot.active {
+            background: var(--accent);
+            box-shadow: 0 0 10px rgba(41, 151, 255, 0.5);
+        }
+        
+        .scenario-name {
+            font-size: 13px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        /* Feature Preview Cards */
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s forwards;
+        }
+        
+        @media (max-width: 1200px) {
+            .preview-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .preview-card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .preview-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-sales);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .preview-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .preview-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .preview-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-sales);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 24px;
+        }
+        
+        .preview-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .preview-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        /* Sandbox Demo Button */
+        .sandbox-section {
+            text-align: center;
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.03), rgba(167, 139, 250, 0.03));
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sandbox-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            animation: shimmerPass 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmerPass {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        /* Pilot CTA */
+        .pilot-section {
+            margin: 60px 0;
+            padding: 48px;
+            background: linear-gradient(135deg, rgba(41, 151, 255, 0.08), rgba(41, 151, 255, 0.03));
+            border-radius: 24px;
+            border: 1px solid rgba(41, 151, 255, 0.2);
+            text-align: center;
+        }
+        
+        /* Footer */
+        .simple-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+        
+        .footer-logo {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        /* Loading animation */
+        .loading-dots {
+            display: inline-flex;
+            gap: 4px;
+            margin-left: 8px;
+        }
+        
+        .loading-dot {
+            width: 6px;
+            height: 6px;
+            background: currentColor;
+            border-radius: 50%;
+            animation: loadingBounce 1.4s ease-in-out infinite;
+        }
+        
+        .loading-dot:nth-child(1) { animation-delay: 0s; }
+        .loading-dot:nth-child(2) { animation-delay: 0.1s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.2s; }
+        
+        @keyframes loadingBounce {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="animated-bg"></div>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="#" class="logo">
+                <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 40px; width: auto;">
+                <span style="font-size: 24px; font-weight: 600; color: var(--text-primary);">LUPO</span>
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="content-wrapper">
+            <!-- Live Badge -->
+            <div class="coming-soon-badge">
+                <span>Live Pilot Program</span>
+                <div class="loading-dots">
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                </div>
+            </div>
+            
+            <!-- Headlines -->
+            <h1>
+                <span class="gradient-text">Sales AI</span><br>
+                in Every Call
+            </h1>
+            
+            <p class="subtitle">
+                Real-time objection handling, competitor insights, and deal intelligence. 
+                Transform your sales team into closing machines with AI that listens, understands, and guides every conversation.
+            </p>
+            
+            <!-- Download Section -->
+            <div class="download-section">
+                <div class="download-title">Get LUPO Desktop Now</div>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">
+                    Test individually or start an enterprise pilot with your team
+                </p>
+                <div class="download-buttons">
+                    <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-2.3.3-arm64.dmg" 
+                       class="download-btn primary">
+                        Download for Mac
+                    </a>
+                    <a href="https://github.com/LUPOLABS/lupo-releases/releases/download/v2.3.3/LUPO.Setup.2.3.3.exe"
+                       class="download-btn">
+                        Download for Windows
+                    </a>
+                </div>
+                <div class="download-version">Version 2.3.3 • Released September 2025</div>
+            </div>
+            
+            <!-- Sandbox Demo Button -->
+            <div class="sandbox-section">
+                <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(96, 165, 250, 0.8); margin-bottom: 16px;">
+                    🚀 NEW: INSTANT DEMO
+                </div>
+                <h2 style="font-size: 32px; font-weight: 600; color: white; margin-bottom: 16px;">
+                    Try LUPO Right Now
+                </h2>
+                <p style="font-size: 16px; color: rgba(255, 255, 255, 0.7); margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto;">
+                    No download needed. Experience real-time objection handling in 20 seconds.
+                </p>
+                <a href="playground.html" style="display: inline-flex; align-items: center; gap: 12px; padding: 18px 48px; background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%); border: none; border-radius: 50px; color: white; text-decoration: none; font-size: 16px; font-weight: 600; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 40px rgba(96, 165, 250, 0.4);"
+                   onmouseover="this.style.transform='translateY(-3px) scale(1.02)'; this.style.boxShadow='0 15px 50px rgba(96, 165, 250, 0.5)'"
+                   onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 40px rgba(96, 165, 250, 0.4)'">
+                    <span>Open Playground</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <div style="margin-top: 16px; font-size: 12px; color: rgba(255, 255, 255, 0.5);">
+                    Works instantly in your browser • No sign-up required
+                </div>
+            </div>
+            
+            <!-- Feature Cards -->
+            <div class="preview-grid">
+                <div class="preview-card">
+                    <div class="preview-icon">🎯</div>
+                    <div class="preview-title">Live Objection Handling</div>
+                    <div class="preview-description">
+                        Instant responses to any customer objection. Never lose a deal to "I need to think about it" again.
+                    </div>
+                </div>
+                
+                <div class="preview-card">
+                    <div class="preview-icon">⚡</div>
+                    <div class="preview-title">Competitor Intelligence</div>
+                    <div class="preview-description">
+                        Real-time battlecards when competitors are mentioned. Know their weaknesses, highlight your strengths.
+                    </div>
+                </div>
+                
+                <div class="preview-card">
+                    <div class="preview-icon">📊</div>
+                    <div class="preview-title">Deal Insights</div>
+                    <div class="preview-description">
+                        AI analyzes tone, sentiment, and buying signals. Know exactly when to push and when to pull back.
+                    </div>
+                </div>
+                
+                <div class="preview-card">
+                    <div class="preview-icon">🚀</div>
+                    <div class="preview-title">Zero Ramp Time</div>
+                    <div class="preview-description">
+                        New reps close like veterans from day one. Your entire playbook, instantly accessible during every call.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Enhanced Live Demo Section -->
+            <div class="demo-showcase">
+                <!-- Call Context -->
+                <div class="call-context">
+                    <div class="live-indicator">
+                        <div class="live-dot"></div>
+                        <span>LIVE SALES CALL</span>
+                        <span class="call-timer" id="callTimer">09:02</span>
+                    </div>
+                    
+                    <div class="customer-speech">
+                        <span class="customer-label">PROSPECT</span>
+                        <span class="typing-text" id="customerText"></span>
+                        <span class="typing-cursor" id="cursor"></span>
+                    </div>
+                    
+                    <div style="font-size: 13px; color: rgba(255, 255, 255, 0.4); margin-top: 20px;">
+                        ↓ LUPO detects signals and responds instantly
+                    </div>
+                </div>
+                
+                <!-- Demo Grid -->
+                <div class="demo-grid">
+                    <!-- LUPO Main Window -->
+                    <div class="lupo-window">
+                        <div class="lupo-header">
+                            <div class="lupo-controls">
+                                <div class="lupo-ask">
+                                    <span class="lupo-hotkey">
+                                        <span>⌘</span><span>⏎</span>
+                                    </span>
+                                    <span class="lupo-text">Sales AI</span>
+                                </div>
+                            </div>
+                            <div class="lupo-status">
+                                <div class="status-dot"></div>
+                                <span style="font-size: 10px; color: rgba(255, 255, 255, 0.5);">Live</span>
+                            </div>
+                        </div>
+                        <div class="question-area" id="questionArea">
+                            <div class="question-text" id="questionText"></div>
+                        </div>
+                        <div class="processing-indicator" id="processingIndicator">
+                            <span>Processing</span>
+                            <div class="processing-dots">
+                                <div class="processing-dot"></div>
+                                <div class="processing-dot"></div>
+                                <div class="processing-dot"></div>
+                            </div>
+                        </div>
+                        <div class="answer-area" id="answerArea">
+                            <div class="answer-content" id="answerContent"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Real-time Insights Panel -->
+                    <div class="insights-panel">
+                        <div class="insights-header">
+                            <span class="insights-title">Real-time Insights</span>
+                            <span class="insights-count" id="insightCount">0 detected</span>
+                        </div>
+                        <div class="insights-container" id="insightsContainer">
+                            <!-- Insights will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Scenario Progress -->
+                <div class="scenario-progress">
+                    <div class="progress-label">Automated Demo Scenarios</div>
+                    <div class="progress-indicators" id="progressDots">
+                        <div class="progress-dot active"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
+                    </div>
+                    <div class="scenario-name" id="scenarioName">Price Objection</div>
+                </div>
+            </div>
+            
+            <!-- Pilot CTA -->
+            <div class="pilot-section">
+                <h2 style="font-size: 36px; font-weight: 600; color: var(--text-primary); margin-bottom: 16px;">
+                    Ready to Deploy LUPO?
+                </h2>
+                <p style="font-size: 18px; color: var(--text-secondary); margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Start your 5-seat pilot for $1,000/month. Your reps will be closing more deals within days.
+                </p>
+                <div style="display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; margin-bottom: 24px;">
+                    <a href="https://calendly.com/tjpbaxter/30min" 
+                       style="display: inline-flex; align-items: center; gap: 8px; padding: 18px 40px; background: var(--accent); color: white; border: none; border-radius: 30px; font-size: 17px; font-weight: 600; text-decoration: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 30px rgba(41, 151, 255, 0.3);"
+                       onmouseover="this.style.transform='translateY(-2px) scale(1.02)'; this.style.boxShadow='0 15px 40px rgba(41, 151, 255, 0.5)'"
+                       onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 30px rgba(41, 151, 255, 0.3)'">
+                        Book Your Pilot Call
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="simple-footer">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <div style="width: 6px; height: 6px; background: #34c759; border-radius: 50%; box-shadow: 0 0 6px rgba(52, 199, 89, 0.6);"></div>
+                <span style="font-size: 11px; color: rgba(255, 255, 255, 0.6); font-weight: 400;">All Systems Operational</span>
+            </div>
+        </div>
+        <div style="text-align: right;">
+            <div class="footer-logo">LUPO</div>
+            <p class="footer-text">© 2025 LUPO — a product of Flair Technologies Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Demo Scenarios
+        const scenarios = [
+            {
+                name: "Price Objection",
+                customerText: "Your solution sounds interesting, but we're already using Competitor X and they're 30% cheaper...",
+                lupoResponse: {
+                    question: "Customer: \"It's 30% cheaper with Competitor X\"",
+                    bullets: [
+                        { action: 'Get specific:', phrase: '"Which features of Competitor X do you use most?"' },
+                        { action: 'Contrast sharply:', phrase: '"They charge $2k for implementation - ours is free"' },
+                        { action: 'Create urgency:', phrase: '"I can lock in 25% off if we start this week"' }
+                    ]
+                },
+                insights: [
+                    { type: 'objection', text: 'Price concern detected', time: 'Just now' },
+                    { type: 'competitor', text: 'Competitor X mentioned', time: '2s ago' }
+                ]
+            },
+            {
+                name: "Decision Timeline",
+                customerText: "We need to think about this... maybe we'll revisit it next quarter when we have budget.",
+                lupoResponse: {
+                    question: "Customer: \"We'll revisit next quarter\"",
+                    bullets: [
+                        { action: 'Explore pain:', phrase: '"What happens to [problem] if you wait 3 months?"' },
+                        { action: 'Offer pilot:', phrase: '"Start with a smaller pilot now, scale up next quarter"' },
+                        { action: 'Lock pricing:', phrase: '"I can guarantee today\'s rate for Q2 if we document intent"' }
+                    ]
+                },
+                insights: [
+                    { type: 'objection', text: 'Delay tactic detected', time: 'Just now' },
+                    { type: 'buying-signal', text: 'Budget mentioned', time: '1s ago' }
+                ]
+            },
+            {
+                name: "Authority Question",
+                customerText: "I like what I'm seeing, but I need to run this by my boss first. Can you send me something?",
+                lupoResponse: {
+                    question: "Customer: \"I need to run this by my boss\"",
+                    bullets: [
+                        { action: 'Qualify process:', phrase: '"What specific concerns might your boss have?"' },
+                        { action: 'Offer to help:', phrase: '"I can join that conversation - when do you typically sync?"' },
+                        { action: 'Build champion:', phrase: '"Let\'s build the business case together right now"' }
+                    ]
+                },
+                insights: [
+                    { type: 'buying-signal', text: 'Interest expressed', time: 'Just now' },
+                    { type: 'objection', text: 'Not decision maker', time: '2s ago' }
+                ]
+            },
+            {
+                name: "Integration Concerns",
+                customerText: "How does this integrate with our existing CRM? We use Salesforce and can't change that.",
+                lupoResponse: {
+                    question: "Customer: \"How does this work with Salesforce?\"",
+                    bullets: [
+                        { action: 'Reassure immediately:', phrase: '"Native Salesforce integration - 15 minute setup"' },
+                        { action: 'Share proof:', phrase: '"80% of our enterprise clients use Salesforce"' },
+                        { action: 'Offer demonstration:', phrase: '"I can show you the integration live right now"' }
+                    ]
+                },
+                insights: [
+                    { type: 'buying-signal', text: 'Technical evaluation', time: 'Just now' },
+                    { type: 'compliance', text: 'Integration requirement', time: '1s ago' }
+                ]
+            }
+        ];
+        
+        let currentScenarioIndex = 0;
+        let typingInterval;
+        let demoInterval;
+        let insightCount = 0;
+        
+        // Typing effect
+        function typeText(element, text, callback) {
+            element.textContent = '';
+            let index = 0;
+            const cursor = document.getElementById('cursor');
+            
+            clearInterval(typingInterval);
+            typingInterval = setInterval(() => {
+                if (index < text.length) {
+                    element.textContent += text[index];
+                    index++;
+                } else {
+                    clearInterval(typingInterval);
+                    if (cursor) cursor.style.display = 'none';
+                    if (callback) setTimeout(callback, 500);
+                }
+            }, 30);
+        }
+        
+        // Add insight to panel
+        function addInsight(insight) {
+            const container = document.getElementById('insightsContainer');
+            const bubble = document.createElement('div');
+            bubble.className = `insight-bubble ${insight.type}`;
+            bubble.innerHTML = `
+                <div class="insight-type">${insight.type.replace('-', ' ').toUpperCase()}</div>
+                <div class="insight-text">${insight.text}</div>
+                <div class="insight-time">${insight.time}</div>
+            `;
+            bubble.style.animationDelay = `${insightCount * 0.1}s`;
+            
+            container.insertBefore(bubble, container.firstChild);
+            insightCount++;
+            document.getElementById('insightCount').textContent = `${insightCount} detected`;
+            
+            // Limit insights to 6
+            while (container.children.length > 6) {
+                container.removeChild(container.lastChild);
+            }
+        }
+        
+        // Show LUPO response
+        function showLupoResponse(response) {
+            const questionArea = document.getElementById('questionArea');
+            const questionText = document.getElementById('questionText');
+            const processingIndicator = document.getElementById('processingIndicator');
+            const answerArea = document.getElementById('answerArea');
+            const answerContent = document.getElementById('answerContent');
+            
+            // Show question
+            questionArea.classList.add('active');
+            questionText.textContent = response.question;
+            
+            // Show processing
+            setTimeout(() => {
+                processingIndicator.classList.add('active');
+            }, 300);
+            
+            // Show answer
+            setTimeout(() => {
+                processingIndicator.classList.remove('active');
+                answerArea.classList.add('active');
+                
+                // Build response HTML
+                let html = '<div class="lupo-bullets">';
+                response.bullets.forEach((bullet, i) => {
+                    html += `
+                        <div class="lupo-bullet" style="animation-delay: ${i * 0.1}s">
+                            <span class="bullet-marker">•</span>
+                            <div class="bullet-content">
+                                <span class="bullet-action">${bullet.action}</span>
+                                <span class="bullet-phrase">${bullet.phrase}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                answerContent.innerHTML = html;
+            }, 1500);
+        }
+        
+        // Play scenario
+        function playScenario() {
+            const scenario = scenarios[currentScenarioIndex];
+            const customerText = document.getElementById('customerText');
+            const cursor = document.getElementById('cursor');
+            
+            // Update progress
+            document.querySelectorAll('.progress-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentScenarioIndex);
+            });
+            document.getElementById('scenarioName').textContent = scenario.name;
+            
+            // Reset UI
+            document.getElementById('questionArea').classList.remove('active');
+            document.getElementById('answerArea').classList.remove('active');
+            cursor.style.display = 'inline-block';
+            
+            // Type customer text
+            typeText(customerText, scenario.customerText, () => {
+                // Add insights
+                scenario.insights.forEach((insight, i) => {
+                    setTimeout(() => addInsight(insight), i * 300);
+                });
+                
+                // Show LUPO response
+                setTimeout(() => {
+                    showLupoResponse(scenario.lupoResponse);
+                }, 1000);
+            });
+        }
+        
+        // Update call timer
+        function updateTimer() {
+            const timer = document.getElementById('callTimer');
+            if (timer) {
+                const parts = timer.textContent.split(':');
+                let minutes = parseInt(parts[0]);
+                let seconds = parseInt(parts[1]);
+                
+                seconds++;
+                if (seconds >= 60) {
+                    seconds = 0;
+                    minutes++;
+                }
+                
+                timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+        
+        // Auto-cycle scenarios
+        function startDemo() {
+            playScenario();
+            
+            demoInterval = setInterval(() => {
+                currentScenarioIndex = (currentScenarioIndex + 1) % scenarios.length;
+                if (currentScenarioIndex === 0) {
+                    // Reset insights when cycling back
+                    document.getElementById('insightsContainer').innerHTML = '';
+                    insightCount = 0;
+                    document.getElementById('insightCount').textContent = '0 detected';
+                }
+                playScenario();
+            }, 12000);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(startDemo, 1000);
+            setInterval(updateTimer, 1000);
+        });
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            clearInterval(typingInterval);
+            clearInterval(demoInterval);
+        });
+        
+        // Floating particles effect
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: ${Math.random() * 4 + 2}px;
+                height: ${Math.random() * 4 + 2}px;
+                background: var(--accent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+                opacity: ${Math.random() * 0.5 + 0.1};
+            `;
+            
+            const startX = Math.random() * window.innerWidth;
+            const startY = window.innerHeight + 10;
+            
+            particle.style.left = startX + 'px';
+            particle.style.top = startY + 'px';
+            
+            document.body.appendChild(particle);
+            
+            const duration = Math.random() * 20000 + 10000;
+            const horizontalMovement = (Math.random() - 0.5) * 100;
+            
+            particle.animate([
+                { transform: `translate(0, 0)`, opacity: 0 },
+                { transform: `translate(${horizontalMovement}px, -${window.innerHeight + 20}px)`, opacity: particle.style.opacity },
+                { transform: `translate(${horizontalMovement * 2}px, -${window.innerHeight * 2}px)`, opacity: 0 }
+            ], {
+                duration: duration,
+                easing: 'linear'
+            }).onfinish = () => particle.remove();
+        }
+        
+        // Start particle animation
+        setInterval(createParticle, 500);
+    </script>
+</body>
+</html>
