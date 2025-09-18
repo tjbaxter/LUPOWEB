@@ -812,6 +812,8 @@
             email: '',
             password: '',
             plan: 'free',
+            organizationId: null,
+            accountType: 'individual',
             provider: 'email' // 'email', 'google', or 'github'
         };
         
@@ -1231,6 +1233,22 @@
         
         // Check for OAuth callback - ENHANCED VERSION
         window.addEventListener('load', async () => {
+            // Check for enterprise signup parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const orgId = urlParams.get('org');
+            const type = urlParams.get('type');
+            const companyName = urlParams.get('company');
+            
+            if (orgId && type === 'enterprise') {
+                // Set enterprise signup data
+                userData.organizationId = orgId;
+                userData.accountType = 'team_member';
+                userData.plan = 'enterprise';
+                
+                // Show enterprise banner
+                showEnterpriseBanner(companyName || 'your company');
+            }
+            
             // Try to focus the window/tab
             window.focus();
             
@@ -1265,7 +1283,7 @@
             });
             
             // Rest of your existing load event code...
-            const urlParams = new URLSearchParams(window.location.search);
+            // urlParams already declared above
             const isOAuth = urlParams.get('oauth') === 'true';
             const provider = urlParams.get('provider');
             
@@ -1517,7 +1535,9 @@
                     body: JSON.stringify({
                         email: userData.email,
                         password: userData.password,
-                        provider: userData.provider
+                        provider: userData.provider,
+                        organizationId: userData.organizationId,
+                        accountType: userData.accountType
                     })
                 });
                 
@@ -1664,6 +1684,47 @@
         
         function isValidEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+        
+        function showEnterpriseBanner(companyName) {
+            const banner = document.createElement('div');
+            banner.className = 'enterprise-banner';
+            banner.style.cssText = `
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px;
+                text-align: center;
+                margin-bottom: 32px;
+                border-radius: 16px;
+                box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+                animation: fadeInUp 0.6s ease;
+            `;
+            banner.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 7h-9a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                        <path d="M9 7V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h2"/>
+                    </svg>
+                    <h3 style="margin: 0; font-size: 20px; font-weight: 600;">Enterprise Account</h3>
+                </div>
+                <p style="margin: 0; opacity: 0.95;">You're joining <strong>${companyName}'s</strong> LUPO team</p>
+                <p style="margin: 8px 0 0 0; font-size: 14px; opacity: 0.9;">All enterprise features will be automatically enabled</p>
+            `;
+            
+            // Insert after the header
+            const header = document.querySelector('.signup-header');
+            if (header && header.parentNode) {
+                header.parentNode.insertBefore(banner, header.nextSibling);
+            }
+            
+            // Also update the plan selection to show enterprise
+            const planOptions = document.querySelectorAll('.plan-option');
+            planOptions.forEach(option => {
+                if (option.dataset.plan === 'pro') {
+                    option.classList.add('selected');
+                    option.innerHTML += '<div style="margin-top: 8px; color: var(--success); font-size: 12px;">✓ Enterprise plan included</div>';
+                }
+            });
         }
     </script>
 </body>
