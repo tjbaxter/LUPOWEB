@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUPO Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, sans-serif;
+            background: #000;
+            color: #fff;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 48px;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #222;
+        }
+        
+        .stat {
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 36px;
+            font-weight: 600;
+            color: #3b82f6;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 8px;
+        }
+        
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        h2 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: #888;
+        }
+        
+        .company {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        
+        .company-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .company-name {
+            font-size: 20px;
+            font-weight: 500;
+        }
+        
+        .company-status {
+            padding: 4px 12px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        
+        .company-info {
+            display: flex;
+            gap: 24px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .add-company {
+            background: #111;
+            border: 2px dashed #333;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .add-company:hover {
+            border-color: #3b82f6;
+            background: #1a1a1a;
+        }
+        
+        .form {
+            display: none;
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .form.show {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #888;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+        }
+        
+        button {
+            padding: 12px 24px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        button:hover {
+            background: #2563eb;
+        }
+        
+        .message {
+            padding: 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            display: none;
+        }
+        
+        .message.show {
+            display: block;
+        }
+        
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <h1>LUPO Admin</h1>
+    
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-value" id="totalCompanies">0</div>
+            <div class="stat-label">Companies</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="totalSeats">0</div>
+            <div class="stat-label">Total Seats</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="mrr">$0</div>
+            <div class="stat-label">Monthly Revenue</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Quick Add Company</h2>
+        
+        <div id="message" class="message"></div>
+        
+        <div class="form show">
+            <div class="form-group">
+                <label>Company Name</label>
+                <input type="text" id="companyName" placeholder="Acme Corp">
+            </div>
+            <div class="form-group">
+                <label>Manager Name</label>
+                <input type="text" id="managerName" placeholder="John Smith">
+            </div>
+            <div class="form-group">
+                <label>Manager Email</label>
+                <input type="email" id="managerEmail" placeholder="john@acme.com">
+            </div>
+            <div class="form-group">
+                <label>Number of Seats</label>
+                <input type="number" id="seats" value="5" min="1">
+            </div>
+            <button onclick="addCompany()">Create Company & Send Invite</button>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Active Companies</h2>
+        <div id="companiesList">
+            <!-- Companies will load here -->
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'https://lupo-backend.fly.dev';
+        let token = null;
+        
+        // Simple data storage
+        const companies = [
+            // We'll load these from localStorage for now
+        ];
+        
+        async function init() {
+            // Get your admin token
+            token = localStorage.getItem('admin_token');
+            if (!token) {
+                const email = 'tjpb2@cantab.ac.uk';
+                const password = prompt('Admin password:');
+                
+                const res = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await res.json();
+                if (data.success) {
+                    token = data.token;
+                    localStorage.setItem('admin_token', token);
+                }
+            }
+            
+            loadCompanies();
+        }
+        
+        function loadCompanies() {
+            // Load from localStorage for now
+            const saved = localStorage.getItem('lupo_companies');
+            if (saved) {
+                const companies = JSON.parse(saved);
+                renderCompanies(companies);
+                updateStats(companies);
+            }
+        }
+        
+        function renderCompanies(companies) {
+            const list = document.getElementById('companiesList');
+            
+            if (companies.length === 0) {
+                list.innerHTML = '<div style="color: #666;">No companies yet</div>';
+                return;
+            }
+            
+            list.innerHTML = companies.map(c => `
+                <div class="company">
+                    <div class="company-header">
+                        <div class="company-name">${c.name}</div>
+                        <div class="company-status">Active</div>
+                    </div>
+                    <div class="company-info">
+                        <div>Manager: ${c.managerEmail}</div>
+                        <div>Seats: ${c.seats}</div>
+                        <div>Added: ${new Date(c.created).toLocaleDateString()}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function updateStats(companies) {
+            const totalCompanies = companies.length;
+            const totalSeats = companies.reduce((sum, c) => sum + c.seats, 0);
+            const mrr = totalSeats * 100;
+            
+            document.getElementById('totalCompanies').textContent = totalCompanies;
+            document.getElementById('totalSeats').textContent = totalSeats;
+            document.getElementById('mrr').textContent = `$${mrr}`;
+        }
+        
+        async function addCompany() {
+            const companyName = document.getElementById('companyName').value;
+            const managerName = document.getElementById('managerName').value;
+            const managerEmail = document.getElementById('managerEmail').value;
+            const seats = parseInt(document.getElementById('seats').value);
+            
+            if (!companyName || !managerEmail) {
+                showMessage('Please fill all fields', 'error');
+                return;
+            }
+            
+            try {
+                // Send invite
+                const res = await fetch(`${API_URL}/auth/admin/send-manager-invite`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ managerEmail, managerName })
+                });
+                
+                const data = await res.json();
+                
+                if (data.success || res.ok) {
+                    // Save company locally
+                    const saved = localStorage.getItem('lupo_companies');
+                    const companies = saved ? JSON.parse(saved) : [];
+                    
+                    companies.push({
+                        name: companyName,
+                        managerName,
+                        managerEmail,
+                        seats,
+                        created: new Date().toISOString()
+                    });
+                    
+                    localStorage.setItem('lupo_companies', JSON.stringify(companies));
+                    
+                    showMessage(`✓ Invite sent to ${managerEmail}`, 'success');
+                    
+                    // Clear form
+                    document.getElementById('companyName').value = '';
+                    document.getElementById('managerName').value = '';
+                    document.getElementById('managerEmail').value = '';
+                    document.getElementById('seats').value = '5';
+                    
+                    // Reload list
+                    loadCompanies();
+                } else {
+                    showMessage(data.error || 'Failed to send invite', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+        
+        function showMessage(text, type) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = `message show ${type === 'error' ? 'error' : ''}`;
+            
+            setTimeout(() => {
+                msg.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Start
+        init();
+    </script>
+</body>
+</html>
