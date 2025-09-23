@@ -786,9 +786,7 @@
                     Your account is ready to use!
                 </p>
                 
-                <button class="form-button" onclick="openApp()">
-                    Open LUPO
-                </button>
+                <!-- Button removed - LUPO connects automatically via polling -->
                 
                 <!-- Only show for free users -->
                 <div class="pro-upsell" id="proUpsell" style="display: none;">
@@ -852,7 +850,8 @@
             }, 4000);
         }
         
-        // Open app function
+        // REMOVED: Deep link opening function (using polling now)
+        /*
         function openApp() {
             console.log('Opening LUPO via deep link...');
             
@@ -922,6 +921,7 @@
                 showToast('Error preparing authentication. Please try again.', 'error');
             }
         }
+        */
         
         // Social Auth Functions
         async function signUpWithGoogle() {
@@ -1017,81 +1017,60 @@
             }
         });
         
-        // Auto-create account for OAuth users - FIXED VERSION
+        // Auto-create account for OAuth users - UPDATED FOR POLLING
         async function autoCreateAccount() {
             try {
-                const authData = JSON.parse(localStorage.getItem('lupo_oauth_temp') || sessionStorage.getItem('authData') || '{}');
+                console.log('🚀 Processing authentication...');
+                
+                // Get auth data (from OAuth or signup form)
+                const authData = JSON.parse(
+                    localStorage.getItem('lupo_oauth_temp') || 
+                    sessionStorage.getItem('authData') || 
+                    '{}'
+                );
                 
                 if (!authData.token || !authData.email) {
                     throw new Error('No authentication data found');
                 }
                 
-                localStorage.setItem('lupo_session', authData.token);
-                localStorage.setItem('lupo_user', JSON.stringify(authData.user || {
-                    email: authData.email,
-                    name: authData.name,
-                    tier: 'free'
-                }));
-                
+                // NO LONGER STORE IN CLIPBOARD OR USE DEEP LINKS
+                // Clear temporary storage
                 localStorage.removeItem('lupo_oauth_temp');
                 sessionStorage.removeItem('authData');
                 
+                // Show success state
                 showSuccessState();
                 
-                // Send to backend for deep link generation
-                fetch('https://lupo-backend.fly.dev/auth/complete-auth', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        token: authData.token, 
-                        user: authData.user || { email: authData.email, name: authData.name }
-                    })
-                })
-                .then(response => response.text())
-                .then(html => {
-                    // Try to open in a new window
-                    const authWindow = window.open('', 'lupo-auth', 'width=500,height=400');
-                    
-                    if (authWindow && authWindow.document) {
-                        // Popup allowed - write the HTML
-                        authWindow.document.write(html);
-                        authWindow.document.close();
-                    } else {
-                        // Popup blocked - redirect current window instead
-                        console.log('Popup blocked, using redirect method');
-                        
-                        // Create a temporary page that will trigger the deep link
-                        const tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = html;
-                        const scriptContent = tempDiv.querySelector('script').textContent;
-                        const deepLinkMatch = scriptContent.match(/window\.location\.href = '(lupo:\/\/[^']+)'/);
-                        
-                        if (deepLinkMatch) {
-                            // Try to open the deep link directly
-                            window.location.href = deepLinkMatch[1];
-                        }
-                    }
-                    
-                    showToast('Authentication complete! Switch to LUPO.', 'success');
-                    
-                    // Update UI to show success
-                    const successStep = document.getElementById('successStep');
-                    if (successStep) {
-                        const openAppBtn = document.getElementById('openAppBtn');
-                        if (openAppBtn) {
-                            openAppBtn.textContent = '✓ Authenticated';
-                            openAppBtn.disabled = true;
-                        }
-                    }
-                })
-                .catch(err => {
-                    console.error('Auth completion failed:', err);
-                    showToast('Authentication saved. Open LUPO to continue.', 'info');
-                });
+                // Display success message
+                const successStep = document.getElementById('successStep');
+                if (successStep) {
+                    successStep.innerHTML = `
+                        <div class="success-container">
+                            <div class="success-icon">✓</div>
+                            <h1>Welcome to LUPO!</h1>
+                            <p style="font-size: 18px; color: var(--text-secondary); margin: 16px 0;">
+                                You're all set! LUPO is updating automatically.
+                            </p>
+                            
+                            <div style="margin-top: 30px; padding: 20px; background: var(--bg-secondary); border-radius: 12px;">
+                                <h3 style="margin-bottom: 12px;">✨ Quick Start Guide</h3>
+                                <ul style="text-align: left; list-style: none; padding: 0;">
+                                    <li style="margin: 8px 0;">📝 Press <strong>Cmd+\\</strong> to ask LUPO anything</li>
+                                    <li style="margin: 8px 0;">🎯 Press <strong>Cmd+Enter</strong> for instant screen analysis</li>
+                                    <li style="margin: 8px 0;">🎤 Press <strong>Cmd+M</strong> to start voice mode</li>
+                                </ul>
+                            </div>
+                            
+                            <p style="margin-top: 24px; font-size: 14px; color: var(--text-secondary);">
+                                You can close this window. LUPO is ready to use!
+                            </p>
+                        </div>
+                    `;
+                }
                 
             } catch (err) {
                 console.error('Account setup error:', err);
-                // Show error UI
+                showToast('Setup error. Please try again.', 'error');
             }
         }
         
@@ -1171,14 +1150,12 @@
             button.innerHTML = 'Creating account<span class="loading-spinner"></span>';
             
             try {
-                // Call auth/signup endpoint
                 const response = await fetch('https://lupo-backend.fly.dev/auth/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         email: userData.email,
                         password: userData.password,
-                        provider: userData.provider,
                         organizationId: userData.organizationId,
                         accountType: userData.accountType
                     })
@@ -1186,32 +1163,50 @@
                 
                 const data = await response.json();
                 
-                if (data.success) {
-                    // Store session in localStorage
-                    localStorage.setItem('lupo_session', data.token);
-                    localStorage.setItem('lupo_user', JSON.stringify(data.user));
+                if (data.success && data.sessionKey) {
+                    // Store session key for LUPO to find
+                    const pollData = {
+                        sessionKey: data.sessionKey,
+                        timestamp: Date.now()
+                    };
                     
-                    if (userData.plan === 'pro' && data.checkoutUrl) {
-                        // Redirect to Stripe for Pro plan
-                        window.location.href = data.checkoutUrl;
-                    } else {
-                        // Show success
-                        showSuccessState();
-                        
-                        // Show upgrade option for free users
-                        if (data.user.tier === 'free') {
-                            document.getElementById('proUpsell').style.display = 'block';
-                        }
-                        
-                        // Try to open the app
-                        setTimeout(openApp, 1000);
+                    // Broadcast to any LUPO instances
+                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                    
+                    // Show success
+                    showSuccessState();
+                    
+                    // Update success message
+                    const successStep = document.getElementById('successStep');
+                    if (successStep) {
+                        successStep.innerHTML = `
+                            <div class="success-container">
+                                <div class="success-icon">✓</div>
+                                <h1>Account Created!</h1>
+                                <p style="font-size: 18px; color: var(--text-secondary); margin: 16px 0;">
+                                    LUPO is connecting to your new account...
+                                </p>
+                                
+                                <div style="margin-top: 20px; padding: 15px; background: rgba(52, 199, 89, 0.1); border-radius: 8px;">
+                                    <p style="color: #34c759; margin: 0;">
+                                        ✓ LUPO will update automatically in a few seconds
+                                    </p>
+                                </div>
+                                
+                                <p style="margin-top: 24px; font-size: 14px; color: var(--text-secondary);">
+                                    Keep LUPO running in the background. You can close this window.
+                                </p>
+                            </div>
+                        `;
                     }
+                    
                 } else {
                     throw new Error(data.error || 'Failed to create account');
                 }
+                
             } catch (err) {
                 button.disabled = false;
-                button.innerHTML = userData.plan === 'pro' ? 'Continue to Payment' : 'Create Free Account';
+                button.innerHTML = 'Create Free Account';
                 alert('Error: ' + err.message);
             }
         }
@@ -1369,6 +1364,37 @@
                 }
             });
         }
+        
+        // ============================================
+        // Polling Communication Handler
+        // ============================================
+        
+        // Broadcast session key when available
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'lupo_auth_poll' && event.newValue) {
+                try {
+                    const data = JSON.parse(event.newValue);
+                    console.log('📡 Broadcasting auth session key');
+                    
+                    // Send message to any listening LUPO instances
+                    if (window.opener) {
+                        window.opener.postMessage({
+                            type: 'lupo-auth-ready',
+                            sessionKey: data.sessionKey
+                        }, '*');
+                    }
+                    
+                    // Clear after broadcasting
+                    setTimeout(() => {
+                        localStorage.removeItem('lupo_auth_poll');
+                    }, 1000);
+                    
+                } catch (err) {
+                    console.error('Failed to broadcast auth:', err);
+                }
+            }
+        });
+        
     </script>
 </body>
 </html>

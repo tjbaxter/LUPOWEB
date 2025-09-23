@@ -455,10 +455,15 @@
                 
                 const data = await response.json();
                 
-                if (data.success) {
-                    // Store session
-                    localStorage.setItem('lupo_session', data.token);
-                    localStorage.setItem('lupo_user', JSON.stringify(data.user));
+                if (data.success && data.sessionKey) {
+                    // Store session key for LUPO to find
+                    const pollData = {
+                        sessionKey: data.sessionKey,
+                        timestamp: Date.now()
+                    };
+                    
+                    // Broadcast to any LUPO instances
+                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
                     
                     showToast('Signed in successfully!', 'success');
                     
@@ -467,40 +472,31 @@
                     const fromApp = urlParams.get('from') === 'app';
                     
                     if (fromApp) {
-                        // Send to backend to generate deep link
-                        fetch('https://lupo-backend.fly.dev/auth/complete-auth', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ token: data.token, user: data.user })
-                        })
-                        .then(response => response.text())
-                        .then(html => {
-                            // Try to open auth completion window
-                            const authWindow = window.open('', 'lupo-auth', 'width=500,height=400');
-                            
-                            if (authWindow && authWindow.document) {
-                                // Popup allowed
-                                authWindow.document.write(html);
-                                authWindow.document.close();
-                            } else {
-                                // Popup blocked - extract and use deep link directly
-                                const tempDiv = document.createElement('div');
-                                tempDiv.innerHTML = html;
-                                const scriptContent = tempDiv.querySelector('script').textContent;
-                                const deepLinkMatch = scriptContent.match(/window\.location\.href = '(lupo:\/\/[^']+)'/);
-                                
-                                if (deepLinkMatch) {
-                                    window.location.href = deepLinkMatch[1];
-                                }
-                            }
-                            
-                            button.innerHTML = '✓ Success - Check LUPO';
-                            showToast('Switch to LUPO to continue', 'info');
-                        })
-                        .catch(err => {
-                            console.error('Auth completion failed:', err);
-                            button.innerHTML = '✓ Signed In';
-                        });
+                        // Show success message for app users
+                        button.innerHTML = '✓ Signed In';
+                        button.disabled = true;
+                        
+                        // Update the form to show success
+                        const formContainer = document.querySelector('.form-container');
+                        if (formContainer) {
+                            formContainer.innerHTML = `
+                                <div style="text-align: center; padding: 40px 20px;">
+                                    <div style="font-size: 64px; margin-bottom: 20px;">✓</div>
+                                    <h2>Login Successful!</h2>
+                                    <p style="color: var(--text-secondary); margin-top: 16px;">
+                                        LUPO is connecting to your account...
+                                    </p>
+                                    <div style="margin-top: 20px; padding: 15px; background: rgba(52, 199, 89, 0.1); border-radius: 8px;">
+                                        <p style="color: #34c759; margin: 0;">
+                                            ✓ LUPO will update automatically in a few seconds
+                                        </p>
+                                    </div>
+                                    <p style="margin-top: 24px; font-size: 14px; color: var(--text-secondary);">
+                                        You can close this window.
+                                    </p>
+                                </div>
+                            `;
+                        }
                     } else {
                         // Normal web redirect
                         setTimeout(() => {
@@ -557,6 +553,37 @@
             // Focus email field
             document.getElementById('email').focus();
         });
+        
+        // ============================================
+        // Polling Communication Handler
+        // ============================================
+        
+        // Broadcast session key when available
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'lupo_auth_poll' && event.newValue) {
+                try {
+                    const data = JSON.parse(event.newValue);
+                    console.log('📡 Broadcasting auth session key from login');
+                    
+                    // Send message to any listening LUPO instances
+                    if (window.opener) {
+                        window.opener.postMessage({
+                            type: 'lupo-auth-ready',
+                            sessionKey: data.sessionKey
+                        }, '*');
+                    }
+                    
+                    // Clear after broadcasting
+                    setTimeout(() => {
+                        localStorage.removeItem('lupo_auth_poll');
+                    }, 1000);
+                    
+                } catch (err) {
+                    console.error('Failed to broadcast auth:', err);
+                }
+            }
+        });
+        
     </script>
 </body>
 </html>
