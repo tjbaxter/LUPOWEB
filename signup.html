@@ -817,219 +817,7 @@
             provider: 'email' // 'email', 'google', or 'github'
         };
         
-        // OAuth clipboard handling variables
-        let pendingAuthData = null;
-        let clipboardRetryCount = 0;
-        const MAX_CLIPBOARD_RETRIES = 5;
-        
-        // Clipboard writing with focus detection
-        async function writeToClipboardWithFocus(data) {
-            // Check if document has focus
-            if (!document.hasFocus()) {
-                console.log('Document not focused, requesting user interaction');
-                return { success: false, needsInteraction: true };
-            }
-            
-            try {
-                await navigator.clipboard.writeText(data);
-                console.log('✅ Clipboard write successful');
-                return { success: true };
-            } catch (err) {
-                console.log('❌ Clipboard write failed:', err.message);
-                return { success: false, error: err };
-            }
-        }
-        
-        // Show interactive completion UI
-        function showInteractiveAuthCompletion(authData) {
-            const successStep = document.getElementById('successStep');
-            const successContainer = successStep.querySelector('.success-container');
-            
-            // Create interactive completion box
-            const interactiveBox = document.createElement('div');
-            interactiveBox.id = 'interactive-auth-box';
-            interactiveBox.style.cssText = `
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                border-radius: 16px;
-                padding: 24px;
-                margin: 20px auto;
-                max-width: 400px;
-                text-align: center;
-                animation: pulse 2s infinite;
-                cursor: pointer;
-                transition: transform 0.2s ease;
-            `;
-            
-            interactiveBox.innerHTML = `
-                <h3 style="color: white; margin: 0 0 12px 0; font-size: 20px;">
-                    🎯 Click Here to Complete Login
-                </h3>
-                <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 15px;">
-                    One more click to activate LUPO
-                </p>
-                <div style="margin-top: 16px; padding: 12px; background: rgba(255,255,255,0.2); border-radius: 8px;">
-                    <p style="color: white; margin: 0; font-size: 13px; font-weight: 600;">
-                        Click anywhere in this box to complete authentication
-                    </p>
-                </div>
-            `;
-            
-            // Add hover effect
-            interactiveBox.onmouseover = () => {
-                interactiveBox.style.transform = 'scale(1.02)';
-            };
-            interactiveBox.onmouseout = () => {
-                interactiveBox.style.transform = 'scale(1)';
-            };
-            
-            // Handle click to complete authentication
-            interactiveBox.onclick = async () => {
-                interactiveBox.innerHTML = `
-                    <div style="color: white;">
-                        <div class="loading-spinner" style="margin: 0 auto 12px; border-color: white; border-top-color: transparent;"></div>
-                        <p style="margin: 0;">Completing authentication...</p>
-                    </div>
-                `;
-                
-                // Now we have user interaction, try clipboard write
-                const result = await writeToClipboardWithFocus(authData);
-                
-                if (result.success) {
-                    // Success! Update UI
-                    interactiveBox.style.background = 'linear-gradient(135deg, #34c759 0%, #32d74b 100%)';
-                    interactiveBox.innerHTML = `
-                        <h3 style="color: white; margin: 0 0 8px 0;">✅ Success!</h3>
-                        <p style="color: white; margin: 0;">Switch to LUPO to start using it</p>
-                    `;
-                    
-                    showToast('✅ Authentication complete! Switch to LUPO.', 'success');
-                    
-                    // Remove the interactive box after 3 seconds
-                    setTimeout(() => {
-                        interactiveBox.style.opacity = '0';
-                        setTimeout(() => interactiveBox.remove(), 300);
-                    }, 3000);
-                    
-                } else {
-                    // Still failed, show manual copy option
-                    showManualCopyFallback(authData);
-                }
-            };
-            
-            // Add to DOM
-            successContainer.appendChild(interactiveBox);
-            
-            // Also add a manual copy link
-            const manualLink = document.createElement('div');
-            manualLink.style.cssText = 'margin-top: 16px; text-align: center;';
-            manualLink.innerHTML = `
-                <a href="#" onclick="showManualCopyFallback('${authData}'); return false;" 
-                   style="color: var(--accent); font-size: 14px; text-decoration: underline;">
-                    Having trouble? Copy manually
-                </a>
-            `;
-            successContainer.appendChild(manualLink);
-        }
-        
-        // Manual copy fallback function
-        function showManualCopyFallback(authData) {
-            // Remove interactive box if it exists
-            const interactiveBox = document.getElementById('interactive-auth-box');
-            if (interactiveBox) interactiveBox.remove();
-            
-            const modal = document.createElement('div');
-            modal.id = 'manual-auth-modal';
-            modal.className = 'manual-auth-modal';
-            modal.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: var(--bg-primary);
-                padding: 30px;
-                border-radius: 16px;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-                z-index: 10000;
-                max-width: 500px;
-                border: 1px solid var(--border);
-            `;
-            
-            modal.innerHTML = `
-                <h3 style="margin: 0 0 16px 0; color: var(--text-primary);">Manual Authentication</h3>
-                <p style="color: var(--text-secondary); margin: 0 0 16px 0;">
-                    Click the button below to copy your authentication code:
-                </p>
-                <div style="display: flex; gap: 12px; margin-bottom: 16px;">
-                    <input type="text" value="${authData}" readonly 
-                           id="auth-code-input"
-                           style="flex: 1; padding: 12px; border: 1px solid var(--border); 
-                                  border-radius: 8px; font-family: monospace; font-size: 12px;
-                                  background: var(--bg-secondary); color: var(--text-primary);">
-                    <button onclick="copyManualAuth()" 
-                            id="copy-btn"
-                            style="padding: 12px 20px; background: var(--accent); color: white; 
-                                   border: none; border-radius: 8px; cursor: pointer; font-weight: 500;">
-                        Copy
-                    </button>
-                </div>
-                <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">
-                    After copying, switch to the LUPO app window. It will automatically detect your login.
-                </p>
-                <button onclick="document.getElementById('manual-auth-modal').remove()" 
-                        style="position: absolute; top: 12px; right: 12px; background: none; 
-                               border: none; font-size: 24px; cursor: pointer; color: var(--text-secondary);">
-                    ×
-                </button>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            // Auto-select the text
-            setTimeout(() => {
-                const input = document.getElementById('auth-code-input');
-                if (input) input.select();
-            }, 100);
-        }
-        
-        // Copy function for manual fallback
-        window.copyManualAuth = async function() {
-            const input = document.getElementById('auth-code-input');
-            const btn = document.getElementById('copy-btn');
-            
-            try {
-                // Try using the clipboard API first
-                await navigator.clipboard.writeText(input.value);
-                btn.textContent = '✓ Copied!';
-                btn.style.background = '#34c759';
-                showToast('✅ Copied! Switch to LUPO to complete login.', 'success');
-                
-                // Close modal after 2 seconds
-                setTimeout(() => {
-                    const modal = document.getElementById('manual-auth-modal');
-                    if (modal) modal.remove();
-                }, 2000);
-            } catch (err) {
-                // Fallback to select and document.execCommand
-                input.select();
-                input.setSelectionRange(0, 99999); // For mobile
-                
-                try {
-                    document.execCommand('copy');
-                    btn.textContent = '✓ Copied!';
-                    btn.style.background = '#34c759';
-                    showToast('✅ Copied! Switch to LUPO to complete login.', 'success');
-                    
-                    setTimeout(() => {
-                        const modal = document.getElementById('manual-auth-modal');
-                        if (modal) modal.remove();
-                    }, 2000);
-                } catch (fallbackErr) {
-                    btn.textContent = 'Select & Copy';
-                    showToast('Please select the text and copy manually (Ctrl+C/Cmd+C)', 'error');
-                }
-            }
-        };
-        
+        // Clipboard-related functions removed - now using deep links
         // Toast functionality
         function showToast(message, type = 'info') {
             // Remove any existing toasts
@@ -1066,145 +854,72 @@
         
         // Open app function
         function openApp() {
-            console.log('🚀 openApp called - using clipboard authentication');
+            console.log('Opening LUPO via deep link...');
             
             const token = localStorage.getItem('lupo_session');
             const user = localStorage.getItem('lupo_user');
             
             if (!token || !user) {
-                console.error('❌ No authentication data found');
                 showToast('No authentication data found. Please log in again.', 'error');
                 return;
             }
             
             try {
                 const userData = JSON.parse(user);
-                console.log('📦 User data found:', { email: userData.email, tier: userData.tier });
                 
-                // Create auth data package
-                const authData = {
-                    token: token,
-                    user: {
-                        email: userData.email,
-                        name: userData.name || userData.email.split('@')[0],
-                        tier: userData.tier || userData.subscriptionTier || 'free',
-                        usage: userData.usage || { daily: 0, limit: 10 }
-                    },
-                    timestamp: Date.now(),
-                    source: 'web_signup'
-                };
-                
-                // Encode the data
-                const encodedData = btoa(JSON.stringify(authData));
-                const clipboardData = `LUPO_AUTH:${encodedData}`;
-                
-                console.log('📋 Copying auth to clipboard, length:', clipboardData.length);
-                
-                // Copy to clipboard for the LUPO app to poll
-                navigator.clipboard.writeText(clipboardData).then(() => {
-                    console.log('✅ Auth data copied to clipboard successfully');
+                // Send to backend to generate deep link
+                fetch('https://lupo-backend.fly.dev/auth/complete-auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token, user: userData })
+                })
+                .then(response => response.text())
+                .then(html => {
+                    // Try to open in a new window
+                    const authWindow = window.open('', 'lupo-auth', 'width=500,height=400');
                     
-                    // Show success message with clear instructions
-                    showToast('✅ Authentication ready! Switch to LUPO to complete.', 'success');
-                    
-                    // Update the UI to show clear instructions
-                    const successStep = document.getElementById('successStep');
-                    if (successStep) {
-                        const instructionsDiv = document.createElement('div');
-                        instructionsDiv.className = 'auth-instructions';
-                        instructionsDiv.style.cssText = `
-                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                            border-radius: 12px;
-                            padding: 20px;
-                            margin: 20px 0;
-                            color: white;
-                            animation: pulse 2s infinite;
-                        `;
-                        instructionsDiv.innerHTML = `
-                            <h3 style="margin: 0 0 10px 0; font-size: 18px;">
-                                ✨ Almost done!
-                            </h3>
-                            <p style="margin: 0; font-size: 15px; opacity: 0.95;">
-                                Your authentication is ready. Please switch to the LUPO app window to start using it.
-                            </p>
-                            <p style="margin: 10px 0 0 0; font-size: 13px; opacity: 0.8;">
-                                The LUPO app will automatically detect your login within a few seconds.
-                            </p>
-                        `;
+                    if (authWindow && authWindow.document) {
+                        // Popup allowed - write the HTML
+                        authWindow.document.write(html);
+                        authWindow.document.close();
+                    } else {
+                        // Popup blocked - redirect current window instead
+                        console.log('Popup blocked, using redirect method');
                         
-                        // Insert after the success message
-                        const successContainer = successStep.querySelector('.success-container');
-                        if (successContainer) {
-                            successContainer.appendChild(instructionsDiv);
+                        // Parse the HTML to extract the deep link
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = html;
+                        const scriptContent = tempDiv.querySelector('script').textContent;
+                        const deepLinkMatch = scriptContent.match(/window\.location\.href = '(lupo:\/\/[^']+)'/);
+                        
+                        if (deepLinkMatch) {
+                            // Try to open the deep link directly
+                            window.location.href = deepLinkMatch[1];
                         }
                     }
                     
-                    // Try to indicate to the user to switch windows
-                    // This won't launch a new instance, just attempts focus
-                    setTimeout(() => {
-                        // Try to blur current window to hint user to switch
-                        window.blur();
-                        
-                        // Show another reminder
-                        showToast('📱 Switch to the LUPO app window now', 'info');
-                    }, 2000);
+                    // Update UI
+                    const successStep = document.getElementById('successStep');
+                    if (successStep) {
+                        const successContainer = successStep.querySelector('.success-container');
+                        if (successContainer) {
+                            const statusDiv = document.createElement('div');
+                            statusDiv.style.cssText = 'margin-top: 20px; padding: 15px; background: rgba(52, 199, 89, 0.1); border-radius: 8px;';
+                            statusDiv.innerHTML = '<p style="color: #34c759; margin: 0;">✓ Authentication sent to LUPO</p>';
+                            successContainer.appendChild(statusDiv);
+                        }
+                    }
                     
-                    // Set up a timeout to clear clipboard after 5 minutes for security
-                    setTimeout(() => {
-                        navigator.clipboard.writeText('').catch(() => {});
-                        console.log('🔒 Cleared clipboard after 5 minutes');
-                    }, 5 * 60 * 1000);
-                    
-                }).catch(err => {
-                    console.error('❌ Failed to copy auth data to clipboard:', err);
-                    
-                    // Fallback: Show the auth data for manual copy
-                    const modal = document.createElement('div');
-                    modal.className = 'manual-auth-modal';
-                    modal.style.cssText = `
-                        position: fixed;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        background: white;
-                        padding: 30px;
-                        border-radius: 12px;
-                        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-                        z-index: 10000;
-                        max-width: 500px;
-                    `;
-                    modal.innerHTML = `
-                        <h3>Manual Authentication</h3>
-                        <p>Automatic authentication failed. Please copy this code:</p>
-                        <textarea readonly style="width: 100%; height: 100px; font-family: monospace; font-size: 12px;">${clipboardData}</textarea>
-                        <button onclick="navigator.clipboard.writeText('${clipboardData}'); this.textContent='Copied!'" 
-                                style="margin-top: 10px; padding: 10px 20px; background: #0071e3; color: white; border: none; border-radius: 6px; cursor: pointer;">
-                            Copy Code
-                        </button>
-                        <p style="margin-top: 10px; font-size: 13px; color: #666;">
-                            After copying, switch to LUPO and it will automatically log you in.
-                        </p>
-                        <button onclick="this.parentElement.remove()" 
-                                style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">
-                            ×
-                        </button>
-                    `;
-                    document.body.appendChild(modal);
+                    showToast('Authentication complete! Check the LUPO app.', 'success');
+                })
+                .catch(err => {
+                    console.error('Failed to complete auth:', err);
+                    showToast('Error completing authentication. Please try again.', 'error');
                 });
                 
             } catch (err) {
-                console.error('❌ Failed to prepare auth data:', err);
+                console.error('Failed to prepare auth data:', err);
                 showToast('Error preparing authentication. Please try again.', 'error');
-                
-                // Show retry button
-                const successStep = document.getElementById('successStep');
-                if (successStep) {
-                    successStep.innerHTML += `
-                        <button class="form-button" onclick="window.location.reload()">
-                            Try Again
-                        </button>
-                    `;
-                }
             }
         }
         
@@ -1252,37 +967,9 @@
             // Try to focus the window/tab
             window.focus();
             
-            // Add visibility change handler to retry clipboard when tab becomes visible
-            document.addEventListener('visibilitychange', async () => {
-                if (!document.hidden && pendingAuthData && clipboardRetryCount < MAX_CLIPBOARD_RETRIES) {
-                    console.log('Tab became visible, retrying clipboard write...');
-                    clipboardRetryCount++;
-                    
-                    const result = await writeToClipboardWithFocus(pendingAuthData);
-                    if (result.success) {
-                        console.log('✅ Clipboard write successful on visibility change');
-                        pendingAuthData = null; // Clear pending data
-                        showToast('✅ Authentication ready! Switch to LUPO.', 'success');
-                    }
-                }
-            });
+            // Removed clipboard-related event handlers
             
-            // Add focus handler as well
-            window.addEventListener('focus', async () => {
-                if (pendingAuthData && clipboardRetryCount < MAX_CLIPBOARD_RETRIES) {
-                    console.log('Window focused, retrying clipboard write...');
-                    clipboardRetryCount++;
-                    
-                    const result = await writeToClipboardWithFocus(pendingAuthData);
-                    if (result.success) {
-                        console.log('✅ Clipboard write successful on focus');
-                        pendingAuthData = null;
-                        showToast('✅ Authentication ready! Switch to LUPO.', 'success');
-                    }
-                }
-            });
-            
-            // Rest of your existing load event code...
+            // Rest of load event code...
             // urlParams already declared above
             const isOAuth = urlParams.get('oauth') === 'true';
             const provider = urlParams.get('provider');
@@ -1333,122 +1020,78 @@
         // Auto-create account for OAuth users - FIXED VERSION
         async function autoCreateAccount() {
             try {
-                // Try localStorage first, then sessionStorage as fallback
                 const authData = JSON.parse(localStorage.getItem('lupo_oauth_temp') || sessionStorage.getItem('authData') || '{}');
                 
-                console.log('Auth data from storage:', authData);
-                
-                // Check if we have the required data
                 if (!authData.token || !authData.email) {
-                    console.error('Missing auth data:', authData);
                     throw new Error('No authentication data found');
                 }
                 
-                // OAuth users are already created during the callback
-                // Store session in localStorage
                 localStorage.setItem('lupo_session', authData.token);
-                
-                // Store user data
-                const userData = authData.user || {
+                localStorage.setItem('lupo_user', JSON.stringify(authData.user || {
                     email: authData.email,
                     name: authData.name,
                     tier: 'free'
-                };
-                localStorage.setItem('lupo_user', JSON.stringify(userData));
+                }));
                 
-                // Clear temporary storage
                 localStorage.removeItem('lupo_oauth_temp');
                 sessionStorage.removeItem('authData');
                 
-                // Show success state first
                 showSuccessState();
                 
-                // Show upgrade option for free users  
-                if (userData.tier === 'free') {
-                    document.getElementById('proUpsell').style.display = 'block';
-                }
-                
-                // Prepare auth data for clipboard
-                const authPackage = {
-                    token: authData.token,
-                    user: userData,
-                    timestamp: Date.now(),
-                    source: 'oauth_callback'
-                };
-                
-                const encodedData = btoa(JSON.stringify(authPackage));
-                const clipboardData = `LUPO_AUTH:${encodedData}`;
-                
-                // Store for retry attempts
-                pendingAuthData = clipboardData;
-                
-                // Try to write to clipboard
-                const result = await writeToClipboardWithFocus(clipboardData);
-                
-                if (result.success) {
-                    // Success! Show success message
-                    console.log('✅ OAuth auth data copied to clipboard automatically');
+                // Send to backend for deep link generation
+                fetch('https://lupo-backend.fly.dev/auth/complete-auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        token: authData.token, 
+                        user: authData.user || { email: authData.email, name: authData.name }
+                    })
+                })
+                .then(response => response.text())
+                .then(html => {
+                    // Try to open in a new window
+                    const authWindow = window.open('', 'lupo-auth', 'width=500,height=400');
                     
-                    const successContainer = document.querySelector('.success-container');
-                    if (successContainer) {
-                        const instructionBox = document.createElement('div');
-                        instructionBox.style.cssText = `
-                            background: linear-gradient(135deg, #34c759 0%, #32d74b 100%);
-                            color: white;
-                            padding: 20px;
-                            border-radius: 12px;
-                            margin: 20px auto;
-                            max-width: 400px;
-                            text-align: center;
-                            animation: slideIn 0.5s ease;
-                        `;
-                        instructionBox.innerHTML = `
-                            <h3 style="margin: 0 0 10px 0; font-size: 20px;">🎉 Success!</h3>
-                            <p style="margin: 0; font-size: 16px;">
-                                Authentication complete! Switch to LUPO to start.
-                            </p>
-                        `;
-                        successContainer.appendChild(instructionBox);
+                    if (authWindow && authWindow.document) {
+                        // Popup allowed - write the HTML
+                        authWindow.document.write(html);
+                        authWindow.document.close();
+                    } else {
+                        // Popup blocked - redirect current window instead
+                        console.log('Popup blocked, using redirect method');
+                        
+                        // Create a temporary page that will trigger the deep link
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = html;
+                        const scriptContent = tempDiv.querySelector('script').textContent;
+                        const deepLinkMatch = scriptContent.match(/window\.location\.href = '(lupo:\/\/[^']+)'/);
+                        
+                        if (deepLinkMatch) {
+                            // Try to open the deep link directly
+                            window.location.href = deepLinkMatch[1];
+                        }
                     }
                     
-                    showToast('✅ Authentication ready! Switch to LUPO.', 'success');
+                    showToast('Authentication complete! Switch to LUPO.', 'success');
                     
-                    // Clear clipboard after 5 minutes for security
-                    setTimeout(() => {
-                        navigator.clipboard.writeText('').catch(() => {});
-                        console.log('🔒 Cleared clipboard after 5 minutes');
-                    }, 5 * 60 * 1000);
-                    
-                } else if (result.needsInteraction) {
-                    // Document not focused, show interactive UI
-                    console.log('📱 Document not focused, showing interactive completion UI');
-                    showInteractiveAuthCompletion(clipboardData);
-                    showToast('👆 Click the button above to complete authentication', 'info');
-                    
-                } else {
-                    // Other error, show manual fallback
-                    console.log('❌ Clipboard write failed, showing manual fallback');
-                    showManualCopyFallback(clipboardData);
-                    showToast('⚠️ Automatic authentication failed. Please copy manually.', 'error');
-                }
+                    // Update UI to show success
+                    const successStep = document.getElementById('successStep');
+                    if (successStep) {
+                        const openAppBtn = document.getElementById('openAppBtn');
+                        if (openAppBtn) {
+                            openAppBtn.textContent = '✓ Authenticated';
+                            openAppBtn.disabled = true;
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.error('Auth completion failed:', err);
+                    showToast('Authentication saved. Open LUPO to continue.', 'info');
+                });
                 
             } catch (err) {
                 console.error('Account setup error:', err);
-                
                 // Show error UI
-                const container = document.querySelector('.signup-container');
-                container.innerHTML = `
-                    <div class="signup-header">
-                        <h1>Setup Error</h1>
-                        <p>We couldn't complete your sign-up. Please try again.</p>
-                    </div>
-                    <button class="form-button" onclick="window.location.href='/signup.html'">
-                        Start Over
-                    </button>
-                    <div class="signup-footer" style="margin-top: 24px;">
-                        <p>If this problem persists, please contact support.</p>
-                    </div>
-                `;
             }
         }
         

@@ -460,37 +460,49 @@
                     localStorage.setItem('lupo_session', data.token);
                     localStorage.setItem('lupo_user', JSON.stringify(data.user));
                     
-                    showToast('✅ Signed in successfully!', 'success');
-                    
-                    // Prepare auth for clipboard (for LUPO app)
-                    const authPackage = {
-                        token: data.token,
-                        user: data.user,
-                        timestamp: Date.now(),
-                        source: 'web_login'
-                    };
-                    
-                    const encodedData = btoa(JSON.stringify(authPackage));
-                    const clipboardData = `LUPO_AUTH:${encodedData}`;
-                    
-                    // Try to copy to clipboard
-                    try {
-                        await navigator.clipboard.writeText(clipboardData);
-                        console.log('✅ Auth copied to clipboard');
-                    } catch (err) {
-                        console.log('Clipboard write failed:', err);
-                    }
+                    showToast('Signed in successfully!', 'success');
                     
                     // Check if coming from app
                     const urlParams = new URLSearchParams(window.location.search);
                     const fromApp = urlParams.get('from') === 'app';
                     
                     if (fromApp) {
-                        // Show success and instructions to return to app
-                        button.innerHTML = '✓ Success - Return to LUPO';
-                        showToast('Switch back to LUPO to continue', 'info');
+                        // Send to backend to generate deep link
+                        fetch('https://lupo-backend.fly.dev/auth/complete-auth', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ token: data.token, user: data.user })
+                        })
+                        .then(response => response.text())
+                        .then(html => {
+                            // Try to open auth completion window
+                            const authWindow = window.open('', 'lupo-auth', 'width=500,height=400');
+                            
+                            if (authWindow && authWindow.document) {
+                                // Popup allowed
+                                authWindow.document.write(html);
+                                authWindow.document.close();
+                            } else {
+                                // Popup blocked - extract and use deep link directly
+                                const tempDiv = document.createElement('div');
+                                tempDiv.innerHTML = html;
+                                const scriptContent = tempDiv.querySelector('script').textContent;
+                                const deepLinkMatch = scriptContent.match(/window\.location\.href = '(lupo:\/\/[^']+)'/);
+                                
+                                if (deepLinkMatch) {
+                                    window.location.href = deepLinkMatch[1];
+                                }
+                            }
+                            
+                            button.innerHTML = '✓ Success - Check LUPO';
+                            showToast('Switch to LUPO to continue', 'info');
+                        })
+                        .catch(err => {
+                            console.error('Auth completion failed:', err);
+                            button.innerHTML = '✓ Signed In';
+                        });
                     } else {
-                        // Redirect to dashboard or home
+                        // Normal web redirect
                         setTimeout(() => {
                             window.location.href = '/';
                         }, 1000);
