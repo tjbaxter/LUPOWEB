@@ -109,6 +109,7 @@
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 48px;
+            margin-top: 140px;
             position: relative;
             z-index: 10;
             opacity: 0;
@@ -805,6 +806,53 @@
         function isValidEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
+        
+        // Floating particles effect (from index.html)
+        function createParticle(initialY = null) {
+            const particle = document.createElement('div');
+            const size = Math.random() * 8 + 4;
+            particle.style.cssText = `
+                position: fixed;
+                width: ${size}px;
+                height: ${size}px;
+                background: #2997ff;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+                opacity: ${Math.random() * 0.6 + 0.3};
+                box-shadow: 0 0 10px rgba(41, 151, 255, 0.5);
+            `;
+            
+            const startX = Math.random() * window.innerWidth;
+            const startY = initialY !== null ? initialY : window.innerHeight - 10;
+            
+            particle.style.left = startX + 'px';
+            particle.style.top = startY + 'px';
+            
+            document.body.appendChild(particle);
+            
+            const duration = Math.random() * 15000 + 8000;
+            const horizontalMovement = (Math.random() - 0.5) * 100;
+            
+            particle.animate([
+                { transform: `translate(0, 0)`, opacity: particle.style.opacity },
+                { transform: `translate(${horizontalMovement}px, -${window.innerHeight + 20}px)`, opacity: particle.style.opacity },
+                { transform: `translate(${horizontalMovement * 2}px, -${window.innerHeight * 2}px)`, opacity: 0 }
+            ], {
+                duration: duration,
+                easing: 'linear'
+            }).onfinish = () => particle.remove();
+        }
+        
+        // Create initial particles at various heights for immediate effect
+        for (let i = 0; i < 10; i++) {
+            setTimeout(() => {
+                createParticle(Math.random() * window.innerHeight);
+            }, i * 100);
+        }
+        
+        // Start continuous particle animation
+        setInterval(createParticle, 300);
     </script>
 </body>
 </html>
