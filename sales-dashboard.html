@@ -531,35 +531,118 @@
     </div>
     
     <script>
+        // Global session management
+        let sessionToken = null;
         let currentCall = null;
         let calls = [];
-        let callsWithTranscripts = new Map(); // Store full data for each call
+        let callsWithTranscripts = new Map();
         let currentFilter = 'all';
         let currentSearchQuery = '';
         
-        // Initialize
-        async function init() {
-            await loadUserInfo();
-            await loadCalls();
-            setupEventListeners();
-        }
-        
-        // Auth headers
+        // Enhanced auth headers with proper token management
         function getAuthHeaders() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const token = urlParams.get('token') || localStorage.getItem('lupo_session');
-            const apiKey = urlParams.get('key');
-            
             const headers = {};
-            if (token) {
-                headers['Authorization'] = `Bearer ${token}`;
-            } else if (apiKey) {
-                headers['X-API-Key'] = apiKey;
+            if (sessionToken) {
+                headers['Authorization'] = `Bearer ${sessionToken}`;
             }
             return headers;
         }
         
-        // Load user info
+        // Secure token exchange function
+        async function exchangeTokenForSession() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const exchangeToken = urlParams.get('auth');
+            
+            // CRITICAL: If exchange token provided, ALWAYS use it and clear old sessions
+            if (exchangeToken) {
+                console.log('🔐 New authentication detected - clearing old session');
+                
+                // SECURITY: Clear ALL old session data immediately
+                localStorage.removeItem('lupo_session');
+                localStorage.removeItem('lupo_manager_token');
+                localStorage.removeItem('lupo_manager_expiry');
+                sessionStorage.clear();
+                sessionToken = null;
+                
+                try {
+                    console.log('Exchanging one-time token for session...');
+                    
+                    const response = await fetch('https://lupo-backend.fly.dev/auth/exchange', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ exchangeToken })
+                    });
+                    
+                    if (!response.ok) {
+                        const error = await response.json();
+                        console.error('Exchange failed:', error);
+                        return false;
+                    }
+                    
+                    const data = await response.json();
+                    sessionToken = data.token;
+                    
+                    // Store NEW session for persistence
+                    localStorage.setItem('lupo_session', sessionToken);
+                    
+                    // Clean URL to remove token
+                    window.history.replaceState({}, document.title, '/sales-dashboard.html');
+                    
+                    console.log('✅ Authentication successful for NEW session');
+                    return true;
+                    
+                } catch (error) {
+                    console.error('Token exchange error:', error);
+                    return false;
+                }
+            }
+            
+            // Only use stored session if NO exchange token was provided
+            sessionToken = localStorage.getItem('lupo_session');
+            if (sessionToken) {
+                console.log('Using existing stored session');
+                return true;
+            }
+            
+            console.log('No authentication found');
+            return false;
+        }
+        
+        // Initialize dashboard
+        async function init() {
+            try {
+                // Show loading state
+                document.getElementById('callsList').innerHTML = 
+                    '<div style="padding: 20px; text-align: center;"><div class="loading"></div></div>';
+                
+                // Authenticate first
+                const authenticated = await exchangeTokenForSession();
+                
+                if (!authenticated) {
+                    // Redirect to login if not authenticated
+                    console.log('Authentication failed - redirecting to login');
+                    window.location.href = '/login.html?redirect=sales-dashboard&from=app';
+                    return;
+                }
+                
+                // Load dashboard data
+                console.log('Loading dashboard data...');
+                await loadUserInfo();
+                await loadCalls();
+                setupEventListeners();
+                
+                console.log('Dashboard initialized successfully');
+                
+            } catch (error) {
+                console.error('Initialization error:', error);
+                
+                // Show error state
+                document.getElementById('callsList').innerHTML = 
+                    '<div style="padding: 20px; color: rgba(255,255,255,0.3); text-align: center;">Failed to load dashboard. Please refresh.</div>';
+            }
+        }
+        
+        // Load user information
         async function loadUserInfo() {
             try {
                 const headers = getAuthHeaders();
@@ -567,23 +650,35 @@
                     headers: headers
                 });
                 
-                if (response.ok) {
-                    const data = await response.json();
-                    const userName = document.getElementById('userName');
-                    const userAvatar = document.getElementById('userAvatar');
-                    
+                if (!response.ok) {
+                    throw new Error('Failed to load user info');
+                }
+                
+                const data = await response.json();
+                const userName = document.getElementById('userName');
+                const userAvatar = document.getElementById('userAvatar');
+                
+                if (userName && userAvatar) {
                     userName.textContent = data.user?.name || data.user?.email || 'User';
                     userAvatar.textContent = (data.user?.name || data.user?.email || 'U').charAt(0).toUpperCase();
                 }
+                
+                console.log('User info loaded:', data.user?.email);
+                
             } catch (err) {
                 console.error('Failed to load user info:', err);
             }
         }
         
-        // Load calls
+        // Load calls with proper authentication
         async function loadCalls(filter = 'all') {
             try {
                 const headers = getAuthHeaders();
+                
+                if (!headers.Authorization) {
+                    throw new Error('No authentication token available');
+                }
+                
                 let url = 'https://lupo-backend.fly.dev/sales/calls?limit=100';
                 
                 // Add date filters
@@ -601,15 +696,19 @@
                 
                 const response = await fetch(url, { headers });
                 
-                if (!response.ok) throw new Error('Failed to load calls');
+                if (!response.ok) {
+                    throw new Error(`Failed to load calls: ${response.status}`);
+                }
                 
                 const data = await response.json();
                 calls = data.calls || [];
                 
-                // Load transcripts for search functionality
-                await loadTranscriptsForSearch(calls.slice(0, 20)); // Load first 20 for performance
+                // Load transcripts for search
+                await loadTranscriptsForSearch(calls.slice(0, 20));
                 
                 renderCalls(calls);
+                
+                console.log(`Loaded ${calls.length} calls`);
                 
             } catch (err) {
                 console.error('Failed to load calls:', err);
@@ -979,8 +1078,10 @@
             });
         }
         
-        // Initialize
-        init();
+        // Start the application
+        document.addEventListener('DOMContentLoaded', () => {
+            init();
+        });
     </script>
 </body>
 </html>

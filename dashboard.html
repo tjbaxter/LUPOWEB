@@ -1358,26 +1358,110 @@ COMPLIANCE & BOUNDARIES:
             }, 3000);
         }
         
-        // Initialize
-        async function init() {
-            await loadUserInfo();
-            await loadCalls();
-            setupEventListeners();
-        }
+        // Global session management
+        let sessionToken = null;
         
-        // Auth headers
+        // Enhanced auth headers with proper token management
         function getAuthHeaders() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const token = urlParams.get('token') || localStorage.getItem('lupo_session');
-            const apiKey = urlParams.get('key');
-            
             const headers = {};
-            if (token) {
-                headers['Authorization'] = `Bearer ${token}`;
-            } else if (apiKey) {
-                headers['X-API-Key'] = apiKey;
+            if (sessionToken) {
+                headers['Authorization'] = `Bearer ${sessionToken}`;
             }
             return headers;
+        }
+        
+        // Secure token exchange function
+        async function exchangeTokenForSession() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const exchangeToken = urlParams.get('auth');
+            
+            // CRITICAL: If exchange token provided, ALWAYS use it and clear old sessions
+            if (exchangeToken) {
+                console.log('🔐 New authentication detected - clearing old session');
+                
+                // SECURITY: Clear ALL old session data immediately
+                localStorage.removeItem('lupo_session');
+                localStorage.removeItem('lupo_manager_token');
+                localStorage.removeItem('lupo_manager_expiry');
+                sessionStorage.clear();
+                sessionToken = null;
+                
+                try {
+                    console.log('Exchanging one-time token for session...');
+                    
+                    const response = await fetch('https://lupo-backend.fly.dev/auth/exchange', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ exchangeToken })
+                    });
+                    
+                    if (!response.ok) {
+                        const error = await response.json();
+                        console.error('Exchange failed:', error);
+                        return false;
+                    }
+                    
+                    const data = await response.json();
+                    sessionToken = data.token;
+                    
+                    // Store NEW session for persistence
+                    localStorage.setItem('lupo_session', sessionToken);
+                    
+                    // Clean URL to remove token
+                    window.history.replaceState({}, document.title, '/dashboard.html');
+                    
+                    console.log('✅ Authentication successful for NEW session');
+                    return true;
+                    
+                } catch (error) {
+                    console.error('Token exchange error:', error);
+                    return false;
+                }
+            }
+            
+            // Only use stored session if NO exchange token was provided
+            sessionToken = localStorage.getItem('lupo_session');
+            if (sessionToken) {
+                console.log('Using existing stored session');
+                return true;
+            }
+            
+            console.log('No authentication found');
+            return false;
+        }
+        
+        // Initialize dashboard
+        async function init() {
+            try {
+                // Show loading state
+                document.getElementById('callsList').innerHTML = 
+                    '<div style="padding: 20px; text-align: center;"><div class="loading"></div></div>';
+                
+                // Authenticate first
+                const authenticated = await exchangeTokenForSession();
+                
+                if (!authenticated) {
+                    // Redirect to login if not authenticated
+                    console.log('Authentication failed - redirecting to login');
+                    window.location.href = '/login.html?redirect=dashboard&from=app';
+                    return;
+                }
+                
+                // Load dashboard data
+                console.log('Loading dashboard data...');
+                await loadUserInfo();
+                await loadCalls();
+                setupEventListeners();
+                
+                console.log('Dashboard initialized successfully');
+                
+            } catch (error) {
+                console.error('Initialization error:', error);
+                
+                // Show error state
+                document.getElementById('callsList').innerHTML = 
+                    '<div style="padding: 20px; color: rgba(255,255,255,0.3); text-align: center;">Failed to load dashboard. Please refresh.</div>';
+            }
         }
         
         // Load user info
@@ -1966,8 +2050,10 @@ COMPLIANCE & BOUNDARIES:
             }
         }
         
-        // Initialize
-        init();
+        // Start the application
+        document.addEventListener('DOMContentLoaded', () => {
+            init();
+        });
     </script>
     
     <!-- Processing Overlay -->
