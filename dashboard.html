@@ -1136,27 +1136,16 @@ COMPLIANCE & BOUNDARIES:
 - [What not to promise]
 - [Discount limits]
 - [Legal boundaries]"></textarea>
-                                    <button class="btn" onclick="saveSalesContext()">Save Context</button>
+                                    <div style="display: flex; gap: 12px; margin-top: 16px;">
+                                        <button class="btn" onclick="saveSalesContext()">Save Context</button>
+                                        <button class="btn" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #ef4444;" 
+                                                onclick="clearSalesContext()">
+                                            Clear & Reset
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <!-- Interview Mode Card -->
-                            <div class="context-card">
-                                <div class="card-header">
-                                    <div class="card-title">
-                                        <h3>Interview Assistant</h3>
-                                        <p>Upload your CV for AI-powered interview coaching</p>
-                                    </div>
-                                </div>
-                                <div class="card-content">
-                                    <div class="upload-area" id="uploadArea" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
-                                        <div class="upload-text">Drop CV here or click to upload</div>
-                                        <div class="upload-hint">Supports PDF, DOC, DOCX formats</div>
-                                        <input type="file" id="fileInput" accept=".pdf,.doc,.docx" style="display: none;" onchange="handleFileSelect(event)">
-                                    </div>
-                                    <button class="btn" onclick="document.getElementById('fileInput').click()">Choose File</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -1255,11 +1244,43 @@ COMPLIANCE & BOUNDARIES:
                     const data = await response.json();
                     if (data.content) {
                         document.getElementById('salesContext').value = data.content;
+                    } else {
+                        // Show helpful template for new users
+                        document.getElementById('salesContext').placeholder = `COMPANY OVERVIEW
+[Your company name] provides [product/service description]
+
+PRICING STRUCTURE
+- Free tier: [details]
+- Pro tier: $X/month
+- Enterprise: Custom pricing
+
+KEY CAPABILITIES
+- [Feature 1 and benefit]
+- [Feature 2 and benefit]
+- [Feature 3 and benefit]
+
+OBJECTION HANDLING
+Price concerns → "Let me show you the ROI..."
+Timing issues → "When would be better to revisit?"
+Competition → "Here's what makes us different..."
+
+BOUNDARIES
+- Never promise features not yet available
+- Maximum discount: X%
+- Compliance requirements: [list any]`;
                     }
                 }
             } catch (err) {
                 console.error('Failed to load context:', err);
             }
+        }
+        
+        // Clear and reset sales context
+        async function clearSalesContext() {
+            if (!confirm('This will clear all sales context. Are you sure?')) return;
+            
+            document.getElementById('salesContext').value = '';
+            await saveSalesContext();
         }
         
         // Save sales context
@@ -1272,11 +1293,23 @@ COMPLIANCE & BOUNDARIES:
                 const response = await fetch('https://lupo-backend.fly.dev/sales/context', {
                     method: 'POST',
                     headers: headers,
-                    body: JSON.stringify({ content })
+                    body: JSON.stringify({ 
+                        content: content || '',  // Ensure empty string is sent, not null
+                        forbiddenPhrases: []
+                    })
                 });
                 
                 if (response.ok) {
-                    showNotification('Context saved successfully');
+                    const message = content.trim() ? 'Context saved successfully' : 'Context cleared successfully';
+                    showNotification(message);
+                } else {
+                    const error = await response.json();
+                    // If backend rejects empty content, show specific message
+                    if (!content.trim() && error.error && error.error.includes('required')) {
+                        showNotification('Note: Backend currently requires content. Update backend to allow empty saves.', 'error');
+                    } else {
+                        showNotification(error.error || 'Failed to save context', 'error');
+                    }
                 }
             } catch (err) {
                 console.error('Failed to save context:', err);
@@ -2015,9 +2048,35 @@ COMPLIANCE & BOUNDARIES:
                 await new Promise(r => setTimeout(r, 1000));
                 
                 if (data.context) {
+                    // Update the textarea
                     document.getElementById('salesContext').value = data.context;
-                    showNotification('Sales context generated successfully! Review and save.');
-                    urlInput.value = ''; // Clear the input
+                    
+                    // AUTO-SAVE: The backend already saved it, just confirm to user
+                    showNotification('✓ Sales context generated and saved automatically!');
+                    urlInput.value = ''; // Clear input
+                    
+                    // Visually indicate it's saved
+                    const saveBtn = document.querySelector('.btn[onclick="saveSalesContext()"]');
+                    if (saveBtn) {
+                        const originalText = saveBtn.textContent;
+                        const originalStyle = {
+                            background: saveBtn.style.background,
+                            borderColor: saveBtn.style.borderColor,
+                            color: saveBtn.style.color
+                        };
+                        
+                        saveBtn.textContent = '✓ Auto-Saved';
+                        saveBtn.style.background = 'rgba(34, 197, 94, 0.2)';
+                        saveBtn.style.borderColor = '#22c55e';
+                        saveBtn.style.color = '#22c55e';
+                        
+                        setTimeout(() => {
+                            saveBtn.textContent = originalText;
+                            saveBtn.style.background = originalStyle.background;
+                            saveBtn.style.borderColor = originalStyle.borderColor;
+                            saveBtn.style.color = originalStyle.color;
+                        }, 3000);
+                    }
                 } else {
                     throw new Error('No content extracted');
                 }
