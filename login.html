@@ -12,34 +12,23 @@
         }
         
         :root {
-            --text-primary: #1d1d1f;
-            --text-secondary: #86868b;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f5f5f7;
+            --text-primary: #ffffff;
+            --text-secondary: #8a8a8e;
+            --bg-primary: #000000;
+            --bg-secondary: rgba(22, 22, 23, 0.98);
             --accent: #0071e3;
-            --border: rgba(0, 0, 0, 0.08);
-            --success: #34c759;
-            --error: #ff3b30;
-        }
-        
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --text-primary: #f5f5f7;
-                --text-secondary: #a1a1a6;
-                --bg-primary: #000000;
-                --bg-secondary: #161617;
-                --accent: #2997ff;
-                --border: rgba(255, 255, 255, 0.08);
-                --success: #32d74b;
-                --error: #ff453a;
-            }
+            --accent-hover: #0077ed;
+            --border: rgba(255, 255, 255, 0.06);
+            --border-focus: rgba(255, 255, 255, 0.12);
+            --success: #10b981;
+            --error: #ef4444;
         }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
-            line-height: 1.47059;
+            line-height: 1.5;
             font-weight: 400;
             letter-spacing: -0.022em;
             min-height: 100vh;
@@ -49,84 +38,139 @@
             padding: 20px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Subtle gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 113, 227, 0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(0, 113, 227, 0.04) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Animated gradient orb */
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(-30px, -10px) scale(1.02); }
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle at center, rgba(41, 151, 255, 0.08) 0%, transparent 70%);
+            filter: blur(60px);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
         }
         
         /* Logo */
         .logo-link {
             position: absolute;
-            top: 32px;
+            top: 30px;
             left: 50%;
             transform: translateX(-50%);
             text-decoration: none;
-            color: var(--text-primary);
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: 0.2px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             transition: opacity 0.3s ease;
+            z-index: 10;
         }
         
         .logo-link:hover {
             opacity: 0.8;
         }
         
+        .logo-text {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+        
         /* Container */
         .login-container {
             width: 100%;
-            max-width: 380px;
-            animation: fadeInUp 0.8s ease;
+            max-width: 600px;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px 48px;
+            margin-top: 100px;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
         }
         
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
         
         /* Header */
         .login-header {
             text-align: center;
-            margin-bottom: 48px;
+            margin-bottom: 32px;
         }
         
         .login-header h1 {
-            font-size: 40px;
+            font-size: 36px;
             font-weight: 700;
-            line-height: 1.07143;
-            letter-spacing: -0.005em;
-            margin-bottom: 12px;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
         }
         
         .login-header p {
-            font-size: 21px;
+            font-size: 16px;
             color: var(--text-secondary);
             font-weight: 400;
+            letter-spacing: -0.01em;
         }
         
         /* Form */
+        .form-section {
+            margin-top: 28px;
+        }
+        
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 22px;
         }
         
         .form-label {
             display: block;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
-            margin-bottom: 8px;
-            color: var(--text-primary);
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+            letter-spacing: -0.01em;
         }
         
         .form-input {
             width: 100%;
-            background: var(--bg-secondary);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px;
-            font-size: 17px;
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-size: 16px;
             font-family: inherit;
             color: var(--text-primary);
             transition: all 0.2s ease;
@@ -135,8 +179,8 @@
         
         .form-input:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+            border-color: var(--border-focus);
+            background: rgba(255, 255, 255, 0.03);
         }
         
         .form-input.error {
@@ -144,7 +188,7 @@
         }
         
         .error-message {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--error);
             margin-top: 6px;
             display: none;
@@ -156,19 +200,20 @@
         
         .forgot-password {
             text-align: right;
-            margin-top: -16px;
+            margin-top: -18px;
             margin-bottom: 24px;
         }
         
         .forgot-password a {
             color: var(--accent);
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
             transition: opacity 0.2s ease;
+            letter-spacing: -0.01em;
         }
         
         .forgot-password a:hover {
-            opacity: 0.8;
+            opacity: 0.7;
         }
         
         /* Buttons */
@@ -177,66 +222,77 @@
             background: var(--accent);
             color: white;
             border: none;
-            padding: 18px;
-            border-radius: 12px;
-            font-size: 17px;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
+            letter-spacing: -0.01em;
+            margin-top: 8px;
         }
         
-        .form-button:hover {
-            opacity: 0.9;
-            transform: scale(1.01);
+        .form-button:hover:not(:disabled) {
+            background: var(--accent-hover);
         }
         
-        .form-button:active {
-            transform: scale(0.99);
+        .form-button:active:not(:disabled) {
+            transform: scale(0.98);
         }
         
         .form-button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
         }
         
         /* Social Auth Buttons */
+        .social-auth {
+            margin-bottom: 24px;
+            display: flex;
+            gap: 12px;
+        }
+        
         .social-button {
-            width: 100%;
-            padding: 16px;
-            margin-bottom: 12px;
-            border-radius: 12px;
+            flex: 1;
+            padding: 14px;
+            border-radius: 8px;
             border: 1px solid var(--border);
-            background: var(--bg-primary);
+            background: transparent;
             color: var(--text-primary);
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
         }
         
         .social-button:hover {
-            background: var(--bg-secondary);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            border-color: var(--border-focus);
         }
         
         .social-icon {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         /* Divider */
         .divider {
             display: flex;
             align-items: center;
-            margin: 32px 0;
+            margin: 24px 0 20px;
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 12px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
         }
         
         .divider::before,
@@ -249,31 +305,34 @@
         
         .divider span {
             padding: 0 16px;
+            font-weight: 500;
         }
         
         /* Footer */
         .login-footer {
             text-align: center;
-            margin-top: 32px;
-            font-size: 15px;
+            margin-top: 24px;
+            padding-top: 18px;
+            font-size: 14px;
             color: var(--text-secondary);
+            border-top: 1px solid var(--border);
         }
         
         .login-footer a {
-            color: var(--accent);
+            color: var(--text-primary);
             text-decoration: none;
             transition: opacity 0.2s ease;
         }
         
         .login-footer a:hover {
-            opacity: 0.8;
+            opacity: 0.7;
         }
         
         /* Loading State */
         .loading-spinner {
             display: inline-block;
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             border: 2px solid white;
             border-top-color: transparent;
             border-radius: 50%;
@@ -292,12 +351,13 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            padding: 12px 24px;
+            padding: 14px 24px;
             border-radius: 8px;
             font-size: 15px;
             transition: transform 0.3s ease;
             z-index: 10000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
         }
         
         .toast.show {
@@ -305,33 +365,69 @@
         }
         
         .toast.success {
-            background: var(--success);
+            background: rgba(16, 185, 129, 0.9);
             color: white;
         }
         
         .toast.error {
-            background: var(--error);
+            background: rgba(239, 68, 68, 0.9);
             color: white;
         }
         
         .toast.info {
-            background: var(--accent);
+            background: rgba(0, 113, 227, 0.9);
             color: white;
         }
         
+        /* Mobile Optimization */
         @media (max-width: 480px) {
-            .login-header h1 {
+            .login-container {
+                padding: 32px 24px;
+                margin-top: 100px;
+            }
+            
+            .logo-link {
+                top: 24px;
+            }
+            
+            .logo-text {
                 font-size: 36px;
             }
             
+            .login-header h1 {
+                font-size: 32px;
+            }
+            
             .login-header p {
-                font-size: 18px;
+                font-size: 16px;
+            }
+            
+            .social-auth {
+                flex-direction: column;
+            }
+        }
+        
+        /* Floating particles effect */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0;
             }
         }
     </style>
 </head>
 <body>
-    <a href="/" class="logo-link">LUPO</a>
+    <a href="/" class="logo-link">
+        <img src="/LUPO_LOGO copy 1.png" alt="LUPO" style="height: 60px; width: auto;">
+        <span class="logo-text">LUPO</span>
+    </a>
     
     <div class="login-container">
         <div class="login-header">
@@ -339,14 +435,38 @@
             <p>Sign in to continue</p>
         </div>
         
-        <form id="loginForm" onsubmit="handleLogin(event)">
+        <!-- Social Auth Options -->
+        <div class="social-auth">
+            <button class="social-button" onclick="signInWithGoogle()">
+                <svg class="social-icon" viewBox="0 0 20 20" fill="none">
+                    <path d="M19.8 10.2273C19.8 9.51818 19.7364 8.83636 19.6182 8.18182H10.2V12.05H15.6109C15.3927 13.3 14.6564 14.3591 13.5491 15.0682V17.5773H16.8182C18.7164 15.8364 19.8 13.2727 19.8 10.2273Z" fill="#4285F4"/>
+                    <path d="M10.2 20C12.9 20 15.1727 19.1045 16.8182 17.5773L13.5491 15.0682C12.6091 15.6682 11.4227 16.0227 10.2 16.0227C7.59545 16.0227 5.38636 14.2636 4.58636 11.9H1.22727V14.4909C2.88182 17.7591 6.30909 20 10.2 20Z" fill="#34A853"/>
+                    <path d="M4.58636 11.9C4.38636 11.3 4.27273 10.6636 4.27273 10C4.27273 9.33636 4.38636 8.7 4.58636 8.1V5.50909H1.22727C0.545455 6.85909 0.2 8.38636 0.2 10C0.2 11.6136 0.545455 13.1409 1.22727 14.4909L4.58636 11.9Z" fill="#FBBC05"/>
+                    <path d="M10.2 3.97727C11.5455 3.97727 12.7455 4.42727 13.6955 5.30909L16.8909 2.11364C15.1682 0.5 12.8955 0 10.2 0C6.30909 0 2.88182 2.24091 1.22727 5.50909L4.58636 8.1C5.38636 5.73636 7.59545 3.97727 10.2 3.97727Z" fill="#EA4335"/>
+                </svg>
+                Continue with Google
+            </button>
+            
+            <button class="social-button" onclick="signInWithGitHub()">
+                <svg class="social-icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0110 4.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.137 18.17 20 14.42 20 10c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/>
+                </svg>
+                Continue with GitHub
+            </button>
+        </div>
+        
+        <div class="divider">
+            <span>or</span>
+        </div>
+        
+        <form id="loginForm" onsubmit="handleLogin(event)" class="form-section">
             <div class="form-group">
-                <label class="form-label" for="email">Email address</label>
+                <label class="form-label" for="email">Email</label>
                 <input 
                     type="email" 
                     id="email" 
                     class="form-input" 
-                    placeholder="name@example.com"
+                    placeholder="you@company.com"
                     required
                     autocomplete="email"
                 >
@@ -375,30 +495,6 @@
                 Sign In
             </button>
         </form>
-        
-        <div class="divider">
-            <span>or</span>
-        </div>
-        
-        <!-- Social Auth Options -->
-        <div class="social-auth">
-            <button class="social-button" onclick="signInWithGoogle()">
-                <svg class="social-icon" viewBox="0 0 20 20" fill="none">
-                    <path d="M19.8 10.2273C19.8 9.51818 19.7364 8.83636 19.6182 8.18182H10.2V12.05H15.6109C15.3927 13.3 14.6564 14.3591 13.5491 15.0682V17.5773H16.8182C18.7164 15.8364 19.8 13.2727 19.8 10.2273Z" fill="#4285F4"/>
-                    <path d="M10.2 20C12.9 20 15.1727 19.1045 16.8182 17.5773L13.5491 15.0682C12.6091 15.6682 11.4227 16.0227 10.2 16.0227C7.59545 16.0227 5.38636 14.2636 4.58636 11.9H1.22727V14.4909C2.88182 17.7591 6.30909 20 10.2 20Z" fill="#34A853"/>
-                    <path d="M4.58636 11.9C4.38636 11.3 4.27273 10.6636 4.27273 10C4.27273 9.33636 4.38636 8.7 4.58636 8.1V5.50909H1.22727C0.545455 6.85909 0.2 8.38636 0.2 10C0.2 11.6136 0.545455 13.1409 1.22727 14.4909L4.58636 11.9Z" fill="#FBBC05"/>
-                    <path d="M10.2 3.97727C11.5455 3.97727 12.7455 4.42727 13.6955 5.30909L16.8909 2.11364C15.1682 0.5 12.8955 0 10.2 0C6.30909 0 2.88182 2.24091 1.22727 5.50909L4.58636 8.1C5.38636 5.73636 7.59545 3.97727 10.2 3.97727Z" fill="#EA4335"/>
-                </svg>
-                Continue with Google
-            </button>
-            
-            <button class="social-button" onclick="signInWithGitHub()">
-                <svg class="social-icon" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0110 4.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.137 18.17 20 14.42 20 10c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/>
-                </svg>
-                Continue with GitHub
-            </button>
-        </div>
         
         <div class="login-footer">
             Don't have an account? <a href="/signup.html">Sign up</a>
@@ -476,23 +572,15 @@
                         button.innerHTML = '✓ Signed In';
                         button.disabled = true;
                         
-                        // Update the form to show success
-                        const formContainer = document.querySelector('.form-container');
-                        if (formContainer) {
-                            formContainer.innerHTML = `
-                                <div style="text-align: center; padding: 40px 20px;">
-                                    <div style="font-size: 64px; margin-bottom: 20px;">✓</div>
-                                    <h2>Login Successful!</h2>
+                        // Update the container to show success
+                        const loginContainer = document.querySelector('.login-container');
+                        if (loginContainer) {
+                            loginContainer.innerHTML = `
+                                <div style="text-align: center; padding: 60px 20px;">
+                                    <div style="width: 64px; height: 64px; border: 2px solid #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 28px; color: #10b981;">✓</div>
+                                    <h1 style="font-size: 32px; font-weight: 600; margin-bottom: 8px;">Login Successful!</h1>
                                     <p style="color: var(--text-secondary); margin-top: 16px;">
-                                        LUPO is connecting to your account...
-                                    </p>
-                                    <div style="margin-top: 20px; padding: 15px; background: rgba(52, 199, 89, 0.1); border-radius: 8px;">
-                                        <p style="color: #34c759; margin: 0;">
-                                            ✓ LUPO will update automatically in a few seconds
-                                        </p>
-                                    </div>
-                                    <p style="margin-top: 24px; font-size: 14px; color: var(--text-secondary);">
-                                        You can close this window.
+                                        LUPO is updating. You can close this window.
                                     </p>
                                 </div>
                             `;
@@ -584,6 +672,52 @@
             }
         });
         
+        // Floating particles effect
+        function createParticle(initialY = null) {
+            const particle = document.createElement('div');
+            const size = Math.random() * 8 + 4;
+            particle.style.cssText = `
+                position: fixed;
+                width: ${size}px;
+                height: ${size}px;
+                background: #0071e3;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+                opacity: ${Math.random() * 0.6 + 0.3};
+                box-shadow: 0 0 10px rgba(0, 113, 227, 0.5);
+            `;
+            
+            const startX = Math.random() * window.innerWidth;
+            const startY = initialY !== null ? initialY : window.innerHeight - 10;
+            
+            particle.style.left = startX + 'px';
+            particle.style.top = startY + 'px';
+            
+            document.body.appendChild(particle);
+            
+            const duration = Math.random() * 15000 + 8000;
+            const horizontalMovement = (Math.random() - 0.5) * 100;
+            
+            particle.animate([
+                { transform: `translate(0, 0)`, opacity: particle.style.opacity },
+                { transform: `translate(${horizontalMovement}px, -${window.innerHeight + 20}px)`, opacity: particle.style.opacity },
+                { transform: `translate(${horizontalMovement * 2}px, -${window.innerHeight * 2}px)`, opacity: 0 }
+            ], {
+                duration: duration,
+                easing: 'linear'
+            }).onfinish = () => particle.remove();
+        }
+        
+        // Create initial particles at various heights for immediate effect
+        for (let i = 0; i < 10; i++) {
+            setTimeout(() => {
+                createParticle(Math.random() * window.innerHeight);
+            }, i * 100);
+        }
+        
+        // Start continuous particle animation
+        setInterval(createParticle, 300);
     </script>
 </body>
 </html>
