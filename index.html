@@ -23,7 +23,7 @@
             --accent-hover: #409cff;
             --border: rgba(255, 255, 255, 0.08);
             --success: #34c759;
-            --danger: #ff3b30;
+            --subtle-blue: #5090ff;
             --warning: #f59e0b;
             --gradient-sales: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
@@ -282,7 +282,7 @@
             border-radius: 24px;
             border: 1px solid var(--border);
             position: relative;
-            min-height: 500px;
+            min-height: 600px;
         }
         
         /* Call Context Header */
@@ -297,25 +297,25 @@
             align-items: center;
             gap: 8px;
             padding: 6px 14px;
-            background: rgba(255, 59, 48, 0.1);
+            background: rgba(102, 126, 234, 0.1);
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
-            color: var(--danger);
+            color: var(--subtle-blue);
             margin-bottom: 20px;
         }
         
         .live-dot {
             width: 8px;
             height: 8px;
-            background: var(--danger);
+            background: var(--subtle-blue);
             border-radius: 50%;
             animation: livePulse 1.5s ease-in-out infinite;
         }
         
         @keyframes livePulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4); }
-            50% { box-shadow: 0 0 0 6px rgba(255, 59, 48, 0); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(80, 144, 255, 0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(80, 144, 255, 0); }
         }
         
         .call-timer {
@@ -331,8 +331,8 @@
             padding: 20px;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 12px;
-            border-left: 3px solid var(--danger);
-            min-height: 80px;
+            border-left: 3px solid var(--subtle-blue);
+            min-height: 100px;
             text-align: left;
             margin-bottom: 30px;
             position: relative;
@@ -345,7 +345,7 @@
             background: var(--bg-primary);
             padding: 0 8px;
             font-size: 11px;
-            color: var(--danger);
+            color: var(--subtle-blue);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -379,6 +379,7 @@
             max-width: 900px;
             margin: 0 auto;
             align-items: start;
+            min-height: 400px;
         }
         
         @media (max-width: 768px) {
@@ -412,6 +413,7 @@
                 inset 0 1px 1px rgba(255, 255, 255, 0.1);
             opacity: 0;
             animation: slideInLeft 0.6s ease 0.5s forwards;
+            min-height: 380px;
         }
         
         @keyframes slideInLeft {
@@ -558,7 +560,7 @@
         
         .answer-area {
             padding: 0 16px 16px;
-            max-height: 320px;
+            max-height: 240px;
             overflow-y: auto;
             display: none;
         }
@@ -638,6 +640,7 @@
                 inset 0 1px 1px rgba(255, 255, 255, 0.05);
             opacity: 0;
             animation: slideInRight 0.6s ease 0.7s forwards;
+            min-height: 380px;
         }
         
         @keyframes slideInRight {
@@ -674,7 +677,7 @@
         
         .insights-container {
             padding: 12px;
-            max-height: 400px;
+            max-height: 320px;
             overflow-y: auto;
         }
         
@@ -708,7 +711,7 @@
         }
         
         .insight-bubble.objection {
-            border-left: 3px solid #ef4444;
+            border-left: 3px solid #f59e0b;
         }
         
         .insight-bubble.buying-signal {
@@ -716,11 +719,11 @@
         }
         
         .insight-bubble.competitor {
-            border-left: 3px solid #f59e0b;
+            border-left: 3px solid #8b5cf6;
         }
         
         .insight-bubble.compliance {
-            border-left: 3px solid #8b5cf6;
+            border-left: 3px solid #3b82f6;
         }
         
         .insight-type {
@@ -806,6 +809,14 @@
             .preview-grid {
                 grid-template-columns: 1fr;
             }
+            
+            h1 {
+                font-size: 48px;
+            }
+            
+            .subtitle {
+                font-size: 20px;
+            }
         }
         
         .preview-card {
@@ -864,7 +875,7 @@
             line-height: 1.5;
         }
         
-        /* Sandbox Demo Button */
+        /* Sandbox Section */
         .sandbox-section {
             text-align: center;
             margin: 60px 0;
@@ -890,17 +901,6 @@
         @keyframes shimmerPass {
             0% { left: -100%; }
             100% { left: 100%; }
-        }
-        
-        @keyframes subtlePulse {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 0 2px 8px rgba(41, 151, 255, 0.1);
-            }
-            50% { 
-                transform: scale(1.02);
-                box-shadow: 0 4px 12px rgba(41, 151, 255, 0.2);
-            }
         }
         
         /* Pilot CTA */
@@ -1013,10 +1013,18 @@
                 <div class="download-buttons">
                     <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-2.6.0-arm64.dmg" 
                        class="download-btn primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+                            <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+                        </svg>
                         Download for Mac
                     </a>
                     <a href="https://github.com/LUPOLABS/lupo-releases/releases/download/v2.6.0/LUPO.Setup.2.6.0.exe"
                        class="download-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="12" y1="3" x2="12" y2="21"></line>
+                        </svg>
                         Download for Windows
                     </a>
                 </div>
@@ -1449,7 +1457,7 @@
                 border-radius: 50%;
                 pointer-events: none;
                 z-index: 0;
-                opacity: ${Math.random() * 0.5 + 0.1};
+                opacity: ${Math.random() * 0.3 + 0.05};
             `;
             
             const startX = Math.random() * window.innerWidth;
@@ -1474,614 +1482,7 @@
         }
         
         // Start particle animation
-        setInterval(createParticle, 500);
-    </script>
-    
-    <!-- LUPO Installation Modal -->
-    <style>
-        /* Modal Overlay */
-        .install-modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(8px) saturate(180%);
-            -webkit-backdrop-filter: blur(8px) saturate(180%);
-            z-index: 10000;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .install-modal-overlay.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Modal Container */
-        .install-modal {
-            background: linear-gradient(135deg, #1a1a1e 0%, #2d2d30 100%);
-            border-radius: 24px;
-            width: 90%;
-            max-width: 900px;
-            max-height: 90vh;
-            overflow: hidden;
-            position: relative;
-            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        @keyframes slideUp {
-            from {
-                transform: translateY(30px) scale(0.95);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-        }
-        
-        /* Modal Close Button */
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            z-index: 10;
-        }
-        
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: rotate(90deg);
-        }
-        
-        .modal-close svg {
-            width: 20px;
-            height: 20px;
-            stroke: rgba(255, 255, 255, 0.8);
-        }
-        
-        /* Modal Content */
-        .modal-content {
-            padding: 40px 40px 30px;
-        }
-        
-        /* Modal Header */
-        .modal-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .download-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-        
-        .download-badge svg {
-            width: 16px;
-            height: 16px;
-        }
-        
-        .modal-title {
-            font-size: 32px;
-            font-weight: 700;
-            color: #ffffff;
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Steps Container */
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-        
-        @media (max-width: 768px) {
-            .steps-container {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* Step Card */
-        .step-card {
-            position: relative;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-        }
-        
-        .step-number {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width: 28px;
-            height: 28px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 14px;
-            z-index: 20;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
-        }
-        
-        .step-visual {
-            height: 200px;
-            background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* Step 1 Visual - Mac Dock */
-        .downloads-visual {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding-bottom: 20px;
-        }
-        
-        .mac-dock {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 18px;
-            padding: 8px;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .dock-item {
-            width: 48px;
-            height: 48px;
-            transition: transform 0.2s ease;
-            position: relative;
-        }
-        
-        .dock-item:hover {
-            transform: scale(1.2) translateY(-8px);
-        }
-        
-        .dock-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        
-        .cursor-pointer {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            bottom: 35px;
-            left: calc(50% + 20px);
-            pointer-events: none;
-            animation: cursorHint 2s ease-in-out infinite;
-        }
-        
-        @keyframes cursorHint {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-3px, -3px); }
-        }
-        
-        .folder-icon, .trash-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease;
-        }
-        
-        .dmg-icon {
-            cursor: pointer;
-            position: relative;
-            animation: subtle-pulse 2s ease-in-out infinite;
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        @keyframes subtle-pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        .dmg-icon::after {
-            content: 'LUPO.dmg';
-            position: absolute;
-            bottom: -18px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 9px;
-            color: rgba(255, 255, 255, 0.8);
-            white-space: nowrap;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        
-        /* Step 2 Visual - Drag Animation */
-        .drag-visual {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .lupo-draggable {
-            position: absolute;
-            width: 64px;
-            height: 64px;
-            left: 20%;
-            top: 50%;
-            transform: translateY(-50%);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: grab;
-            animation: dragHint 3s ease-in-out infinite;
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
-            padding: 8px;
-        }
-        
-        @keyframes dragHint {
-            0%, 100% { transform: translateY(-50%) translateX(0); }
-            50% { transform: translateY(-50%) translateX(120px); }
-        }
-        
-        .applications-folder {
-            position: absolute;
-            right: 20%;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 64px;
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .drag-arrow {
-            position: absolute;
-            left: calc(20% + 60px);
-            right: calc(20% + 70px);
-            top: 50%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        }
-        
-        .drag-arrow::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: -4px;
-            width: 0;
-            height: 0;
-            border-left: 8px solid rgba(255, 255, 255, 0.3);
-            border-top: 5px solid transparent;
-            border-bottom: 5px solid transparent;
-        }
-        
-        /* Step 3 Visual - Applications List */
-        .apps-visual {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            padding: 20px;
-        }
-        
-        .apps-header {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 16px;
-            font-weight: 500;
-        }
-        
-        .app-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            margin-bottom: 4px;
-            transition: all 0.2s ease;
-        }
-        
-        .app-item.highlighted {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
-            transform: translateX(4px);
-        }
-        
-        .app-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-        
-        .app-name {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 13px;
-        }
-        
-        /* Step Description */
-        .step-description {
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .step-action {
-            font-size: 15px;
-            color: #ffffff;
-            margin-bottom: 4px;
-        }
-        
-        .step-action strong {
-            color: #667eea;
-            font-weight: 600;
-        }
-        
-        .step-location {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.6);
-        }
-        
-        /* Modal Footer */
-        .modal-footer {
-            padding: 20px 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(0, 0, 0, 0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .footer-text {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .download-again-link {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.2s ease;
-        }
-        
-        .download-again-link:hover {
-            opacity: 0.8;
-        }
-        
-        /* Icon styles */
-        .icon-logo {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .icon-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-    </style>
-    
-    <!-- Installation Modal HTML -->
-    <div id="installModal" class="install-modal-overlay">
-        <div class="install-modal">
-            <!-- Close Button -->
-            <button class="modal-close" onclick="closeInstallModal()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 6L6 18M6 6l12 12"/>
-                </svg>
-            </button>
-            
-            <!-- Modal Content -->
-            <div class="modal-content">
-                <!-- Header -->
-                <div class="modal-header">
-                    <div class="download-badge">
-                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
-                            <path d="M3 8l3 3L13 4" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        Downloaded
-                    </div>
-                    <h1 class="modal-title">How to install LUPO</h1>
-                </div>
-                
-                <!-- Steps -->
-                <div class="steps-container">
-                    <!-- Step 1 -->
-                    <div class="step-card">
-                        <div class="step-number">1</div>
-                        <div class="step-visual">
-                            <div class="downloads-visual">
-                                <div class="mac-dock">
-                                    <div class="dock-item">
-                                        <img src="applications-folder.png" alt="Applications" />
-                                    </div>
-                                    <div class="dock-item dmg-icon">
-                                        <img src="dmg-icon.png" alt="LUPO DMG" />
-                                    </div>
-                                    <div class="dock-item">
-                                        <div style="width: 48px; height: 48px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🗑️</div>
-                                    </div>
-                                </div>
-                                <img class="cursor-pointer" src="cursor-arrow.png" alt="cursor" />
-                            </div>
-                        </div>
-                        <div class="step-description">
-                            <div class="step-action">Open <strong>LUPO.dmg</strong> from your</div>
-                            <div class="step-location">Downloads folder</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 2 -->
-                    <div class="step-card">
-                        <div class="step-number">2</div>
-                        <div class="step-visual">
-                            <div class="drag-visual">
-                                <div class="lupo-draggable">
-                                    <div class="icon-logo">
-                                        <img src="lupo-icon.ico" alt="LUPO" />
-                                    </div>
-                                </div>
-                                <div class="drag-arrow"></div>
-                                <div class="applications-folder">
-                                    <img src="applications-folder.png" alt="Applications" style="width: 100%; height: 100%; object-fit: contain;" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="step-description">
-                            <div class="step-action">Drag the <strong>LUPO icon</strong> into your</div>
-                            <div class="step-location">Applications folder</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 3 -->
-                    <div class="step-card">
-                        <div class="step-number">3</div>
-                        <div class="step-visual">
-                            <div class="apps-visual">
-                                <div class="apps-header">Applications</div>
-                                <div class="app-item">
-                                    <div class="app-icon">🕐</div>
-                                    <div class="app-name">Clock</div>
-                                </div>
-                                <div class="app-item highlighted">
-                                    <div class="app-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2px; overflow: hidden; width: 32px; height: 32px;">
-                                        <img src="lupo-icon.ico" alt="LUPO" style="width: 100%; height: 100%; object-fit: contain;" />
-                                    </div>
-                                    <div class="app-name">LUPO</div>
-                                </div>
-                                <div class="app-item">
-                                    <div class="app-icon">📇</div>
-                                    <div class="app-name">Contacts</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="step-description">
-                            <div class="step-action">Open the <strong>LUPO app</strong> from your</div>
-                            <div class="step-location">Applications folder</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Footer -->
-            <div class="modal-footer">
-                <span class="footer-text">Problem?</span>
-                <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-2.6.0-arm64.dmg" 
-                   class="download-again-link">Download again</a>
-            </div>
-        </div>
-    </div>
-    
-    <script>
-        // Function to show the installation modal
-        function showInstallModal() {
-            const modal = document.getElementById('installModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // Function to close the installation modal
-        function closeInstallModal() {
-            const modal = document.getElementById('installModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        
-        // Close modal when clicking outside
-        document.getElementById('installModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeInstallModal();
-            }
-        });
-        
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeInstallModal();
-            }
-        });
-        
-        // Attach to Mac download button
-        document.addEventListener('DOMContentLoaded', function() {
-            // Find all Mac download links
-            const macDownloadLinks = document.querySelectorAll('a[href*="LUPO-2.6.0-arm64.dmg"]');
-            
-            macDownloadLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Start the actual download
-                    const downloadLink = document.createElement('a');
-                    downloadLink.href = this.href;
-                    downloadLink.download = '';
-                    document.body.appendChild(downloadLink);
-                    downloadLink.click();
-                    document.body.removeChild(downloadLink);
-                    
-                    // Show the modal after a short delay
-                    setTimeout(showInstallModal, 800);
-                });
-            });
-        });
+        setInterval(createParticle, 1000);
     </script>
 </body>
 </html>
