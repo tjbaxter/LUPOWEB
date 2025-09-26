@@ -1502,7 +1502,7 @@
         
         /* Modal Container */
         .install-modal {
-            background: #ffffff;
+            background: linear-gradient(135deg, #1a1a1e 0%, #2d2d30 100%);
             border-radius: 24px;
             width: 90%;
             max-width: 900px;
@@ -1510,7 +1510,9 @@
             overflow: hidden;
             position: relative;
             animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         @keyframes slideUp {
@@ -1532,7 +1534,7 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             cursor: pointer;
             display: flex;
@@ -1543,14 +1545,14 @@
         }
         
         .modal-close:hover {
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             transform: rotate(90deg);
         }
         
         .modal-close svg {
             width: 20px;
             height: 20px;
-            stroke: #666;
+            stroke: rgba(255, 255, 255, 0.8);
         }
         
         /* Modal Content */
@@ -1569,11 +1571,15 @@
             align-items: center;
             gap: 8px;
             padding: 6px 14px;
-            background: linear-gradient(135deg, #34c759 0%, #30d158 100%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
             margin-bottom: 16px;
         }
         
@@ -1585,9 +1591,11 @@
         .modal-title {
             font-size: 32px;
             font-weight: 700;
-            color: #1a1a1a;
+            color: #ffffff;
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            position: relative;
+            z-index: 1;
         }
         
         /* Steps Container */
@@ -1607,18 +1615,19 @@
         /* Step Card */
         .step-card {
             position: relative;
-            background: #f8f8fa;
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 16px;
             overflow: hidden;
-            border: 1px solid rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
         }
         
         .step-number {
             position: absolute;
             top: 16px;
-            left: 16px;
-            width: 32px;
-            height: 32px;
+            right: 16px;
+            width: 28px;
+            height: 28px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border-radius: 50%;
@@ -1626,8 +1635,9 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 16px;
-            z-index: 2;
+            font-size: 14px;
+            z-index: 20;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
         }
         
         .step-visual {
@@ -1640,31 +1650,62 @@
             overflow: hidden;
         }
         
-        /* Step 1 Visual - Downloads Folder */
+        /* Step 1 Visual - Mac Dock */
         .downloads-visual {
+            position: relative;
+            width: 100%;
+            height: 100%;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 20px;
         }
         
-        .downloads-label {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 8px 20px;
-            border-radius: 20px;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .downloads-icons {
+        .mac-dock {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 18px;
+            padding: 8px;
             display: flex;
-            gap: 16px;
+            gap: 8px;
             align-items: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         
-        .folder-icon, .dmg-icon, .trash-icon {
+        .dock-item {
+            width: 48px;
+            height: 48px;
+            transition: transform 0.2s ease;
+            position: relative;
+        }
+        
+        .dock-item:hover {
+            transform: scale(1.2) translateY(-8px);
+        }
+        
+        .dock-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .cursor-pointer {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            bottom: 35px;
+            left: calc(50% + 20px);
+            pointer-events: none;
+            animation: cursorHint 2s ease-in-out infinite;
+        }
+        
+        @keyframes cursorHint {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-3px, -3px); }
+        }
+        
+        .folder-icon, .trash-icon {
             width: 48px;
             height: 48px;
             background: rgba(255, 255, 255, 0.1);
@@ -1676,10 +1717,14 @@
         }
         
         .dmg-icon {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             cursor: pointer;
             position: relative;
             animation: subtle-pulse 2s ease-in-out infinite;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         @keyframes subtle-pulse {
@@ -1690,10 +1735,15 @@
         .dmg-icon::after {
             content: 'LUPO.dmg';
             position: absolute;
-            bottom: -20px;
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.7);
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.8);
             white-space: nowrap;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px 6px;
+            border-radius: 4px;
         }
         
         /* Step 2 Visual - Drag Animation */
@@ -1705,8 +1755,8 @@
         
         .lupo-draggable {
             position: absolute;
-            width: 56px;
-            height: 56px;
+            width: 64px;
+            height: 64px;
             left: 20%;
             top: 50%;
             transform: translateY(-50%);
@@ -1718,6 +1768,7 @@
             cursor: grab;
             animation: dragHint 3s ease-in-out infinite;
             box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+            padding: 8px;
         }
         
         @keyframes dragHint {
@@ -1812,7 +1863,7 @@
         
         .step-action {
             font-size: 15px;
-            color: #1a1a1a;
+            color: #ffffff;
             margin-bottom: 4px;
         }
         
@@ -1823,14 +1874,14 @@
         
         .step-location {
             font-size: 13px;
-            color: #666;
+            color: rgba(255, 255, 255, 0.6);
         }
         
         /* Modal Footer */
         .modal-footer {
             padding: 20px 40px;
-            border-top: 1px solid rgba(0, 0, 0, 0.08);
-            background: #fafafa;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.2);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -1839,7 +1890,7 @@
         
         .footer-text {
             font-size: 14px;
-            color: #666;
+            color: rgba(255, 255, 255, 0.7);
         }
         
         .download-again-link {
@@ -1855,8 +1906,8 @@
         
         /* Icon styles */
         .icon-logo {
-            width: 40px;
-            height: 40px;
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1884,9 +1935,8 @@
                 <!-- Header -->
                 <div class="modal-header">
                     <div class="download-badge">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 11l3 3L22 4"/>
-                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
+                            <path d="M3 8l3 3L13 4" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                         Downloaded
                     </div>
@@ -1900,16 +1950,18 @@
                         <div class="step-number">1</div>
                         <div class="step-visual">
                             <div class="downloads-visual">
-                                <div class="downloads-label">Downloads</div>
-                                <div class="downloads-icons">
-                                    <div class="folder-icon">📁</div>
-                                    <div class="dmg-icon">
-                                        <div class="icon-logo">
-                                            <img src="lupo-icon.ico" alt="LUPO" />
-                                        </div>
+                                <div class="mac-dock">
+                                    <div class="dock-item">
+                                        <img src="applications-folder.png" alt="Applications" />
                                     </div>
-                                    <div class="trash-icon">🗑️</div>
+                                    <div class="dock-item dmg-icon">
+                                        <img src="dmg-icon.png" alt="LUPO DMG" />
+                                    </div>
+                                    <div class="dock-item">
+                                        <div style="width: 48px; height: 48px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🗑️</div>
+                                    </div>
                                 </div>
+                                <img class="cursor-pointer" src="cursor-arrow.png" alt="cursor" />
                             </div>
                         </div>
                         <div class="step-description">
@@ -1951,8 +2003,8 @@
                                     <div class="app-name">Clock</div>
                                 </div>
                                 <div class="app-item highlighted">
-                                    <div class="app-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 0; overflow: hidden;">
-                                        <img src="lupo-icon.ico" alt="LUPO" style="width: 100%; height: 100%; object-fit: cover;" />
+                                    <div class="app-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2px; overflow: hidden; width: 32px; height: 32px;">
+                                        <img src="lupo-icon.ico" alt="LUPO" style="width: 100%; height: 100%; object-fit: contain;" />
                                     </div>
                                     <div class="app-name">LUPO</div>
                                 </div>
