@@ -3,7 +3,9 @@
     "allow": [
       "Bash(ls:*)",
       "Bash(open:*)",
-      "Read(//Users/tombaxter/**)"
+      "Read(//Users/tombaxter/**)",
+      "Read(//Users/tombaxter/LUPO3/lupo/build/**)",
+      "Bash(git fetch:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
