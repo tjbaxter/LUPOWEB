@@ -1476,5 +1476,556 @@
         // Start particle animation
         setInterval(createParticle, 500);
     </script>
+    
+    <!-- LUPO Installation Modal -->
+    <style>
+        /* Modal Overlay */
+        .install-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .install-modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Modal Container */
+        .install-modal {
+            background: #ffffff;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow: hidden;
+            position: relative;
+            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px) scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        /* Modal Close Button */
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.05);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+        
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.1);
+            transform: rotate(90deg);
+        }
+        
+        .modal-close svg {
+            width: 20px;
+            height: 20px;
+            stroke: #666;
+        }
+        
+        /* Modal Content */
+        .modal-content {
+            padding: 40px 40px 30px;
+        }
+        
+        /* Modal Header */
+        .modal-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .download-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: linear-gradient(135deg, #34c759 0%, #30d158 100%);
+            border-radius: 20px;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .download-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .modal-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+        }
+        
+        /* Steps Container */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Step Card */
+        .step-card {
+            position: relative;
+            background: #f8f8fa;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            z-index: 2;
+        }
+        
+        .step-visual {
+            height: 200px;
+            background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Step 1 Visual - Downloads Folder */
+        .downloads-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .downloads-label {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .downloads-icons {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        
+        .folder-icon, .dmg-icon, .trash-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+        
+        .dmg-icon {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            position: relative;
+            animation: subtle-pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .dmg-icon::after {
+            content: 'LUPO.dmg';
+            position: absolute;
+            bottom: -20px;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            white-space: nowrap;
+        }
+        
+        /* Step 2 Visual - Drag Animation */
+        .drag-visual {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .lupo-draggable {
+            position: absolute;
+            width: 56px;
+            height: 56px;
+            left: 20%;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            animation: dragHint 3s ease-in-out infinite;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+        }
+        
+        @keyframes dragHint {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(120px); }
+        }
+        
+        .applications-folder {
+            position: absolute;
+            right: 20%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .drag-arrow {
+            position: absolute;
+            left: calc(20% + 60px);
+            right: calc(20% + 70px);
+            top: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+        
+        .drag-arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+        }
+        
+        /* Step 3 Visual - Applications List */
+        .apps-visual {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 20px;
+        }
+        
+        .apps-header {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+        
+        .app-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .app-item.highlighted {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            transform: translateX(4px);
+        }
+        
+        .app-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .app-name {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+        }
+        
+        /* Step Description */
+        .step-description {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .step-action {
+            font-size: 15px;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+        
+        .step-action strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .step-location {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        /* Modal Footer */
+        .modal-footer {
+            padding: 20px 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            background: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .download-again-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s ease;
+        }
+        
+        .download-again-link:hover {
+            opacity: 0.8;
+        }
+        
+        /* Icon styles */
+        .icon-logo {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #667eea;
+            font-size: 18px;
+        }
+    </style>
+    
+    <!-- Installation Modal HTML -->
+    <div id="installModal" class="install-modal-overlay">
+        <div class="install-modal">
+            <!-- Close Button -->
+            <button class="modal-close" onclick="closeInstallModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+            
+            <!-- Modal Content -->
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header">
+                    <div class="download-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11l3 3L22 4"/>
+                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                        </svg>
+                        Downloaded
+                    </div>
+                    <h1 class="modal-title">How to install LUPO</h1>
+                </div>
+                
+                <!-- Steps -->
+                <div class="steps-container">
+                    <!-- Step 1 -->
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <div class="step-visual">
+                            <div class="downloads-visual">
+                                <div class="downloads-label">Downloads</div>
+                                <div class="downloads-icons">
+                                    <div class="folder-icon">📁</div>
+                                    <div class="dmg-icon">
+                                        <div class="icon-logo">L</div>
+                                    </div>
+                                    <div class="trash-icon">🗑️</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step-description">
+                            <div class="step-action">Open <strong>LUPO.dmg</strong> from your</div>
+                            <div class="step-location">Downloads folder</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <div class="step-visual">
+                            <div class="drag-visual">
+                                <div class="lupo-draggable">
+                                    <div class="icon-logo">L</div>
+                                </div>
+                                <div class="drag-arrow"></div>
+                                <div class="applications-folder">📁</div>
+                            </div>
+                        </div>
+                        <div class="step-description">
+                            <div class="step-action">Drag the <strong>LUPO icon</strong> into your</div>
+                            <div class="step-location">Applications folder</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <div class="step-visual">
+                            <div class="apps-visual">
+                                <div class="apps-header">Applications</div>
+                                <div class="app-item">
+                                    <div class="app-icon">🕐</div>
+                                    <div class="app-name">Clock</div>
+                                </div>
+                                <div class="app-item highlighted">
+                                    <div class="app-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                        <span style="color: white; font-weight: 700; font-size: 14px;">L</span>
+                                    </div>
+                                    <div class="app-name">LUPO</div>
+                                </div>
+                                <div class="app-item">
+                                    <div class="app-icon">📇</div>
+                                    <div class="app-name">Contacts</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step-description">
+                            <div class="step-action">Open the <strong>LUPO app</strong> from your</div>
+                            <div class="step-location">Applications folder</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="modal-footer">
+                <span class="footer-text">Problem?</span>
+                <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-2.6.0-arm64.dmg" 
+                   class="download-again-link">Download again</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Function to show the installation modal
+        function showInstallModal() {
+            const modal = document.getElementById('installModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Function to close the installation modal
+        function closeInstallModal() {
+            const modal = document.getElementById('installModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('installModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeInstallModal();
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeInstallModal();
+            }
+        });
+        
+        // Attach to Mac download button
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find all Mac download links
+            const macDownloadLinks = document.querySelectorAll('a[href*="LUPO-2.6.0-arm64.dmg"]');
+            
+            macDownloadLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Start the actual download
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = this.href;
+                    downloadLink.download = '';
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                    
+                    // Show the modal after a short delay
+                    setTimeout(showInstallModal, 800);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

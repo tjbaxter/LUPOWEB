@@ -8,6 +8,9 @@
       "Bash(git fetch:*)"
     ],
     "deny": [],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "acceptEdits",
+    "additionalDirectories": [
+      "/Users/tombaxter/LUPO3/lupo/build"
+    ]
   }
 }
