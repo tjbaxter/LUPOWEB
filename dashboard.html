@@ -1019,6 +1019,43 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Manager Preview Styles */
+        .manager-metric-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .manager-metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59,130,246,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .manager-metric-card:hover::before {
+            left: 100%;
+        }
+        
+        .manager-metric-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(59,130,246,0.3) !important;
+            box-shadow: 0 8px 24px rgba(59,130,246,0.15);
+        }
+        
+        .manager-metric-card:hover > div:first-child {
+            transform: scale(1.05);
+            color: #3b82f6;
+        }
+        
         /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -1130,50 +1167,70 @@
                 <!-- Manager Preview View -->
                 <div class="manager-preview-view" id="managerPreviewView">
                     <div class="demo-banner">
-                        <span>📊 Manager Dashboard Preview</span>
-                        <span style="opacity: 0.6; font-size: 12px;">Demo data for illustration purposes</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                            <div>
+                                <span>📊 Manager Dashboard Preview</span>
+                                <span style="opacity: 0.6; font-size: 12px; margin-left: 12px;">Demo data for illustration purposes</span>
+                            </div>
+                            <div style="display: flex; gap: 2rem; align-items: center;">
+                                <div style="text-align: right;">
+                                    <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.5); margin-bottom: 2px;">Organization</div>
+                                    <div style="font-size: 14px; font-weight: 600;">Demo Company</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.5); margin-bottom: 2px;">Reps Active</div>
+                                    <div style="font-size: 14px; font-weight: 600;" id="managerRepsActive">12</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.5); margin-bottom: 2px;">Live Now</div>
+                                    <div style="font-size: 14px; font-weight: 600; color: #10b981;" id="managerLiveNow">
+                                        <span class="pulse-dot" style="display: inline-block; width: 6px; height: 6px; background: #10b981; border-radius: 50%; margin-right: 4px; animation: pulse 2s infinite;"></span>3
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div style="padding: 2rem; max-width: 1200px; margin: 0 auto;">
                         <!-- Time Filter -->
                         <div class="time-filter" style="margin-bottom: 3rem;">
-                            <button class="filter-btn active">Today</button>
-                            <button class="filter-btn">This Week</button>
-                            <button class="filter-btn">This Month</button>
+                            <button class="filter-btn active" onclick="updateManagerPreview('today')">Today</button>
+                            <button class="filter-btn" onclick="updateManagerPreview('week')">This Week</button>
+                            <button class="filter-btn" onclick="updateManagerPreview('month')">This Month</button>
                         </div>
                         
                         <!-- Main KPI -->
                         <div style="text-align: center; margin-bottom: 3rem;">
-                            <div style="font-size: 5rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, #fff 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">47</div>
+                            <div id="managerMainKPI" style="font-size: 5rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, #fff 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; transition: all 0.3s ease;">47</div>
                             <div style="font-size: 1rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px;">Critical Moments Detected</div>
                             <div style="font-size: 0.875rem; color: rgba(255,255,255,0.4); margin-top: 0.25rem;">Objections and risks LUPO flagged</div>
                             <div style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: #111; border: 1px solid #222; border-radius: 6px; font-size: 0.875rem;">
-                                <span style="color: #10b981;">↑ 23%</span> from yesterday
+                                <span id="managerTrend" style="color: #10b981;">↑ 23%</span> <span id="managerTrendPeriod">from yesterday</span>
                             </div>
                         </div>
                         
                         <!-- Supporting Metrics -->
                         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 3rem;">
-                            <div style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center;">
-                                <div style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem;">78%</div>
+                            <div class="manager-metric-card" style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center; transition: all 0.3s ease; cursor: pointer;">
+                                <div id="managerCoverage" style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem; transition: all 0.3s ease;">78%</div>
                                 <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem;">LUPO Coverage</div>
                                 <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">% of calls with assistance</div>
                             </div>
                             
-                            <div style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center;">
-                                <div style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem;">64%</div>
+                            <div class="manager-metric-card" style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center; transition: all 0.3s ease; cursor: pointer;">
+                                <div id="managerMomentum" style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem; transition: all 0.3s ease;">64%</div>
                                 <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem;">Forward Momentum</div>
                                 <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">% securing next steps</div>
                             </div>
                             
-                            <div style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center;">
-                                <div style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem;">Price</div>
+                            <div class="manager-metric-card" style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center; transition: all 0.3s ease; cursor: pointer;">
+                                <div id="managerObjection" style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem; transition: all 0.3s ease;">Price</div>
                                 <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem;">Top Objection</div>
-                                <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">appeared 12× today</div>
+                                <div id="managerObjectionCount" style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">appeared 12× today</div>
                             </div>
                             
-                            <div style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center;">
-                                <div style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem;">34</div>
+                            <div class="manager-metric-card" style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center; transition: all 0.3s ease; cursor: pointer;">
+                                <div id="managerTotalCalls" style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem; transition: all 0.3s ease;">34</div>
                                 <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem;">Total Calls</div>
                                 <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">analyzed this period</div>
                             </div>
@@ -1353,7 +1410,45 @@ COMPLIANCE & BOUNDARIES:
                 managerPreviewView.classList.add('active');
                 aiPanel.style.display = 'none';
                 aiResponse.classList.remove('show');
+                
+                // Start live updates for manager preview
+                startManagerPreviewUpdates();
             }
+        }
+        
+        // Manager preview live update interval
+        let managerUpdateInterval = null;
+        
+        function startManagerPreviewUpdates() {
+            // Clear any existing interval
+            if (managerUpdateInterval) {
+                clearInterval(managerUpdateInterval);
+            }
+            
+            // Update live metrics every 5 seconds
+            managerUpdateInterval = setInterval(() => {
+                if (currentView !== 'manager-preview') {
+                    clearInterval(managerUpdateInterval);
+                    return;
+                }
+                
+                // Randomly update live calls (0-8)
+                const currentLive = parseInt(document.getElementById('managerLiveNow').textContent) || 0;
+                const newLive = Math.max(0, currentLive + Math.floor(Math.random() * 3 - 1));
+                animateValue('managerLiveNow', newLive, true);
+                
+                // Occasionally increment critical moments
+                if (Math.random() > 0.7) {
+                    const currentKPI = parseInt(document.getElementById('managerMainKPI').textContent) || 0;
+                    animateValue('managerMainKPI', currentKPI + Math.floor(Math.random() * 3 + 1));
+                }
+                
+                // Update reps active occasionally
+                if (Math.random() > 0.85) {
+                    const currentReps = parseInt(document.getElementById('managerRepsActive').textContent) || 0;
+                    animateValue('managerRepsActive', Math.max(8, currentReps + Math.floor(Math.random() * 3 - 1)));
+                }
+            }, 5000);
         }
         
         // Load sales context
@@ -1934,6 +2029,134 @@ BOUNDARIES
                     submitAI();
                 }
             });
+        }
+        
+        // Manager Preview Functions
+        function updateManagerPreview(period) {
+            // Update filter buttons
+            document.querySelectorAll('#managerPreviewView .filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(period)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Demo data for different periods
+            const demoData = {
+                today: {
+                    mainKPI: 47,
+                    trend: '↑ 23%',
+                    trendPeriod: 'from yesterday',
+                    coverage: '78%',
+                    momentum: '64%',
+                    objection: 'Price',
+                    objectionCount: 'appeared 12× today',
+                    totalCalls: 34
+                },
+                week: {
+                    mainKPI: 312,
+                    trend: '↑ 18%',
+                    trendPeriod: 'from last week',
+                    coverage: '82%',
+                    momentum: '71%',
+                    objection: 'Timeline',
+                    objectionCount: 'appeared 67× this week',
+                    totalCalls: 248
+                },
+                month: {
+                    mainKPI: 1428,
+                    trend: '↑ 34%',
+                    trendPeriod: 'from last month',
+                    coverage: '85%',
+                    momentum: '76%',
+                    objection: 'Budget',
+                    objectionCount: 'appeared 284× this month',
+                    totalCalls: 1165
+                }
+            };
+            
+            const data = demoData[period] || demoData.today;
+            
+            // Animate value changes
+            animateValue('managerMainKPI', data.mainKPI);
+            document.getElementById('managerTrend').innerHTML = data.trend;
+            document.getElementById('managerTrendPeriod').textContent = data.trendPeriod;
+            
+            // Update trend color based on direction
+            const trendEl = document.getElementById('managerTrend');
+            if (data.trend.includes('↑')) {
+                trendEl.style.color = '#10b981';
+            } else {
+                trendEl.style.color = '#ef4444';
+            }
+            
+            // Animate metric cards
+            animateMetric('managerCoverage', data.coverage);
+            animateMetric('managerMomentum', data.momentum);
+            document.getElementById('managerObjection').textContent = data.objection;
+            document.getElementById('managerObjectionCount').textContent = data.objectionCount;
+            animateValue('managerTotalCalls', data.totalCalls);
+            
+            // Note: Reps Active and Live Now are NOT updated here because they show current status,
+            // not historical data. They remain constant regardless of time period selected.
+        }
+        
+        // Animate numeric values
+        function animateValue(id, end, keepDot = false) {
+            const element = document.getElementById(id);
+            if (!element) return;
+            
+            const start = parseInt(element.textContent) || 0;
+            const duration = 500;
+            const startTime = performance.now();
+            
+            const animate = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function
+                const easeOutQuad = progress => 1 - (1 - progress) * (1 - progress);
+                const current = Math.floor(start + (end - start) * easeOutQuad(progress));
+                
+                if (keepDot) {
+                    element.innerHTML = `<span class="pulse-dot" style="display: inline-block; width: 6px; height: 6px; background: #10b981; border-radius: 50%; margin-right: 4px; animation: pulse 2s infinite;"></span>${current}`;
+                } else {
+                    element.textContent = current;
+                }
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            };
+            
+            requestAnimationFrame(animate);
+        }
+        
+        // Animate percentage metrics
+        function animateMetric(id, endValue) {
+            const element = document.getElementById(id);
+            if (!element) return;
+            
+            const startValue = parseInt(element.textContent) || 0;
+            const endNum = parseInt(endValue);
+            const duration = 500;
+            const startTime = performance.now();
+            
+            const animate = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const easeOutQuad = progress => 1 - (1 - progress) * (1 - progress);
+                const current = Math.floor(startValue + (endNum - startValue) * easeOutQuad(progress));
+                
+                element.textContent = current + '%';
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            };
+            
+            requestAnimationFrame(animate);
         }
         
         // Helpers
