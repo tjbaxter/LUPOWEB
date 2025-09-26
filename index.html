@@ -1487,9 +1487,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px) saturate(180%);
+            -webkit-backdrop-filter: blur(8px) saturate(180%);
             z-index: 10000;
             animation: fadeIn 0.3s ease;
         }
@@ -1732,12 +1732,9 @@
             transform: translateY(-50%);
             width: 64px;
             height: 64px;
-            background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
-            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
         
         .drag-arrow {
@@ -1860,14 +1857,15 @@
         .icon-logo {
             width: 40px;
             height: 40px;
-            background: white;
-            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            color: #667eea;
-            font-size: 18px;
+        }
+        
+        .icon-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
     </style>
     
@@ -1906,7 +1904,9 @@
                                 <div class="downloads-icons">
                                     <div class="folder-icon">📁</div>
                                     <div class="dmg-icon">
-                                        <div class="icon-logo">L</div>
+                                        <div class="icon-logo">
+                                            <img src="lupo-icon.ico" alt="LUPO" />
+                                        </div>
                                     </div>
                                     <div class="trash-icon">🗑️</div>
                                 </div>
@@ -1924,10 +1924,14 @@
                         <div class="step-visual">
                             <div class="drag-visual">
                                 <div class="lupo-draggable">
-                                    <div class="icon-logo">L</div>
+                                    <div class="icon-logo">
+                                        <img src="lupo-icon.ico" alt="LUPO" />
+                                    </div>
                                 </div>
                                 <div class="drag-arrow"></div>
-                                <div class="applications-folder">📁</div>
+                                <div class="applications-folder">
+                                    <img src="applications-folder.png" alt="Applications" style="width: 100%; height: 100%; object-fit: contain;" />
+                                </div>
                             </div>
                         </div>
                         <div class="step-description">
@@ -1947,8 +1951,8 @@
                                     <div class="app-name">Clock</div>
                                 </div>
                                 <div class="app-item highlighted">
-                                    <div class="app-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                                        <span style="color: white; font-weight: 700; font-size: 14px;">L</span>
+                                    <div class="app-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 0; overflow: hidden;">
+                                        <img src="lupo-icon.ico" alt="LUPO" style="width: 100%; height: 100%; object-fit: cover;" />
                                     </div>
                                     <div class="app-name">LUPO</div>
                                 </div>

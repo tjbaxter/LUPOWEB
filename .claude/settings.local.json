@@ -10,7 +10,8 @@
     "deny": [],
     "defaultMode": "acceptEdits",
     "additionalDirectories": [
-      "/Users/tombaxter/LUPO3/lupo/build"
+      "/Users/tombaxter/LUPO3/lupo/build",
+      "/Users/tombaxter/Downloads"
     ]
   }
 }
