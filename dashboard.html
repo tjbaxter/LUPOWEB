@@ -550,6 +550,56 @@
             color: rgba(255,255,255,0.3);
             margin-top: 6px;
         }
+
+        /* Manager Preview View */
+        .manager-preview-view {
+            display: none;
+            flex: 1;
+            background: #000;
+            overflow-y: auto;
+        }
+
+        .manager-preview-view.active {
+            display: block;
+        }
+
+        .demo-banner {
+            background: linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(59,130,246,0.05) 100%);
+            border-bottom: 1px solid rgba(59,130,246,0.2);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .time-filter {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .time-filter .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: #111;
+            border: 1px solid #222;
+            color: rgba(255,255,255,0.6);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.15s;
+        }
+
+        .time-filter .filter-btn:hover {
+            background: #1a1a1a;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .time-filter .filter-btn.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
         
         /* AI Panel */
         .ai-panel {
@@ -1013,6 +1063,16 @@
                 </div>
                 <span class="nav-label">Sales Calls</span>
             </div>
+            <div class="nav-item" onclick="switchView('manager-preview')">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                    </svg>
+                </div>
+                <span class="nav-label">Manager Dashboard</span>
+            </div>
             <div class="nav-item" onclick="switchView('context')">
                 <div class="nav-icon">
                     <svg viewBox="0 0 24 24">
@@ -1023,7 +1083,7 @@
                         <polyline points="10 9 9 9 8 9"></polyline>
                     </svg>
                 </div>
-                <span class="nav-label">Context</span>
+                <span class="nav-label">Sales Context</span>
             </div>
             <div class="nav-item disabled">
                 <div class="nav-icon">
@@ -1065,6 +1125,60 @@
                 <!-- Sales Transcript View -->
                 <div class="transcript-view" id="transcriptView">
                     <div class="empty-state">Select a call to view transcript</div>
+                </div>
+                
+                <!-- Manager Preview View -->
+                <div class="manager-preview-view" id="managerPreviewView">
+                    <div class="demo-banner">
+                        <span>📊 Manager Dashboard Preview</span>
+                        <span style="opacity: 0.6; font-size: 12px;">Demo data for illustration purposes</span>
+                    </div>
+                    
+                    <div style="padding: 2rem; max-width: 1200px; margin: 0 auto;">
+                        <!-- Time Filter -->
+                        <div class="time-filter" style="margin-bottom: 3rem;">
+                            <button class="filter-btn active">Today</button>
+                            <button class="filter-btn">This Week</button>
+                            <button class="filter-btn">This Month</button>
+                        </div>
+                        
+                        <!-- Main KPI -->
+                        <div style="text-align: center; margin-bottom: 3rem;">
+                            <div style="font-size: 5rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, #fff 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">47</div>
+                            <div style="font-size: 1rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px;">Critical Moments Detected</div>
+                            <div style="font-size: 0.875rem; color: rgba(255,255,255,0.4); margin-top: 0.25rem;">Objections and risks LUPO flagged</div>
+                            <div style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: #111; border: 1px solid #222; border-radius: 6px; font-size: 0.875rem;">
+                                <span style="color: #10b981;">↑ 23%</span> from yesterday
+                            </div>
+                        </div>
+                        
+                        <!-- Supporting Metrics -->
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 3rem;">
+                            <div style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center;">
+                                <div style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem;">78%</div>
+                                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem;">LUPO Coverage</div>
+                                <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">% of calls with assistance</div>
+                            </div>
+                            
+                            <div style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center;">
+                                <div style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem;">64%</div>
+                                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem;">Forward Momentum</div>
+                                <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">% securing next steps</div>
+                            </div>
+                            
+                            <div style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center;">
+                                <div style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem;">Price</div>
+                                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem;">Top Objection</div>
+                                <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">appeared 12× today</div>
+                            </div>
+                            
+                            <div style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center;">
+                                <div style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem;">34</div>
+                                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem;">Total Calls</div>
+                                <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">analyzed this period</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Context View -->
@@ -1212,6 +1326,7 @@ COMPLIANCE & BOUNDARIES:
             const salesSidebar = document.getElementById('salesSidebar');
             const transcriptView = document.getElementById('transcriptView');
             const contextView = document.getElementById('contextView');
+            const managerPreviewView = document.getElementById('managerPreviewView');
             const aiPanel = document.getElementById('aiPanel');
             const aiResponse = document.getElementById('aiResponse');
             
@@ -1219,16 +1334,25 @@ COMPLIANCE & BOUNDARIES:
                 salesSidebar.style.display = 'flex';
                 transcriptView.classList.remove('hidden');
                 contextView.classList.remove('active');
+                managerPreviewView.classList.remove('active');
                 aiPanel.style.display = 'block';
-                // AI response overlay can be visible in sales view
+                
             } else if (view === 'context') {
                 salesSidebar.style.display = 'none';
                 transcriptView.classList.add('hidden');
                 contextView.classList.add('active');
+                managerPreviewView.classList.remove('active');
                 aiPanel.style.display = 'none';
-                // Hide AI response overlay when switching to context view
                 aiResponse.classList.remove('show');
                 loadSalesContext();
+                
+            } else if (view === 'manager-preview') {
+                salesSidebar.style.display = 'none';
+                transcriptView.classList.add('hidden');
+                contextView.classList.remove('active');
+                managerPreviewView.classList.add('active');
+                aiPanel.style.display = 'none';
+                aiResponse.classList.remove('show');
             }
         }
         
@@ -1294,7 +1418,7 @@ BOUNDARIES
                     method: 'POST',
                     headers: headers,
                     body: JSON.stringify({ 
-                        content: content || '',  // Ensure empty string is sent, not null
+                        content: content || '',
                         forbiddenPhrases: []
                     })
                 });
@@ -1304,7 +1428,6 @@ BOUNDARIES
                     showNotification(message);
                 } else {
                     const error = await response.json();
-                    // If backend rejects empty content, show specific message
                     if (!content.trim() && error.error && error.error.includes('required')) {
                         showNotification('Note: Backend currently requires content. Update backend to allow empty saves.', 'error');
                     } else {
@@ -1315,55 +1438,6 @@ BOUNDARIES
                 console.error('Failed to save context:', err);
                 showNotification('Failed to save context', 'error');
             }
-        }
-        
-        // File upload handlers
-        function handleDragOver(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            document.getElementById('uploadArea').classList.add('dragover');
-        }
-        
-        function handleDragLeave(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            document.getElementById('uploadArea').classList.remove('dragover');
-        }
-        
-        function handleDrop(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            document.getElementById('uploadArea').classList.remove('dragover');
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFile(files[0]);
-            }
-        }
-        
-        function handleFileSelect(e) {
-            const files = e.target.files;
-            if (files.length > 0) {
-                handleFile(files[0]);
-            }
-        }
-        
-        function handleFile(file) {
-            const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-            
-            if (!validTypes.includes(file.type)) {
-                showNotification('Please upload a PDF or Word document', 'error');
-                return;
-            }
-            
-            // Update UI
-            const uploadArea = document.getElementById('uploadArea');
-            uploadArea.innerHTML = `
-                <div class="upload-text">${file.name}</div>
-                <div class="upload-hint">File ready for interview mode</div>
-            `;
-            
-            showNotification('CV uploaded successfully');
         }
         
         // Show notification
@@ -1408,11 +1482,9 @@ BOUNDARIES
             const urlParams = new URLSearchParams(window.location.search);
             const exchangeToken = urlParams.get('auth');
             
-            // CRITICAL: If exchange token provided, ALWAYS use it and clear old sessions
             if (exchangeToken) {
                 console.log('🔐 New authentication detected - clearing old session');
                 
-                // SECURITY: Clear ALL old session data immediately
                 localStorage.removeItem('lupo_session');
                 localStorage.removeItem('lupo_manager_token');
                 localStorage.removeItem('lupo_manager_expiry');
@@ -1437,10 +1509,8 @@ BOUNDARIES
                     const data = await response.json();
                     sessionToken = data.token;
                     
-                    // Store NEW session for persistence
                     localStorage.setItem('lupo_session', sessionToken);
                     
-                    // Clean URL to remove token
                     window.history.replaceState({}, document.title, '/dashboard.html');
                     
                     console.log('✅ Authentication successful for NEW session');
@@ -1452,7 +1522,6 @@ BOUNDARIES
                 }
             }
             
-            // Only use stored session if NO exchange token was provided
             sessionToken = localStorage.getItem('lupo_session');
             if (sessionToken) {
                 console.log('Using existing stored session');
@@ -1466,21 +1535,17 @@ BOUNDARIES
         // Initialize dashboard
         async function init() {
             try {
-                // Show loading state
                 document.getElementById('callsList').innerHTML = 
                     '<div style="padding: 20px; text-align: center;"><div class="loading"></div></div>';
                 
-                // Authenticate first
                 const authenticated = await exchangeTokenForSession();
                 
                 if (!authenticated) {
-                    // Redirect to login if not authenticated
                     console.log('Authentication failed - redirecting to login');
                     window.location.href = '/login.html?redirect=dashboard&from=app';
                     return;
                 }
                 
-                // Load dashboard data
                 console.log('Loading dashboard data...');
                 await loadUserInfo();
                 await loadCalls();
@@ -1491,7 +1556,6 @@ BOUNDARIES
             } catch (error) {
                 console.error('Initialization error:', error);
                 
-                // Show error state
                 document.getElementById('callsList').innerHTML = 
                     '<div style="padding: 20px; color: rgba(255,255,255,0.3); text-align: center;">Failed to load dashboard. Please refresh.</div>';
             }
@@ -1524,7 +1588,6 @@ BOUNDARIES
                 const headers = getAuthHeaders();
                 let url = 'https://lupo-backend.fly.dev/sales/calls?limit=100';
                 
-                // Add date filters
                 const now = new Date();
                 if (filter === 'today') {
                     const startOfDay = new Date(now.setHours(0,0,0,0));
@@ -1544,7 +1607,6 @@ BOUNDARIES
                 const data = await response.json();
                 calls = data.calls || [];
                 
-                // Load transcripts for search functionality
                 await loadTranscriptsForSearch(calls.slice(0, 20));
                 
                 renderCalls(calls);
@@ -1586,7 +1648,6 @@ BOUNDARIES
                 let match = null;
                 let matchScore = 0;
                 
-                // Check basic call info
                 if ((call.customer || '').toLowerCase().includes(lowerQuery)) {
                     matchScore = 3;
                     match = { type: 'customer', text: call.customer };
@@ -1598,13 +1659,11 @@ BOUNDARIES
                     match = { type: 'context', text: call.context };
                 }
                 
-                // Check transcript if loaded
                 const fullData = callsWithTranscripts.get(call.id);
                 if (fullData && fullData.transcript && !match) {
                     for (const msg of fullData.transcript) {
                         if (msg.text && msg.text.toLowerCase().includes(lowerQuery)) {
                             matchScore = 1;
-                            // Find the part of text with the match
                             const startIdx = Math.max(0, msg.text.toLowerCase().indexOf(lowerQuery) - 30);
                             const endIdx = Math.min(msg.text.length, startIdx + 100);
                             let excerpt = msg.text.substring(startIdx, endIdx);
@@ -1626,12 +1685,10 @@ BOUNDARIES
                 }
             }
             
-            // Sort by match score
             results.sort((a, b) => b.matchScore - a.matchScore);
             
             return results;
         }
-        
         // Render calls with search highlights
         function renderCalls(callsList) {
             const container = document.getElementById('callsList');
@@ -1646,7 +1703,6 @@ BOUNDARIES
             }
             
             container.innerHTML = callsList.map(call => {
-                // Build display text
                 let displayText;
                 if (call.customer && call.customer !== 'Unknown') {
                     if (call.context && call.context !== 'Sales call') {
@@ -1658,7 +1714,6 @@ BOUNDARIES
                     displayText = call.context || 'Sales call';
                 }
                 
-                // Add search match preview if available
                 let matchPreview = '';
                 if (call.match && currentSearchQuery) {
                     const highlightedText = call.match.text.replace(
@@ -1688,10 +1743,8 @@ BOUNDARIES
             document.querySelectorAll('.call-item').forEach(el => el.classList.remove('active'));
             document.querySelector(`[data-id="${callId}"]`)?.classList.add('active');
             
-            // Clear AI response
             closeAI();
             
-            // Show loading
             document.getElementById('transcriptView').innerHTML = 
                 '<div class="empty-state"><div class="loading"></div></div>';
             
@@ -1741,7 +1794,6 @@ BOUNDARIES
                 const timestamp = msg.timestamp ? formatTime(msg.timestamp) : '';
                 let text = msg.text;
                 
-                // Highlight search terms if searching
                 if (currentSearchQuery) {
                     text = text.replace(
                         new RegExp(currentSearchQuery, 'gi'),
@@ -1759,7 +1811,6 @@ BOUNDARIES
                 `;
             }).join('');
             
-            // Scroll to matched message if specified
             if (scrollToIndex !== null) {
                 setTimeout(() => {
                     const element = container.querySelector(`[data-index="${scrollToIndex}"]`);
@@ -1851,13 +1902,11 @@ BOUNDARIES
         
         // Setup event listeners
         function setupEventListeners() {
-            // Enhanced search
             let searchTimeout;
             document.getElementById('searchInput').addEventListener('input', (e) => {
                 clearTimeout(searchTimeout);
                 currentSearchQuery = e.target.value.trim();
                 
-                // Debounce search
                 searchTimeout = setTimeout(() => {
                     if (currentSearchQuery) {
                         const filtered = searchCalls(currentSearchQuery);
@@ -1868,19 +1917,17 @@ BOUNDARIES
                 }, 300);
             });
             
-            // Filters
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     e.target.classList.add('active');
                     currentFilter = e.target.dataset.filter;
-                    currentSearchQuery = ''; // Clear search when changing filters
+                    currentSearchQuery = '';
                     document.getElementById('searchInput').value = '';
                     loadCalls(currentFilter);
                 });
             });
             
-            // AI input enter
             document.getElementById('aiInput').addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
@@ -1927,12 +1974,10 @@ BOUNDARIES
                 return;
             }
             
-            // Normalize the URL - ensure it has a protocol
             if (!url.startsWith('http://') && !url.startsWith('https://')) {
                 url = 'https://' + url;
             }
             
-            // Validate the normalized URL
             try {
                 new URL(url);
             } catch (e) {
@@ -1944,7 +1989,6 @@ BOUNDARIES
             const overlay = document.getElementById('processingOverlay');
             const steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
             
-            // Reset steps
             steps.forEach((stepId, index) => {
                 const step = document.getElementById(stepId);
                 if (step) {
@@ -2027,7 +2071,6 @@ BOUNDARIES
                 
                 const data = await response.json();
                 
-                // Mark all steps as complete
                 for (let i = currentStep - 1; i < steps.length; i++) {
                     if (i >= 0) {
                         const stepEl = document.getElementById(steps[i]);
@@ -2048,14 +2091,11 @@ BOUNDARIES
                 await new Promise(r => setTimeout(r, 1000));
                 
                 if (data.context) {
-                    // Update the textarea
                     document.getElementById('salesContext').value = data.context;
                     
-                    // AUTO-SAVE: The backend already saved it, just confirm to user
                     showNotification('✓ Sales context generated and saved automatically!');
-                    urlInput.value = ''; // Clear input
+                    urlInput.value = '';
                     
-                    // Visually indicate it's saved
                     const saveBtn = document.querySelector('.btn[onclick="saveSalesContext()"]');
                     if (saveBtn) {
                         const originalText = saveBtn.textContent;
@@ -2097,7 +2137,6 @@ BOUNDARIES
                 btn.disabled = false;
                 overlay.classList.remove('active');
                 
-                // Reset all steps
                 steps.forEach((stepId, index) => {
                     const step = document.getElementById(stepId);
                     if (step) {
