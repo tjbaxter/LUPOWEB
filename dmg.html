@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMG Background</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 600px;
+            height: 400px;
+            background: linear-gradient(145deg, #0a0a0b 0%, #161617 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle gradient overlay */
+        .gradient-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.03), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03), transparent 50%);
+        }
+
+        /* Top header area */
+        .header {
+            position: absolute;
+            top: 40px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background: #667eea;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .badge-text {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .app-title {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+            background: linear-gradient(180deg, #f5f5f7 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .app-subtitle {
+            font-size: 13px;
+            color: #a1a1a6;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+        }
+
+        /* Arrow in the middle */
+        .arrow-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            margin-top: 20px;
+        }
+
+        .arrow-svg {
+            width: 200px;
+            height: 60px;
+            opacity: 0.2;
+        }
+
+        /* Bottom instruction */
+        .instruction-text {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            text-align: center;
+            color: #a1a1a6;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            opacity: 0.4;
+        }
+
+        /* Edge glow */
+        .edge-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-overlay"></div>
+    <div class="edge-glow"></div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="badge">
+            <div class="pulse-dot"></div>
+            <span class="badge-text">Install</span>
+        </div>
+        <div class="app-title">LUPO</div>
+        <div class="app-subtitle">Drag to Applications folder to install</div>
+    </div>
+
+    <!-- Arrow -->
+    <div class="arrow-container">
+        <svg class="arrow-svg" viewBox="0 0 200 60">
+            <defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+                 refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#a1a1a6" opacity="0.5" />
+                </marker>
+            </defs>
+            <path d="M 30 30 L 170 30" 
+                  stroke="#a1a1a6" 
+                  stroke-width="1.5" 
+                  marker-end="url(#arrowhead)"
+                  stroke-dasharray="4,4"
+                  opacity="0.4" />
+        </svg>
+    </div>
+
+    <!-- Bottom text -->
+    <div class="instruction-text">
+        Drop to install
+    </div>
+</body>
+</html>
