@@ -1,2 +1,10 @@
 downloads/
 .DS_Store
+
+
+
+
+git checkout -b main64
+git add .
+git commit -m "popups gone working"
+git push -u origin main64
