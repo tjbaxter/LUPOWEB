@@ -622,12 +622,12 @@
         
         // OAuth sign in functions
         function signInWithGoogle() {
-            const redirectUrl = window.location.origin + '/auth/callback.html';
+            const redirectUrl = window.location.origin + '/auth/callback.html?mode=login';
             window.location.href = 'https://lupo-backend.fly.dev/auth/google?redirect=' + encodeURIComponent(redirectUrl);
         }
         
         function signInWithGitHub() {
-            const redirectUrl = window.location.origin + '/auth/callback.html';
+            const redirectUrl = window.location.origin + '/auth/callback.html?mode=login';
             window.location.href = 'https://lupo-backend.fly.dev/auth/github?redirect=' + encodeURIComponent(redirectUrl);
         }
         

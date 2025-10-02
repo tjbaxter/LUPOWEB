@@ -86,6 +86,7 @@
             const code = urlParams.get('code');
             const state = urlParams.get('state');
             const error = urlParams.get('error');
+            const mode = urlParams.get('mode'); // 'login' or 'signup'
             
             console.log('Code:', code ? code.substring(0, 20) + '...' : 'none');
             console.log('State:', state ? state.substring(0, 20) + '...' : 'none');
@@ -153,9 +154,15 @@
                     document.getElementById('status').textContent = 'Success! LUPO is connecting...';
                     document.getElementById('status').className = 'success';
                     
-                    // Redirect to success page with OAuth parameters
+                    // Redirect based on mode (login vs signup)
                     setTimeout(() => {
-                        window.location.href = `/signup?oauth=true&provider=${provider}`;
+                        if (mode === 'login') {
+                            // Existing user logging in - show welcome back
+                            window.location.href = `/signup?oauth=true&provider=${provider}&mode=login`;
+                        } else {
+                            // New user signing up - show welcome
+                            window.location.href = `/signup?oauth=true&provider=${provider}`;
+                        }
                     }, 1500);
                     
                 } else {

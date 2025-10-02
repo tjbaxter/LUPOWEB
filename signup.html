@@ -1100,6 +1100,11 @@
             const orgName = urlParams.get('org');
             const isOAuth = urlParams.get('oauth') === 'true';
             const provider = urlParams.get('provider');
+            const mode = urlParams.get('mode'); // 'login' for existing users
+            
+            // Check if user is returning/existing user
+            const hasAuthPoll = localStorage.getItem('lupo_auth_poll');
+            const hasBeenHere = localStorage.getItem('lupo_visited_signup');
             
             // Show enterprise indicator if joining via invite
             if (inviteCode && orgName) {
@@ -1128,14 +1133,37 @@
                     userData.email = authData.email;
                     userData.name = authData.name;
                     
-                    showProcessingState();
-                    setTimeout(autoCreateAccount, 500);
+                    // Show welcome container with appropriate message
+                    showSuccessState();
+                    
+                    // Customize message for login vs signup
+                    setTimeout(() => {
+                        const welcomeHeader = document.querySelector('.welcome-header');
+                        if (welcomeHeader && mode === 'login') {
+                            welcomeHeader.innerHTML = `
+                                <h1>Welcome back!</h1>
+                                <p>Your AI sales assistant is ready to help you close more deals</p>
+                            `;
+                        }
+                    }, 100);
+                    
+                    localStorage.removeItem('lupo_oauth_temp');
+                    return;
                 }
             }
             
-            // Focus email input
+            // Show welcome container for existing users or returning users
+            if (hasAuthPoll || hasBeenHere) {
+                showSuccessState();
+                return;
+            }
+            
+            // Mark that user has visited signup page
+            localStorage.setItem('lupo_visited_signup', 'true');
+            
+            // Focus email input for new users
             const emailInput = document.getElementById('email');
-            if (emailInput && !isOAuth) emailInput.focus();
+            if (emailInput) emailInput.focus();
         });
         
         function handleEmailSubmit(event) {
@@ -1392,4 +1420,5 @@
         };
     </script>
 </body>
+</html>
 </html>
