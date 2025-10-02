@@ -140,13 +140,22 @@
                     localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
                     console.log('✅ Stored session key for polling');
                     
+                    // Store OAuth data for signup.html
+                    const oauthData = {
+                        email: data.user?.email || '',
+                        name: data.user?.name || '',
+                        token: data.sessionKey,
+                        provider: provider
+                    };
+                    localStorage.setItem('lupo_oauth_temp', JSON.stringify(oauthData));
+                    
                     // Show success
                     document.getElementById('status').textContent = 'Success! LUPO is connecting...';
                     document.getElementById('status').className = 'success';
                     
-                    // Redirect to success page
+                    // Redirect to success page with OAuth parameters
                     setTimeout(() => {
-                        window.location.href = '/signup?success=true';
+                        window.location.href = `/signup?oauth=true&provider=${provider}`;
                     }, 1500);
                     
                 } else {
