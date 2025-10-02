@@ -1128,8 +1128,16 @@
                     userData.email = authData.email;
                     userData.name = authData.name;
                     
+                    // Update processing message for OAuth
+                    const processingTitle = document.querySelector('#processingStep h2');
+                    if (processingTitle) {
+                        processingTitle.textContent = `Completing ${provider} signup`;
+                    }
+                    
                     showProcessingState();
                     setTimeout(autoCreateAccount, 500);
+                } else {
+                    console.error('❌ OAuth data missing or incomplete');
                 }
             }
             
@@ -1251,12 +1259,64 @@
                     throw new Error('No authentication data found');
                 }
                 
-                localStorage.removeItem('lupo_oauth_temp');
-                showSuccessState();
+                // Get invite code if present
+                const urlParams = new URLSearchParams(window.location.search);
+                const inviteCode = urlParams.get('invite');
+                
+                // Try OAuth signup endpoint first, fallback to regular signup if needed
+                let response, data;
+                try {
+                    response = await fetch('https://lupo-backend.fly.dev/auth/oauth-signup', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: authData.email,
+                            name: authData.name,
+                            provider: authData.provider,
+                            token: authData.token,
+                            inviteCode: inviteCode
+                        })
+                    });
+                    data = await response.json();
+                } catch (err) {
+                    // Fallback: OAuth is already complete, just show success
+                    console.log('OAuth signup endpoint not available, using existing token');
+                    data = { success: true, sessionKey: authData.token };
+                }
+                
+                if (data.success && data.sessionKey) {
+                    // Store session key for LUPO polling (update with new key if different)
+                    const pollData = {
+                        sessionKey: data.sessionKey,
+                        timestamp: Date.now()
+                    };
+                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                    
+                    // Clean up temporary OAuth data
+                    localStorage.removeItem('lupo_oauth_temp');
+                    
+                    // Show success state
+                    showSuccessState();
+                    
+                    // Customize message if joining team
+                    if (inviteCode && data.organization) {
+                        const welcomeHeader = document.querySelector('.welcome-header');
+                        if (welcomeHeader) {
+                            welcomeHeader.innerHTML = `
+                                <h1>Welcome to ${data.organization.name}!</h1>
+                                <p>You've joined your team workspace and your AI sales assistant is ready</p>
+                            `;
+                        }
+                    }
+                } else {
+                    throw new Error(data.error || 'Failed to complete OAuth signup');
+                }
                 
             } catch (err) {
-                console.error('Account setup error:', err);
-                alert('Setup error. Please try again.');
+                console.error('OAuth account setup error:', err);
+                alert('Setup error: ' + err.message + '. Please try again.');
+                // Redirect back to login on error
+                setTimeout(() => window.location.href = '/login', 2000);
             }
         }
         
