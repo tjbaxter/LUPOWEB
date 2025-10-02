@@ -189,6 +189,7 @@
             color: var(--text-primary);
             transition: all 0.2s ease;
             -webkit-appearance: none;
+            appearance: none;
         }
         
         .form-input:focus {
@@ -355,29 +356,454 @@
             30% { opacity: 1; }
         }
         
-        /* Success State - Minimal */
-        .success-container {
+        /* Welcome State - Enhanced */
+        .welcome-container {
             text-align: center;
-            padding: 60px 0;
+            padding: 40px 0;
         }
         
         .success-icon {
-            width: 64px;
-            height: 64px;
+            width: 56px;
+            height: 56px;
             border: 2px solid var(--success);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 24px;
-            font-size: 28px;
+            margin: 0 auto 20px;
+            font-size: 24px;
             color: var(--success);
             opacity: 0;
-            animation: successFade 0.6s ease forwards;
+            animation: successPop 0.6s ease forwards;
         }
         
-        @keyframes successFade {
-            to { opacity: 1; }
+        @keyframes successPop {
+            0% { 
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .welcome-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        
+        .welcome-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .welcome-header p {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+        
+        /* LUPO Interface Preview Container */
+        .interface-container {
+            display: grid;
+            grid-template-columns: 1fr 180px;
+            gap: 12px;
+            margin: 28px 0;
+            position: relative;
+        }
+        
+        @media (max-width: 580px) {
+            .interface-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .insights-panel {
+                display: none;
+            }
+        }
+        
+        /* LUPO Main Window */
+        .interface-preview {
+            position: relative;
+            background: rgba(30, 30, 32, 0.95);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: visible;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            animation: slideIn 0.8s ease 0.3s forwards;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* LUPO Header Bar */
+        .lupo-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            min-height: 44px;
+            background: rgba(0, 0, 0, 0.3);
+            position: relative;
+            border-bottom: 0.5px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .lupo-controls {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        /* Ask Button Group */
+        .ask-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            opacity: 0.9;
+            transition: opacity 0.2s ease;
+            position: relative;
+        }
+        
+        .ask-group:hover {
+            opacity: 1;
+        }
+        
+        .ask-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 400;
+        }
+        
+        .ask-hotkey {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            padding: 3px 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 0.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Listen Button Group */
+        .listen-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 6px;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        .listen-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            opacity: 1;
+        }
+        
+        .listen-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 400;
+        }
+        
+        .volume-bars {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            height: 12px;
+        }
+        
+        .volume-bar {
+            width: 2.5px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .volume-bar:nth-child(1) { height: 6px; }
+        .volume-bar:nth-child(2) { height: 10px; }
+        .volume-bar:nth-child(3) { height: 8px; }
+        
+        .listen-btn:hover .volume-bar {
+            background: var(--accent);
+        }
+        
+        /* Preview content area */
+        .preview-content {
+            padding: 16px;
+            min-height: 60px;
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            font-style: italic;
+        }
+        
+        /* Tooltips above buttons */
+        .annotation {
+            position: absolute;
+            padding: 6px 10px;
+            background: var(--accent);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            color: white;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+            opacity: 0;
+            animation: annotationFade 0.6s ease forwards;
+            z-index: 20;
+            pointer-events: none;
+        }
+        
+        @keyframes annotationFade {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .annotation::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+        
+        .annotation-1 {
+            top: -28px;
+            left: 50%;
+            transform: translateX(-130px);
+            animation-delay: 0.8s;
+        }
+        
+        .annotation-1::before {
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px 5px 0 5px;
+            border-color: var(--accent) transparent transparent transparent;
+        }
+        
+        .annotation-2 {
+            top: -28px;
+            left: 50%;
+            transform: translateX(45px);
+            animation-delay: 1.2s;
+            background: var(--success);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        .annotation-2::before {
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px 5px 0 5px;
+            border-color: var(--success) transparent transparent transparent;
+        }
+        
+        /* Insights Panel */
+        .insights-panel {
+            background: rgba(22, 22, 23, 0.9);
+            border: 0.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            overflow: visible;
+            opacity: 0;
+            animation: slideIn 0.8s ease 0.5s forwards;
+            position: relative;
+        }
+        
+        .insights-header {
+            padding: 10px 12px;
+            border-bottom: 0.5px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .insights-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .insights-badge {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .insights-list {
+            padding: 8px;
+        }
+        
+        .insight-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 0.5px solid rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+            padding: 8px;
+            margin-bottom: 6px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            border-left: 2px solid var(--warning);
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .insight-item:nth-child(1) { animation-delay: 1.4s; }
+        .insight-item:nth-child(2) { animation-delay: 1.6s; }
+        
+        .insight-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            color: var(--warning);
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+        
+        /* 3D Tooltip for insights */
+        .insight-tooltip {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: calc(100% + 8px);
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.9);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            white-space: nowrap;
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.3),
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            z-index: 100;
+            opacity: 0;
+            animation: tooltipBounce 2s ease-in-out 2.8s forwards;
+            pointer-events: none;
+        }
+        
+        @keyframes tooltipBounce {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(5px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            60%, 80% {
+                transform: translateX(-50%) translateY(-2px);
+            }
+            70%, 90% {
+                transform: translateX(-50%) translateY(1px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        
+        .insight-tooltip .tooltip-arrow {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -6px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 6px 6px 6px;
+            border-color: transparent transparent rgba(0, 0, 0, 0.9) transparent;
+        }
+        
+        .insight-tooltip .tooltip-arrow::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: -1px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 7px 7px 7px;
+            border-color: transparent transparent rgba(255, 255, 255, 0.3) transparent;
+            z-index: -1;
+        }
+        
+        /* Pulse effect on the second insight item */
+        .insight-item[data-has-tooltip] {
+            animation: fadeIn 0.5s ease 1.6s forwards, subtlePulse 2s ease-in-out 3s infinite;
+        }
+        
+        @keyframes subtlePulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+            50% {
+                box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+            }
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+            text-align: left;
+        }
+        
+        .step:nth-child(1) { animation-delay: 1.8s; }
+        .step:nth-child(2) { animation-delay: 2s; }
+        .step:nth-child(3) { animation-delay: 2.2s; }
+        .step:nth-child(4) { animation-delay: 2.4s; }
+        
+        .step-number {
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            flex-shrink: 0;
+        }
+        
+        .step-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.4;
+        }
+        
+        /* Bottom text */
+        .bottom-text {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            opacity: 0;
+            animation: fadeIn 0.6s ease 2.6s forwards;
         }
         
         /* Footer */
@@ -556,12 +982,100 @@
         
         <!-- Success State -->
         <div class="form-step" id="successStep">
-            <div class="success-container">
+            <div class="welcome-container">
                 <div class="success-icon">✓</div>
-                <h1 style="font-size: 32px; font-weight: 600; margin-bottom: 8px;">Account Created</h1>
-                <p style="font-size: 16px; color: var(--text-secondary);">
-                    LUPO is updating. You can close this window.
-                </p>
+                
+                <div class="welcome-header">
+                    <h1>Welcome to LUPO</h1>
+                    <p>Your AI sales assistant is ready</p>
+                </div>
+                
+                <!-- LUPO Interface with Insights Panel -->
+                <div class="interface-container">
+                    <!-- Main LUPO Window -->
+                    <div class="interface-preview">
+                        <!-- Tooltips positioned above the buttons -->
+                        <div class="annotation annotation-1">
+                            Ask any question
+                        </div>
+                        <div class="annotation annotation-2">
+                            Start call
+                        </div>
+                        
+                        <div class="lupo-header">
+                            <div class="lupo-controls">
+                                <!-- Ask Button -->
+                                <div class="ask-group">
+                                    <span class="ask-text">Ask</span>
+                                    <span class="ask-hotkey">
+                                        <span>⌘</span><span>\</span>
+                                    </span>
+                                </div>
+                                
+                                <!-- Listen Button -->
+                                <button class="listen-btn">
+                                    <span class="listen-text">Listen</span>
+                                    <div class="volume-bars">
+                                        <div class="volume-bar"></div>
+                                        <div class="volume-bar"></div>
+                                        <div class="volume-bar"></div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="preview-content">
+                            Responses will appear here during your calls
+                        </div>
+                    </div>
+                    
+                    <!-- Insights Panel -->
+                    <div class="insights-panel">
+                        <div class="insights-header">
+                            <span class="insights-title">Insights</span>
+                            <span class="insights-badge">Live</span>
+                        </div>
+                        <div class="insights-list">
+                            <div class="insight-item">
+                                <div class="insight-label">Objection</div>
+                                <div>"Too expensive"</div>
+                            </div>
+                            <div class="insight-item" style="border-left-color: var(--success); position: relative;" data-has-tooltip="true">
+                                <div class="insight-label" style="color: var(--success);">Signal</div>
+                                <div>"Need to think about it"</div>
+                                <!-- 3D Tooltip pointing to this insight -->
+                                <div class="insight-tooltip">
+                                    <span>Click insights for instant responses</span>
+                                    <div class="tooltip-arrow"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Simple Steps -->
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Click <strong>Listen</strong> during your sales calls</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Allow microphone access if prompted</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-text">See real-time insights and AI responses</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-text">Upload company data in <strong>Dashboard</strong> for personalized responses</div>
+                    </div>
+                </div>
+                
+                <div class="bottom-text">
+                    LUPO is ready to use • This window will close automatically
+                </div>
             </div>
         </div>
     </div>
@@ -713,14 +1227,13 @@
                     
                     // Customize message if joining team
                     if (inviteCode && data.organization) {
-                        const successContainer = document.querySelector('.success-container');
-                        successContainer.innerHTML = `
-                            <div class="success-icon">✓</div>
-                            <h1 style="font-size: 32px; font-weight: 600; margin-bottom: 8px;">Welcome to ${data.organization.name}</h1>
-                            <p style="font-size: 16px; color: var(--text-secondary);">
-                                You've joined your team workspace.
-                            </p>
-                        `;
+                        const welcomeHeader = document.querySelector('.welcome-header');
+                        if (welcomeHeader) {
+                            welcomeHeader.innerHTML = `
+                                <h1>Welcome to ${data.organization.name}</h1>
+                                <p>You've joined your team workspace</p>
+                            `;
+                        }
                     }
                 } else {
                     throw new Error(data.error || 'Failed to create account');
@@ -857,6 +1370,31 @@
         
         // Start continuous particle animation
         setInterval(createParticle, 300);
+        
+        // Subtle hover animation for volume bars in welcome interface
+        function initializeWelcomeInteractions() {
+            const listenBtn = document.querySelector('.listen-btn');
+            if (listenBtn) {
+                listenBtn.addEventListener('mouseenter', () => {
+                    const bars = listenBtn.querySelectorAll('.volume-bar');
+                    bars.forEach((bar, i) => {
+                        setTimeout(() => {
+                            bar.style.transform = 'scaleY(1.3)';
+                            setTimeout(() => {
+                                bar.style.transform = 'scaleY(1)';
+                            }, 200);
+                        }, i * 100);
+                    });
+                });
+            }
+        }
+        
+        // Initialize welcome interactions when success state is shown
+        const originalShowSuccessState = showSuccessState;
+        showSuccessState = function() {
+            originalShowSuccessState();
+            setTimeout(initializeWelcomeInteractions, 100);
+        };
     </script>
 </body>
 </html>
