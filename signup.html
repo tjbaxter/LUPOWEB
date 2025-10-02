@@ -111,7 +111,7 @@
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 40px 48px;
-            margin-top: 100px;
+            margin-top: 60px;
             position: relative;
             z-index: 10;
             opacity: 0;
@@ -359,7 +359,7 @@
         /* Welcome State - Enhanced */
         .welcome-container {
             text-align: center;
-            padding: 40px 0;
+            padding: 8px 0 24px 0;
         }
         
         .success-icon {
@@ -370,7 +370,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
+            margin: 0 auto 12px;
             font-size: 24px;
             color: var(--success);
             opacity: 0;
@@ -390,7 +390,7 @@
         
         .welcome-header {
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 56px;
         }
         
         .welcome-header h1 {
@@ -587,7 +587,7 @@
         }
         
         .annotation-1 {
-            top: -28px;
+            top: -40px;
             left: 50%;
             transform: translateX(-130px);
             animation-delay: 0.8s;
@@ -602,7 +602,7 @@
         }
         
         .annotation-2 {
-            top: -28px;
+            top: -40px;
             left: 50%;
             transform: translateX(45px);
             animation-delay: 1.2s;
@@ -774,7 +774,6 @@
         .step:nth-child(1) { animation-delay: 1.8s; }
         .step:nth-child(2) { animation-delay: 2s; }
         .step:nth-child(3) { animation-delay: 2.2s; }
-        .step:nth-child(4) { animation-delay: 2.4s; }
         
         .step-number {
             width: 24px;
@@ -986,9 +985,9 @@
                 <div class="success-icon">✓</div>
                 
                 <div class="welcome-header">
-                    <h1>Welcome to LUPO</h1>
-                    <p>Your AI sales assistant is ready</p>
-                </div>
+                    <h1>You're all set!</h1>
+                    <p>Your AI sales assistant is ready to help you close more deals</p>
+            </div>
                 
                 <!-- LUPO Interface with Insights Panel -->
                 <div class="interface-container">
@@ -1065,10 +1064,6 @@
                     </div>
                     <div class="step">
                         <div class="step-number">3</div>
-                        <div class="step-text">See real-time insights and AI responses</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">4</div>
                         <div class="step-text">Upload company data in <strong>Dashboard</strong> for personalized responses</div>
                     </div>
                 </div>
@@ -1230,8 +1225,8 @@
                         const welcomeHeader = document.querySelector('.welcome-header');
                         if (welcomeHeader) {
                             welcomeHeader.innerHTML = `
-                                <h1>Welcome to ${data.organization.name}</h1>
-                                <p>You've joined your team workspace</p>
+                                <h1>Welcome to ${data.organization.name}!</h1>
+                                <p>You've joined your team workspace and your AI sales assistant is ready</p>
                             `;
                         }
                     }
