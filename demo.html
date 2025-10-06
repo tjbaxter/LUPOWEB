@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUPO Demo - 90-Second Sales AI Showcase</title>
+    <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
+    <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
+    
+    <!-- Meta Tags for Social Sharing -->
+    <meta name="description" content="Watch the LUPO demo - Real-time objection handling, competitor insights, and deal intelligence for enterprise sales teams. 90-second cinematic showcase.">
+    <meta property="og:title" content="LUPO — 90-Second Demo">
+    <meta property="og:description" content="Real-time compliance guardrails + on-call coaching for sales teams. Watch the cinematic demo.">
+    <meta property="og:image" content="/assets/poster.jpg">
+    <meta property="og:url" content="https://lupolabs.ai/demo">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LUPO — 90-Second Demo">
+    <meta name="twitter:description" content="Real-time compliance guardrails + on-call coaching for sales teams.">
+    <meta name="twitter:image" content="/assets/poster.jpg">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --bg-primary: #0b0b0c;
+            --bg-secondary: #161617;
+            --accent: #6b37ff;
+            --accent-hover: #5a2de6;
+            --border: rgba(255, 255, 255, 0.08);
+            --gradient-purple: linear-gradient(135deg, #6b37ff 0%, #8b5cf6 100%);
+            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(11, 11, 12, 0.72);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 22px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+        
+        /* Main Container */
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 60px;
+            position: relative;
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.03;
+            background: radial-gradient(circle at 20% 50%, var(--accent) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, #8b5cf6 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, #3b82f6 0%, transparent 50%);
+            animation: bgShift 30s ease-in-out infinite;
+        }
+        
+        @keyframes bgShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            33% { transform: rotate(120deg) scale(1.1); }
+            66% { transform: rotate(240deg) scale(0.9); }
+        }
+        
+        /* Content */
+        .content-wrapper {
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header Section */
+        .demo-header {
+            margin-bottom: 60px;
+        }
+        
+        .demo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: var(--gradient-purple);
+            border-radius: 30px;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 32px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(107, 55, 255, 0.3); }
+            50% { transform: scale(1.02); box-shadow: 0 6px 30px rgba(107, 55, 255, 0.5); }
+        }
+        
+        .demo-title {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.005em;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .demo-subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            line-height: 1.4;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Video Container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 60px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 
+                0 24px 48px rgba(0, 0, 0, 0.3),
+                0 12px 24px rgba(0, 0, 0, 0.2),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+        }
+        
+        
+        /* CTA Section */
+        .cta-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-button {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 40px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            min-width: 200px;
+            justify-content: center;
+        }
+        
+        .cta-button.primary {
+            background: var(--gradient-purple);
+            box-shadow: 0 10px 30px rgba(107, 55, 255, 0.3);
+        }
+        
+        .cta-button.secondary {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        .cta-button.primary:hover {
+            box-shadow: 0 20px 40px rgba(107, 55, 255, 0.4);
+        }
+        
+        .cta-button.secondary:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-title {
+                font-size: 48px;
+            }
+            
+            .demo-subtitle {
+                font-size: 20px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        .feature-card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 32px 24px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-purple);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-purple);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 24px;
+        }
+        
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .feature-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        /* Footer */
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
+            margin-top: auto;
+        }
+        
+        .footer-logo {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .main-container {
+                padding: 80px 16px 40px;
+            }
+            
+            .video-container {
+                border-radius: 16px;
+            }
+        }
+        
+        /* Loading Animation */
+        .loading-dots {
+            display: inline-flex;
+            gap: 4px;
+            margin-left: 8px;
+        }
+        
+        .loading-dot {
+            width: 6px;
+            height: 6px;
+            background: currentColor;
+            border-radius: 50%;
+            animation: loadingBounce 1.4s ease-in-out infinite;
+        }
+        
+        .loading-dot:nth-child(1) { animation-delay: 0s; }
+        .loading-dot:nth-child(2) { animation-delay: 0.1s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.2s; }
+        
+        @keyframes loadingBounce {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="animated-bg"></div>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 40px; width: auto;">
+                <span style="font-size: 24px; font-weight: 600; color: var(--text-primary);">LUPO</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/pricing" class="nav-link">Pricing</a>
+                <a href="/contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="content-wrapper">
+            <!-- Demo Header -->
+            <div class="demo-header">
+                <div class="demo-badge">
+                    <span>🎬 CINEMATIC DEMO</span>
+                    <div class="loading-dots">
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                    </div>
+                </div>
+                
+                <h1 class="demo-title">
+                    Watch LUPO in Action
+                </h1>
+                
+                <p class="demo-subtitle">
+                    Experience real-time objection handling, competitor insights, and deal intelligence 
+                    in this 90-second cinematic showcase of LUPO's capabilities.
+                </p>
+            </div>
+            
+            <!-- Video Container -->
+            <div class="video-container">
+                <div style="position:relative;padding:56.25% 0 0 0;border-radius:18px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.35);">
+                    <iframe
+                        src="https://player.vimeo.com/video/1125001975?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:18px;"
+                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        title="LUPO 4K Demo"
+                        allowfullscreen
+                    ></iframe>
+                </div>
+            </div>
+            
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <div class="cta-buttons">
+                    <a href="https://calendly.com/tjpbaxter/30min" class="cta-button primary">
+                        <span>Book a Live Demo</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="/" class="cta-button secondary">
+                        <span>Try LUPO Free</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">Live Objection Handling</div>
+                    <div class="feature-description">
+                        Instant responses to any customer objection. Never lose a deal to "I need to think about it" again.
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Competitor Intelligence</div>
+                    <div class="feature-description">
+                        Real-time battlecards when competitors are mentioned. Know their weaknesses, highlight your strengths.
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Deal Insights</div>
+                    <div class="feature-description">
+                        AI analyzes tone, sentiment, and buying signals. Know exactly when to push and when to pull back.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <div style="width: 6px; height: 6px; background: #34c759; border-radius: 50%; box-shadow: 0 0 6px rgba(52, 199, 89, 0.6);"></div>
+                <span style="font-size: 11px; color: rgba(255, 255, 255, 0.6); font-weight: 400;">All Systems Operational</span>
+            </div>
+        </div>
+        <div style="text-align: right;">
+            <div class="footer-logo">LUPO</div>
+            <p class="footer-text">© 2025 LUPO — a product of Flair Technologies Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script src="https://player.vimeo.com/api/player.js"></script>
+</body>
+</html>
