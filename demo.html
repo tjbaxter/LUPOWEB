@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUPO Demo - 90-Second Sales AI Showcase</title>
+    <title>LUPO Demo - Watch Sales AI in Action</title>
     <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
     <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
     
     <!-- Meta Tags for Social Sharing -->
     <meta name="description" content="Watch the LUPO demo - Real-time objection handling, competitor insights, and deal intelligence for enterprise sales teams. 90-second cinematic showcase.">
-    <meta property="og:title" content="LUPO — 90-Second Demo">
+    <meta property="og:title" content="LUPO - 90-Second Demo">
     <meta property="og:description" content="Real-time compliance guardrails + on-call coaching for sales teams. Watch the cinematic demo.">
     <meta property="og:image" content="/assets/poster.jpg">
     <meta property="og:url" content="https://lupolabs.ai/demo">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="LUPO — 90-Second Demo">
+    <meta name="twitter:title" content="LUPO - 90-Second Demo">
     <meta name="twitter:description" content="Real-time compliance guardrails + on-call coaching for sales teams.">
     <meta name="twitter:image" content="/assets/poster.jpg">
     
@@ -29,13 +29,12 @@
         :root {
             --text-primary: #f5f5f7;
             --text-secondary: #a1a1a6;
-            --bg-primary: #0b0b0c;
+            --bg-primary: #000000;
             --bg-secondary: #161617;
-            --accent: #6b37ff;
-            --accent-hover: #5a2de6;
+            --accent: #2997ff;
+            --accent-hover: #409cff;
             --border: rgba(255, 255, 255, 0.08);
-            --gradient-purple: linear-gradient(135deg, #6b37ff 0%, #8b5cf6 100%);
-            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --gradient-sales: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         
         body {
@@ -49,6 +48,29 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Animated Background with Orbs */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.03;
+            background: radial-gradient(circle at 20% 50%, var(--accent) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, #667eea 0%, transparent 50%);
+            animation: bgShift 30s ease-in-out infinite;
+        }
+        
+        @keyframes bgShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            33% { transform: rotate(120deg) scale(1.1); }
+            66% { transform: rotate(240deg) scale(0.9); }
         }
         
         /* Navigation */
@@ -60,7 +82,7 @@
             z-index: 1000;
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
-            background: rgba(11, 11, 12, 0.72);
+            background: rgba(0, 0, 0, 0.72);
             border-bottom: 1px solid var(--border);
         }
         
@@ -106,34 +128,12 @@
         
         /* Main Container */
         .main-container {
-            min-height: 100vh;
+            flex: 1;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 100px 20px 60px;
             position: relative;
-        }
-        
-        /* Animated Background */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: -1;
-            opacity: 0.03;
-            background: radial-gradient(circle at 20% 50%, var(--accent) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, #8b5cf6 0%, transparent 50%),
-                        radial-gradient(circle at 40% 20%, #3b82f6 0%, transparent 50%);
-            animation: bgShift 30s ease-in-out infinite;
-        }
-        
-        @keyframes bgShift {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            33% { transform: rotate(120deg) scale(1.1); }
-            66% { transform: rotate(240deg) scale(0.9); }
         }
         
         /* Content */
@@ -148,6 +148,19 @@
         /* Header Section */
         .demo-header {
             margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .demo-badge {
@@ -155,7 +168,7 @@
             align-items: center;
             gap: 8px;
             padding: 8px 20px;
-            background: var(--gradient-purple);
+            background: var(--gradient-sales);
             border-radius: 30px;
             color: white;
             font-size: 13px;
@@ -167,8 +180,14 @@
         }
         
         @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(107, 55, 255, 0.3); }
-            50% { transform: scale(1.02); box-shadow: 0 6px 30px rgba(107, 55, 255, 0.5); }
+            0%, 100% { 
+                transform: scale(1); 
+                box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3); 
+            }
+            50% { 
+                transform: scale(1.02); 
+                box-shadow: 0 6px 30px rgba(102, 126, 234, 0.5); 
+            }
         }
         
         .demo-title {
@@ -208,8 +227,27 @@
                 inset 0 1px 1px rgba(255, 255, 255, 0.1);
             background: var(--bg-secondary);
             border: 1px solid var(--border);
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.2s forwards;
         }
         
+        .video-wrapper {
+            position: relative;
+            padding: 56.25% 0 0 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 20px;
+        }
         
         /* CTA Section */
         .cta-section {
@@ -218,6 +256,8 @@
             align-items: center;
             gap: 24px;
             margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s forwards;
         }
         
         .cta-buttons {
@@ -246,8 +286,8 @@
         }
         
         .cta-button.primary {
-            background: var(--gradient-purple);
-            box-shadow: 0 10px 30px rgba(107, 55, 255, 0.3);
+            background: linear-gradient(135deg, var(--accent), #5090ff);
+            box-shadow: 0 10px 30px rgba(41, 151, 255, 0.3);
         }
         
         .cta-button.secondary {
@@ -263,7 +303,7 @@
         }
         
         .cta-button.primary:hover {
-            box-shadow: 0 20px 40px rgba(107, 55, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(41, 151, 255, 0.4);
         }
         
         .cta-button.secondary:hover {
@@ -277,6 +317,8 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 24px;
             margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
         }
         
         @media (max-width: 768px) {
@@ -294,11 +336,24 @@
             
             .cta-buttons {
                 flex-direction: column;
+                width: 100%;
+            }
+            
+            .cta-button {
+                width: 100%;
+            }
+            
+            .nav-links {
+                display: none;
             }
         }
         
         .feature-card {
-            background: var(--bg-secondary);
+            background: linear-gradient(145deg,
+                rgba(22, 22, 23, 0.6) 0%,
+                rgba(22, 22, 23, 0.4) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 32px 24px;
             border: 1px solid var(--border);
@@ -314,14 +369,14 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: var(--gradient-purple);
+            background: var(--gradient-sales);
             transform: scaleX(0);
             transition: transform 0.3s ease;
         }
         
         .feature-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
         }
         
         .feature-card:hover::before {
@@ -331,7 +386,7 @@
         .feature-icon {
             width: 48px;
             height: 48px;
-            background: var(--gradient-purple);
+            background: var(--gradient-sales);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -376,22 +431,7 @@
             color: var(--text-secondary);
         }
         
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .main-container {
-                padding: 80px 16px 40px;
-            }
-            
-            .video-container {
-                border-radius: 16px;
-            }
-        }
-        
-        /* Loading Animation */
+        /* Loading Dots */
         .loading-dots {
             display: inline-flex;
             gap: 4px;
@@ -420,6 +460,13 @@
                 opacity: 0.5;
             }
         }
+        
+        /* Floating particles effect */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+        }
     </style>
 </head>
 <body>
@@ -435,8 +482,8 @@
             </a>
             <div class="nav-links">
                 <a href="/" class="nav-link">Home</a>
-                <a href="/pricing" class="nav-link">Pricing</a>
-                <a href="/contact" class="nav-link">Contact</a>
+                <a href="/playground.html" class="nav-link">Playground</a>
+                <a href="https://calendly.com/tjpbaxter/30min" class="nav-link">Book Demo</a>
             </div>
         </div>
     </nav>
@@ -447,7 +494,7 @@
             <!-- Demo Header -->
             <div class="demo-header">
                 <div class="demo-badge">
-                    <span>🎬 CINEMATIC DEMO</span>
+                    <span>CINEMATIC DEMO</span>
                     <div class="loading-dots">
                         <div class="loading-dot"></div>
                         <div class="loading-dot"></div>
@@ -467,10 +514,9 @@
             
             <!-- Video Container -->
             <div class="video-container">
-                <div style="position:relative;padding:56.25% 0 0 0;border-radius:18px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.35);">
+                <div class="video-wrapper">
                     <iframe
                         src="https://player.vimeo.com/video/1125010367?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0"
-                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:18px;"
                         allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                         referrerpolicy="strict-origin-when-cross-origin"
                         title="LUPO 4K Demo"
@@ -489,9 +535,9 @@
                         </svg>
                     </a>
                     <a href="/" class="cta-button secondary">
-                        <span>Try LUPO Free</span>
+                        <span>Download LUPO</span>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+                            <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5"/>
                         </svg>
                     </a>
                 </div>
@@ -536,10 +582,52 @@
         </div>
         <div style="text-align: right;">
             <div class="footer-logo">LUPO</div>
-            <p class="footer-text">© 2025 LUPO — a product of Flair Technologies Ltd. All rights reserved.</p>
+            <p class="footer-text">© 2025 LUPO - a product of Flair Technologies Ltd. All rights reserved.</p>
+            <p style="font-size: 11px; color: rgba(255, 255, 255, 0.35); margin-top: 8px; line-height: 1.4; font-weight: 400;">
+                Registered Office<br>
+                45 Fitzroy St, Fitzrovia<br>
+                London, W1T 6EB, United Kingdom
+            </p>
         </div>
     </footer>
     
     <script src="https://player.vimeo.com/api/player.js"></script>
+    <script>
+        // Floating particles effect (matching index.html)
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.cssText = `
+                width: ${Math.random() * 4 + 2}px;
+                height: ${Math.random() * 4 + 2}px;
+                background: var(--accent);
+                border-radius: 50%;
+                opacity: ${Math.random() * 0.3 + 0.05};
+            `;
+            
+            const startX = Math.random() * window.innerWidth;
+            const startY = window.innerHeight + 10;
+            
+            particle.style.left = startX + 'px';
+            particle.style.top = startY + 'px';
+            
+            document.body.appendChild(particle);
+            
+            const duration = Math.random() * 20000 + 10000;
+            const horizontalMovement = (Math.random() - 0.5) * 100;
+            
+            particle.animate([
+                { transform: `translate(0, 0)`, opacity: 0 },
+                { transform: `translate(${horizontalMovement}px, -${window.innerHeight + 20}px)`, opacity: particle.style.opacity },
+                { transform: `translate(${horizontalMovement * 2}px, -${window.innerHeight * 2}px)`, opacity: 0 }
+            ], {
+                duration: duration,
+                easing: 'linear'
+            }).onfinish = () => particle.remove();
+        }
+        
+        // Start particle animation
+        setInterval(createParticle, 1000);
+    </script>
 </body>
 </html>

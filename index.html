@@ -1084,27 +1084,45 @@
                 <div class="download-version">Version 3.0.3 • Released October 2025</div>
             </div>
             
-            <!-- Sandbox Demo Button -->
-            <div class="sandbox-section">
-                <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(96, 165, 250, 0.8); margin-bottom: 16px;">
-                    🚀 NEW: INSTANT DEMO
+            <!-- Video Demo Section -->
+            <div class="video-demo-section" style="margin: 60px 0; padding: 40px; background: linear-gradient(145deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05)); border-radius: 24px; border: 1px solid var(--border);">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(102, 126, 234, 0.8); margin-bottom: 16px;">
+                        WATCH LUPO IN ACTION
+                    </div>
+                    <h2 style="font-size: 32px; font-weight: 600; color: white; margin-bottom: 12px;">
+                        90-Second Demo
+                    </h2>
+                    <p style="font-size: 16px; color: rgba(255, 255, 255, 0.7); max-width: 600px; margin: 0 auto;">
+                        See how LUPO handles objections, competitor mentions, and compliance in real-time
+                    </p>
                 </div>
-                <h2 style="font-size: 32px; font-weight: 600; color: white; margin-bottom: 16px;">
-                    Try LUPO Right Now
-                </h2>
-                <p style="font-size: 16px; color: rgba(255, 255, 255, 0.7); margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto;">
-                    No download needed. Experience real-time objection handling in 20 seconds.
-                </p>
-                <a href="playground.html" style="display: inline-flex; align-items: center; gap: 12px; padding: 18px 48px; background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%); border: none; border-radius: 50px; color: white; text-decoration: none; font-size: 16px; font-weight: 600; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 40px rgba(96, 165, 250, 0.4);"
-                   onmouseover="this.style.transform='translateY(-3px) scale(1.02)'; this.style.boxShadow='0 15px 50px rgba(96, 165, 250, 0.5)'"
-                   onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 40px rgba(96, 165, 250, 0.4)'">
-                    <span>Open Playground</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
-                <div style="margin-top: 16px; font-size: 12px; color: rgba(255, 255, 255, 0.5);">
-                    Works instantly in your browser • No sign-up required
+                
+                <!-- Vimeo Video Container with Lazy Loading -->
+                <div id="vimeoContainer" style="position: relative; width: 100%; max-width: 900px; margin: 0 auto 30px; border-radius: 16px; overflow: hidden; box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3); background: var(--bg-secondary);">
+                    <div id="vimeoPlaceholder" style="position: relative; padding: 56.25% 0 0 0; cursor: pointer; background: linear-gradient(135deg, rgba(22, 22, 23, 0.95), rgba(22, 22, 23, 0.85)); display: flex; align-items: center; justify-content: center;">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2;">
+                            <div style="width: 80px; height: 80px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; transition: all 0.3s ease;">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="white" style="margin-left: 4px;">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 18px; color: white; font-weight: 600; margin-bottom: 8px;">Watch Demo</div>
+                            <div style="font-size: 13px; color: rgba(255, 255, 255, 0.7);">1:20 • Click to play</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Try Interactive Demo Link -->
+                <div style="text-align: center;">
+                    <a href="playground.html" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50px; color: white; text-decoration: none; font-size: 15px; font-weight: 500; transition: all 0.3s ease;"
+                       onmouseover="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.borderColor='rgba(255, 255, 255, 0.2)'"
+                       onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.1)'">
+                        <span>Try Interactive Demo</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
             
@@ -1143,85 +1161,6 @@
                 </div>
             </div>
             
-            <!-- Enhanced Live Demo Section -->
-            <div class="demo-showcase">
-                <!-- Call Context -->
-                <div class="call-context">
-                    <div class="live-indicator">
-                        <div class="live-dot"></div>
-                        <span>LIVE SALES CALL</span>
-                        <span class="call-timer" id="callTimer">09:02</span>
-                    </div>
-                    
-                    <div class="customer-speech">
-                        <span class="customer-label">PROSPECT</span>
-                        <span class="typing-text" id="customerText"></span>
-                        <span class="typing-cursor" id="cursor"></span>
-                    </div>
-                    
-                    <div style="font-size: 13px; color: rgba(255, 255, 255, 0.4); margin-top: 20px;">
-                        ↓ LUPO detects signals and responds instantly
-                    </div>
-                </div>
-                
-                <!-- Demo Grid -->
-                <div class="demo-grid">
-                    <!-- LUPO Main Window -->
-                    <div class="lupo-window">
-                        <div class="lupo-header">
-                            <div class="lupo-controls">
-                                <div class="lupo-ask">
-                                    <span class="lupo-hotkey">
-                                        <span>⌘</span><span>⏎</span>
-                                    </span>
-                                    <span class="lupo-text">Sales AI</span>
-                                </div>
-                            </div>
-                            <div class="lupo-status">
-                                <div class="status-dot"></div>
-                                <span style="font-size: 10px; color: rgba(255, 255, 255, 0.5);">Live</span>
-                            </div>
-                        </div>
-                        <div class="question-area" id="questionArea">
-                            <div class="question-text" id="questionText"></div>
-                        </div>
-                        <div class="processing-indicator" id="processingIndicator">
-                            <span>Processing</span>
-                            <div class="processing-dots">
-                                <div class="processing-dot"></div>
-                                <div class="processing-dot"></div>
-                                <div class="processing-dot"></div>
-                            </div>
-                        </div>
-                        <div class="answer-area" id="answerArea">
-                            <div class="answer-content" id="answerContent"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Real-time Insights Panel -->
-                    <div class="insights-panel">
-                        <div class="insights-header">
-                            <span class="insights-title">Real-time Insights</span>
-                            <span class="insights-count" id="insightCount">0 detected</span>
-                        </div>
-                        <div class="insights-container" id="insightsContainer">
-                            <!-- Insights will be added here dynamically -->
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Scenario Progress -->
-                <div class="scenario-progress">
-                    <div class="progress-label">Automated Demo Scenarios</div>
-                    <div class="progress-indicators" id="progressDots">
-                        <div class="progress-dot active"></div>
-                        <div class="progress-dot"></div>
-                        <div class="progress-dot"></div>
-                        <div class="progress-dot"></div>
-                    </div>
-                    <div class="scenario-name" id="scenarioName">Price Objection</div>
-                </div>
-            </div>
             
             <!-- Pilot CTA -->
             <div class="pilot-section">
@@ -1267,241 +1206,58 @@
     </footer>
     
     <script>
-        // Demo Scenarios - Simplified and realistic
-        const scenarios = [
-            {
-                name: "Price Objection",
-                customerText: "Your solution sounds interesting, but we're already using Competitor X and they're 30% cheaper...",
-                insight: {
-                    type: 'objection',
-                    text: 'Price objection + competitor',
-                    time: 'Just now'
-                },
-                lupoResponse: {
-                    question: "Customer: \"It's 30% cheaper with Competitor X\"",
-                    bullets: [
-                        { action: 'Get specific:', phrase: '"Which features of Competitor X do you use most?"' },
-                        { action: 'Contrast sharply:', phrase: '"They charge $2k for implementation - ours is free"' },
-                        { action: 'Create urgency:', phrase: '"I can lock in 25% off if we start this week"' }
-                    ]
-                }
-            },
-            {
-                name: "Decision Timeline",
-                customerText: "We need to think about this... maybe we'll revisit it next quarter when we have budget.",
-                insight: {
-                    type: 'objection',
-                    text: 'Delay tactic detected',
-                    time: 'Just now'
-                },
-                lupoResponse: {
-                    question: "Customer: \"We'll revisit next quarter\"",
-                    bullets: [
-                        { action: 'Explore pain:', phrase: '"What happens to [problem] if you wait 3 months?"' },
-                        { action: 'Offer pilot:', phrase: '"Start with a smaller pilot now, scale up next quarter"' },
-                        { action: 'Lock pricing:', phrase: '"I can guarantee today\'s rate for Q2 if we document intent"' }
-                    ]
-                }
-            },
-            {
-                name: "Authority Question",
-                customerText: "I like what I'm seeing, but I need to run this by my boss first. Can you send me something?",
-                insight: {
-                    type: 'buying-signal',
-                    text: 'Interest but needs approval',
-                    time: 'Just now'
-                },
-                lupoResponse: {
-                    question: "Customer: \"I need to run this by my boss\"",
-                    bullets: [
-                        { action: 'Qualify process:', phrase: '"What specific concerns might your boss have?"' },
-                        { action: 'Offer to help:', phrase: '"I can join that conversation - when do you typically sync?"' },
-                        { action: 'Build champion:', phrase: '"Let\'s build the business case together right now"' }
-                    ]
-                }
-            },
-            {
-                name: "Integration Concerns",
-                customerText: "How does this integrate with our existing CRM? We use Salesforce and can't change that.",
-                insight: {
-                    type: 'compliance',
-                    text: 'Integration requirement',
-                    time: 'Just now'
-                },
-                lupoResponse: {
-                    question: "Customer: \"How does this work with Salesforce?\"",
-                    bullets: [
-                        { action: 'Reassure immediately:', phrase: '"Native Salesforce integration - 15 minute setup"' },
-                        { action: 'Share proof:', phrase: '"80% of our enterprise clients use Salesforce"' },
-                        { action: 'Offer demonstration:', phrase: '"I can show you the integration live right now"' }
-                    ]
-                }
-            }
-        ];
-        
-        let currentScenarioIndex = 0;
-        let typingInterval;
-        let demoInterval;
-        
-        // Typing effect
-        function typeText(element, text, callback) {
-            element.textContent = '';
-            let index = 0;
-            const cursor = document.getElementById('cursor');
-            
-            clearInterval(typingInterval);
-            typingInterval = setInterval(() => {
-                if (index < text.length) {
-                    element.textContent += text[index];
-                    index++;
-                } else {
-                    clearInterval(typingInterval);
-                    if (cursor) cursor.style.display = 'none';
-                    if (callback) setTimeout(callback, 400);
-                }
-            }, 30);
-        }
-        
-        // Add single insight to panel
-        function addInsight(insight) {
-            const container = document.getElementById('insightsContainer');
-            
-            // Clear previous insights for this scenario
-            container.innerHTML = '';
-            
-            const bubble = document.createElement('div');
-            bubble.className = `insight-bubble ${insight.type}`;
-            bubble.innerHTML = `
-                <div class="insight-type">${insight.type.replace('-', ' ').toUpperCase()}</div>
-                <div class="insight-text">${insight.text}</div>
-                <div class="insight-time">${insight.time}</div>
-            `;
-            
-            container.appendChild(bubble);
-            
-            // Update count
-            const count = container.children.length;
-            document.getElementById('insightCount').textContent = `${count} active`;
-            
-            // Add subtle pulse to indicate it's actionable
-            bubble.style.animation = 'insightSlide 0.3s ease forwards, subtlePulse 2s ease-in-out infinite';
-        }
-        
-        // Show LUPO response
-        function showLupoResponse(response) {
-            const questionArea = document.getElementById('questionArea');
-            const questionText = document.getElementById('questionText');
-            const processingIndicator = document.getElementById('processingIndicator');
-            const answerArea = document.getElementById('answerArea');
-            const answerContent = document.getElementById('answerContent');
-            
-            // Show question immediately
-            questionArea.classList.add('active');
-            questionText.textContent = response.question;
-            
-            // Very brief processing indicator
-            setTimeout(() => {
-                processingIndicator.classList.add('active');
-            }, 100);
-            
-            // Show answer quickly
-            setTimeout(() => {
-                processingIndicator.classList.remove('active');
-                answerArea.classList.add('active');
-                
-                // Build response HTML
-                let html = '<div class="lupo-bullets">';
-                response.bullets.forEach((bullet, i) => {
-                    html += `
-                        <div class="lupo-bullet" style="animation-delay: ${i * 0.1}s">
-                            <span class="bullet-marker">•</span>
-                            <div class="bullet-content">
-                                <span class="bullet-action">${bullet.action}</span>
-                                <span class="bullet-phrase">${bullet.phrase}</span>
-                            </div>
-                        </div>
-                    `;
-                });
-                html += '</div>';
-                answerContent.innerHTML = html;
-            }, 600);
-        }
-        
-        // Play scenario
-        function playScenario() {
-            const scenario = scenarios[currentScenarioIndex];
-            const customerText = document.getElementById('customerText');
-            const cursor = document.getElementById('cursor');
-            
-            // Update progress
-            document.querySelectorAll('.progress-dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentScenarioIndex);
-            });
-            document.getElementById('scenarioName').textContent = scenario.name;
-            
-            // Reset UI
-            document.getElementById('questionArea').classList.remove('active');
-            document.getElementById('answerArea').classList.remove('active');
-            cursor.style.display = 'inline-block';
-            
-            // Type customer text
-            typeText(customerText, scenario.customerText, () => {
-                // Add insight and show response almost immediately
-                setTimeout(() => {
-                    addInsight(scenario.insight);
-                    
-                    // Show LUPO response right after insight appears
-                    setTimeout(() => {
-                        showLupoResponse(scenario.lupoResponse);
-                    }, 200);
-                }, 300);
-            });
-        }
-        
-        // Update call timer
-        function updateTimer() {
-            const timer = document.getElementById('callTimer');
-            if (timer) {
-                const parts = timer.textContent.split(':');
-                let minutes = parseInt(parts[0]);
-                let seconds = parseInt(parts[1]);
-                
-                seconds++;
-                if (seconds >= 60) {
-                    seconds = 0;
-                    minutes++;
-                }
-                
-                timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }
-        }
-        
-        // Auto-cycle scenarios
-        function startDemo() {
-            playScenario();
-            
-            demoInterval = setInterval(() => {
-                currentScenarioIndex = (currentScenarioIndex + 1) % scenarios.length;
-                if (currentScenarioIndex === 0) {
-                    // Reset insights when cycling back
-                    document.getElementById('insightsContainer').innerHTML = '';
-                    insightCount = 0;
-                    document.getElementById('insightCount').textContent = '0 detected';
-                }
-                playScenario();
-            }, 12000);
-        }
-        
-        // Initialize
+        // Lazy load Vimeo video with Intersection Observer
         document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(startDemo, 1000);
-            setInterval(updateTimer, 1000);
-        });
-        
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', () => {
-            clearInterval(typingInterval);
-            clearInterval(demoInterval);
+            const vimeoContainer = document.getElementById('vimeoContainer');
+            const vimeoPlaceholder = document.getElementById('vimeoPlaceholder');
+            
+            if (!vimeoContainer || !vimeoPlaceholder) return;
+            
+            let videoLoaded = false;
+            
+            // Function to load the video
+            function loadVimeoVideo() {
+                if (videoLoaded) return;
+                videoLoaded = true;
+                
+                const iframe = document.createElement('iframe');
+                iframe.src = 'https://player.vimeo.com/video/1125010367?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0';
+                iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;';
+                iframe.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
+                iframe.setAttribute('allowfullscreen', '');
+                iframe.title = 'LUPO Demo Video';
+                
+                vimeoPlaceholder.innerHTML = '';
+                vimeoPlaceholder.appendChild(iframe);
+                
+                // Load Vimeo Player API
+                const script = document.createElement('script');
+                script.src = 'https://player.vimeo.com/api/player.js';
+                document.head.appendChild(script);
+                
+                // Auto-play when loaded
+                script.onload = () => {
+                    const player = new Vimeo.Player(iframe);
+                    player.play();
+                };
+            }
+            
+            // Click to load
+            vimeoPlaceholder.addEventListener('click', loadVimeoVideo);
+            
+            // Intersection Observer for scroll-based loading
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+                        loadVimeoVideo();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.5 // Load when 50% visible
+            });
+            
+            observer.observe(vimeoContainer);
         });
         
         // Floating particles effect
