@@ -4,3 +4,5 @@ downloads/
 # Large video files - use Vimeo instead
 /public/video/*.mp4
 /public/video/*.mov
+# Local Netlify folder
+.netlify
