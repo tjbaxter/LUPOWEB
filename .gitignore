@@ -1,10 +1,6 @@
 downloads/
 .DS_Store
 
-
-
-
-git checkout -b main66
-git add .
-git commit -m "popups gone working"
-git push -u origin main66
+# Large video files - use Vimeo instead
+/public/video/*.mp4
+/public/video/*.mov
