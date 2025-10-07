@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>LUPO Sales Preview</title>
+    <title>LUPO — Sales Preview</title>
     <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
-    <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
     <style>
         * {
             margin: 0;
@@ -15,32 +14,31 @@
         }
         
         :root {
-            --text-primary: #f5f5f7;
-            --text-secondary: #a1a1a6;
-            --bg-primary: #000000;
-            --bg-secondary: #161617;
-            --accent: #667eea;
-            --accent-hover: #764ba2;
-            --border: rgba(255, 255, 255, 0.08);
-            --success: #34c759;
-            --danger: #ff3b30;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.45);
+            --bg-primary: #0a0a0c;
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-mid: rgba(255, 255, 255, 0.12);
+            --border-bright: rgba(255, 255, 255, 0.28);
+            --purple-start: #7b4cff;
+            --purple-end: #b47cff;
         }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
-            line-height: 1.47059;
+            line-height: 1.5;
             font-weight: 400;
-            letter-spacing: -0.022em;
-            overflow-x: hidden;
+            letter-spacing: -0.01em;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             min-height: 100vh;
         }
         
-        /* Animated Background with Orbs */
-        .animated-bg {
+        /* Orb background - matching homepage */
+        .orb-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -48,171 +46,149 @@
             bottom: 0;
             z-index: -1;
             opacity: 0.03;
-            background: radial-gradient(circle at 20% 50%, var(--accent) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
-                        radial-gradient(circle at 40% 20%, #667eea 0%, transparent 50%);
-            animation: bgShift 30s ease-in-out infinite;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 50%, var(--purple-start) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--purple-end) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, #667eea 0%, transparent 50%);
+            animation: orbShift 30s ease-in-out infinite;
         }
         
-        @keyframes bgShift {
+        @keyframes orbShift {
             0%, 100% { transform: rotate(0deg) scale(1); }
             33% { transform: rotate(120deg) scale(1.1); }
             66% { transform: rotate(240deg) scale(0.9); }
         }
         
-        /* Header */
-        header {
+        /* Header - minimal, sticky */
+        .site-header {
             position: sticky;
             top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            background: rgba(0, 0, 0, 0.72);
-            border-bottom: 1px solid var(--border);
+            z-index: 50;
+            backdrop-filter: blur(8px) saturate(180%);
+            -webkit-backdrop-filter: blur(8px) saturate(180%);
+            background: rgba(10, 10, 12, 0.7);
+            border-bottom: 1px solid var(--border-subtle);
         }
         
-        .header-content {
+        .header-row {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 22px;
-            height: 52px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 0.75rem 1.5rem;
         }
         
-        .logo {
-            font-size: 21px;
+        .brand {
             font-weight: 600;
-            letter-spacing: 0.2px;
-            text-decoration: none;
+            font-size: 1.25rem;
+            letter-spacing: 0.08em;
             color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-        
-        .nav-link {
-            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 14px;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
             font-weight: 500;
-            transition: color 0.2s ease;
+            transition: color 120ms ease;
         }
         
-        .nav-link:hover {
+        .nav a:hover {
             color: var(--text-primary);
         }
         
-        /* Main Container */
-        main {
+        /* Container */
+        .container {
             max-width: 720px;
             margin: 0 auto;
-            padding: 80px 20px 60px;
+            padding: 5rem 1.5rem 3rem;
         }
         
-        /* Hero Section */
+        /* Hero */
         .hero {
             text-align: center;
-            margin-bottom: 80px;
-            animation: fadeInUp 0.6s ease forwards;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            margin-bottom: 5rem;
         }
         
         .hero h1 {
-            font-size: 42px;
+            font-size: 2.75rem;
             font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 24px;
-            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
         }
         
         .hero p {
-            font-size: 18px;
+            font-size: 1.125rem;
             line-height: 1.6;
             color: var(--text-secondary);
-            margin-bottom: 32px;
+            margin-bottom: 2rem;
         }
         
-        .hero-cta {
+        .btn-primary {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 16px 32px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            border-radius: 999px;
+            border: 0;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+            background: linear-gradient(90deg, var(--purple-start), var(--purple-end));
+            color: white;
+            font-weight: 500;
+            font-size: 1rem;
+            text-decoration: none;
+            transform: translateY(0);
+            transition: transform 120ms ease, box-shadow 120ms ease;
+            box-shadow: 0 4px 16px rgba(123, 76, 255, 0.3);
         }
         
-        .hero-cta:hover {
+        .btn-primary:hover {
             transform: translateY(-1px);
-            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 24px rgba(123, 76, 255, 0.4);
         }
         
-        /* Video Section */
-        .video-section {
-            margin-bottom: 80px;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease 0.2s forwards;
+        /* Video section - wider for readability */
+        .film-section {
+            margin-bottom: 5rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .video-container {
+        .video-shell {
             position: relative;
-            border-radius: 16px;
+            border-radius: 18px;
             overflow: hidden;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
-            transition: all 0.2s ease;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+            opacity: 0;
+            transform: scale(1.02);
+            transition: opacity 180ms ease, transform 180ms ease;
         }
         
-        .video-container.revealed {
-            animation: scaleReveal 0.2s ease forwards;
+        .video-shell.is-visible {
+            opacity: 1;
+            transform: scale(1);
         }
         
-        @keyframes scaleReveal {
-            from {
-                opacity: 0;
-                transform: scale(1.02);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+        .video-shell::before {
+            content: '';
+            display: block;
+            padding-top: 56.25%;
         }
         
-        .video-wrapper {
-            position: relative;
-            padding: 56.25% 0 0 0;
-        }
-        
-        .video-wrapper iframe {
+        .video-shell iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -221,618 +197,370 @@
             border: 0;
         }
         
-        .video-poster {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, rgba(22, 22, 23, 0.95), rgba(22, 22, 23, 0.85));
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .video-poster:hover {
-            background: linear-gradient(135deg, rgba(32, 32, 33, 0.95), rgba(32, 32, 33, 0.85));
-        }
-        
-        .play-button {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-        
-        .video-poster:hover .play-button {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.25);
-        }
-        
-        .play-button svg {
-            width: 32px;
-            height: 32px;
-            margin-left: 4px;
-        }
-        
         .video-caption {
             text-align: center;
-            margin-top: 16px;
-            font-size: 14px;
-            color: var(--text-secondary);
+            margin-top: 1rem;
+            font-size: 0.9375rem;
+            color: var(--text-muted);
             font-style: italic;
         }
         
-        /* Feedback Section */
+        /* Feedback section */
         .feedback-section {
-            margin-bottom: 80px;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease 0.4s forwards;
+            margin-bottom: 5rem;
         }
         
         .feedback-section h2 {
-            font-size: 32px;
+            font-size: 2rem;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 12px;
-            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.015em;
         }
         
-        .feedback-helper {
+        .feedback-intro {
             text-align: center;
-            font-size: 15px;
+            font-size: 1rem;
             color: var(--text-secondary);
-            margin-bottom: 32px;
+            margin-bottom: 2.5rem;
             line-height: 1.6;
         }
         
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        form {
-            transition: all 0.2s ease;
-        }
-        
-        form.submitting {
-            opacity: 0.6;
-            pointer-events: none;
-        }
-        
-        form.error {
-            animation: shake 0.3s ease;
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
-        }
-        
-        .form-field {
-            margin-bottom: 20px;
-        }
-        
-        textarea {
+        .feedback-form textarea {
             width: 100%;
-            min-height: 120px;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 15px;
-            font-family: inherit;
-            line-height: 1.6;
-            resize: vertical;
-            transition: all 0.2s ease;
-        }
-        
-        textarea:focus {
-            outline: none;
+            min-height: 140px;
             background: rgba(255, 255, 255, 0.05);
-            border-color: var(--accent);
-            box-shadow: 0 0 0 8px rgba(102, 126, 234, 0.1);
+            color: var(--text-primary);
+            border: 1px solid var(--border-mid);
+            border-radius: 12px;
+            padding: 1rem;
+            font-size: 1rem;
+            font-family: inherit;
+            line-height: 1.5;
+            resize: none;
+            transition: border-color 120ms ease, box-shadow 120ms ease;
         }
         
-        textarea::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+        .feedback-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.35);
         }
         
-        .submit-button {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
-            display: flex;
+        .feedback-form textarea:focus {
+            outline: none;
+            border-color: var(--border-bright);
+            box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.04);
+        }
+        
+        .btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 0.5rem;
+            padding: 0.8rem 1.6rem;
+            border-radius: 999px;
+            border: 0;
+            cursor: pointer;
+            background: linear-gradient(90deg, var(--purple-start), var(--purple-end));
+            color: white;
+            font-weight: 500;
+            font-size: 1rem;
+            transform: translateY(0);
+            transition: transform 120ms ease, opacity 120ms ease, background 180ms ease;
+            width: 100%;
+            margin-top: 1rem;
         }
         
-        .submit-button:hover:not(:disabled) {
+        .btn:hover:not(:disabled) {
             transform: translateY(-1px);
-            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
         }
         
-        .submit-button:disabled {
-            opacity: 0.7;
+        .btn:disabled {
+            opacity: 0.6;
             cursor: not-allowed;
+            transform: none;
         }
         
         .spinner {
             width: 16px;
             height: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
             border-radius: 50%;
-            animation: spin 0.6s linear infinite;
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            border-top-color: white;
+            animation: spin 700ms linear infinite;
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
         
-        .error-message {
-            color: var(--danger);
-            font-size: 14px;
-            margin-top: 12px;
-            text-align: center;
-            display: none;
-        }
-        
-        .error-message.visible {
-            display: block;
-        }
-        
-        .privacy-note {
-            text-align: center;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.4);
-            margin-top: 12px;
-        }
-        
-        /* Success State */
-        .success-state {
-            display: none;
-            text-align: center;
-            padding: 40px 20px;
-            animation: fadeInUp 0.4s ease forwards;
-        }
-        
-        .success-state.visible {
-            display: block;
-        }
-        
-        .success-state h3 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--success);
-        }
-        
-        .success-state p {
-            font-size: 16px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-        
-        .success-links {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .success-link {
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            font-size: 13px;
-            transition: color 0.2s ease;
-        }
-        
-        .success-link:hover {
-            color: var(--text-primary);
-        }
-        
-        /* Testimonials Carousel (Hidden) */
-        .testimonials-section {
-            display: none; /* Hidden by default */
-            margin-bottom: 80px;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease 0.6s forwards;
-        }
-        
-        .testimonials-section.visible {
-            display: block;
-        }
-        
-        .testimonials-section h2 {
-            font-size: 32px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 40px;
-            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .quotes-carousel {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .quotes-track {
-            display: flex;
-            scroll-snap-type: x mandatory;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            gap: 20px;
-            padding: 20px 0;
-            scrollbar-width: none;
-        }
-        
-        .quotes-track::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .quote-card {
-            flex: 0 0 100%;
-            scroll-snap-align: center;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
+        .form-note {
+            margin-top: 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.8125rem;
             text-align: center;
         }
         
-        .quote-text {
-            font-size: 16px;
-            line-height: 1.6;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-            font-style: italic;
+        .form-error {
+            color: #ff8a80;
         }
         
-        .quote-author {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 500;
+        .shake {
+            animation: shake 250ms ease;
         }
         
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            border-top: 1px solid var(--border);
-            background: var(--bg-secondary);
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-4px); }
+            60% { transform: translateX(4px); }
         }
         
-        .footer-text {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.4);
-        }
-        
-        /* Hidden honeypot */
         .hidden {
             display: none !important;
         }
         
+        /* Thank you state */
+        .thank-you {
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .thank-you h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .thank-you p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .thank-you-links {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .thank-you-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 120ms ease;
+        }
+        
+        .thank-you-links a:hover {
+            color: var(--text-primary);
+        }
+        
+        .thank-you-links span {
+            color: var(--border-mid);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border-top: 1px solid var(--border-subtle);
+            margin-top: 4rem;
+        }
+        
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.8125rem;
+        }
+        
         /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                gap: 16px;
-            }
-            
-            .nav-link {
-                font-size: 13px;
-            }
-            
+        @media (max-width: 640px) {
             .hero h1 {
-                font-size: 32px;
+                font-size: 2rem;
             }
             
             .hero p {
-                font-size: 16px;
+                font-size: 1rem;
             }
             
-            main {
-                padding: 60px 16px 40px;
+            .container {
+                padding: 3rem 1rem 2rem;
+            }
+            
+            .nav {
+                gap: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Background Animation -->
-    <div class="animated-bg"></div>
+    <!-- Orb background -->
+    <div class="orb-bg"></div>
     
     <!-- Header -->
-    <header>
-        <div class="header-content">
-            <a href="/" class="logo">
-                <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 36px; width: auto;">
-                <span>LUPO</span>
-            </a>
-            <nav class="nav-links">
-                <a href="/" class="nav-link">Product</a>
-                <a href="/#download" class="nav-link">Download</a>
+    <header class="site-header">
+        <div class="header-row">
+            <a href="/" class="brand">LUPO</a>
+            <nav class="nav">
+                <a href="/">Product</a>
+                <a href="/">Download</a>
             </nav>
         </div>
     </header>
     
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
+    <!-- Main content -->
+    <div class="container">
+        <!-- Hero -->
         <section class="hero">
-            <h1>You're on the front line of sales.</h1>
-            <p>We built Lupo to make every call sharper, calmer, and more compliant — and this is your first look.<br>Take 90 seconds to watch. Then tell us what you think — we're listening closely.</p>
-            <a href="#video" class="hero-cta" onclick="scrollToVideo(event)">Watch the preview</a>
+            <h1>Built for people who live on calls.</h1>
+            <p>This is an early look at Lupo — AI that helps you stay sharp and compliant in real time.<br>Watch the 90-second preview and tell us what you think.</p>
+            <a href="#film" class="btn-primary" onclick="scrollToFilm(event)">Watch the preview</a>
         </section>
         
-        <!-- Video Section -->
-        <section class="video-section" id="video">
-            <div class="video-container" id="videoContainer">
-                <div class="video-wrapper">
-                    <div class="video-poster" id="videoPoster" role="button" aria-label="Play demo" tabindex="0">
-                        <div class="play-button">
-                            <svg viewBox="0 0 24 24" fill="white">
-                                <path d="M8 5v14l11-7z"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+        <!-- Film -->
+        <section class="film-section" id="film">
+            <div class="video-shell" id="videoShell">
+                <!-- Vimeo iframe injected here -->
             </div>
             <p class="video-caption">A quick look at how Lupo listens, analyses, and guides in real time.</p>
         </section>
         
-        <!-- Feedback Section -->
-        <section class="feedback-section" id="feedback">
+        <!-- Feedback -->
+        <section class="feedback-section">
             <h2>What did you think?</h2>
-            <p class="feedback-helper">We read every message ourselves. One line is enough — what stood out, or what you'd change?</p>
+            <p class="feedback-intro">We read every message ourselves.<br>One line is enough — what stood out, or what you'd change?</p>
             
-            <div class="form-container">
-                <form name="sales-preview-feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="feedbackForm">
-                    <!-- Hidden fields for Netlify -->
-                    <input type="hidden" name="form-name" value="sales-preview-feedback">
-                    <div class="hidden">
-                        <label>Don't fill this out if you're human: <input name="bot-field"></label>
-                    </div>
-                    
-                    <div class="form-field">
-                        <textarea 
-                            name="feedback" 
-                            placeholder="Be blunt — what would make Lupo better on your next call?" 
-                            required
-                            id="feedbackText"
-                        ></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-button" id="submitButton">
-                        <span id="buttonText">Send Feedback</span>
-                    </button>
-                    
-                    <p class="error-message" id="errorMessage">Something went wrong. Please try again.</p>
-                    <p class="privacy-note">No data is retained beyond this message.</p>
-                </form>
-                
-                <div class="success-state" id="successState">
-                    <h3>Thank you — genuinely.</h3>
-                    <p>You're one of the first to ever see Lupo. We'll take this seriously.</p>
-                    <div class="success-links">
-                        <a href="https://calendly.com/tjpbaxter/30min" class="success-link">Book a 5-min chat</a>
-                        <span style="color: rgba(255, 255, 255, 0.3);">·</span>
-                        <a href="/" class="success-link">Download beta</a>
-                    </div>
+            <form name="sales-preview-feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="feedback-form" id="feedbackForm">
+                <input type="hidden" name="form-name" value="sales-preview-feedback">
+                <p class="hidden">
+                    <label>Don't fill this out if you're human: <input name="bot-field"></label>
+                </p>
+                <textarea name="feedback" placeholder="Be blunt — what would make Lupo better on your next call?" required></textarea>
+                <button type="submit" class="btn" id="submitBtn">
+                    <span id="btnLabel">Send Feedback</span>
+                </button>
+                <p class="form-note" id="formNote">We read every message ourselves.</p>
+            </form>
+            
+            <div id="thankYou" class="thank-you hidden">
+                <h3>Thank you — genuinely.</h3>
+                <p>You're one of the first to see Lupo. We'll take this seriously.</p>
+                <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.75rem;">Seen enough?</p>
+                <div class="thank-you-links">
+                    <a href="https://calendly.com/tjpbaxter/30min">Book 5-min chat</a>
+                    <span>·</span>
+                    <a href="/">Download beta</a>
                 </div>
             </div>
         </section>
-        
-        <!-- Testimonials Carousel (Hidden by default) -->
-        <section class="testimonials-section" id="testimonials">
-            <h2>What early reps are saying</h2>
-            <div class="quotes-carousel">
-                <div class="quotes-track">
-                    <div class="quote-card">
-                        <p class="quote-text">"[Placeholder testimonial - waiting for real feedback]"</p>
-                        <p class="quote-author">Anonymous · Enterprise SDR</p>
-                    </div>
-                    <div class="quote-card">
-                        <p class="quote-text">"[Placeholder testimonial - waiting for real feedback]"</p>
-                        <p class="quote-author">Anonymous · Sales Rep, London</p>
-                    </div>
-                    <div class="quote-card">
-                        <p class="quote-text">"[Placeholder testimonial - waiting for real feedback]"</p>
-                        <p class="quote-author">Anonymous · AE</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+    </div>
     
     <!-- Footer -->
-    <footer>
-        <p class="footer-text">© 2025 Flair Technologies Ltd · Built in London</p>
+    <footer class="footer">
+        <p>© 2025 Flair Technologies Ltd · Built in London</p>
     </footer>
     
     <script>
-        // Analytics helper
-        function trackEvent(eventName) {
-            if (typeof gtag !== 'undefined') {
-                gtag('event', eventName);
-            }
-            console.log('Event:', eventName);
-        }
+        // Lazy video reveal with IntersectionObserver
+        const videoShell = document.getElementById('videoShell');
+        let videoInjected = false;
         
-        // Track page view
-        trackEvent('sales_preview_view');
-        
-        // Lazy load video with IntersectionObserver
-        let videoLoaded = false;
-        const videoContainer = document.getElementById('videoContainer');
-        const videoPoster = document.getElementById('videoPoster');
-        
-        function loadVideo() {
-            if (videoLoaded) return;
-            videoLoaded = true;
+        function injectVideo() {
+            if (videoInjected) return;
+            videoInjected = true;
             
-            const wrapper = videoPoster.parentElement;
             const iframe = document.createElement('iframe');
             iframe.src = 'https://player.vimeo.com/video/1125010367?autoplay=1&muted=1&controls=1&title=0&byline=0&portrait=0&playsinline=1&dnt=1';
             iframe.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
             iframe.setAttribute('allowfullscreen', '');
             
-            videoPoster.style.display = 'none';
-            wrapper.appendChild(iframe);
-            videoContainer.classList.add('revealed');
-            
-            trackEvent('sales_preview_video_revealed');
+            videoShell.appendChild(iframe);
+            videoShell.classList.add('is-visible');
         }
         
-        // IntersectionObserver for lazy loading
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
-                    loadVideo();
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.3
-        });
-        
-        observer.observe(videoContainer);
-        
-        // Click to load video
-        videoPoster.addEventListener('click', loadVideo);
-        videoPoster.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                loadVideo();
+        const io = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                injectVideo();
             }
-        });
+        }, { threshold: 0.3 });
         
-        // Smooth scroll to video
-        function scrollToVideo(e) {
+        io.observe(videoShell);
+        
+        // Smooth scroll to film
+        function scrollToFilm(e) {
             e.preventDefault();
-            document.getElementById('video').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            // Load video immediately when CTA clicked
-            setTimeout(loadVideo, 300);
+            document.getElementById('film').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(injectVideo, 300);
         }
         
-        // Form submission handling
+        // Netlify AJAX submit with premium success state
         const form = document.getElementById('feedbackForm');
-        const submitButton = document.getElementById('submitButton');
-        const buttonText = document.getElementById('buttonText');
-        const errorMessage = document.getElementById('errorMessage');
-        const successState = document.getElementById('successState');
+        const btn = document.getElementById('submitBtn');
+        const btnLabel = document.getElementById('btnLabel');
+        const note = document.getElementById('formNote');
+        const thankYou = document.getElementById('thankYou');
         
-        // Encode form data
         function encode(data) {
-            return Object.keys(data)
-                .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
-                .join('&');
+            return Object.keys(data).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k])).join('&');
         }
         
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // Reset states
-            form.classList.remove('error');
-            errorMessage.classList.remove('visible');
-            
-            // Set submitting state
-            form.classList.add('submitting');
-            submitButton.disabled = true;
-            buttonText.innerHTML = '<span class="spinner"></span>';
-            
-            // Prepare form data
-            const formData = new FormData(form);
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
-            
-            try {
-                const response = await fetch('/', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: encode(data)
-                });
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
                 
-                if (response.ok) {
-                    // Success - show checkmark briefly, then morph to thank you
-                    buttonText.innerHTML = '✓';
+                // Lock UI
+                btn.disabled = true;
+                btnLabel.style.display = 'none';
+                const spinner = document.createElement('span');
+                spinner.className = 'spinner';
+                btn.appendChild(spinner);
+                
+                const formData = new FormData(form);
+                const payload = {
+                    'form-name': form.getAttribute('name'),
+                    'feedback': formData.get('feedback')
+                };
+                
+                try {
+                    await fetch('/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: encode(payload)
+                    });
+                    
+                    // Success morph
+                    btn.innerHTML = '✓ Sent';
                     
                     setTimeout(() => {
-                        form.style.display = 'none';
-                        successState.classList.add('visible');
-                        trackEvent('sales_preview_feedback_sent');
-                        
-                        // Optional: store flag in localStorage
-                        try {
-                            localStorage.setItem('lupo_feedback_sent', 'true');
-                        } catch (e) {
-                            // Ignore localStorage errors
-                        }
-                    }, 800);
-                } else {
-                    throw new Error('Form submission failed');
+                        form.classList.add('hidden');
+                        thankYou.classList.remove('hidden');
+                    }, 250);
+                    
+                } catch (err) {
+                    // Failure state
+                    btn.disabled = false;
+                    btnLabel.style.display = '';
+                    spinner.remove();
+                    form.classList.add('shake');
+                    setTimeout(() => form.classList.remove('shake'), 260);
+                    note.textContent = 'Something went wrong. Please try again.';
+                    note.classList.add('form-error');
                 }
-            } catch (error) {
-                // Error state
-                form.classList.remove('submitting');
-                form.classList.add('error');
-                submitButton.disabled = false;
-                buttonText.textContent = 'Send Feedback';
-                errorMessage.classList.add('visible');
-                console.error('Form submission error:', error);
-            }
-        });
+            });
+        }
         
-        // Check if already submitted (optional)
-        document.addEventListener('DOMContentLoaded', () => {
-            try {
-                if (localStorage.getItem('lupo_feedback_sent') === 'true') {
-                    // Optionally show a note that they've already submitted
-                    // For now, we'll allow multiple submissions
-                }
-            } catch (e) {
-                // Ignore localStorage errors
-            }
-        });
-        
-        // Floating particles effect (matching homepage)
+        // Subtle floating particles (matching homepage)
         function createParticle() {
             const particle = document.createElement('div');
             particle.style.cssText = `
                 position: fixed;
                 width: ${Math.random() * 4 + 2}px;
                 height: ${Math.random() * 4 + 2}px;
-                background: var(--accent);
+                background: var(--purple-start);
                 border-radius: 50%;
                 pointer-events: none;
                 z-index: 0;
-                opacity: ${Math.random() * 0.3 + 0.05};
+                opacity: ${Math.random() * 0.2 + 0.05};
             `;
             
             const startX = Math.random() * window.innerWidth;
@@ -856,9 +584,7 @@
             }).onfinish = () => particle.remove();
         }
         
-        // Start particle animation
-        setInterval(createParticle, 1000);
+        setInterval(createParticle, 1200);
     </script>
 </body>
 </html>
-
