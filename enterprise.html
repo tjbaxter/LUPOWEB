@@ -73,6 +73,27 @@
             cursor: pointer;
             text-decoration: none;
             color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--text-primary);
         }
         
         /* Main Container */
@@ -634,6 +655,10 @@
         }
         
         @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
             h1 {
                 font-size: 48px;
             }
@@ -665,13 +690,18 @@
     <!-- Background Animation -->
     <div class="animated-bg"></div>
     
-    <!-- Simple Navigation -->
+    <!-- Navigation -->
     <nav>
         <div class="nav-content">
-            <a href="/" class="logo" style="display: flex; align-items: center; gap: 12px;">
+            <a href="/" class="logo">
                 <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 40px; width: auto;">
                 <span style="font-size: 24px; font-weight: 600; color: var(--text-primary);">LUPO</span>
             </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/playground.html" class="nav-link">Playground</a>
+                <a href="https://calendly.com/tjpbaxter/30min" class="nav-link">Book Demo</a>
+            </div>
         </div>
     </nav>
     
