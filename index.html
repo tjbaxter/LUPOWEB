@@ -903,6 +903,110 @@
             100% { left: 100%; }
         }
         
+        /* FAQ Section */
+        .faq-section {
+            margin: 60px 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .faq-grid {
+            display: grid;
+            gap: 12px;
+            margin-top: 48px;
+        }
+        
+        .faq-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(41, 151, 255, 0.3);
+        }
+        
+        .faq-question {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 24px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: rgba(41, 151, 255, 0.05);
+        }
+        
+        .faq-question-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+        
+        .faq-indicator {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-indicator {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 0 24px 24px 24px;
+        }
+        
+        .faq-footer {
+            text-align: center;
+            margin-top: 32px;
+            padding: 24px;
+            background: rgba(41, 151, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(41, 151, 255, 0.2);
+        }
+        
+        .faq-footer p {
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+        
+        .faq-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .faq-footer a:hover {
+            text-decoration: underline;
+        }
+        
         /* Pilot CTA */
         .pilot-section {
             margin: 60px 0;
@@ -1089,10 +1193,10 @@
                 <div style="text-align: center; margin-bottom: 40px;">
                     <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(102, 126, 234, 0.8); margin-bottom: 16px;">
                         WATCH LUPO IN ACTION
-                    </div>
+                </div>
                     <h2 style="font-size: 32px; font-weight: 600; color: white; margin-bottom: 12px;">
                         90-Second Demo
-                    </h2>
+                </h2>
                     <p style="font-size: 16px; color: rgba(255, 255, 255, 0.7); max-width: 600px; margin: 0 auto;">
                         See how LUPO handles objections, competitor mentions, and compliance in real-time
                     </p>
@@ -1120,47 +1224,153 @@
                        onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.1)'">
                         <span>Try Interactive Demo</span>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
                 </div>
             </div>
             
             <!-- Feature Cards -->
             <div class="preview-grid">
                 <div class="preview-card">
-                    <div class="preview-icon">🎯</div>
-                    <div class="preview-title">Live Objection Handling</div>
+                    <div class="preview-icon" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
+                    </div>
+                    <div class="preview-title">Unlimited Objection Handling</div>
                     <div class="preview-description">
-                        Instant responses to any customer objection. Never lose a deal to "I need to think about it" again.
+                        Real-time responses in ~200ms. Your reps never stumble on objections again. Every rebuttal, perfectly timed, perfectly delivered.
                     </div>
                 </div>
                 
                 <div class="preview-card">
-                    <div class="preview-icon">⚡</div>
-                    <div class="preview-title">Competitor Intelligence</div>
+                    <div class="preview-icon" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <div class="preview-title">Compliance Guardrails</div>
                     <div class="preview-description">
-                        Real-time battlecards when competitors are mentioned. Know their weaknesses, highlight your strengths.
+                        Prevents risky promises and unauthorized discounts. Stay compliant while closing aggressively.
                     </div>
                 </div>
                 
                 <div class="preview-card">
-                    <div class="preview-icon">📊</div>
-                    <div class="preview-title">Deal Insights</div>
+                    <div class="preview-icon" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="20" x2="12" y2="10"></line>
+                            <line x1="18" y1="20" x2="18" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="16"></line>
+                        </svg>
+                    </div>
+                    <div class="preview-title">Analytics Dashboards</div>
                     <div class="preview-description">
-                        AI analyzes tone, sentiment, and buying signals. Know exactly when to push and when to pull back.
+                        Manager view for team performance and usage tracking. Rep view for self-review and AI coaching on their calls.
                     </div>
                 </div>
                 
                 <div class="preview-card">
-                    <div class="preview-icon">🚀</div>
-                    <div class="preview-title">Zero Ramp Time</div>
+                    <div class="preview-icon" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <div class="preview-title">Instant Rep Onboarding</div>
                     <div class="preview-description">
-                        New reps close like veterans from day one. Your entire playbook, instantly accessible during every call.
+                        New reps close like veterans from day one. Works with any video conferencing tool - install and go.
                     </div>
                 </div>
             </div>
             
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <h2 style="font-size: 48px; font-weight: 700; text-align: center; margin-bottom: 16px; background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    Frequently Asked Questions
+                </h2>
+                <p style="text-align: center; font-size: 18px; color: var(--text-secondary); margin-bottom: 48px;">
+                    Everything you need to know about LUPO
+                </p>
+                
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">How does LUPO work?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            LUPO listens to your live calls, detects key phrases, and provides instant on-screen guidance — all in under 200ms. No special setup required.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Is my data stored or recorded?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            No. LUPO performs analysis in real time and does not retain audio or transcripts after your call ends. Your conversations remain private.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Do I need special software?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            No — just install the desktop app for Mac or Windows. It runs quietly in the background and overlays on any call tool (Zoom, Teams, Meet, etc.).
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Can I try LUPO without downloading?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Yes — try our <a href="/playground.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">interactive demo</a> to see LUPO handle objections in real-time, or watch the demo video above.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">What's the pricing?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            $200 per seat per month with a 5-seat minimum ($1,000/month). Month-to-month billing with a 7-day refund guarantee. No volume discounts — consistent per-seat pricing.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-footer">
+                    <p>Still have questions? <a href="https://calendly.com/tjpbaxter/30min">Book a call</a> to discuss your needs.</p>
+                </div>
+            </div>
             
             <!-- Pilot CTA -->
             <div class="pilot-section">
@@ -1259,6 +1469,22 @@
             
             observer.observe(vimeoContainer);
         });
+        
+        // Toggle FAQ items
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const allFaqItems = document.querySelectorAll('.faq-item');
+            
+            // Close all other FAQ items
+            allFaqItems.forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle current FAQ item
+            faqItem.classList.toggle('active');
+        }
         
         // Floating particles effect
         function createParticle() {
