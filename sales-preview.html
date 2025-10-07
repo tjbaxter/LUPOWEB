@@ -160,6 +160,13 @@
             margin-right: auto;
         }
         
+        .hero-note {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 24px;
+            font-style: italic;
+        }
+        
         /* Video Section */
         .video-section {
             margin-bottom: 80px;
@@ -556,11 +563,6 @@
                 <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 40px; width: auto;">
                 <span style="font-size: 24px; font-weight: 600; color: var(--text-primary);">LUPO</span>
             </a>
-            <div class="nav-links">
-                <a href="/" class="nav-link">Home</a>
-                <a href="/playground.html" class="nav-link">Playground</a>
-                <a href="https://calendly.com/tjpbaxter/30min" class="nav-link">Book Demo</a>
-            </div>
         </div>
     </nav>
     
@@ -568,8 +570,9 @@
     <main>
         <!-- Hero Section -->
         <section class="hero">
-            <h1>Built for people who live on calls.</h1>
-            <p>This is an early look at Lupo — AI that helps you stay sharp and compliant in real time.</p>
+            <h1>Something I've been building for live sales calls.</h1>
+            <p>This is a short private preview — about 90 seconds — showing how Lupo helps in real calls.<br>I'd love your honest reaction after watching.</p>
+            <p class="hero-note">No sign-up. No tracking. Just the video.</p>
         </section>
         
         <!-- Video Section -->
@@ -591,7 +594,7 @@
         <!-- Feedback Section -->
         <section class="feedback-section" id="feedback">
             <h2>What did you think?</h2>
-            <p class="feedback-helper">We read every message ourselves. One line is enough — what stood out, or what you'd change?</p>
+            <p class="feedback-helper">I read every message myself. One line is enough — what stood out, or what you'd change?</p>
             
             <div class="form-container">
                 <form name="sales-preview-feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="feedbackForm">
@@ -615,12 +618,12 @@
                     </button>
                     
                     <p class="error-message" id="errorMessage">Something went wrong. Please try again.</p>
-                    <p class="privacy-note">No data is retained beyond this message.</p>
+                    <p class="privacy-note">I read every message myself.</p>
                 </form>
                 
                 <div class="success-state" id="successState">
                     <h3>Thank you — genuinely.</h3>
-                    <p>You're one of the first to ever see Lupo. We'll take this seriously.</p>
+                    <p>You're one of the first to see Lupo. I'll take this seriously.</p>
                     <div class="success-links">
                         <a href="https://calendly.com/tjpbaxter/30min" class="success-link">Book a 5-min chat</a>
                         <span style="color: rgba(255, 255, 255, 0.3);">·</span>
