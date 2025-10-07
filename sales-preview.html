@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>LUPO Sales Preview</title>
+    <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
+    <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --bg-primary: #000000;
+            --bg-secondary: #161617;
+            --accent: #667eea;
+            --accent-hover: #764ba2;
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #34c759;
+            --danger: #ff3b30;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+        }
+        
+        /* Animated Background with Orbs */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.03;
+            background: radial-gradient(circle at 20% 50%, var(--accent) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, #667eea 0%, transparent 50%);
+            animation: bgShift 30s ease-in-out infinite;
+        }
+        
+        @keyframes bgShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            33% { transform: rotate(120deg) scale(1.1); }
+            66% { transform: rotate(240deg) scale(0.9); }
+        }
+        
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(0, 0, 0, 0.72);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 22px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+        
+        /* Main Container */
+        main {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 20px 60px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+        
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        }
+        
+        .hero-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Video Section */
+        .video-section {
+            margin-bottom: 80px;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.2s forwards;
+        }
+        
+        .video-container {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+        
+        .video-container.revealed {
+            animation: scaleReveal 0.2s ease forwards;
+        }
+        
+        @keyframes scaleReveal {
+            from {
+                opacity: 0;
+                transform: scale(1.02);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding: 56.25% 0 0 0;
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        .video-poster {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(22, 22, 23, 0.95), rgba(22, 22, 23, 0.85));
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .video-poster:hover {
+            background: linear-gradient(135deg, rgba(32, 32, 33, 0.95), rgba(32, 32, 33, 0.85));
+        }
+        
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .video-poster:hover .play-button {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .play-button svg {
+            width: 32px;
+            height: 32px;
+            margin-left: 4px;
+        }
+        
+        .video-caption {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        /* Feedback Section */
+        .feedback-section {
+            margin-bottom: 80px;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.4s forwards;
+        }
+        
+        .feedback-section h2 {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px;
+            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .feedback-helper {
+            text-align: center;
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        form {
+            transition: all 0.2s ease;
+        }
+        
+        form.submitting {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        form.error {
+            animation: shake 0.3s ease;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+        
+        .form-field {
+            margin-bottom: 20px;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: inherit;
+            line-height: 1.6;
+            resize: vertical;
+            transition: all 0.2s ease;
+        }
+        
+        textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 8px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .submit-button:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+        }
+        
+        .submit-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            color: var(--danger);
+            font-size: 14px;
+            margin-top: 12px;
+            text-align: center;
+            display: none;
+        }
+        
+        .error-message.visible {
+            display: block;
+        }
+        
+        .privacy-note {
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 12px;
+        }
+        
+        /* Success State */
+        .success-state {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeInUp 0.4s ease forwards;
+        }
+        
+        .success-state.visible {
+            display: block;
+        }
+        
+        .success-state h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--success);
+        }
+        
+        .success-state p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        
+        .success-links {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .success-link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s ease;
+        }
+        
+        .success-link:hover {
+            color: var(--text-primary);
+        }
+        
+        /* Testimonials Carousel (Hidden) */
+        .testimonials-section {
+            display: none; /* Hidden by default */
+            margin-bottom: 80px;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.6s forwards;
+        }
+        
+        .testimonials-section.visible {
+            display: block;
+        }
+        
+        .testimonials-section h2 {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .quotes-carousel {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quotes-track {
+            display: flex;
+            scroll-snap-type: x mandatory;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding: 20px 0;
+            scrollbar-width: none;
+        }
+        
+        .quotes-track::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .quote-card {
+            flex: 0 0 100%;
+            scroll-snap-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+        }
+        
+        .quote-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .quote-author {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+        
+        .footer-text {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Hidden honeypot */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 16px;
+            }
+            
+            .nav-link {
+                font-size: 13px;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            main {
+                padding: 60px 16px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="animated-bg"></div>
+    
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">
+                <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 36px; width: auto;">
+                <span>LUPO</span>
+            </a>
+            <nav class="nav-links">
+                <a href="/" class="nav-link">Product</a>
+                <a href="/#download" class="nav-link">Download</a>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>You're on the front line of sales.</h1>
+            <p>We built Lupo to make every call sharper, calmer, and more compliant — and this is your first look.<br>Take 90 seconds to watch. Then tell us what you think — we're listening closely.</p>
+            <a href="#video" class="hero-cta" onclick="scrollToVideo(event)">Watch the preview</a>
+        </section>
+        
+        <!-- Video Section -->
+        <section class="video-section" id="video">
+            <div class="video-container" id="videoContainer">
+                <div class="video-wrapper">
+                    <div class="video-poster" id="videoPoster" role="button" aria-label="Play demo" tabindex="0">
+                        <div class="play-button">
+                            <svg viewBox="0 0 24 24" fill="white">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="video-caption">A quick look at how Lupo listens, analyses, and guides in real time.</p>
+        </section>
+        
+        <!-- Feedback Section -->
+        <section class="feedback-section" id="feedback">
+            <h2>What did you think?</h2>
+            <p class="feedback-helper">We read every message ourselves. One line is enough — what stood out, or what you'd change?</p>
+            
+            <div class="form-container">
+                <form name="sales-preview-feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="feedbackForm">
+                    <!-- Hidden fields for Netlify -->
+                    <input type="hidden" name="form-name" value="sales-preview-feedback">
+                    <div class="hidden">
+                        <label>Don't fill this out if you're human: <input name="bot-field"></label>
+                    </div>
+                    
+                    <div class="form-field">
+                        <textarea 
+                            name="feedback" 
+                            placeholder="Be blunt — what would make Lupo better on your next call?" 
+                            required
+                            id="feedbackText"
+                        ></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-button" id="submitButton">
+                        <span id="buttonText">Send Feedback</span>
+                    </button>
+                    
+                    <p class="error-message" id="errorMessage">Something went wrong. Please try again.</p>
+                    <p class="privacy-note">No data is retained beyond this message.</p>
+                </form>
+                
+                <div class="success-state" id="successState">
+                    <h3>Thank you — genuinely.</h3>
+                    <p>You're one of the first to ever see Lupo. We'll take this seriously.</p>
+                    <div class="success-links">
+                        <a href="https://calendly.com/tjpbaxter/30min" class="success-link">Book a 5-min chat</a>
+                        <span style="color: rgba(255, 255, 255, 0.3);">·</span>
+                        <a href="/" class="success-link">Download beta</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials Carousel (Hidden by default) -->
+        <section class="testimonials-section" id="testimonials">
+            <h2>What early reps are saying</h2>
+            <div class="quotes-carousel">
+                <div class="quotes-track">
+                    <div class="quote-card">
+                        <p class="quote-text">"[Placeholder testimonial - waiting for real feedback]"</p>
+                        <p class="quote-author">Anonymous · Enterprise SDR</p>
+                    </div>
+                    <div class="quote-card">
+                        <p class="quote-text">"[Placeholder testimonial - waiting for real feedback]"</p>
+                        <p class="quote-author">Anonymous · Sales Rep, London</p>
+                    </div>
+                    <div class="quote-card">
+                        <p class="quote-text">"[Placeholder testimonial - waiting for real feedback]"</p>
+                        <p class="quote-author">Anonymous · AE</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">© 2025 Flair Technologies Ltd · Built in London</p>
+    </footer>
+    
+    <script>
+        // Analytics helper
+        function trackEvent(eventName) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', eventName);
+            }
+            console.log('Event:', eventName);
+        }
+        
+        // Track page view
+        trackEvent('sales_preview_view');
+        
+        // Lazy load video with IntersectionObserver
+        let videoLoaded = false;
+        const videoContainer = document.getElementById('videoContainer');
+        const videoPoster = document.getElementById('videoPoster');
+        
+        function loadVideo() {
+            if (videoLoaded) return;
+            videoLoaded = true;
+            
+            const wrapper = videoPoster.parentElement;
+            const iframe = document.createElement('iframe');
+            iframe.src = 'https://player.vimeo.com/video/1125010367?autoplay=1&muted=1&controls=1&title=0&byline=0&portrait=0&playsinline=1&dnt=1';
+            iframe.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
+            iframe.setAttribute('allowfullscreen', '');
+            
+            videoPoster.style.display = 'none';
+            wrapper.appendChild(iframe);
+            videoContainer.classList.add('revealed');
+            
+            trackEvent('sales_preview_video_revealed');
+        }
+        
+        // IntersectionObserver for lazy loading
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+                    loadVideo();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.3
+        });
+        
+        observer.observe(videoContainer);
+        
+        // Click to load video
+        videoPoster.addEventListener('click', loadVideo);
+        videoPoster.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                loadVideo();
+            }
+        });
+        
+        // Smooth scroll to video
+        function scrollToVideo(e) {
+            e.preventDefault();
+            document.getElementById('video').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Load video immediately when CTA clicked
+            setTimeout(loadVideo, 300);
+        }
+        
+        // Form submission handling
+        const form = document.getElementById('feedbackForm');
+        const submitButton = document.getElementById('submitButton');
+        const buttonText = document.getElementById('buttonText');
+        const errorMessage = document.getElementById('errorMessage');
+        const successState = document.getElementById('successState');
+        
+        // Encode form data
+        function encode(data) {
+            return Object.keys(data)
+                .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+                .join('&');
+        }
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Reset states
+            form.classList.remove('error');
+            errorMessage.classList.remove('visible');
+            
+            // Set submitting state
+            form.classList.add('submitting');
+            submitButton.disabled = true;
+            buttonText.innerHTML = '<span class="spinner"></span>';
+            
+            // Prepare form data
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+            
+            try {
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: encode(data)
+                });
+                
+                if (response.ok) {
+                    // Success - show checkmark briefly, then morph to thank you
+                    buttonText.innerHTML = '✓';
+                    
+                    setTimeout(() => {
+                        form.style.display = 'none';
+                        successState.classList.add('visible');
+                        trackEvent('sales_preview_feedback_sent');
+                        
+                        // Optional: store flag in localStorage
+                        try {
+                            localStorage.setItem('lupo_feedback_sent', 'true');
+                        } catch (e) {
+                            // Ignore localStorage errors
+                        }
+                    }, 800);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                // Error state
+                form.classList.remove('submitting');
+                form.classList.add('error');
+                submitButton.disabled = false;
+                buttonText.textContent = 'Send Feedback';
+                errorMessage.classList.add('visible');
+                console.error('Form submission error:', error);
+            }
+        });
+        
+        // Check if already submitted (optional)
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                if (localStorage.getItem('lupo_feedback_sent') === 'true') {
+                    // Optionally show a note that they've already submitted
+                    // For now, we'll allow multiple submissions
+                }
+            } catch (e) {
+                // Ignore localStorage errors
+            }
+        });
+        
+        // Floating particles effect (matching homepage)
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: ${Math.random() * 4 + 2}px;
+                height: ${Math.random() * 4 + 2}px;
+                background: var(--accent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+                opacity: ${Math.random() * 0.3 + 0.05};
+            `;
+            
+            const startX = Math.random() * window.innerWidth;
+            const startY = window.innerHeight + 10;
+            
+            particle.style.left = startX + 'px';
+            particle.style.top = startY + 'px';
+            
+            document.body.appendChild(particle);
+            
+            const duration = Math.random() * 20000 + 10000;
+            const horizontalMovement = (Math.random() - 0.5) * 100;
+            
+            particle.animate([
+                { transform: `translate(0, 0)`, opacity: 0 },
+                { transform: `translate(${horizontalMovement}px, -${window.innerHeight + 20}px)`, opacity: particle.style.opacity },
+                { transform: `translate(${horizontalMovement * 2}px, -${window.innerHeight * 2}px)`, opacity: 0 }
+            ], {
+                duration: duration,
+                easing: 'linear'
+            }).onfinish = () => particle.remove();
+        }
+        
+        // Start particle animation
+        setInterval(createParticle, 1000);
+    </script>
+</body>
+</html>
+
