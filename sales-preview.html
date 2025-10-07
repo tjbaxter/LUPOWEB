@@ -1167,6 +1167,41 @@
                 font-size: 16px;
             }
         }
+
+        /* AI Reveal Blur Effect */
+        .ai-reveal-container {
+            margin-top: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+
+        .ai-reveal-container.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .ai-reveal-text {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent);
+            text-align: center;
+        }
+
+        .blur-text {
+            filter: blur(8px);
+            transition: filter 1.2s ease-out;
+        }
+
+        .blur-text.revealed {
+            filter: blur(0px);
+        }
+
+        @media (max-width: 768px) {
+            .ai-reveal-text {
+                font-size: 36px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1188,7 +1223,7 @@
         <!-- Hero Section -->
         <section class="hero">
             <h1>A quick look at LUPO.</h1>
-            <p>90-seconds handling objections live and writing follow-up emails instantly.</p>
+            <p>90-seconds handling objections live and writing instant follow-up emails.</p>
             <p>Watch it and tell me what you think.</p>
             <p class="hero-note">(No sign-up. No tracking. Just the video.)</p>
         </section>
@@ -1228,6 +1263,11 @@
                 Experience LUPO handling objections in real-time. 
                 Choose a scenario and see how LUPO responds.
             </p>
+            <div class="ai-reveal-container">
+                <div class="ai-reveal-text" id="aiRevealText">
+                    <span class="blur-text">AI</span>
+                </div>
+            </div>
         </section>
         
         <!-- Playground Section -->
@@ -1917,6 +1957,35 @@
                     item.classList.toggle('active');
                 });
             });
+        });
+
+        // AI Reveal on Scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const aiRevealContainer = document.getElementById('aiRevealText');
+            const blurText = document.querySelector('.blur-text');
+            
+            if (aiRevealContainer && blurText) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Add a slight delay for dramatic effect
+                            setTimeout(() => {
+                                aiRevealContainer.parentElement.classList.add('revealed');
+                            }, 500);
+                            
+                            setTimeout(() => {
+                                blurText.classList.add('revealed');
+                            }, 1000);
+                            
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.3 // Trigger when 30% visible
+                });
+                
+                observer.observe(aiRevealContainer);
+            }
         });
     </script>
 </body>
