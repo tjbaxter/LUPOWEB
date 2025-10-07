@@ -883,6 +883,220 @@
             margin-top: 4px;
         }
         
+        /* How It Works Section */
+        .how-it-works-section {
+            max-width: 1200px;
+            margin: 100px auto 80px;
+            padding: 60px 40px;
+            background: linear-gradient(
+                145deg,
+                rgba(22, 22, 24, 0.6) 0%,
+                rgba(22, 22, 24, 0.4) 100%
+            );
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        
+        .hiw-title {
+            text-align: center;
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hiw-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hiw-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .hiw-step {
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .hiw-step:nth-child(1) { animation-delay: 0.1s; }
+        .hiw-step:nth-child(2) { animation-delay: 0.3s; }
+        .hiw-step:nth-child(3) { animation-delay: 0.5s; }
+        
+        .hiw-step-number {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .hiw-step-number::before {
+            content: '';
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent), #5090ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hiw-step-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .hiw-step-items {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .hiw-step-item {
+            padding: 10px 0;
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .hiw-step-item::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .hiw-arrow {
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: var(--accent);
+            opacity: 0.3;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            max-width: 900px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        
+        .faq-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 48px;
+            color: var(--text-primary);
+        }
+        
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .faq-item {
+            background: linear-gradient(
+                145deg,
+                rgba(22, 22, 24, 0.6) 0%,
+                rgba(22, 22, 24, 0.4) 100%
+            );
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .faq-question {
+            padding: 24px 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        .faq-question-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            flex: 1;
+        }
+        
+        .faq-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .faq-icon::before {
+            content: '+';
+            font-size: 20px;
+            color: var(--text-primary);
+            font-weight: 300;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+            background: var(--accent);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 28px 24px 28px;
+        }
+        
+        .faq-answer-text {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        
         /* Footer */
         footer {
             text-align: center;
@@ -920,6 +1134,36 @@
             }
             
             .transition-subtitle {
+                font-size: 16px;
+            }
+            
+            .hiw-steps {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .hiw-arrow {
+                display: none;
+            }
+            
+            .hiw-title {
+                font-size: 32px;
+            }
+            
+            .hiw-subtitle {
+                font-size: 16px;
+            }
+            
+            .how-it-works-section {
+                padding: 40px 24px;
+                margin: 60px 20px;
+            }
+            
+            .faq-title {
+                font-size: 28px;
+            }
+            
+            .faq-question-text {
                 font-size: 16px;
             }
         }
@@ -1076,6 +1320,119 @@
                     </div>
                     <div class="signals-container" id="signalsContainer">
                         <!-- Signals will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- How It Works Section -->
+        <section class="how-it-works-section">
+            <h2 class="hiw-title">How LUPO Works</h2>
+            <p class="hiw-subtitle">Three simple steps to transform your sales calls</p>
+            
+            <div class="hiw-steps">
+                <div class="hiw-step">
+                    <div class="hiw-step-number">Step 1 - Setup</div>
+                    <h3 class="hiw-step-title">Upload Your Company Data</h3>
+                    <ul class="hiw-step-items">
+                        <li class="hiw-step-item">Upload your pitch deck</li>
+                        <li class="hiw-step-item">Add case studies & battlecards</li>
+                        <li class="hiw-step-item">Include product docs & pricing</li>
+                        <li class="hiw-step-item">Upload your sales playbook</li>
+                        <li class="hiw-step-item">Works with ANY video tool (Zoom, Teams, Meet)</li>
+                    </ul>
+                    <div class="hiw-arrow">→</div>
+                </div>
+                
+                <div class="hiw-step">
+                    <div class="hiw-step-number">Step 2 - During Call</div>
+                    <h3 class="hiw-step-title">LUPO Listens & Assists</h3>
+                    <ul class="hiw-step-items">
+                        <li class="hiw-step-item">LUPO listens to your call</li>
+                        <li class="hiw-step-item">Detects objections & buying signals</li>
+                        <li class="hiw-step-item">Suggests responses from YOUR data</li>
+                        <li class="hiw-step-item">Responds in ~200ms (instant)</li>
+                        <li class="hiw-step-item">Not generic AI—uses YOUR company playbook</li>
+                    </ul>
+                    <div class="hiw-arrow">→</div>
+                </div>
+                
+                <div class="hiw-step">
+                    <div class="hiw-step-number">Step 3 - After Call</div>
+                    <h3 class="hiw-step-title">Instant Follow-Up & Insights</h3>
+                    <ul class="hiw-step-items">
+                        <li class="hiw-step-item">Personalized follow-up email drafted instantly</li>
+                        <li class="hiw-step-item">Full transcript saved & searchable</li>
+                        <li class="hiw-step-item">Ask AI: "What could I do better?"</li>
+                        <li class="hiw-step-item">Manager sees team insights & critical moments</li>
+                        <li class="hiw-step-item">Review call performance with AI coaching</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="faq-title">Common Questions</h2>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="faq-question-text">How does LUPO know about MY company specifically?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="faq-answer-text">
+                            You upload your pitch deck, case studies, battlecards, and product docs once. LUPO uses YOUR content to generate responses—not generic AI suggestions. Every response comes from YOUR approved playbook, ensuring consistency and accuracy across your entire team.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="faq-question-text">Does it work with Zoom, Teams, and Google Meet?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="faq-answer-text">
+                            Yes. LUPO works with ANY video conferencing tool—Zoom, Microsoft Teams, Google Meet, and everything else. No integrations needed. Just start your call and LUPO listens in the background, ready to assist.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="faq-question-text">What exactly happens after the call ends?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="faq-answer-text">
+                            Instantly after your call: (1) A personalized follow-up email is drafted in seconds, ready for you to review and send. (2) The full transcript is saved and searchable. (3) You can ask the AI "What could I do better?" for instant coaching. (4) Managers see critical moments, buying signals, and team insights on their dashboard.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="faq-question-text">Is my call data private and secure?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="faq-answer-text">
+                            Yes. All call transcripts are processed in real-time and stored encrypted. You own your data completely and can delete it anytime. We never share your call data with third parties or use it to train models for other companies.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="faq-question-text">How fast does LUPO respond during calls?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="faq-answer-text">
+                            LUPO suggests responses in approximately 200 milliseconds—essentially instant. When a prospect raises an objection, LUPO immediately provides relevant talking points from your company's playbook, so you never have to pause or fumble for the right response.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1516,6 +1873,28 @@
         function formatType(type) {
             return type.replace(/-/g, ' ').replace(/_/g, ' ').toUpperCase();
         }
+        
+        // ========== FAQ ACCORDION ==========
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
+            });
+        });
     </script>
 </body>
 </html>
