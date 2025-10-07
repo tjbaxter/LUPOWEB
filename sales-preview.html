@@ -256,30 +256,70 @@
             margin-left: 4px;
         }
         
-        .video-caption {
+        /* Under-video block */
+        .under-video {
+            max-width: 760px;
+            margin: 1.25rem auto 0;
             text-align: center;
-            margin-top: 16px;
-            font-size: 14px;
-            color: var(--text-secondary);
-            font-style: italic;
         }
         
-        .after-video-note {
-            text-align: center;
-            margin-top: 2.5rem;
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.7);
+        .video-caption {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.98rem;
             line-height: 1.6;
+            margin: 0 0 0.5rem;
+        }
+        
+        .video-caption .muted {
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.92rem;
+        }
+        
+        .reply-note {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.98rem;
+            margin: 0.75rem 0 0;
         }
         
         .linkedin-link {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.75);
             text-decoration: underline;
             transition: color 120ms ease;
         }
         
         .linkedin-link:hover {
             color: var(--text-primary);
+        }
+        
+        .playground-card {
+            margin-top: 2.2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 16px;
+            backdrop-filter: blur(6px);
+        }
+        
+        .playground-text {
+            color: rgba(255, 255, 255, 0.78);
+            margin: 0 0 0.75rem;
+            font-size: 0.98rem;
+        }
+        
+        .playground-btn {
+            display: inline-block;
+            padding: 0.75rem 1.6rem;
+            border-radius: 999px;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(90deg, #7b4cff, #b47cff);
+            font-weight: 500;
+            transition: opacity 120ms ease, transform 120ms ease;
+        }
+        
+        .playground-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
         
         
@@ -352,13 +392,24 @@
                     </div>
                 </div>
             </div>
-            <p class="video-caption">A quick look at how Lupo listens, analyses, and guides in real time.</p>
-            
-            <p class="after-video-note">
-                Thanks for watching.<br>
-                If anything stood out — good or bad — just message me back on LinkedIn.<br>
-                <a href="https://www.linkedin.com/in/thomasjpbaxter/" target="_blank" rel="noopener" class="linkedin-link">Message me on LinkedIn →</a>
-            </p>
+            <!-- Under-video block -->
+            <div class="under-video">
+                <p class="video-caption">
+                    See how LUPO works in real calls.<br>
+                    <span class="muted">(90-second preview)</span>
+                </p>
+                
+                <p class="reply-note">
+                    Thanks for watching — if anything stood out, message me back on
+                    <a href="https://www.linkedin.com/in/thomasjpbaxter/" target="_blank" rel="noopener" class="linkedin-link">LinkedIn →</a>
+                </p>
+                
+                <!-- Optional: playground invite -->
+                <div class="playground-card">
+                    <p class="playground-text">Want to see it live?</p>
+                    <a href="/playground.html" target="_blank" rel="noopener" class="playground-btn">Open the interactive playground</a>
+                </div>
+            </div>
         </section>
     </main>
     
