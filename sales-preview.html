@@ -60,10 +60,12 @@
             66% { transform: rotate(240deg) scale(0.9); }
         }
         
-        /* Header */
-        header {
-            position: sticky;
+        /* Navigation - matching demo.html */
+        nav {
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -71,7 +73,7 @@
             border-bottom: 1px solid var(--border);
         }
         
-        .header-content {
+        .nav-content {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 22px;
@@ -85,6 +87,7 @@
             font-size: 21px;
             font-weight: 600;
             letter-spacing: 0.2px;
+            cursor: pointer;
             text-decoration: none;
             color: var(--text-primary);
             display: flex;
@@ -95,7 +98,7 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 32px;
         }
         
         .nav-link {
@@ -103,7 +106,7 @@
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
-            transition: color 0.2s ease;
+            transition: color 0.3s ease;
         }
         
         .nav-link:hover {
@@ -184,6 +187,8 @@
         
         .video-container {
             position: relative;
+            max-width: 900px;
+            margin: 0 auto;
             border-radius: 16px;
             overflow: hidden;
             background: var(--bg-secondary);
@@ -541,11 +546,7 @@
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
-                gap: 16px;
-            }
-            
-            .nav-link {
-                font-size: 13px;
+                display: none;
             }
             
             .hero h1 {
@@ -566,26 +567,27 @@
     <!-- Background Animation -->
     <div class="animated-bg"></div>
     
-    <!-- Header -->
-    <header>
-        <div class="header-content">
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
             <a href="/" class="logo">
-                <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 36px; width: auto;">
-                <span>LUPO</span>
+                <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 40px; width: auto;">
+                <span style="font-size: 24px; font-weight: 600; color: var(--text-primary);">LUPO</span>
             </a>
-            <nav class="nav-links">
-                <a href="/" class="nav-link">Product</a>
-                <a href="/#download" class="nav-link">Download</a>
-            </nav>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/playground.html" class="nav-link">Playground</a>
+                <a href="https://calendly.com/tjpbaxter/30min" class="nav-link">Book Demo</a>
+            </div>
         </div>
-    </header>
+    </nav>
     
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
         <section class="hero">
-            <h1>You're on the front line of sales.</h1>
-            <p>We built Lupo to make every call sharper, calmer, and more compliant — and this is your first look.<br>Take 90 seconds to watch. Then tell us what you think — we're listening closely.</p>
+            <h1>Built for people who live on calls.</h1>
+            <p>This is an early look at Lupo — AI that helps you stay sharp and compliant in real time. Watch the 90-second preview and tell us what you think.</p>
             <a href="#video" class="hero-cta" onclick="scrollToVideo(event)">Watch the preview</a>
         </section>
         
