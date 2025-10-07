@@ -291,35 +291,21 @@
             color: var(--text-primary);
         }
         
-        .playground-card {
-            margin-top: 2.2rem;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 16px;
-            backdrop-filter: blur(6px);
+        /* Quiet playground epilogue - Apple style */
+        .playground-epilogue {
+            margin-top: 2.5rem;
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.5);
         }
         
-        .playground-text {
-            color: rgba(255, 255, 255, 0.78);
-            margin: 0 0 0.75rem;
-            font-size: 0.98rem;
-        }
-        
-        .playground-btn {
-            display: inline-block;
-            padding: 0.75rem 1.6rem;
-            border-radius: 999px;
+        .playground-epilogue a {
+            color: rgba(255, 255, 255, 0.6);
             text-decoration: none;
-            color: white;
-            background: linear-gradient(90deg, #7b4cff, #b47cff);
-            font-weight: 500;
-            transition: opacity 120ms ease, transform 120ms ease;
+            transition: color 120ms ease;
         }
         
-        .playground-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
+        .playground-epilogue a:hover {
+            color: rgba(255, 255, 255, 0.9);
         }
         
         
@@ -374,7 +360,7 @@
     <main>
         <!-- Hero Section -->
         <section class="hero">
-            <h1>A quick look at Lupo.</h1>
+            <h1>A quick look at LUPO.</h1>
             <p>A 90-second preview showing how it helps during real sales calls.<br>Watch it and tell me what you think.</p>
             <p class="hero-note">(No sign-up. No tracking. Just the video.)</p>
         </section>
@@ -404,11 +390,10 @@
                     <a href="https://www.linkedin.com/in/thomasjpbaxter/" target="_blank" rel="noopener" class="linkedin-link">LinkedIn →</a>
                 </p>
                 
-                <!-- Optional: playground invite -->
-                <div class="playground-card">
-                    <p class="playground-text">Want to see it live?</p>
-                    <a href="/playground.html" target="_blank" rel="noopener" class="playground-btn">Open the interactive playground</a>
-                </div>
+                <!-- Optional: quiet playground link -->
+                <p class="playground-epilogue">
+                    Still curious? <a href="/playground.html" target="_blank" rel="noopener">Try the live demo →</a>
+                </p>
             </div>
         </section>
     </main>
