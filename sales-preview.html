@@ -1717,6 +1717,7 @@
         let currentScenario = 'saas';
         let signalInterval;
         let currentSignalIndex = 0;
+        let hasStarted = false;
         
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
@@ -1734,8 +1735,22 @@
                 });
             });
             
-            // Start initial simulation
-            startSignalSimulation();
+            // Only start simulation when user scrolls to the demo section
+            const demoSection = document.querySelector('.playground-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !hasStarted) {
+                        hasStarted = true;
+                        startSignalSimulation();
+                    }
+                });
+            }, {
+                threshold: 0.2 // Start when 20% of the section is visible
+            });
+            
+            if (demoSection) {
+                observer.observe(demoSection);
+            }
         });
         
         // Reset demo
