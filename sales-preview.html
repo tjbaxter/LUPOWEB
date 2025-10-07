@@ -298,6 +298,15 @@
             padding: 100px 20px 60px;
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            filter: blur(8px);
+            opacity: 0.3;
+            transition: filter 1.2s ease-out, opacity 1.2s ease-out;
+        }
+
+        .playground-transition.unblurred {
+            filter: blur(0px);
+            opacity: 1;
         }
         
         .transition-arrow {
@@ -1167,41 +1176,6 @@
                 font-size: 16px;
             }
         }
-
-        /* AI Reveal Blur Effect */
-        .ai-reveal-container {
-            margin-top: 30px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease-out;
-        }
-
-        .ai-reveal-container.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .ai-reveal-text {
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--accent);
-            text-align: center;
-        }
-
-        .blur-text {
-            filter: blur(8px);
-            transition: filter 1.2s ease-out;
-        }
-
-        .blur-text.revealed {
-            filter: blur(0px);
-        }
-
-        @media (max-width: 768px) {
-            .ai-reveal-text {
-                font-size: 36px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -1256,18 +1230,13 @@
         </section>
         
         <!-- Playground Transition Section -->
-        <section class="playground-transition">
+        <section class="playground-transition" id="playgroundTransition">
             <div class="transition-arrow">↓</div>
             <h2 class="transition-title">Now Try It Yourself</h2>
             <p class="transition-subtitle">
                 Experience LUPO handling objections in real-time. 
                 Choose a scenario and see how LUPO responds.
             </p>
-            <div class="ai-reveal-container">
-                <div class="ai-reveal-text" id="aiRevealText">
-                    <span class="blur-text">AI</span>
-                </div>
-            </div>
         </section>
         
         <!-- Playground Section -->
@@ -1959,32 +1928,27 @@
             });
         });
 
-        // AI Reveal on Scroll
+        // Unblur Playground Transition on Scroll
         document.addEventListener('DOMContentLoaded', function() {
-            const aiRevealContainer = document.getElementById('aiRevealText');
-            const blurText = document.querySelector('.blur-text');
+            const playgroundTransition = document.getElementById('playgroundTransition');
             
-            if (aiRevealContainer && blurText) {
+            if (playgroundTransition) {
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            // Add a slight delay for dramatic effect
+                            // Unblur when user scrolls to this section
                             setTimeout(() => {
-                                aiRevealContainer.parentElement.classList.add('revealed');
-                            }, 500);
-                            
-                            setTimeout(() => {
-                                blurText.classList.add('revealed');
-                            }, 1000);
+                                playgroundTransition.classList.add('unblurred');
+                            }, 300);
                             
                             observer.unobserve(entry.target);
                         }
                     });
                 }, {
-                    threshold: 0.3 // Trigger when 30% visible
+                    threshold: 0.5 // Trigger when 50% visible
                 });
                 
-                observer.observe(aiRevealContainer);
+                observer.observe(playgroundTransition);
             }
         });
     </script>
