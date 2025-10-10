@@ -1216,11 +1216,48 @@
                     </div>
                 </div>
                 
+                <!-- Video Explanation -->
+                <div style="text-align: center; max-width: 700px; margin: 0 auto 40px; padding: 0 20px;">
+                    <p style="font-size: 14px; color: rgba(255, 255, 255, 0.6); line-height: 1.6;">
+                        The clip uses a simple real estate scenario, but LUPO is designed for any B2B sales team. The interactive demo below shows how it adapts to real-world objections, whether you sell software, services, or solutions.
+                    </p>
+                </div>
+                
                 <!-- Try Interactive Demo Link -->
+                <style>
+                    .demo-btn {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 18px 48px;
+                        background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%);
+                        border: none;
+                        border-radius: 50px;
+                        color: white;
+                        text-decoration: none;
+                        font-size: 16px;
+                        font-weight: 600;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 10px 40px rgba(96, 165, 250, 0.4);
+                        cursor: pointer;
+                    }
+                    .demo-btn:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 15px 50px rgba(96, 165, 250, 0.5);
+                    }
+                    .demo-btn:active {
+                        transform: translateY(0px);
+                        box-shadow: 0 8px 30px rgba(96, 165, 250, 0.4);
+                    }
+                    .demo-btn svg {
+                        transition: transform 0.3s ease;
+                    }
+                    .demo-btn:hover svg {
+                        transform: translateX(3px);
+                    }
+                </style>
                 <div style="text-align: center;">
-                    <a href="playground.html" style="display: inline-flex; align-items: center; gap: 12px; padding: 18px 48px; background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%); border: none; border-radius: 50px; color: white; text-decoration: none; font-size: 16px; font-weight: 600; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 40px rgba(96, 165, 250, 0.4);"
-                       onmouseover="this.style.transform='translateY(-3px) scale(1.02)'; this.style.boxShadow='0 15px 50px rgba(96, 165, 250, 0.5)'"
-                       onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 40px rgba(96, 165, 250, 0.4)'">
+                    <a href="playground.html" class="demo-btn">
                         <span>Try Interactive Demo</span>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -1244,10 +1281,8 @@
                 </div>
                 
                 <div class="preview-card">
-                    <div class="preview-icon" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        </svg>
+                    <div class="preview-icon" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2)); font-size: 28px;">
+                        ✉️
                     </div>
                     <div class="preview-title">Instant Follow-Up Emails</div>
                     <div class="preview-description">
