@@ -610,6 +610,300 @@
             line-height: 1.4;
         }
         
+        /* Onboarding Styles */
+        .onboarding-container {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .onboarding-container.active {
+            display: flex;
+        }
+        
+        .onboarding-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        .onboarding-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .onboarding-progress {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+        }
+        
+        .progress-bar {
+            width: 120px;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .onboarding-step {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .onboarding-step.active {
+            display: flex;
+        }
+        
+        .step-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 8px;
+        }
+        
+        .step-description {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .form-input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(59,130,246,0.5);
+        }
+        
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+        
+        .form-textarea {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 14px;
+            min-height: 80px;
+            resize: vertical;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+        
+        .form-textarea:focus {
+            outline: none;
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(59,130,246,0.5);
+        }
+        
+        .form-textarea::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 8px 0;
+        }
+        
+        .checkbox {
+            width: 16px;
+            height: 16px;
+            accent-color: #3b82f6;
+        }
+        
+        .checkbox-label {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            cursor: pointer;
+        }
+        
+        .pricing-tiers {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .tier-input {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .tier-name {
+            flex: 1;
+        }
+        
+        .tier-price {
+            width: 120px;
+        }
+        
+        .add-tier-btn {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .add-tier-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .onboarding-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin-top: auto;
+        }
+        
+        .onboarding-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+        
+        .onboarding-btn.primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .onboarding-btn.primary:hover:not(:disabled) {
+            background: #2563eb;
+        }
+        
+        .onboarding-btn.secondary {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.8);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .onboarding-btn.secondary:hover:not(:disabled) {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+        
+        .onboarding-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        .welcome-banner {
+            background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(59,130,246,0.05));
+            border: 1px solid rgba(59,130,246,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .welcome-banner.show {
+            display: block;
+        }
+        
+        .welcome-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .welcome-text {
+            flex: 1;
+        }
+        
+        .welcome-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 4px;
+        }
+        
+        .welcome-subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .welcome-btn {
+            padding: 10px 20px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .welcome-btn:hover {
+            background: #2563eb;
+        }
+        
+        .battlecard-btn.first-time {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(59,130,246,0.7);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 0 8px rgba(59,130,246,0);
+                transform: scale(1.02);
+            }
+        }
+        
         .context-editor {
             flex: 1;
             min-height: 500px;
@@ -750,6 +1044,17 @@
         
         <!-- Content Area -->
         <div class="content-area">
+            <!-- Welcome Banner for New Users -->
+            <div class="welcome-banner" id="welcomeBanner">
+                <div class="welcome-content">
+                    <div class="welcome-text">
+                        <div class="welcome-title">Welcome to LUPO!</div>
+                        <div class="welcome-subtitle">Set up your sales context so LUPO can help you close deals</div>
+                    </div>
+                    <button class="welcome-btn" onclick="openBattlecard(true)">Get Started (2 min)</button>
+                </div>
+            </div>
+            
             <div class="transcript-view" id="transcriptView">
                 <div class="empty-state">Select a call to view transcript</div>
             </div>
@@ -791,6 +1096,10 @@
         let callsWithTranscripts = new Map(); // Store full data for each call
         let currentFilter = 'all';
         let currentSearchQuery = '';
+        let currentUser = null;
+        let isOnboardingMode = false;
+        let currentStep = 1;
+        const totalSteps = 4;
         
         // Initialize
         async function init() {
@@ -824,11 +1133,18 @@
                 
                 if (response.ok) {
                     const data = await response.json();
+                    currentUser = data.user;
+                    
                     const userName = document.getElementById('userName');
                     const userAvatar = document.getElementById('userAvatar');
                     
-                    userName.textContent = data.user?.name || data.user?.email || 'User';
-                    userAvatar.textContent = (data.user?.name || data.user?.email || 'U').charAt(0).toUpperCase();
+                    userName.textContent = currentUser?.name || currentUser?.email || 'User';
+                    userAvatar.textContent = (currentUser?.name || currentUser?.email || 'U').charAt(0).toUpperCase();
+                    
+                    // Check if user needs onboarding
+                    if (!currentUser?.onboardingCompleted && (!currentUser?.salesContext?.content || currentUser.salesContext.content.trim() === '')) {
+                        showOnboardingUI();
+                    }
                 }
             } catch (err) {
                 console.error('Failed to load user info:', err);
@@ -1244,10 +1560,15 @@
         let autoSaveTimer;
         let contextHasChanges = false;
         
-        function openBattlecard() {
+        function openBattlecard(forceOnboarding = false) {
             document.getElementById('battlecardOverlay').classList.add('active');
             document.getElementById('battlecardPanel').classList.add('active');
-            loadUserContext();
+            
+            if (forceOnboarding || (!currentUser?.onboardingCompleted && (!currentUser?.salesContext?.content || currentUser.salesContext.content.trim() === ''))) {
+                showOnboardingFlow();
+            } else {
+                showContextEditor();
+            }
         }
         
         function closeBattlecard() {
@@ -1327,6 +1648,200 @@
             }, 3000);
         }
         
+        // ============================================================================
+        // ONBOARDING FUNCTIONS
+        // ============================================================================
+        
+        function showOnboardingUI() {
+            // Show welcome banner
+            document.getElementById('welcomeBanner').classList.add('show');
+            
+            // Pulse the context button
+            document.querySelector('.battlecard-btn').classList.add('first-time');
+            
+            // Auto-open context panel after 2 seconds
+            setTimeout(() => {
+                openBattlecard(true);
+            }, 2000);
+        }
+        
+        function showOnboardingFlow() {
+            isOnboardingMode = true;
+            currentStep = 1;
+            
+            document.getElementById('onboardingContainer').classList.add('active');
+            document.getElementById('contextSection').style.display = 'none';
+            document.getElementById('battlecard-footer').style.display = 'none';
+            
+            updateProgress();
+            showStep(1);
+            
+            // Setup pricing tiers toggle
+            document.getElementById('hasMultipleTiers').addEventListener('change', function() {
+                const tiers = document.getElementById('pricingTiers');
+                tiers.style.display = this.checked ? 'block' : 'none';
+            });
+        }
+        
+        function showContextEditor() {
+            isOnboardingMode = false;
+            
+            document.getElementById('onboardingContainer').classList.remove('active');
+            document.getElementById('contextSection').style.display = 'block';
+            document.getElementById('battlecard-footer').style.display = 'flex';
+            
+            loadUserContext();
+        }
+        
+        function showStep(step) {
+            // Hide all steps
+            for (let i = 1; i <= totalSteps; i++) {
+                document.getElementById(`step${i}`).classList.remove('active');
+            }
+            
+            // Show current step
+            document.getElementById(`step${step}`).classList.add('active');
+            
+            // Update buttons
+            const backBtn = document.getElementById('backBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            backBtn.style.display = step > 1 ? 'block' : 'none';
+            
+            if (step === totalSteps) {
+                nextBtn.textContent = 'Complete Setup';
+                generateContextPreview();
+            } else {
+                nextBtn.textContent = 'Next →';
+            }
+        }
+        
+        function updateProgress() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `Step ${currentStep} of ${totalSteps}`;
+        }
+        
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+                updateProgress();
+            } else {
+                completeOnboarding();
+            }
+        }
+        
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+                updateProgress();
+            }
+        }
+        
+        function addPricingTier() {
+            const container = document.getElementById('pricingTiers');
+            const newTier = document.createElement('div');
+            newTier.className = 'tier-input';
+            newTier.innerHTML = `
+                <input type="text" class="form-input tier-name" placeholder="Tier name">
+                <input type="text" class="form-input tier-price" placeholder="$X/mo">
+            `;
+            container.appendChild(newTier);
+        }
+        
+        function generateContextPreview() {
+            const productName = document.getElementById('productName').value;
+            const productDescription = document.getElementById('productDescription').value;
+            const targetCustomer = document.getElementById('targetCustomer').value;
+            const startingPrice = document.getElementById('startingPrice').value;
+            const priceUnit = document.getElementById('priceUnit').value;
+            const hasMultipleTiers = document.getElementById('hasMultipleTiers').checked;
+            const implementationTime = document.getElementById('implementationTime').value;
+            const mainObjection = document.getElementById('mainObjection').value;
+            const objectionResponse = document.getElementById('objectionResponse').value;
+            const differentiation = document.getElementById('differentiation').value;
+            
+            let context = `PRODUCT OVERVIEW\n`;
+            context += `${productName} - ${productDescription}\n`;
+            context += `Target customer: ${targetCustomer}\n\n`;
+            
+            context += `PRICING STRUCTURE\n`;
+            if (hasMultipleTiers) {
+                const tierInputs = document.querySelectorAll('.tier-input');
+                tierInputs.forEach(input => {
+                    const name = input.querySelector('.tier-name').value;
+                    const price = input.querySelector('.tier-price').value;
+                    if (name && price) {
+                        context += `• ${name}: ${price}\n`;
+                    }
+                });
+            } else {
+                context += `• Starting price: $${startingPrice}/${priceUnit}\n`;
+            }
+            
+            if (implementationTime) {
+                context += `\nIMPLEMENTATION\n`;
+                context += `Timeline: ${implementationTime}\n`;
+            }
+            
+            if (mainObjection && objectionResponse) {
+                context += `\nOBJECTION HANDLING\n`;
+                context += `Common: "${mainObjection}"\n`;
+                context += `Response: ${objectionResponse}\n`;
+            }
+            
+            if (differentiation) {
+                context += `\nDIFFERENTIATION\n`;
+                context += `${differentiation}\n`;
+            }
+            
+            document.getElementById('contextPreview').value = context;
+        }
+        
+        async function completeOnboarding() {
+            const contextContent = document.getElementById('contextPreview').value;
+            
+            try {
+                const headers = getAuthHeaders();
+                headers['Content-Type'] = 'application/json';
+                
+                const response = await fetch('https://lupo-backend.fly.dev/sales/update-context', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({ 
+                        content: contextContent,
+                        source: 'onboarding',
+                        onboardingCompleted: true
+                    })
+                });
+                
+                if (response.ok) {
+                    // Update user state
+                    currentUser.onboardingCompleted = true;
+                    currentUser.salesContext = { content: contextContent };
+                    
+                    // Hide welcome banner
+                    document.getElementById('welcomeBanner').classList.remove('show');
+                    
+                    // Remove pulsing from context button
+                    document.querySelector('.battlecard-btn').classList.remove('first-time');
+                    
+                    // Show success and switch to context editor
+                    showToast('Setup complete! Your sales context has been saved.');
+                    showContextEditor();
+                    
+                } else {
+                    throw new Error('Failed to save context');
+                }
+                
+            } catch (err) {
+                console.error('Onboarding completion failed:', err);
+                showToast('Setup failed. Please try again.', 'error');
+            }
+        }
+        
         // Setup context editor listeners
         document.addEventListener('DOMContentLoaded', () => {
             const editor = document.getElementById('contextEditor');
@@ -1351,7 +1866,143 @@
         </div>
         
         <div class="battlecard-content">
-            <div class="context-section">
+            <!-- Onboarding Flow -->
+            <div class="onboarding-container" id="onboardingContainer">
+                <div class="onboarding-header">
+                    <div class="onboarding-title">Quick Setup</div>
+                    <div class="onboarding-progress">
+                        <span id="progressText">Step 1 of 4</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    </div>
+                </div>
+                
+                <!-- Step 1: Product Basics -->
+                <div class="onboarding-step active" id="step1">
+                    <div class="step-title">What do you sell?</div>
+                    <div class="step-description">Tell us about your product or service so LUPO can help you sell it effectively.</div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Product name</label>
+                        <input type="text" class="form-input" id="productName" placeholder="e.g., Salesforce CRM">
+            </div>
+            
+                    <div class="form-group">
+                        <label class="form-label">What does it do? (1-2 sentences)</label>
+                        <textarea class="form-textarea" id="productDescription" placeholder="e.g., Cloud-based customer relationship management software that helps sales teams track leads and close deals"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Who buys this?</label>
+                        <input type="text" class="form-input" id="targetCustomer" placeholder="e.g., Sales teams at B2B companies">
+                    </div>
+                </div>
+                
+                <!-- Step 2: Pricing -->
+                <div class="onboarding-step" id="step2">
+                    <div class="step-title">Let's talk pricing</div>
+                    <div class="step-description">Help LUPO understand your pricing structure to handle price objections effectively.</div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">What's your starting price?</label>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <span style="color: rgba(255,255,255,0.6);">$</span>
+                            <input type="text" class="form-input" id="startingPrice" placeholder="99" style="width: 100px;">
+                            <select class="form-input" id="priceUnit" style="width: 120px;">
+                                <option value="month">per month</option>
+                                <option value="year">per year</option>
+                                <option value="one-time">one-time</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" class="checkbox" id="hasMultipleTiers">
+                        <label class="checkbox-label" for="hasMultipleTiers">We have multiple pricing tiers</label>
+                    </div>
+                    
+                    <div class="pricing-tiers" id="pricingTiers" style="display: none;">
+                        <div class="tier-input">
+                            <input type="text" class="form-input tier-name" placeholder="Tier name (e.g., Basic)">
+                            <input type="text" class="form-input tier-price" placeholder="$99/mo">
+                        </div>
+                        <div class="tier-input">
+                            <input type="text" class="form-input tier-name" placeholder="Tier name (e.g., Professional)">
+                            <input type="text" class="form-input tier-price" placeholder="$299/mo">
+                        </div>
+                        <div class="tier-input">
+                            <input type="text" class="form-input tier-name" placeholder="Tier name (e.g., Enterprise)">
+                            <input type="text" class="form-input tier-price" placeholder="Custom">
+                        </div>
+                        <button type="button" class="add-tier-btn" onclick="addPricingTier()">+ Add another tier</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Minimum contract length?</label>
+                        <div style="display: flex; gap: 16px; margin-top: 8px;">
+                            <label class="checkbox-group">
+                                <input type="radio" name="contractLength" value="none" class="checkbox">
+                                <span class="checkbox-label">No commitment</span>
+                            </label>
+                            <label class="checkbox-group">
+                                <input type="radio" name="contractLength" value="monthly" class="checkbox" checked>
+                                <span class="checkbox-label">Monthly</span>
+                            </label>
+                            <label class="checkbox-group">
+                                <input type="radio" name="contractLength" value="annual" class="checkbox">
+                                <span class="checkbox-label">Annual</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Key Info -->
+                <div class="onboarding-step" id="step3">
+                    <div class="step-title">A few more quick questions</div>
+                    <div class="step-description">This helps LUPO provide better guidance during your calls.</div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">How long does implementation take?</label>
+                        <input type="text" class="form-input" id="implementationTime" placeholder="e.g., 2-3 weeks or Same day setup">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">What's the #1 objection you hear?</label>
+                        <input type="text" class="form-input" id="mainObjection" placeholder="e.g., Too expensive or We already have a solution">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">How do you handle that objection?</label>
+                        <textarea class="form-textarea" id="objectionResponse" placeholder="e.g., Show ROI calculator - typical customer saves $50k annually"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">What makes you different from competitors?</label>
+                        <textarea class="form-textarea" id="differentiation" placeholder="e.g., Only solution with built-in AI, 10x faster setup than Competitor X"></textarea>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Review -->
+                <div class="onboarding-step" id="step4">
+                    <div class="step-title">You're all set!</div>
+                    <div class="step-description">Here's what LUPO will know during your calls. You can always edit this later.</div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Your sales context preview:</label>
+                        <textarea class="form-textarea" id="contextPreview" readonly style="min-height: 200px; background: rgba(255,255,255,0.02);"></textarea>
+                    </div>
+                </div>
+                
+                <div class="onboarding-footer">
+                    <button class="onboarding-btn secondary" id="backBtn" onclick="previousStep()" style="display: none;">← Back</button>
+                    <div style="flex: 1;"></div>
+                    <button class="onboarding-btn primary" id="nextBtn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+            
+            <!-- Regular Context Editor -->
+            <div class="context-section" id="contextSection">
                 <div class="context-header">
                     <div class="context-title">Personal Sales Context</div>
                     <div class="context-subtitle">Define your sales strategy, pricing, and key talking points. This context will be used by LUPO AI during your live calls to provide personalized coaching and real-time guidance.</div>
