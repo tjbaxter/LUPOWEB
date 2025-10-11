@@ -1164,6 +1164,11 @@
         let currentStep = 1;
         const totalSteps = 3;
         
+        // NEW: Hierarchical context state
+        let isUserAdmin = false;
+        let companyContextStatus = null;
+        let viewMode = 'personal'; // 'personal' or 'company'
+        
         // ========================================
         // ENTERPRISE-GRADE API UTILITIES
         // ========================================
@@ -1383,20 +1388,40 @@
         async function loadUserInfo() {
             try {
                 const data = await api.get('/sales/me');
-                    currentUser = data.user;
-                    
-                    const userName = document.getElementById('userName');
-                    const userAvatar = document.getElementById('userAvatar');
-                    
-                    userName.textContent = currentUser?.name || currentUser?.email || 'User';
-                    userAvatar.textContent = (currentUser?.name || currentUser?.email || 'U').charAt(0).toUpperCase();
-                    
-                    // Show info banner if context is empty (and not dismissed)
-                    const hasContext = currentUser?.salesContext?.content && currentUser.salesContext.content.trim() !== '';
-                    const bannerDismissed = localStorage.getItem('lupo_context_banner_dismissed') === 'true';
-                    
-                    if (!hasContext && !bannerDismissed) {
-                        showInfoBanner();
+                currentUser = data.user;
+                
+                const userName = document.getElementById('userName');
+                const userAvatar = document.getElementById('userAvatar');
+                
+                userName.textContent = currentUser?.name || currentUser?.email || 'User';
+                userAvatar.textContent = (currentUser?.name || currentUser?.email || 'U').charAt(0).toUpperCase();
+                
+                // NEW: Check if user is admin
+                const orgData = data.org;
+                if (orgData && orgData.admins) {
+                    isUserAdmin = orgData.admins.some(admin => admin.email === currentUser?.email);
+                }
+                
+                // NEW: Load company context status
+                await loadCompanyContextStatus();
+                
+                // Show info banner if context is empty (and not dismissed)
+                const hasContext = currentUser?.salesContext?.content && currentUser.salesContext.content.trim() !== '';
+                const bannerDismissed = localStorage.getItem('lupo_context_banner_dismissed') === 'true';
+                
+                // NEW: Check if company has context but user doesn't
+                if (!hasContext && companyContextStatus?.hasCompanyContext && !bannerDismissed) {
+                    showCompanyContextBanner();
+                } else if (!hasContext && !bannerDismissed) {
+                    showInfoBanner();
+                } else if (companyContextStatus?.isOutOfDate && !bannerDismissed) {
+                    // Show different banner based on context source
+                    const contextSource = currentUser?.salesContext?.contextSource;
+                    if (contextSource === 'custom') {
+                        showUpdatesAvailableBanner(); // Softer message for custom contexts
+                    } else {
+                        showOutOfDateBanner(); // Stronger message for company contexts
+                    }
                 }
             } catch (err) {
                 console.error('Failed to load user info:', err);
@@ -1404,15 +1429,80 @@
             }
         }
         
+        // NEW: Load company context status
+        async function loadCompanyContextStatus() {
+            try {
+                const data = await api.get('/sales/context-status');
+                companyContextStatus = data.status;
+                console.log('Company context status:', companyContextStatus);
+            } catch (err) {
+                console.error('Failed to load company context status:', err);
+            }
+        }
+        
         // Show info banner
         function showInfoBanner() {
-            document.getElementById('welcomeBanner').classList.add('show');
+            const banner = document.getElementById('welcomeBanner');
+            banner.querySelector('.welcome-title').textContent = '💡 Make LUPO smarter';
+            banner.querySelector('.welcome-subtitle').textContent = 'Add your sales context so LUPO can provide better coaching';
+            banner.querySelector('.welcome-btn').textContent = 'Add Context';
+            banner.querySelector('.welcome-btn').onclick = () => openBattlecard(true);
+            banner.classList.add('show');
+        }
+        
+        // NEW: Show company context banner (for reps when company has context)
+        function showCompanyContextBanner() {
+            const banner = document.getElementById('welcomeBanner');
+            banner.querySelector('.welcome-title').textContent = '🎯 Your company has a sales playbook ready';
+            banner.querySelector('.welcome-subtitle').textContent = 'Use your company\'s pre-configured context to get started instantly';
+            banner.querySelector('.welcome-btn').textContent = 'Use Company Context';
+            banner.querySelector('.welcome-btn').onclick = () => applyCompanyContextFromBanner();
+            banner.classList.add('show');
+        }
+        
+        // NEW: Show out of date banner (when company context was updated)
+        function showOutOfDateBanner() {
+            const banner = document.getElementById('welcomeBanner');
+            banner.querySelector('.welcome-title').textContent = '🔔 Company context updated';
+            banner.querySelector('.welcome-subtitle').textContent = `Your manager updated the sales playbook. Review and apply the changes.`;
+            banner.querySelector('.welcome-btn').textContent = 'View Updates';
+            banner.querySelector('.welcome-btn').onclick = () => openBattlecard(false, true);
+            banner.classList.add('show');
+        }
+        
+        // NEW: Show updates available banner (softer message for custom contexts)
+        function showUpdatesAvailableBanner() {
+            const banner = document.getElementById('welcomeBanner');
+            banner.querySelector('.welcome-title').textContent = '💡 Company playbook updated';
+            banner.querySelector('.welcome-subtitle').textContent = `You're using a custom context. View the latest company updates.`;
+            banner.querySelector('.welcome-btn').textContent = 'View Updates';
+            banner.querySelector('.welcome-btn').onclick = () => openBattlecard(false, true);
+            banner.classList.add('show');
         }
         
         // Dismiss info banner
         function dismissInfoBanner() {
             document.getElementById('welcomeBanner').classList.remove('show');
             localStorage.setItem('lupo_context_banner_dismissed', 'true');
+        }
+        
+        // NEW: Apply company context from banner
+        async function applyCompanyContextFromBanner() {
+            try {
+                const response = await api.post('/sales/apply-company-context', {});
+                
+                if (response.success) {
+                    currentUser.salesContext = response.salesContext;
+                    showToast('Company context applied successfully!');
+                    dismissInfoBanner();
+                    
+                    // Reload context status
+                    await loadCompanyContextStatus();
+                }
+            } catch (err) {
+                console.error('Failed to apply company context:', err);
+                showToast('Failed to apply company context', 'error');
+            }
         }
         
         // Load calls
@@ -1801,18 +1891,181 @@
         let autoSaveTimer;
         let contextHasChanges = false;
         
-        function openBattlecard(startWithOnboarding = false) {
+        function openBattlecard(startWithOnboarding = false, showCompanyUpdates = false) {
             const panel = document.getElementById('battlecardPanel');
             const hasContext = currentUser?.salesContext?.content && currentUser.salesContext.content.trim() !== '';
             
             document.getElementById('battlecardOverlay').classList.add('active');
             panel.classList.add('active');
             
-            // Show onboarding if explicitly requested OR if they have no context
-            if (startWithOnboarding || !hasContext) {
+            // NEW: Determine which mode to show
+            if (showCompanyUpdates && companyContextStatus?.hasCompanyContext) {
+                // Show company context comparison view
+                viewMode = 'company';
+                showContextEditor();
+                showContextModeSelector();
+            } else if (startWithOnboarding || !hasContext) {
+                // Show onboarding
                 showOnboarding();
             } else {
+                // Show regular editor with mode selector
                 showContextEditor();
+                showContextModeSelector();
+            }
+        }
+        
+        // NEW: Show context mode selector (Personal vs Company)
+        function showContextModeSelector() {
+            // Only show if user is admin OR company has context
+            if (!isUserAdmin && !companyContextStatus?.hasCompanyContext) {
+                return;
+            }
+            
+            const header = document.getElementById('battlecardPanel').querySelector('.battlecard-header');
+            
+            // Check if selector already exists
+            if (header.querySelector('.context-mode-selector')) {
+                return;
+            }
+            
+            // Create mode selector
+            const selector = document.createElement('div');
+            selector.className = 'context-mode-selector';
+            selector.style.cssText = 'display: flex; gap: 8px; margin-right: auto; margin-left: 16px;';
+            
+            // Personal context button
+            const personalBtn = document.createElement('button');
+            personalBtn.className = 'mode-btn';
+            personalBtn.textContent = 'My Context';
+            personalBtn.style.cssText = 'padding: 6px 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: all 0.2s;';
+            personalBtn.onclick = () => switchContextMode('personal');
+            
+            // Company context button (only for admins or if company context exists)
+            const companyBtn = document.createElement('button');
+            companyBtn.className = 'mode-btn';
+            companyBtn.textContent = isUserAdmin ? 'Company Template' : 'Company Context';
+            companyBtn.style.cssText = 'padding: 6px 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: rgba(255,255,255,0.6); font-size: 12px; cursor: pointer; transition: all 0.2s;';
+            companyBtn.onclick = () => switchContextMode('company');
+            
+            selector.appendChild(personalBtn);
+            selector.appendChild(companyBtn);
+            
+            // Insert after title
+            const title = header.querySelector('.battlecard-title');
+            title.after(selector);
+            
+            // Set initial active state
+            updateModeButtonStates();
+        }
+        
+        // NEW: Switch between personal and company context modes
+        async function switchContextMode(mode) {
+            viewMode = mode;
+            updateModeButtonStates();
+            
+            if (mode === 'company') {
+                await loadCompanyContext();
+            } else {
+                await loadUserContext();
+            }
+        }
+        
+        // NEW: Update mode button visual states
+        function updateModeButtonStates() {
+            const buttons = document.querySelectorAll('.mode-btn');
+            buttons.forEach((btn, index) => {
+                const isActive = (index === 0 && viewMode === 'personal') || (index === 1 && viewMode === 'company');
+                if (isActive) {
+                    btn.style.background = 'rgba(59,130,246,0.2)';
+                    btn.style.borderColor = '#3b82f6';
+                    btn.style.color = '#3b82f6';
+                } else {
+                    btn.style.background = 'rgba(255,255,255,0.05)';
+                    btn.style.borderColor = 'rgba(255,255,255,0.1)';
+                    btn.style.color = 'rgba(255,255,255,0.6)';
+                }
+            });
+            
+            // Update save button text
+            const saveBtn = document.getElementById('saveContextBtn');
+            if (viewMode === 'company' && isUserAdmin) {
+                saveBtn.textContent = 'Save Company Template';
+            } else {
+                saveBtn.textContent = 'Save';
+            }
+        }
+        
+        // NEW: Load company context
+        async function loadCompanyContext() {
+            try {
+                const data = await api.get('/sales/company-context');
+                const context = data.context?.content || '';
+                document.getElementById('contextEditor').value = context;
+                updateCharCount();
+                contextHasChanges = false;
+                
+                // Show info message for non-admins
+                if (!isUserAdmin) {
+                    const editor = document.getElementById('contextEditor');
+                    editor.disabled = true;
+                    editor.style.opacity = '0.7';
+                    
+                    // Add apply button
+                    showApplyCompanyContextButton();
+                }
+            } catch (err) {
+                console.error('Failed to load company context:', err);
+                showToast('Failed to load company context', 'error');
+            }
+        }
+        
+        // NEW: Show apply company context button
+        function showApplyCompanyContextButton() {
+            const footer = document.getElementById('battlecard-footer');
+            
+            // Check if button already exists
+            if (footer.querySelector('.apply-company-btn')) {
+                return;
+            }
+            
+            const applyBtn = document.createElement('button');
+            applyBtn.className = 'apply-company-btn';
+            applyBtn.textContent = 'Use This Context';
+            applyBtn.style.cssText = 'padding: 12px 32px; background: #3b82f6; border: none; border-radius: 8px; color: white; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;';
+            applyBtn.onclick = applyCompanyContext;
+            
+            footer.appendChild(applyBtn);
+        }
+        
+        // NEW: Apply company context to user
+        async function applyCompanyContext() {
+            try {
+                const response = await api.post('/sales/apply-company-context', {});
+                
+                if (response.success) {
+                    currentUser.salesContext = response.salesContext;
+                    showToast('Company context applied successfully!');
+                    
+                    // Switch back to personal view
+                    viewMode = 'personal';
+                    await loadUserContext();
+                    updateModeButtonStates();
+                    
+                    // Re-enable editor
+                    const editor = document.getElementById('contextEditor');
+                    editor.disabled = false;
+                    editor.style.opacity = '1';
+                    
+                    // Remove apply button
+                    const applyBtn = document.querySelector('.apply-company-btn');
+                    if (applyBtn) applyBtn.remove();
+                    
+                    // Reload status
+                    await loadCompanyContextStatus();
+                }
+            } catch (err) {
+                console.error('Failed to apply company context:', err);
+                showToast('Failed to apply company context', 'error');
             }
         }
         
@@ -1821,6 +2074,26 @@
             document.getElementById('battlecardOverlay').classList.remove('active');
             panel.classList.remove('active');
             panel.classList.remove('onboarding-mode');
+            
+            // NEW: Clean up mode selector
+            const selector = panel.querySelector('.context-mode-selector');
+            if (selector) {
+                selector.remove();
+            }
+            
+            // NEW: Re-enable editor if it was disabled
+            const editor = document.getElementById('contextEditor');
+            editor.disabled = false;
+            editor.style.opacity = '1';
+            
+            // NEW: Remove apply button if exists
+            const applyBtn = document.querySelector('.apply-company-btn');
+            if (applyBtn) {
+                applyBtn.remove();
+            }
+            
+            // Reset to personal mode
+            viewMode = 'personal';
         }
         
         // Show onboarding
@@ -1846,7 +2119,23 @@
             document.getElementById('contextSection').style.display = 'flex';
             document.getElementById('battlecard-footer').style.display = 'flex';
             
-            loadUserContext();
+            // NEW: Reset editor state
+            const editor = document.getElementById('contextEditor');
+            editor.disabled = false;
+            editor.style.opacity = '1';
+            
+            // NEW: Remove any existing apply button
+            const existingApplyBtn = document.querySelector('.apply-company-btn');
+            if (existingApplyBtn) {
+                existingApplyBtn.remove();
+            }
+            
+            // Load appropriate context based on view mode
+            if (viewMode === 'company') {
+                loadCompanyContext();
+            } else {
+                loadUserContext();
+            }
         }
         
         // Update progress
@@ -1929,26 +2218,45 @@
             nextBtn.textContent = 'Saving...';
             
             try {
+                // NEW: If user is admin, offer to save as company template
+                if (isUserAdmin) {
+                    const saveAsCompany = confirm('Save this as the company template for all reps?\n\nClick OK to set as company template, or Cancel to save only for yourself.');
+                    
+                    if (saveAsCompany) {
+                        await api.post('/sales/company-context', { 
+                            content: context,
+                            summary: 'Initial company context setup'
+                        });
+                        
+                        showToast('Company template saved! All reps can now use this context.');
+                    }
+                }
+                
+                // Always save to personal context too
                 await api.post('/sales/update-context', { 
-                        content: context,
-                        source: 'onboarding',
-                        onboardingCompleted: true
+                    content: context,
+                    source: 'onboarding',
+                    onboardingCompleted: true
                 });
                 
-                    // Update state
-                    if (currentUser) {
-                        currentUser.onboardingCompleted = true;
-                        currentUser.salesContext = { content: context };
-                    }
-                    
-                    // Hide info banner permanently (they have context now)
-                    document.getElementById('welcomeBanner').classList.remove('show');
-                    localStorage.removeItem('lupo_context_banner_dismissed'); // Clear flag so it can show again if they delete context
-                    
-                    showToast('Setup complete! Your sales context has been saved.');
-                    
-                    // Switch to editor
-                    showContextEditor();
+                // Update state
+                if (currentUser) {
+                    currentUser.onboardingCompleted = true;
+                    currentUser.salesContext = { content: context };
+                }
+                
+                // Hide info banner permanently (they have context now)
+                document.getElementById('welcomeBanner').classList.remove('show');
+                localStorage.removeItem('lupo_context_banner_dismissed'); // Clear flag so it can show again if they delete context
+                
+                showToast('Setup complete! Your sales context has been saved.');
+                
+                // Reload context status
+                await loadCompanyContextStatus();
+                
+                // Switch to editor
+                showContextEditor();
+                showContextModeSelector();
                 
             } catch (err) {
                 console.error('Onboarding failed:', err);
@@ -1965,9 +2273,51 @@
                 document.getElementById('contextEditor').value = context;
                 updateCharCount();
                 contextHasChanges = false;
+                
+                // NEW: Show revert button if user has custom context and company has context
+                const revertBtn = document.getElementById('revertContextBtn');
+                const hasCustomContext = data.user?.salesContext?.contextSource === 'custom' && context.trim() !== '';
+                const hasCompanyContext = companyContextStatus?.hasCompanyContext;
+                
+                if (revertBtn && hasCustomContext && hasCompanyContext && !isUserAdmin) {
+                    revertBtn.style.display = 'block';
+                } else if (revertBtn) {
+                    revertBtn.style.display = 'none';
+                }
             } catch (err) {
                 console.error('Failed to load context:', err);
                 showToast('Failed to load context', 'error');
+            }
+        }
+        
+        // NEW: Revert to company template
+        async function revertToCompanyTemplate() {
+            const confirmed = confirm(
+                '⚠️ Revert to Company Template?\n\n' +
+                'This will replace your personal context with the company template.\n' +
+                'Your custom edits will be lost.\n\n' +
+                'Are you sure?'
+            );
+            
+            if (!confirmed) return;
+            
+            try {
+                const response = await api.post('/sales/apply-company-context', {});
+                
+                if (response.success) {
+                    currentUser.salesContext = response.salesContext;
+                    showToast('Reverted to company template successfully!');
+                    
+                    // Reload the context
+                    await loadUserContext();
+                    await loadCompanyContextStatus();
+                    
+                    // Hide revert button
+                    document.getElementById('revertContextBtn').style.display = 'none';
+                }
+            } catch (err) {
+                console.error('Failed to revert to company template:', err);
+                showToast('Failed to revert to company template', 'error');
             }
         }
         
@@ -1977,23 +2327,39 @@
             const btn = document.getElementById('saveContextBtn');
             
             btn.disabled = true;
+            const originalText = btn.innerHTML;
             btn.innerHTML = '<span class="processing-spinner"></span> Saving...';
             
             try {
-                await api.post('/sales/update-context', { 
-                    content: content,
-                    source: 'manual'
-                });
+                // NEW: Save to company context if in company mode and user is admin
+                if (viewMode === 'company' && isUserAdmin) {
+                    await api.post('/sales/company-context', { 
+                        content: content,
+                        summary: 'Company context updated'
+                    });
+                    
+                    showToast('Company template saved! All reps can now use this context.');
+                    
+                    // Reload company context status
+                    await loadCompanyContextStatus();
+                } else {
+                    // Save personal context
+                    await api.post('/sales/update-context', { 
+                        content: content,
+                        source: 'manual'
+                    });
+                    
+                    showToast('Context saved!');
+                }
                 
                 contextHasChanges = false;
-                showToast('Battlecard saved!');
                 
             } catch (err) {
                 console.error('Save failed:', err);
                 showToast('Save failed', 'error');
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = 'Save';
+                btn.innerHTML = originalText;
             }
         }
         
@@ -2156,7 +2522,12 @@ Compliance and Guidelines
         </div>
         
         <div class="battlecard-footer" id="battlecard-footer">
-            <div class="char-count-display" id="charCount">0 chars</div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="char-count-display" id="charCount">0 chars</div>
+                <button class="revert-context-btn" id="revertContextBtn" onclick="revertToCompanyTemplate()" style="display: none; padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: rgba(255,255,255,0.7); font-size: 12px; cursor: pointer; transition: all 0.2s;">
+                    ↺ Revert to Company Template
+                </button>
+            </div>
             <button class="save-context-btn" id="saveContextBtn" onclick="saveUserContext()">Save</button>
         </div>
     </div>
