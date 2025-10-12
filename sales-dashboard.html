@@ -1446,7 +1446,7 @@
             banner.querySelector('.welcome-title').textContent = '💡 Make LUPO smarter';
             banner.querySelector('.welcome-subtitle').textContent = 'Add your sales context so LUPO can provide better coaching';
             banner.querySelector('.welcome-btn').textContent = 'Add Context';
-            banner.querySelector('.welcome-btn').onclick = () => openBattlecard(true);
+            banner.querySelector('.welcome-btn').onclick = () => openBattlecard(false);
             banner.classList.add('show');
         }
         
@@ -1898,15 +1898,13 @@
             document.getElementById('battlecardOverlay').classList.add('active');
             panel.classList.add('active');
             
-            // NEW: Determine which mode to show
+            // NEW: Always show editor (no more onboarding wizard)
+            // Reps inherit from company context or start typing
             if (showCompanyUpdates && companyContextStatus?.hasCompanyContext) {
                 // Show company context comparison view
                 viewMode = 'company';
                 showContextEditor();
                 showContextModeSelector();
-            } else if (startWithOnboarding || !hasContext) {
-                // Show onboarding
-                showOnboarding();
             } else {
                 // Show regular editor with mode selector
                 showContextEditor();

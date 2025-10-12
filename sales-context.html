@@ -523,6 +523,20 @@
             </div>
         </div>
         
+        <!-- NEW: Company Context Banner -->
+        <div class="company-context-banner" id="companyContextBanner" style="display: none; margin-bottom: 1rem; padding: 1rem; background: linear-gradient(135deg, rgba(0,102,255,0.1) 0%, rgba(0,102,255,0.05) 100%); border: 1px solid rgba(0,102,255,0.3); border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="font-size: 1.5rem;">🎯</div>
+                <div style="flex: 1;">
+                    <div style="font-weight: 600; margin-bottom: 0.25rem;">Your company has a sales playbook ready</div>
+                    <div style="font-size: 0.75rem; color: var(--text-dim);">Use your company's pre-configured context instead of starting from scratch</div>
+                </div>
+                <a href="/sales-dashboard.html" class="btn" style="text-decoration: none; white-space: nowrap;">
+                    Go to Dashboard →
+                </a>
+            </div>
+        </div>
+        
         <div class="ai-analyzer-box">
             <div class="ai-analyzer-header">
                 <div class="ai-icon">✨</div>
@@ -692,6 +706,9 @@ PILOT PROGRAM:
     if (apiKey) authHeaders['X-API-Key'] = apiKey;
     
     await loadContext();
+    
+    // NEW: Check if company context is available
+    await checkCompanyContext();
     
     const textarea = document.getElementById('context');
     const updateCharCount = () => {
@@ -898,6 +915,25 @@ PILOT PROGRAM:
                 }
             } catch (error) {
                 console.error('Failed to load:', error);
+            }
+        }
+        
+        // NEW: Check if company context is available
+        async function checkCompanyContext() {
+            try {
+                const response = await fetch('https://lupo-backend.fly.dev/sales/context-status', {
+                    headers: authHeaders
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    // Show banner if company has context
+                    if (data.status?.hasCompanyContext) {
+                        document.getElementById('companyContextBanner').style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to check company context:', error);
             }
         }
         
