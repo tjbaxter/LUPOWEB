@@ -676,9 +676,9 @@ PILOT PROGRAM:
         let autoSaveTimer;
         let hasUserEdited = false;
         async function init() {
-    // First check URL for token
+    // First check URL for token (check both 'auth' and 'token' params)
     const urlParams = new URLSearchParams(window.location.search);
-    const urlToken = urlParams.get('token');
+    const urlToken = urlParams.get('auth') || urlParams.get('token');
     
     // Then check localStorage
     const storedToken = localStorage.getItem('lupo_token');

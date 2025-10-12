@@ -1211,9 +1211,8 @@
         
         // Auth headers
         function getAuthHeaders() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const token = urlParams.get('token') || localStorage.getItem('lupo_session');
-            const apiKey = urlParams.get('key');
+            const token = localStorage.getItem('lupo_session');
+            const apiKey = localStorage.getItem('lupo_apikey');
             
             const headers = {};
             if (token) {
@@ -1222,6 +1221,47 @@
                 headers['X-API-Key'] = apiKey;
             }
             return headers;
+        }
+        
+        // NEW: Exchange token handler - called on page load if exchange token is present
+        async function handleExchangeToken() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const exchangeToken = urlParams.get('auth') || urlParams.get('token');
+            
+            if (!exchangeToken) {
+                return false; // No exchange token, use existing session
+            }
+            
+            console.log('🔑 Found exchange token in URL, exchanging for JWT...');
+            
+            try {
+                const response = await fetch(`${API_CONFIG.baseURL}/auth/exchange`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ exchangeToken })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Exchange token invalid or expired');
+                }
+                
+                const data = await response.json();
+                console.log('✅ Exchange successful, saving JWT token');
+                
+                // Save the real JWT token
+                localStorage.setItem('lupo_session', data.token);
+                
+                // Clean URL (remove exchange token from address bar)
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+                return true;
+            } catch (error) {
+                console.error('❌ Token exchange failed:', error);
+                localStorage.removeItem('lupo_session');
+                return false;
+            }
         }
         
         // Enterprise-grade fetch with retry, timeout, circuit breaker
@@ -1379,6 +1419,9 @@
         
         // Initialize
         async function init() {
+            // CRITICAL: Exchange token for JWT first if present
+            await handleExchangeToken();
+            
             await loadUserInfo();
             await loadCalls();
             setupEventListeners();
