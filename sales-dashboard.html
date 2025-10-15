@@ -1303,6 +1303,120 @@
             color: rgba(255,255,255,0.9);
             border-color: rgba(255,255,255,0.3);
         }
+        
+        /* AI Context Preview Modal */
+        .context-preview-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+        
+        .context-preview-overlay.active {
+            display: block;
+        }
+        
+        .context-preview-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            background: #0a0a0a;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            z-index: 2001;
+            display: none;
+            animation: slideUp 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        
+        .context-preview-modal.active {
+            display: block;
+        }
+        
+        .context-preview-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .context-preview-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .context-preview-close {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+        
+        .context-preview-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .context-preview-content {
+            padding: 24px;
+            max-height: calc(80vh - 120px);
+            overflow-y: auto;
+        }
+        
+        .context-preview-info {
+            margin-bottom: 20px;
+            padding: 16px;
+            background: rgba(59,130,246,0.05);
+            border: 1px solid rgba(59,130,246,0.2);
+            border-radius: 8px;
+        }
+        
+        .context-preview-stats {
+            font-size: 14px;
+            font-weight: 500;
+            color: #3b82f6;
+            margin-bottom: 8px;
+        }
+        
+        .context-preview-note {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .context-preview-text {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 20px;
+            color: rgba(255,255,255,0.85);
+            font-size: 13px;
+            line-height: 1.6;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
@@ -2617,6 +2731,7 @@
                 });
                 
                 const structured = response.structuredContext;
+                const compressionStats = response.compressionStats;
                 
                 // Populate editor with structured content
                 document.getElementById('contextEditor').value = structured;
@@ -2625,7 +2740,12 @@
                 // Hide upload section, show editor
                 document.getElementById('pdfUploadSection').style.display = 'none';
                 
-                showToast('Context structured! Review and save when ready.');
+                // Show compression info if applicable
+                if (compressionStats) {
+                    showToast(`Context structured and compressed from ${compressionStats.originalLength} to ${compressionStats.compressedLength} chars (${compressionStats.compressionRatio})`);
+                } else {
+                    showToast('Context structured! Review and save when ready.');
+                }
                 
                 console.log(`Structured: ${structured.length} chars`);
                 
@@ -2888,7 +3008,20 @@
         
         function updateCharCount() {
             const count = document.getElementById('contextEditor').value.length;
-            document.getElementById('charCount').textContent = `${count.toLocaleString()} chars`;
+            const maxCount = 1000;
+            const charCountElement = document.getElementById('charCount');
+            
+            // Update character count with limit
+            charCountElement.textContent = `${count}/${maxCount} chars`;
+            
+            // Change color as approaching limit
+            if (count > maxCount * 0.9) {
+                charCountElement.style.color = '#ef4444'; // Red when near limit
+            } else if (count > maxCount * 0.7) {
+                charCountElement.style.color = '#f59e0b'; // Orange when getting close
+            } else {
+                charCountElement.style.color = 'rgba(255,255,255,0.3)'; // Normal color
+            }
         }
         
         function showToast(message, type = 'success') {
@@ -2916,6 +3049,58 @@
                 });
             }
         });
+        
+        // AI Context Preview Functions
+        async function previewAIContext() {
+            const overlay = document.getElementById('contextPreviewOverlay');
+            const modal = document.getElementById('contextPreviewModal');
+            const statsElement = document.getElementById('contextPreviewStats');
+            const textElement = document.getElementById('contextPreviewText');
+            
+            // Show modal
+            overlay.classList.add('active');
+            modal.classList.add('active');
+            
+            // Show loading state
+            statsElement.textContent = 'Loading...';
+            textElement.textContent = 'Loading context preview...';
+            
+            try {
+                // Get the current context from the editor
+                const currentContent = document.getElementById('contextEditor').value;
+                
+                if (!currentContent.trim()) {
+                    textElement.textContent = 'No context entered yet. Please add your sales context first.';
+                    statsElement.textContent = 'No context available';
+                    return;
+                }
+                
+                // Simulate the compression that happens on save
+                const response = await api.post('/sales/compress-context', {
+                    content: currentContent
+                });
+                
+                const compressedContext = response.compressedContext || currentContent;
+                const originalLength = currentContent.length;
+                const compressedLength = compressedContext.length;
+                
+                // Display stats
+                statsElement.textContent = `Original: ${originalLength} chars → Compressed: ${compressedLength} chars (${Math.round((compressedLength/originalLength)*100)}%)`;
+                
+                // Display the actual context AI will see
+                textElement.textContent = compressedContext;
+                
+            } catch (error) {
+                console.error('Failed to preview AI context:', error);
+                textElement.textContent = 'Failed to load context preview. Please try again.';
+                statsElement.textContent = 'Error loading preview';
+            }
+        }
+        
+        function closeContextPreview() {
+            document.getElementById('contextPreviewOverlay').classList.remove('active');
+            document.getElementById('contextPreviewModal').classList.remove('active');
+        }
     </script>
     
     <!-- Battlecard Panel -->
@@ -3021,7 +3206,7 @@
                             Drop PDFs here or click to browse
                         </div>
                         <div style="font-size: 12px; color: rgba(255,255,255,0.4);">
-                            Support for multiple files • Max 10MB each
+                            Support for multiple files • Max 10MB each • Up to 50,000 chars total
                         </div>
                     </div>
                     
@@ -3042,7 +3227,8 @@
                 <textarea 
                     class="context-editor" 
                     id="contextEditor" 
-                    placeholder="Enter your sales context here...
+                    maxlength="1000"
+                    placeholder="Enter your sales context here (up to 1000 characters)...
 
 Pricing and Packages
 • Standard pricing tiers
@@ -3079,7 +3265,13 @@ Compliance and Guidelines
         
         <div class="battlecard-footer" id="battlecard-footer">
             <div style="display: flex; align-items: center; gap: 12px;">
-                <div class="char-count-display" id="charCount">0 chars</div>
+                <div class="char-count-display" id="charCount">0/1000 chars</div>
+                <div style="font-size: 11px; color: #3b82f6; font-weight: 500;">
+                    Will be compressed to 500 chars for AI calls
+                </div>
+                <button class="preview-context-btn" onclick="previewAIContext()" style="padding: 6px 12px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); border-radius: 6px; color: #3b82f6; font-size: 11px; cursor: pointer; transition: all 0.2s;">
+                    Preview AI Context
+                </button>
                 <button class="revert-context-btn" id="revertContextBtn" onclick="revertToCompanyTemplate()" style="display: none; padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: rgba(255,255,255,0.7); font-size: 12px; cursor: pointer; transition: all 0.2s;">
                     ↺ Revert to Company Template
                 </button>
@@ -3089,5 +3281,27 @@ Compliance and Guidelines
     </div>
     
     <div class="toast" id="toast">Saved</div>
+    
+    <!-- AI Context Preview Modal -->
+    <div class="context-preview-overlay" id="contextPreviewOverlay" onclick="closeContextPreview()"></div>
+    <div class="context-preview-modal" id="contextPreviewModal">
+        <div class="context-preview-header">
+            <div class="context-preview-title">AI Context Preview</div>
+            <button class="context-preview-close" onclick="closeContextPreview()">×</button>
+        </div>
+        <div class="context-preview-content">
+            <div class="context-preview-info">
+                <div class="context-preview-stats">
+                    <span id="contextPreviewStats">Loading...</span>
+                </div>
+                <div class="context-preview-note">
+                    This is exactly what LUPO AI sees during your calls
+                </div>
+            </div>
+            <div class="context-preview-text" id="contextPreviewText">
+                Loading context preview...
+            </div>
+        </div>
+    </div>
 </body>
 </html>
