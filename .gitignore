@@ -6,3 +6,9 @@ downloads/
 /public/video/*.mov
 # Local Netlify folder
 .netlify
+
+
+git checkout -b main95dualcontexts.4
+git add .
+git commit -m "stable"
+git push -u origin main95dualcontexts.4
