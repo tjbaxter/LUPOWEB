@@ -27,7 +27,7 @@ exports.handler = async (event, context) => {
   try {
     // Parse the request body
     const data = JSON.parse(event.body);
-    const { thoughts, email, name, appVersion, location } = data;
+    const { thoughts, email, name, appVersion, location, userTier, userUsage, systemInfo, appState } = data;
 
     // Basic validation
     if (!thoughts || thoughts.trim() === '') {
@@ -48,6 +48,10 @@ exports.handler = async (event, context) => {
       name: name || 'Anonymous',
       appVersion: appVersion || 'Unknown version',
       location: location || 'Location not available',
+      userTier: userTier || 'Unknown',
+      userUsage: userUsage || {},
+      systemInfo: systemInfo || {},
+      appState: appState || {},
       timestamp: new Date().toISOString(),
       ip: event.headers['x-forwarded-for'] || event.headers['client-ip'] || 'unknown',
       userAgent: event.headers['user-agent'] || 'Unknown'
