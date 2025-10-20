@@ -7,7 +7,7 @@ headers = []
 [functions."*"]
 
 [build]
-publish = "/Users/tombaxter/LUPOWEB/LUPOWEB"
+publish = "."
 publishOrigin = "ui"
 
 [build.environment]
