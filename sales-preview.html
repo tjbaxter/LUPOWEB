@@ -881,6 +881,10 @@
             border-left: 3px solid #f43f5e;
         }
         
+        .insight-bubble.live-recap {
+            border-left: 3px solid #8b5cf6;
+        }
+        
         .insight-type {
             font-size: 9px;
             font-weight: 700;
@@ -948,8 +952,8 @@
         
         .hiw-steps {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
             margin-bottom: 40px;
         }
         
@@ -962,6 +966,7 @@
         .hiw-step:nth-child(1) { animation-delay: 0.1s; }
         .hiw-step:nth-child(2) { animation-delay: 0.3s; }
         .hiw-step:nth-child(3) { animation-delay: 0.5s; }
+        .hiw-step:nth-child(4) { animation-delay: 0.7s; }
         
         .hiw-step-number {
             font-size: 14px;
@@ -1261,7 +1266,7 @@
             
             .hiw-steps {
                 grid-template-columns: 1fr;
-                gap: 40px;
+                gap: 30px;
             }
             
             .hiw-arrow {
@@ -1310,7 +1315,7 @@
         <!-- Hero Section -->
         <section class="hero">
             <h1>A quick look at LUPO.</h1>
-            <p>90-seconds handling objections live and writing instant follow-up emails.</p>
+            <p>90-seconds showing how reps prep, handle objections, and know what to do next.</p>
             <p>Watch it and tell me what you think.</p>
             <p class="hero-note">(No sign-up. No tracking. Just the video.)</p>
         </section>
@@ -1332,7 +1337,7 @@
             <!-- Under-video block -->
             <div class="under-video">
                 <p class="video-caption">
-                    The clip uses a simple real estate scenario, but LUPO is designed for any B2B sales team. The interactive demo below shows how it adapts to real-world objections, whether you sell software, services, or solutions.
+                    The clip uses a simple real estate scenario, but LUPO is designed for any B2B sales team. Set context before calls, get live objection handling during, and generate next steps, summaries, or emails after — whether you sell software, services, or solutions.
                 </p>
                 
                 <p class="reply-note">
@@ -1451,11 +1456,23 @@
         <!-- How It Works Section -->
         <section class="how-it-works-section">
             <h2 class="hiw-title">How LUPO Works</h2>
-            <p class="hiw-subtitle">Three simple steps to transform your sales calls</p>
+            <p class="hiw-subtitle">Four simple steps to transform your sales calls</p>
             
             <div class="hiw-steps">
                 <div class="hiw-step">
-                    <div class="hiw-step-number">Step 1 - Setup</div>
+                    <div class="hiw-step-number">Step 1 - Before Call</div>
+                    <h3 class="hiw-step-title">Set Your Call Objective</h3>
+                    <ul class="hiw-step-items">
+                        <li class="hiw-step-item">Speak or type 240 characters of context</li>
+                        <li class="hiw-step-item">"Following up with Anna at Oracle - price concern - closing at 50k today"</li>
+                        <li class="hiw-step-item">LUPO understands what you're trying to achieve</li>
+                        <li class="hiw-step-item">Takes 10 seconds, makes the whole call sharper</li>
+                    </ul>
+                    <div class="hiw-arrow">→</div>
+                </div>
+                
+                <div class="hiw-step">
+                    <div class="hiw-step-number">Step 2 - Setup</div>
                     <h3 class="hiw-step-title">Enter Your Company Details</h3>
                     <ul class="hiw-step-items">
                         <li class="hiw-step-item">Enter your company URL</li>
@@ -1468,7 +1485,7 @@
                 </div>
                 
                 <div class="hiw-step">
-                    <div class="hiw-step-number">Step 2 - During Call</div>
+                    <div class="hiw-step-number">Step 3 - During Call</div>
                     <h3 class="hiw-step-title">LUPO Listens & Assists</h3>
                     <ul class="hiw-step-items">
                         <li class="hiw-step-item">LUPO listens to your call</li>
@@ -1476,15 +1493,16 @@
                         <li class="hiw-step-item">Suggests responses from YOUR data</li>
                         <li class="hiw-step-item">Responds instantly in real-time</li>
                         <li class="hiw-step-item">Not generic AI, uses YOUR company playbook</li>
+                        <li class="hiw-step-item">Live Recap keeps you on track - shows what's happened, what's happening now, what to do next</li>
                     </ul>
                     <div class="hiw-arrow">→</div>
                 </div>
                 
                 <div class="hiw-step">
-                    <div class="hiw-step-number">Step 3 - After Call</div>
-                    <h3 class="hiw-step-title">Instant Follow-Up & Dashboard</h3>
+                    <div class="hiw-step-number">Step 4 - After Call</div>
+                    <h3 class="hiw-step-title">Instant Next Steps, Summaries & Follow-Ups</h3>
                     <ul class="hiw-step-items">
-                        <li class="hiw-step-item">Personalized follow-up email drafted instantly</li>
+                        <li class="hiw-step-item">Choose: Next steps to close the deal, call summary for CRM, or draft follow-up email</li>
                         <li class="hiw-step-item">Full transcript saved in your dashboard</li>
                         <li class="hiw-step-item">Visit dashboard to ask AI: "What could I do better?"</li>
                         <li class="hiw-step-item">Review call performance with AI coaching</li>
@@ -1767,6 +1785,18 @@
                             ]
                         },
                         time: '10 seconds ago'
+                    },
+                    {
+                        type: 'live-recap',
+                        trigger: 'You\'ve covered pricing and timeline. Next: confirm decision-maker availability.',
+                        response: {
+                            bullets: [
+                                { action: 'Confirm next steps:', phrase: '"Great, we\'ve covered pricing and timeline. Who else needs to be involved in this decision?"' },
+                                { action: 'Schedule follow-up:', phrase: '"Should we schedule a call with your team next week to finalize this?"' },
+                                { action: 'Close for commitment:', phrase: '"Based on what we\'ve discussed, does this solution work for your needs?"' }
+                            ]
+                        },
+                        time: '30 seconds ago'
                     }
                 ]
             },
@@ -2043,7 +2073,8 @@
                 'objection': '⚠️',
                 'buying-signal': '✅',
                 'competitor': '🎯',
-                'compliance': '🔒'
+                'compliance': '🔒',
+                'live-recap': '📋'
             };
             return icons[type] || '💬';
         }
