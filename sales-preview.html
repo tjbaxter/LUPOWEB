@@ -731,7 +731,7 @@
         }
         
         .answer-content {
-            font-size: 14px;
+            font-size: 16px;
             line-height: 1.8;
             color: rgba(255, 255, 255, 0.95);
         }
@@ -775,6 +775,57 @@
         .bullet-phrase {
             color: rgba(147, 197, 253, 0.9);
             font-style: italic;
+        }
+        
+        /* Live Recap Styles */
+        .live-recap-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .recap-section-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 16px 0 8px 0;
+            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.3);
+        }
+        
+        .recap-section-title:first-child {
+            margin-top: 0;
+        }
+        
+        .recap-bullet {
+            margin: 6px 0;
+            padding-left: 8px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+        }
+        
+        .recap-spacer {
+            height: 8px;
+        }
+        
+        /* Vibe bullet styles */
+        .vibe-bullet {
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 8px 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+        }
+        
+        .vibe-bullet .bullet-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            font-size: 15px;
+        }
+        
+        .bullet-text {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 16px;
         }
         
         /* Real-time Signals Window */
@@ -1519,14 +1570,14 @@
                 Download free for Mac or Windows and experience real-time guidance and instant follow-ups in action.
             </p>
             <div class="download-buttons">
-                <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-3.0.3-arm64.dmg" 
+                <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-3.0.9-arm64.dmg" 
                    class="download-btn primary">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
                         <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
                     </svg>
                     Download for Mac
                 </a>
-                <a href="https://github.com/LUPOLABS/lupo-releases/releases/download/v3.0.3/LUPO.Setup.3.0.3.exe"
+                <a href="https://github.com/LUPOLABS/lupo-releases/releases/download/v3.0.9/LUPO.Setup.3.0.9.exe"
                    class="download-btn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -1536,7 +1587,7 @@
                     Download for Windows
                 </a>
             </div>
-            <div class="download-version">Version 3.0.3 • Released October 2025</div>
+            <div class="download-version">Version 3.0.9 • Released October 2025</div>
             <p style="margin-top: 20px; font-size: 14px; color: var(--text-secondary);">
                 Have suggestions? <a href="https://www.linkedin.com/in/thomasjpbaxter/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">Share them with me on LinkedIn <span style="font-size: 12px;">→</span></a>
             </p>
@@ -1648,7 +1699,7 @@
             
             const wrapper = videoPoster.parentElement;
             const iframe = document.createElement('iframe');
-            iframe.src = 'https://player.vimeo.com/video/1128651620?autoplay=1&muted=1&controls=1&title=0&byline=0&portrait=0&playsinline=1&dnt=1&quality=4k';
+            iframe.src = 'https://player.vimeo.com/video/1128921682?autoplay=1&muted=1&controls=1&title=0&byline=0&portrait=0&playsinline=1&dnt=1&quality=4k';
             iframe.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
             iframe.setAttribute('allowfullscreen', '');
             
@@ -1731,9 +1782,8 @@
                         trigger: '"We already have something in place"',
                         response: {
                             bullets: [
-                                { action: 'Acknowledge & probe:', phrase: '"I understand - most of our clients were using another solution before switching. What\'s working well with your current setup?"' },
-                                { action: 'Create contrast:', phrase: '"The main difference teams notice is [specific feature]. How important is [specific benefit] to your team?"' },
-                                { action: 'Suggest comparison:', phrase: '"Would it be valuable to see a side-by-side comparison of the key differences?"' }
+                                '"I understand - most of our clients were using another solution before switching. What\'s working well with your current setup?"',
+                                'Vibe: Stay curious, not defensive. They\'re protecting their current choice - show respect while probing for gaps.'
                             ]
                         },
                         time: 'Just now'
@@ -1743,9 +1793,8 @@
                         trigger: '"How quickly can we get this implemented?"',
                         response: {
                             bullets: [
-                                { action: 'Build excitement:', phrase: '"Great question! Most teams are fully up and running within 2 weeks."' },
-                                { action: 'Offer fast-track:', phrase: '"We have a rapid deployment option that can get you live by next Friday - would that timeline work?"' },
-                                { action: 'Close for commitment:', phrase: '"If we start the onboarding process today, you\'ll have access by Monday. Should we lock that in?"' }
+                                '"Great question! Most teams are fully up and running within 2 weeks. We have a rapid deployment option that can get you live by next Friday - would that timeline work?"',
+                                'Vibe: They\'re ready to buy! Match their energy, be confident about timelines, and close for commitment.'
                             ]
                         },
                         time: '2 seconds ago'
@@ -1755,9 +1804,8 @@
                         trigger: '"How do you compare to Competitor X?"',
                         response: {
                             bullets: [
-                                { action: 'Position uniquely:', phrase: '"Competitor X is great for basic needs. We focus on enterprise-grade [specific capability]."' },
-                                { action: 'Share win story:', phrase: '"Actually, 40% of our customers switched from Competitor X - mainly for [key differentiator]."' },
-                                { action: 'Offer proof:', phrase: '"I can share a case study of a similar company that made the switch - would that be helpful?"' }
+                                '"Competitor X is great for basic needs. We focus on enterprise-grade [specific capability]. Actually, 40% of our customers switched from them - mainly for [key differentiator]."',
+                                'Vibe: Stay confident but respectful. They\'re doing their homework - position yourself as the premium choice without bashing the competition.'
                             ]
                         },
                         time: '5 seconds ago'
@@ -1767,9 +1815,8 @@
                         trigger: '"We don\'t have budget for this right now"',
                         response: {
                             bullets: [
-                                { action: 'Reframe value:', phrase: '"I understand budgets are tight. Most teams fund this from their existing [category] budget since it replaces [current solution]."' },
-                                { action: 'Show ROI:', phrase: '"On average, our clients see payback in 3 months. Would seeing those numbers help build a business case?"' },
-                                { action: 'Offer flexibility:', phrase: '"We have quarterly payment options and can align with your next budget cycle. When does that start?"' }
+                                '"I understand budgets are tight. Most teams fund this from their existing [category] budget since it replaces [current solution]. On average, our clients see payback in 3 months - would seeing those numbers help build a business case?"',
+                                'Vibe: Don\'t push too hard on budget. They\'re being honest - focus on value and ROI, offer flexible payment options.'
                             ]
                         },
                         time: '8 seconds ago'
@@ -1779,9 +1826,8 @@
                         trigger: 'Customer mentioned "GDPR compliance"',
                         response: {
                             bullets: [
-                                { action: 'Assure immediately:', phrase: '"Absolutely - we\'re fully GDPR compliant and SOC 2 Type II certified."' },
-                                { action: 'Provide evidence:', phrase: '"I can send you our compliance documentation right after this call."' },
-                                { action: 'Offer security review:', phrase: '"Would your security team like to review our architecture? We can arrange that this week."' }
+                                '"Absolutely - we\'re fully GDPR compliant and SOC 2 Type II certified. I can send you our compliance documentation right after this call."',
+                                'Vibe: Be confident and reassuring. Compliance is non-negotiable - show you take it seriously and have the credentials to prove it.'
                             ]
                         },
                         time: '10 seconds ago'
@@ -1790,11 +1836,23 @@
                         type: 'live-recap',
                         trigger: 'You\'ve covered pricing and timeline. Next: confirm decision-maker availability.',
                         response: {
-                            bullets: [
-                                { action: 'Confirm next steps:', phrase: '"Great, we\'ve covered pricing and timeline. Who else needs to be involved in this decision?"' },
-                                { action: 'Schedule follow-up:', phrase: '"Should we schedule a call with your team next week to finalize this?"' },
-                                { action: 'Close for commitment:', phrase: '"Based on what we\'ve discussed, does this solution work for your needs?"' }
-                            ]
+                            format: 'live-recap',
+                            content: `**WHAT'S HAPPENED:**
+• Discussed pricing structure and timeline requirements
+• Prospect confirmed budget range of $50k-75k
+• Identified main pain point: current system too slow
+• Prospect mentioned they need approval from IT director
+
+**CURRENT SITUATION:**
+• Prospect is engaged and asking detailed questions
+• Price seems acceptable but needs IT sign-off
+• You're at the decision-maker identification stage
+• Prospect is ready to move forward pending internal approval
+
+**NEXT STEPS:**
+• Ask: "Who else needs to be involved in this decision?"
+• Offer to schedule a technical demo with IT team
+• Suggest: "Should we get your IT director on a call this week?"`
                         },
                         time: '30 seconds ago'
                     }
@@ -1807,9 +1865,8 @@
                         trigger: '"I need to compare more quotes first"',
                         response: {
                             bullets: [
-                                { action: 'Position as helper:', phrase: '"That\'s smart - comparing is important. What specific coverage aspects matter most to you?"' },
-                                { action: 'Differentiate value:', phrase: '"While you\'re comparing, keep in mind we\'re the only provider that includes [unique benefit] at no extra cost."' },
-                                { action: 'Create urgency:', phrase: '"Just so you know, this rate is locked for 24 hours. After that, it may change based on market conditions."' }
+                                '"That\'s smart - comparing is important. What specific coverage aspects matter most to you? While you\'re comparing, keep in mind we\'re the only provider that includes [unique benefit] at no extra cost."',
+                                'Vibe: Stay helpful, not pushy. They\'re being responsible - position yourself as the expert who can guide their comparison.'
                             ]
                         },
                         time: 'Just now'
@@ -1819,9 +1876,8 @@
                         trigger: '"What happens if I need to file a claim?"',
                         response: {
                             bullets: [
-                                { action: 'Reassure process:', phrase: '"Great question! Claims are handled 24/7 through our app - average processing time is under 48 hours."' },
-                                { action: 'Share success metrics:', phrase: '"We have a 98% claim approval rate and 4.9-star customer satisfaction score."' },
-                                { action: 'Transition to close:', phrase: '"Would you like me to walk you through starting your coverage today so you\'re protected immediately?"' }
+                                '"Great question! Claims are handled 24/7 through our app - average processing time is under 48 hours. We have a 98% claim approval rate and 4.9-star customer satisfaction score."',
+                                'Vibe: They\'re visualizing using your service! Be confident about your process - this is a buying signal, not just a question.'
                             ]
                         },
                         time: '3 seconds ago'
@@ -1831,9 +1887,8 @@
                         trigger: '"The premium seems high for my situation"',
                         response: {
                             bullets: [
-                                { action: 'Explore specifics:', phrase: '"I understand price is important. Which part of the coverage seems high for your needs?"' },
-                                { action: 'Highlight hidden value:', phrase: '"This includes benefits competitors charge extra for - like roadside assistance and rental coverage."' },
-                                { action: 'Offer optimization:', phrase: '"Let me adjust the deductible options - we might save you 20% while keeping strong coverage."' }
+                                '"I understand price is important. Which part of the coverage seems high for your needs? This includes benefits competitors charge extra for - like roadside assistance and rental coverage."',
+                                'Vibe: Don\'t get defensive about price. They\'re being honest - explore their specific needs and show the value they\'re getting.'
                             ]
                         },
                         time: '6 seconds ago'
@@ -1847,9 +1902,8 @@
                         trigger: '"Your rate\'s higher than my current provider"',
                         response: {
                             bullets: [
-                                { action: 'Reframe:', phrase: '"Fair, are you on a promo that expires? What happens to your bill after month 12?"' },
-                                { action: 'Contrast:', phrase: '"Our average net over 12 months is lower once fees/surcharges are included."' },
-                                { action: 'Next step:', phrase: '"Can I run your exact usage and email a side-by-side today?"' }
+                                '"Fair, are you on a promo that expires? What happens to your bill after month 12? Our average net over 12 months is lower once fees/surcharges are included."',
+                                'Vibe: Stay confident but not defensive. They\'re comparing - focus on total cost of ownership, not just the headline rate.'
                             ]
                         },
                         time: 'Just now'
@@ -1859,9 +1913,8 @@
                         trigger: '"How fast can we switch?"',
                         response: {
                             bullets: [
-                                { action: 'Speed to value:', phrase: '"Install window this week; zero-downtime cutover; we handle the paperwork."' },
-                                { action: 'Create urgency:', phrase: '"Earliest slot is Thursday. Want me to hold it?"' },
-                                { action: 'Remove friction:', phrase: '"We\'ll port your numbers and handle cancellation with your current provider - you don\'t have to do anything."' }
+                                '"Install window this week; zero-downtime cutover; we handle the paperwork. We\'ll port your numbers and handle cancellation with your current provider - you don\'t have to do anything."',
+                                'Vibe: They\'re ready to move! Be confident about your process and remove all friction - this is a strong buying signal.'
                             ]
                         },
                         time: '3 seconds ago'
@@ -1875,9 +1928,8 @@
                         trigger: '"Your rate\'s too high for this lane"',
                         response: {
                             bullets: [
-                                { action: 'Probe:', phrase: '"Totally. Are you optimizing for speed or cost on this pickup?"' },
-                                { action: 'Social proof:', phrase: '"We cover this lane daily; 96% on-time last quarter."' },
-                                { action: 'Close:', phrase: '"If I match transit at $X all-in, can we lock this load now?"' }
+                                '"Totally. Are you optimizing for speed or cost on this pickup? We cover this lane daily; 96% on-time last quarter."',
+                                'Vibe: Stay direct and confident. They\'re negotiating - understand their priorities and show your reliability.'
                             ]
                         },
                         time: 'Just now'
@@ -1887,9 +1939,8 @@
                         trigger: '"Can you do recurring weekly pickups?"',
                         response: {
                             bullets: [
-                                { action: 'Lock it in:', phrase: '"We\'ll set a standing order, shared tracking, and backup carrier. Want a pilot for the next 2 Fridays?"' },
-                                { action: 'Sweeten deal:', phrase: '"For recurring volume, I can drop the rate 8% and guarantee the same driver."' },
-                                { action: 'Fast commitment:', phrase: '"I can reserve your preferred pickup window for the next month - should I lock it in?"' }
+                                '"We\'ll set a standing order, shared tracking, and backup carrier. For recurring volume, I can drop the rate 8% and guarantee the same driver."',
+                                'Vibe: They\'re thinking long-term! This is a major buying signal - be confident about your recurring capabilities and sweeten the deal.'
                             ]
                         },
                         time: '4 seconds ago'
@@ -2048,22 +2099,48 @@
             const answerArea = document.getElementById('answerArea');
             const answerContent = document.getElementById('answerContent');
             
-            // Build bullet points
-            let bulletsHTML = '<div class="lupo-bullets">';
-            response.bullets.forEach(bullet => {
-                bulletsHTML += `
-                    <div class="lupo-bullet">
-                        <span class="bullet-marker">•</span>
-                        <div class="bullet-content">
-                            <span class="bullet-action">${bullet.action}</span>
-                            <span class="bullet-phrase">${bullet.phrase}</span>
-                        </div>
-                    </div>
-                `;
-            });
-            bulletsHTML += '</div>';
+            // Handle different response formats
+            if (response.format === 'live-recap') {
+                // Format Live Recap with structured sections
+                const formattedContent = response.content
+                    .replace(/\*\*(.*?)\*\*/g, '<div class="recap-section-title">$1</div>')
+                    .replace(/• (.*?)(?=\n|$)/g, '<div class="recap-bullet">• $1</div>')
+                    .replace(/\n\n/g, '<div class="recap-spacer"></div>');
+                
+                answerContent.innerHTML = `<div class="live-recap-content">${formattedContent}</div>`;
+            } else {
+                // Build bullet points for regular responses (2-bullet format: what to say + vibe)
+                let bulletsHTML = '<div class="lupo-bullets">';
+                response.bullets.forEach((bullet, index) => {
+                    if (typeof bullet === 'string') {
+                        // New format: direct string
+                        const isVibe = bullet.startsWith('Vibe:');
+                        bulletsHTML += `
+                            <div class="lupo-bullet ${isVibe ? 'vibe-bullet' : ''}">
+                                <span class="bullet-marker">${isVibe ? '🎯' : '•'}</span>
+                                <div class="bullet-content">
+                                    <span class="bullet-text">${bullet}</span>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // Legacy format: action + phrase
+                        bulletsHTML += `
+                            <div class="lupo-bullet">
+                                <span class="bullet-marker">•</span>
+                                <div class="bullet-content">
+                                    <span class="bullet-action">${bullet.action}</span>
+                                    <span class="bullet-phrase">${bullet.phrase}</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+                bulletsHTML += '</div>';
+                
+                answerContent.innerHTML = bulletsHTML;
+            }
             
-            answerContent.innerHTML = bulletsHTML;
             answerArea.classList.add('visible');
         }
         
