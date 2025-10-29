@@ -1466,7 +1466,7 @@
                     </div>
                     
                     <!-- Screenshot with Click-to-View -->
-                    <div class="research-preview" role="button" aria-label="View full deep research screenshot" tabindex="0" style="position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; background: var(--bg-secondary);" onclick="window.open('deep-research-screenshot.png', '_blank')">
+                    <div class="research-preview" role="button" aria-label="View full deep research screenshot" tabindex="0" style="position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; background: var(--bg-secondary);" onclick="openImageModal('deep-research-screenshot.png')">
                         <img 
                             src="deep-research-screenshot.png" 
                             alt="Deep Research Report Example"
@@ -1509,6 +1509,73 @@
                 grid-template-columns: 1fr !important;
                 gap: 32px !important;
             }
+        }
+        
+        /* Image Modal/Lightbox */
+        .image-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .image-modal-overlay.active {
+            display: flex;
+        }
+        
+        .image-modal-content {
+            position: relative;
+            max-width: 95vw;
+            max-height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .image-modal-content img {
+            max-width: 100%;
+            max-height: 95vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+        }
+        
+        .image-modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: white;
+            font-size: 24px;
+            font-weight: 300;
+        }
+        
+        .image-modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         </style>
         

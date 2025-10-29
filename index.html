@@ -1238,7 +1238,7 @@
                 </div>
                 
                 <!-- Vimeo Video Container with Lazy Loading -->
-                <div id="vimeoContainer" style="position: relative; width: 100%; max-width: 1100px; margin: 0 auto 30px; border-radius: 16px; overflow: hidden; box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3); background: var(--bg-secondary); aspect-ratio: 16/9;">
+                <div id="vimeoContainer" style="position: relative; width: 100%; max-width: 1400px; margin: 0 auto 30px; border-radius: 16px; overflow: hidden; box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3); background: var(--bg-secondary); aspect-ratio: 16/9;">
                     <div id="vimeoPlaceholder" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; background: linear-gradient(135deg, rgba(22, 22, 23, 0.95), rgba(22, 22, 23, 0.85)); display: flex; align-items: center; justify-content: center;">
                         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2;">
                             <div style="width: 80px; height: 80px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; transition: all 0.3s ease;">
@@ -1427,7 +1427,7 @@
             </div>
             
             <!-- FEATURE SHOWCASE: Translation + Deep Research -->
-            <section style="max-width: 1200px; margin: 100px auto 80px; padding: 0 20px;">
+            <section style="max-width: 1600px; margin: 100px auto 80px; padding: 0 20px;">
                 
                 <!-- Section Header -->
                 <div style="text-align: center; margin-bottom: 60px;">
@@ -1443,10 +1443,10 @@
                 <div class="feature-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
                     
                     <!-- LEFT: Translation Demo Video -->
-                    <div class="feature-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease;">
+                    <div class="feature-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s ease;">
                         
                         <!-- Icon + Title + Description -->
-                        <div style="margin-bottom: 24px;">
+                        <div style="margin-bottom: 20px;">
                             <div style="font-size: 48px; margin-bottom: 16px;">🔤</div>
                             <h3 style="font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
                                 NEW: Live Translation
@@ -1475,10 +1475,10 @@
                     </div>
                     
                     <!-- RIGHT: Deep Research Screenshot -->
-                    <div class="feature-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease;">
+                    <div class="feature-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s ease;">
                         
                         <!-- Icon + Title + Description -->
-                        <div style="margin-bottom: 24px;">
+                        <div style="margin-bottom: 20px;">
                             <div style="font-size: 48px; margin-bottom: 16px;">🔍</div>
                             <h3 style="font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
                                 NEW: Deep Research
@@ -1489,7 +1489,7 @@
                         </div>
                         
                         <!-- Screenshot with Click-to-View -->
-                        <div class="research-preview" role="button" aria-label="View full deep research screenshot" tabindex="0" style="position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; background: var(--bg-secondary);" onclick="window.open('deep-research-screenshot.png', '_blank')">
+                        <div class="research-preview" role="button" aria-label="View full deep research screenshot" tabindex="0" style="position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; background: var(--bg-secondary);" onclick="openImageModal('deep-research-screenshot.png')">
                             <img 
                                 src="deep-research-screenshot.png" 
                                 alt="Deep Research Report Example"
@@ -1532,6 +1532,74 @@
                     grid-template-columns: 1fr !important;
                     gap: 32px !important;
                 }
+            }
+            
+            /* Image Modal/Lightbox */
+            .image-modal-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(20px);
+                z-index: 10000;
+                align-items: center;
+                justify-content: center;
+                padding: 40px;
+                animation: fadeIn 0.3s ease;
+            }
+            
+            .image-modal-overlay.active {
+                display: flex;
+            }
+            
+            .image-modal-content {
+                position: relative;
+                max-width: 95vw;
+                max-height: 95vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .image-modal-content img {
+                max-width: 100%;
+                max-height: 95vh;
+                object-fit: contain;
+                border-radius: 12px;
+                box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+            }
+            
+            .image-modal-close {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                color: white;
+                font-size: 24px;
+                font-weight: 300;
+                z-index: 10;
+            }
+            
+            .image-modal-close:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: rotate(90deg);
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
             }
             </style>
             
@@ -1781,6 +1849,25 @@
         // Start particle animation
         setInterval(createParticle, 1000);
         
+        // Image Modal Functions
+        function openImageModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            if (modal && modalImg) {
+                modalImg.src = imageSrc;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+        
         // Research preview keyboard accessibility
         document.addEventListener('DOMContentLoaded', () => {
             const researchPreview = document.querySelector('.research-preview');
@@ -1788,7 +1875,24 @@
                 researchPreview.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        window.open('deep-research-screenshot.png', '_blank');
+                        openImageModal('deep-research-screenshot.png');
+                    }
+                });
+            }
+            
+            // Close modal on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeImageModal();
+                }
+            });
+            
+            // Close modal when clicking overlay
+            const modal = document.getElementById('imageModal');
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeImageModal();
                     }
                 });
             }
@@ -2465,5 +2569,13 @@
             }
         })();
     </script>
+    
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal-overlay">
+        <div class="image-modal-content">
+            <button class="image-modal-close" onclick="closeImageModal()" aria-label="Close image modal">×</button>
+            <img id="modalImage" src="" alt="Full size image">
+        </div>
+    </div>
 </body>
 </html>
