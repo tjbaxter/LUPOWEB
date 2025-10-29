@@ -1398,6 +1398,121 @@
             </div>
         </section>
         
+        <!-- FEATURE SHOWCASE: Translation + Deep Research -->
+        <section style="max-width: 1200px; margin: 100px auto 80px; padding: 0 20px;">
+            
+            <!-- Section Header -->
+            <div style="text-align: center; margin-bottom: 60px;">
+                <h2 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px;">
+                    More ways LUPO helps you close
+                </h2>
+                <p style="font-size: 19px; color: var(--text-secondary); line-height: 1.5;">
+                    Live translation during calls and deep research after
+                </p>
+            </div>
+            
+            <!-- Two-column grid -->
+            <div class="feature-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                
+                <!-- LEFT: Translation Demo Video -->
+                <div class="feature-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease;">
+                    
+                    <!-- Icon + Title + Description -->
+                    <div style="margin-bottom: 24px;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🔤</div>
+                        <h3 style="font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
+                            Live Translation
+                        </h3>
+                        <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0;">
+                            Prospect uses unfamiliar terms? LUPO translates instantly. "120% NRR" → "customers expanding 20% year-over-year" in real-time.
+                        </p>
+                    </div>
+                    
+                    <!-- Video Container -->
+                    <div class="translation-video-container" style="position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); background: var(--bg-secondary);">
+                        <div class="translation-video-wrapper" style="position: relative; padding-top: 56.25%;">
+                            <div class="translation-video-poster" role="button" aria-label="Play translation demo" tabindex="0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(22, 22, 23, 0.95), rgba(22, 22, 23, 0.85)); cursor: pointer; transition: all 0.2s ease;">
+                                <div class="play-button" style="width: 60px; height: 60px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                                    <svg viewBox="0 0 24 24" fill="white" style="width: 24px; height: 24px; margin-left: 4px;">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- RIGHT: Deep Research Screenshot -->
+                <div class="feature-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease;">
+                    
+                    <!-- Icon + Title + Description -->
+                    <div style="margin-bottom: 24px;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🔍</div>
+                        <h3 style="font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
+                            Deep Research
+                        </h3>
+                        <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0;">
+                            One-click tactical brief after every call. Competitive positioning, exact follow-up phrases, and intelligence to weaponize. Generated in seconds.
+                        </p>
+                    </div>
+                    
+                    <!-- Screenshot with Click-to-View -->
+                    <div class="research-preview" role="button" aria-label="View full deep research screenshot" tabindex="0" style="position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; background: var(--bg-secondary);" onclick="window.open('deep-research-screenshot.png', '_blank')">
+                        <img 
+                            src="deep-research-screenshot.png" 
+                            alt="Deep Research Report Example"
+                            style="width: 100%; height: auto; display: block; transition: transform 0.3s ease;">
+                        
+                        <!-- Hover Overlay -->
+                        <div class="research-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to view full screenshot</span>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 14px;">→</span>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </section>
+        
+        <style>
+        /* Feature card hover effect */
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15);
+        }
+
+        /* Research preview hover */
+        .research-preview:hover .research-overlay {
+            opacity: 1;
+        }
+
+        .research-preview:hover img {
+            transform: scale(1.05);
+        }
+        
+        .translation-video-poster:hover {
+            background: linear-gradient(135deg, rgba(32, 32, 33, 0.95), rgba(32, 32, 33, 0.85));
+        }
+        
+        .translation-video-poster:hover .play-button {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Mobile responsive: stack vertically */
+        @media (max-width: 968px) {
+            .feature-grid {
+                grid-template-columns: 1fr !important;
+                gap: 32px !important;
+            }
+        }
+        </style>
+        
         <!-- FEATURE HIGHLIGHTS -->
         <section style="max-width: 1000px; margin: 100px auto; padding: 0 20px;">
             <div style="text-align: center; margin-bottom: 60px;">
@@ -1796,6 +1911,54 @@
                 loadVideo();
             }
         });
+        
+        // Translation video loading
+        let translationVideoLoaded = false;
+        const translationVideoContainer = document.querySelector('.translation-video-container');
+        const translationVideoPoster = document.querySelector('.translation-video-poster');
+        
+        function loadTranslationVideo() {
+            if (translationVideoLoaded || !translationVideoPoster) return;
+            translationVideoLoaded = true;
+            
+            const wrapper = translationVideoPoster.parentElement;
+            const iframe = document.createElement('iframe');
+            iframe.src = 'https://player.vimeo.com/video/1131686366?autoplay=1&muted=1&controls=1&title=0&byline=0&portrait=0&playsinline=1&dnt=1';
+            iframe.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.style.position = 'absolute';
+            iframe.style.top = '0';
+            iframe.style.left = '0';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = '0';
+            
+            translationVideoPoster.style.display = 'none';
+            wrapper.appendChild(iframe);
+            
+            trackEvent('translation_video_revealed');
+        }
+        
+        if (translationVideoPoster) {
+            translationVideoPoster.addEventListener('click', loadTranslationVideo);
+            translationVideoPoster.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    loadTranslationVideo();
+                }
+            });
+        }
+        
+        // Research preview keyboard accessibility
+        const researchPreview = document.querySelector('.research-preview');
+        if (researchPreview) {
+            researchPreview.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    window.open('deep-research-screenshot.png', '_blank');
+                }
+            });
+        }
         
         // Floating particles effect (matching homepage)
         function createParticle() {
