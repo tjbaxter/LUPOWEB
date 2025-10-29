@@ -1426,6 +1426,115 @@
                 </div>
             </div>
             
+            <!-- FEATURE SHOWCASE: Translation + Deep Research -->
+            <section style="max-width: 1200px; margin: 100px auto 80px; padding: 0 20px;">
+                
+                <!-- Section Header -->
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h2 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px;">
+                        More ways LUPO helps you close
+                    </h2>
+                    <p style="font-size: 19px; color: var(--text-secondary); line-height: 1.5;">
+                        Live translation during calls and deep research after
+                    </p>
+                </div>
+                
+                <!-- Two-column grid -->
+                <div class="feature-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                    
+                    <!-- LEFT: Translation Demo Video -->
+                    <div class="feature-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease;">
+                        
+                        <!-- Icon + Title + Description -->
+                        <div style="margin-bottom: 24px;">
+                            <div style="font-size: 48px; margin-bottom: 16px;">🔤</div>
+                            <h3 style="font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
+                                NEW: Live Translation
+                            </h3>
+                            <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0;">
+                                Prospect uses unfamiliar terms? LUPO translates instantly. "120% NRR" → "customers expanding 20% year-over-year" in real-time.
+                            </p>
+                        </div>
+                        
+                        <!-- Video Container -->
+                        <div class="translation-video-container" style="position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); background: var(--bg-secondary);">
+                            <div class="translation-video-wrapper" style="position: relative; padding-top: 56.25%;">
+                                <iframe 
+                                    src="https://player.vimeo.com/video/1131686366?autoplay=0&muted=0&controls=1&title=0&byline=0&portrait=0&playsinline=1&dnt=1&quality=4k"
+                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                                    allowfullscreen
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 12px; font-size: 13px; color: var(--text-secondary);">
+                            - 30s clip
+                        </div>
+                        
+                    </div>
+                    
+                    <!-- RIGHT: Deep Research Screenshot -->
+                    <div class="feature-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease;">
+                        
+                        <!-- Icon + Title + Description -->
+                        <div style="margin-bottom: 24px;">
+                            <div style="font-size: 48px; margin-bottom: 16px;">🔍</div>
+                            <h3 style="font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
+                                NEW: Deep Research
+                            </h3>
+                            <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0;">
+                                LUPO analyzes your entire call, researches the prospect's company (latest news, funding, competitors), and generates a complete tactical playbook. Exact phrases for follow-up, competitive positioning, and every insight you need to close.
+                            </p>
+                        </div>
+                        
+                        <!-- Screenshot with Click-to-View -->
+                        <div class="research-preview" role="button" aria-label="View full deep research screenshot" tabindex="0" style="position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; background: var(--bg-secondary);" onclick="window.open('deep-research-screenshot.png', '_blank')">
+                            <img 
+                                src="deep-research-screenshot.png" 
+                                alt="Deep Research Report Example"
+                                style="width: 100%; height: auto; display: block; transition: transform 0.3s ease;">
+                            
+                            <!-- Hover Overlay -->
+                            <div class="research-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+                                <span style="color: white; font-size: 18px; font-weight: 600;">Click to view full screenshot</span>
+                                <span style="color: rgba(255,255,255,0.9); font-size: 14px;">→</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+            </section>
+            
+            <style>
+            /* Feature card hover effect */
+            .feature-card:hover {
+                background: rgba(255, 255, 255, 0.04);
+                border-color: rgba(255, 255, 255, 0.15);
+                transform: translateY(-4px);
+                box-shadow: 0 12px 40px rgba(41, 151, 255, 0.15);
+            }
+
+            /* Research preview hover */
+            .research-preview:hover .research-overlay {
+                opacity: 1;
+            }
+
+            .research-preview:hover img {
+                transform: scale(1.05);
+            }
+
+            /* Mobile responsive: stack vertically */
+            @media (max-width: 968px) {
+                .feature-grid {
+                    grid-template-columns: 1fr !important;
+                    gap: 32px !important;
+                }
+            }
+            </style>
+            
             <!-- FAQ Section -->
             <div class="faq-section">
                 <h2 style="font-size: 48px; font-weight: 700; text-align: center; margin-bottom: 16px; background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
@@ -1671,6 +1780,19 @@
         
         // Start particle animation
         setInterval(createParticle, 1000);
+        
+        // Research preview keyboard accessibility
+        document.addEventListener('DOMContentLoaded', () => {
+            const researchPreview = document.querySelector('.research-preview');
+            if (researchPreview) {
+                researchPreview.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        window.open('deep-research-screenshot.png', '_blank');
+                    }
+                });
+            }
+        });
     </script>
     
     <!-- LUPO Installation Modal -->
