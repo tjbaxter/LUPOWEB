@@ -953,6 +953,24 @@
             margin-top: 48px;
         }
         
+        .faq-category-header {
+            grid-column: 1 / -1;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .faq-category-header:first-child {
+            margin-top: 0;
+        }
+        
+        .faq-category-header h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+        
         .faq-item {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border);
@@ -1015,7 +1033,7 @@
         }
         
         .faq-item.active .faq-answer {
-            max-height: 200px;
+            max-height: 500px;
             padding: 0 24px 24px 24px;
         }
         
@@ -1606,16 +1624,21 @@
             <!-- FAQ Section -->
             <div class="faq-section">
                 <h2 style="font-size: 48px; font-weight: 700; text-align: center; margin-bottom: 16px; background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                    Frequently Asked Questions
+                    Common Questions
                 </h2>
                 <p style="text-align: center; font-size: 18px; color: var(--text-secondary); margin-bottom: 48px;">
                     Everything you need to know about LUPO
                 </p>
                 
                 <div class="faq-grid">
+                    <!-- Setup & Onboarding -->
+                    <div class="faq-category-header">
+                        <h3>Setup & Onboarding</h3>
+                    </div>
+                    
                     <div class="faq-item">
                         <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">How does LUPO work?</span>
+                            <span class="faq-question-text">How long does setup take?</span>
                             <span class="faq-indicator">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M6 9l6 6 6-6"/>
@@ -1623,13 +1646,32 @@
                             </span>
                         </div>
                         <div class="faq-answer">
-                            LUPO listens to your live calls, detects key phrases, and provides instant on-screen guidance in real-time. No special setup required.
+                            90 seconds. Upload your company info (or paste/speak it), add your name and what you sell, and you're ready. Works with any video call tool—Zoom, Teams, Google Meet, etc. No integrations needed.
+                        </div>
+                    </div>
+                    
+                    <!-- During Calls -->
+                    <div class="faq-category-header">
+                        <h3>During Calls</h3>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Does LUPO work with my video call software?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Yes. LUPO works with Zoom, Microsoft Teams, Google Meet, and any other video platform. It's a desktop app that captures your system audio, so there's nothing to install in your video software. Just start your call and LUPO listens.
                         </div>
                     </div>
                     
                     <div class="faq-item">
                         <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Is my data private and secure?</span>
+                            <span class="faq-question-text">Can prospects see that I'm using LUPO?</span>
                             <span class="faq-indicator">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M6 9l6 6 6-6"/>
@@ -1637,13 +1679,13 @@
                             </span>
                         </div>
                         <div class="faq-answer">
-                            Yes. Call transcripts are encrypted and stored securely in your private dashboard for coaching and review. Audio is processed in real-time and never stored. Only your team can access your data.
+                            No. LUPO appears only on your screen—it's like having notes open during a call. Prospects can't see it. You should still follow your company's call recording and consent policies.
                         </div>
                     </div>
                     
                     <div class="faq-item">
                         <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Do I need special software?</span>
+                            <span class="faq-question-text">What if I don't know the industry terms prospects use?</span>
                             <span class="faq-indicator">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M6 9l6 6 6-6"/>
@@ -1651,13 +1693,13 @@
                             </span>
                         </div>
                         <div class="faq-answer">
-                            No, just install the desktop app for Mac or Windows. It runs quietly in the background and overlays on any call tool (Zoom, Teams, Meet, etc.).
+                            That's exactly what live translation is for. When prospects say "120% NRR" or "API rate limits," LUPO instantly shows you what it means in plain English. Works for any industry—finance, tech, healthcare, manufacturing, etc.
                         </div>
                     </div>
                     
                     <div class="faq-item">
                         <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Can I try LUPO without downloading?</span>
+                            <span class="faq-question-text">How fast are the responses during calls?</span>
                             <span class="faq-indicator">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M6 9l6 6 6-6"/>
@@ -1665,13 +1707,32 @@
                             </span>
                         </div>
                         <div class="faq-answer">
-                            Yes, try our <a href="/playground.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">interactive demo</a> to see LUPO handle objections in real-time, or watch the demo video above.
+                            2 seconds. When an objection is detected or you type "what should I say?", LUPO responds in 2 seconds with tactical suggestions based on your company data—not generic advice.
+                        </div>
+                    </div>
+                    
+                    <!-- Post-Call -->
+                    <div class="faq-category-header">
+                        <h3>Post-Call</h3>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">How does deep research work?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            After every call, click "Deep Research" and LUPO analyzes the full transcript, researches the prospect's company (news, funding, competitors), and generates a tactical playbook with exact follow-up phrases, competitive positioning, and intelligence to weaponize. Takes seconds, saves hours.
                         </div>
                     </div>
                     
                     <div class="faq-item">
                         <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">What's the pricing?</span>
+                            <span class="faq-question-text">Can I use LUPO's summaries in my CRM?</span>
                             <span class="faq-indicator">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M6 9l6 6 6-6"/>
@@ -1679,7 +1740,233 @@
                             </span>
                         </div>
                         <div class="faq-answer">
-                            $200 per seat per month with a 5-seat minimum ($1,000/month). Month-to-month billing with a 7-day refund guarantee. No volume discounts, consistent per-seat pricing.
+                            Yes. Post-call summaries, next steps, and emails are all copy-paste ready. Generate in 2 seconds, then paste directly into Salesforce, HubSpot, or wherever you log calls.
+                        </div>
+                    </div>
+                    
+                    <!-- Data & Privacy -->
+                    <div class="faq-category-header">
+                        <h3>Data & Privacy</h3>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Is my call data secure?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Yes. Audio is encrypted in transit and processed on our secure servers. We're SOC 2 aligned and GDPR compliant. Your call transcripts and company data are never used to train AI models or shared with third parties. You can delete any call data at any time.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Where is my data stored?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            All data is stored on secure, encrypted cloud servers. You have full control—delete any call transcript or report whenever you want. We never sell or share your data.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Does LUPO record my calls?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            LUPO transcribes your calls in real-time to provide guidance, summaries, and research. You control what's saved and can delete transcripts anytime. Always follow your company's recording and consent policies.
+                        </div>
+                    </div>
+                    
+                    <!-- Pricing & Trial -->
+                    <div class="faq-category-header">
+                        <h3>Pricing & Trial</h3>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">How does the 7-day free trial work?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Download LUPO, add your payment details, and use all features free for 7 days. If you cancel before day 7, you're not charged. After 7 days, it's $200/seat/month. No contracts, cancel anytime.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">What's included for $200/seat/month?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Everything. Live translation, smart alerts, quick guidance during calls, post-call summaries, 10 deep research reports per month, email drafts, full transcripts, and unlimited calls. No hidden fees or usage limits.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Do you offer team or enterprise pricing?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Yes. For teams of 10+ seats, we offer volume discounts, dedicated onboarding, and custom integrations. Contact us for enterprise pricing.
+                        </div>
+                    </div>
+                    
+                    <!-- Use Cases -->
+                    <div class="faq-category-header">
+                        <h3>Use Cases</h3>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Does this work for all industries?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Yes. LUPO translates terminology from any industry—finance, healthcare, manufacturing, tech, real estate, insurance, etc. Whether prospects say "alpha generation" or "OEE optimization," LUPO explains it instantly.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Is this just for SDRs or can AEs use it too?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Both. SDRs use it for cold calls and discovery. AEs use it for demos and closing calls. Anyone on a sales call benefits—new reps learn faster, experienced reps close more deals.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">What if I sell to multiple industries?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            LUPO adapts. Set your call objective before each call ("calling healthcare CIO" or "fintech CFO") and LUPO tailors responses to that context. Works across any vertical you sell into.
+                        </div>
+                    </div>
+                    
+                    <!-- Manager Questions -->
+                    <div class="faq-category-header">
+                        <h3>Manager Questions</h3>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Can managers see their team's calls?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Yes. Managers get a dashboard showing all team calls with critical moments (objections, buying signals, competitor mentions) highlighted. Use it for coaching, pipeline visibility, and spotting common objections across the team.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">How does this help onboard new reps?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            New reps get real-time coaching from day one. They see translations of unfamiliar terms, get objection handling suggestions, and learn what to say next—without waiting for manager feedback. Cuts ramp time significantly.
+                        </div>
+                    </div>
+                    
+                    <!-- Technical -->
+                    <div class="faq-category-header">
+                        <h3>Technical</h3>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">What if my internet is slow during a call?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            LUPO is lightweight and works on most connections. If your internet can handle a video call, it can handle LUPO. Responses are optimized for speed—2 seconds even on slower connections.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">Does LUPO slow down my computer?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            No. LUPO is optimized to use minimal CPU and memory. It runs quietly in the background and won't affect your video call quality or other applications.
+                        </div>
+                    </div>
+                    
+                    <!-- Support -->
+                    <div class="faq-category-header">
+                        <h3>Support</h3>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span class="faq-question-text">What if I need help or have questions?</span>
+                            <span class="faq-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="faq-answer">
+                            Email us anytime at <a href="mailto:support@lupolabs.ai" style="color: var(--accent); text-decoration: none; font-weight: 500;">support@lupolabs.ai</a> or message us on LinkedIn. We respond within a few hours and offer onboarding help for new users.
                         </div>
                     </div>
                 </div>
