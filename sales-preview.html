@@ -1421,7 +1421,7 @@
                     <div style="margin-bottom: 24px;">
                         <div style="font-size: 48px; margin-bottom: 16px;">🔤</div>
                         <h3 style="font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
-                            Live Translation
+                            NEW: Live Translation
                         </h3>
                         <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0;">
                             Prospect uses unfamiliar terms? LUPO translates instantly. "120% NRR" → "customers expanding 20% year-over-year" in real-time.
@@ -1431,13 +1431,13 @@
                     <!-- Video Container -->
                     <div class="translation-video-container" style="position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); background: var(--bg-secondary);">
                         <div class="translation-video-wrapper" style="position: relative; padding-top: 56.25%;">
-                            <div class="translation-video-poster" role="button" aria-label="Play translation demo" tabindex="0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(22, 22, 23, 0.95), rgba(22, 22, 23, 0.85)); cursor: pointer; transition: all 0.2s ease;">
-                                <div class="play-button" style="width: 60px; height: 60px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
-                                    <svg viewBox="0 0 24 24" fill="white" style="width: 24px; height: 24px; margin-left: 4px;">
-                                        <path d="M8 5v14l11-7z"/>
-                                    </svg>
-                                </div>
-                            </div>
+                            <iframe 
+                                src="https://player.vimeo.com/video/1131686366?autoplay=0&muted=0&controls=1&title=0&byline=0&portrait=0&playsinline=1&dnt=1"
+                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                                allowfullscreen
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                                loading="lazy">
+                            </iframe>
                         </div>
                     </div>
                     
@@ -1450,10 +1450,10 @@
                     <div style="margin-bottom: 24px;">
                         <div style="font-size: 48px; margin-bottom: 16px;">🔍</div>
                         <h3 style="font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
-                            Deep Research
+                            NEW: Deep Research
                         </h3>
                         <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0;">
-                            One-click tactical brief after every call. Competitive positioning, exact follow-up phrases, and intelligence to weaponize. Generated in seconds.
+                            LUPO analyzes your entire call, researches the prospect's company (latest news, funding, competitors), and generates a complete tactical playbook. Exact phrases for follow-up, competitive positioning, and every insight you need to close.
                         </p>
                     </div>
                     
@@ -1494,15 +1494,6 @@
         .research-preview:hover img {
             transform: scale(1.05);
         }
-        
-        .translation-video-poster:hover {
-            background: linear-gradient(135deg, rgba(32, 32, 33, 0.95), rgba(32, 32, 33, 0.85));
-        }
-        
-        .translation-video-poster:hover .play-button {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.25);
-        }
 
         /* Mobile responsive: stack vertically */
         @media (max-width: 968px) {
@@ -1512,76 +1503,6 @@
             }
         }
         </style>
-        
-        <!-- FEATURE HIGHLIGHTS -->
-        <section style="max-width: 1000px; margin: 100px auto; padding: 0 20px;">
-            <div style="text-align: center; margin-bottom: 60px;">
-                <h2 style="font-size: 40px; font-weight: 700; color: #f5f5f7; margin-bottom: 16px;">
-                    Three ways LUPO helps you close
-                </h2>
-                <p style="font-size: 19px; color: #a1a1a6;">
-                    Live translation, smart alerts, and instant post-call actions
-                </p>
-            </div>
-            
-            <div style="display: grid; gap: 32px;">
-                
-                <!-- During Call -->
-                <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 40px; display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: start;">
-                    <div style="font-size: 64px; opacity: 0.9;">🔤</div>
-                    <div>
-                        <h3 style="font-size: 24px; font-weight: 600; color: #f5f5f7; margin-bottom: 12px;">
-                            During calls: Live translation
-                        </h3>
-                        <p style="font-size: 17px; line-height: 1.6; color: #a1a1a6; margin-bottom: 16px;">
-                            Prospects use unfamiliar terms? LUPO translates instantly. "120% NDR" becomes "customers expanding 20% year-over-year" in real-time.
-                        </p>
-                        <div style="background: rgba(102, 126, 234, 0.1); border-left: 3px solid #667eea; padding: 16px; border-radius: 8px;">
-                            <p style="font-size: 15px; color: #a1a1a6; font-style: italic;">
-                                "Never get lost when prospects use industry terms you don't know yet."
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Objections -->
-                <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 40px; display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: start;">
-                    <div style="font-size: 64px; opacity: 0.9;">⚡</div>
-                    <div>
-                        <h3 style="font-size: 24px; font-weight: 600; color: #f5f5f7; margin-bottom: 12px;">
-                            During calls: Smart alerts
-                        </h3>
-                        <p style="font-size: 17px; line-height: 1.6; color: #a1a1a6; margin-bottom: 16px;">
-                            LUPO catches objections as they happen and suggests responses in 2 seconds. Never get caught off-guard again.
-                        </p>
-                        <div style="background: rgba(102, 126, 234, 0.1); border-left: 3px solid #667eea; padding: 16px; border-radius: 8px;">
-                            <p style="font-size: 15px; color: #a1a1a6; font-style: italic;">
-                                "Turn objections into opportunities with instant, context-aware suggestions."
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Post-Call -->
-                <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 40px; display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: start;">
-                    <div style="font-size: 64px; opacity: 0.9;">🔍</div>
-                    <div>
-                        <h3 style="font-size: 24px; font-weight: 600; color: #f5f5f7; margin-bottom: 12px;">
-                            After calls: Deep research & summaries
-                        </h3>
-                        <p style="font-size: 17px; line-height: 1.6; color: #a1a1a6; margin-bottom: 16px;">
-                            Post-call summaries, next steps, and email drafts in 2 seconds. One-click deep research on prospects and competitors.
-                        </p>
-                        <div style="background: rgba(102, 126, 234, 0.1); border-left: 3px solid #667eea; padding: 16px; border-radius: 8px;">
-                            <p style="font-size: 15px; color: #a1a1a6; font-style: italic;">
-                                "Save 20 minutes of admin work after every call."
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </section>
         
         <!-- Playground Transition Section -->
         <section class="playground-transition" id="playgroundTransition">
@@ -1721,26 +1642,26 @@
                 
                 <div class="hiw-step">
                     <div class="hiw-step-number">Step 3 - During Call</div>
-                    <h3 class="hiw-step-title">LUPO Listens & Assists</h3>
+                    <h3 class="hiw-step-title">LUPO Listens & Assists in Real-Time</h3>
                     <ul class="hiw-step-items">
-                        <li class="hiw-step-item">LUPO listens to your call</li>
-                        <li class="hiw-step-item">Detects objections & buying signals</li>
-                        <li class="hiw-step-item">Suggests responses from YOUR data</li>
-                        <li class="hiw-step-item">Responds instantly in real-time</li>
-                        <li class="hiw-step-item">Not generic AI, uses YOUR company playbook</li>
-                        <li class="hiw-step-item">Live Recap keeps you on track - shows what's happened, what's happening now, what to do next</li>
+                        <li class="hiw-step-item">Live Translation: Prospect uses unfamiliar terms? LUPO translates instantly ("120% NRR" → "customers expanding 20%")</li>
+                        <li class="hiw-step-item">Smart Alerts: Detects objections & buying signals as they happen</li>
+                        <li class="hiw-step-item">Instant Guidance: Suggests responses from YOUR company data</li>
+                        <li class="hiw-step-item">Quick Answers: Type "what should I say?" and get tactical responses in 2 seconds</li>
+                        <li class="hiw-step-item">Live Recap: Shows what's happened, what's happening now, what to do next</li>
+                        <li class="hiw-step-item">Not generic AI - uses YOUR company playbook</li>
                     </ul>
                     <div class="hiw-arrow">→</div>
                 </div>
                 
                 <div class="hiw-step">
                     <div class="hiw-step-number">Step 4 - After Call</div>
-                    <h3 class="hiw-step-title">Instant Next Steps, Summaries or Follow-Ups</h3>
+                    <h3 class="hiw-step-title">Instant Actions & Deep Intelligence</h3>
                     <ul class="hiw-step-items">
-                        <li class="hiw-step-item">Choose: Next steps to close the deal, call summary for CRM, or draft follow-up email</li>
+                        <li class="hiw-step-item">Quick Actions: Generate next steps, call summary, or follow-up email in 2 seconds</li>
+                        <li class="hiw-step-item">Deep Research: One-click comprehensive brief analyzing the call + prospect company research (news, funding, competitors) with exact follow-up phrases and competitive positioning</li>
                         <li class="hiw-step-item">Full transcript saved in your dashboard</li>
-                        <li class="hiw-step-item">Visit dashboard to ask AI: "What could I do better?"</li>
-                        <li class="hiw-step-item">Review call performance with AI coaching</li>
+                        <li class="hiw-step-item">Ask AI: "What could I do better?" for coaching</li>
                         <li class="hiw-step-item">Managers see all calls with critical moments & insights</li>
                     </ul>
                 </div>
@@ -1911,43 +1832,6 @@
                 loadVideo();
             }
         });
-        
-        // Translation video loading
-        let translationVideoLoaded = false;
-        const translationVideoContainer = document.querySelector('.translation-video-container');
-        const translationVideoPoster = document.querySelector('.translation-video-poster');
-        
-        function loadTranslationVideo() {
-            if (translationVideoLoaded || !translationVideoPoster) return;
-            translationVideoLoaded = true;
-            
-            const wrapper = translationVideoPoster.parentElement;
-            const iframe = document.createElement('iframe');
-            iframe.src = 'https://player.vimeo.com/video/1131686366?autoplay=1&muted=1&controls=1&title=0&byline=0&portrait=0&playsinline=1&dnt=1';
-            iframe.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
-            iframe.setAttribute('allowfullscreen', '');
-            iframe.style.position = 'absolute';
-            iframe.style.top = '0';
-            iframe.style.left = '0';
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
-            iframe.style.border = '0';
-            
-            translationVideoPoster.style.display = 'none';
-            wrapper.appendChild(iframe);
-            
-            trackEvent('translation_video_revealed');
-        }
-        
-        if (translationVideoPoster) {
-            translationVideoPoster.addEventListener('click', loadTranslationVideo);
-            translationVideoPoster.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    loadTranslationVideo();
-                }
-            });
-        }
         
         // Research preview keyboard accessibility
         const researchPreview = document.querySelector('.research-preview');
