@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Created - LUPO</title>
+  <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
+  <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --text-primary: #ffffff;
+      --text-secondary: #8a8a8e;
+      --bg-primary: #000000;
+      --bg-secondary: rgba(22, 22, 23, 0.98);
+      --accent: #0071e3;
+      --success: #10b981;
+      --border: rgba(255, 255, 255, 0.06);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(0, 113, 227, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: var(--bg-secondary);
+      backdrop-filter: blur(40px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 24px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .success-icon {
+      font-size: 64px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.03em;
+    }
+
+    p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    .invite-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .invite-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .invite-link-container {
+      display: flex;
+      gap: 12px;
+    }
+
+    .invite-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: 'SF Mono', Monaco, monospace;
+    }
+
+    .copy-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .copy-btn:hover {
+      opacity: 0.9;
+    }
+
+    .copy-btn.copied {
+      background: var(--success);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .next-steps {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 32px;
+      text-align: left;
+    }
+
+    .next-steps h3 {
+      font-size: 18px;
+      color: var(--success);
+      margin-bottom: 16px;
+    }
+
+    .next-steps ol {
+      list-style: none;
+      counter-reset: step;
+    }
+
+    .next-steps li {
+      counter-increment: step;
+      position: relative;
+      padding-left: 36px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .next-steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 24px;
+      height: 24px;
+      background: var(--success);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .error-state {
+      display: none;
+    }
+
+    .error-state.show {
+      display: block;
+    }
+
+    .error-icon {
+      font-size: 64px;
+      margin-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Loading State -->
+    <div id="loadingState">
+      <div class="spinner"></div>
+      <h1>Creating Your Team...</h1>
+      <p>Please wait while we set everything up</p>
+    </div>
+
+    <!-- Success State -->
+    <div id="successState" style="display: none;">
+      <div class="success-icon">✅</div>
+      <h1>Team Created Successfully!</h1>
+      <p>Your 7-day free trial has started. Share this invite link with your sales reps:</p>
+      
+      <div class="invite-box">
+        <div class="invite-label">Team Invite Link</div>
+        <div class="invite-link-container">
+          <input type="text" id="inviteLink" class="invite-input" readonly>
+          <button class="copy-btn" id="copyBtn">Copy</button>
+        </div>
+      </div>
+
+      <a href="/manager-dashboard.html" class="btn-secondary">Go to Dashboard →</a>
+
+      <div class="next-steps">
+        <h3>✨ Next Steps</h3>
+        <ol>
+          <li>Share the invite link with your team members</li>
+          <li>Configure your sales context in the dashboard</li>
+          <li>Watch your team's performance improve in real-time</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div id="errorState" class="error-state">
+      <div class="error-icon">❌</div>
+      <h1>Setup Failed</h1>
+      <p id="errorMessage">Something went wrong. Please try again or contact support.</p>
+      <a href="/team-setup.html" class="btn-secondary">Try Again</a>
+    </div>
+  </div>
+
+  <script>
+    const BACKEND_URL = 'https://lupobackend.fly.dev';
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get('session_id');
+    const tempId = urlParams.get('temp_id');
+
+    async function processSuccess() {
+      if (!sessionId || !tempId) {
+        showError('Missing session information. Please contact support.');
+        return;
+      }
+
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/team/checkout/success?session_id=${sessionId}&temp_id=${tempId}`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to process payment');
+        }
+
+        // Show success
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('successState').style.display = 'block';
+        document.getElementById('inviteLink').value = data.inviteLink;
+
+        console.log('✅ Team created:', data);
+
+      } catch (error) {
+        console.error('❌ Error:', error);
+        showError(error.message);
+      }
+    }
+
+    function showError(message) {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('errorState').classList.add('show');
+      document.getElementById('errorMessage').textContent = message;
+    }
+
+    // Copy invite link
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      const input = document.getElementById('inviteLink');
+      const btn = document.getElementById('copyBtn');
+      
+      input.select();
+      document.execCommand('copy');
+      
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+
+    // Process on load
+    processSuccess();
+  </script>
+</body>
+</html>
+

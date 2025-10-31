@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onboarding - LUPO</title>
+  <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
+  <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --text-primary: #ffffff;
+      --text-secondary: #8a8a8e;
+      --bg-primary: #000000;
+      --bg-secondary: rgba(22, 22, 23, 0.98);
+      --accent: #0071e3;
+      --accent-hover: #0077ed;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-focus: rgba(255, 255, 255, 0.12);
+      --success: #10b981;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 80px 20px 40px;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(0, 113, 227, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .logo-link {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: 28px;
+      font-weight: 600;
+      z-index: 10;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--bg-secondary);
+      backdrop-filter: blur(40px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px;
+      position: relative;
+      z-index: 10;
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+    }
+
+    textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-family: inherit;
+      color: var(--text-primary);
+      min-height: 200px;
+      resize: vertical;
+      transition: all 0.2s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .form-hint {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    .upload-option {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 24px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .upload-option:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--border-focus);
+    }
+
+    .upload-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .skip-link {
+      display: block;
+      text-align: center;
+      margin-top: 16px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .skip-link:hover {
+      color: var(--text-primary);
+    }
+
+    .info-box {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+
+    .info-box h3 {
+      font-size: 16px;
+      color: var(--success);
+      margin-bottom: 12px;
+    }
+
+    .info-box ul {
+      list-style: none;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .info-box li {
+      padding: 6px 0;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .info-box li::before {
+      content: "•";
+      position: absolute;
+      left: 8px;
+      color: var(--success);
+    }
+
+    .error-message {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 32px 24px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="/" class="logo-link">LUPO</a>
+
+  <div class="container">
+    <div id="errorMessage" class="error-message"></div>
+
+    <div class="header">
+      <h1>Set Up Your Company Context</h1>
+      <p class="subtitle">Help LUPO provide better coaching with your company's knowledge</p>
+    </div>
+
+    <div class="info-box">
+      <h3>💡 What to include:</h3>
+      <ul>
+        <li>Your product/service details</li>
+        <li>Key value propositions</li>
+        <li>Common objections and responses</li>
+        <li>Sales playbooks or scripts</li>
+        <li>Pricing information</li>
+      </ul>
+    </div>
+
+    <form id="contextForm">
+      <div class="form-group">
+        <label class="form-label" for="companyContext">Company Context</label>
+        <textarea 
+          id="companyContext" 
+          placeholder="Tell us about your product, sales process, common objections, pricing, and anything else that would help coach your team...
+          
+Example:
+We sell CloudCRM to mid-market B2B companies. Our key differentiator is native AI integration. 
+Pricing: $99/user/month
+Common objection: 'Too expensive' → Response: Show ROI calculator
+Sales process: Discovery → Demo → Trial → Close"
+          required
+        ></textarea>
+        <div class="form-hint">This information will be encrypted and only used to coach your team</div>
+      </div>
+
+      <button type="submit" id="submitBtn" class="btn-primary">
+        Complete Setup →
+      </button>
+
+      <a href="#" id="skipLink" class="skip-link">Skip for now (you can add this later)</a>
+    </form>
+  </div>
+
+  <script>
+    const BACKEND_URL = 'https://lupobackend.fly.dev';
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get('session_id');
+    const tempId = urlParams.get('temp_id');
+
+    // Validate params
+    if (!sessionId || !tempId) {
+      showError('Missing session information. Please try again from the start.');
+      document.getElementById('submitBtn').disabled = true;
+    }
+
+    // Handle form submission
+    document.getElementById('contextForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const btn = document.getElementById('submitBtn');
+      const companyContext = document.getElementById('companyContext').value.trim();
+
+      if (!companyContext) {
+        showError('Please provide some company context to help coach your team');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Completing setup...';
+
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/team/onboarding/complete`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            temp_id: tempId,
+            session_id: sessionId,
+            companyContext
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to complete setup');
+        }
+
+        // Redirect to success page
+        window.location.href = `/team-success-final.html?invite=${data.inviteToken}&org=${encodeURIComponent(data.orgName)}`;
+
+      } catch (error) {
+        console.error('❌ Setup error:', error);
+        showError(error.message);
+        btn.disabled = false;
+        btn.innerHTML = 'Complete Setup →';
+      }
+    });
+
+    // Handle skip
+    document.getElementById('skipLink').addEventListener('click', async (e) => {
+      e.preventDefault();
+      
+      if (!confirm('Skip context setup? You can add this later in your dashboard.')) {
+        return;
+      }
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Completing setup...';
+
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/team/onboarding/complete`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            temp_id: tempId,
+            session_id: sessionId,
+            companyContext: '' // Empty context
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to complete setup');
+        }
+
+        window.location.href = `/team-success-final.html?invite=${data.inviteToken}&org=${encodeURIComponent(data.orgName)}`;
+
+      } catch (error) {
+        console.error('❌ Setup error:', error);
+        showError(error.message);
+        btn.disabled = false;
+        btn.innerHTML = 'Complete Setup →';
+      }
+    });
+
+    function showError(message) {
+      const errorDiv = document.getElementById('errorMessage');
+      errorDiv.textContent = message;
+      errorDiv.classList.add('show');
+    }
+  </script>
+</body>
+</html>
+
