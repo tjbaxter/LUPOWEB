@@ -180,7 +180,7 @@
         
         .video-container {
             position: relative;
-            max-width: 900px;
+            max-width: 1600px;
             margin: 0 auto;
             border-radius: 16px;
             overflow: hidden;
@@ -1371,8 +1371,8 @@
     <main>
         <!-- Hero Section -->
         <section class="hero">
-            <h1>See LUPO in Action</h1>
-            <p>60s demo. LUPO translates prospects in real-time, handles objections instantly, and generates post-call actions in seconds.</p>
+            <h1>Understand anyone. Close more deals.</h1>
+            <p>LUPO translates complex terminology in real-time, handles objections instantly, and generates summaries, research, and follow-ups in seconds.</p>
         </section>
         
         <!-- Video Section -->
@@ -1392,13 +1392,41 @@
             <!-- Under-video block -->
             <div class="under-video">
                 <p class="video-caption">
-                    Set your objective before calls. Get live guidance during. Generate summaries, next steps, emails, and deep research after, all in seconds.
+                    26s • Watch live translation, objection handling, and instant guidance in action
                 </p>
-                
+            </div>
+        </section>
+        
+        <!-- Secondary Video: Full Call -->
+        <section style="margin: 60px 0; padding: 60px 20px; border-top: 1px solid var(--border);">
+            <div style="text-align: center; margin-bottom: 40px; max-width: 1200px; margin-left: auto; margin-right: auto;">
+                <h2 style="font-size: 28px; font-weight: 600; color: white; margin-bottom: 12px;">
+                    See LUPO on a live call
+                </h2>
+                <p style="font-size: 16px; color: rgba(255, 255, 255, 0.7); max-width: 600px; margin: 0 auto;">
+                    Watch the complete flow from objective setup through live call to post-call actions
+                </p>
+            </div>
+            
+            <!-- Full Call Video Container -->
+            <div id="fullCallVideoContainer" style="position: relative; width: 100%; max-width: 1200px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); background: var(--bg-secondary); aspect-ratio: 16/9;">
+                <div id="fullCallVideoPlaceholder" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; background: linear-gradient(135deg, rgba(22, 22, 23, 0.95), rgba(22, 22, 23, 0.85)); display: flex; align-items: center; justify-content: center;">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2;">
+                        <div style="width: 70px; height: 70px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; transition: all 0.3s ease;">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="white" style="margin-left: 3px;">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                        <div style="font-size: 16px; color: white; font-weight: 600; margin-bottom: 6px;">Watch Full Call Demo</div>
+                        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.7);">1:10 • Click to play</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
                 <p class="reply-note">
                     Does this actually solve a problem for you?
                 </p>
-                
                 <a href="https://www.linkedin.com/in/thomasjpbaxter/" target="_blank" rel="noopener" class="linkedin-link">Message me on LinkedIn →</a>
             </div>
         </section>
@@ -1470,9 +1498,17 @@
                         <h3 style="font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
                             NEW: Deep Research
                         </h3>
-                        <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0;">
-                            One-click tactical brief after every call. LUPO analyzes your call (transcript, objective, objections raised) and researches the prospect's company (news, funding, competitors), then generates exact follow-up phrases and competitive positioning tailored to YOUR conversation and YOUR company approach.
-                        </p>
+                        <div style="font-size: 17px; color: var(--text-secondary); line-height: 1.8;">
+                            <p style="margin-bottom: 12px; font-weight: 600; color: var(--text-primary);">
+                                One-click tactical brief after every call.
+                            </p>
+                            <p style="margin-bottom: 12px;">
+                                LUPO analyzes your call (transcript, objective, objections raised) and researches the prospect's company (news, funding, competitors).
+                            </p>
+                            <p style="margin-bottom: 0;">
+                                Generates exact follow-up phrases and competitive positioning tailored to YOUR conversation and YOUR company approach.
+                            </p>
+                        </div>
                     </div>
                     
                     <!-- Screenshot with Click-to-View -->
@@ -1884,7 +1920,7 @@
             
             const wrapper = videoPoster.parentElement;
             const iframe = document.createElement('iframe');
-            iframe.src = 'https://player.vimeo.com/video/1131476355?autoplay=1&muted=1&controls=1&title=0&byline=0&portrait=0&playsinline=1&dnt=1&quality=4k';
+            iframe.src = 'https://player.vimeo.com/video/1131686366?autoplay=1&muted=1&controls=1&title=0&byline=0&portrait=0&playsinline=1&dnt=1&quality=4k';
             iframe.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
             iframe.setAttribute('allowfullscreen', '');
             
@@ -1917,6 +1953,50 @@
                 loadVideo();
             }
         });
+        
+        // Lazy load Full Call Video
+        let fullCallVideoLoaded = false;
+        const fullCallVideoContainer = document.getElementById('fullCallVideoContainer');
+        const fullCallVideoPlaceholder = document.getElementById('fullCallVideoPlaceholder');
+        
+        if (fullCallVideoContainer && fullCallVideoPlaceholder) {
+            function loadFullCallVideo() {
+                if (fullCallVideoLoaded) return;
+                fullCallVideoLoaded = true;
+                
+                const iframe = document.createElement('iframe');
+                iframe.src = 'https://player.vimeo.com/video/1131476355?autoplay=0&muted=0&controls=1&title=0&byline=0&portrait=0&playsinline=1&dnt=1&quality=4k';
+                iframe.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
+                iframe.setAttribute('allowfullscreen', '');
+                iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;';
+                iframe.title = 'LUPO Full Call Demo Video';
+                
+                fullCallVideoPlaceholder.innerHTML = '';
+                fullCallVideoPlaceholder.appendChild(iframe);
+            }
+            
+            fullCallVideoPlaceholder.addEventListener('click', loadFullCallVideo);
+            fullCallVideoPlaceholder.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    loadFullCallVideo();
+                }
+            });
+            
+            // IntersectionObserver for lazy loading
+            const fullCallObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+                        loadFullCallVideo();
+                        fullCallObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.3
+            });
+            
+            fullCallObserver.observe(fullCallVideoContainer);
+        }
         
         // Research preview keyboard accessibility
         const researchPreview = document.querySelector('.research-preview');
