@@ -52,50 +52,6 @@
       z-index: 0;
     }
 
-    /* Animated gradient orb */
-    @keyframes float {
-      0%, 100% { transform: translate(-50%, -50%) translate(0, 0) scale(1); }
-      25% { transform: translate(-50%, -50%) translate(30px, -30px) scale(1.05); }
-      50% { transform: translate(-50%, -50%) translate(-20px, 20px) scale(0.95); }
-      75% { transform: translate(-50%, -50%) translate(-30px, -10px) scale(1.02); }
-    }
-
-    body::after {
-      content: '';
-      position: fixed;
-      width: 600px;
-      height: 600px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle at center, rgba(41, 151, 255, 0.08) 0%, transparent 70%);
-      filter: blur(60px);
-      animation: float 20s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Animated Background Orbs (index.html style) */
-    .animated-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: -1;
-      opacity: 0.05;
-      background: radial-gradient(circle at 20% 50%, #2997ff 0%, transparent 50%),
-                  radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
-                  radial-gradient(circle at 40% 20%, #667eea 0%, transparent 50%);
-      animation: bgShift 30s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    @keyframes bgShift {
-      0%, 100% { transform: rotate(0deg) scale(1); }
-      33% { transform: rotate(120deg) scale(1.1); }
-      66% { transform: rotate(240deg) scale(0.9); }
-    }
 
     .logo-link {
       position: absolute;
@@ -274,7 +230,6 @@
   </style>
 </head>
 <body>
-  <div class="animated-bg"></div>
   <a href="/" class="logo-link">LUPO</a>
 
   <div class="container">
@@ -380,6 +335,53 @@
       errorDiv.textContent = message;
       errorDiv.classList.add('show');
     }
+
+    // Floating particles effect (matching index.html and signup.html)
+    function createParticle(initialY = null) {
+      const particle = document.createElement('div');
+      const size = Math.random() * 6 + 3;
+      particle.style.cssText = `
+        position: fixed;
+        width: ${size}px;
+        height: ${size}px;
+        background: var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+        opacity: ${Math.random() * 0.4 + 0.2};
+        box-shadow: 0 0 8px rgba(0, 113, 227, 0.4);
+      `;
+      
+      const startX = Math.random() * window.innerWidth;
+      const startY = initialY !== null ? initialY : window.innerHeight - 10;
+      
+      particle.style.left = startX + 'px';
+      particle.style.top = startY + 'px';
+      
+      document.body.appendChild(particle);
+      
+      const duration = Math.random() * 15000 + 8000;
+      const horizontalMovement = (Math.random() - 0.5) * 100;
+      
+      particle.animate([
+        { transform: `translate(0, 0)`, opacity: particle.style.opacity },
+        { transform: `translate(${horizontalMovement}px, -${window.innerHeight + 20}px)`, opacity: particle.style.opacity },
+        { transform: `translate(${horizontalMovement * 2}px, -${window.innerHeight * 2}px)`, opacity: 0 }
+      ], {
+        duration: duration,
+        easing: 'linear'
+      }).onfinish = () => particle.remove();
+    }
+    
+    // Create initial particles at various heights for immediate effect
+    for (let i = 0; i < 10; i++) {
+      setTimeout(() => {
+        createParticle(Math.random() * window.innerHeight);
+      }, i * 150);
+    }
+    
+    // Start continuous particle animation
+    setInterval(createParticle, 800);
   </script>
 </body>
 </html>
