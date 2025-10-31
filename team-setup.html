@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Your LUPO Team - Enterprise Setup</title>
+  
+  <!-- Stripe.js -->
+  <script src="https://js.stripe.com/v3/"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 50px 100px rgba(50, 50, 93, 0.15), 0 30px 60px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      width: 100%;
+      overflow: hidden;
+      animation: slideUp 0.4s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 48px 48px 40px;
+      text-align: center;
+      color: white;
+    }
+
+    .logo {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .header p {
+      font-size: 16px;
+      opacity: 0.95;
+      line-height: 1.5;
+    }
+
+    .content {
+      padding: 48px;
+    }
+
+    .form-section {
+      margin-bottom: 32px;
+    }
+
+    .form-section.hidden {
+      display: none;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      letter-spacing: -0.2px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e1e4e8;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .input-hint {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .card-element-container {
+      padding: 16px;
+      border: 2px solid #e1e4e8;
+      border-radius: 12px;
+      background: #f9fafb;
+      transition: all 0.2s ease;
+    }
+
+    .card-element-container:focus-within {
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      background: white;
+    }
+
+    .pricing-card {
+      background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
+      border: 2px solid #e1e4e8;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .pricing-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .pricing-amount {
+      font-size: 36px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .pricing-period {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .trial-badge {
+      display: inline-block;
+      background: #10b981;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin-top: 16px;
+    }
+
+    .feature-list li {
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background: #667eea;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 24px;
+      margin-right: 12px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: 0.3px;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #374151;
+      margin-top: 12px;
+    }
+
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+
+    .success-section {
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .success-icon {
+      font-size: 72px;
+      margin-bottom: 24px;
+    }
+
+    .success-section h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+    }
+
+    .success-section p {
+      font-size: 16px;
+      color: #6b7280;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .invite-link-box {
+      background: #f9fafb;
+      border: 2px solid #e1e4e8;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .invite-link-box input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 14px;
+      color: #374151;
+      padding: 0;
+    }
+
+    .copy-btn {
+      padding: 10px 20px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .copy-btn:hover {
+      background: #5568d3;
+    }
+
+    .copy-btn.copied {
+      background: #10b981;
+    }
+
+    .error-message {
+      background: #fee;
+      border: 2px solid #fcc;
+      color: #c33;
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .security-note {
+      background: #f0fdf4;
+      border: 2px solid #bbf7d0;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: #166534;
+      line-height: 1.5;
+    }
+
+    .security-note strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        border-radius: 16px;
+      }
+
+      .header {
+        padding: 32px 24px 28px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      .content {
+        padding: 32px 24px;
+      }
+
+      .pricing-amount {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">🚀</div>
+      <h1>Create Your LUPO Team</h1>
+      <p>Start your 7-day free trial • No charge today</p>
+    </div>
+
+    <div class="content">
+      <div id="errorMessage" class="error-message"></div>
+
+      <!-- Setup Form -->
+      <div id="setupForm" class="form-section">
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <div>
+              <div class="pricing-amount">$<span id="totalPrice">1000</span></div>
+              <div class="pricing-period">per month</div>
+            </div>
+            <div class="trial-badge">7-Day Free Trial</div>
+          </div>
+          <ul class="feature-list">
+            <li>Real-time AI coaching for all reps</li>
+            <li>Unlimited calls & streaming</li>
+            <li>Team analytics dashboard</li>
+            <li>Compliance monitoring</li>
+            <li><span id="seatsCount">5</span> sales rep seats included</li>
+          </ul>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <label for="teamName">Team Name *</label>
+          <input type="text" id="teamName" placeholder="e.g., Acme Sales Team" required>
+          <div class="input-hint">This will be visible to all team members</div>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <label for="email">Your Email *</label>
+          <input type="email" id="email" placeholder="manager@company.com" required>
+          <div class="input-hint">You'll be the team admin</div>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <label for="seats">Number of Seats *</label>
+          <input type="number" id="seats" value="5" min="2" max="100" required>
+          <div class="input-hint">$200 per seat/month after trial</div>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <label for="companyContext">Company Context (Optional)</label>
+          <textarea id="companyContext" placeholder="Add product info, sales playbooks, or key talking points..."></textarea>
+          <div class="input-hint">Help LUPO provide better coaching with your company's knowledge</div>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <label>Payment Method *</label>
+          <div class="card-element-container">
+            <div id="card-element"></div>
+          </div>
+          <div class="input-hint">💳 Your card won't be charged during the 7-day trial</div>
+        </div>
+
+        <button id="submitBtn" class="btn btn-primary">
+          Start 7-Day Free Trial
+        </button>
+
+        <div class="security-note">
+          <strong>🔒 Secure & Risk-Free</strong>
+          No payment required today. Cancel anytime during your trial at no charge. After 7 days, you'll be automatically charged $<span id="finalPrice">1000</span>/month.
+        </div>
+      </div>
+
+      <!-- Success View -->
+      <div id="successView" class="form-section hidden">
+        <div class="success-section">
+          <div class="success-icon">✅</div>
+          <h2>Team Created Successfully!</h2>
+          <p>Your 7-day free trial has started. Share this invite link with your sales reps to get them onboarded:</p>
+          
+          <div class="invite-link-box">
+            <input type="text" id="inviteLink" readonly>
+            <button class="copy-btn" id="copyBtn">Copy Link</button>
+          </div>
+
+          <button class="btn btn-secondary" onclick="window.location.href='/manager-dashboard.html'">
+            Go to Dashboard →
+          </button>
+        </div>
+
+        <div class="security-note">
+          <strong>✨ Next Steps</strong>
+          1. Share the invite link with your team<br>
+          2. Configure your sales context in the dashboard<br>
+          3. Watch your team's performance improve in real-time
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const BACKEND_URL = 'https://lupobackend.fly.dev';
+    const stripe = Stripe('pk_live_51QRBTvKkZCM8JfO99kQXYEBaOdVfAqFj0yqQgSvNJxAqBBaYFTTPBDqj9jFhsA9FEUDFMrxxVnOA0U5E0JxPnOKf00fXn1bxzR'); // Replace with your publishable key
+    
+    const elements = stripe.elements();
+    const cardElement = elements.create('card', {
+      style: {
+        base: {
+          fontSize: '16px',
+          color: '#1a1a1a',
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+          '::placeholder': {
+            color: '#9ca3af'
+          }
+        }
+      }
+    });
+    cardElement.mount('#card-element');
+
+    // Update pricing dynamically
+    const seatsInput = document.getElementById('seats');
+    const totalPriceEl = document.getElementById('totalPrice');
+    const finalPriceEl = document.getElementById('finalPrice');
+    const seatsCountEl = document.getElementById('seatsCount');
+
+    seatsInput.addEventListener('input', () => {
+      const seats = parseInt(seatsInput.value) || 5;
+      const total = seats * 200;
+      totalPriceEl.textContent = total;
+      finalPriceEl.textContent = total;
+      seatsCountEl.textContent = seats;
+    });
+
+    // Handle form submission
+    document.getElementById('submitBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('submitBtn');
+      const errorDiv = document.getElementById('errorMessage');
+      
+      // Validate inputs
+      const teamName = document.getElementById('teamName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const seats = parseInt(document.getElementById('seats').value);
+      const companyContext = document.getElementById('companyContext').value.trim();
+
+      if (!teamName || !email || !seats) {
+        showError('Please fill in all required fields');
+        return;
+      }
+
+      if (seats < 2) {
+        showError('Minimum 2 seats required');
+        return;
+      }
+
+      // Disable button and show loading
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loading-spinner"></span>Creating your team...';
+      errorDiv.classList.remove('show');
+
+      try {
+        // Create payment method
+        const { paymentMethod, error } = await stripe.createPaymentMethod({
+          type: 'card',
+          card: cardElement,
+          billing_details: {
+            email: email
+          }
+        });
+
+        if (error) {
+          throw new Error(error.message);
+        }
+
+        // Send to backend
+        const response = await fetch(`${BACKEND_URL}/api/team/create`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: teamName,
+            email: email,
+            seats: seats,
+            companyContext: companyContext,
+            paymentMethodId: paymentMethod.id
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to create team');
+        }
+
+        // Show success view
+        document.getElementById('setupForm').classList.add('hidden');
+        document.getElementById('successView').classList.remove('hidden');
+        document.getElementById('inviteLink').value = data.inviteLink;
+
+        console.log('✅ Team created:', data);
+
+      } catch (error) {
+        console.error('❌ Team creation error:', error);
+        showError(error.message);
+        btn.disabled = false;
+        btn.innerHTML = 'Start 7-Day Free Trial';
+      }
+    });
+
+    // Copy invite link
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      const input = document.getElementById('inviteLink');
+      const btn = document.getElementById('copyBtn');
+      
+      input.select();
+      document.execCommand('copy');
+      
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      
+      setTimeout(() => {
+        btn.textContent = 'Copy Link';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+
+    function showError(message) {
+      const errorDiv = document.getElementById('errorMessage');
+      errorDiv.textContent = message;
+      errorDiv.classList.add('show');
+      errorDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  </script>
+</body>
+</html>
+
