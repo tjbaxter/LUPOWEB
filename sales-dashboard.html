@@ -3084,6 +3084,52 @@
             }
         }
         
+        // NEW: Save Rep Profile (Simple Name Only for RAG)
+        async function saveRepProfile() {
+            const repName = document.getElementById('repName').value.trim();
+            const btn = document.getElementById('btnSaveProfile');
+            
+            if (!repName) {
+                showToast('Please enter your name', 'error');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = 'Saving...';
+            
+            try {
+                // Save rep name to User.salesContext
+                await api.post('/sales/update-context', { 
+                    content: `Rep: ${repName}`, // Simple name-based context (Tier 2)
+                    source: 'profile',
+                    onboardingCompleted: true
+                });
+                
+                // Update local state
+                if (currentUser) {
+                    currentUser.onboardingCompleted = true;
+                    currentUser.salesContext = { content: `Rep: ${repName}` };
+                }
+                
+                // Close panel
+                closeBattlecard();
+                
+                // Hide welcome banner
+                document.getElementById('welcomeBanner').classList.remove('show');
+                
+                showToast(`✓ Profile saved! Welcome, ${repName}!`);
+                
+                btn.disabled = false;
+                btn.textContent = 'Save Profile';
+                
+            } catch (err) {
+                console.error('Failed to save profile:', err);
+                btn.disabled = false;
+                btn.textContent = 'Save Profile';
+                showToast('Failed to save profile', 'error');
+            }
+        }
+        
         function updateCharCount() {
             const count = document.getElementById('contextEditor').value.length;
             const maxCount = 1000;
@@ -3140,76 +3186,35 @@
         </div>
         
         <div class="battlecard-content">
-            <!-- Onboarding Flow -->
-            <div class="onboarding-container" id="onboardingContainer">
+            <!-- Simple Rep Profile -->
+            <div class="onboarding-container" id="profileContainer">
                 <div class="onboarding-header">
-                    <div class="onboarding-title">Quick Setup</div>
-                    <div class="onboarding-progress">
-                        <span class="progress-text" id="progressText">Step 1 of 3</span>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progressFill" style="width: 33%"></div>
-                        </div>
+                    <div class="onboarding-title">Your Profile</div>
+                    <div style="font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 8px;">
+                        Quick profile setup - your company context is already loaded by your manager
                     </div>
                 </div>
                 
                 <div class="onboarding-steps-wrapper">
-                    <!-- Step 1: Product -->
-                    <div class="onboarding-step active" id="step1">
-                        <div class="step-title">What do you sell?</div>
-                        <div class="step-subtitle">Tell us about your product or service</div>
+                    <!-- Simple Profile Form -->
+                    <div class="onboarding-step active" id="profileStep">
+                        <div class="step-title">What's your name?</div>
+                        <div class="step-subtitle">This helps LUPO personalize guidance during your calls</div>
                         
                         <div class="form-group">
-                            <label class="form-label">Product name</label>
-                            <input type="text" class="form-input" id="productName" placeholder="e.g., Acme CRM">
+                            <label class="form-label">Your Name</label>
+                            <input type="text" class="form-input" id="repName" placeholder="e.g., Thomas Baxter">
                         </div>
                         
-                        <div class="form-group">
-                            <label class="form-label">What does it do? (1-2 sentences)</label>
-                            <textarea class="form-textarea" id="productDesc" placeholder="e.g., Helps sales teams close deals faster"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Who buys this?</label>
-                            <input type="text" class="form-input" id="targetCustomer" placeholder="e.g., B2B sales teams">
-                        </div>
-                    </div>
-                    
-                    <!-- Step 2: Pricing -->
-                    <div class="onboarding-step" id="step2">
-                        <div class="step-title">Let's talk pricing</div>
-                        <div class="step-subtitle">Help LUPO quote accurately during calls</div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">What's your pricing?</label>
-                            <textarea class="form-textarea" id="pricingStructure" placeholder="e.g., $200/seat/month"></textarea>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 3: Key Details -->
-                    <div class="onboarding-step" id="step3">
-                        <div class="step-title">✅ You're all set!</div>
-                        <div class="step-subtitle">Just a few more details and you're ready to go</div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Implementation timeline</label>
-                            <input type="text" class="form-input" id="implTime" placeholder="e.g., 2-3 weeks">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">What makes you different from competitors?</label>
-                            <textarea class="form-textarea" id="differentiator" placeholder="e.g., Only AI-powered solution"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Any other details LUPO should know?</label>
-                            <textarea class="form-textarea" id="additionalNotes" placeholder="e.g., Don't work with companies under 50 employees"></textarea>
+                        <div style="margin-top: 20px; padding: 16px; background: rgba(0, 102, 255, 0.1); border: 1px solid rgba(0, 102, 255, 0.3); border-radius: 8px; font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.7);">
+                            <strong style="color: rgba(255,255,255,0.9);">📚 Your company context is ready!</strong><br>
+                            Your manager has already uploaded all product docs, pricing, and sales materials. LUPO will automatically pull the right context during your calls.
                         </div>
                     </div>
                 </div>
                 
                 <div class="onboarding-footer">
-                    <button class="btn-back" id="btnBack" onclick="prevStep()" style="visibility: hidden;">← Back</button>
-                    <button class="btn-next" id="btnNext" onclick="nextStep()">Next →</button>
+                    <button class="btn-next" id="btnSaveProfile" onclick="saveRepProfile()" style="margin: 0 auto;">Save Profile</button>
                 </div>
             </div>
             
