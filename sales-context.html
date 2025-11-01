@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Context - LUPO</title>
+    <title>Company Context - LUPO</title>
     <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
     <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
     <style>
@@ -28,44 +28,32 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
             background: var(--bg);
             color: var(--text);
             -webkit-font-smoothing: antialiased;
-            height: 100vh;
-            padding: 1rem;
-            overflow: hidden;
+            min-height: 100vh;
+            padding: 2rem;
         }
         
         .container {
-            max-width: 100%;
+            max-width: 900px;
             margin: 0 auto;
-            height: calc(100vh - 2rem);
-            display: flex;
-            flex-direction: column;
         }
         
+        /* Header */
         .header {
-            margin-bottom: 0.75rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-        }
-        
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
         
         .back-button {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             color: var(--text-dim);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
             transition: color 0.2s;
         }
         
@@ -73,160 +61,386 @@
             color: var(--text);
         }
         
-        .page-info h1 {
-            font-size: 1.25rem;
+        h1 {
+            font-size: 2rem;
             font-weight: 600;
-            letter-spacing: -0.02em;
-            color: var(--text);
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
         }
         
-        .page-info p {
-            font-size: 0.75rem;
+        .subtitle {
             color: var(--text-dim);
-            margin-top: 0.125rem;
+            font-size: 1rem;
+            line-height: 1.5;
         }
         
-        .header-right {
+        /* Upload Zone */
+        .upload-zone {
+            background: var(--surface);
+            border: 2px dashed var(--border);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .upload-zone:hover {
+            border-color: var(--accent);
+            background: rgba(0, 102, 255, 0.05);
+        }
+        
+        .upload-zone.drag-over {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            transform: scale(1.02);
+        }
+        
+        .upload-zone.uploading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        
+        .cloud-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--accent), #0052cc);
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 102, 255, 0.3);
         }
         
-        .char-count {
-            font-size: 0.75rem;
+        .upload-zone h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-zone p {
             color: var(--text-dim);
-            padding: 0.375rem 0.75rem;
-            background: var(--surface);
-            border-radius: 6px;
-            border: 1px solid var(--border);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
         }
         
-        .save-status {
+        .file-types {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        
+        .file-type {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
             font-size: 0.75rem;
             color: var(--text-dim);
         }
         
-        .save-status.saved {
-            color: var(--success);
+        .file-type-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.625rem;
+            font-weight: 600;
+        }
+        
+        /* Documents List */
+        .documents-section {
+            margin-bottom: 2rem;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .doc-count {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            padding: 0.25rem 0.75rem;
+            background: var(--surface);
+            border-radius: 6px;
+        }
+        
+        .documents-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .document-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .document-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: var(--surface-light);
+        }
+        
+        .doc-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.2), rgba(0, 102, 255, 0.05));
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        
+        .doc-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .doc-name {
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .doc-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+        
+        .doc-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .status-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: currentColor;
+            background: var(--success);
         }
         
-        .ai-analyzer-box {
-            background: linear-gradient(135deg, rgba(0, 102, 255, 0.08), rgba(0, 102, 255, 0.03));
-            border: 1px solid rgba(0, 102, 255, 0.5);
-            border-radius: 8px;
-            padding: 0.875rem;
-            margin-bottom: 0.75rem;
-            flex-shrink: 0;
+        .status-dot.processing {
+            background: var(--warning);
+            animation: pulse 1.5s ease-in-out infinite;
         }
         
-        .ai-analyzer-header {
+        .status-dot.failed {
+            background: var(--error);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .doc-actions {
             display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.5rem;
+            gap: 0.5rem;
         }
         
-        .ai-icon {
-            width: 28px;
-            height: 28px;
-            background: var(--accent);
+        .doc-btn {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: 1px solid var(--border);
             border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
-        }
-        
-        .ai-analyzer-content h3 {
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 0.125rem;
-        }
-        
-        .ai-analyzer-content p {
-            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
             color: var(--text-dim);
         }
         
-        .ai-analyzer-input {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
+        .doc-btn:hover {
+            background: var(--surface-light);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: var(--text);
         }
         
-        .url-input {
-            flex: 1;
-            padding: 0.5rem 0.75rem;
+        .doc-btn.delete:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--error);
+            color: var(--error);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-dim);
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .empty-state p {
+            font-size: 0.875rem;
+        }
+        
+        /* Progress Bar */
+        .upload-progress {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text);
-            font-size: 0.75rem;
-            transition: all 0.2s;
+            border-radius: 12px;
+            padding: 1.25rem;
+            width: 320px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            transform: translateY(150%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .url-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px var(--accent-glow);
+        .upload-progress.active {
+            transform: translateY(0);
         }
         
-        .analyze-btn {
-            padding: 0.5rem 1rem;
-            background: var(--accent);
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .progress-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .progress-close {
+            width: 24px;
+            height: 24px;
+            background: transparent;
             border: none;
-            border-radius: 6px;
-            color: white;
-            font-weight: 500;
-            font-size: 0.75rem;
+            color: var(--text-dim);
             cursor: pointer;
-            transition: all 0.2s;
-            min-width: 100px;
-        }
-        
-        .analyze-btn:hover:not(:disabled) {
-            background: #0052cc;
-        }
-        
-        .analyze-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        
-        .btn-text {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 0.4rem;
+            justify-content: center;
+            border-radius: 4px;
         }
         
-        .btn-loading {
-            display: none;
+        .progress-close:hover {
+            background: var(--surface-light);
+            color: var(--text);
+        }
+        
+        .progress-file {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: var(--surface-light);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #0052cc);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-status {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.75rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            transform: translateX(150%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
         }
         
-        .analyze-btn.loading .btn-text {
+        .toast.active {
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            border-color: var(--success);
+        }
+        
+        .toast.error {
+            border-color: var(--error);
+        }
+        
+        .toast-icon {
+            font-size: 1.25rem;
+        }
+        
+        .toast-message {
+            font-size: 0.875rem;
+        }
+        
+        /* Hidden Input */
+        #fileInput {
             display: none;
         }
         
-        .analyze-btn.loading .btn-loading {
-            display: inline-flex;
-        }
-        
-        .spinner-small {
-            width: 12px;
-            height: 12px;
-            border: 2px solid rgba(255,255,255,0.3);
+        /* Spinner */
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
             border-top-color: white;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
@@ -236,743 +450,401 @@
             to { transform: rotate(360deg); }
         }
         
-        .ai-examples {
-            margin-top: 0.375rem;
-            font-size: 0.65rem;
-            color: var(--text-dim);
-        }
-        
-        .template-notice {
-            background: linear-gradient(135deg, rgba(0, 200, 150, 0.08), rgba(0, 200, 150, 0.03));
-            border: 1px solid rgba(0, 200, 150, 0.5);
-            border-radius: 6px;
-            padding: 0.625rem 0.75rem;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 0.75rem;
-            flex-shrink: 0;
-        }
-        
-        .template-notice-icon {
-            width: 16px;
-            height: 16px;
-            background: var(--success);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        
-        .template-notice-text {
-            flex: 1;
-        }
-        
-        .template-notice-text strong {
-            color: var(--success);
-        }
-        
-        .clear-template-btn {
-            padding: 0.25rem 0.5rem;
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            color: var(--text-dim);
-            font-size: 0.65rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .clear-template-btn:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text);
-        }
-        
-        .editor-container {
-            flex: 1;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            min-height: 0;
-        }
-        
-        .editor-wrapper {
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            min-height: 0;
-        }
-        
-        .editor-textarea {
-            width: 100%;
-            min-height: 100%;
-            background: transparent;
-            border: none;
-            padding: 1.5rem;
-            color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
-            font-size: 0.75rem;
-            line-height: 1.5;
-            resize: none;
-            outline: none;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        
-        .editor-textarea::selection {
-            background: var(--accent-glow);
-        }
-        
-        .editor-textarea::placeholder {
-            color: #555;
-        }
-        
-        .actions {
-            padding: 0.75rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            flex-shrink: 0;
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 0.75rem;
-        }
-        
-        .btn {
-            padding: 0.5rem 1.5rem;
-            background: var(--accent);
-            border: none;
-            border-radius: 6px;
-            color: white;
-            font-size: 0.75rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .btn:hover {
-            background: #0052cc;
-        }
-        
-        .processing-overlay {
+        /* Loading Overlay */
+        .loading-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
+            z-index: 999;
         }
         
-        .processing-overlay.active {
+        .loading-overlay.active {
             display: flex;
         }
         
-        .processing-modal {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
+        .loading-content {
             text-align: center;
-            max-width: 350px;
         }
         
-        .processing-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--border);
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
             border-top-color: var(--accent);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1.25rem;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
         }
         
-        .processing-title {
+        .loading-text {
             font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.375rem;
-        }
-        
-        .processing-status {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            margin-bottom: 0.75rem;
-        }
-        
-        .processing-steps {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            text-align: left;
-        }
-        
-        .processing-step {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            transition: all 0.3s;
-        }
-        
-        .processing-step.active {
             color: var(--text);
-        }
-        
-        .processing-step.done {
-            color: var(--success);
-        }
-        
-        .step-icon {
-            width: 16px;
-            height: 16px;
-            border: 1.5px solid currentColor;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.6rem;
-            flex-shrink: 0;
-        }
-        
-        .processing-step.done .step-icon {
-            background: var(--success);
-            border-color: var(--success);
-            color: var(--bg);
-        }
-        
-        .toast {
-            position: fixed;
-            bottom: 1.5rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--surface);
-            border: 1px solid var(--success);
-            border-radius: 6px;
-            padding: 0.75rem 1.25rem;
-            font-size: 0.75rem;
-            opacity: 0;
-            transition: all 0.3s;
-            z-index: 1000;
-        }
-        
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-        
-        .toast.error {
-            border-color: var(--error);
-            color: var(--error);
-        }
-        
-        /* Scrollbar styling */
-        .editor-wrapper::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .editor-wrapper::-webkit-scrollbar-track {
-            background: var(--surface);
-        }
-        
-        .editor-wrapper::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 4px;
-        }
-        
-        .editor-wrapper::-webkit-scrollbar-thumb:hover {
-            background: #333;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <div class="header">
-            <div class="header-left">
-                <a href="/manager-dashboard.html" class="back-button">
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                        <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    Dashboard
-                </a>
-                <div class="page-info">
-                    <h1>Sales Context</h1>
-                    <p>Your real-time sales playbook</p>
+            <a href="/manager-dashboard.html" class="back-button">
+                ← Back to Dashboard
+            </a>
+            <h1>Company Context</h1>
+            <p class="subtitle">
+                Upload documents about your products, pricing, policies, and competitive positioning. 
+                LUPO will use this information to provide intelligent real-time guidance during sales calls.
+            </p>
+        </div>
+        
+        <!-- Upload Zone -->
+        <div class="upload-zone" id="uploadZone">
+            <div class="cloud-icon">📁</div>
+            <h3>Drop files here or click to upload</h3>
+            <p>Upload PDFs, Word docs, or text files containing your sales materials</p>
+            <div class="file-types">
+                <div class="file-type">
+                    <div class="file-type-icon">PDF</div>
+                    <span>PDF Documents</span>
                 </div>
-            </div>
-            <div class="header-right">
-                <div class="save-status" id="saveStatus">
-                    <span class="status-dot"></span>
-                    <span>Ready</span>
+                <div class="file-type">
+                    <div class="file-type-icon">DOC</div>
+                    <span>Word Documents</span>
                 </div>
-                <div class="char-count" id="charCount">0 chars</div>
+                <div class="file-type">
+                    <div class="file-type-icon">TXT</div>
+                    <span>Text Files</span>
+                </div>
             </div>
         </div>
         
-        <!-- NEW: Company Context Banner -->
-        <div class="company-context-banner" id="companyContextBanner" style="display: none; margin-bottom: 1rem; padding: 1rem; background: linear-gradient(135deg, rgba(0,102,255,0.1) 0%, rgba(0,102,255,0.05) 100%); border: 1px solid rgba(0,102,255,0.3); border-radius: 8px;">
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem;">🎯</div>
-                <div style="flex: 1;">
-                    <div style="font-weight: 600; margin-bottom: 0.25rem;">Your company has a sales playbook ready</div>
-                    <div style="font-size: 0.75rem; color: var(--text-dim);">Use your company's pre-configured context instead of starting from scratch</div>
-                </div>
-                <a href="/sales-dashboard.html" class="btn" style="text-decoration: none; white-space: nowrap;">
-                    Go to Dashboard →
-                </a>
-            </div>
-        </div>
+        <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.txt">
         
-        <div class="ai-analyzer-box">
-            <div class="ai-analyzer-header">
-                <div class="ai-icon">✨</div>
-                <div class="ai-analyzer-content">
-                    <h3>Extract sales intelligence from any website</h3>
-                    <p>Auto-generate your playbook with product details, pricing, and competitive positioning</p>
-                </div>
+        <!-- Documents List -->
+        <div class="documents-section">
+            <div class="section-header">
+                <h2 class="section-title">Uploaded Documents</h2>
+                <span class="doc-count" id="docCount">0 documents</span>
             </div>
-            <div class="ai-analyzer-input">
-                <input type="url" 
-                       id="companyUrl" 
-                       placeholder="https://your-company.com"
-                       class="url-input">
-                <button onclick="analyzeWebsite()" class="analyze-btn" id="analyzeBtn">
-                    <span class="btn-text">Analyze</span>
-                    <span class="btn-loading">
-                        <span class="spinner-small"></span>
-                        Analyzing
-                    </span>
-                </button>
-            </div>
-            <div class="ai-examples">
-                Examples: monday.com • slack.com • notion.so • linear.app • figma.com
-            </div>
-        </div>
-        
-        <div class="template-notice" id="templateNotice">
-            <div class="template-notice-icon">
-                <svg width="10" height="10" viewBox="0 0 12 12" fill="white">
-                    <circle cx="6" cy="6" r="1" fill="white"/>
-                </svg>
-            </div>
-            <div class="template-notice-text">
-                <strong>Template loaded:</strong> Replace with your actual company information
-            </div>
-            <button class="clear-template-btn" onclick="clearTemplate()">Clear</button>
-        </div>
-        
-        <div class="editor-container">
-            <div class="editor-wrapper">
-                <textarea class="editor-textarea" id="context" placeholder="Enter your sales context information here...">COMPANY FACTS:
-Product: NeuroSense Diagnostics - AI-powered neuroimaging platform
-Description: Accelerates brain tumor detection for radiologists and neurosurgeons
-Price: $12,000/month per department (enterprise pricing available)
-Target Market: 200+ bed hospitals, academic medical centers, neuro clinics
-
-KEY CAPABILITIES:
-- 97.8% accuracy in tumor detection (FDA 510(k) cleared - K220847)
-- Reduces reading time by 65%
-- Integrates with Epic, Cerner, GE Healthcare PACS
-- Real-time multi-site collaboration
-- Automated ACR-compliant reporting
-
-DIFFERENTIATORS:
-- 30% faster processing than Viz.ai
-- Includes pediatric protocols (unique in market)
-- 40% lower cost than Aidoc with no per-scan fees
-- US-based support vs offshore competitors
-- Published validation study in Radiology journal
-
-SUCCESS METRICS:
-- Cleveland Clinic: 42% faster diagnosis, 18% more tumors caught
-- Johns Hopkins: $2.3M annual savings
-- Mount Sinai: 3x scan throughput with same staff
-- Mayo Clinic: 89% reduction in critical misses
-- 78% pilot-to-purchase conversion rate
-
-COMPLIANCE & SECURITY:
-- FDA 510(k) clearance: K220847
-- SOC 2 Type II certified
-- HIPAA compliant with BAA
-- CE Mark for European sales
-- Zero security breaches since 2019
-- Covered by malpractice insurance
-
-BOUNDARIES & LIMITATIONS:
-- Never guarantee specific patient outcomes
-- Never claim to replace radiologists (we augment)
-- Maximum discount: 20% (requires CEO approval)
-- Don't share other hospitals' patient data
-- Don't promise features not FDA-cleared
-- Don't mention competitor safety issues unless asked
-
-TECHNICAL REQUIREMENTS:
-- Minimum: 100 Mbps, DICOM compatible
-- Integration time: 2-3 weeks average
-- Storage: 2TB local cache
-- Cloud or on-premise deployment
-
-PILOT PROGRAM:
-- 30-day free trial for 500+ bed hospitals
-- Full integration and training included
-- Success metrics defined upfront</textarea>
-            </div>
-        </div>
-        
-        <div class="actions">
-            <div></div>
-            <button class="btn" onclick="saveContext()">Save Changes</button>
-        </div>
-    </div>
-    
-    <div class="processing-overlay" id="processingOverlay">
-        <div class="processing-modal">
-            <div class="processing-spinner"></div>
-            <div class="processing-title">Analyzing Website</div>
-            <div class="processing-status" id="processingStatus">Extracting information...</div>
-            <div class="processing-steps">
-                <div class="processing-step" id="step1">
-                    <span class="step-icon">1</span>
-                    <span>Scanning website</span>
-                </div>
-                <div class="processing-step" id="step2">
-                    <span class="step-icon">2</span>
-                    <span>Finding pricing</span>
-                </div>
-                <div class="processing-step" id="step3">
-                    <span class="step-icon">3</span>
-                    <span>Extracting features</span>
-                </div>
-                <div class="processing-step" id="step4">
-                    <span class="step-icon">4</span>
-                    <span>Analyzing competitors</span>
-                </div>
-                <div class="processing-step" id="step5">
-                    <span class="step-icon">5</span>
-                    <span>Formatting playbook</span>
+            
+            <div class="documents-list" id="documentsList">
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-state-icon">📄</div>
+                    <p>No documents uploaded yet. Start by uploading your first document above.</p>
                 </div>
             </div>
         </div>
     </div>
     
-    <div class="toast" id="toast">Saved</div>
+    <!-- Upload Progress -->
+    <div class="upload-progress" id="uploadProgress">
+        <div class="progress-header">
+            <span class="progress-title">Uploading...</span>
+            <button class="progress-close" onclick="closeProgress()">×</button>
+        </div>
+        <div class="progress-file" id="progressFile">document.pdf</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+        <div class="progress-status" id="progressStatus">Preparing upload...</div>
+    </div>
+    
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span class="toast-icon" id="toastIcon">✓</span>
+        <span class="toast-message" id="toastMessage">Success!</span>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading documents...</div>
+        </div>
+    </div>
     
     <script>
-        let authHeaders = {};
-        let autoSaveTimer;
-        let hasUserEdited = false;
-        async function init() {
-    // First check URL for token (check both 'auth' and 'token' params)
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlToken = urlParams.get('auth') || urlParams.get('token');
-    
-    // Then check localStorage
-    const storedToken = localStorage.getItem('lupo_token');
-    const apiKey = localStorage.getItem('lupo_apikey');
-    
-    // Use URL token if available, otherwise stored token
-    const token = urlToken || storedToken;
-    
-    if (!apiKey && !token) {
-        window.location.href = '/login.html';
-        return;
-    }
-    
-    // Store the URL token for future use if provided
-    if (urlToken && !storedToken) {
-        localStorage.setItem('lupo_token', urlToken);
+        // Auth
+        const token = localStorage.getItem('token');
+        const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
         
-        // Calculate and store expiry (7 days from now)
-        const expiry = new Date();
-        expiry.setDate(expiry.getDate() + 7);
-        localStorage.setItem('lupo_token_expiry', expiry.toISOString());
-    }
-    
-    if (token) authHeaders['Authorization'] = `Bearer ${token}`;
-    if (apiKey) authHeaders['X-API-Key'] = apiKey;
-    
-    await loadContext();
-    
-    // NEW: Check if company context is available
-    await checkCompanyContext();
-    
-    const textarea = document.getElementById('context');
-    const updateCharCount = () => {
-        const count = textarea.value.length;
-        document.getElementById('charCount').textContent = `${count.toLocaleString()} chars`;
-    };
-    
-    textarea.addEventListener('input', () => {
-        hasUserEdited = true;
-        updateCharCount();
-        document.getElementById('saveStatus').innerHTML = '<span class="status-dot"></span><span>Unsaved</span>';
-        document.getElementById('saveStatus').classList.remove('saved');
-        
-        if (hasUserEdited) {
-            const notice = document.getElementById('templateNotice');
-            if (notice) {
-                notice.style.display = 'none';
-            }
+        if (!token || !currentUser.org) {
+            window.location.href = '/manager-login.html';
         }
         
-        clearTimeout(autoSaveTimer);
-        autoSaveTimer = setTimeout(saveContext, 3000);
-    });
-    
-    document.getElementById('companyUrl').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            analyzeWebsite();
-        }
-    });
-    
-    updateCharCount();
-}
-        async function analyzeWebsite() {
-    const urlInput = document.getElementById('companyUrl');
-    let url = urlInput.value.trim();
-    
-    if (!url) {
-        showToast('Enter a URL', 'error');
-        return;
-    }
-    
-    // Normalize the URL - ensure it has a protocol
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        url = 'https://' + url;
-    }
-    
-    // Validate the normalized URL
-    try {
-        new URL(url);
-    } catch (e) {
-        showToast('Invalid URL', 'error');
-        return;
-    }
-    
-    const btn = document.getElementById('analyzeBtn');
-    const overlay = document.getElementById('processingOverlay');
-    const steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
-    
-    steps.forEach((stepId, index) => {
-        const step = document.getElementById(stepId);
-        step.classList.remove('active', 'done');
-        const icon = step.querySelector('.step-icon');
-        icon.innerHTML = (index + 1).toString();
-    });
-    
-    btn.classList.add('loading');
-    btn.disabled = true;
-    overlay.classList.add('active');
-    
-    let stepInterval = null;
-    let currentStep = 0;
-    let isComplete = false;
-    
-    const animateSteps = () => {
-        if (currentStep > 0 && currentStep <= steps.length) {
-            document.getElementById(steps[currentStep - 1]).classList.remove('active');
-            document.getElementById(steps[currentStep - 1]).classList.add('done');
-            document.getElementById(steps[currentStep - 1]).querySelector('.step-icon').innerHTML = '✓';
-        }
+        const authHeaders = {
+            'Authorization': `Bearer ${token}`
+        };
         
-        if (currentStep < steps.length && !isComplete) {
-            document.getElementById(steps[currentStep]).classList.add('active');
-            
-            const statusTexts = [
-                'Scanning website...',
-                'Extracting pricing...',
-                'Finding features...',
-                'Analyzing competition...',
-                'Building playbook...'
-            ];
-            document.getElementById('processingStatus').textContent = statusTexts[currentStep];
-            currentStep++;
-        } else if (currentStep >= steps.length && !isComplete) {
-            document.getElementById('processingStatus').textContent = 'Processing...';
-        }
-    };
-    
-    stepInterval = setInterval(animateSteps, 3500);
-    animateSteps();
-    
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 60000);
+        // Elements
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const documentsList = document.getElementById('documentsList');
+        const emptyState = document.getElementById('emptyState');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const toast = document.getElementById('toast');
+        const loadingOverlay = document.getElementById('loadingOverlay');
         
-        const response = await fetch('https://lupo-backend.fly.dev/sales/analyze-website', {
-            method: 'POST',
-            headers: {
-                ...authHeaders,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ 
-                url: url  // Now always has https:// prefix
-            }),
-            signal: controller.signal
+        // State
+        let documents = [];
+        
+        // Initialize
+        loadDocuments();
+        
+        // Upload Zone Click
+        uploadZone.addEventListener('click', () => {
+            fileInput.click();
         });
         
-        clearTimeout(timeoutId);
-        isComplete = true;
-        clearInterval(stepInterval);
-        
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.error || 'Analysis failed');
-        }
-        
-        const data = await response.json();
-        
-        for (let i = currentStep - 1; i < steps.length; i++) {
-            if (i >= 0) {
-                document.getElementById(steps[i]).classList.remove('active');
-                document.getElementById(steps[i]).classList.add('done');
-                document.getElementById(steps[i]).querySelector('.step-icon').innerHTML = '✓';
-            }
-        }
-        
-        document.getElementById('processingStatus').textContent = 'Complete!';
-        
-        await new Promise(r => setTimeout(r, 1000));
-        
-        if (data.context) {
-            document.getElementById('context').value = data.context;
-            document.getElementById('charCount').textContent = `${data.context.length.toLocaleString()} chars`;
-            document.getElementById('templateNotice').style.display = 'none';
-            hasUserEdited = true;
-            document.getElementById('saveStatus').innerHTML = '<span class="status-dot"></span><span>Review</span>';
-            document.getElementById('saveStatus').classList.remove('saved');
-            showToast('Analysis complete - review and save');
-        } else {
-            throw new Error('No content extracted');
-        }
-        
-    } catch (error) {
-        console.error('Analysis error:', error);
-        isComplete = true;
-        clearInterval(stepInterval);
-        
-        if (error.name === 'AbortError') {
-            showToast('Timeout - try again', 'error');
-        } else {
-            showToast('Analysis failed', 'error');
-        }
-        
-    } finally {
-        btn.classList.remove('loading');
-        btn.disabled = false;
-        overlay.classList.remove('active');
-        
-        steps.forEach((stepId, index) => {
-            const step = document.getElementById(stepId);
-            step.classList.remove('active', 'done');
-            const icon = step.querySelector('.step-icon');
-            icon.innerHTML = (index + 1).toString();
+        // Drag and Drop
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('drag-over');
         });
         
-        if (isComplete && document.getElementById('context').value !== '') {
-            urlInput.value = '';
-        }
-    }
-}
-        function clearTemplate() {
-            if (confirm('Clear all content?')) {
-                const textarea = document.getElementById('context');
-                textarea.value = '';
-                document.getElementById('templateNotice').style.display = 'none';
-                document.getElementById('charCount').textContent = '0 chars';
-                textarea.focus();
-            }
-        }
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('drag-over');
+        });
         
-        async function loadContext() {
-            try {
-                const response = await fetch('https://lupo-backend.fly.dev/sales/context', {
-                    headers: authHeaders
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.content) {
-                        document.getElementById('context').value = data.content;
-                        document.getElementById('charCount').textContent = `${data.content.length.toLocaleString()} chars`;
-                        document.getElementById('templateNotice').style.display = 'none';
-                        hasUserEdited = true;
-                    }
-                }
-            } catch (error) {
-                console.error('Failed to load:', error);
-            }
-        }
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('drag-over');
+            const files = Array.from(e.dataTransfer.files);
+            handleFiles(files);
+        });
         
-        // NEW: Check if company context is available
-        async function checkCompanyContext() {
-            try {
-                const response = await fetch('https://lupo-backend.fly.dev/sales/context-status', {
-                    headers: authHeaders
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    // Show banner if company has context
-                    if (data.status?.hasCompanyContext) {
-                        document.getElementById('companyContextBanner').style.display = 'block';
-                    }
-                }
-            } catch (error) {
-                console.error('Failed to check company context:', error);
-            }
-        }
+        // File Input Change
+        fileInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            handleFiles(files);
+            fileInput.value = ''; // Reset
+        });
         
-        async function saveContext() {
-            const content = document.getElementById('context').value;
+        // Handle Files
+        async function handleFiles(files) {
+            if (!files || files.length === 0) return;
             
+            // Filter valid files
+            const validFiles = files.filter(file => {
+                const validTypes = ['.pdf', '.doc', '.docx', '.txt'];
+                const ext = '.' + file.name.split('.').pop().toLowerCase();
+                return validTypes.includes(ext);
+            });
+            
+            if (validFiles.length === 0) {
+                showToast('Please upload PDF, Word, or text files only', 'error');
+                return;
+            }
+            
+            // Upload each file
+            for (const file of validFiles) {
+                await uploadFile(file);
+            }
+            
+            // Reload documents
+            await loadDocuments();
+        }
+        
+        // Upload File
+        async function uploadFile(file) {
             try {
-                const response = await fetch('https://lupo-backend.fly.dev/sales/context', {
+                // Show progress
+                document.getElementById('progressFile').textContent = file.name;
+                document.getElementById('progressFill').style.width = '0%';
+                document.getElementById('progressStatus').textContent = 'Preparing upload...';
+                uploadProgress.classList.add('active');
+                
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('companyId', currentUser.org._id);
+                
+                // Simulate progress
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    if (progress < 90) {
+                        progress += 10;
+                        document.getElementById('progressFill').style.width = progress + '%';
+                        if (progress < 30) {
+                            document.getElementById('progressStatus').textContent = 'Uploading...';
+                        } else if (progress < 60) {
+                            document.getElementById('progressStatus').textContent = 'Processing...';
+                        } else {
+                            document.getElementById('progressStatus').textContent = 'Indexing...';
+                        }
+                    }
+                }, 300);
+                
+                const response = await fetch('https://lupo-backend.fly.dev/api/rag/upload', {
                     method: 'POST',
-                    headers: {
-                        ...authHeaders,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ content })
+                    headers: authHeaders,
+                    body: formData
                 });
                 
-                if (response.ok) {
-                    document.getElementById('saveStatus').innerHTML = '<span class="status-dot"></span><span>Saved</span>';
-                    document.getElementById('saveStatus').classList.add('saved');
-                    showToast('Saved');
+                clearInterval(progressInterval);
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Upload failed');
                 }
+                
+                const data = await response.json();
+                
+                // Complete progress
+                document.getElementById('progressFill').style.width = '100%';
+                document.getElementById('progressStatus').textContent = 'Complete!';
+                
+                setTimeout(() => {
+                    uploadProgress.classList.remove('active');
+                }, 1500);
+                
+                showToast(`${file.name} uploaded successfully!`, 'success');
+                
             } catch (error) {
-                console.error('Failed to save:', error);
-                showToast('Save failed', 'error');
+                console.error('Upload error:', error);
+                uploadProgress.classList.remove('active');
+                showToast(error.message || 'Upload failed', 'error');
             }
         }
         
+        // Load Documents
+        async function loadDocuments() {
+            try {
+                loadingOverlay.classList.add('active');
+                
+                const response = await fetch(`https://lupo-backend.fly.dev/api/rag/documents?companyId=${currentUser.org._id}`, {
+                    headers: authHeaders
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load documents');
+                }
+                
+                const data = await response.json();
+                documents = data.documents || [];
+                
+                renderDocuments();
+                
+            } catch (error) {
+                console.error('Load error:', error);
+                showToast('Failed to load documents', 'error');
+            } finally {
+                loadingOverlay.classList.remove('active');
+            }
+        }
+        
+        // Render Documents
+        function renderDocuments() {
+            const docCount = document.getElementById('docCount');
+            docCount.textContent = `${documents.length} document${documents.length !== 1 ? 's' : ''}`;
+            
+            if (documents.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            
+            documentsList.innerHTML = documents.map(doc => {
+                const icon = getFileIcon(doc.fileName);
+                const status = getStatusInfo(doc.status);
+                const uploadDate = new Date(doc.uploadedAt).toLocaleDateString();
+                
+                return `
+                    <div class="document-card">
+                        <div class="doc-icon">${icon}</div>
+                        <div class="doc-info">
+                            <div class="doc-name">${doc.fileName}</div>
+                            <div class="doc-meta">
+                                <div class="doc-status">
+                                    <span class="status-dot ${status.class}"></span>
+                                    <span>${status.text}</span>
+                                </div>
+                                <span>•</span>
+                                <span>${uploadDate}</span>
+                                ${doc.metadata?.pageCount ? `<span>• ${doc.metadata.pageCount} pages</span>` : ''}
+                            </div>
+                        </div>
+                        <div class="doc-actions">
+                            <button class="doc-btn delete" onclick="deleteDocument('${doc._id}')" title="Delete">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Get File Icon
+        function getFileIcon(fileName) {
+            const ext = fileName.split('.').pop().toLowerCase();
+            const icons = {
+                pdf: '📕',
+                doc: '📘',
+                docx: '📘',
+                txt: '📄',
+            };
+            return icons[ext] || '📄';
+        }
+        
+        // Get Status Info
+        function getStatusInfo(status) {
+            const statuses = {
+                processing: { text: 'Processing', class: 'processing' },
+                indexed: { text: 'Indexed', class: '' },
+                failed: { text: 'Failed', class: 'failed' }
+            };
+            return statuses[status] || statuses.indexed;
+        }
+        
+        // Delete Document
+        async function deleteDocument(documentId) {
+            if (!confirm('Delete this document? Your team will no longer have access to this context.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`https://lupo-backend.fly.dev/api/rag/documents/${documentId}`, {
+                    method: 'DELETE',
+                    headers: authHeaders
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Delete failed');
+                }
+                
+                showToast('Document deleted', 'success');
+                await loadDocuments();
+                
+            } catch (error) {
+                console.error('Delete error:', error);
+                showToast('Failed to delete document', 'error');
+            }
+        }
+        
+        // Show Toast
         function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = 'toast';
-            if (type === 'error') {
-                toast.classList.add('error');
-            }
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.className = 'toast ' + type;
+            toastIcon.textContent = type === 'success' ? '✓' : '✕';
+            toastMessage.textContent = message;
+            
+            toast.classList.add('active');
+            
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
         }
         
-        init();
+        // Close Progress
+        function closeProgress() {
+            uploadProgress.classList.remove('active');
+        }
     </script>
 </body>
 </html>
