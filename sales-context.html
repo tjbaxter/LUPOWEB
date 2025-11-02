@@ -83,7 +83,7 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             position: relative;
             overflow: hidden;
         }
@@ -450,6 +450,109 @@
             to { transform: rotate(360deg); }
         }
         
+        /* Text Paste Section */
+        .paste-section {
+            margin-bottom: 2rem;
+        }
+        
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-dim);
+            margin-bottom: 0.75rem;
+        }
+        
+        .paste-area {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .paste-area:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        
+        #pasteTextArea {
+            width: 100%;
+            min-height: 140px;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+        }
+        
+        #pasteTextArea::placeholder {
+            color: var(--text-dim);
+        }
+        
+        .paste-footer {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        
+        #pasteTitle {
+            flex: 1;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.625rem 0.875rem;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.875rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        
+        #pasteTitle:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        
+        #pasteTitle::placeholder {
+            color: var(--text-dim);
+        }
+        
+        .paste-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.625rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .paste-btn:hover:not(:disabled) {
+            background: #0052cc;
+            transform: translateY(-1px);
+        }
+        
+        .paste-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 2rem 0;
+        }
+        
         /* Loading Overlay */
         .loading-overlay {
             position: fixed;
@@ -522,6 +625,33 @@
         </div>
         
         <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.txt">
+        
+        <!-- Text Paste Section -->
+        <div class="paste-section">
+            <div class="section-label">
+                ✍️ Or paste text directly
+            </div>
+            <div class="paste-area">
+                <textarea 
+                    id="pasteTextArea" 
+                    placeholder="Paste transcript, notes, or any text content..."
+                ></textarea>
+            </div>
+            <div class="paste-footer">
+                <input 
+                    type="text" 
+                    id="pasteTitle" 
+                    placeholder="Title (optional)"
+                    maxlength="100"
+                />
+                <button class="paste-btn" id="addTextBtn" onclick="addPastedText()">
+                    Add Text
+                </button>
+            </div>
+        </div>
+        
+        <!-- Divider -->
+        <div class="divider"></div>
         
         <!-- Documents List -->
         <div class="documents-section">
@@ -966,6 +1096,73 @@
         // Close Progress
         function closeProgress() {
             uploadProgress.classList.remove('active');
+        }
+        
+        // Add Pasted Text
+        async function addPastedText() {
+            const textArea = document.getElementById('pasteTextArea');
+            const titleInput = document.getElementById('pasteTitle');
+            const addTextBtn = document.getElementById('addTextBtn');
+            
+            const text = textArea.value.trim();
+            const title = titleInput.value.trim();
+            
+            if (!text) {
+                showToast('Please paste some text first', 'error');
+                return;
+            }
+            
+            if (!initialized || !currentUser || !currentUser.org) {
+                showToast('Please wait, loading...', 'error');
+                return;
+            }
+            
+            try {
+                // Disable button
+                addTextBtn.disabled = true;
+                addTextBtn.textContent = 'Adding...';
+                
+                const companyId = currentUser.org._id || currentUser.organizationId;
+                
+                // Use dedicated text endpoint (more efficient than multipart upload)
+                const response = await fetch('https://lupo-backend.fly.dev/api/rag/add-text', {
+                    method: 'POST',
+                    headers: {
+                        ...authHeaders,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        title: title || null,
+                        companyId: companyId
+                    })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Failed to add text');
+                }
+                
+                const data = await response.json();
+                
+                // Success
+                showToast(`Text added successfully! (${data.chunkCount} chunks indexed)`, 'success');
+                
+                // Clear inputs
+                textArea.value = '';
+                titleInput.value = '';
+                
+                // Reload documents
+                await loadDocuments();
+                
+            } catch (error) {
+                console.error('Add text error:', error);
+                showToast(error.message || 'Failed to add text', 'error');
+            } finally {
+                // Re-enable button
+                addTextBtn.disabled = false;
+                addTextBtn.textContent = 'Add Text';
+            }
         }
     </script>
 </body>
