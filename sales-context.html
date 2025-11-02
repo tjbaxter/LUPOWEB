@@ -925,6 +925,13 @@
                     headers: authHeaders
                 });
                 
+                // Handle 404 as success (already deleted)
+                if (response.status === 404) {
+                    showToast('Document already removed', 'success');
+                    await loadDocuments();
+                    return;
+                }
+                
                 if (!response.ok) {
                     throw new Error('Delete failed');
                 }
@@ -935,6 +942,8 @@
             } catch (error) {
                 console.error('Delete error:', error);
                 showToast('Failed to delete document', 'error');
+                // Refresh anyway to sync with server
+                await loadDocuments();
             }
         }
         
