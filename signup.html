@@ -900,7 +900,7 @@
             
             <form onsubmit="handleEmailSubmit(event)">
                 <div class="form-group">
-                    <label class="form-label" for="email">Work Email</label>
+                    <label class="form-label" for="email">Email</label>
                     <input 
                         type="email" 
                         id="email" 
@@ -1174,14 +1174,6 @@
                 return;
             }
             
-            // Check if it's a work email (not a free provider)
-            if (!isWorkEmail(email)) {
-                emailError.textContent = 'Please use a work email address. Personal emails (Gmail, Yahoo, etc.) are not accepted.';
-                emailError.classList.add('show');
-                document.getElementById('email').classList.add('error');
-                return;
-            }
-            
             userData.email = email;
             emailError.classList.remove('show');
             document.getElementById('email').classList.remove('error');
@@ -1406,50 +1398,6 @@
         
         function isValidEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        }
-        
-        function isWorkEmail(email) {
-            // List of common free/personal email providers to block
-            const freeEmailProviders = [
-                // Major providers
-                'gmail.com', 'googlemail.com', 'yahoo.com', 'yahoo.co.uk', 'yahoo.fr', 'yahoo.de',
-                'hotmail.com', 'hotmail.co.uk', 'hotmail.fr', 'outlook.com', 'live.com', 'msn.com',
-                'aol.com', 'mail.com', 'icloud.com', 'me.com', 'mac.com',
-                
-                // Other popular free providers
-                'protonmail.com', 'proton.me', 'yandex.com', 'yandex.ru', 'zoho.com',
-                'gmx.com', 'gmx.net', 'gmx.de', 'mail.ru', 'inbox.com',
-                'fastmail.com', 'hushmail.com', 'tutanota.com', 'tutanota.de',
-                
-                // Regional providers
-                'rediffmail.com', 'qq.com', '163.com', '126.com', 'sina.com',
-                'naver.com', 'daum.net', 'hanmail.net', 'libero.it', 'web.de',
-                'orange.fr', 'free.fr', 'laposte.net', 'wanadoo.fr',
-                
-                // Temporary/disposable
-                'guerrillamail.com', 'mailinator.com', '10minutemail.com', 'tempmail.com',
-                'throwaway.email', 'maildrop.cc', 'sharklasers.com'
-            ];
-            
-            const domain = email.split('@')[1]?.toLowerCase();
-            
-            // Check if domain is in the blocked list
-            if (freeEmailProviders.includes(domain)) {
-                return false;
-            }
-            
-            // Additional check: reject common typos and suspicious patterns
-            if (!domain || domain.length < 4 || !domain.includes('.')) {
-                return false;
-            }
-            
-            // Must have a valid TLD (at least 2 characters after last dot)
-            const tld = domain.split('.').pop();
-            if (tld.length < 2) {
-                return false;
-            }
-            
-            return true;
         }
         
         // Floating particles effect (from index.html)
