@@ -985,11 +985,16 @@
             docCount.textContent = `${documents.length} document${documents.length !== 1 ? 's' : ''}`;
             
             if (documents.length === 0) {
-                emptyState.style.display = 'block';
+                // Clear the list and show empty state
+                documentsList.innerHTML = '<div class="empty-state" id="emptyState"><div class="empty-state-icon">📄</div><p>No documents uploaded yet. Start by uploading your first document above.</p></div>';
                 return;
             }
             
-            emptyState.style.display = 'none';
+            // Hide empty state (in case it's showing)
+            const existingEmptyState = document.getElementById('emptyState');
+            if (existingEmptyState) {
+                existingEmptyState.style.display = 'none';
+            }
             
             documentsList.innerHTML = documents.map(doc => {
                 const icon = getFileIcon(doc.fileName);
@@ -1050,6 +1055,11 @@
             }
             
             try {
+                // Optimistic UI update - remove from local array immediately
+                const originalDocuments = [...documents];
+                documents = documents.filter(doc => doc._id !== documentId);
+                renderDocuments();
+                
                 const response = await fetch(`https://lupo-backend.fly.dev/api/rag/documents/${documentId}`, {
                     method: 'DELETE',
                     headers: authHeaders
@@ -1058,16 +1068,19 @@
                 // Handle 404 as success (already deleted)
                 if (response.status === 404) {
                     showToast('Document already removed', 'success');
-                    await loadDocuments();
+                    await loadDocuments(); // Refresh to sync
                     return;
                 }
                 
                 if (!response.ok) {
+                    // Restore documents on failure
+                    documents = originalDocuments;
+                    renderDocuments();
                     throw new Error('Delete failed');
                 }
                 
                 showToast('Document deleted', 'success');
-                await loadDocuments();
+                await loadDocuments(); // Refresh to ensure sync
                 
             } catch (error) {
                 console.error('Delete error:', error);
