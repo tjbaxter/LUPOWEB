@@ -634,7 +634,7 @@
             <div class="paste-area">
                 <textarea 
                     id="pasteTextArea" 
-                    placeholder="Paste transcript, notes, or any text content..."
+                    placeholder="Paste transcript, notes, or any text content... (Minimum 50 words for meaningful context)"
                 ></textarea>
             </div>
             <div class="paste-footer">
@@ -1125,6 +1125,13 @@
                 return;
             }
             
+            // Validate minimum length (approximately 100 tokens = 75-100 words)
+            const wordCount = text.split(/\s+/).length;
+            if (wordCount < 50) {
+                showToast(`Text too short (${wordCount} words). Please paste at least 50 words for meaningful context.`, 'error');
+                return;
+            }
+            
             if (!initialized || !currentUser || !currentUser.org) {
                 showToast('Please wait, loading...', 'error');
                 return;
@@ -1137,22 +1144,34 @@
                 
                 const companyId = currentUser.org._id || currentUser.organizationId;
                 
-                // Use dedicated text endpoint (more efficient than multipart upload)
-                const response = await fetch('https://lupo-backend.fly.dev/api/rag/add-text', {
+                // Generate filename
+                const timestamp = new Date().toISOString().split('T')[0];
+                const fileName = title 
+                    ? `${title.trim()}.txt`
+                    : `Pasted_${timestamp}.txt`;
+                
+                // Create a file from text
+                const blob = new Blob([text], { type: 'text/plain' });
+                const file = new File([blob], fileName, { type: 'text/plain' });
+                
+                // Create FormData for upload
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('companyId', companyId);
+                
+                // Upload using existing endpoint
+                const response = await fetch('https://lupo-backend.fly.dev/api/rag/upload', {
                     method: 'POST',
-                    headers: {
-                        ...authHeaders,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        text: text,
-                        title: title || null,
-                        companyId: companyId
-                    })
+                    headers: authHeaders, // Don't add Content-Type, let browser set it for FormData
+                    body: formData
                 });
                 
                 if (!response.ok) {
-                    const error = await response.json();
+                    const error = await response.json().catch(() => ({ error: 'Upload failed' }));
+                    // Check for specific backend errors
+                    if (error.details && error.details.includes('too short')) {
+                        throw new Error('Text is too short. Please paste at least 50 words for meaningful context.');
+                    }
                     throw new Error(error.error || 'Failed to add text');
                 }
                 
