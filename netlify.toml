@@ -112,8 +112,8 @@ force = false
 [[redirects]]
 from = "/join/*"
 to = "/join.html?token=:splat"
-status = 200.0
-force = false
+status = 200
+force = true
 
 [redirects.query]
 
