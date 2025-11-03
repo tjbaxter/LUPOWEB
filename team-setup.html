@@ -242,8 +242,8 @@
 
     <form id="setupForm">
       <div class="form-group">
-        <label class="form-label" for="teamName">Team Name *</label>
-        <input type="text" id="teamName" class="form-input" placeholder="e.g., Acme Sales Team" required>
+        <label class="form-label" for="teamName">Company name *</label>
+        <input type="text" id="teamName" class="form-input" placeholder="e.g., Acme Inc" required>
       </div>
 
       <div class="form-group">
@@ -297,7 +297,7 @@
 
       // Disable button and show loading
       btn.disabled = true;
-      btn.innerHTML = '<span class="spinner"></span>Creating checkout...';
+      btn.innerHTML = '<span class="spinner"></span>Setting up your team...';
       errorDiv.classList.remove('show');
 
       try {

@@ -863,18 +863,60 @@
         let accessMethod = null; // 'electron', 'web', or null
         let currentPeriod = 'today';
         let complianceDetails = [];
+        let isAuthenticated = false; // Cache authentication state
         
         // Main authentication function that handles both methods
-        async function authenticateUser() {
+        async function authenticateUser(skipValidation = false) {
             const overlay = document.getElementById('authOverlay');
             const spinner = document.getElementById('authSpinner');
             const title = document.getElementById('authTitle');
             const message = document.getElementById('authMessage');
             
+            // If already authenticated in this session, skip validation
+            if (isAuthenticated && authToken && !skipValidation) {
+                console.log('✅ Already authenticated, skipping validation');
+                overlay.classList.add('hidden');
+                return;
+            }
+            
             try {
-                // METHOD 1: Check if opened from Electron app with exchange token
+                // METHOD 0: Check for direct token in URL (from Stripe checkout success)
                 const urlParams = new URLSearchParams(window.location.search);
-                const exchangeToken = urlParams.get('auth');
+                const urlToken = urlParams.get('token');
+                
+                if (urlToken) {
+                    console.log('🔑 New token from URL detected - clearing old sessions');
+                    
+                    // CRITICAL: Clear ALL old session data
+                    localStorage.removeItem('lupo_session');
+                    localStorage.removeItem('lupo_manager_token');
+                    localStorage.removeItem('lupo_manager_expiry');
+                    localStorage.removeItem('lupo_refresh_token');
+                    sessionStorage.clear();
+                    
+                    // Store the new token
+                    authToken = urlToken;
+                    accessMethod = 'web';
+                    localStorage.setItem('lupo_manager_token', authToken);
+                    
+                    // Calculate expiry (7 days from now)
+                    const expiry = new Date();
+                    expiry.setDate(expiry.getDate() + 7);
+                    localStorage.setItem('lupo_manager_expiry', expiry.toISOString());
+                    
+                    // Clean URL to remove token
+                    const newParams = new URLSearchParams(urlParams);
+                    newParams.delete('token');
+                    const cleanUrl = window.location.origin + window.location.pathname + 
+                        (newParams.toString() ? '?' + newParams.toString() : '');
+                    window.history.replaceState({}, document.title, cleanUrl);
+                    
+                    console.log('✅ Token from URL stored and URL cleaned');
+                }
+                
+                // METHOD 1: Check if opened from Electron app with exchange token
+                // Only check if we don't already have a token from URL
+                const exchangeToken = !authToken ? urlParams.get('auth') : null;
                 
                 if (exchangeToken) {
                     console.log('🔑 New authentication detected - clearing old sessions');
@@ -1020,6 +1062,28 @@
                     return;
                 }
                 
+                // Check if we have a cached valid token (skip API call if authenticated recently)
+                const cachedAuth = sessionStorage.getItem('lupo_auth_valid');
+                const cachedToken = sessionStorage.getItem('lupo_cached_token');
+                const cachedTime = sessionStorage.getItem('lupo_auth_time');
+                
+                // If we have a cached auth with the same token from last 5 minutes, skip validation
+                if (cachedAuth === 'true' && cachedToken === authToken && cachedTime) {
+                    const cacheAge = Date.now() - parseInt(cachedTime);
+                    if (cacheAge < 5 * 60 * 1000) { // 5 minutes
+                        console.log('✅ Using cached authentication (instant)');
+                        isAuthenticated = true;
+                        overlay.classList.add('hidden');
+                        
+                        // Only initialize if not already initialized
+                        const dashboardContent = document.querySelector('.dashboard-content');
+                        if (!dashboardContent || !dashboardContent.hasAttribute('data-initialized')) {
+                            await initializeDashboard();
+                        }
+                        return;
+                    }
+                }
+                
                 // Validate the token with backend
                 console.log(`🔐 Validating ${accessMethod} token...`);
                 title.textContent = 'Validating Access...';
@@ -1033,6 +1097,11 @@
                 });
                 
                 if (!response.ok) {
+                    // Clear cache on auth failure
+                    sessionStorage.removeItem('lupo_auth_valid');
+                    sessionStorage.removeItem('lupo_cached_token');
+                    sessionStorage.removeItem('lupo_auth_time');
+                    
                     if (response.status === 401) {
                         throw new Error('TOKEN_EXPIRED');
                     }
@@ -1047,7 +1116,12 @@
                     throw new Error('ACCESS_DENIED');
                 }
                 
-                // Success! Hide overlay and start dashboard
+                // Success! Cache authentication state
+                isAuthenticated = true;
+                sessionStorage.setItem('lupo_auth_valid', 'true');
+                sessionStorage.setItem('lupo_cached_token', authToken);
+                sessionStorage.setItem('lupo_auth_time', Date.now().toString());
+                
                 console.log(`✅ Authentication successful:`, {
                     email: user.email,
                     method: accessMethod,
