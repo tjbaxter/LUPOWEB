@@ -1656,11 +1656,11 @@
                 // For Electron users, pass token in URL (they're already authenticated)
                 const contextUrl = `/sales-context.html?token=${encodeURIComponent(authToken)}`;
                 contextBtn.href = contextUrl;
-                configLink.href = contextUrl;
+                // configLink.href = contextUrl; // REMOVED: configLink is in commented-out compliance tile
             } else {
                 // For web users, use regular link (they'll use cookies/localStorage)
                 contextBtn.href = '/sales-context.html';
-                configLink.href = '/sales-context.html';
+                // configLink.href = '/sales-context.html'; // REMOVED: configLink is in commented-out compliance tile
             }
             
             // Load initial data with error handling (don't fail auth if data load fails)
@@ -1907,12 +1907,14 @@
             document.getElementById('liveCalls').textContent = metrics.activeCalls || 0;
             document.getElementById('liveCalls').style.color = metrics.activeCalls > 0 ? 'var(--success)' : 'var(--text-dim)';
             
-            // Compliance tile
-            updateComplianceTile(metrics.compliance);
+            // Compliance tile - COMMENTED OUT
+            // updateComplianceTile(metrics.compliance);
         }
         
         function updateComplianceTile(compliance) {
             const tile = document.getElementById('complianceTile');
+            if (!tile) return; // Exit if compliance tile is commented out
+            
             const indicator = document.getElementById('complianceIndicator');
             
             const shouldShow = compliance?.rulesConfigured || 
