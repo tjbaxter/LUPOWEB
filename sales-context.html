@@ -627,36 +627,39 @@
                 currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
                 
                 // If no cached user or no org, fetch from backend
-                if (!currentUser || !currentUser.org) {
-                    const response = await fetch('https://lupo-backend.fly.dev/sales/me', {
-                        headers: authHeaders
+                // ALWAYS fetch fresh user data (don't trust localStorage cache)
+                // Force fresh API call to prevent stale org data
+                const response = await fetch('https://lupo-backend.fly.dev/sales/me', {
+                    headers: authHeaders,
+                    cache: 'no-cache'  // Force fresh fetch every time
+                });
+                
+                if (!response.ok) {
+                    console.error('Failed to fetch user info:', response.status);
+                    window.location.href = '/manager-login.html';
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                currentUser = data.user || data || {};
+                
+                // Check if org data is in different location
+                if (!currentUser.org) {
+                    // Try to fetch org separately
+                    const orgResponse = await fetch('https://lupo-backend.fly.dev/sales/org', {
+                        headers: authHeaders,
+                        cache: 'no-cache'
                     });
                     
-                    if (!response.ok) {
-                        console.error('Failed to fetch user info:', response.status);
-                        window.location.href = '/manager-login.html';
-                        return;
+                    if (orgResponse.ok) {
+                        const orgData = await orgResponse.json();
+                        currentUser.org = orgData;
                     }
-                    
-                    const data = await response.json();
-                    
-                    currentUser = data.user || data || {};
-                    
-                    // Check if org data is in different location
-                    if (!currentUser.org) {
-                        // Try to fetch org separately
-                        const orgResponse = await fetch('https://lupo-backend.fly.dev/sales/org', {
-                            headers: authHeaders
-                        });
-                        
-                        if (orgResponse.ok) {
-                            const orgData = await orgResponse.json();
-                            currentUser.org = orgData;
-                        }
-                    }
-                    
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 }
+                
+                // Don't cache user data in localStorage - always fetch fresh
+                // This prevents org mismatch bugs after backend updates
                 
                 // Verify we have org data - check for companyName instead of _id
                 if (!currentUser.org || !currentUser.org.companyName) {
