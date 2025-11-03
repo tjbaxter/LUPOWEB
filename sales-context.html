@@ -819,9 +819,13 @@
         }
         
         // Load Documents
-        async function loadDocuments() {
+        async function loadDocuments(showLoader = false) {
             try {
-                loadingOverlay.classList.add('active');
+                // Only show loading overlay if explicitly requested (e.g. refresh button)
+                // Don't show it on initial page load - it causes a flash
+                if (showLoader) {
+                    loadingOverlay.classList.add('active');
+                }
                 
                 const companyId = currentUser.org._id || currentUser.organizationId;
                 const response = await fetch(`https://lupo-backend.fly.dev/api/rag/documents?companyId=${companyId}`, {
@@ -841,7 +845,9 @@
                 console.error('Load error:', error);
                 showToast('Failed to load documents', 'error');
             } finally {
-                loadingOverlay.classList.remove('active');
+                if (showLoader) {
+                    loadingOverlay.classList.remove('active');
+                }
             }
         }
         
