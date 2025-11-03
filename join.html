@@ -536,26 +536,9 @@
                 document.getElementById('macDownloadBtn').href = macUrl;
                 document.getElementById('windowsDownloadBtn').href = windowsUrl;
                 
-                // Add click handlers for deep link attempts
-                document.getElementById('macDownloadBtn').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    // Try deep link silently using iframe (no page navigation/flash)
-                    tryDeepLink(inviteToken);
-                    // Start download
-                    setTimeout(() => {
-                        window.location.href = macUrl;
-                    }, 100);
-                });
-                
-                document.getElementById('windowsDownloadBtn').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    // Try deep link silently using iframe (no page navigation/flash)
-                    tryDeepLink(inviteToken);
-                    // Start download
-                    setTimeout(() => {
-                        window.location.href = windowsUrl;
-                    }, 100);
-                });
+                // Don't trigger deep link on download button clicks
+                // If user already has the app, they should click the invite link directly
+                // Download buttons are for NEW users who need to install the app first
                 
                 // Store token for later use
                 localStorage.setItem('pendingInviteToken', inviteToken);
