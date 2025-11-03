@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUPO - Cut Time to Revenue for New SDRs | AI Sales Training Platform</title>
+    <title>LUPO - Your AI Co-Pilot for Every Call | Cut Time to Revenue</title>
     <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
     <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
-    <meta name="description" content="Real-time AI that gets new reps productive faster. Live translation, objection handling, and deep post-call research. All automated. Book a demo today.">
+    <meta name="description" content="Your AI co-pilot for every call. Real-time guidance that feels human, built to have your back. Book a demo today.">
     <style>
         * {
             margin: 0;
@@ -17,19 +17,22 @@
         :root {
             --text-primary: #f5f5f7;
             --text-secondary: #a1a1a6;
+            --text-tertiary: #6e6e73;
             --bg-primary: #000000;
             --bg-secondary: #161617;
+            --bg-tertiary: #1d1d1f;
             --accent: #2997ff;
             --accent-hover: #409cff;
             --border: rgba(255, 255, 255, 0.08);
+            --border-subtle: rgba(255, 255, 255, 0.05);
             --success: #34c759;
             --subtle-blue: #5090ff;
-            --warning: #f59e0b;
             --gradient-sales: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-premium: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.47059;
@@ -38,9 +41,6 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
         
         /* Navigation */
@@ -69,24 +69,10 @@
         .logo {
             font-size: 21px;
             font-weight: 600;
-            letter-spacing: 0.2px;
+            letter-spacing: 0.4px;
             cursor: pointer;
             text-decoration: none;
             color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        /* Main Container */
-        .main-container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 100px 20px 60px;
-            position: relative;
-            overflow: hidden;
         }
         
         /* Animated Background */
@@ -110,17 +96,15 @@
             66% { transform: rotate(240deg) scale(0.9); }
         }
         
-        /* Content */
-        .content-wrapper {
-            max-width: 1400px;
-            width: 100%;
+        /* Hero Section */
+        .hero {
+            padding: 140px 20px 80px;
             text-align: center;
-            position: relative;
-            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
         }
         
-        /* Badge */
-        .coming-soon-badge {
+        .badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -128,7 +112,7 @@
             background: var(--gradient-sales);
             border-radius: 30px;
             color: white;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -141,30 +125,16 @@
             50% { transform: scale(1.02); box-shadow: 0 6px 30px rgba(102, 126, 234, 0.5); }
         }
         
-        /* Headlines */
         h1 {
             font-size: 80px;
             font-weight: 700;
-            line-height: 1;
-            letter-spacing: -0.005em;
+            line-height: 1.05;
+            letter-spacing: -0.015em;
             margin-bottom: 24px;
             background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
         }
         
         .gradient-text {
@@ -174,2767 +144,684 @@
             background-clip: text;
         }
         
-        .subtitle {
-            font-size: 24px;
+        .hero-subtitle {
+            font-size: 28px;
             font-weight: 400;
             color: var(--text-secondary);
             margin-bottom: 48px;
-            line-height: 1.4;
-            max-width: 900px;
+            line-height: 1.3;
+            max-width: 820px;
             margin-left: auto;
             margin-right: auto;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.2s forwards;
         }
         
-        /* Download Section */
-        .download-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            margin-top: 60px;
-            margin-bottom: 60px;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.3s forwards;
-        }
-        
-        .download-title {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 8px;
-        }
-        
-        .download-buttons {
+        /* CTA Buttons */
+        .cta-group {
             display: flex;
             gap: 16px;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
+            margin-bottom: 16px;
         }
         
-        .download-btn {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 32px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .btn {
+            padding: 16px 36px;
             border-radius: 50px;
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 500;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
-            min-width: 200px;
-            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
         }
         
-        .download-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, var(--accent), #764ba2);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: -1;
-        }
-        
-        .download-btn:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(41, 151, 255, 0.3);
-            border-color: var(--accent);
-        }
-        
-        .download-btn:hover::before {
-            opacity: 0.1;
-        }
-        
-        .download-btn.primary {
+        .btn-primary {
             background: linear-gradient(135deg, var(--accent), #5090ff);
             color: white;
-            border: none;
             box-shadow: 0 10px 30px rgba(41, 151, 255, 0.3);
         }
         
-        .download-version {
-            font-size: 11px;
-            opacity: 0.7;
-            margin-top: 12px;
-            color: var(--text-secondary);
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(41, 151, 255, 0.4);
         }
         
-        /* Enhanced Live Demo Section */
-        .demo-showcase {
-            margin: 60px 0;
-            padding: 40px;
-            background: linear-gradient(145deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
-            border-radius: 24px;
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
             border: 1px solid var(--border);
-            position: relative;
-            min-height: 600px;
+            backdrop-filter: blur(10px);
         }
         
-        /* Call Context Header */
-        .call-context {
-            max-width: 800px;
-            margin: 0 auto 40px;
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .trial-text {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+        
+        /* Video Section */
+        .video-section {
+            max-width: 1000px;
+            margin: 80px auto;
+            padding: 0 20px;
             text-align: center;
         }
         
-        .live-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            background: rgba(102, 126, 234, 0.1);
-            border-radius: 20px;
-            font-size: 12px;
+        .video-header {
+            margin-bottom: 32px;
+        }
+        
+        .video-header h2 {
+            font-size: 28px;
             font-weight: 600;
-            color: var(--subtle-blue);
-            margin-bottom: 20px;
-        }
-        
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--subtle-blue);
-            border-radius: 50%;
-            animation: livePulse 1.5s ease-in-out infinite;
-        }
-        
-        @keyframes livePulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(80, 144, 255, 0.4); }
-            50% { box-shadow: 0 0 0 6px rgba(80, 144, 255, 0); }
-        }
-        
-        .call-timer {
-            opacity: 0.7;
-        }
-        
-        /* Customer Speech Bubble */
-        .customer-speech {
-            font-size: 16px;
-            color: var(--text-secondary);
-            font-style: italic;
-            line-height: 1.6;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            border-left: 3px solid var(--subtle-blue);
-            min-height: 100px;
-            text-align: left;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        
-        .customer-label {
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            background: var(--bg-primary);
-            padding: 0 8px;
-            font-size: 11px;
-            color: var(--subtle-blue);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-style: normal;
-        }
-        
-        .typing-text {
-            display: inline;
-        }
-        
-        .typing-cursor {
-            display: inline-block;
-            width: 2px;
-            height: 20px;
-            background: var(--text-secondary);
-            animation: blink 1s infinite;
-            margin-left: 2px;
-            vertical-align: text-bottom;
-        }
-        
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-        
-        /* Demo Layout Grid */
-        .demo-grid {
-            display: grid;
-            grid-template-columns: 1fr 320px;
-            gap: 30px;
-            max-width: 900px;
-            margin: 0 auto;
-            align-items: start;
-            min-height: 400px;
-        }
-        
-        @media (max-width: 768px) {
-            .demo-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            h1 {
-                font-size: 48px;
-            }
-            
-            .subtitle {
-                font-size: 20px;
-            }
-        }
-        
-        /* LUPO Main Window */
-        .lupo-window {
-            background: linear-gradient(to bottom,
-                rgba(0, 0, 0, 0.05) 0%,
-                rgba(0, 0, 0, 0.02) 100%);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 
-                0 24px 48px rgba(0, 0, 0, 0.15),
-                0 12px 24px rgba(0, 0, 0, 0.15),
-                inset 0 1px 1px rgba(255, 255, 255, 0.1);
-            opacity: 0;
-            animation: slideInLeft 0.6s ease 0.5s forwards;
-            min-height: 380px;
-        }
-        
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .lupo-header {
-            padding: 16px 16px 12px 16px;
-            background: rgba(255, 255, 255, 0.02);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .lupo-controls {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .lupo-ask {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .lupo-hotkey {
-            display: flex;
-            align-items: center;
-            gap: 2px;
-            padding: 4px 8px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 6px;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .lupo-text {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 400;
-        }
-        
-        .lupo-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background: #34c759;
-            border-radius: 50%;
-            box-shadow: 0 0 8px rgba(52, 199, 89, 0.6);
-            animation: statusPulse 2s ease-in-out infinite;
-        }
-        
-        @keyframes statusPulse {
-            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.4); }
-            50% { opacity: 0.8; box-shadow: 0 0 0 4px rgba(52, 199, 89, 0); }
-        }
-        
-        .question-area {
-            padding: 16px;
-            min-height: 60px;
-            position: relative;
-            display: none;
-        }
-        
-        .question-area.active {
-            display: block;
-        }
-        
-        .question-text {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 12px;
-            font-style: italic;
-            opacity: 0;
-            animation: fadeInSlide 0.5s ease forwards;
-        }
-        
-        @keyframes fadeInSlide {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .processing-indicator {
-            display: none;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 11px;
-        }
-        
-        .processing-indicator.active {
-            display: flex;
-        }
-        
-        .processing-dots {
-            display: flex;
-            gap: 3px;
-        }
-        
-        .processing-dot {
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 50%;
-            animation: processingWave 1.4s ease-in-out infinite;
-        }
-        
-        .processing-dot:nth-child(1) { animation-delay: 0s; }
-        .processing-dot:nth-child(2) { animation-delay: 0.1s; }
-        .processing-dot:nth-child(3) { animation-delay: 0.2s; }
-        
-        @keyframes processingWave {
-            0%, 60%, 100% {
-                transform: scale(1);
-                opacity: 0.4;
-            }
-            30% {
-                transform: scale(1.5);
-                opacity: 1;
-            }
-        }
-        
-        .answer-area {
-            padding: 0 16px 16px;
-            max-height: 240px;
-            overflow-y: auto;
-            display: none;
-        }
-        
-        .answer-area.active {
-            display: block;
-        }
-        
-        .answer-content {
-            font-size: 13px;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.95);
-        }
-        
-        .lupo-bullets {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        .lupo-bullet {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            opacity: 0;
-            animation: bulletFadeIn 0.4s ease forwards;
-        }
-        
-        .lupo-bullet:nth-child(1) { animation-delay: 0.1s; }
-        .lupo-bullet:nth-child(2) { animation-delay: 0.2s; }
-        .lupo-bullet:nth-child(3) { animation-delay: 0.3s; }
-        
-        @keyframes bulletFadeIn {
-            from {
-                opacity: 0;
-                transform: translateX(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .bullet-marker {
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 700;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-        
-        .bullet-content {
-            flex: 1;
-            color: rgba(255, 255, 255, 0.95);
-        }
-        
-        .bullet-action {
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .bullet-phrase {
-            color: rgba(147, 197, 253, 0.9);
-        }
-        
-        /* Insights Panel */
-        .insights-panel {
-            background: linear-gradient(to bottom,
-                rgba(22, 22, 22, 0.9) 0%,
-                rgba(22, 22, 22, 0.7) 100%);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 
-                0 12px 24px rgba(0, 0, 0, 0.2),
-                inset 0 1px 1px rgba(255, 255, 255, 0.05);
-            opacity: 0;
-            animation: slideInRight 0.6s ease 0.7s forwards;
-            min-height: 380px;
-        }
-        
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .insights-header {
-            padding: 12px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .insights-title {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .insights-count {
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.3);
-        }
-        
-        .insights-container {
-            padding: 12px;
-            max-height: 320px;
-            overflow-y: auto;
-        }
-        
-        .insight-bubble {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 8px;
-            padding: 10px;
+            color: var(--text-primary);
             margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            opacity: 0;
-            animation: insightSlide 0.3s ease forwards;
+            letter-spacing: -0.01em;
         }
         
-        @keyframes insightSlide {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .video-header p {
+            font-size: 17px;
+            color: var(--text-secondary);
         }
         
-        .insight-bubble:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.12);
-            transform: translateX(-2px);
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 560px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
         }
         
-        .insight-bubble.objection {
-            border-left: 3px solid #f59e0b;
+        /* Section Styling */
+        .section {
+            max-width: 1200px;
+            margin: 120px auto;
+            padding: 0 20px;
         }
         
-        .insight-bubble.buying-signal {
-            border-left: 3px solid #10b981;
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
         }
         
-        .insight-bubble.competitor {
-            border-left: 3px solid #8b5cf6;
-        }
-        
-        .insight-bubble.compliance {
-            border-left: 3px solid #3b82f6;
-        }
-        
-        .insight-type {
-            font-size: 9px;
+        .section-header h2 {
+            font-size: 56px;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: rgba(255, 255, 255, 0.4);
-            margin-bottom: 4px;
+            margin-bottom: 20px;
+            letter-spacing: -0.015em;
+            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
-        .insight-text {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.8);
+        .section-header p {
+            font-size: 21px;
+            color: var(--text-secondary);
             line-height: 1.4;
         }
         
-        .insight-time {
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.3);
-            margin-top: 4px;
+        /* Before/During/After Cards */
+        .stage-section {
+            margin-bottom: 100px;
         }
         
-        /* Scenario Progress Bar */
-        .scenario-progress {
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-        
-        .progress-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-        }
-        
-        .progress-indicators {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-        
-        .progress-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .progress-dot.active {
-            background: var(--accent);
-            box-shadow: 0 0 10px rgba(41, 151, 255, 0.5);
-        }
-        
-        .scenario-name {
+        .stage-label {
+            display: inline-block;
             font-size: 13px;
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-        
-        /* Feature Preview Cards */
-        .preview-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 60px;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.4s forwards;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        /* First 2 cards span 1.5 columns each (centered) */
-        .preview-card:nth-child(1) {
-            grid-column: 1 / 3;
-            justify-self: end;
-            margin-right: 12px;
-        }
-        .preview-card:nth-child(2) {
-            grid-column: 2 / 4;
-            justify-self: start;
-            margin-left: 12px;
-        }
-        
-        /* Bottom 3 cards each take 1 column */
-        .preview-card:nth-child(3),
-        .preview-card:nth-child(4),
-        .preview-card:nth-child(5) {
-            grid-column: span 1;
-        }
-        
-        @media (max-width: 1200px) {
-            .preview-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .preview-card:nth-child(1),
-            .preview-card:nth-child(2) {
-                grid-column: span 1;
-                justify-self: stretch;
-                margin: 0;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .preview-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .preview-card:nth-child(1),
-            .preview-card:nth-child(2) {
-                grid-column: span 1;
-                justify-self: stretch;
-                margin: 0;
-            }
-            
-            h1 {
-                font-size: 48px;
-            }
-            
-            .subtitle {
-                font-size: 20px;
-            }
-        }
-        
-        .preview-card {
-            background: var(--bg-secondary);
-            border-radius: 20px;
-            padding: 24px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .preview-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-sales);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-        
-        .preview-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-        }
-        
-        .preview-card:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .preview-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--gradient-sales);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-            font-size: 24px;
-        }
-        
-        .preview-title {
-            font-size: 18px;
             font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-primary);
+            color: rgba(102, 126, 234, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+            padding: 8px 16px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 20px;
         }
         
-        .preview-description {
-            font-size: 14px;
+        .stage-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--text-primary);
+            letter-spacing: -0.015em;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 24px;
+            display: block;
+        }
+        
+        .feature-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+        
+        .feature-card p {
+            font-size: 17px;
             color: var(--text-secondary);
             line-height: 1.5;
         }
         
-        /* Sandbox Section */
-        .sandbox-section {
-            text-align: center;
-            margin: 60px 0;
-            padding: 40px;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.03), rgba(167, 139, 250, 0.03));
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .sandbox-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            animation: shimmerPass 3s ease-in-out infinite;
-        }
-        
-        @keyframes shimmerPass {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-        
-        /* FAQ Section */
-        .faq-section {
-            margin: 60px 0;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .faq-grid {
+        /* Two Column Layout for Features */
+        .two-column {
             display: grid;
-            gap: 12px;
-            margin-top: 48px;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
         }
         
-        .faq-category-header {
-            grid-column: 1 / -1;
-            margin-top: 20px;
-            margin-bottom: 8px;
-        }
-        
-        .faq-category-header:first-child {
-            margin-top: 0;
-        }
-        
-        .faq-category-header h3 {
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 12px;
-        }
-        
-        .faq-item {
-            background: rgba(255, 255, 255, 0.02);
+        /* Coming Soon Section */
+        .coming-soon-section {
+            background: var(--gradient-premium);
             border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 60px 40px;
+            text-align: center;
+            margin: 100px auto;
+        }
+        
+        .coming-soon-section h2 {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .coming-soon-section p {
+            font-size: 19px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 32px;
+            line-height: 1.5;
+        }
+        
+        .integration-logos {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            opacity: 0.6;
+        }
+        
+        .integration-logo {
+            font-size: 32px;
+            opacity: 0.8;
+        }
+        
+        /* Privacy Section */
+        .privacy-section {
+            max-width: 1200px;
+            margin: 100px auto 80px;
+            padding: 0 20px;
+        }
+        
+        .privacy-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .privacy-header h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        
+        .privacy-header p {
+            font-size: 21px;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        .privacy-grid {
+            display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             overflow: hidden;
-            transition: all 0.3s ease;
         }
         
-        .faq-item:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(41, 151, 255, 0.3);
+        .privacy-card {
+            background: var(--bg-secondary);
+            padding: 48px;
         }
         
-        .faq-question {
-            font-size: 18px;
+        .privacy-card h3 {
+            font-size: 20px;
             font-weight: 600;
             color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 24px;
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.3s ease;
+            margin-bottom: 12px;
         }
         
-        .faq-question:hover {
-            background: rgba(41, 151, 255, 0.05);
-        }
-        
-        .faq-question-text {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-        }
-        
-        .faq-indicator {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .faq-item.active .faq-indicator {
-            transform: rotate(180deg);
-        }
-        
-        .faq-answer {
+        .privacy-card p {
             font-size: 15px;
             color: var(--text-secondary);
             line-height: 1.6;
-            padding: 0 24px;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
         }
         
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-            padding: 0 24px 24px 24px;
-        }
-        
-        .faq-footer {
+        /* Pricing Section */
+        .pricing-section {
+            max-width: 800px;
+            margin: 120px auto;
+            padding: 0 20px;
             text-align: center;
-            margin-top: 32px;
-            padding: 24px;
-            background: rgba(41, 151, 255, 0.05);
-            border-radius: 12px;
-            border: 1px solid rgba(41, 151, 255, 0.2);
         }
         
-        .faq-footer p {
-            font-size: 15px;
+        .pricing-section h2 {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 32px;
             color: var(--text-primary);
         }
         
-        .faq-footer a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .faq-footer a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Pilot CTA */
-        .pilot-section {
-            margin: 60px 0;
-            padding: 48px;
-            background: linear-gradient(135deg, rgba(41, 151, 255, 0.08), rgba(41, 151, 255, 0.03));
+        .pricing-box {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border: 1px solid var(--border);
             border-radius: 24px;
-            border: 1px solid rgba(41, 151, 255, 0.2);
-            text-align: center;
+            padding: 48px;
+            margin-bottom: 32px;
+        }
+        
+        .price {
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .price-details {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+        
+        .price-features {
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto 32px;
+        }
+        
+        .price-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .checkmark {
+            color: var(--success);
+            font-weight: bold;
         }
         
         /* Footer */
-        .simple-footer {
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 60px 20px 40px;
+            text-align: center;
+        }
+        
+        .footer-status {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .status-item {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 40px;
-            border-top: 1px solid var(--border);
-            background: var(--bg-secondary);
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
         }
         
         .footer-logo {
-            font-size: 18px;
+            font-size: 21px;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
             color: var(--text-primary);
         }
         
         .footer-text {
             font-size: 13px;
-            color: var(--text-secondary);
+            color: var(--text-tertiary);
+            line-height: 1.6;
         }
         
-        /* Loading animation */
-        .loading-dots {
-            display: inline-flex;
-            gap: 4px;
-            margin-left: 8px;
-        }
-        
-        .loading-dot {
-            width: 6px;
-            height: 6px;
-            background: currentColor;
-            border-radius: 50%;
-            animation: loadingBounce 1.4s ease-in-out infinite;
-        }
-        
-        .loading-dot:nth-child(1) { animation-delay: 0s; }
-        .loading-dot:nth-child(2) { animation-delay: 0.1s; }
-        .loading-dot:nth-child(3) { animation-delay: 0.2s; }
-        
-        @keyframes loadingBounce {
-            0%, 60%, 100% {
-                transform: translateY(0);
-                opacity: 1;
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 48px;
             }
-            30% {
-                transform: translateY(-10px);
-                opacity: 0.5;
+            
+            .hero-subtitle {
+                font-size: 21px;
             }
-        }
-        
-        
-        /* Animation for update notification */
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-20px);
+            
+            .section-header h2 {
+                font-size: 40px;
             }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
+            
+            .stage-title {
+                font-size: 36px;
+            }
+            
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .privacy-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 320px;
+            }
+            
+            .video-container {
+                height: 300px;
             }
         }
         
-        @keyframes slideUp {
-            from {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-20px);
+        @media (max-width: 640px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Update Notification Tile (Hidden by default) -->
-    <div id="updateNotification" style="
-        display: none;
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%) translateY(-20px);
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 20px 30px;
-        border-radius: 15px;
-        box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
-        z-index: 10000;
-        max-width: 600px;
-        text-align: center;
-        opacity: 0;
-        transition: all 0.5s ease-out;
-        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;">
-        <h3 style="margin: 0 0 10px 0; font-size: 20px; font-weight: 600;">
-            🎉 Thank you for using LUPO!
-        </h3>
-        <p style="margin: 0 0 5px 0; font-size: 16px; opacity: 0.95;">
-            Please download the latest version below.
-        </p>
-        <p style="margin: 0; font-size: 14px; opacity: 0.85;">
-            All future updates will be automatic after this installation!
-        </p>
-    </div>
-
-    <!-- Background Animation -->
     <div class="animated-bg"></div>
     
     <!-- Navigation -->
     <nav>
         <div class="nav-content">
-            <a href="#" class="logo">
-                <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 40px; width: auto;">
-                <span style="font-size: 24px; font-weight: 600; color: var(--text-primary);">LUPO</span>
-            </a>
+            <a href="/" class="logo">LUPO</a>
         </div>
     </nav>
     
-    <!-- Main Container -->
-    <div class="main-container">
-        <div class="content-wrapper">
-            <!-- Live Badge -->
-            <div class="coming-soon-badge">
-                <span>Live Pilot Program</span>
-                <div class="loading-dots">
-                    <div class="loading-dot"></div>
-                    <div class="loading-dot"></div>
-                    <div class="loading-dot"></div>
-                </div>
-            </div>
-            
-            <!-- Headlines -->
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="badge">LIVE PILOT PROGRAM</div>
+        
             <h1>
                 <span class="gradient-text">Cut Time to Revenue</span><br>
                 for New SDRs
             </h1>
             
-            <p class="subtitle">
-                Real-time AI that gets new reps productive faster. Live translation, objection handling, and deep post-call research. All automated.
-            </p>
-            
-            <!-- CTA Section -->
-            <div class="download-section">
-                <div class="download-buttons">
-                    <a href="demo.html" 
-                       class="download-btn primary">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
-                            <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
-                        </svg>
-                        Book a Demo
-                    </a>
-                    <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-3.1.4-arm64.dmg"
-                       class="download-btn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
-                            <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
-                        </svg>
-                        Try Free
-                    </a>
-                </div>
-                <div class="download-version">7-day free trial • No credit card required</div>
+        <p class="hero-subtitle">
+            Your AI co-pilot for every call. Real-time guidance that feels human, built to have your back.
+        </p>
+        
+        <div class="cta-group">
+            <a href="/demo.html" class="btn btn-primary">Book a Demo</a>
+            <a href="/signup.html" class="btn btn-secondary">Try Free</a>
             </div>
             
-            <!-- Video Demo Section -->
-            <div class="video-demo-section" style="margin: 60px 0; padding: 40px; background: linear-gradient(145deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05)); border-radius: 24px; border: 1px solid var(--border);">
-                <div style="text-align: center; margin-bottom: 40px;">
-                    <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(102, 126, 234, 0.8); margin-bottom: 16px;">
-                        WATCH LUPO IN ACTION
-                </div>
-                    <h2 style="font-size: 32px; font-weight: 600; color: white; margin-bottom: 12px;">
-                        New reps understand prospects instantly
-                </h2>
-                    <p style="font-size: 16px; color: rgba(255, 255, 255, 0.7); max-width: 600px; margin: 0 auto;">
-                        Live translation means no more lost deals from jargon. Watch new SDRs handle technical conversations they couldn't before.
-                    </p>
-                </div>
-                
-                <!-- Vimeo Video Container with Lazy Loading -->
-                <div id="vimeoContainer" style="position: relative; width: 100%; max-width: 1600px; margin: 0 auto 30px; border-radius: 16px; overflow: hidden; box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3); background: var(--bg-secondary); aspect-ratio: 16/9;">
-                    <div id="vimeoPlaceholder" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; background: linear-gradient(135deg, rgba(22, 22, 23, 0.95), rgba(22, 22, 23, 0.85)); display: flex; align-items: center; justify-content: center;">
-                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2;">
-                            <div style="width: 80px; height: 80px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; transition: all 0.3s ease;">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="white" style="margin-left: 4px;">
-                                    <path d="M8 5v14l11-7z"/>
-                                </svg>
-                            </div>
-                            <div style="font-size: 18px; color: white; font-weight: 600; margin-bottom: 8px;">Watch Demo</div>
-                            <div style="font-size: 13px; color: rgba(255, 255, 255, 0.7);">26s • Click to play</div>
-                        </div>
-                        <div style="position: absolute; bottom: 20px; right: 20px; background: rgba(0, 0, 0, 0.7); color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500; letter-spacing: 0.5px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); z-index: 3;">Watch in 4K</div>
-                    </div>
-                </div>
-                
-                <!-- Try Interactive Demo Link -->
-                <style>
-                    .demo-btn {
-                        display: inline-flex;
-                        align-items: center;
-                        gap: 12px;
-                        padding: 18px 48px;
-                        background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%);
-                        border: none;
-                        border-radius: 50px;
-                        color: white;
-                        text-decoration: none;
-                        font-size: 16px;
-                        font-weight: 600;
-                        transition: all 0.3s ease;
-                        box-shadow: 0 10px 40px rgba(96, 165, 250, 0.4);
-                        cursor: pointer;
-                    }
-                    .demo-btn:hover {
-                        transform: translateY(-2px);
-                        box-shadow: 0 15px 50px rgba(96, 165, 250, 0.5);
-                    }
-                    .demo-btn:active {
-                        transform: translateY(0px);
-                        box-shadow: 0 8px 30px rgba(96, 165, 250, 0.4);
-                    }
-                    .demo-btn svg {
-                        transition: transform 0.3s ease;
-                    }
-                    .demo-btn:hover svg {
-                        transform: translateX(3px);
-                    }
-                </style>
-                <div style="text-align: center;">
-                    <a href="playground.html" class="demo-btn">
-                        <span>Try Interactive Demo</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
-                </div>
-                
-                <!-- Secondary Video: Full Call -->
-                <div style="margin-top: 60px; padding-top: 60px; border-top: 1px solid var(--border);">
-                    <div style="text-align: center; margin-bottom: 30px;">
-                        <h3 style="font-size: 24px; font-weight: 600; color: white; margin-bottom: 12px;">
-                            See LUPO on a live call
-                        </h3>
-                        <p style="font-size: 16px; color: rgba(255, 255, 255, 0.7); max-width: 600px; margin: 0 auto;">
-                            This clip uses a simple real estate example, but LUPO is built for any B2B sales team whether you sell software or services.
-                        </p>
-                    </div>
-                    
-                    <!-- Full Call Video Container -->
-                    <div id="fullCallVideoContainer" style="position: relative; width: 100%; max-width: 1200px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); background: var(--bg-secondary); aspect-ratio: 16/9;">
-                        <div id="fullCallVideoPlaceholder" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; background: linear-gradient(135deg, rgba(22, 22, 23, 0.95), rgba(22, 22, 23, 0.85)); display: flex; align-items: center; justify-content: center;">
-                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2;">
-                                <div style="width: 70px; height: 70px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; transition: all 0.3s ease;">
-                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="white" style="margin-left: 3px;">
-                                        <path d="M8 5v14l11-7z"/>
-                                    </svg>
-                                </div>
-                                <div style="font-size: 16px; color: white; font-weight: 600; margin-bottom: 6px;">Watch Full Call Demo</div>
-                                <div style="font-size: 12px; color: rgba(255, 255, 255, 0.7);">1:10 • Click to play</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Video Explanation -->
-                <div style="text-align: center; max-width: 700px; margin: 30px auto 0; padding: 0 20px;">
-                    <p style="font-size: 14px; color: rgba(255, 255, 255, 0.6); line-height: 1.6;">
-                        The interactive demo below shows how LUPO adapts to real-world objections, whether you sell software, services, or solutions.
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Features Section -->
-            <section style="max-width: 1200px; margin: 100px auto 80px; padding: 0 20px;">
-                <div style="text-align: center; margin-bottom: 60px;">
-                    <h2 style="font-size: 48px; font-weight: 700; margin-bottom: 20px; background: linear-gradient(180deg, #f5f5f7 0%, #a1a1a6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                        Everything you need on every call
-                    </h2>
-                    <p style="font-size: 21px; color: #a1a1a6; max-width: 700px; margin: 0 auto; line-height: 1.4;">
-                        From setup to close, LUPO has you covered
-                    </p>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto;">
-                    <!-- 90-Second Setup -->
-                    <div class="preview-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease;">
-                        <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15)); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(102, 126, 234, 0.9);">
-                                <circle cx="12" cy="12" r="3"></circle>
-                                <path d="M12 1v6m0 6v6M23 12h-6M7 12H1m18.364-5.636l-4.243 4.243m0-8.485l4.243 4.243M5.636 18.364l4.243-4.243m0 8.485l-4.243-4.243"></path>
-                            </svg>
-                        </div>
-                        <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">90-Second Setup</h3>
-                        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.5;">Set your call objective. "Following up with Anna - price concern - closing at 50k." LUPO knows what you're trying to achieve.</p>
-                    </div>
-                    
-                    <!-- Live Translation -->
-                    <div class="preview-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease;">
-                        <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15)); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(102, 126, 234, 0.9);">
-                                <path d="M5 8l6 6m-6 0l6-6M13 8l6 6m-6 0l6-6"></path>
-                            </svg>
-                        </div>
-                        <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Live Translation</h3>
-                        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.5;">Prospect uses unfamiliar terms? LUPO translates instantly. "120% NRR" → "customers expanding 20% year-over-year"</p>
-                    </div>
-                    
-                    <!-- Smart Alerts -->
-                    <div class="preview-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease;">
-                        <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15)); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(102, 126, 234, 0.9);">
-                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                            </svg>
-                        </div>
-                        <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Smart Alerts</h3>
-                        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.5;">Catch objections as they happen. Get suggested responses in 1 second based on YOUR company playbook.</p>
-                    </div>
-                    
-                    <!-- Quick Guidance -->
-                    <div class="preview-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease;">
-                        <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15)); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(102, 126, 234, 0.9);">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                        </div>
-                        <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Quick Guidance</h3>
-                        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.5;">Type "what should I say?" and get instant tactical responses. Never go blank on a call.</p>
-                    </div>
-                    
-                    <!-- Instant Summaries -->
-                    <div class="preview-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease;">
-                        <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15)); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(102, 126, 234, 0.9);">
-                                <line x1="12" y1="20" x2="12" y2="10"></line>
-                                <line x1="18" y1="20" x2="18" y2="4"></line>
-                                <line x1="6" y1="20" x2="6" y2="16"></line>
-                            </svg>
-                        </div>
-                        <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Instant Summaries</h3>
-                        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.5;">Generate next steps, call summaries, or follow-up emails in 1 second. Copy-paste into your CRM.</p>
-                    </div>
-                    
-                    <!-- Deep Research -->
-                    <div class="preview-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease;">
-                        <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15)); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(102, 126, 234, 0.9);">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <path d="M21 21l-4.35-4.35"></path>
-                            </svg>
-                        </div>
-                        <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Deep Research</h3>
-                        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.5;">One-click tactical brief with company intel, competitive positioning, and exact follow-up phrases to use.</p>
-                    </div>
-                </div>
-                
-                <style>
-                    /* Responsive grid for features */
-                    @media (max-width: 968px) {
-                        section div[style*="grid-template-columns: repeat(3, 1fr)"] {
-                            grid-template-columns: repeat(2, 1fr) !important;
-                        }
-                    }
-                    
-                    @media (max-width: 640px) {
-                        section div[style*="grid-template-columns: repeat(3, 1fr)"] {
-                            grid-template-columns: 1fr !important;
-                        }
-                    }
-                </style>
-            </section>
-            
-            <!-- FEATURE SHOWCASE: Translation + Deep Research -->
-            <section style="max-width: 1200px; margin: 100px auto 80px; padding: 0 20px;">
-                
-                <!-- Section Header -->
-                <div style="text-align: center; margin-bottom: 60px;">
-                    <h2 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px;">
-                        More ways LUPO helps you close
-                    </h2>
-                    <p style="font-size: 19px; color: var(--text-secondary); line-height: 1.5;">
-                        Live translation during calls and deep research after
-                    </p>
-                </div>
-                
-                <!-- Deep Research Section -->
-                <div class="feature-grid" style="display: flex; justify-content: center; max-width: 800px; margin: 0 auto;">
-                    
-                    <!-- Deep Research Screenshot -->
-                    <div class="feature-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease;">
-                        
-                        <!-- Icon + Title + Description -->
-                        <div style="margin-bottom: 24px;">
-                            <div style="font-size: 48px; margin-bottom: 16px;">🔍</div>
-                            <h3 style="font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
-                                NEW: Deep Research
-                            </h3>
-                            <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0;">
-                                LUPO analyzes your entire call, researches the prospect's company (latest news, funding, competitors), and generates a complete tactical playbook. Exact phrases for follow-up, competitive positioning, and every insight you need to close.
-                            </p>
-                        </div>
-                        
-                        <!-- Screenshot with Click-to-View -->
-                        <div class="research-preview" role="button" aria-label="View full deep research screenshot" tabindex="0" style="position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; background: var(--bg-secondary);" onclick="openImageModal('deep-research-screenshot.png')">
-                            <img 
-                                src="deep-research-screenshot.png" 
-                                alt="Deep Research Report Example"
-                                style="width: 100%; height: auto; display: block; transition: transform 0.3s ease;">
-                            
-                            <!-- Hover Overlay -->
-                            <div class="research-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
-                                <span style="color: white; font-size: 18px; font-weight: 600;">Click to view full screenshot</span>
-                                <span style="color: rgba(255,255,255,0.9); font-size: 14px;">→</span>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-                
-            </section>
-            
-            <style>
-            /* Feature card hover effect */
-            .feature-card:hover {
-                background: rgba(255, 255, 255, 0.04);
-                border-color: rgba(255, 255, 255, 0.15);
-                transform: translateY(-4px);
-                box-shadow: 0 12px 40px rgba(41, 151, 255, 0.15);
-            }
-
-            /* Research preview hover */
-            .research-preview:hover .research-overlay {
-                opacity: 1;
-            }
-
-            .research-preview:hover img {
-                transform: scale(1.05);
-            }
-
-            /* Mobile responsive: stack vertically */
-            @media (max-width: 968px) {
-                .feature-grid {
-                    grid-template-columns: 1fr !important;
-                    gap: 32px !important;
-                }
-            }
-            
-            /* Image Modal/Lightbox */
-            .image-modal-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(20px);
-                z-index: 10000;
-                align-items: center;
-                justify-content: center;
-                padding: 40px;
-                animation: fadeIn 0.3s ease;
-            }
-            
-            .image-modal-overlay.active {
-                display: flex;
-            }
-            
-            .image-modal-content {
-                position: relative;
-                max-width: 95vw;
-                max-height: 95vh;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .image-modal-content img {
-                max-width: 100%;
-                max-height: 95vh;
-                object-fit: contain;
-                border-radius: 12px;
-                box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
-            }
-            
-            .image-modal-close {
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                width: 40px;
-                height: 40px;
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: all 0.2s ease;
-                color: white;
-                font-size: 24px;
-                font-weight: 300;
-                z-index: 10;
-            }
-            
-            .image-modal-close:hover {
-                background: rgba(255, 255, 255, 0.2);
-                transform: rotate(90deg);
-            }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            </style>
-            
-            <!-- Privacy & Security Section -->
-            <section style="max-width: 1200px; margin: 100px auto 80px; padding: 0 20px;">
-                <div style="text-align: center; margin-bottom: 60px;">
-                    <h2 style="font-size: 48px; font-weight: 700; margin-bottom: 20px;">
-                        <span style="color: var(--text-primary);">Private. Invisible. Untouchable.</span>
-                    </h2>
-                    <p style="font-size: 21px; color: var(--text-secondary); max-width: 800px; margin: 0 auto; line-height: 1.5;">
-                        Engineered for complete discretion. LUPO never joins as a bot or visible participant. Your calls remain yours alone.
-                    </p>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; overflow: hidden; max-width: 1200px; margin: 0 auto;">
-                    
-                    <!-- Invisible by design -->
-                    <div style="background: var(--bg-secondary); padding: 48px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); border-right: 1px solid rgba(255, 255, 255, 0.08);">
-                        <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Invisible by design</h3>
-                        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.6;">Completely undetectable on screen share or recordings. Only you can see LUPO. No traces, no overlays, no shadows.</p>
-                    </div>
-                    
-                    <!-- Doesn't join calls -->
-                    <div style="background: var(--bg-secondary); padding: 48px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-                        <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Doesn't join calls</h3>
-                        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.6;">Listens locally, never as a bot participant. Your audio is processed securely through encrypted channels.</p>
-                    </div>
-                    
-                    <!-- Military-grade encryption -->
-                    <div style="background: var(--bg-secondary); padding: 48px; border-right: 1px solid rgba(255, 255, 255, 0.08);">
-                        <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Military-grade encryption</h3>
-                        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.6;">Secured with AES-256-GCM and RSA-4096. The same level of protection trusted by defense systems worldwide.</p>
-                    </div>
-                    
-                    <!-- Zero-training guarantee -->
-                    <div style="background: var(--bg-secondary); padding: 48px;">
-                        <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Zero-training guarantee</h3>
-                        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.6;">Your conversations never train AI models, never leave your environment, and are never shared with anyone. What's said in your call stays in your call.</p>
-                    </div>
-                    
-                </div>
-                
-                <style>
-                    /* Responsive grid for privacy section */
-                    @media (max-width: 768px) {
-                        section div[style*="grid-template-columns: repeat(2, 1fr)"] {
-                            grid-template-columns: 1fr !important;
-                        }
-                        
-                        section div[style*="border-right: 1px solid rgba(255, 255, 255, 0.08)"] {
-                            border-right: none !important;
-                        }
-                    }
-                </style>
-            </section>
-            
-            <!-- FAQ Section -->
-            <div class="faq-section">
-                <h2 style="font-size: 48px; font-weight: 700; text-align: center; margin-bottom: 16px; background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                    Common Questions
-                </h2>
-                <p style="text-align: center; font-size: 18px; color: var(--text-secondary); margin-bottom: 48px;">
-                    Everything you need to know about LUPO
-                </p>
-                
-                <div class="faq-grid">
-                    <!-- Setup & Onboarding -->
-                    <div class="faq-category-header">
-                        <h3>Setup & Onboarding</h3>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">How long does setup take?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            3 minutes. Upload your company info (or paste/speak it), add your name and what you sell, and you're ready. Works with any video call tool, Zoom, Teams, Google Meet, etc. No integrations needed.
-                        </div>
-                    </div>
-                    
-                    <!-- During Calls -->
-                    <div class="faq-category-header">
-                        <h3>During Calls</h3>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Does LUPO work with my video call software?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            Yes. LUPO works with Zoom, Microsoft Teams, Google Meet, and any other video platform/dialer. It's a desktop app that captures your system audio, so there's nothing to install in your video software. LUPO also integrates with dialers. Just start your call and LUPO listens.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Can prospects see that I'm using LUPO?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            No. LUPO appears only on your screen, it's like having notes open during a call. Prospects can't see it. You should still follow your company's call recording and consent policies.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">What if I don't know the industry terms prospects use?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            That's exactly what live translation is for. When prospects say "120% NRR" or "API rate limits," LUPO instantly shows you what it means in plain English. Works for any industry, finance, tech, healthcare, manufacturing, etc.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">How fast are the responses during calls?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            0.5-1 seconds. When an objection is detected or you type "what should I say?", LUPO responds in 0.5-1 seconds with tactical suggestions based on your company data, not generic advice.
-                        </div>
-                    </div>
-                    
-                    <!-- Post-Call -->
-                    <div class="faq-category-header">
-                        <h3>Post-Call</h3>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">How does deep research work?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            After every call, click "Deep Research" and LUPO analyzes the full transcript, researches the prospect's company (news, funding, competitors), and generates a tactical playbook with exact follow-up phrases, competitive positioning, and intelligence to weaponize. Takes seconds, saves hours.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Can I use LUPO's summaries in my CRM?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            Yes. Post-call summaries, next steps, and emails are all copy-paste ready. Generate in seconds, then paste directly into Salesforce, HubSpot, or wherever you log calls.
-                        </div>
-                    </div>
-                    
-                    <!-- Data & Privacy -->
-                    <div class="faq-category-header">
-                        <h3>Data & Privacy</h3>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Is my call data secure?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            Yes. Audio is encrypted in transit and processed on our secure servers. We're SOC 2 aligned and GDPR compliant. Your call transcripts and company data are never used to train AI models or shared with third parties. You can delete any call data at any time.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Where is my data stored?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            All data is stored on secure, encrypted cloud servers. You have full control, delete any call transcript or report whenever you want. We never sell or share your data.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Does LUPO record my calls?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            LUPO transcribes your calls in real-time to provide guidance, summaries, and research. You control what's saved and can delete transcripts anytime. Always follow your company's recording and consent policies.
-                        </div>
-                    </div>
-                    
-                    <!-- Pricing & Trial -->
-                    <div class="faq-category-header">
-                        <h3>Pricing & Trial</h3>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">How does the 7-day free trial work?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            Download LUPO, add your payment details, and use all features free for 7 days. If you cancel before day 7, you're not charged. After 7 days, it's $200/seat/month. No contracts, cancel anytime.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">What's included for $200/seat/month?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            Everything. Live translation, smart alerts, quick guidance during calls, post-call summaries, 10 deep research reports per month, email drafts, full transcripts, and unlimited calls. No hidden fees or usage limits.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Do you offer team or enterprise pricing?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            Enterprise pricing is $200/seat/month with a 5-seat minimum. For teams of 10+ seats, we offer custom integrations.
-                        </div>
-                    </div>
-                    
-                    <!-- Use Cases -->
-                    <div class="faq-category-header">
-                        <h3>Use Cases</h3>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Does this work for all industries?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            Yes. LUPO translates terminology from any industry, finance, healthcare, manufacturing, tech, real estate, insurance, etc. Whether prospects say "alpha generation" or "OEE optimization," LUPO explains it instantly.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Is this just for SDRs or can AEs use it too?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            Both. SDRs use it for cold calls and discovery. AEs use it for demos and closing calls. Anyone on a sales call benefits, new reps learn faster, experienced reps close more deals.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">What if I sell to multiple industries?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            LUPO adapts. Set your call objective before each call ("calling healthcare CIO" or "fintech CFO") and LUPO tailors responses to that context. Works across any vertical you sell into.
-                        </div>
-                    </div>
-                    
-                    <!-- Manager Questions -->
-                    <div class="faq-category-header">
-                        <h3>Manager Questions</h3>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Can managers see their team's calls?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            Yes. Managers get an overview of how their teams use LUPO, not individual micro managing. Use it for coaching, pipeline visibility, and spotting common objections across the team.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">How does this help onboard new reps?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            New reps get real-time coaching from day one. They see translations of unfamiliar terms, get objection handling suggestions, and learn what to say next, without waiting for manager feedback. Cuts ramp time significantly.
-                        </div>
-                    </div>
-                    
-                    <!-- Technical -->
-                    <div class="faq-category-header">
-                        <h3>Technical</h3>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">What if my internet is slow during a call?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            LUPO is lightweight and works on most connections. If your internet can handle a video call, it can handle LUPO. Responses are optimized for speed, 0.5-1 seconds even on slower connections.
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">Does LUPO slow down my computer?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            No. LUPO is optimized to use minimal CPU and memory. It runs quietly in the background and won't affect your video call quality or other applications.
-                        </div>
-                    </div>
-                    
-                    <!-- Support -->
-                    <div class="faq-category-header">
-                        <h3>Support</h3>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span class="faq-question-text">What if I need help or have questions?</span>
-                            <span class="faq-indicator">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="faq-answer">
-                            Email us anytime at <a href="mailto:support@lupolabs.ai" style="color: var(--accent); text-decoration: none; font-weight: 500;">support@lupolabs.ai</a> or message us on LinkedIn. We respond within a few hours and offer onboarding help for new users.
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="faq-footer">
-                    <p>Still have questions? <a href="https://calendly.com/tjpbaxter/30min">Book a call</a> to discuss your needs.</p>
-                </div>
-            </div>
-            
-            <!-- Pilot CTA -->
-            <div class="pilot-section">
-                <h2 style="font-size: 36px; font-weight: 600; color: var(--text-primary); margin-bottom: 16px;">
-                    Ready to Deploy?
-                </h2>
-                <p style="font-size: 18px; color: var(--text-secondary); margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    $200 per seat / month • 5-seat minimum<br>
-                    <span style="font-size: 14px; opacity: 0.8;">White-glove onboarding included</span>
-                </p>
-                <div style="display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; margin-bottom: 24px;">
-                    <a href="https://calendly.com/tjpbaxter/30min" 
-                       style="display: inline-flex; align-items: center; gap: 8px; padding: 18px 40px; background: var(--accent); color: white; border: none; border-radius: 30px; font-size: 17px; font-weight: 600; text-decoration: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 30px rgba(41, 151, 255, 0.3);"
-                       onmouseover="this.style.transform='translateY(-2px) scale(1.02)'; this.style.boxShadow='0 15px 40px rgba(41, 151, 255, 0.5)'"
-                       onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 30px rgba(41, 151, 255, 0.3)'">
-                        Book Your Pilot
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+        <p class="trial-text">7-day free trial • No credit card required</p>
+    </section>
     
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="video-header">
+            <h2>See LUPO in Action</h2>
+            <p>Watch how LUPO guides a real call in real time.</p>
+                            </div>
+        <div class="video-container">
+            <video 
+                width="100%" 
+                height="100%" 
+                controls 
+                poster="/assets/poster.jpg"
+                style="width: 100%; height: 100%; object-fit: cover;">
+                <source src="/public/video/demo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+                        </div>
+    </section>
+    
+    <!-- Why Teams Choose LUPO -->
+    <section class="section">
+        <div class="section-header">
+            <h2>Why Teams Choose LUPO</h2>
+            <p>Built not to teach you how to sell, but to make sure you never miss a moment.</p>
+                </div>
+    </section>
+    
+    <!-- BEFORE THE CALL -->
+    <section class="section stage-section">
+        <span class="stage-label">BEFORE THE CALL</span>
+        <h2 class="stage-title">Set objectives. Load context. Prepare in seconds.</h2>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <h3>Five-Second Setup</h3>
+                <p>Managers upload company materials once: pricing, playbooks, and winning call transcripts. Reps simply set their call objective: "Follow up with Anna at Oracle. Closing at 50k today."</p>
+                </div>
+                
+            <div class="feature-card">
+                <span class="feature-icon">🎯</span>
+                <h3>Instant Understanding</h3>
+                <p>LUPO knows your goal before the call begins, aligning its live assistance to your intent.</p>
+                </div>
+            </div>
+    </section>
+    
+    <!-- DURING THE CALL -->
+    <section class="section stage-section">
+        <span class="stage-label">DURING THE CALL</span>
+        <h2 class="stage-title">Live translation, objection handling, and technical answers in real time.</h2>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🌐</span>
+                <h3>Plain-English Translation</h3>
+                <p>LUPO instantly explains complex terms and metrics so every rep stays clear and confident.</p>
+                    </div>
+                    
+            <div class="feature-card">
+                <span class="feature-icon">🛡️</span>
+                <h3>Smart Objection Detection</h3>
+                <p>Catches hesitation or pushback as it happens and suggests precise responses from your own data.</p>
+                    </div>
+                    
+            <div class="feature-card">
+                <span class="feature-icon">💡</span>
+                <h3>Technical Questions</h3>
+                <p>When prospects ask detailed product or pricing questions, LUPO retrieves verified answers from company docs and winning calls using real-time RAG retrieval.</p>
+                    </div>
+                    
+            <div class="feature-card">
+                <span class="feature-icon">💬</span>
+                <h3>Quick Guidance</h3>
+                <p>Type "what should I say?" to get instant tactical advice based on the live conversation.</p>
+                    </div>
+                    
+            <div class="feature-card">
+                <span class="feature-icon">📊</span>
+                <h3>Live Recap</h3>
+                <p>Shows what's happened, what's happening now, and what to do next, keeping reps focused and composed.</p>
+                        </div>
+                    </div>
+            </section>
+            
+    <!-- AFTER THE CALL -->
+    <section class="section stage-section">
+        <span class="stage-label">AFTER THE CALL</span>
+        <h2 class="stage-title">Instant actions and deep intelligence.</h2>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <span class="feature-icon">📝</span>
+                <h3>Post-Call Actions</h3>
+                <p>Generate next steps, summaries, and follow-up emails in one click. Copy directly into your CRM.</p>
+                </div>
+                
+            <div class="feature-card">
+                <span class="feature-icon">🔍</span>
+                <h3>Deep Research</h3>
+                <p>Ten minutes after the call, LUPO delivers a tactical brief: company news, funding, competitors, and suggested follow-up phrasing unique to your conversation.</p>
+                        </div>
+                        
+            <div class="feature-card">
+                <span class="feature-icon">📈</span>
+                <h3>Continuous Improvement</h3>
+                <p>Each uploaded document and winning call strengthens LUPO's future responses. It evolves with your team.</p>
+                            </div>
+                        </div>
+            </section>
+            
+    <!-- Coming Soon -->
+    <section class="section">
+        <div class="coming-soon-section">
+            <h2>Coming Soon</h2>
+            <p>Integrations that fit your workflow. Connect LUPO to your CRM, calendar, and communication tools for seamless data flow and zero setup friction.</p>
+            
+            <div class="integration-logos">
+                <span class="integration-logo">📧</span>
+                <span class="integration-logo">📅</span>
+                <span class="integration-logo">💼</span>
+                <span class="integration-logo">🔗</span>
+                <span class="integration-logo">📞</span>
+                    </div>
+                        </div>
+    </section>
+    
+    <!-- Privacy & Security -->
+    <section class="privacy-section">
+        <div class="privacy-header">
+            <h2>Private. Invisible. Untouchable.</h2>
+            <p>Engineered for complete discretion. LUPO never joins as a bot or visible participant. Your calls remain yours alone.</p>
+                    </div>
+                    
+        <div class="privacy-grid">
+            <div class="privacy-card">
+                <h3>Invisible by design</h3>
+                <p>LUPO never appears on shared screens or recordings. Only you can see it.</p>
+                    </div>
+                    
+            <div class="privacy-card">
+                <h3>Doesn't join calls</h3>
+                <p>Listens locally, never as a bot participant. Your audio is processed securely through encrypted channels.</p>
+                    </div>
+                    
+            <div class="privacy-card">
+                <h3>Military-grade encryption</h3>
+                <p>Protected with AES-256-GCM and RSA-4096. The same level of protection trusted by defense systems worldwide.</p>
+                    </div>
+                    
+            <div class="privacy-card">
+                <h3>Zero-training guarantee</h3>
+                <p>Your conversations never train external AI models and never leave your control.</p>
+                        </div>
+                        </div>
+    </section>
+    
+    <!-- Pricing -->
+    <section class="pricing-section">
+        <h2>Ready to Deploy?</h2>
+        
+        <div class="pricing-box">
+            <div class="price">$200<span style="font-size: 28px; font-weight: 400; color: var(--text-secondary);">/seat/month</span></div>
+            <p class="price-details">5-seat minimum • White-glove onboarding included</p>
+            
+            <a href="/demo.html" class="btn btn-primary">Book Your Pilot</a>
+                        </div>
+    </section>
     
     <!-- Footer -->
-    <footer class="simple-footer">
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-            <div style="display: flex; align-items: center; gap: 6px;">
-                <div style="width: 6px; height: 6px; background: #34c759; border-radius: 50%; box-shadow: 0 0 6px rgba(52, 199, 89, 0.6);"></div>
-                <span style="font-size: 11px; color: rgba(255, 255, 255, 0.6); font-weight: 400;">All Systems Operational</span>
+    <footer>
+        <div class="footer-status">
+            <div class="status-item">
+                <span class="status-dot"></span>
+                <span>All Systems Operational</span>
             </div>
-            <div style="margin-top: 8px;">
-                <img src="compliancelogos/gdpr-compliant.png" alt="GDPR Compliant" style="height: 48px; opacity: 0.8;">
+            <div class="status-item">
+                <span>GDPR Compliant</span>
             </div>
-            <div style="margin-top: 12px; padding: 8px 12px; background: rgba(52, 199, 89, 0.1); border: 1px solid rgba(52, 199, 89, 0.3); border-radius: 6px; display: flex; align-items: center; gap: 6px;">
-                <span style="font-size: 12px; color: #34c759;">🔒</span>
-                <span style="font-size: 11px; color: rgba(255, 255, 255, 0.8); font-weight: 500;">SOC 2-aligned security controls</span>
+            <div class="status-item">
+                <span>🔒 SOC 2-aligned security controls</span>
             </div>
         </div>
-        <div style="text-align: right;">
+        
+        <div class="footer-content">
             <div class="footer-logo">LUPO</div>
-            <p class="footer-text">© 2025 LUPO, a product of Flair Technologies Ltd. All rights reserved.</p>
-            <p style="font-size: 11px; color: rgba(255, 255, 255, 0.35); margin-top: 8px; line-height: 1.4; font-weight: 400;">
-                Registered Office<br>
-                45 Fitzroy St, Fitzrovia<br>
-                London, W1T 6EB, United Kingdom
+            <p class="footer-text">
+                © 2025 LUPO, a product of Flair Technologies Ltd. All rights reserved.<br>
+                45 Fitzroy St, Fitzrovia, London W1T 6EB, United Kingdom
             </p>
         </div>
     </footer>
-    
-    <script>
-        // Lazy load Vimeo video with Intersection Observer
-        document.addEventListener('DOMContentLoaded', () => {
-            const vimeoContainer = document.getElementById('vimeoContainer');
-            const vimeoPlaceholder = document.getElementById('vimeoPlaceholder');
-            
-            if (!vimeoContainer || !vimeoPlaceholder) return;
-            
-            let videoLoaded = false;
-            
-            // Function to load the video
-            function loadVimeoVideo() {
-                if (videoLoaded) return;
-                videoLoaded = true;
-                
-                const iframe = document.createElement('iframe');
-                iframe.src = 'https://player.vimeo.com/video/1131686366?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&quality=4k';
-                iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;';
-                iframe.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
-                iframe.setAttribute('allowfullscreen', '');
-                iframe.title = 'LUPO Demo Video';
-                
-                vimeoPlaceholder.innerHTML = '';
-                vimeoPlaceholder.appendChild(iframe);
-                
-                // Load Vimeo Player API
-                const script = document.createElement('script');
-                script.src = 'https://player.vimeo.com/api/player.js';
-                document.head.appendChild(script);
-                
-                // Auto-play when loaded
-                script.onload = () => {
-                    const player = new Vimeo.Player(iframe);
-                    player.play();
-                };
-            }
-            
-            // Click to load
-            vimeoPlaceholder.addEventListener('click', loadVimeoVideo);
-            
-            // Intersection Observer for scroll-based loading
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-                        loadVimeoVideo();
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.5 // Load when 50% visible
-            });
-            
-            observer.observe(vimeoContainer);
-        });
-        
-        // Lazy load Full Call Video with Intersection Observer
-        document.addEventListener('DOMContentLoaded', () => {
-            const fullCallVideoContainer = document.getElementById('fullCallVideoContainer');
-            const fullCallVideoPlaceholder = document.getElementById('fullCallVideoPlaceholder');
-            
-            if (!fullCallVideoContainer || !fullCallVideoPlaceholder) return;
-            
-            let fullCallVideoLoaded = false;
-            
-            // Function to load the full call video
-            function loadFullCallVideo() {
-                if (fullCallVideoLoaded) return;
-                fullCallVideoLoaded = true;
-                
-                const iframe = document.createElement('iframe');
-                iframe.src = 'https://player.vimeo.com/video/1131476355?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&quality=4k';
-                iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;';
-                iframe.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
-                iframe.setAttribute('allowfullscreen', '');
-                iframe.title = 'LUPO Full Call Demo Video';
-                
-                fullCallVideoPlaceholder.innerHTML = '';
-                fullCallVideoPlaceholder.appendChild(iframe);
-                
-                // Load Vimeo Player API
-                const script = document.createElement('script');
-                script.src = 'https://player.vimeo.com/api/player.js';
-                document.head.appendChild(script);
-                
-                // Auto-play when loaded
-                script.onload = () => {
-                    const player = new Vimeo.Player(iframe);
-                    player.play();
-                };
-            }
-            
-            // Click to load
-            fullCallVideoPlaceholder.addEventListener('click', loadFullCallVideo);
-            
-            // Intersection Observer for scroll-based loading
-            const fullCallObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-                        loadFullCallVideo();
-                        fullCallObserver.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.5 // Load when 50% visible
-            });
-            
-            fullCallObserver.observe(fullCallVideoContainer);
-        });
-        
-        // Toggle FAQ items
-        function toggleFAQ(element) {
-            const faqItem = element.parentElement;
-            const allFaqItems = document.querySelectorAll('.faq-item');
-            
-            // Close all other FAQ items
-            allFaqItems.forEach(item => {
-                if (item !== faqItem) {
-                    item.classList.remove('active');
-                }
-            });
-            
-            // Toggle current FAQ item
-            faqItem.classList.toggle('active');
-        }
-        
-        // Floating particles effect
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.style.cssText = `
-                position: fixed;
-                width: ${Math.random() * 4 + 2}px;
-                height: ${Math.random() * 4 + 2}px;
-                background: var(--accent);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 0;
-                opacity: ${Math.random() * 0.3 + 0.05};
-            `;
-            
-            const startX = Math.random() * window.innerWidth;
-            const startY = window.innerHeight + 10;
-            
-            particle.style.left = startX + 'px';
-            particle.style.top = startY + 'px';
-            
-            document.body.appendChild(particle);
-            
-            const duration = Math.random() * 20000 + 10000;
-            const horizontalMovement = (Math.random() - 0.5) * 100;
-            
-            particle.animate([
-                { transform: `translate(0, 0)`, opacity: 0 },
-                { transform: `translate(${horizontalMovement}px, -${window.innerHeight + 20}px)`, opacity: particle.style.opacity },
-                { transform: `translate(${horizontalMovement * 2}px, -${window.innerHeight * 2}px)`, opacity: 0 }
-            ], {
-                duration: duration,
-                easing: 'linear'
-            }).onfinish = () => particle.remove();
-        }
-        
-        // Start particle animation
-        setInterval(createParticle, 1000);
-        
-        // Image Modal Functions
-        function openImageModal(imageSrc) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            if (modal && modalImg) {
-                modalImg.src = imageSrc;
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-        
-        function closeImageModal() {
-            const modal = document.getElementById('imageModal');
-            if (modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }
-        
-        // Research preview keyboard accessibility
-        document.addEventListener('DOMContentLoaded', () => {
-            const researchPreview = document.querySelector('.research-preview');
-            if (researchPreview) {
-                researchPreview.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        openImageModal('deep-research-screenshot.png');
-                    }
-                });
-            }
-            
-            // Close modal on Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeImageModal();
-                }
-            });
-            
-            // Close modal when clicking overlay
-            const modal = document.getElementById('imageModal');
-            if (modal) {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        closeImageModal();
-                    }
-                });
-            }
-        });
-    </script>
-    
-    <!-- LUPO Installation Modal -->
-    <style>
-        /* Modal Overlay */
-        .install-modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(8px) saturate(180%);
-            -webkit-backdrop-filter: blur(8px) saturate(180%);
-            z-index: 10000;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .install-modal-overlay.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Modal Container */
-        .install-modal {
-            background: linear-gradient(135deg, #1a1a1e 0%, #2d2d30 100%);
-            border-radius: 24px;
-            width: 90%;
-            max-width: 900px;
-            max-height: 90vh;
-            overflow: hidden;
-            position: relative;
-            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        @keyframes slideUp {
-            from {
-                transform: translateY(30px) scale(0.95);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-        }
-        
-        /* Modal Close Button */
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            z-index: 10;
-        }
-        
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: rotate(90deg);
-        }
-        
-        .modal-close svg {
-            width: 20px;
-            height: 20px;
-            stroke: rgba(255, 255, 255, 0.8);
-        }
-        
-        /* Modal Content */
-        .modal-content {
-            padding: 40px 40px 30px;
-        }
-        
-        /* Modal Header */
-        .modal-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .download-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-        
-        .download-badge svg {
-            width: 16px;
-            height: 16px;
-        }
-        
-        .modal-title {
-            font-size: 32px;
-            font-weight: 700;
-            color: #ffffff;
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Steps Container */
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-        
-        @media (max-width: 768px) {
-            .steps-container {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* Step Card */
-        .step-card {
-            position: relative;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-        }
-        
-        .step-number {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width: 28px;
-            height: 28px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 14px;
-            z-index: 20;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
-        }
-        
-        .step-visual {
-            height: 200px;
-            background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* Step 1 Visual - Mac Dock */
-        .downloads-visual {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding-bottom: 20px;
-        }
-        
-        .mac-dock {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 18px;
-            padding: 8px;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .dock-item {
-            width: 48px;
-            height: 48px;
-            transition: transform 0.2s ease;
-            position: relative;
-        }
-        
-        .dock-item:hover {
-            transform: scale(1.2) translateY(-8px);
-        }
-        
-        .dock-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        
-        .cursor-pointer {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            bottom: 35px;
-            left: calc(50% + 20px);
-            pointer-events: none;
-            animation: cursorHint 2s ease-in-out infinite;
-        }
-        
-        @keyframes cursorHint {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-3px, -3px); }
-        }
-        
-        .folder-icon, .trash-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease;
-        }
-        
-        .dmg-icon {
-            cursor: pointer;
-            position: relative;
-            animation: subtle-pulse 2s ease-in-out infinite;
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        @keyframes subtle-pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        .dmg-icon::after {
-            content: 'LUPO.dmg';
-            position: absolute;
-            bottom: -18px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 9px;
-            color: rgba(255, 255, 255, 0.8);
-            white-space: nowrap;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        
-        /* Step 2 Visual - Drag Animation */
-        .drag-visual {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .lupo-draggable {
-            position: absolute;
-            width: 64px;
-            height: 64px;
-            left: 20%;
-            top: 50%;
-            transform: translateY(-50%);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: grab;
-            animation: dragHint 3s ease-in-out infinite;
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
-            padding: 8px;
-        }
-        
-        @keyframes dragHint {
-            0%, 100% { transform: translateY(-50%) translateX(0); }
-            50% { transform: translateY(-50%) translateX(120px); }
-        }
-        
-        .applications-folder {
-            position: absolute;
-            right: 20%;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 64px;
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .drag-arrow {
-            position: absolute;
-            left: calc(20% + 60px);
-            right: calc(20% + 70px);
-            top: 50%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        }
-        
-        .drag-arrow::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: -4px;
-            width: 0;
-            height: 0;
-            border-left: 8px solid rgba(255, 255, 255, 0.3);
-            border-top: 5px solid transparent;
-            border-bottom: 5px solid transparent;
-        }
-        
-        /* Step 3 Visual - Applications List */
-        .apps-visual {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            padding: 20px;
-        }
-        
-        .apps-header {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 16px;
-            font-weight: 500;
-        }
-        
-        .app-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            margin-bottom: 4px;
-            transition: all 0.2s ease;
-        }
-        
-        .app-item.highlighted {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
-            transform: translateX(4px);
-        }
-        
-        .app-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-        
-        .app-name {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 13px;
-        }
-        
-        /* Step Description */
-        .step-description {
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .step-action {
-            font-size: 15px;
-            color: #ffffff;
-            margin-bottom: 4px;
-        }
-        
-        .step-action strong {
-            color: #667eea;
-            font-weight: 600;
-        }
-        
-        .step-location {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.6);
-        }
-        
-        /* Modal Footer */
-        .modal-footer {
-            padding: 20px 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(0, 0, 0, 0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .footer-text {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .download-again-link {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.2s ease;
-        }
-        
-        .download-again-link:hover {
-            opacity: 0.8;
-        }
-        
-        /* Icon styles */
-        .icon-logo {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .icon-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-    </style>
-    
-    <!-- Installation Modal HTML -->
-    <div id="installModal" class="install-modal-overlay">
-        <div class="install-modal">
-            <!-- Close Button -->
-            <button class="modal-close" onclick="closeInstallModal()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 6L6 18M6 6l12 12"/>
-                </svg>
-            </button>
-            
-            <!-- Modal Content -->
-            <div class="modal-content">
-                <!-- Header -->
-                <div class="modal-header">
-                    <div class="download-badge">
-                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
-                            <path d="M3 8l3 3L13 4" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        Downloaded
-                    </div>
-                    <h1 class="modal-title">How to install LUPO</h1>
-                    <p style="font-size: 16px; color: rgba(255, 255, 255, 0.8); margin-top: 12px; margin-bottom: 0; font-weight: 500;">
-                        Open LUPO from Applications for fastest launch
-                    </p>
-                </div>
-                
-                <!-- Steps -->
-                <div class="steps-container">
-                    <!-- Step 1 -->
-                    <div class="step-card">
-                        <div class="step-number">1</div>
-                        <div class="step-visual">
-                            <div class="downloads-visual">
-                                <div class="mac-dock">
-                                    <div class="dock-item">
-                                        <img src="applications-folder.png" alt="Applications" />
-                                    </div>
-                                    <div class="dock-item dmg-icon">
-                                        <img src="dmg-icon.png" alt="LUPO DMG" />
-                                    </div>
-                                    <div class="dock-item">
-                                        <div style="width: 48px; height: 48px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🗑️</div>
-                                    </div>
-                                </div>
-                                <img class="cursor-pointer" src="cursor-arrow.png" alt="cursor" />
-                            </div>
-                        </div>
-                        <div class="step-description">
-                            <div class="step-action">Open <strong>LUPO.dmg</strong> from your</div>
-                            <div class="step-location">Downloads folder</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 2 -->
-                    <div class="step-card">
-                        <div class="step-number">2</div>
-                        <div class="step-visual">
-                            <div class="drag-visual">
-                                <div class="lupo-draggable">
-                                    <div class="icon-logo">
-                                        <img src="lupo-icon.ico" alt="LUPO" />
-                                    </div>
-                                </div>
-                                <div class="drag-arrow"></div>
-                                <div class="applications-folder">
-                                    <img src="applications-folder.png" alt="Applications" style="width: 100%; height: 100%; object-fit: contain;" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="step-description">
-                            <div class="step-action">Drag the <strong>LUPO icon</strong> into your</div>
-                            <div class="step-location">Applications folder</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 3 -->
-                    <div class="step-card">
-                        <div class="step-number">3</div>
-                        <div class="step-visual">
-                            <div class="apps-visual">
-                                <div class="apps-header">Applications</div>
-                                <div class="app-item">
-                                    <div class="app-icon">🕐</div>
-                                    <div class="app-name">Clock</div>
-                                </div>
-                                <div class="app-item highlighted">
-                                    <div class="app-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2px; overflow: hidden; width: 32px; height: 32px;">
-                                        <img src="lupo-icon.ico" alt="LUPO" style="width: 100%; height: 100%; object-fit: contain;" />
-                                    </div>
-                                    <div class="app-name">LUPO</div>
-                                </div>
-                                <div class="app-item">
-                                    <div class="app-icon">📇</div>
-                                    <div class="app-name">Contacts</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="step-description">
-                            <div class="step-action">Open the <strong>LUPO app</strong> from your</div>
-                            <div class="step-location">Applications folder</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Footer -->
-            <div class="modal-footer">
-                <span class="footer-text">Problem?</span>
-                <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-3.1.4-arm64.dmg" 
-                   class="download-again-link">Download again</a>
-            </div>
-        </div>
-    </div>
-    
-    <script>
-        // Function to show the installation modal
-        function showInstallModal() {
-            const modal = document.getElementById('installModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // Function to close the installation modal
-        function closeInstallModal() {
-            const modal = document.getElementById('installModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        
-        // Close modal when clicking outside
-        document.getElementById('installModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeInstallModal();
-            }
-        });
-        
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeInstallModal();
-            }
-        });
-        
-        // Attach to Mac download button
-        document.addEventListener('DOMContentLoaded', function() {
-            // Find all Mac download links
-            const macDownloadLinks = document.querySelectorAll('a[href*="LUPO-3.1.4-arm64.dmg"]');
-            
-            macDownloadLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Start the actual download
-                    const downloadLink = document.createElement('a');
-                    downloadLink.href = this.href;
-                    downloadLink.download = '';
-                    document.body.appendChild(downloadLink);
-                    downloadLink.click();
-                    document.body.removeChild(downloadLink);
-                    
-                    // Show the modal after a short delay
-                    setTimeout(showInstallModal, 800);
-                });
-            });
-        });
-    </script>
-    
-    <!-- Script to handle update notification from app -->
-    <script>
-        // Check if user came from app update
-        (function() {
-            let notificationShown = false;
-            
-            function showUpdateNotification() {
-                if (notificationShown) return; // Prevent duplicate shows
-                
-                const urlParams = new URLSearchParams(window.location.search);
-                const fromApp = urlParams.get('from');
-                const currentVersion = urlParams.get('version');
-                
-                if (fromApp === 'app-update' && currentVersion) {
-                    notificationShown = true;
-                    
-                    // Show the update notification
-                    const notification = document.getElementById('updateNotification');
-                    if (notification) {
-                        // Update version in the message if needed
-                        const versionText = notification.querySelector('p');
-                        if (versionText && currentVersion) {
-                            versionText.innerHTML = `You're currently on version ${currentVersion}. Please download the latest version below.`;
-                        }
-                        
-                        // Show notification with proper positioning
-                        notification.style.display = 'block';
-                        notification.style.opacity = '1';
-                        notification.style.transform = 'translateX(-50%) translateY(0)';
-                        
-                        // Auto-scroll to download section after 2 seconds
-                        setTimeout(() => {
-                            const downloadSection = document.querySelector('.download-section');
-                            if (downloadSection) {
-                                downloadSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            }
-                        }, 2000);
-                        
-                        // Hide notification after 10 seconds with smooth fade
-                        setTimeout(() => {
-                            notification.style.transition = 'all 0.5s ease-out';
-                            notification.style.opacity = '0';
-                            notification.style.transform = 'translateX(-50%) translateY(-20px)';
-                            
-                            setTimeout(() => {
-                                notification.style.display = 'none';
-                            }, 500);
-                        }, 10000);
-                    }
-                }
-            }
-            
-            // Run once when DOM is ready
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', showUpdateNotification);
-            } else {
-                showUpdateNotification();
-            }
-        })();
-    </script>
-    
-    <!-- Image Modal -->
-    <div id="imageModal" class="image-modal-overlay">
-        <div class="image-modal-content">
-            <button class="image-modal-close" onclick="closeImageModal()" aria-label="Close image modal">×</button>
-            <img id="modalImage" src="" alt="Full size image">
-        </div>
-    </div>
 </body>
 </html>
+
