@@ -1091,9 +1091,9 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 40px;
+            padding: 60px 40px;
             border-top: 1px solid var(--border);
-            background: var(--bg-secondary);
+            background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
         }
         
         .footer-logo {
@@ -1232,7 +1232,7 @@
             <!-- CTA Section -->
             <div class="download-section">
                 <div class="download-buttons">
-                    <a href="demo.html" 
+                    <a href="https://calendly.com/tjpbaxter/30min" 
                        class="download-btn primary">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
                             <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
@@ -1244,7 +1244,6 @@
                         <span>→</span>
                     </a>
                 </div>
-                <div class="download-version">7-day free trial • No credit card required</div>
             </div>
             
             <!-- Video Demo Section -->
@@ -1412,7 +1411,7 @@
                 </div>
                 
                 <!-- Feature 4: Quick Guidance (IMAGE LEFT, TEXT RIGHT) -->
-                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
+                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
                     <div class="premium-feature-image" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 1px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('quick-guidance.png')">
                         <img 
                             src="quick-guidance.png" 
@@ -1823,7 +1822,8 @@
                 </style>
             </section>
             
-            <!-- FAQ Section -->
+            <!-- FAQ Section - COMMENTED OUT -->
+            <!--
             <div class="faq-section">
                 <h2 style="font-size: 48px; font-weight: 700; text-align: center; margin-bottom: 16px; background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
                     Common Questions
@@ -2177,8 +2177,10 @@
                     <p>Still have questions? <a href="https://calendly.com/tjpbaxter/30min">Book a call</a> to discuss your needs.</p>
                 </div>
             </div>
+            -->
             
-            <!-- Pilot CTA -->
+            <!-- Pilot CTA - COMMENTED OUT -->
+            <!--
             <div class="pilot-section">
                 <h2 style="font-size: 36px; font-weight: 600; color: var(--text-primary); margin-bottom: 16px;">
                     Ready to Deploy?
@@ -2199,6 +2201,7 @@
                     </a>
                 </div>
             </div>
+            -->
         </div>
     </div>
     
@@ -2313,11 +2316,8 @@
                 script.src = 'https://player.vimeo.com/api/player.js';
                 document.head.appendChild(script);
                 
-                // Auto-play when loaded
-                script.onload = () => {
-                    const player = new Vimeo.Player(iframe);
-                    player.play();
-                };
+                // Don't auto-play the second video (to avoid audio overlap with first video)
+                // User can click play button manually
             }
             
             // Click to load
