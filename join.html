@@ -24,6 +24,7 @@
             --border: rgba(255, 255, 255, 0.08);
             --success: #34c759;
             --danger: #ff3b30;
+            --warning: #f59e0b;
         }
         
         body {
@@ -36,15 +37,16 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 70px 20px 30px;
+            overflow-y: hidden;
         }
         
-        /* Animated Background */
+        /* Animated Background with Orbs */
         .animated-bg {
             position: fixed;
             top: 0;
@@ -92,22 +94,26 @@
             font-size: 21px;
             font-weight: 600;
             letter-spacing: 0.2px;
+            cursor: pointer;
             text-decoration: none;
             color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         
         /* Main Container */
-        .container {
-            max-width: 560px;
+        .main-content {
+            max-width: 900px;
             width: 100%;
             text-align: center;
-            animation: fadeIn 0.6s ease-out;
+            animation: fadeInUp 0.8s ease forwards;
         }
         
-        @keyframes fadeIn {
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -115,256 +121,283 @@
             }
         }
         
+        /* Hero Section */
+        .hero {
+            margin-bottom: 40px;
+        }
+        
+        .early-access-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, var(--accent), #764ba2);
+            border-radius: 30px;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        }
+        
         .hero h1 {
             font-size: 56px;
             font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            line-height: 1.1;
+            letter-spacing: -0.005em;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         
         .hero-subtitle {
-            font-size: 21px;
-            color: var(--text-secondary);
-            margin-bottom: 48px;
+            font-size: 19px;
             font-weight: 400;
-        }
-        
-        .org-name {
-            font-size: 24px;
-            color: var(--text-primary);
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .invite-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 32px;
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-        }
-        
-        .team-icon {
-            font-size: 64px;
-            margin-bottom: 24px;
-        }
-        
-        .invite-card h2 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            letter-spacing: -0.02em;
-        }
-        
-        .invite-card .subtitle {
-            font-size: 17px;
-            color: var(--text-secondary);
-            margin-bottom: 32px;
             line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 750px;
+            margin: 0 auto 32px;
+            white-space: pre-line; /* Preserve line breaks */
         }
         
-        .info-badge {
-            display: inline-block;
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #10b981;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
+        .hype-text {
+            font-size: 32px;
             font-weight: 600;
-            margin-bottom: 24px;
+            color: var(--text-primary);
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, var(--accent), #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
-        .action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 24px;
+        /* Download Section */
+        .download-section {
+            background: linear-gradient(
+                145deg,
+                rgba(22, 22, 24, 0.6) 0%,
+                rgba(22, 22, 24, 0.4) 100%
+            );
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px 40px 32px;
+            box-shadow: 
+                0 24px 48px rgba(0, 0, 0, 0.3),
+                0 8px 16px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 0 80px rgba(102, 126, 234, 0.1);
         }
         
-        .btn {
-            width: 100%;
-            padding: 16px 24px;
-            border-radius: 12px;
+        .download-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            letter-spacing: 0.3px;
+        }
+        
+        .download-description {
             font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none;
-            font-family: inherit;
+            color: var(--text-secondary);
+            margin-bottom: 0px;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 500;
+            display: none; /* Hidden since we're removing the description */
+        }
+        
+        .download-buttons {
             display: flex;
+            gap: 20px;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            letter-spacing: -0.01em;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
         
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
-            color: white;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
-        
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
-        }
-        
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-        }
-        
-        .btn-secondary:hover:not(:disabled) {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-        
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        .divider {
-            text-align: center;
-            margin: 24px 0;
+        .download-btn {
             position: relative;
-        }
-        
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: var(--border);
-        }
-        
-        .divider span {
-            background: var(--bg-primary);
-            padding: 0 16px;
-            position: relative;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-        
-        .features {
-            background: rgba(16, 185, 129, 0.08);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            border-radius: 16px;
-            padding: 24px;
-            margin-top: 32px;
-            text-align: left;
-        }
-        
-        .features h3 {
-            font-size: 17px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--text-primary);
-        }
-        
-        .features ul {
-            list-style: none;
-        }
-        
-        .features li {
-            padding: 8px 0;
-            font-size: 15px;
-            color: var(--text-secondary);
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 12px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            overflow: hidden;
+            min-width: 200px;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
         
-        .features li::before {
-            content: "✓";
-            font-weight: bold;
-            font-size: 18px;
-            color: var(--success);
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--accent), #764ba2);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
         }
         
-        /* Loading State */
-        .loading {
+        .download-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 24px 48px rgba(102, 126, 234, 0.4);
+            border-color: var(--accent);
+        }
+        
+        .download-btn:hover::before {
+            opacity: 0.15;
+        }
+        
+        .download-btn.primary {
+            background: linear-gradient(135deg, var(--accent), #5090ff);
+            color: white;
+            border: none;
+            box-shadow: 0 12px 36px rgba(102, 126, 234, 0.4);
+        }
+        
+        .download-btn.primary:hover {
+            box-shadow: 0 16px 48px rgba(102, 126, 234, 0.5);
+        }
+        
+        .download-btn svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        
+        .download-version {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            opacity: 0.8;
+        }
+        
+        .precision-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 16px;
+            font-style: italic;
+            opacity: 0.85;
+        }
+        
+        .linkedin-link {
+            display: inline-block;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 13px;
+            margin-top: 12px;
+            transition: color 0.2s ease;
+        }
+        
+        .linkedin-link:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 12px;
+            left: 0;
+            right: 0;
             text-align: center;
-            padding: 60px 0;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.3px;
+            z-index: 1;
         }
         
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 60px 16px;
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .hero-subtitle {
+                font-size: 20px;
+            }
+            
+            .hype-text {
+                font-size: 24px;
+            }
+            
+            .download-section {
+                padding: 48px 32px;
+                border-radius: 24px;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .download-btn {
+                width: 100%;
+                max-width: 100%;
+                min-width: auto;
+            }
+            
+            .download-title {
+                font-size: 18px;
+            }
+            
+            .download-description {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hype-text {
+                font-size: 20px;
+            }
+            
+            .download-section {
+                padding: 40px 24px;
+            }
+        }
+        
+        /* Loading spinner */
         .spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
             border-top-color: var(--accent);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            margin: 0 auto 24px;
+            margin: 0 auto 20px;
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
-        }
-        
-        .loading-text {
-            font-size: 17px;
-            color: var(--text-secondary);
-        }
-        
-        /* Error State */
-        .error {
-            text-align: center;
-            padding: 60px 0;
-        }
-        
-        .error-icon {
-            font-size: 64px;
-            margin-bottom: 24px;
-        }
-        
-        .error h2 {
-            font-size: 28px;
-            color: var(--danger);
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-        
-        .error p {
-            color: var(--text-secondary);
-            font-size: 17px;
-            line-height: 1.6;
-        }
-        
-        .error-link {
-            display: inline-block;
-            margin-top: 24px;
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 15px;
-        }
-        
-        .error-link:hover {
-            text-decoration: underline;
-        }
-        
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 42px;
-            }
-            
-            .hero-subtitle {
-                font-size: 19px;
-            }
-            
-            .invite-card {
-                padding: 32px 24px;
-            }
         }
     </style>
 </head>
@@ -375,80 +408,74 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-content">
-            <a href="/" class="logo">LUPO</a>
+            <a href="/" class="logo">
+                <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 40px; width: auto;">
+                <span style="font-size: 24px; font-weight: 600; color: var(--text-primary);">LUPO</span>
+            </a>
         </div>
     </nav>
     
-    <div class="container">
-        <!-- Loading State -->
-        <div id="loadingState" class="loading">
-            <div class="spinner"></div>
-            <div class="loading-text">Verifying invitation...</div>
-        </div>
+    <!-- Main Content -->
+    <div class="main-content" id="loadingState">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="early-access-badge">Team Invitation</div>
+            <h1 id="heroTitle">Verifying your invitation...</h1>
+            <p class="hero-subtitle" id="heroSubtitle">
+                Please wait while we confirm your team invite.
+            </p>
+        </section>
         
-        <!-- Error State -->
-        <div id="errorState" class="error" style="display: none;">
-            <div class="error-icon">⚠️</div>
-            <h2 id="errorTitle">Invalid Invitation</h2>
-            <p id="errorMessage">This invitation link may have expired or is no longer valid.</p>
-            <a href="/" class="error-link">Go to LUPO homepage →</a>
-        </div>
-        
-        <!-- Join State -->
-        <div id="joinState" style="display: none;">
-            <div class="hero">
-                <h1>You're Invited</h1>
-                <div class="org-name" id="orgName">-</div>
-                <p class="hero-subtitle">Join your team and get instant access to AI-powered sales coaching</p>
+        <!-- Download Section -->
+        <section class="download-section">
+            <div class="spinner" id="spinner"></div>
+            <h2 class="download-title" id="downloadTitle">Checking invitation link</h2>
+            <p class="download-description" id="downloadDescription">
+                This will only take a moment.
+            </p>
+            <div class="download-buttons" id="downloadButtons" style="display: none;">
+                <a href="#" id="macDownloadBtn" class="download-btn primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+                    </svg>
+                    Download for Mac
+                </a>
+                <a href="#" id="windowsDownloadBtn" class="download-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="12" y1="3" x2="12" y2="21"></line>
+                    </svg>
+                    Download for Windows
+                </a>
             </div>
-            
-            <div class="invite-card">
-                <div class="team-icon">👥</div>
-                <h2>Welcome to LUPO</h2>
-                <p class="subtitle">You've been invited to join <strong id="teamName">your team</strong> on LUPO.</p>
-                
-                <div class="info-badge" id="trialBadge">7-Day Free Trial Active</div>
-                
-                <div class="action-buttons">
-                    <button class="btn btn-primary" id="downloadBtn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        Download LUPO
-                    </button>
-                    
-                    <button class="btn btn-secondary" id="webSignupBtn">
-                        Continue on Web
-                    </button>
-                </div>
-                
-                <div class="features">
-                    <h3>🎯 What You'll Get</h3>
-                    <ul>
-                        <li>Real-time AI coaching during sales calls</li>
-                        <li>Instant objection handling & responses</li>
-                        <li>Live prospect intelligence & context</li>
-                        <li>Call analytics & team insights</li>
-                        <li>Unlimited access during trial</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+            <div class="download-version" id="versionText" style="display: none;">Version 3.1.4 • Released October 2025</div>
+            <p class="precision-text" id="precisionText" style="display: none;">Designed in London. Built by Cambridge engineers.</p>
+            <a href="https://www.linkedin.com/in/thomasjpbaxter/" target="_blank" rel="noopener" class="linkedin-link" id="linkedinLink" style="display: none;">
+                Have feedback? Reach me on LinkedIn →
+            </a>
+        </section>
     </div>
+    
+    <!-- Footer -->
+    <footer>
+        © 2025 LUPO, a product of Flair Technologies Ltd.
+    </footer>
     
     <script>
         const BACKEND_URL = 'https://lupo-backend.fly.dev';
         
         // Get invite token from URL
-        const pathParts = window.location.pathname.split('/');
-        let inviteToken = pathParts[pathParts.length - 1];
+        const urlParams = new URLSearchParams(window.location.search);
+        let inviteToken = urlParams.get('token');
         
-        // Fallback to query param
-        if (!inviteToken || inviteToken === 'join' || inviteToken === 'join.html') {
-            const urlParams = new URLSearchParams(window.location.search);
-            inviteToken = urlParams.get('token');
+        // Fallback to path param (for redirects)
+        if (!inviteToken) {
+            const pathParts = window.location.pathname.split('/');
+            const lastPart = pathParts[pathParts.length - 1];
+            if (lastPart && lastPart !== 'join' && lastPart !== 'join.html') {
+                inviteToken = lastPart;
+            }
         }
         
         let orgData = null;
@@ -469,22 +496,47 @@
                 
                 orgData = data;
                 
-                // Update UI
-                document.getElementById('orgName').textContent = data.companyName;
-                document.getElementById('teamName').textContent = data.companyName;
+                // Update UI with company name
+                document.getElementById('heroTitle').textContent = `Welcome to LUPO`;
+                document.getElementById('heroSubtitle').textContent = `${data.companyName} invited you to join their team.\nAI for closers.`;
                 
-                if (data.expiresAt) {
-                    const expiresDate = new Date(data.expiresAt);
-                    const now = new Date();
-                    const daysLeft = Math.ceil((expiresDate - now) / (1000 * 60 * 60 * 24));
-                    if (daysLeft > 0 && daysLeft <= 7) {
-                        document.getElementById('trialBadge').textContent = `${daysLeft} days left in trial`;
-                    }
-                }
+                document.getElementById('downloadTitle').textContent = 'Download free for Mac or Windows';
+                document.getElementById('downloadDescription').textContent = ''; // Removed redundant text
                 
-                // Show join UI
-                document.getElementById('loadingState').style.display = 'none';
-                document.getElementById('joinState').style.display = 'block';
+                // Show download buttons
+                document.getElementById('spinner').style.display = 'none';
+                document.getElementById('downloadButtons').style.display = 'flex';
+                document.getElementById('versionText').style.display = 'block';
+                document.getElementById('precisionText').style.display = 'block';
+                document.getElementById('linkedinLink').style.display = 'inline-block';
+                
+                // Update download buttons with token
+                const macUrl = `https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-3.1.4-arm64.dmg`;
+                const windowsUrl = `https://github.com/LUPOLABS/lupo-releases/releases/download/v3.1.4/LUPO.Setup.3.1.4.exe`;
+                
+                document.getElementById('macDownloadBtn').href = macUrl;
+                document.getElementById('windowsDownloadBtn').href = windowsUrl;
+                
+                // Add click handlers for deep link attempts
+                document.getElementById('macDownloadBtn').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Try deep link first
+                    window.location.href = `lupo://join/${inviteToken}`;
+                    // Fallback to download after short delay
+                    setTimeout(() => {
+                        window.location.href = macUrl;
+                    }, 300);
+                });
+                
+                document.getElementById('windowsDownloadBtn').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Try deep link first
+                    window.location.href = `lupo://join/${inviteToken}`;
+                    // Fallback to download after short delay
+                    setTimeout(() => {
+                        window.location.href = windowsUrl;
+                    }, 300);
+                });
                 
                 // Store token for later use
                 localStorage.setItem('pendingInviteToken', inviteToken);
@@ -492,45 +544,83 @@
                 
             } catch (error) {
                 console.error('Verification error:', error);
-                document.getElementById('loadingState').style.display = 'none';
-                document.getElementById('errorState').style.display = 'block';
-                document.getElementById('errorMessage').textContent = error.message;
+                
+                // Show error state
+                document.getElementById('heroTitle').textContent = 'Invalid invitation';
+                document.getElementById('heroSubtitle').textContent = error.message || 'This invitation link may have expired or is no longer valid.';
+                document.getElementById('downloadTitle').textContent = 'Unable to verify invitation';
+                document.getElementById('downloadDescription').textContent = 'Please contact your team administrator for a new invitation link.';
+                document.getElementById('spinner').style.display = 'none';
+                
+                // Show home button
+                const homeBtn = document.createElement('a');
+                homeBtn.href = '/';
+                homeBtn.className = 'download-btn primary';
+                homeBtn.textContent = 'Go to LUPO Home';
+                document.getElementById('downloadButtons').appendChild(homeBtn);
+                document.getElementById('downloadButtons').style.display = 'flex';
             }
         }
-        
-        // Download button - try deep link first, then download
-        document.getElementById('downloadBtn').addEventListener('click', async () => {
-            // Try deep link first
-            const deepLink = `lupo://join/${inviteToken}`;
-            
-            // Fallback to download page with token
-            const downloadUrl = `/early-access.html?invite=${inviteToken}`;
-            
-            // Try deep link (will fail silently if app not installed)
-            window.location.href = deepLink;
-            
-            // After 500ms, if still on page, redirect to download
-            setTimeout(() => {
-                if (document.hasFocus()) {
-                    window.location.href = downloadUrl;
-                }
-            }, 500);
-        });
-        
-        // Web signup button
-        document.getElementById('webSignupBtn').addEventListener('click', () => {
-            // Redirect to signup with invite token
-            window.location.href = `/signup.html?invite=${inviteToken}`;
-        });
         
         // Initialize
         if (inviteToken) {
             verifyInvitation();
         } else {
-            document.getElementById('loadingState').style.display = 'none';
-            document.getElementById('errorState').style.display = 'block';
-            document.getElementById('errorMessage').textContent = 'No invitation token provided.';
+            document.getElementById('heroTitle').textContent = 'No invitation found';
+            document.getElementById('heroSubtitle').textContent = 'You need a valid invitation link to join a team.';
+            document.getElementById('downloadTitle').textContent = 'Missing invitation token';
+            document.getElementById('downloadDescription').textContent = 'Please check your invitation link and try again.';
+            document.getElementById('spinner').style.display = 'none';
+            
+            // Show home button
+            const homeBtn = document.createElement('a');
+            homeBtn.href = '/';
+            homeBtn.className = 'download-btn primary';
+            homeBtn.textContent = 'Go to LUPO Home';
+            document.getElementById('downloadButtons').appendChild(homeBtn);
+            document.getElementById('downloadButtons').style.display = 'flex';
         }
+        
+        // Floating particles effect (orbs)
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: ${Math.random() * 5 + 3}px;
+                height: ${Math.random() * 5 + 3}px;
+                background: var(--accent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+                opacity: ${Math.random() * 0.4 + 0.15};
+            `;
+            
+            const startX = Math.random() * window.innerWidth;
+            const startY = window.innerHeight - 10;
+            
+            particle.style.left = startX + 'px';
+            particle.style.top = startY + 'px';
+            
+            document.body.appendChild(particle);
+            
+            const duration = Math.random() * 15000 + 8000;
+            const horizontalMovement = (Math.random() - 0.5) * 150;
+            
+            particle.animate([
+                { transform: `translate(0, 0)`, opacity: particle.style.opacity },
+                { transform: `translate(${horizontalMovement}px, -${window.innerHeight}px)`, opacity: particle.style.opacity },
+                { transform: `translate(${horizontalMovement * 1.5}px, -${window.innerHeight * 1.5}px)`, opacity: 0 }
+            ], {
+                duration: duration,
+                easing: 'linear'
+            }).onfinish = () => particle.remove();
+        }
+        
+        // Start particle animation & create initial batch
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => createParticle(), i * 200);
+        }
+        setInterval(createParticle, 800);
     </script>
 </body>
 </html>
