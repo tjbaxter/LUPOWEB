@@ -865,6 +865,47 @@
         let complianceDetails = [];
         let isAuthenticated = false; // Cache authentication state
         
+        // Background token validation (silent, no UI)
+        async function validateTokenSilently(token) {
+            try {
+                const response = await fetch(`${AUTH_CONFIG.apiUrl}/auth/me`, {
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    cache: 'no-cache'
+                });
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('TOKEN_EXPIRED');
+                    }
+                    throw new Error(`AUTH_FAILED_${response.status}`);
+                }
+                
+                const data = await response.json();
+                const user = data.user;
+                
+                // Verify manager access
+                if (user.accountType !== 'enterprise_admin' && user.accountType !== 'team_member') {
+                    throw new Error('ACCESS_DENIED');
+                }
+                
+                // Cache successful validation
+                isAuthenticated = true;
+                sessionStorage.setItem('lupo_auth_valid', 'true');
+                sessionStorage.setItem('lupo_cached_token', token);
+                sessionStorage.setItem('lupo_auth_time', Date.now().toString());
+                
+                authHeaders = { 'Authorization': `Bearer ${token}` };
+                
+                return { success: true, user };
+            } catch (error) {
+                // Clear cache on failure
+                sessionStorage.removeItem('lupo_auth_valid');
+                sessionStorage.removeItem('lupo_cached_token');
+                sessionStorage.removeItem('lupo_auth_time');
+                throw error;
+            }
+        }
+        
         // Main authentication function that handles both methods
         async function authenticateUser(skipValidation = false) {
             const overlay = document.getElementById('authOverlay');
@@ -897,6 +938,7 @@
                     // Store the new token
                     authToken = urlToken;
                     accessMethod = 'web';
+                    authHeaders = { 'Authorization': `Bearer ${authToken}` };
                     localStorage.setItem('lupo_manager_token', authToken);
                     
                     // Calculate expiry (7 days from now)
@@ -911,7 +953,32 @@
                         (newParams.toString() ? '?' + newParams.toString() : '');
                     window.history.replaceState({}, document.title, cleanUrl);
                     
-                    console.log('✅ Token from URL stored and URL cleaned');
+                    // HIDE OVERLAY IMMEDIATELY - token from Stripe means we're good to go
+                    overlay.classList.add('hidden');
+                    
+                    console.log('✅ Token from URL stored - showing dashboard immediately');
+                    
+                    // Initialize dashboard immediately without waiting for validation
+                    isAuthenticated = true;
+                    await initializeDashboard();
+                    
+                    // Validate in background (non-blocking, after dashboard shows)
+                    // Don't show validation screen, just verify silently
+                    validateTokenSilently(authToken).then((result) => {
+                        console.log('✅ Background validation complete');
+                        // Add access indicator after validation
+                        if (result.user) {
+                            addAccessIndicator(accessMethod);
+                        }
+                    }).catch(err => {
+                        console.error('⚠️ Background validation failed:', err);
+                        // Only redirect to login if token is actually invalid
+                        if (err.message === 'TOKEN_EXPIRED' || err.message.includes('AUTH_FAILED')) {
+                            window.location.href = AUTH_CONFIG.loginUrl;
+                        }
+                    });
+                    
+                    return; // Skip rest of authentication flow
                 }
                 
                 // METHOD 1: Check if opened from Electron app with exchange token
@@ -990,6 +1057,7 @@
                         console.log('📱 Found LUPO session token');
                         accessMethod = 'electron';
                         authToken = lupoSession;
+                        authHeaders = { 'Authorization': `Bearer ${authToken}` }; // SET HEADERS
                     }
                 }
                 
@@ -1004,6 +1072,7 @@
                             console.log('🌐 Detected web-based login');
                             accessMethod = 'web';
                             authToken = webToken;
+                            authHeaders = { 'Authorization': `Bearer ${authToken}` }; // SET HEADERS
                         } else {
                             // Token expired, try refresh
                             const refreshToken = localStorage.getItem('lupo_refresh_token');
@@ -1020,6 +1089,7 @@
                                         const data = await refreshResponse.json();
                                         authToken = data.token;
                                         accessMethod = 'web';
+                                        authHeaders = { 'Authorization': `Bearer ${authToken}` }; // SET HEADERS
                                         
                                         // Update stored token
                                         const newExpiry = new Date();
@@ -1044,6 +1114,7 @@
                         console.log('🌐 Detected web session (tab-only)');
                         accessMethod = 'web';
                         authToken = sessionWebToken;
+                        authHeaders = { 'Authorization': `Bearer ${authToken}` }; // SET HEADERS
                     }
                 }
                 
@@ -1073,6 +1144,7 @@
                     if (cacheAge < 5 * 60 * 1000) { // 5 minutes
                         console.log('✅ Using cached authentication (instant)');
                         isAuthenticated = true;
+                        authHeaders = { 'Authorization': `Bearer ${authToken}` }; // SET HEADERS
                         overlay.classList.add('hidden');
                         
                         // Only initialize if not already initialized
@@ -1294,8 +1366,34 @@
                 configLink.href = '/sales-context.html';
             }
             
-            // Load initial data
-            await loadData();
+            // Load initial data with error handling (don't fail auth if data load fails)
+            try {
+                await loadData();
+            } catch (error) {
+                console.error('⚠️ Failed to load dashboard data:', error);
+                // Only redirect to login if it's a 401 AND we don't have valid auth
+                if (error.status === 401 && (!authHeaders || !authHeaders['Authorization'])) {
+                    console.error('❌ No auth headers, redirecting to login');
+                    window.location.href = `${AUTH_CONFIG.loginUrl}?error=${encodeURIComponent(error.message || 'authentication_failed')}`;
+                    return;
+                }
+                // Otherwise, just show error in UI but don't redirect
+                if (error.status === 401) {
+                    // Try re-authenticating
+                    console.log('🔄 401 error, re-authenticating...');
+                    await authenticateUser(true);
+                    // Retry loadData after re-auth
+                    try {
+                        await loadData();
+                    } catch (retryError) {
+                        console.error('❌ Still failing after re-auth:', retryError);
+                        // Show error but don't redirect - user might have valid token but org issue
+                    }
+                } else {
+                    // Non-auth error, just log it
+                    console.error('Data load error (non-auth):', error);
+                }
+            }
             
             // Setup event listeners
             setupListeners();
