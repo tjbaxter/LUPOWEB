@@ -1369,12 +1369,16 @@
                     
                 <!-- Feature 2: Live Translation (VIDEO LEFT, TEXT RIGHT) -->
                 <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
-                    <div class="premium-feature-image no-hover" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 1px; display: flex; align-items: center; justify-content: center;">
+                    <div class="premium-feature-image" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 1px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('setup-translation.png')">
                         <img 
                             src="setup-translation.png" 
                             alt="Live Translation"
-                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px;">
+                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px; transition: transform 0.4s ease;">
+                        <div class="image-hover-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to expand</span>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
                         </div>
+                    </div>
                     <div class="premium-feature-text" style="padding: 40px 0;">
                         <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
                             Live Translation
@@ -1395,21 +1399,29 @@
                             Never say "I'll get back to you" again. LUPO retrieves verified answers from your company knowledge in real time.
                         </p>
                         </div>
-                    <div class="premium-feature-image no-hover" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 1px; display: flex; align-items: center; justify-content: center;">
+                    <div class="premium-feature-image" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 1px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('smart-alerts.png')">
                         <img 
                             src="smart-alerts.png" 
                             alt="Smart Alerts"
-                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px;">
+                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px; transition: transform 0.4s ease;">
+                        <div class="image-hover-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to expand</span>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Feature 4: Quick Guidance (IMAGE LEFT, TEXT RIGHT) -->
                 <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
-                    <div class="premium-feature-image no-hover" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 1px; display: flex; align-items: center; justify-content: center;">
+                    <div class="premium-feature-image" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 1px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('quick-guidance.png')">
                         <img 
                             src="quick-guidance.png" 
                             alt="Quick Guidance"
-                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px;">
+                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px; transition: transform 0.4s ease;">
+                        <div class="image-hover-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to expand</span>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
+                        </div>
                     </div>
                     <div class="premium-feature-text" style="padding: 40px 0;">
                         <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
@@ -1429,15 +1441,19 @@
                             </h3>
                         <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
                             Generate next steps, call summaries, or follow-up emails in 1 second. Copy-paste into your CRM.
-                        </p>
-                    </div>
-                    <div class="premium-feature-image no-hover" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 1px; display: flex; align-items: center; justify-content: center;">
+                            </p>
+                        </div>
+                    <div class="premium-feature-image" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 1px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('postcallactions.png')">
                         <img 
                             src="postcallactions.png" 
                             alt="Instant Summaries - Post Call Actions"
-                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px;">
-                    </div>
+                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px; transition: transform 0.4s ease;">
+                        <div class="image-hover-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to expand</span>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
                         </div>
+                    </div>
+                    </div>
                         
                 <!-- Feature 6: Deep Research (IMAGE LEFT, TEXT RIGHT - PREMIUM SHOWCASE) -->
                 <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
@@ -1655,9 +1671,8 @@
                 transform: scale(1.05);
             }
 
-            /* Disable hover effect for post-call actions image */
-            .premium-feature-image.no-hover:hover img {
-                transform: none;
+            .premium-feature-image:hover .image-hover-overlay {
+                opacity: 1;
             }
             
             .premium-feature-image:hover .research-overlay {
