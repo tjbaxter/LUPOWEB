@@ -1223,45 +1223,93 @@
         
         async function createAccount() {
             const urlParams = new URLSearchParams(window.location.search);
-            const inviteCode = urlParams.get('invite');
+            const inviteToken = urlParams.get('invite');
             
             try {
+                // Step 1: Create account
                 const response = await fetch('https://lupo-backend.fly.dev/auth/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         email: userData.email,
-                        password: userData.password,
-                        inviteCode: inviteCode
+                        password: userData.password
                     })
                 });
                 
                 const data = await response.json();
                 
-                if (data.success && data.sessionKey) {
-                    // Store for LUPO polling
-                    const pollData = {
-                        sessionKey: data.sessionKey,
-                        timestamp: Date.now()
-                    };
-                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
-                    
-                    // Show success
-                    showSuccessState();
-                    
-                    // Customize message if joining team
-                    if (inviteCode && data.organization) {
-                        const welcomeHeader = document.querySelector('.welcome-header');
-                        if (welcomeHeader) {
-                            welcomeHeader.innerHTML = `
-                                <h1>Welcome to ${data.organization.name}!</h1>
-                                <p>You've joined your team workspace and your AI sales assistant is ready</p>
-                            `;
-                        }
-                    }
-                } else {
+                if (!data.success || !data.sessionKey) {
                     throw new Error(data.error || 'Failed to create account');
                 }
+                
+                // Step 2: If invite token exists, accept it to join organization
+                if (inviteToken) {
+                    try {
+                        // Get the auth token from the session using poll endpoint
+                        const pollResponse = await fetch(`https://lupo-backend.fly.dev/auth/poll/${data.sessionKey}`, {
+                            method: 'GET',
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                        
+                        if (pollResponse.ok) {
+                            const pollData = await pollResponse.json();
+                            if (pollData.token) {
+                                // Accept invite with token
+                                const acceptResponse = await fetch('https://lupo-backend.fly.dev/api/team/invite/accept', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${pollData.token}`
+                                    },
+                                    body: JSON.stringify({
+                                        token: inviteToken
+                                    })
+                                });
+                                
+                                if (acceptResponse.ok) {
+                                    const acceptData = await acceptResponse.json();
+                                    console.log('✅ Successfully joined organization:', acceptData.companyName);
+                                    
+                                    // Store for LUPO polling
+                                    const pollDataForLupo = {
+                                        sessionKey: data.sessionKey,
+                                        timestamp: Date.now()
+                                    };
+                                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollDataForLupo));
+                                    
+                                    // Show success with organization name
+                                    showSuccessState();
+                                    const welcomeHeader = document.querySelector('.welcome-header');
+                                    if (welcomeHeader) {
+                                        welcomeHeader.innerHTML = `
+                                            <h1>Welcome to ${acceptData.companyName}!</h1>
+                                            <p>You've joined your team workspace and your AI sales assistant is ready</p>
+                                        `;
+                                    }
+                                    return;
+                                } else {
+                                    const acceptError = await acceptResponse.json();
+                                    console.warn('⚠️ Failed to accept invite (account created but not joined to org):', acceptError.error);
+                                    // Continue anyway - account is created
+                                }
+                            }
+                        }
+                    } catch (inviteErr) {
+                        console.error('Error accepting invite:', inviteErr);
+                        // Continue anyway - account is created successfully
+                    }
+                }
+                
+                // Store for LUPO polling (even if invite accept failed)
+                const pollData = {
+                    sessionKey: data.sessionKey,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                
+                // Show success
+                showSuccessState();
+                
             } catch (err) {
                 console.error('Account creation error:', err);
                 alert('Error: ' + err.message);
@@ -1280,9 +1328,9 @@
                     throw new Error('No authentication data found');
                 }
                 
-                // Get invite code if present
+                // Get invite token if present
                 const urlParams = new URLSearchParams(window.location.search);
-                const inviteCode = urlParams.get('invite');
+                const inviteToken = urlParams.get('invite');
                 
                 // Try OAuth signup endpoint first, fallback to regular signup if needed
                 let response, data;
@@ -1294,8 +1342,7 @@
                             email: authData.email,
                             name: authData.name,
                             provider: authData.provider,
-                            token: authData.token,
-                            inviteCode: inviteCode
+                            token: authData.token
                         })
                     });
                     data = await response.json();
@@ -1305,10 +1352,58 @@
                     data = { success: true, sessionKey: authData.token };
                 }
                 
-                if (data.success && data.sessionKey) {
+                if (data.success) {
+                    // If invite token exists, accept it to join organization
+                    if (inviteToken && authData.token) {
+                        try {
+                            const acceptResponse = await fetch('https://lupo-backend.fly.dev/api/team/invite/accept', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${authData.token}`
+                                },
+                                body: JSON.stringify({
+                                    token: inviteToken
+                                })
+                            });
+                            
+                            if (acceptResponse.ok) {
+                                const acceptData = await acceptResponse.json();
+                                console.log('✅ Successfully joined organization:', acceptData.companyName);
+                                
+                                // Store session key for LUPO polling
+                                const pollData = {
+                                    sessionKey: data.sessionKey || authData.token,
+                                    timestamp: Date.now()
+                                };
+                                localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                                
+                                // Clean up temporary OAuth data
+                                localStorage.removeItem('lupo_oauth_temp');
+                                
+                                // Show success with organization name
+                                showSuccessState();
+                                const welcomeHeader = document.querySelector('.welcome-header');
+                                if (welcomeHeader) {
+                                    welcomeHeader.innerHTML = `
+                                        <h1>Welcome to ${acceptData.companyName}!</h1>
+                                        <p>You've joined your team workspace and your AI sales assistant is ready</p>
+                                    `;
+                                }
+                                return;
+                            } else {
+                                const acceptError = await acceptResponse.json();
+                                console.warn('⚠️ Failed to accept invite (account created but not joined to org):', acceptError.error);
+                            }
+                        } catch (inviteErr) {
+                            console.error('Error accepting invite:', inviteErr);
+                            // Continue anyway
+                        }
+                    }
+                    
                     // Store session key for LUPO polling (update with new key if different)
                     const pollData = {
-                        sessionKey: data.sessionKey,
+                        sessionKey: data.sessionKey || authData.token,
                         timestamp: Date.now()
                     };
                     localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
@@ -1320,7 +1415,7 @@
                     showSuccessState();
                     
                     // Customize message if joining team
-                    if (inviteCode && data.organization) {
+                    if (inviteToken && data.organization) {
                         const welcomeHeader = document.querySelector('.welcome-header');
                         if (welcomeHeader) {
                             welcomeHeader.innerHTML = `

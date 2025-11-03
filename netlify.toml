@@ -107,3 +107,16 @@ force = false
 [redirects.conditions]
 
 [redirects.headers]
+
+# Redirect old invite format /join/TOKEN to join.html?token=TOKEN
+[[redirects]]
+from = "/join/*"
+to = "/join.html?token=:splat"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
