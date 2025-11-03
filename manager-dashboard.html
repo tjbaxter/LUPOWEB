@@ -300,6 +300,8 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            display: inline-block;
+            text-align: center;
         }
         
         .kpi-label {
@@ -360,6 +362,8 @@
             font-size: 2.5rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
+            display: inline-block;
+            text-align: center;
         }
         
         .metric-label {
@@ -1057,7 +1061,7 @@
         
         <!-- Main KPI -->
         <div class="kpi-section">
-            <div class="kpi-value skeleton" id="criticalCount" style="display: inline-block; width: 200px; height: 100px;">--</div>
+            <div class="kpi-value" id="criticalCount" style="min-width: 120px;">--</div>
             <div class="kpi-label">Critical Moments Detected</div>
             <div class="kpi-subtitle">Objections and risks LUPO flagged</div>
             <div class="kpi-sparkline" id="criticalTrend"></div>
@@ -1066,25 +1070,25 @@
         <!-- Supporting Metrics -->
         <div class="metrics-grid">
             <div class="metric-card">
-                <div class="metric-value skeleton" id="callsWithLUPO" style="display: inline-block; width: 80px; height: 40px;">--</div>
+                <div class="metric-value" id="callsWithLUPO" style="min-width: 60px;">--</div>
                 <div class="metric-label">LUPO Coverage</div>
                 <div class="metric-subtitle">% of calls with assistance</div>
             </div>
             
             <div class="metric-card">
-                <div class="metric-value skeleton" id="momentumRate" style="display: inline-block; width: 80px; height: 40px;">--</div>
+                <div class="metric-value" id="momentumRate" style="min-width: 60px;">--</div>
                 <div class="metric-label">Forward Momentum</div>
                 <div class="metric-subtitle">% securing next steps</div>
             </div>
             
             <div class="metric-card">
-                <div class="metric-value skeleton" id="topObjection" style="display: inline-block; width: 120px; height: 40px;">--</div>
+                <div class="metric-value" id="topObjection" style="min-width: 100px;">--</div>
                 <div class="metric-label">Top Objection</div>
                 <div class="metric-subtitle" id="objectionCount">this period</div>
             </div>
             
             <div class="metric-card">
-                <div class="metric-value skeleton" id="totalCalls" style="display: inline-block; width: 80px; height: 40px;">--</div>
+                <div class="metric-value" id="totalCalls" style="min-width: 60px;">--</div>
                 <div class="metric-label">Total Calls</div>
                 <div class="metric-subtitle">analyzed this period</div>
             </div>
