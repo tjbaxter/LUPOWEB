@@ -705,6 +705,112 @@
             background: var(--surface-hover);
             color: var(--text);
         }
+        
+        /* Invite Section */
+        .invite-section {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+        
+        .invite-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .invite-card:hover {
+            border-color: var(--accent);
+        }
+        
+        .invite-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        
+        .invite-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+        
+        .invite-link-container {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .invite-link-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.875rem;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+        }
+        
+        .invite-link-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .invite-copy-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .invite-copy-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+        
+        .invite-copy-btn:active {
+            transform: translateY(0);
+        }
+        
+        .invite-copy-btn.copied {
+            background: var(--success);
+        }
+        
+        .invite-stats {
+            display: flex;
+            gap: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .invite-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        
+        .invite-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .invite-stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
     </style>
 </head>
 <body>
@@ -816,6 +922,36 @@
                 <div class="metric-value skeleton" id="totalCalls" style="display: inline-block; width: 80px; height: 40px;">--</div>
                 <div class="metric-label">Total Calls</div>
                 <div class="metric-subtitle">analyzed this period</div>
+            </div>
+        </div>
+        
+        <!-- Invite Team Section -->
+        <div class="invite-section" id="inviteSection" style="display: none;">
+            <div class="invite-card">
+                <h3 class="invite-title">👥 Invite Your Team</h3>
+                <p class="invite-subtitle">Share this link with your sales reps to get them started</p>
+                
+                <div class="invite-link-container">
+                    <input type="text" id="inviteLink" class="invite-link-input" readonly value="Loading invite link...">
+                    <button class="invite-copy-btn" id="copyInviteBtn" onclick="copyInviteLink()">
+                        <span id="copyBtnText">Copy</span>
+                    </button>
+                </div>
+                
+                <div class="invite-stats">
+                    <div class="invite-stat">
+                        <span class="invite-stat-label">Used Seats</span>
+                        <span class="invite-stat-value" id="usedSeats">--</span>
+                    </div>
+                    <div class="invite-stat">
+                        <span class="invite-stat-label">Total Seats</span>
+                        <span class="invite-stat-value" id="totalSeats">--</span>
+                    </div>
+                    <div class="invite-stat">
+                        <span class="invite-stat-label">Invite Uses</span>
+                        <span class="invite-stat-value" id="inviteUses">--</span>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -1368,7 +1504,7 @@
             
             // Load initial data with error handling (don't fail auth if data load fails)
             try {
-                await loadData();
+            await loadData();
             } catch (error) {
                 console.error('⚠️ Failed to load dashboard data:', error);
                 // Only redirect to login if it's a 401 AND we don't have valid auth
@@ -1393,6 +1529,14 @@
                     // Non-auth error, just log it
                     console.error('Data load error (non-auth):', error);
                 }
+            }
+            
+            // Load invite link
+            try {
+                await loadInviteLink();
+            } catch (error) {
+                console.error('⚠️ Failed to load invite link:', error);
+                // Don't fail dashboard if invite loading fails
             }
             
             // Setup event listeners
@@ -1454,6 +1598,76 @@
             } catch (error) {
                 console.error('Load data error:', error);
                 throw error; // Re-throw for caller to handle
+            }
+        }
+        
+        // Load and display invite link
+        async function loadInviteLink() {
+            try {
+                const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/team/invite`, {
+                    headers: authHeaders,
+                    cache: 'no-cache'
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load invite link');
+                }
+                
+                const data = await response.json();
+                
+                if (data.success && data.inviteLink) {
+                    // Show invite section
+                    document.getElementById('inviteSection').style.display = 'block';
+                    
+                    // Set invite link
+                    document.getElementById('inviteLink').value = data.inviteLink;
+                    
+                    // Update stats
+                    // Get org data for seat counts
+                    const orgRes = await fetch(`${AUTH_CONFIG.apiUrl}/sales/org`, {
+                        headers: authHeaders,
+                        cache: 'no-cache'
+                    });
+                    
+                    if (orgRes.ok) {
+                        const org = await orgRes.json();
+                        document.getElementById('usedSeats').textContent = org.planDetails?.activeUsers || 0;
+                        document.getElementById('totalSeats').textContent = org.planDetails?.maxUsers || 0;
+                    }
+                    
+                    document.getElementById('inviteUses').textContent = data.usedCount || 0;
+                }
+            } catch (error) {
+                console.error('Error loading invite link:', error);
+                // Hide invite section on error
+                document.getElementById('inviteSection').style.display = 'none';
+            }
+        }
+        
+        // Copy invite link to clipboard
+        function copyInviteLink() {
+            const inviteInput = document.getElementById('inviteLink');
+            const copyBtn = document.getElementById('copyInviteBtn');
+            const copyBtnText = document.getElementById('copyBtnText');
+            
+            inviteInput.select();
+            inviteInput.setSelectionRange(0, 99999); // For mobile devices
+            
+            try {
+                document.execCommand('copy');
+                
+                // Visual feedback
+                copyBtn.classList.add('copied');
+                copyBtnText.textContent = 'Copied!';
+                
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtnText.textContent = 'Copy';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                // Fallback: show the link
+                alert('Invite link: ' + inviteInput.value);
             }
         }
         
