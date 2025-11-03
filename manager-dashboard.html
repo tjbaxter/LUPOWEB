@@ -1014,7 +1014,7 @@
         </div>
     </header>
     
-    <!-- Compliance Tile -->
+    <!-- Compliance Tile - COMMENTED OUT
     <div class="compliance-tile" id="complianceTile" onclick="showComplianceDetails(event)">
         <div class="compliance-header">
             <div class="compliance-title-group">
@@ -1030,7 +1030,6 @@
             <span class="compliance-trend" id="complianceTrend"></span>
         </div>
         
-        <!-- Info Tooltip -->
         <div class="info-tooltip" id="infoTooltip">
             <h4>How LUPO keeps reps compliant</h4>
             <p>Real-time monitoring ensures your team stays within legal and policy boundaries:</p>
@@ -1046,6 +1045,7 @@
             </a>
         </div>
     </div>
+    -->
     
     <div class="container">
         <!-- Time Filter -->
@@ -1141,21 +1141,6 @@
                 <button class="invite-copy-btn" onclick="copyInviteLinkModal()">
                     <span id="copyBtnTextModal">Copy</span>
                 </button>
-            </div>
-            
-            <div class="invite-stats">
-                <div class="invite-stat">
-                    <span class="invite-stat-label">Used Seats</span>
-                    <span class="invite-stat-value" id="usedSeatsModal">--</span>
-                </div>
-                <div class="invite-stat">
-                    <span class="invite-stat-label">Total Seats</span>
-                    <span class="invite-stat-value" id="totalSeatsModal">--</span>
-                </div>
-                <div class="invite-stat">
-                    <span class="invite-stat-label">Invite Uses</span>
-                    <span class="invite-stat-value" id="inviteUsesModal">--</span>
-                </div>
             </div>
         </div>
     </div>
@@ -1792,22 +1777,8 @@
                 const data = await response.json();
                 
                 if (data.success && data.inviteLink) {
-                    // Update modal stats
+                    // Update modal with invite link only
                     document.getElementById('inviteLinkModal').value = data.inviteLink;
-                    document.getElementById('inviteUsesModal').textContent = data.usedCount || 0;
-                    
-                    // Get org data for seat counts
-                    const orgRes = await fetch(`${AUTH_CONFIG.apiUrl}/sales/org`, {
-                        headers: authHeaders,
-                        cache: 'no-cache'
-                    });
-                    
-                    if (orgRes.ok) {
-                        const org = await orgRes.json();
-                        // Update modal stats
-                        document.getElementById('usedSeatsModal').textContent = org.planDetails?.activeUsers || 0;
-                        document.getElementById('totalSeatsModal').textContent = org.planDetails?.maxUsers || 0;
-                    }
                 }
             } catch (error) {
                 console.error('Error loading invite link:', error);

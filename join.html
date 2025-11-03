@@ -480,6 +480,25 @@
         
         let orgData = null;
         
+        // Silent deep link attempt without page navigation
+        function tryDeepLink(token) {
+            try {
+                // Create hidden iframe to attempt deep link without navigating page
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = `lupo://join/${token}`;
+                document.body.appendChild(iframe);
+                
+                // Clean up after 1 second
+                setTimeout(() => {
+                    document.body.removeChild(iframe);
+                }, 1000);
+            } catch (e) {
+                // Silently fail - app not installed
+                console.log('Deep link not available');
+            }
+        }
+        
         // Verify invitation
         async function verifyInvitation() {
             try {
@@ -520,22 +539,22 @@
                 // Add click handlers for deep link attempts
                 document.getElementById('macDownloadBtn').addEventListener('click', (e) => {
                     e.preventDefault();
-                    // Try deep link first
-                    window.location.href = `lupo://join/${inviteToken}`;
-                    // Fallback to download after short delay
+                    // Try deep link silently using iframe (no page navigation/flash)
+                    tryDeepLink(inviteToken);
+                    // Start download
                     setTimeout(() => {
                         window.location.href = macUrl;
-                    }, 300);
+                    }, 100);
                 });
                 
                 document.getElementById('windowsDownloadBtn').addEventListener('click', (e) => {
                     e.preventDefault();
-                    // Try deep link first
-                    window.location.href = `lupo://join/${inviteToken}`;
-                    // Fallback to download after short delay
+                    // Try deep link silently using iframe (no page navigation/flash)
+                    tryDeepLink(inviteToken);
+                    // Start download
                     setTimeout(() => {
                         window.location.href = windowsUrl;
-                    }, 300);
+                    }, 100);
                 });
                 
                 // Store token for later use
