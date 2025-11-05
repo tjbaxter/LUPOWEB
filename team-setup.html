@@ -322,7 +322,17 @@
 
     // Auto-fill email from JWT token if available
     function autoFillEmailFromToken() {
-      // Check multiple token storage locations (Electron, Web, Manager)
+      // First, check if email is in URL parameter (from Electron app)
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlEmail = urlParams.get('email');
+      
+      if (urlEmail) {
+        emailInput.value = urlEmail;
+        console.log('✅ Auto-filled email from URL parameter:', urlEmail);
+        return;
+      }
+      
+      // Otherwise, check multiple token storage locations (Web, Manager)
       const token = localStorage.getItem('lupoToken') || 
                     localStorage.getItem('lupo_manager_token') || 
                     localStorage.getItem('lupo_session');
