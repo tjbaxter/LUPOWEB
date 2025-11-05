@@ -322,7 +322,11 @@
 
     // Auto-fill email from JWT token if available
     function autoFillEmailFromToken() {
-      const token = localStorage.getItem('lupoToken');
+      // Check multiple token storage locations (Electron, Web, Manager)
+      const token = localStorage.getItem('lupoToken') || 
+                    localStorage.getItem('lupo_manager_token') || 
+                    localStorage.getItem('lupo_session');
+      
       if (token) {
         try {
           // Decode JWT (simple base64 decode of payload)
@@ -334,6 +338,8 @@
         } catch (err) {
           console.warn('Failed to decode token for email auto-fill:', err);
         }
+      } else {
+        console.log('⚠️ No token found in localStorage for email auto-fill');
       }
     }
 
