@@ -1814,7 +1814,13 @@
                 });
                 
                 if (!response.ok) {
-                    throw new Error('Failed to load invite link');
+                    if (response.status === 403) {
+                        console.warn('⚠️ 403 error loading invite link - user may not have admin access yet. This is normal for new managers.');
+                        // Don't throw - just silently fail for now, the invite link will load on refresh
+                        return;
+                    }
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || 'Failed to load invite link');
                 }
                 
                 const data = await response.json();
@@ -1825,6 +1831,7 @@
                 }
             } catch (error) {
                 console.error('Error loading invite link:', error);
+                // Don't propagate error - not critical
             }
         }
         
@@ -1941,13 +1948,18 @@
             objectionEl.classList.remove('skeleton');
             objectionEl.style = '';
             
-            document.getElementById('totalCalls').textContent = metrics.totalCalls || 0;
-            document.getElementById('totalCalls').classList.remove('skeleton');
-            document.getElementById('totalCalls').style = '';
+            const totalCallsEl = document.getElementById('totalCalls');
+            if (totalCallsEl) {
+                totalCallsEl.textContent = metrics.totalCalls || 0;
+                totalCallsEl.classList.remove('skeleton');
+                totalCallsEl.style = '';
+            }
             
             // Header stats
-            document.getElementById('repsActive').textContent = metrics.totalReps || 0;
-            document.getElementById('liveCalls').textContent = metrics.activeCalls || 0;
+            const repsActiveEl = document.getElementById('repsActive');
+            const liveCallsEl = document.getElementById('liveCalls');
+            if (repsActiveEl) repsActiveEl.textContent = metrics.totalReps || 0;
+            if (liveCallsEl) liveCallsEl.textContent = metrics.activeCalls || 0;
             document.getElementById('liveCalls').style.color = metrics.activeCalls > 0 ? 'var(--success)' : 'var(--text-dim)';
             
             // Compliance tile - COMMENTED OUT
