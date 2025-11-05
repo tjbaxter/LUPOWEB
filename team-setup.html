@@ -110,7 +110,7 @@
       color: #10b981;
       padding: 6px 14px;
       border-radius: 20px;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       margin-top: 2px;
     }
@@ -122,7 +122,7 @@
       padding: 10px 14px;
       border-radius: 8px;
       margin-bottom: 14px;
-      font-size: 13px;
+      font-size: 14px;
       display: none;
     }
 
@@ -136,7 +136,7 @@
 
     .form-label {
       display: block;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 600;
       margin-bottom: 4px;
       color: var(--text-primary);
@@ -147,8 +147,8 @@
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 11px 13px;
-      font-size: 16px;
+      padding: 12px 14px;
+      font-size: 17px;
       font-family: inherit;
       color: var(--text-primary);
       transition: all 0.2s ease;
@@ -161,7 +161,7 @@
     }
 
     .form-hint {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-secondary);
       margin-top: 3px;
       line-height: 1.4;
@@ -199,7 +199,7 @@
 
     .checkbox-label {
       display: block;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 600;
       color: var(--text-primary);
       margin-bottom: 1px;
@@ -207,7 +207,7 @@
     }
 
     .checkbox-description {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-secondary);
       line-height: 1.35;
     }
@@ -224,7 +224,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 15px;
+      font-size: 16px;
       margin-bottom: 4px;
     }
 
@@ -241,7 +241,7 @@
     }
 
     .trial-note {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-secondary);
       margin-top: 4px;
       text-align: center;
@@ -289,7 +289,7 @@
 
     .security-note {
       text-align: center;
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-secondary);
       margin-top: 8px;
       line-height: 1.4;
@@ -366,11 +366,11 @@
       </div>
 
       <button type="submit" id="submitBtn" class="btn-primary">
-        Start Free Trial →
+        Continue →
       </button>
 
       <div class="security-note">
-        🔒 No charge today • Cancel anytime during trial
+        🔒 No charge for 7 days • Cancel anytime
       </div>
     </form>
   </div>
@@ -456,7 +456,7 @@
         console.error('❌ Checkout error:', error);
         showError(error.message);
         btn.disabled = false;
-        btn.innerHTML = 'Start Free Trial →';
+        btn.innerHTML = 'Continue →';
       }
     });
 
