@@ -6,7 +6,6 @@
   <title>Start Your 7-Day Free Trial - LUPO</title>
   <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
   <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
-  <link rel="stylesheet" href="https://fonts.apple.com/fonts/sf-pro.css" integrity="sha512-..." crossorigin="anonymous">
   
   <style>
     * {
@@ -28,12 +27,12 @@
     }
 
     body {
-      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
       background: var(--bg-primary);
       color: var(--text-primary);
       line-height: 1.5;
       min-height: 100vh;
-      padding: 70px 20px 40px;
+      padding: 100px 20px 60px;
       -webkit-font-smoothing: antialiased;
       position: relative;
     }
@@ -53,15 +52,59 @@
       z-index: 0;
     }
 
+    /* Animated gradient orb */
+    @keyframes float {
+      0%, 100% { transform: translate(-50%, -50%) translate(0, 0) scale(1); }
+      25% { transform: translate(-50%, -50%) translate(30px, -30px) scale(1.05); }
+      50% { transform: translate(-50%, -50%) translate(-20px, 20px) scale(0.95); }
+      75% { transform: translate(-50%, -50%) translate(-30px, -10px) scale(1.02); }
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at center, rgba(41, 151, 255, 0.08) 0%, transparent 70%);
+      filter: blur(60px);
+      animation: float 20s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Animated Background Orbs (index.html style) */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      opacity: 0.05;
+      background: radial-gradient(circle at 20% 50%, #2997ff 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
+                  radial-gradient(circle at 40% 20%, #667eea 0%, transparent 50%);
+      animation: bgShift 30s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes bgShift {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      33% { transform: rotate(120deg) scale(1.1); }
+      66% { transform: rotate(240deg) scale(0.9); }
+    }
 
     .logo-link {
       position: absolute;
-      top: 18px;
+      top: 24px;
       left: 50%;
       transform: translateX(-50%);
       text-decoration: none;
       color: var(--text-primary);
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 600;
       z-index: 2;
       margin-bottom: 40px;
@@ -79,7 +122,7 @@
       backdrop-filter: blur(40px);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 24px;
+      padding: 32px;
       position: relative;
       z-index: 1;
       opacity: 0;
@@ -92,15 +135,15 @@
 
     .header {
       text-align: center;
-      margin-bottom: 18px;
-      margin-top: 0;
+      margin-bottom: 28px;
+      margin-top: 8px;
     }
 
     h1 {
-      font-size: 32px;
-      font-weight: 800;
-      margin-bottom: 8px;
-      letter-spacing: -0.04em;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.03em;
     }
 
     .no-charge-badge {
@@ -110,18 +153,18 @@
       color: #10b981;
       padding: 6px 14px;
       border-radius: 20px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
     .error-message {
       background: rgba(239, 68, 68, 0.1);
       border: 1px solid rgba(239, 68, 68, 0.2);
       color: var(--error);
-      padding: 10px 14px;
+      padding: 12px 16px;
       border-radius: 8px;
-      margin-bottom: 14px;
+      margin-bottom: 20px;
       font-size: 14px;
       display: none;
     }
@@ -131,14 +174,14 @@
     }
 
     .form-group {
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     .form-label {
       display: block;
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
       color: var(--text-primary);
     }
 
@@ -148,7 +191,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 12px 14px;
-      font-size: 17px;
+      font-size: 16px;
       font-family: inherit;
       color: var(--text-primary);
       transition: all 0.2s ease;
@@ -161,90 +204,14 @@
     }
 
     .form-hint {
-      font-size: 14px;
-      color: var(--text-secondary);
-      margin-top: 3px;
-      line-height: 1.4;
-    }
-
-    .checkbox-group {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .checkbox-group:hover {
-      background: rgba(255, 255, 255, 0.03);
-      border-color: var(--border-focus);
-    }
-
-    .checkbox-group input[type="checkbox"] {
-      margin-top: 2px;
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-      accent-color: var(--accent);
-    }
-
-    .checkbox-content {
-      flex: 1;
-    }
-
-    .checkbox-label {
-      display: block;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 1px;
-      cursor: pointer;
-    }
-
-    .checkbox-description {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.35;
-    }
-
-    .pricing-summary {
-      background: rgba(0, 113, 227, 0.08);
-      border: 1px solid rgba(0, 113, 227, 0.2);
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin-bottom: 12px;
-    }
-
-    .pricing-line {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 16px;
-      margin-bottom: 4px;
-    }
-
-    .pricing-line:last-child {
-      margin-bottom: 0;
-      padding-top: 6px;
-      border-top: 1px solid var(--border);
-      font-weight: 600;
-    }
-
-    .pricing-amount {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .trial-note {
       font-size: 13px;
       color: var(--text-secondary);
       margin-top: 4px;
-      text-align: center;
+    }
+
+    #priceDisplay {
+      font-weight: 500;
+      color: var(--accent);
     }
 
     .btn-primary {
@@ -253,13 +220,13 @@
       color: white;
       border: none;
       border-radius: 8px;
-      padding: 12px;
+      padding: 14px;
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
       font-family: inherit;
-      margin-top: 4px;
+      margin-top: 8px;
     }
 
     .btn-primary:hover:not(:disabled) {
@@ -289,28 +256,25 @@
 
     .security-note {
       text-align: center;
-      font-size: 14px;
+      font-size: 12px;
       color: var(--text-secondary);
-      margin-top: 8px;
-      line-height: 1.4;
+      margin-top: 12px;
+      line-height: 1.5;
     }
 
     @media (max-width: 640px) {
       .container {
-        padding: 20px 16px;
+        padding: 24px 20px;
       }
 
       h1 {
-        font-size: 22px;
-      }
-      
-      body {
-        padding: 60px 20px 30px;
+        font-size: 24px;
       }
     }
   </style>
 </head>
 <body>
+  <div class="animated-bg"></div>
   <a href="/" class="logo-link">LUPO</a>
 
   <div class="container">
@@ -323,8 +287,8 @@
 
     <form id="setupForm">
       <div class="form-group">
-        <label class="form-label" for="teamName">Company name *</label>
-        <input type="text" id="teamName" class="form-input" placeholder="e.g., Acme Inc" required>
+        <label class="form-label" for="teamName">Team Name *</label>
+        <input type="text" id="teamName" class="form-input" placeholder="e.g., Acme Sales Team" required>
       </div>
 
       <div class="form-group">
@@ -334,43 +298,17 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="seats">How many reps need Lupo? *</label>
-        <input type="number" id="seats" class="form-input" value="5" min="1" max="100" required>
-        <div class="form-hint">Each rep can use Lupo during their sales calls</div>
-      </div>
-
-      <label class="checkbox-group" for="managerSeat">
-        <input type="checkbox" id="managerSeat">
-        <div class="checkbox-content">
-          <span class="checkbox-label">Add a seat for me too</span>
-          <div class="checkbox-description">
-            You'll get full dashboard access either way. This lets you use Lupo on your own calls.
-          </div>
-        </div>
-      </label>
-
-      <div class="pricing-summary">
-        <div class="pricing-line">
-          <span id="repSeatsText">5 rep seats</span>
-          <span class="pricing-amount" id="repSeatsPrice">$1,000/month</span>
-        </div>
-        <div class="pricing-line" id="managerSeatLine" style="display: none;">
-          <span>+ Your seat</span>
-          <span class="pricing-amount">$200/month</span>
-        </div>
-        <div class="pricing-line">
-          <span>Total</span>
-          <span class="pricing-amount" id="totalPrice">$1,000/month</span>
-        </div>
-        <div class="trial-note">7-day free trial • Cancel anytime</div>
+        <label class="form-label" for="seats">Number of Seats *</label>
+        <input type="number" id="seats" class="form-input" value="5" min="2" max="100" required>
+        <div class="form-hint" id="priceDisplay">$1,000/month after trial</div>
       </div>
 
       <button type="submit" id="submitBtn" class="btn-primary">
-        Continue →
+        Continue to Payment →
       </button>
 
       <div class="security-note">
-        🔒 No charge for 7 days • Cancel anytime
+        🔒 Secure payment via Stripe • Cancel anytime during trial
       </div>
     </form>
   </div>
@@ -378,35 +316,61 @@
   <script>
     const BACKEND_URL = 'https://lupo-backend.fly.dev';
     const seatsInput = document.getElementById('seats');
-    const managerSeatCheckbox = document.getElementById('managerSeat');
+    const priceDisplay = document.getElementById('priceDisplay');
     const errorDiv = document.getElementById('errorMessage');
+    const emailInput = document.getElementById('email');
 
-    function updatePricing() {
-      const repSeats = parseInt(seatsInput.value) || 0;
-      const managerSeatIncluded = managerSeatCheckbox.checked;
+    // Auto-fill email from JWT token if available
+    function autoFillEmailFromToken() {
+      console.log('🔍 autoFillEmailFromToken called');
+      console.log('🔍 URL:', window.location.href);
+      console.log('🔍 Search params:', window.location.search);
       
-      const repPrice = repSeats * 200;
-      const managerPrice = managerSeatIncluded ? 200 : 0;
-      const totalPrice = repPrice + managerPrice;
-      const totalSeats = repSeats + (managerSeatIncluded ? 1 : 0);
-
-      // Update text
-      document.getElementById('repSeatsText').textContent = `${repSeats} rep seat${repSeats !== 1 ? 's' : ''}`;
-      document.getElementById('repSeatsPrice').textContent = `$${repPrice.toLocaleString()}/month`;
-      document.getElementById('totalPrice').textContent = `$${totalPrice.toLocaleString()}/month`;
-
-      // Show/hide manager seat line
-      const managerSeatLine = document.getElementById('managerSeatLine');
-      if (managerSeatIncluded) {
-        managerSeatLine.style.display = 'flex';
+      // First, check if email is in URL parameter (from Electron app)
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlEmail = urlParams.get('email');
+      
+      console.log('🔍 urlEmail from URL param:', urlEmail);
+      console.log('🔍 emailInput element:', emailInput);
+      
+      if (urlEmail) {
+        console.log('🔍 Setting emailInput.value to:', urlEmail);
+        emailInput.value = urlEmail;
+        console.log('✅ Auto-filled email from URL parameter:', urlEmail);
+        console.log('🔍 emailInput.value after setting:', emailInput.value);
+        return;
+      }
+      
+      // Otherwise, check multiple token storage locations (Web, Manager)
+      const token = localStorage.getItem('lupoToken') || 
+                    localStorage.getItem('lupo_manager_token') || 
+                    localStorage.getItem('lupo_session');
+      
+      if (token) {
+        try {
+          // Decode JWT (simple base64 decode of payload)
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          if (payload.email) {
+            emailInput.value = payload.email;
+            console.log('✅ Auto-filled email from token:', payload.email);
+          }
+        } catch (err) {
+          console.warn('Failed to decode token for email auto-fill:', err);
+        }
       } else {
-        managerSeatLine.style.display = 'none';
+        console.log('⚠️ No token found in localStorage for email auto-fill');
       }
     }
 
-    // Update pricing when seats change
-    seatsInput.addEventListener('input', updatePricing);
-    managerSeatCheckbox.addEventListener('change', updatePricing);
+    // Run auto-fill on page load
+    autoFillEmailFromToken();
+
+    // Update price display when seats change
+    seatsInput.addEventListener('input', () => {
+      const seats = parseInt(seatsInput.value) || 0;
+      const price = seats * 200;
+      priceDisplay.textContent = `$${price.toLocaleString()}/month after trial`;
+    });
 
     // Handle form submission
     document.getElementById('setupForm').addEventListener('submit', async (e) => {
@@ -415,17 +379,16 @@
       const teamName = document.getElementById('teamName').value.trim();
       const email = document.getElementById('email').value.trim();
       const seats = parseInt(document.getElementById('seats').value);
-      const managerSeatIncluded = managerSeatCheckbox.checked;
       const btn = document.getElementById('submitBtn');
 
-      if (!teamName || !email || !seats || seats < 1) {
+      if (!teamName || !email || !seats || seats < 2) {
         showError('Please fill in all required fields');
         return;
       }
 
       // Disable button and show loading
       btn.disabled = true;
-      btn.innerHTML = '<span class="spinner"></span>Setting up your team...';
+      btn.innerHTML = '<span class="spinner"></span>Creating checkout...';
       errorDiv.classList.remove('show');
 
       try {
@@ -438,8 +401,7 @@
           body: JSON.stringify({
             teamName,
             email,
-            seats,
-            managerSeatIncluded
+            seats
           })
         });
 
@@ -456,7 +418,7 @@
         console.error('❌ Checkout error:', error);
         showError(error.message);
         btn.disabled = false;
-        btn.innerHTML = 'Continue →';
+        btn.innerHTML = 'Continue to Payment →';
       }
     });
 
@@ -464,53 +426,6 @@
       errorDiv.textContent = message;
       errorDiv.classList.add('show');
     }
-
-    // Floating particles effect (matching index.html and signup.html)
-    function createParticle(initialY = null) {
-      const particle = document.createElement('div');
-      const size = Math.random() * 6 + 3;
-      particle.style.cssText = `
-        position: fixed;
-        width: ${size}px;
-        height: ${size}px;
-        background: var(--accent);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 0;
-        opacity: ${Math.random() * 0.4 + 0.2};
-        box-shadow: 0 0 8px rgba(0, 113, 227, 0.4);
-      `;
-      
-      const startX = Math.random() * window.innerWidth;
-      const startY = initialY !== null ? initialY : window.innerHeight - 10;
-      
-      particle.style.left = startX + 'px';
-      particle.style.top = startY + 'px';
-      
-      document.body.appendChild(particle);
-      
-      const duration = Math.random() * 15000 + 8000;
-      const horizontalMovement = (Math.random() - 0.5) * 100;
-      
-      particle.animate([
-        { transform: `translate(0, 0)`, opacity: particle.style.opacity },
-        { transform: `translate(${horizontalMovement}px, -${window.innerHeight + 20}px)`, opacity: particle.style.opacity },
-        { transform: `translate(${horizontalMovement * 2}px, -${window.innerHeight * 2}px)`, opacity: 0 }
-      ], {
-        duration: duration,
-        easing: 'linear'
-      }).onfinish = () => particle.remove();
-    }
-    
-    // Create initial particles at various heights for immediate effect
-    for (let i = 0; i < 10; i++) {
-      setTimeout(() => {
-        createParticle(Math.random() * window.innerHeight);
-      }, i * 150);
-    }
-    
-    // Start continuous particle animation
-    setInterval(createParticle, 800);
   </script>
 </body>
 </html>
