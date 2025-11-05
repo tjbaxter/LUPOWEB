@@ -803,6 +803,29 @@
             gap: 0.25rem;
         }
         
+        /* My Calls Button - Premium styling */
+        .my-calls-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 6px;
+            color: var(--accent);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .my-calls-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-1px);
+        }
+        
         /* Invite Button - Premium and subtle in header */
         .invite-btn {
             display: flex;
@@ -994,6 +1017,10 @@
     <header>
         <div class="logo">LUPO</div>
         <div class="header-info" id="headerInfo">
+            <!-- NEW: My Calls button (only visible if manager has call access) -->
+            <a href="sales-dashboard.html" class="my-calls-btn" id="myCallsBtn" style="display: none;">
+                📞 My Calls
+            </a>
             <div class="header-stat">
                 <div class="header-stat-label">Organization</div>
                 <div class="header-stat-value" id="orgName">--</div>
@@ -1746,6 +1773,14 @@
                 const org = await orgRes.json();
                 document.getElementById('orgName').textContent = org.companyName || 'Enterprise';
                 document.getElementById('orgName').classList.remove('skeleton');
+                
+                // NEW: Show "My Calls" button if manager has call access
+                if (currentUser && currentUser.has_call_access) {
+                    document.getElementById('myCallsBtn').style.display = 'flex';
+                    console.log('✅ Manager has call access - showing My Calls button');
+                } else {
+                    console.log('ℹ️ Manager is admin-only - hiding My Calls button');
+                }
                 
                 // Load analytics with error handling
                 const dataRes = await fetch(`${AUTH_CONFIG.apiUrl}/sales/global-analytics?period=${currentPeriod}`, {
