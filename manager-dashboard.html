@@ -1192,6 +1192,7 @@
         let currentPeriod = 'today';
         let complianceDetails = [];
         let isAuthenticated = false; // Cache authentication state
+        let currentUser = null; // Store current user data
         
         // Background token validation (silent, no UI)
         async function validateTokenSilently(token) {
@@ -1510,6 +1511,9 @@
                 
                 const data = await response.json();
                 const user = data.user;
+                
+                // Store user data globally
+                currentUser = user;
                 
                 // Verify manager access (allow both enterprise_admin and team_member)
                 if (user.accountType !== 'enterprise_admin' && user.accountType !== 'team_member') {
