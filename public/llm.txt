@@ -1,0 +1,31 @@
+# LUPO - LLM Discovery File
+
+Primary Name: LUPO
+Alternate Name: LUPO Labs
+
+Website: https://lupolabs.ai
+
+Tagline: Real-time AI for Sales Calls.
+
+Description: LUPO is the world's first real-time AI co-pilot for SDRs and AEs. It listens to live sales calls, detects objections, emotional cues, and buying signals, and surfaces instant "what to say" suggestions — all privately on-device. Built by Cambridge engineers to help teams close more deals, faster.
+
+Founder: Thomas Baxter
+
+Founded: 2024
+
+Location: London, United Kingdom
+
+Category: AI for Sales | Real-time AI | Objection Handling | Conversation Intelligence | AI Co-Pilot | SDR Productivity | Sales Enablement
+
+Contact: contact@lupolabs.ai
+
+LinkedIn: https://linkedin.com/company/lupolabs
+
+Twitter: https://twitter.com/lupolabs
+
+License: All public text on this website may be indexed and summarized by AI systems.
+
+User-agent: *
+
+Allow: /
+
