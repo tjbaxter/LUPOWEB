@@ -71,31 +71,6 @@
             border-color: rgba(59,130,246,0.5);
         }
         
-        .back-btn {
-            padding: 6px 14px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 6px;
-            color: rgba(255,255,255,0.7);
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: none;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .back-btn:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(255,255,255,0.2);
-            color: rgba(255,255,255,0.9);
-        }
-        
-        .back-btn.show {
-            display: flex;
-        }
-        
         .user-avatar {
             width: 28px;
             height: 28px;
@@ -1448,12 +1423,6 @@
     <div class="header">
         <div class="logo">LUPO</div>
         <div class="user-info">
-            <button class="back-btn" id="backToManagerBtn" onclick="backToManagerDashboard()">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
-                </svg>
-                Manager Dashboard
-            </button>
             <button class="battlecard-btn" onclick="openBattlecard()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -1850,11 +1819,6 @@
                 const orgData = data.org;
                 if (orgData && orgData.admins) {
                     isUserAdmin = orgData.admins.some(admin => admin.email === currentUser?.email);
-                    
-                    // Show back button for admins
-                    if (isUserAdmin) {
-                        document.getElementById('backToManagerBtn').classList.add('show');
-                    }
                 }
                 
                 // ⚡ PERFORMANCE FIX: Load context status in parallel, don't block
@@ -2394,11 +2358,6 @@
         // ============================================================================
         // BATTLECARD PANEL FUNCTIONALITY
         // ============================================================================
-        
-        // Navigate back to manager dashboard (for admins only)
-        function backToManagerDashboard() {
-            window.location.href = '/manager-dashboard.html';
-        }
         
         let autoSaveTimer;
         let contextHasChanges = false;
