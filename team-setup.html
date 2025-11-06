@@ -299,12 +299,6 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="email">Your Email *</label>
-        <input type="email" id="email" class="form-input locked-input" placeholder="manager@company.com" required readonly>
-        <div class="form-hint">🔒 Using your Lupo account email</div>
-      </div>
-
-      <div class="form-group">
         <label class="form-label" for="seats">Number of Seats *</label>
         <input type="number" id="seats" class="form-input" value="5" min="2" max="100" required>
         <div class="form-hint" id="priceDisplay">$1,000/month after trial</div>
@@ -325,52 +319,6 @@
     const seatsInput = document.getElementById('seats');
     const priceDisplay = document.getElementById('priceDisplay');
     const errorDiv = document.getElementById('errorMessage');
-    const emailInput = document.getElementById('email');
-
-    // Auto-fill email from JWT token if available
-    function autoFillEmailFromToken() {
-      console.log('🔍 autoFillEmailFromToken called');
-      console.log('🔍 URL:', window.location.href);
-      console.log('🔍 Search params:', window.location.search);
-      
-      // First, check if email is in URL parameter (from Electron app)
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlEmail = urlParams.get('email');
-      
-      console.log('🔍 urlEmail from URL param:', urlEmail);
-      console.log('🔍 emailInput element:', emailInput);
-      
-      if (urlEmail) {
-        console.log('🔍 Setting emailInput.value to:', urlEmail);
-        emailInput.value = urlEmail;
-        console.log('✅ Auto-filled email from URL parameter:', urlEmail);
-        console.log('🔍 emailInput.value after setting:', emailInput.value);
-        return;
-      }
-      
-      // Otherwise, check multiple token storage locations (Web, Manager)
-      const token = localStorage.getItem('lupoToken') || 
-                    localStorage.getItem('lupo_manager_token') || 
-                    localStorage.getItem('lupo_session');
-      
-      if (token) {
-        try {
-          // Decode JWT (simple base64 decode of payload)
-          const payload = JSON.parse(atob(token.split('.')[1]));
-          if (payload.email) {
-            emailInput.value = payload.email;
-            console.log('✅ Auto-filled email from token:', payload.email);
-          }
-        } catch (err) {
-          console.warn('Failed to decode token for email auto-fill:', err);
-        }
-      } else {
-        console.log('⚠️ No token found in localStorage for email auto-fill');
-      }
-    }
-
-    // Run auto-fill on page load
-    autoFillEmailFromToken();
 
     // Update price display when seats change
     seatsInput.addEventListener('input', () => {
@@ -384,11 +332,10 @@
       e.preventDefault();
 
       const teamName = document.getElementById('teamName').value.trim();
-      const email = document.getElementById('email').value.trim();
       const seats = parseInt(document.getElementById('seats').value);
       const btn = document.getElementById('submitBtn');
 
-      if (!teamName || !email || !seats || seats < 2) {
+      if (!teamName || !seats || seats < 2) {
         showError('Please fill in all required fields');
         return;
       }
@@ -399,6 +346,22 @@
       errorDiv.classList.remove('show');
 
       try {
+        // Get userId from JWT token if available
+        let userId = null;
+        const token = localStorage.getItem('lupoToken') || 
+                      localStorage.getItem('lupo_manager_token') || 
+                      localStorage.getItem('lupo_session');
+        
+        if (token) {
+          try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            userId = payload.userId;
+            console.log('✅ Got userId from token:', userId);
+          } catch (err) {
+            console.warn('Failed to decode token:', err);
+          }
+        }
+        
         // Create Stripe Checkout session
         const response = await fetch(`${BACKEND_URL}/api/team/checkout/create`, {
           method: 'POST',
@@ -407,8 +370,8 @@
           },
           body: JSON.stringify({
             teamName,
-            email,
-            seats
+            seats,
+            userId // Send userId if available (authenticated upgrade flow)
           })
         });
 
