@@ -137,8 +137,15 @@
                         timestamp: Date.now()
                     };
                     
-                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
-                    console.log('✅ Stored session key for polling');
+                    // FIXED: Use IPC to notify Electron app (preferred method)
+                    if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
+                        console.log('✅ Notifying Electron app via IPC:', data.sessionKey);
+                        window.electronAPI.notifyAuthSuccess(data.sessionKey);
+                    } else {
+                        // Fallback to localStorage for web browser
+                        localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                        console.log('✅ Stored session key in localStorage (fallback)');
+                    }
                     
                     // Store OAuth data for signup.html
                     const oauthData = {

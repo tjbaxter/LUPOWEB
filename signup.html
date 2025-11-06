@@ -1316,7 +1316,14 @@
                                         sessionKey: data.sessionKey,
                                         timestamp: Date.now()
                                     };
-                                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollDataForLupo));
+                                    
+                                    // FIXED: Use IPC to notify Electron app
+                                    if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
+                                        console.log('✅ Notifying Electron app via IPC:', pollDataForLupo.sessionKey);
+                                        window.electronAPI.notifyAuthSuccess(pollDataForLupo.sessionKey);
+                                    } else {
+                                        localStorage.setItem('lupo_auth_poll', JSON.stringify(pollDataForLupo));
+                                    }
                                     
                                     // Show success with organization name
                                     showSuccessState();
@@ -1346,7 +1353,14 @@
                     sessionKey: data.sessionKey,
                     timestamp: Date.now()
                 };
-                localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                
+                // FIXED: Use IPC to notify Electron app
+                if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
+                    console.log('✅ Notifying Electron app via IPC:', pollData.sessionKey);
+                    window.electronAPI.notifyAuthSuccess(pollData.sessionKey);
+                } else {
+                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                }
                 
                 // Show success
                 showSuccessState();
@@ -1417,7 +1431,14 @@
                                     sessionKey: data.sessionKey || authData.token,
                                     timestamp: Date.now()
                                 };
-                                localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                                
+                                // FIXED: Use IPC to notify Electron app
+                                if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
+                                    console.log('✅ Notifying Electron app via IPC:', pollData.sessionKey);
+                                    window.electronAPI.notifyAuthSuccess(pollData.sessionKey);
+                                } else {
+                                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                                }
                                 
                                 // Clean up temporary OAuth data
                                 localStorage.removeItem('lupo_oauth_temp');
@@ -1447,7 +1468,16 @@
                         sessionKey: data.sessionKey || authData.token,
                         timestamp: Date.now()
                     };
-                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                    
+                    // FIXED: Use IPC to notify Electron app (preferred method)
+                    if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
+                        console.log('✅ Notifying Electron app via IPC:', pollData.sessionKey);
+                        window.electronAPI.notifyAuthSuccess(pollData.sessionKey);
+                    } else {
+                        // Fallback to localStorage for web browser
+                        localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                        console.log('✅ Stored session key in localStorage (fallback)');
+                    }
                     
                     // Clean up temporary OAuth data
                     localStorage.removeItem('lupo_oauth_temp');
