@@ -1680,6 +1680,25 @@
         
         async function loadData() {
             try {
+                // CRITICAL: Always fetch fresh user data first to get latest has_call_access
+                try {
+                    const userRes = await fetch(`${AUTH_CONFIG.apiUrl}/auth/me`, {
+                        headers: authHeaders,
+                        cache: 'no-cache'
+                    });
+                    if (userRes.ok) {
+                        const userData = await userRes.json();
+                        currentUser = userData.user; // Update with fresh data
+                        console.log('🔄 Refreshed user data:', {
+                            email: currentUser.email,
+                            accountType: currentUser.accountType,
+                            has_call_access: currentUser.has_call_access
+                        });
+                    }
+                } catch (err) {
+                    console.warn('⚠️ Failed to refresh user data:', err);
+                }
+                
                 // Load org info with error handling
                 const orgRes = await fetch(`${AUTH_CONFIG.apiUrl}/sales/org`, {
                     headers: authHeaders,
@@ -1699,7 +1718,7 @@
                     document.getElementById('myCallsBtn').style.display = 'flex';
                     console.log('✅ Manager has call access - showing My Calls button');
                 } else {
-                    console.log('ℹ️ Manager is admin-only - hiding My Calls button');
+                    console.log('ℹ️ Manager is admin-only - hiding My Calls button (has_call_access:', currentUser?.has_call_access, ')');
                 }
                 
                 // Load analytics with error handling
