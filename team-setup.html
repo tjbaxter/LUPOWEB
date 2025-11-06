@@ -558,7 +558,7 @@
             body: JSON.stringify({
               teamName,
               seats,
-              managerSeatIncluded,
+              includeManagerSeat: managerSeatIncluded, // Backend expects includeManagerSeat
               userId, // Send userId if available (authenticated upgrade flow)
               email // Send email from token if available
             })
