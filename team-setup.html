@@ -381,8 +381,8 @@
 
     <form id="setupForm">
       <div class="form-group">
-        <label class="form-label" for="teamName">Company Name *</label>
-        <input type="text" id="teamName" class="form-input" placeholder="e.g., Acme Inc" required>
+        <label class="form-label" for="teamName">Team Name *</label>
+        <input type="text" id="teamName" class="form-input" placeholder="e.g., Acme Sales Team" required>
       </div>
 
       <div class="form-group">
@@ -476,36 +476,36 @@
       btn.innerHTML = '<span class="spinner"></span>Creating checkout...';
       errorDiv.classList.remove('show');
 
-      try {
-        // Get userId from JWT token if available
-        let userId = null;
-        const token = localStorage.getItem('lupoToken') || 
-                      localStorage.getItem('lupo_manager_token') || 
-                      localStorage.getItem('lupo_session');
-        
-        if (token) {
-          try {
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            userId = payload.userId;
-            console.log('✅ Got userId from token:', userId);
-          } catch (err) {
-            console.warn('Failed to decode token:', err);
+        try {
+          // Get userId from JWT token if available
+          let userId = null;
+          const token = localStorage.getItem('lupoToken') || 
+                        localStorage.getItem('lupo_manager_token') || 
+                        localStorage.getItem('lupo_session');
+          
+          if (token) {
+            try {
+              const payload = JSON.parse(atob(token.split('.')[1]));
+              userId = payload.userId;
+              console.log('✅ Got userId from token:', userId);
+            } catch (err) {
+              console.warn('Failed to decode token:', err);
+            }
           }
-        }
-        
-        // Create Stripe Checkout session
-        const response = await fetch(`${BACKEND_URL}/api/team/checkout/create`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            teamName,
-            seats,
-            managerSeatIncluded,
-            userId // Send userId if available (authenticated upgrade flow)
-          })
-        });
+          
+          // Create Stripe Checkout session
+          const response = await fetch(`${BACKEND_URL}/api/team/checkout/create`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              teamName,
+              seats,
+              managerSeatIncluded,
+              userId // Send userId if available (authenticated upgrade flow)
+            })
+          });
 
         const data = await response.json();
 
