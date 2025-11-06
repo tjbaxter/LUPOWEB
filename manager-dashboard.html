@@ -1651,7 +1651,10 @@
             // Setup event listeners
             setupListeners();
             
-            // Start auto-refresh
+            // Connect real-time WebSocket for instant "Live Now" updates
+            connectManagerWebSocket();
+            
+            // Start auto-refresh (reduced frequency since WebSocket provides real-time updates)
             setInterval(async () => {
                 try {
                     await loadData();
@@ -1672,7 +1675,7 @@
                         window.location.reload();
                     }
                 }
-            }, 30000);
+            }, 60000); // Reduced to 60s since WebSocket provides real-time updates
         }
         
         async function loadData() {
@@ -2091,6 +2094,142 @@
                 } catch (error) {
                     console.error('Visibility check error:', error);
                 }
+            }
+        });
+        
+        // ============================================================================
+        // REAL-TIME WEBSOCKET - Instant "Live Now" Updates
+        // ============================================================================
+        let managerWS = null;
+        let wsReconnectAttempts = 0;
+        const MAX_WS_RECONNECTS = 5;
+        
+        function connectManagerWebSocket() {
+            // Use the global authToken variable (set during authentication)
+            const token = authToken;
+            if (!token) {
+                console.log('⚠️  No auth token available for WebSocket - waiting for authentication...');
+                return;
+            }
+            
+            // Determine WebSocket URL
+            const apiUrl = AUTH_CONFIG.apiUrl;
+            const wsUrl = apiUrl.replace('https://', 'wss://').replace('http://', 'ws://');
+            const wsEndpoint = `${wsUrl}/manager-stream?token=${encodeURIComponent(token)}`;
+            
+            console.log('🔌 Connecting to Manager WebSocket for real-time updates...');
+            
+            try {
+                managerWS = new WebSocket(wsEndpoint);
+                
+                managerWS.onopen = () => {
+                    console.log('✅ Real-time WebSocket connected - Live Now will update instantly!');
+                    wsReconnectAttempts = 0;
+                };
+                
+                managerWS.onmessage = (event) => {
+                    try {
+                        const data = JSON.parse(event.data);
+                        
+                        switch (data.type) {
+                            case 'handshake':
+                                console.log(`📊 Watching org: ${data.orgName}`);
+                                break;
+                                
+                            case 'live_update':
+                                // Update the "Live Now" counter in real-time
+                                updateLiveNowDisplay(data.liveNow);
+                                break;
+                                
+                            case 'pong':
+                                // Keep-alive response
+                                break;
+                                
+                            default:
+                                console.log('Unknown WS message:', data);
+                        }
+                        
+                    } catch (error) {
+                        console.error('Error parsing WebSocket message:', error);
+                    }
+                };
+                
+                managerWS.onerror = (error) => {
+                    console.error('❌ Manager WebSocket error:', error);
+                };
+                
+                managerWS.onclose = (event) => {
+                    console.log('🔌 Manager WebSocket closed');
+                    
+                    // Attempt reconnection
+                    if (wsReconnectAttempts < MAX_WS_RECONNECTS) {
+                        wsReconnectAttempts++;
+                        const delay = Math.min(1000 * Math.pow(2, wsReconnectAttempts), 30000);
+                        console.log(`🔄 Reconnecting in ${delay / 1000}s (attempt ${wsReconnectAttempts}/${MAX_WS_RECONNECTS})`);
+                        setTimeout(connectManagerWebSocket, delay);
+                    } else {
+                        console.log('⚠️  Max reconnection attempts reached. Falling back to polling.');
+                    }
+                };
+                
+            } catch (error) {
+                console.error('Error creating WebSocket:', error);
+            }
+        }
+        
+        function updateLiveNowDisplay(count) {
+            // Find the "Live Now" element in the header
+            const headerStats = document.querySelectorAll('.header-stat-value');
+            let liveStatValue = null;
+            
+            // Find which one is "Live Now"
+            headerStats.forEach(stat => {
+                if (stat.textContent.includes('Live Now')) {
+                    liveStatValue = stat;
+                }
+            });
+            
+            if (liveStatValue) {
+                const oldText = liveStatValue.textContent;
+                const oldValue = parseInt(oldText) || 0;
+                
+                // Only update if changed
+                if (oldValue !== count) {
+                    liveStatValue.textContent = `${count} Live Now`;
+                    
+                    // Visual feedback when count changes
+                    liveStatValue.style.transition = 'all 0.3s ease';
+                    liveStatValue.style.transform = 'scale(1.15)';
+                    
+                    if (count > oldValue) {
+                        // Someone went live - pulse green
+                        liveStatValue.style.color = 'var(--success)';
+                        console.log(`🟢 Live Now: ${count} ↑ (someone just went live!)`);
+                    } else if (count < oldValue) {
+                        // Someone went offline - pulse dim
+                        liveStatValue.style.color = 'var(--text-dim)';
+                        console.log(`⚪ Live Now: ${count} ↓ (someone went offline)`);
+                    }
+                    
+                    setTimeout(() => {
+                        liveStatValue.style.transform = 'scale(1)';
+                        liveStatValue.style.color = 'var(--text)';
+                    }, 300);
+                }
+            }
+        }
+        
+        // Send keep-alive ping every 30 seconds
+        setInterval(() => {
+            if (managerWS && managerWS.readyState === WebSocket.OPEN) {
+                managerWS.send(JSON.stringify({ type: 'ping' }));
+            }
+        }, 30000);
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            if (managerWS) {
+                managerWS.close();
             }
         });
     </script>
