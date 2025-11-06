@@ -78,19 +78,7 @@
             font-weight: 600;
         }
         
-        /* Access Indicator */
-        .access-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            margin-right: 1rem;
-        }
+        /* Access Indicator - REMOVED (clutter) */
         
         /* Compliance Tile - Minimal and sophisticated */
         .compliance-tile {
@@ -1092,8 +1080,8 @@
                 <div class="metric-value" id="seatsActive" style="min-width: 100px; font-size: 3.5rem;">--</div>
                 <div class="metric-label" style="font-size: 0.875rem; margin-top: 1rem;">Seats Active This Week</div>
                 <div class="metric-subtitle" id="seatsSubtitle">out of -- paid seats</div>
-            </div>
-            
+        </div>
+        
             <div class="metric-card" style="padding: 2.5rem 2rem;">
                 <div class="metric-value" id="totalMinutes" style="min-width: 100px; font-size: 3.5rem;">--</div>
                 <div class="metric-label" style="font-size: 0.875rem; margin-top: 1rem;">Minutes of Live Coaching</div>
@@ -1105,8 +1093,8 @@
                 <div class="metric-label" style="font-size: 0.875rem; margin-top: 1rem;">Calls Coached</div>
                 <div class="metric-subtitle" id="callsSubtitle">this week</div>
             </div>
-        </div>
-        
+            </div>
+            
         <!-- Action Buttons -->
         <div class="action-section" style="display: flex; gap: 1rem; justify-content: center;">
             <a href="#" class="primary-btn" id="contextBtn" style="background: var(--accent);">Team Settings</a>
@@ -1584,82 +1572,9 @@
             }
         }
         
-        // Add visual indicator showing how user accessed
+        // Add access method indicator to header - REMOVED (clutter)
         function addAccessIndicator(method) {
-            const headerInfo = document.getElementById('headerInfo');
-            if (!headerInfo) return;
-            
-            const indicator = document.createElement('div');
-            indicator.className = 'access-indicator';
-            indicator.id = 'accessIndicator';
-            
-            if (method === 'electron') {
-                indicator.innerHTML = `
-                    <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
-                    <span>LUPO App</span>
-                `;
-                
-                // Add button to open LUPO if in app
-                if (window.electronAPI) {
-                    const openLupoBtn = document.createElement('button');
-                    openLupoBtn.textContent = 'Open LUPO';
-                    openLupoBtn.style.cssText = `
-                        margin-left: 0.5rem;
-                        padding: 0.25rem 0.5rem;
-                        background: var(--accent);
-                        color: white;
-                        border: none;
-                        border-radius: 4px;
-                        font-size: 0.625rem;
-                        cursor: pointer;
-                    `;
-                    openLupoBtn.onclick = () => {
-                        if (window.electronAPI) {
-                            window.electronAPI.showLupo();
-                        }
-                    };
-                    indicator.appendChild(openLupoBtn);
-                }
-                
-            } else {
-                indicator.innerHTML = `
-                    <span style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%;"></span>
-                    <span>Web Access</span>
-                `;
-                
-                // Add sign out button for web users
-                const signOutBtn = document.createElement('button');
-                signOutBtn.textContent = 'Sign Out';
-                signOutBtn.style.cssText = `
-                    margin-left: 0.5rem;
-                    padding: 0.25rem 0.5rem;
-                    background: transparent;
-                    color: var(--text-dim);
-                    border: 1px solid var(--border);
-                    border-radius: 4px;
-                    font-size: 0.625rem;
-                    cursor: pointer;
-                    transition: all 0.15s;
-                `;
-                signOutBtn.onmouseover = () => {
-                    signOutBtn.style.borderColor = 'var(--accent)';
-                    signOutBtn.style.color = 'var(--text)';
-                };
-                signOutBtn.onmouseout = () => {
-                    signOutBtn.style.borderColor = 'var(--border)';
-                    signOutBtn.style.color = 'var(--text-dim)';
-                };
-                signOutBtn.onclick = () => {
-                    if (confirm('Sign out of manager dashboard?')) {
-                        localStorage.clear();
-                        sessionStorage.clear();
-                        window.location.href = AUTH_CONFIG.loginUrl;
-                    }
-                };
-                indicator.appendChild(signOutBtn);
-            }
-            
-            headerInfo.insertBefore(indicator, headerInfo.firstChild);
+            // Do nothing - indicator removed for cleaner UI
         }
         
         async function retryAuth() {
@@ -1935,8 +1850,8 @@
             const totalCallsEl = document.getElementById('totalCalls');
             const totalCalls = metrics.totalCalls || 0;
             totalCallsEl.textContent = totalCalls;
-            totalCallsEl.classList.remove('skeleton');
-            totalCallsEl.style = '';
+                totalCallsEl.classList.remove('skeleton');
+                totalCallsEl.style = '';
             
             const callsSubtitle = document.getElementById('callsSubtitle');
             callsSubtitle.textContent = periodLabel;
