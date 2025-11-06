@@ -1161,6 +1161,12 @@
             const isOAuth = urlParams.get('oauth') === 'true';
             const provider = urlParams.get('provider');
             
+            // ✅ CHECK: Log what we're checking for
+            console.log('🔍 Signup page loaded, checking for invite token...');
+            console.log('   URL invite param:', inviteCode);
+            console.log('   localStorage pendingInviteToken:', localStorage.getItem('pendingInviteToken'));
+            console.log('   sessionStorage pendingInviteToken:', sessionStorage.getItem('pendingInviteToken'));
+            
             // Show enterprise indicator if joining via invite
             if (inviteCode && orgName) {
                 const header = document.querySelector('.signup-header');
@@ -1168,6 +1174,10 @@
                 indicator.className = 'enterprise-indicator';
                 indicator.textContent = `Joining ${orgName}`;
                 header.insertBefore(indicator, header.firstChild);
+            } else if (localStorage.getItem('pendingInviteToken') || sessionStorage.getItem('pendingInviteToken')) {
+                // ✅ NEW: Show indicator for localStorage invite too
+                console.log('✅ Found pending invite in storage!');
+                // We'll show the org name after they sign up
             }
             
             // Handle OAuth callback
@@ -1439,13 +1449,36 @@
                 
                 if (data.success) {
                     // If invite token exists, accept it to join organization
-                    if (inviteToken && authData.token) {
+                    if (inviteToken) {
                         try {
+                            // ✅ FIX: First poll for the JWT token using session key
+                            const sessionKey = data.sessionKey || authData.token;
+                            console.log('📡 Polling for JWT token with session key:', sessionKey.substring(0, 8) + '...');
+                            
+                            const pollResponse = await fetch(`https://lupo-backend.fly.dev/auth/poll/${sessionKey}`, {
+                                method: 'GET',
+                                headers: { 'Content-Type': 'application/json' }
+                            });
+                            
+                            if (!pollResponse.ok) {
+                                throw new Error('Failed to get JWT token');
+                            }
+                            
+                            const pollData = await pollResponse.json();
+                            const jwtToken = pollData.token;
+                            
+                            if (!jwtToken) {
+                                throw new Error('No JWT token received');
+                            }
+                            
+                            console.log('✅ Got JWT token for invite acceptance');
+                            
+                            // Now accept invite with proper JWT token
                             const acceptResponse = await fetch('https://lupo-backend.fly.dev/api/team/invite/accept', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${authData.token}`
+                                    'Authorization': `Bearer ${jwtToken}`  // ✅ Use JWT, not session key!
                                 },
                                 body: JSON.stringify({
                                     token: inviteToken
@@ -1461,17 +1494,17 @@
                                 sessionStorage.removeItem('pendingInviteToken');
                                 
                                 // Store session key for LUPO polling
-                                const pollData = {
-                                    sessionKey: data.sessionKey || authData.token,
+                                const pollDataForLupo = {
+                                    sessionKey: sessionKey,
                                     timestamp: Date.now()
                                 };
                                 
                                 // FIXED: Use IPC to notify Electron app
                                 if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
-                                    console.log('✅ Notifying Electron app via IPC:', pollData.sessionKey);
-                                    window.electronAPI.notifyAuthSuccess(pollData.sessionKey);
+                                    console.log('✅ Notifying Electron app via IPC:', pollDataForLupo.sessionKey);
+                                    window.electronAPI.notifyAuthSuccess(pollDataForLupo.sessionKey);
                                 } else {
-                                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollDataForLupo));
                                 }
                                 
                                 // Clean up temporary OAuth data
