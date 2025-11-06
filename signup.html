@@ -1155,6 +1155,22 @@
         
         // Check for OAuth callback and invite codes
         window.addEventListener('load', async () => {
+            // ✅ CRITICAL: Clear any existing auth tokens to prevent conflicts
+            // This ensures fresh signups don't accidentally use old tokens
+            // BUT preserve invite tokens (those are needed for team onboarding)
+            const pendingInvite = localStorage.getItem('pendingInviteToken');
+            const sessionInvite = sessionStorage.getItem('pendingInviteToken');
+            
+            localStorage.removeItem('lupo_session');
+            localStorage.removeItem('lupo_manager_token');
+            localStorage.removeItem('lupo_cached_token');
+            
+            // Restore invite tokens if they existed
+            if (pendingInvite) localStorage.setItem('pendingInviteToken', pendingInvite);
+            if (sessionInvite) sessionStorage.setItem('pendingInviteToken', sessionInvite);
+            
+            console.log('🧹 Cleared old auth tokens for fresh signup');
+            
             const urlParams = new URLSearchParams(window.location.search);
             const inviteCode = urlParams.get('invite');
             const orgName = urlParams.get('org');
