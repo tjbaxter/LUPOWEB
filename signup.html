@@ -1497,8 +1497,8 @@
                                         const welcomeHeader = document.querySelector('.welcome-header');
                                         if (welcomeHeader) {
                                             welcomeHeader.innerHTML = `
-                                                <h1>Welcome to ${acceptData.companyName}! 🎉</h1>
-                                                <p>You've joined your team workspace and your AI sales assistant is ready</p>
+                                                <h1>Welcome to LUPO! 🎉</h1>
+                                                <p>You've joined ${acceptData.companyName}'s team workspace and your AI sales assistant is ready</p>
                                             `;
                                         }
                                         return;
@@ -1515,8 +1515,8 @@
                                     const welcomeHeader = document.querySelector('.welcome-header');
                                     if (welcomeHeader) {
                                         welcomeHeader.innerHTML = `
-                                            <h1>Welcome to ${acceptData.companyName}! 🎉</h1>
-                                            <p>You've joined your team workspace and your AI sales assistant is ready</p>
+                                            <h1>Welcome to LUPO! 🎉</h1>
+                                            <p>You've joined ${acceptData.companyName}'s team workspace and your AI sales assistant is ready</p>
                                         `;
                                     }
                                     return;
@@ -1692,8 +1692,8 @@
                                     const welcomeHeader = document.querySelector('.welcome-header');
                                     if (welcomeHeader) {
                                         welcomeHeader.innerHTML = `
-                                            <h1>Welcome to ${acceptData.companyName}! 🎉</h1>
-                                            <p>You've joined your team workspace and your AI sales assistant is ready</p>
+                                            <h1>Welcome to LUPO! 🎉</h1>
+                                            <p>You've joined ${acceptData.companyName}'s team workspace and your AI sales assistant is ready</p>
                                         `;
                                     }
                                     return;
@@ -1712,8 +1712,8 @@
                                 const welcomeHeader = document.querySelector('.welcome-header');
                                 if (welcomeHeader) {
                                     welcomeHeader.innerHTML = `
-                                        <h1>Welcome to ${acceptData.companyName}! 🎉</h1>
-                                        <p>You've joined your team workspace and your AI sales assistant is ready</p>
+                                        <h1>Welcome to LUPO! 🎉</h1>
+                                        <p>You've joined ${acceptData.companyName}'s team workspace and your AI sales assistant is ready</p>
                                     `;
                                 }
                                 return;
@@ -1754,8 +1754,8 @@
                         const welcomeHeader = document.querySelector('.welcome-header');
                         if (welcomeHeader) {
                             welcomeHeader.innerHTML = `
-                                <h1>Welcome to ${data.organization.name}! 🎉</h1>
-                                <p>You've joined your team workspace and your AI sales assistant is ready</p>
+                                <h1>Welcome to LUPO! 🎉</h1>
+                                <p>You've joined ${data.organization.name}'s team workspace and your AI sales assistant is ready</p>
                             `;
                         }
                     }
@@ -1766,8 +1766,8 @@
                         const welcomeHeader = document.querySelector('.welcome-header');
                         if (welcomeHeader) {
                             welcomeHeader.innerHTML = `
-                                <h1>Welcome to ${companyName}! 🎉</h1>
-                                <p>You've joined your team workspace and your AI sales assistant is ready</p>
+                                <h1>Welcome to LUPO! 🎉</h1>
+                                <p>You've joined ${companyName}'s team workspace and your AI sales assistant is ready</p>
                             `;
                         }
                         // Clean up
@@ -1797,6 +1797,12 @@
                 step.classList.remove('active');
             });
             document.getElementById('successStep').classList.add('active');
+            
+            // Hide the company invite banner in success state
+            const companyInviteBanner = document.getElementById('companyInviteBanner');
+            if (companyInviteBanner) {
+                companyInviteBanner.style.display = 'none';
+            }
         }
         
         function showPasswordState() {
