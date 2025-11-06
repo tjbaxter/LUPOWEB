@@ -1128,6 +1128,13 @@
                 window.electronAPI.showAuthLoading();
             }
             
+            // FIXED: Store fromElectron flag in sessionStorage (survives redirects)
+            const urlParams = new URLSearchParams(window.location.search);
+            const fromElectron = urlParams.get('fromElectron') === 'true';
+            if (fromElectron) {
+                sessionStorage.setItem('fromElectron', 'true');
+            }
+            
             const redirectUrl = window.location.origin + '/auth/callback.html';
             window.location.href = 'https://lupo-backend.fly.dev/auth/google?redirect=' + encodeURIComponent(redirectUrl);
         }
@@ -1260,7 +1267,17 @@
         
         async function createAccount() {
             const urlParams = new URLSearchParams(window.location.search);
-            const inviteToken = urlParams.get('invite');
+            // ✅ FIX: Check BOTH URL params AND localStorage for invite token
+            let inviteToken = urlParams.get('invite');
+            
+            // Check localStorage/sessionStorage for pending invite (set by join.html)
+            if (!inviteToken) {
+                inviteToken = localStorage.getItem('pendingInviteToken') || 
+                             sessionStorage.getItem('pendingInviteToken');
+                if (inviteToken) {
+                    console.log('✅ Found pending invite token in storage:', inviteToken.substring(0, 8) + '...');
+                }
+            }
             
             try {
                 // Get device fingerprint (async)
@@ -1311,12 +1328,23 @@
                                     const acceptData = await acceptResponse.json();
                                     console.log('✅ Successfully joined organization:', acceptData.companyName);
                                     
+                                    // ✅ Clean up pending invite token after successful join
+                                    localStorage.removeItem('pendingInviteToken');
+                                    sessionStorage.removeItem('pendingInviteToken');
+                                    
                                     // Store for LUPO polling
                                     const pollDataForLupo = {
                                         sessionKey: data.sessionKey,
                                         timestamp: Date.now()
                                     };
-                                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollDataForLupo));
+                                    
+                                    // FIXED: Use IPC to notify Electron app
+                                    if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
+                                        console.log('✅ Notifying Electron app via IPC:', pollDataForLupo.sessionKey);
+                                        window.electronAPI.notifyAuthSuccess(pollDataForLupo.sessionKey);
+                                    } else {
+                                        localStorage.setItem('lupo_auth_poll', JSON.stringify(pollDataForLupo));
+                                    }
                                     
                                     // Show success with organization name
                                     showSuccessState();
@@ -1346,7 +1374,14 @@
                     sessionKey: data.sessionKey,
                     timestamp: Date.now()
                 };
-                localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                
+                // FIXED: Use IPC to notify Electron app
+                if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
+                    console.log('✅ Notifying Electron app via IPC:', pollData.sessionKey);
+                    window.electronAPI.notifyAuthSuccess(pollData.sessionKey);
+                } else {
+                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                }
                 
                 // Show success
                 showSuccessState();
@@ -1369,9 +1404,18 @@
                     throw new Error('No authentication data found');
                 }
                 
-                // Get invite token if present
+                // ✅ FIX: Get invite token from URL params AND localStorage
                 const urlParams = new URLSearchParams(window.location.search);
-                const inviteToken = urlParams.get('invite');
+                let inviteToken = urlParams.get('invite');
+                
+                // Check localStorage/sessionStorage for pending invite (set by join.html)
+                if (!inviteToken) {
+                    inviteToken = localStorage.getItem('pendingInviteToken') || 
+                                 sessionStorage.getItem('pendingInviteToken');
+                    if (inviteToken) {
+                        console.log('✅ Found pending invite token in storage for OAuth:', inviteToken.substring(0, 8) + '...');
+                    }
+                }
                 
                 // Try OAuth signup endpoint first, fallback to regular signup if needed
                 let response, data;
@@ -1412,12 +1456,23 @@
                                 const acceptData = await acceptResponse.json();
                                 console.log('✅ Successfully joined organization:', acceptData.companyName);
                                 
+                                // ✅ Clean up pending invite token after successful join
+                                localStorage.removeItem('pendingInviteToken');
+                                sessionStorage.removeItem('pendingInviteToken');
+                                
                                 // Store session key for LUPO polling
                                 const pollData = {
                                     sessionKey: data.sessionKey || authData.token,
                                     timestamp: Date.now()
                                 };
-                                localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                                
+                                // FIXED: Use IPC to notify Electron app
+                                if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
+                                    console.log('✅ Notifying Electron app via IPC:', pollData.sessionKey);
+                                    window.electronAPI.notifyAuthSuccess(pollData.sessionKey);
+                                } else {
+                                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                                }
                                 
                                 // Clean up temporary OAuth data
                                 localStorage.removeItem('lupo_oauth_temp');
@@ -1447,7 +1502,16 @@
                         sessionKey: data.sessionKey || authData.token,
                         timestamp: Date.now()
                     };
-                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                    
+                    // FIXED: Use IPC to notify Electron app (preferred method)
+                    if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
+                        console.log('✅ Notifying Electron app via IPC:', pollData.sessionKey);
+                        window.electronAPI.notifyAuthSuccess(pollData.sessionKey);
+                    } else {
+                        // Fallback to localStorage for web browser
+                        localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
+                        console.log('✅ Stored session key in localStorage (fallback)');
+                    }
                     
                     // Clean up temporary OAuth data
                     localStorage.removeItem('lupo_oauth_temp');

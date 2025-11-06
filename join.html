@@ -536,6 +536,24 @@
                 document.getElementById('macDownloadBtn').href = macUrl;
                 document.getElementById('windowsDownloadBtn').href = windowsUrl;
                 
+                // ✅ Add helpful note for existing users
+                const downloadSection = document.querySelector('.download-section');
+                const existingUserNote = document.createElement('p');
+                existingUserNote.style.cssText = `
+                    font-size: 14px;
+                    color: rgba(255, 255, 255, 0.6);
+                    margin-top: 24px;
+                    padding: 16px;
+                    background: rgba(255, 255, 255, 0.05);
+                    border-radius: 8px;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                `;
+                existingUserNote.innerHTML = `
+                    <strong style="color: rgba(255, 255, 255, 0.9);">Already have LUPO installed?</strong><br>
+                    Just sign up in the app using the same email. Your invite will be automatically detected and you'll be added to ${data.companyName}.
+                `;
+                downloadSection.appendChild(existingUserNote);
+                
                 // Don't trigger deep link on download button clicks
                 // If user already has the app, they should click the invite link directly
                 // Download buttons are for NEW users who need to install the app first
@@ -543,6 +561,7 @@
                 // Store token for later use
                 localStorage.setItem('pendingInviteToken', inviteToken);
                 sessionStorage.setItem('pendingInviteToken', inviteToken);
+                console.log('✅ Stored invite token for signup:', inviteToken.substring(0, 8) + '...');
                 
             } catch (error) {
                 console.error('Verification error:', error);
