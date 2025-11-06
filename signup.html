@@ -842,6 +842,47 @@
             text-transform: uppercase;
         }
         
+        /* Company Invite Banner */
+        .company-invite-banner {
+            background: linear-gradient(145deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.10));
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 32px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 0.6s ease 0.2s forwards;
+        }
+        
+        .company-invite-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 12px;
+            color: white;
+        }
+        
+        .company-invite-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            letter-spacing: -0.02em;
+        }
+        
+        .company-invite-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        
         /* Mobile Optimization */
         @media (max-width: 480px) {
             .signup-container {
@@ -865,11 +906,26 @@
     </a>
     
     <div class="signup-container">
+        <!-- Company Invite Banner (hidden by default, shown when invite detected) -->
+        <div class="company-invite-banner" id="companyInviteBanner" style="display: none;">
+            <div class="company-invite-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                Team Invitation
+            </div>
+            <div class="company-invite-name" id="companyName">Loading...</div>
+            <div class="company-invite-subtitle">You've been invited to join the team</div>
+        </div>
+        
         <!-- Step 1: Email -->
         <div class="form-step active" id="emailStep">
             <div class="signup-header">
-                <h1>Get Started</h1>
-                <p>Real-time sales intelligence for closing more deals</p>
+                <h1 id="signupTitle">Get Started</h1>
+                <p id="signupSubtitle">Real-time sales intelligence for closing more deals</p>
             </div>
             
             <!-- Social Auth Options -->
@@ -1121,6 +1177,46 @@
             provider: 'email'
         };
         
+        // ✅ NEW: Load and display company information from invite token
+        async function loadCompanyInfo(inviteToken) {
+            try {
+                console.log('📡 Fetching company info for token:', inviteToken.substring(0, 8) + '...');
+                
+                const response = await fetch(`https://lupo-backend.fly.dev/api/team/invite/validate/${inviteToken}`);
+                const data = await response.json();
+                
+                if (response.ok && data.valid && data.companyName) {
+                    console.log('✅ Company info loaded:', data.companyName);
+                    
+                    // Show the company banner
+                    const banner = document.getElementById('companyInviteBanner');
+                    const companyNameEl = document.getElementById('companyName');
+                    
+                    if (banner && companyNameEl) {
+                        companyNameEl.textContent = data.companyName;
+                        banner.style.display = 'block';
+                        
+                        // Update signup header for company context
+                        const title = document.getElementById('signupTitle');
+                        const subtitle = document.getElementById('signupSubtitle');
+                        if (title) title.textContent = 'Join Your Team';
+                        if (subtitle) subtitle.textContent = `Create your account to join ${data.companyName}`;
+                    }
+                    
+                    // Store company name for later use in success message
+                    sessionStorage.setItem('inviteCompanyName', data.companyName);
+                } else {
+                    console.warn('⚠️ Invalid or expired invite token');
+                    // Clear invalid token
+                    localStorage.removeItem('pendingInviteToken');
+                    sessionStorage.removeItem('pendingInviteToken');
+                }
+            } catch (error) {
+                console.error('❌ Error loading company info:', error);
+                // Don't block signup if company info fails to load
+            }
+        }
+        
         // Social Auth Functions
         async function signUpWithGoogle() {
             // Notify Electron app to show loading animation immediately
@@ -1155,6 +1251,15 @@
         
         // Check for OAuth callback and invite codes
         window.addEventListener('load', async () => {
+            // ✅ CRITICAL: Store fromElectron flag in sessionStorage if present in URL
+            // This preserves the flag even if URL changes (e.g., OAuth redirects)
+            const urlParams = new URLSearchParams(window.location.search);
+            const fromElectronParam = urlParams.get('fromElectron') === 'true';
+            if (fromElectronParam) {
+                sessionStorage.setItem('fromElectron', 'true');
+                console.log('✅ Stored fromElectron=true in sessionStorage');
+            }
+            
             // ✅ CRITICAL: Clear any existing auth tokens to prevent conflicts
             // This ensures fresh signups don't accidentally use old tokens
             // BUT preserve invite tokens (those are needed for team onboarding)
@@ -1171,7 +1276,7 @@
             
             console.log('🧹 Cleared old auth tokens for fresh signup');
             
-            const urlParams = new URLSearchParams(window.location.search);
+            // Reuse urlParams from above (already declared at line 1256)
             const inviteCode = urlParams.get('invite');
             const orgName = urlParams.get('org');
             const isOAuth = urlParams.get('oauth') === 'true';
@@ -1183,17 +1288,22 @@
             console.log('   localStorage pendingInviteToken:', localStorage.getItem('pendingInviteToken'));
             console.log('   sessionStorage pendingInviteToken:', sessionStorage.getItem('pendingInviteToken'));
             
-            // Show enterprise indicator if joining via invite
+            // Get invite token from URL or storage
+            let inviteToken = inviteCode || localStorage.getItem('pendingInviteToken') || sessionStorage.getItem('pendingInviteToken');
+            
+            // ✅ NEW: Fetch and display company info if invite token exists
+            if (inviteToken) {
+                console.log('✅ Found invite token, fetching company info...');
+                await loadCompanyInfo(inviteToken);
+            }
+            
+            // Show enterprise indicator if joining via invite (legacy support)
             if (inviteCode && orgName) {
                 const header = document.querySelector('.signup-header');
                 const indicator = document.createElement('div');
                 indicator.className = 'enterprise-indicator';
                 indicator.textContent = `Joining ${orgName}`;
                 header.insertBefore(indicator, header.firstChild);
-            } else if (localStorage.getItem('pendingInviteToken') || sessionStorage.getItem('pendingInviteToken')) {
-                // ✅ NEW: Show indicator for localStorage invite too
-                console.log('✅ Found pending invite in storage!');
-                // We'll show the org name after they sign up
             }
             
             // Handle OAuth callback
@@ -1354,21 +1464,49 @@
                                     const acceptData = await acceptResponse.json();
                                     console.log('✅ Successfully joined organization:', acceptData.companyName);
                                     
+                                    // ✅ CRITICAL: Use the NEW session key from invite acceptance
+                                    // This session key has the updated user data (now enterprise)
+                                    const updatedSessionKey = acceptData.sessionKey || data.sessionKey;
+                                    console.log('🔑 Using session key for deep link:', updatedSessionKey.substring(0, 8) + '...');
+                                    
                                     // ✅ Clean up pending invite token after successful join
                                     localStorage.removeItem('pendingInviteToken');
                                     sessionStorage.removeItem('pendingInviteToken');
                                     
                                     // Store for LUPO polling
                                     const pollDataForLupo = {
-                                        sessionKey: data.sessionKey,
+                                        sessionKey: updatedSessionKey,
                                         timestamp: Date.now()
                                     };
                                     
-                                    // FIXED: Use IPC to notify Electron app
-                                    if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
-                                        console.log('✅ Notifying Electron app via IPC:', pollDataForLupo.sessionKey);
-                                        window.electronAPI.notifyAuthSuccess(pollDataForLupo.sessionKey);
+                                    // Check if opened from Electron (URL parameter OR sessionStorage)
+                                    // Reuse urlParams from top of load event
+                                    const fromElectron = urlParams.get('fromElectron') === 'true' || sessionStorage.getItem('fromElectron') === 'true';
+                                    
+                                    console.log('🔍 DEBUG: fromElectron =', fromElectron, ', window.electronAPI =', !!window.electronAPI);
+                                    console.log('🔍 DEBUG: Current URL =', window.location.href);
+                                    console.log('🔍 DEBUG: sessionStorage.fromElectron =', sessionStorage.getItem('fromElectron'));
+                                    
+                                    // CRITICAL FIX: Use deep link for system browser, IPC for Electron window
+                                    if (fromElectron && !window.electronAPI) {
+                                        // Electron app opened this in system browser - use deep link
+                                        console.log('✅ Triggering deep link for Electron (team invite): lupo://auth-success');
+                                        window.location.href = `lupo://auth-success?sessionKey=${encodeURIComponent(updatedSessionKey)}`;
+                                        // Show success message while redirecting
+                                        showSuccessState();
+                                        const welcomeHeader = document.querySelector('.welcome-header');
+                                        if (welcomeHeader) {
+                                            welcomeHeader.innerHTML = `
+                                                <h1>Welcome to ${acceptData.companyName}! 🎉</h1>
+                                                <p>You've joined your team workspace and your AI sales assistant is ready</p>
+                                            `;
+                                        }
+                                        return;
+                                    } else if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
+                                        console.log('✅ Notifying Electron app via IPC (team member signup):', pollDataForLupo.sessionKey);
+                                        await window.electronAPI.notifyAuthSuccess(pollDataForLupo.sessionKey);
                                     } else {
+                                        // For web browser - store for polling
                                         localStorage.setItem('lupo_auth_poll', JSON.stringify(pollDataForLupo));
                                     }
                                     
@@ -1377,7 +1515,7 @@
                                     const welcomeHeader = document.querySelector('.welcome-header');
                                     if (welcomeHeader) {
                                         welcomeHeader.innerHTML = `
-                                            <h1>Welcome to ${acceptData.companyName}!</h1>
+                                            <h1>Welcome to ${acceptData.companyName}! 🎉</h1>
                                             <p>You've joined your team workspace and your AI sales assistant is ready</p>
                                         `;
                                     }
@@ -1401,8 +1539,23 @@
                     timestamp: Date.now()
                 };
                 
-                // FIXED: Use IPC to notify Electron app
-                if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
+                // Check if opened from Electron (URL parameter OR sessionStorage)
+                // Reuse urlParams from top of load event
+                const fromElectron = urlParams.get('fromElectron') === 'true' || sessionStorage.getItem('fromElectron') === 'true';
+                
+                console.log('🔍 DEBUG (email/password): fromElectron =', fromElectron, ', window.electronAPI =', !!window.electronAPI);
+                console.log('🔍 DEBUG: Current URL =', window.location.href);
+                console.log('🔍 DEBUG: sessionStorage.fromElectron =', sessionStorage.getItem('fromElectron'));
+                
+                // FIXED: Use deep link for system browser, IPC for Electron window
+                if (fromElectron && !window.electronAPI) {
+                    // Electron app opened this in system browser - use deep link
+                    console.log('✅ Triggering deep link for Electron: lupo://auth-success');
+                    window.location.href = `lupo://auth-success?sessionKey=${encodeURIComponent(data.sessionKey)}`;
+                    // Show success message while redirecting
+                    showSuccessState();
+                    return;
+                } else if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
                     console.log('✅ Notifying Electron app via IPC:', pollData.sessionKey);
                     window.electronAPI.notifyAuthSuccess(pollData.sessionKey);
                 } else {
@@ -1505,18 +1658,46 @@
                                 const acceptData = await acceptResponse.json();
                                 console.log('✅ Successfully joined organization:', acceptData.companyName);
                                 
+                                // ✅ CRITICAL: Use the NEW session key from invite acceptance
+                                // This session key has the updated user data (now enterprise)
+                                const updatedSessionKey = acceptData.sessionKey || sessionKey;
+                                console.log('🔑 Using session key for deep link (OAuth):', updatedSessionKey.substring(0, 8) + '...');
+                                
                                 // ✅ Clean up pending invite token after successful join
                                 localStorage.removeItem('pendingInviteToken');
                                 sessionStorage.removeItem('pendingInviteToken');
                                 
                                 // Store session key for LUPO polling
                                 const pollDataForLupo = {
-                                    sessionKey: sessionKey,
+                                    sessionKey: updatedSessionKey,
                                     timestamp: Date.now()
                                 };
                                 
-                                // FIXED: Use IPC to notify Electron app
-                                if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
+                                // Check if opened from Electron (URL parameter OR sessionStorage)
+                                // Reuse urlParams from top of load event
+                                const fromElectron = urlParams.get('fromElectron') === 'true' || sessionStorage.getItem('fromElectron') === 'true';
+                                
+                                console.log('🔍 DEBUG (OAuth team invite): fromElectron =', fromElectron, ', window.electronAPI =', !!window.electronAPI);
+                                console.log('🔍 DEBUG: Current URL =', window.location.href);
+                                console.log('🔍 DEBUG: sessionStorage.fromElectron =', sessionStorage.getItem('fromElectron'));
+                                
+                                // FIXED: Use deep link for system browser, IPC for Electron window  
+                                if (fromElectron && !window.electronAPI) {
+                                    // Electron app opened this in system browser - use deep link
+                                    console.log('✅ Triggering deep link for Electron (OAuth team invite): lupo://auth-success');
+                                    window.location.href = `lupo://auth-success?sessionKey=${encodeURIComponent(updatedSessionKey)}`;
+                                    // Show success message while redirecting
+                                    localStorage.removeItem('lupo_oauth_temp');
+                                    showSuccessState();
+                                    const welcomeHeader = document.querySelector('.welcome-header');
+                                    if (welcomeHeader) {
+                                        welcomeHeader.innerHTML = `
+                                            <h1>Welcome to ${acceptData.companyName}! 🎉</h1>
+                                            <p>You've joined your team workspace and your AI sales assistant is ready</p>
+                                        `;
+                                    }
+                                    return;
+                                } else if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
                                     console.log('✅ Notifying Electron app via IPC:', pollDataForLupo.sessionKey);
                                     window.electronAPI.notifyAuthSuccess(pollDataForLupo.sessionKey);
                                 } else {
@@ -1531,7 +1712,7 @@
                                 const welcomeHeader = document.querySelector('.welcome-header');
                                 if (welcomeHeader) {
                                     welcomeHeader.innerHTML = `
-                                        <h1>Welcome to ${acceptData.companyName}!</h1>
+                                        <h1>Welcome to ${acceptData.companyName}! 🎉</h1>
                                         <p>You've joined your team workspace and your AI sales assistant is ready</p>
                                     `;
                                 }
@@ -1573,10 +1754,24 @@
                         const welcomeHeader = document.querySelector('.welcome-header');
                         if (welcomeHeader) {
                             welcomeHeader.innerHTML = `
-                                <h1>Welcome to ${data.organization.name}!</h1>
+                                <h1>Welcome to ${data.organization.name}! 🎉</h1>
                                 <p>You've joined your team workspace and your AI sales assistant is ready</p>
                             `;
                         }
+                    }
+                    
+                    // ✅ NEW: Also check sessionStorage for company name
+                    const companyName = sessionStorage.getItem('inviteCompanyName');
+                    if (inviteToken && companyName) {
+                        const welcomeHeader = document.querySelector('.welcome-header');
+                        if (welcomeHeader) {
+                            welcomeHeader.innerHTML = `
+                                <h1>Welcome to ${companyName}! 🎉</h1>
+                                <p>You've joined your team workspace and your AI sales assistant is ready</p>
+                            `;
+                        }
+                        // Clean up
+                        sessionStorage.removeItem('inviteCompanyName');
                     }
                 } else {
                     throw new Error(data.error || 'Failed to complete OAuth signup');
