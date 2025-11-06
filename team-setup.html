@@ -380,8 +380,15 @@
     <div id="errorMessage" class="error-message"></div>
 
     <form id="setupForm">
+      <!-- Email field (hidden if user is authenticated) -->
+      <div class="form-group" id="emailFieldGroup">
+        <label class="form-label" for="email">Your Email *</label>
+        <input type="email" id="email" class="form-input" placeholder="you@company.com">
+        <div class="form-hint">We'll use this for your admin account</div>
+      </div>
+
       <div class="form-group">
-        <label class="form-label" for="teamName">Team Name *</label>
+        <label class="form-label" for="teamName">Company Name *</label>
         <input type="text" id="teamName" class="form-input" placeholder="e.g., Acme Sales Team" required>
       </div>
 
@@ -458,15 +465,79 @@
     managerSeatCheckbox.addEventListener('change', updatePrice);
 
     // Handle form submission
-    document.getElementById('setupForm').addEventListener('submit', async (e) => {
+      // Check authentication status on page load
+      async function checkAuthStatus() {
+        // First check if email is in URL (from Electron app)
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlEmail = urlParams.get('email');
+        
+        if (urlEmail) {
+          // Email from URL - treat as authenticated
+          document.getElementById('emailFieldGroup').style.display = 'none';
+          document.getElementById('email').value = urlEmail;
+          document.getElementById('email').removeAttribute('required');
+          console.log('✅ Email from URL:', urlEmail);
+          return { userId: null, email: urlEmail, token: null };
+        }
+        
+        // Check localStorage for valid tokens
+        const tokenKeys = ['lupoToken', 'lupo_manager_token', 'lupo_session'];
+        
+        for (const key of tokenKeys) {
+          const token = localStorage.getItem(key);
+          if (token) {
+            try {
+              const authCheck = await fetch(`${BACKEND_URL}/auth/me`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+              });
+              
+              if (authCheck.ok) {
+                const userData = await authCheck.json();
+                // User is authenticated - hide email field and pre-fill it
+                document.getElementById('emailFieldGroup').style.display = 'none';
+                document.getElementById('email').value = userData.email;
+                document.getElementById('email').removeAttribute('required');
+                console.log('✅ Authenticated as:', userData.email);
+                return { userId: userData.userId, email: userData.email, token };
+              } else {
+                console.warn(`⚠️ Token from ${key} is invalid - removing`);
+                localStorage.removeItem(key); // Clean up invalid token
+              }
+            } catch (err) {
+              console.warn(`⚠️ Error validating token from ${key}:`, err);
+              localStorage.removeItem(key);
+            }
+          }
+        }
+        
+        // No valid token and no URL email - show email field
+        document.getElementById('emailFieldGroup').style.display = 'block';
+        document.getElementById('email').setAttribute('required', 'required');
+        console.log('⚠️ No authentication found - please log in or enter email');
+        console.log('💡 If you just tried to upgrade, you may need to log out and back in to refresh your token');
+        return null;
+      }
+      
+      // Check auth on page load
+      let authData = null;
+      checkAuthStatus().then(data => {
+        authData = data;
+      });
+
+      document.getElementById('setupForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const teamName = document.getElementById('teamName').value.trim();
       const seats = parseInt(document.getElementById('seats').value);
       const managerSeatIncluded = managerSeatCheckbox.checked;
+      const emailInput = document.getElementById('email');
       const btn = document.getElementById('submitBtn');
 
-      if (!teamName || !seats || seats < 2) {
+      // Get email from authenticated user OR from form field
+      let email = authData ? authData.email : emailInput.value.trim();
+      let userId = authData ? authData.userId : null;
+
+      if (!teamName || !seats || seats < 2 || !email) {
         showError('Please fill in all required fields');
         return;
       }
@@ -477,40 +548,6 @@
       errorDiv.classList.remove('show');
 
         try {
-          // Get userId and email from JWT token if available
-          let userId = null;
-          let email = null;
-          
-          // Try to get current authenticated user from backend
-          const tokenKeys = ['lupoToken', 'lupo_manager_token', 'lupo_session'];
-          let validToken = null;
-          
-          for (const key of tokenKeys) {
-            const token = localStorage.getItem(key);
-            if (token) {
-              try {
-                // Verify token is valid by checking with backend
-                const authCheck = await fetch(`${BACKEND_URL}/auth/me`, {
-                  headers: { 'Authorization': `Bearer ${token}` }
-                });
-                
-                if (authCheck.ok) {
-                  const userData = await authCheck.json();
-                  userId = userData.userId;
-                  email = userData.email;
-                  validToken = token;
-                  console.log('✅ Got authenticated user:', email, userId);
-                  break; // Found valid token, stop looking
-                } else {
-                  console.warn(`❌ Token from ${key} is invalid, trying next...`);
-                  localStorage.removeItem(key); // Clean up invalid token
-                }
-              } catch (err) {
-                console.warn(`Failed to validate token from ${key}:`, err);
-                localStorage.removeItem(key); // Clean up bad token
-              }
-            }
-          }
           
           // Create Stripe Checkout session
           const response = await fetch(`${BACKEND_URL}/api/team/checkout/create`, {
