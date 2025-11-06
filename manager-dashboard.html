@@ -1715,7 +1715,15 @@
                 
                 // NEW: Show "My Calls" button if manager has call access
                 if (currentUser && currentUser.has_call_access) {
-                    document.getElementById('myCallsBtn').style.display = 'flex';
+                    const myCallsBtn = document.getElementById('myCallsBtn');
+                    myCallsBtn.style.display = 'flex';
+                    
+                    // CRITICAL: Pass the auth token to sales-manager-dash
+                    // Store it in localStorage so sales-manager-dash can access it
+                    if (authToken) {
+                        localStorage.setItem('lupo_session', authToken);
+                    }
+                    
                     console.log('✅ Manager has call access - showing My Calls button');
                 } else {
                     console.log('ℹ️ Manager is admin-only - hiding My Calls button (has_call_access:', currentUser?.has_call_access, ')');
