@@ -477,19 +477,38 @@
       errorDiv.classList.remove('show');
 
         try {
-          // Get userId from JWT token if available
+          // Get userId and email from JWT token if available
           let userId = null;
-          const token = localStorage.getItem('lupoToken') || 
-                        localStorage.getItem('lupo_manager_token') || 
-                        localStorage.getItem('lupo_session');
+          let email = null;
           
-          if (token) {
-            try {
-              const payload = JSON.parse(atob(token.split('.')[1]));
-              userId = payload.userId;
-              console.log('✅ Got userId from token:', userId);
-            } catch (err) {
-              console.warn('Failed to decode token:', err);
+          // Try to get current authenticated user from backend
+          const tokenKeys = ['lupoToken', 'lupo_manager_token', 'lupo_session'];
+          let validToken = null;
+          
+          for (const key of tokenKeys) {
+            const token = localStorage.getItem(key);
+            if (token) {
+              try {
+                // Verify token is valid by checking with backend
+                const authCheck = await fetch(`${BACKEND_URL}/auth/me`, {
+                  headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (authCheck.ok) {
+                  const userData = await authCheck.json();
+                  userId = userData.userId;
+                  email = userData.email;
+                  validToken = token;
+                  console.log('✅ Got authenticated user:', email, userId);
+                  break; // Found valid token, stop looking
+                } else {
+                  console.warn(`❌ Token from ${key} is invalid, trying next...`);
+                  localStorage.removeItem(key); // Clean up invalid token
+                }
+              } catch (err) {
+                console.warn(`Failed to validate token from ${key}:`, err);
+                localStorage.removeItem(key); // Clean up bad token
+              }
             }
           }
           
@@ -503,7 +522,8 @@
               teamName,
               seats,
               managerSeatIncluded,
-              userId // Send userId if available (authenticated upgrade flow)
+              userId, // Send userId if available (authenticated upgrade flow)
+              email // Send email from token if available
             })
           });
 
