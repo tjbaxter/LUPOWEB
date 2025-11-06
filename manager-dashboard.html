@@ -1474,6 +1474,21 @@
                         console.log('✅ Using cached authentication (instant)');
                         isAuthenticated = true;
                         authHeaders = { 'Authorization': `Bearer ${authToken}` }; // SET HEADERS
+                        
+                        // CRITICAL: Always refresh currentUser from /auth/me to get latest has_call_access
+                        try {
+                            const response = await fetch(`${AUTH_CONFIG.apiUrl}/auth/me`, {
+                                headers: authHeaders,
+                                cache: 'no-cache'
+                            });
+                            if (response.ok) {
+                                const data = await response.json();
+                                currentUser = data.user; // Update with fresh data including has_call_access
+                            }
+                        } catch (err) {
+                            console.warn('Failed to refresh user data:', err);
+                        }
+                        
                         overlay.classList.add('hidden');
                         
                         // Only initialize if not already initialized
