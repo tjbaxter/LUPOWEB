@@ -1081,54 +1081,36 @@
     <div class="container">
         <!-- Time Filter -->
         <div class="time-filter">
-            <button class="filter-btn active" data-period="today">Today</button>
-            <button class="filter-btn" data-period="week">This Week</button>
-            <button class="filter-btn" data-period="month">This Month</button>
+            <button class="filter-btn active" data-period="week">Last 7 days</button>
+            <button class="filter-btn" data-period="month">Last 30 days</button>
+            <button class="filter-btn" data-period="all">All time</button>
         </div>
         
-        <!-- Main KPI -->
-        <div class="kpi-section">
-            <div class="kpi-value" id="criticalCount" style="min-width: 120px;">--</div>
-            <div class="kpi-label">Critical Moments Detected</div>
-            <div class="kpi-subtitle">Objections and risks LUPO flagged</div>
-            <div class="kpi-sparkline" id="criticalTrend"></div>
-        </div>
-        
-        <!-- Supporting Metrics -->
-        <div class="metrics-grid">
-            <div class="metric-card">
-                <div class="metric-value" id="callsWithLUPO" style="min-width: 60px;">--</div>
-                <div class="metric-label">LUPO Coverage</div>
-                <div class="metric-subtitle">% of calls with assistance</div>
+        <!-- Three Key Metrics -->
+        <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;">
+            <div class="metric-card" style="padding: 2.5rem 2rem;">
+                <div class="metric-value" id="seatsActive" style="min-width: 100px; font-size: 3.5rem;">--</div>
+                <div class="metric-label" style="font-size: 0.875rem; margin-top: 1rem;">Seats Active This Week</div>
+                <div class="metric-subtitle" id="seatsSubtitle">out of -- paid seats</div>
             </div>
             
-            <div class="metric-card">
-                <div class="metric-value" id="momentumRate" style="min-width: 60px;">--</div>
-                <div class="metric-label">Forward Momentum</div>
-                <div class="metric-subtitle">% securing next steps</div>
+            <div class="metric-card" style="padding: 2.5rem 2rem;">
+                <div class="metric-value" id="totalMinutes" style="min-width: 100px; font-size: 3.5rem;">--</div>
+                <div class="metric-label" style="font-size: 0.875rem; margin-top: 1rem;">Minutes of Live Coaching</div>
+                <div class="metric-subtitle" id="minutesSubtitle">this week</div>
             </div>
             
-            <div class="metric-card">
-                <div class="metric-value" id="topObjection" style="min-width: 100px;">--</div>
-                <div class="metric-label">Top Objection</div>
-                <div class="metric-subtitle" id="objectionCount">this period</div>
-            </div>
-            
-            <div class="metric-card">
-                <div class="metric-value" id="totalCalls" style="min-width: 60px;">--</div>
-                <div class="metric-label">Total Calls</div>
-                <div class="metric-subtitle">analyzed this period</div>
+            <div class="metric-card" style="padding: 2.5rem 2rem;">
+                <div class="metric-value" id="totalCalls" style="min-width: 100px; font-size: 3.5rem;">--</div>
+                <div class="metric-label" style="font-size: 0.875rem; margin-top: 1rem;">Calls Coached</div>
+                <div class="metric-subtitle" id="callsSubtitle">this week</div>
             </div>
         </div>
         
-        <!-- Invite Team Section -->
-        <div class="invite-section" id="inviteSection" style="display: none !important;">
-            <!-- Hidden - Invite now in header -->
-        </div>
-        
-        <!-- Action Button -->
-        <div class="action-section">
-            <a href="#" class="primary-btn" id="contextBtn">Configure Sales Context</a>
+        <!-- Action Buttons -->
+        <div class="action-section" style="display: flex; gap: 1rem; justify-content: center;">
+            <a href="#" class="primary-btn" id="contextBtn" style="background: var(--accent);">Team Settings</a>
+            <a href="#" class="primary-btn" id="billingBtn" style="background: var(--surface); border: 1px solid var(--border); color: var(--text);">Manage Subscription</a>
         </div>
     </div>
     
@@ -1189,7 +1171,7 @@
         let authToken = null;
         let authHeaders = {};
         let accessMethod = null; // 'electron', 'web', or null
-        let currentPeriod = 'today';
+        let currentPeriod = 'week'; // Default to 'Last 7 days'
         let complianceDetails = [];
         let isAuthenticated = false; // Cache authentication state
         let currentUser = null; // Store current user data
@@ -1698,20 +1680,21 @@
         }
         
         async function initializeDashboard() {
-            // Setup context button - different behavior based on access method
+            // Setup action buttons
             const contextBtn = document.getElementById('contextBtn');
-            const configLink = document.getElementById('configLink');
+            const billingBtn = document.getElementById('billingBtn');
             
             if (accessMethod === 'electron') {
                 // For Electron users, pass token in URL (they're already authenticated)
                 const contextUrl = `/sales-context.html?token=${encodeURIComponent(authToken)}`;
                 contextBtn.href = contextUrl;
-                // configLink.href = contextUrl; // REMOVED: configLink is in commented-out compliance tile
             } else {
                 // For web users, use regular link (they'll use cookies/localStorage)
                 contextBtn.href = '/sales-context.html';
-                // configLink.href = '/sales-context.html'; // REMOVED: configLink is in commented-out compliance tile
             }
+            
+            // Setup billing portal link
+            setupBillingPortal();
             
             // Load initial data with error handling (don't fail auth if data load fails)
             try {
@@ -1922,63 +1905,48 @@
         });
         
         function updateDashboard(metrics) {
-            // Main KPI
-            const countEl = document.getElementById('criticalCount');
-            countEl.textContent = metrics.criticalMoments || '0';
-            countEl.classList.remove('skeleton');
-            countEl.style = '';
+            // Get period label for subtitles
+            const periodLabel = currentPeriod === 'week' ? 'this week' : 
+                               currentPeriod === 'month' ? 'last 30 days' : 
+                               'all time';
             
-            // Trend
-            const trendEl = document.getElementById('criticalTrend');
-            if (metrics.criticalTrend && metrics.criticalTrend !== 0) {
-                const isPositive = metrics.criticalTrend > 0;
-                trendEl.innerHTML = `
-                    <span class="${isPositive ? 'trend-positive' : 'trend-negative'}">
-                        ${isPositive ? '↑' : '↓'} ${Math.abs(metrics.criticalTrend)}% from previous ${currentPeriod === 'today' ? 'day' : currentPeriod}
-                    </span>
-                `;
-            } else {
-                trendEl.innerHTML = '<span>No change from previous period</span>';
-            }
+            // 1. SEATS ACTIVE
+            const seatsActiveEl = document.getElementById('seatsActive');
+            const activeSeats = metrics.activeSeats || 0;
+            const totalSeats = metrics.totalSeats || 0;
+            seatsActiveEl.textContent = `${activeSeats}/${totalSeats}`;
+            seatsActiveEl.classList.remove('skeleton');
+            seatsActiveEl.style = '';
             
-            // Metrics
-            document.getElementById('callsWithLUPO').textContent = `${metrics.usageRate || 0}%`;
-            document.getElementById('callsWithLUPO').classList.remove('skeleton');
-            document.getElementById('callsWithLUPO').style = '';
+            const seatsSubtitle = document.getElementById('seatsSubtitle');
+            seatsSubtitle.textContent = `out of ${totalSeats} paid seats`;
             
-            document.getElementById('momentumRate').textContent = `${metrics.momentumRate || 0}%`;
-            document.getElementById('momentumRate').classList.remove('skeleton');
-            document.getElementById('momentumRate').style = '';
+            // 2. TOTAL MINUTES COACHED
+            const totalMinutesEl = document.getElementById('totalMinutes');
+            const totalMinutes = metrics.totalMinutes || 0;
+            totalMinutesEl.textContent = totalMinutes;
+            totalMinutesEl.classList.remove('skeleton');
+            totalMinutesEl.style = '';
             
-            // Top Objection
-            const objectionEl = document.getElementById('topObjection');
-            const periodLabel = currentPeriod === 'today' ? 'today' : `this ${currentPeriod}`;
-            if (metrics.topObjection) {
-                objectionEl.textContent = metrics.topObjection.type;
-                document.getElementById('objectionCount').textContent = `appeared ${metrics.topObjection.count}× ${periodLabel}`;
-            } else {
-                objectionEl.textContent = 'None yet';
-                document.getElementById('objectionCount').textContent = 'no objections tracked';
-            }
-            objectionEl.classList.remove('skeleton');
-            objectionEl.style = '';
+            const minutesSubtitle = document.getElementById('minutesSubtitle');
+            minutesSubtitle.textContent = periodLabel;
             
+            // 3. TOTAL CALLS
             const totalCallsEl = document.getElementById('totalCalls');
-            if (totalCallsEl) {
-                totalCallsEl.textContent = metrics.totalCalls || 0;
-                totalCallsEl.classList.remove('skeleton');
-                totalCallsEl.style = '';
-            }
+            const totalCalls = metrics.totalCalls || 0;
+            totalCallsEl.textContent = totalCalls;
+            totalCallsEl.classList.remove('skeleton');
+            totalCallsEl.style = '';
+            
+            const callsSubtitle = document.getElementById('callsSubtitle');
+            callsSubtitle.textContent = periodLabel;
             
             // Header stats
             const repsActiveEl = document.getElementById('repsActive');
             const liveCallsEl = document.getElementById('liveCalls');
-            if (repsActiveEl) repsActiveEl.textContent = metrics.totalReps || 0;
+            if (repsActiveEl) repsActiveEl.textContent = activeSeats || 0;
             if (liveCallsEl) liveCallsEl.textContent = metrics.activeCalls || 0;
             document.getElementById('liveCalls').style.color = metrics.activeCalls > 0 ? 'var(--success)' : 'var(--text-dim)';
-            
-            // Compliance tile - COMMENTED OUT
-            // updateComplianceTile(metrics.compliance);
         }
         
         function updateComplianceTile(compliance) {
@@ -2135,18 +2103,45 @@
                     loadData();
                 });
             });
+        }
+        
+        async function setupBillingPortal() {
+            const billingBtn = document.getElementById('billingBtn');
             
-            // Close modal on background click
-            document.getElementById('complianceModal').addEventListener('click', (e) => {
-                if (e.target.id === 'complianceModal') {
-                    closeModal();
-                }
-            });
-            
-            // Close tooltip when clicking elsewhere
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('.compliance-tile')) {
-                    document.getElementById('infoTooltip').classList.remove('show');
+            billingBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                
+                // Show loading state
+                billingBtn.textContent = 'Loading...';
+                billingBtn.style.opacity = '0.6';
+                billingBtn.style.pointerEvents = 'none';
+                
+                try {
+                    const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/portal`, {
+                        method: 'POST',
+                        headers: authHeaders
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to create portal session');
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.url) {
+                        // Redirect to Stripe billing portal
+                        window.location.href = data.url;
+                    } else {
+                        throw new Error('No portal URL returned');
+                    }
+                } catch (error) {
+                    console.error('Billing portal error:', error);
+                    alert('Unable to open billing portal. Please contact support.');
+                    
+                    // Reset button
+                    billingBtn.textContent = 'Manage Subscription';
+                    billingBtn.style.opacity = '1';
+                    billingBtn.style.pointerEvents = 'auto';
                 }
             });
         }
