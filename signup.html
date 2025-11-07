@@ -1326,7 +1326,7 @@
             
             // Block consumer email domains
             if (isConsumerEmail(email)) {
-                emailError.textContent = 'Please use a work email address. Consumer emails (Gmail, Yahoo, etc.) are not allowed';
+                emailError.textContent = 'Please use your work email (not personal Gmail/Yahoo)';
                 emailError.classList.add('show');
                 document.getElementById('email').classList.add('error');
                 return;
