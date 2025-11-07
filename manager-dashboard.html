@@ -2060,10 +2060,31 @@
                 } else {
                     console.log('✅ Rendering team members...');
                     membersList.innerHTML = members.map(member => {
-                        const initials = getInitials(member.firstName || '', member.lastName || '');
-                        const gradient = getAvatarGradient((member.firstName || '') + (member.lastName || ''));
+                        // Extract name from email if firstName/lastName not available
+                        let displayName = [member.firstName, member.lastName].filter(Boolean).join(' ');
+                        if (!displayName && member.email) {
+                            // Extract name from email (e.g., "ragnar@katergat.com" -> "Ragnar")
+                            const emailName = member.email.split('@')[0];
+                            displayName = emailName.charAt(0).toUpperCase() + emailName.slice(1);
+                        }
+                        if (!displayName) {
+                            displayName = 'Team Member';
+                        }
+                        
+                        // Get initials from name or email
+                        let initials;
+                        if (member.firstName || member.lastName) {
+                            initials = getInitials(member.firstName || '', member.lastName || '');
+                        } else if (member.email) {
+                            // Use first two letters of email username
+                            const emailName = member.email.split('@')[0];
+                            initials = emailName.substring(0, 2).toUpperCase();
+                        } else {
+                            initials = '?';
+                        }
+                        
+                        const gradient = getAvatarGradient(displayName + (member.email || ''));
                         const joinDate = member.joinedAt ? formatJoinDate(member.joinedAt) : 'Recently';
-                        const displayName = [member.firstName, member.lastName].filter(Boolean).join(' ') || 'Team Member';
                         
                         console.log(`   - Rendering: ${displayName} (${member.email})`);
                         
