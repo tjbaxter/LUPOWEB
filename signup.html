@@ -169,6 +169,25 @@
             margin-bottom: 24px;
         }
         
+        /* Name fields side by side */
+        .name-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        @media (max-width: 480px) {
+            .name-fields {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            
+            .name-fields .form-group {
+                margin-bottom: 24px;
+            }
+        }
+        
         .form-label {
             display: block;
             font-size: 14px;
@@ -881,40 +900,14 @@
             <div class="company-invite-subtitle">You've been invited to join the team</div>
         </div>
         
-        <!-- Single Step: All Info -->
-        <div class="form-step active" id="signupStep">
+        <!-- Step 1: Email -->
+        <div class="form-step active" id="emailStep">
             <div class="signup-header">
                 <h1 id="signupTitle">Get Started</h1>
                 <p id="signupSubtitle">Real-time sales intelligence for closing more deals</p>
             </div>
             
-            <form onsubmit="handleSignupSubmit(event)">
-                <div class="form-group">
-                    <label class="form-label" for="firstName">First name</label>
-                    <input 
-                        type="text" 
-                        id="firstName" 
-                        class="form-input" 
-                        placeholder="John"
-                        required
-                        autocomplete="given-name"
-                    >
-                    <div class="error-message" id="firstNameError"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label" for="lastName">Last name</label>
-                    <input 
-                        type="text" 
-                        id="lastName" 
-                        class="form-input" 
-                        placeholder="Smith"
-                        required
-                        autocomplete="family-name"
-                    >
-                    <div class="error-message" id="lastNameError"></div>
-                </div>
-                
+            <form onsubmit="handleEmailSubmit(event)">
                 <div class="form-group">
                     <label class="form-label" for="email">Work email address</label>
                     <input 
@@ -926,6 +919,52 @@
                         autocomplete="email"
                     >
                     <div class="error-message" id="emailError"></div>
+                </div>
+                
+                <button type="submit" class="form-button" id="emailButton">
+                    Continue
+                </button>
+            </form>
+            
+            <div class="signup-footer">
+                Already have an account? <a href="/login.html">Sign in</a>
+            </div>
+        </div>
+        
+        <!-- Step 2: Name & Password -->
+        <div class="form-step" id="namePasswordStep">
+            <div class="signup-header">
+                <h1>Complete Your Account</h1>
+                <p id="emailDisplay" style="color: var(--text-secondary); font-size: 14px; margin-top: 8px;"></p>
+            </div>
+            
+            <form onsubmit="handleSignupSubmit(event)">
+                <div class="name-fields">
+                    <div class="form-group">
+                        <label class="form-label" for="firstName">First name</label>
+                        <input 
+                            type="text" 
+                            id="firstName" 
+                            class="form-input" 
+                            placeholder="John"
+                            required
+                            autocomplete="given-name"
+                        >
+                        <div class="error-message" id="firstNameError"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="lastName">Last name</label>
+                        <input 
+                            type="text" 
+                            id="lastName" 
+                            class="form-input" 
+                            placeholder="Smith"
+                            required
+                            autocomplete="family-name"
+                        >
+                        <div class="error-message" id="lastNameError"></div>
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -949,11 +988,10 @@
                 <button type="submit" class="form-button" id="signupButton">
                     Create Account
                 </button>
+                <button type="button" class="form-button secondary-button" onclick="goBack()">
+                    Back
+                </button>
             </form>
-            
-            <div class="signup-footer">
-                Already have an account? <a href="/login.html">Sign in</a>
-            </div>
         </div>
         
         <!-- Processing State -->
@@ -1206,16 +1244,51 @@
                 header.insertBefore(indicator, header.firstChild);
             }
             
-            // Focus first name input
-            const firstNameInput = document.getElementById('firstName');
-            if (firstNameInput) firstNameInput.focus();
+            // Focus email input
+            const emailInput = document.getElementById('email');
+            if (emailInput) emailInput.focus();
         });
+        
+        function handleEmailSubmit(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const emailError = document.getElementById('emailError');
+            
+            // Validate email
+            if (!isValidEmail(email)) {
+                emailError.textContent = 'Please enter a valid work email address';
+                emailError.classList.add('show');
+                document.getElementById('email').classList.add('error');
+                return;
+            }
+            
+            // Store email
+            userData.email = email;
+            emailError.classList.remove('show');
+            document.getElementById('email').classList.remove('error');
+            
+            // Show email on next page
+            const emailDisplay = document.getElementById('emailDisplay');
+            if (emailDisplay) {
+                emailDisplay.textContent = email;
+            }
+            
+            // Move to name & password step
+            document.getElementById('emailStep').classList.remove('active');
+            document.getElementById('namePasswordStep').classList.add('active');
+            document.getElementById('firstName').focus();
+        }
+        
+        function goBack() {
+            document.getElementById('namePasswordStep').classList.remove('active');
+            document.getElementById('emailStep').classList.add('active');
+            document.getElementById('email').focus();
+        }
         
         function handleSignupSubmit(event) {
             event.preventDefault();
             const firstName = document.getElementById('firstName').value.trim();
             const lastName = document.getElementById('lastName').value.trim();
-            const email = document.getElementById('email').value.trim().toLowerCase();
             const password = document.getElementById('password').value;
             
             // Reset all errors
@@ -1240,15 +1313,6 @@
                 return;
             }
             
-            // Validate email
-            if (!isValidEmail(email)) {
-                const emailError = document.getElementById('emailError');
-                emailError.textContent = 'Please enter a valid work email address';
-                emailError.classList.add('show');
-                document.getElementById('email').classList.add('error');
-                return;
-            }
-            
             // Validate password
             if (password.length < 8) {
                 const passwordError = document.getElementById('passwordError');
@@ -1261,7 +1325,7 @@
             // Store user data
             userData.firstName = firstName;
             userData.lastName = lastName;
-            userData.email = email;
+            // email is already stored from step 1
             userData.password = password;
             
             // Notify Electron app to show loading animation immediately
@@ -1443,11 +1507,11 @@
             } catch (err) {
                 console.error('Account creation error:', err);
                 alert('Error: ' + err.message);
-                // Return to signup step
+                // Return to name & password step
                 document.querySelectorAll('.form-step').forEach(step => {
                     step.classList.remove('active');
                 });
-                document.getElementById('signupStep').classList.add('active');
+                document.getElementById('namePasswordStep').classList.add('active');
             }
         }
         
