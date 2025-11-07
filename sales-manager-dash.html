@@ -1485,7 +1485,7 @@
                 <div class="welcome-content">
                     <div class="welcome-text-content">
                         <div class="welcome-title">💡 Make LUPO smarter</div>
-                        <div class="welcome-subtitle">Add your sales context so LUPO can provide better coaching</div>
+                        <div class="welcome-subtitle">Add details about your role and selling style for better coaching</div>
                     </div>
                     <div style="display: flex; gap: 12px; align-items: center;">
                         <button class="welcome-btn" onclick="openBattlecard(true)">Add Context</button>
@@ -1892,7 +1892,7 @@
         function showInfoBanner() {
             const banner = document.getElementById('welcomeBanner');
             banner.querySelector('.welcome-title').textContent = '💡 Make LUPO smarter';
-            banner.querySelector('.welcome-subtitle').textContent = 'Add your sales context so LUPO can provide better coaching';
+            banner.querySelector('.welcome-subtitle').textContent = 'Add details about your role and selling style for better coaching';
             banner.querySelector('.welcome-btn').textContent = 'Add Context';
             banner.querySelector('.welcome-btn').onclick = () => openBattlecard(false);
             banner.classList.add('show');
