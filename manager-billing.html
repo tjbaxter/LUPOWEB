@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Management - LUPO</title>
+    <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
+    <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --surface-hover: #1a1a1a;
+            --border: #222;
+            --text: #fff;
+            --text-dim: #888;
+            --text-muted: #666;
+            --accent: #3b82f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            font-size: 14px;
+            min-height: 100vh;
+        }
+        
+        /* Header - match manager dashboard */
+        header {
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--surface);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .back-btn {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .back-btn:hover {
+            background: var(--surface-hover);
+            border-color: var(--text-dim);
+        }
+        
+        /* Main Container - Premium spacing */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        /* Page Title */
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-subtitle {
+            font-size: 1rem;
+            color: var(--text-dim);
+            margin-bottom: 4rem;
+        }
+        
+        /* Section - Clean with subtle divider */
+        .section {
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border);
+        }
+        
+        .section:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+        
+        .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        /* Current Plan - Hero section */
+        .plan-overview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .plan-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .plan-stat-label {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+        }
+        
+        .plan-stat-value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .plan-stat-value.highlight {
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .plan-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        /* Seats Management */
+        .seats-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .seats-label {
+            font-size: 1rem;
+            color: var(--text);
+        }
+        
+        .seats-count {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .seats-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            background: var(--surface-hover);
+            border-color: var(--text-dim);
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+            border-color: #2563eb;
+        }
+        
+        /* Payment Method */
+        .payment-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+        
+        .payment-details {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .card-icon {
+            width: 48px;
+            height: 32px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        
+        .card-brand {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .card-number {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            font-family: 'SF Mono', 'Monaco', monospace;
+        }
+        
+        /* Billing History Table */
+        .billing-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .billing-table thead {
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .billing-table th {
+            text-align: left;
+            padding: 0.75rem 0;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+        
+        .billing-table td {
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+        
+        .billing-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+        
+        .status-paid {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+        
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+        
+        .invoice-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+        
+        .invoice-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Cancel Subscription */
+        .danger-zone {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .cancel-link {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .cancel-link:hover {
+            color: var(--danger);
+            text-decoration: underline;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .modal-description {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .modal-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+        
+        /* Loading State */
+        .skeleton {
+            background: linear-gradient(90deg, var(--surface) 25%, var(--surface-hover) 50%, var(--surface) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+            color: transparent;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-dim);
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+        
+        .empty-state-text {
+            font-size: 0.875rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .plan-overview {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .seats-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .payment-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .billing-table {
+                font-size: 0.75rem;
+            }
+            
+            .billing-table th,
+            .billing-table td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">LUPO</div>
+        <div class="header-actions">
+            <a href="/manager-dashboard.html" class="back-btn">← Back to Dashboard</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h1 class="page-title">Subscription Management</h1>
+        <p class="page-subtitle">Manage your LUPO Enterprise subscription</p>
+        
+        <!-- Current Plan -->
+        <section class="section">
+            <h2 class="section-title">Current Plan</h2>
+            <div class="plan-overview">
+                <div class="plan-stat">
+                    <div class="plan-stat-label">Plan</div>
+                    <div class="plan-stat-value">
+                        <span id="planName">Enterprise</span>
+                        <div class="plan-badge" id="planStatus">Active</div>
+                    </div>
+                </div>
+                <div class="plan-stat">
+                    <div class="plan-stat-label">Monthly Cost</div>
+                    <div class="plan-stat-value highlight" id="monthlyCost">$--</div>
+                </div>
+                <div class="plan-stat">
+                    <div class="plan-stat-label">Next Billing Date</div>
+                    <div class="plan-stat-value" style="font-size: 1.25rem;" id="nextBillingDate">--</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seats Management -->
+        <section class="section">
+            <h2 class="section-title">Team Seats</h2>
+            <div class="seats-info">
+                <div>
+                    <div class="seats-label">
+                        <span class="seats-count" id="activeSeats">-</span> / <span id="totalSeats">-</span> seats
+                    </div>
+                    <div class="seats-subtitle">$200/seat/month</div>
+                </div>
+                <button class="btn" onclick="openSeatsModal()">Adjust Seats</button>
+            </div>
+        </section>
+        
+        <!-- Payment Method -->
+        <section class="section">
+            <h2 class="section-title">Payment Method</h2>
+            <div class="payment-card">
+                <div class="payment-details">
+                    <div class="card-icon" id="cardBrand">VISA</div>
+                    <div class="card-info">
+                        <div class="card-brand" id="cardType">Visa</div>
+                        <div class="card-number" id="cardLast4">•••• 4242</div>
+                    </div>
+                </div>
+                <button class="btn" onclick="updatePaymentMethod()">Update Payment Method</button>
+            </div>
+        </section>
+        
+        <!-- Billing History -->
+        <section class="section">
+            <h2 class="section-title">Billing History</h2>
+            <table class="billing-table" id="billingTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Invoice</th>
+                    </tr>
+                </thead>
+                <tbody id="billingTableBody">
+                    <!-- Will be populated by JavaScript -->
+                    <tr>
+                        <td colspan="4" class="empty-state">
+                            <div class="empty-state-icon">📄</div>
+                            <div class="empty-state-text">No billing history yet</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Cancel Subscription -->
+        <div class="danger-zone">
+            <a href="#" class="cancel-link" onclick="openCancelModal(event)">Cancel Subscription</a>
+        </div>
+    </div>
+    
+    <!-- Adjust Seats Modal -->
+    <div class="modal" id="seatsModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Adjust Team Seats</h3>
+            <p class="modal-description">
+                Add or remove seats from your subscription. Changes will be prorated on your next invoice.
+            </p>
+            <label for="newSeats" style="display: block; font-size: 0.875rem; color: var(--text-dim); margin-bottom: 0.5rem;">
+                Number of seats
+            </label>
+            <input type="number" id="newSeats" class="modal-input" min="1" max="100" placeholder="5">
+            <div style="font-size: 0.875rem; color: var(--text-dim); margin-bottom: 1.5rem;">
+                New monthly cost: <strong style="color: var(--text);" id="newCost">$1,000</strong>
+            </div>
+            <div class="modal-actions">
+                <button class="btn" onclick="closeSeatsModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="updateSeats()">Update Seats</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Cancel Subscription Modal -->
+    <div class="modal" id="cancelModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Cancel Subscription</h3>
+            <p class="modal-description">
+                We're sorry to see you go. Your subscription will remain active until the end of your current billing period.
+            </p>
+            <p class="modal-description" style="color: var(--warning);">
+                This action cannot be undone. All team members will lose access at the end of the billing period.
+            </p>
+            <div class="modal-actions">
+                <button class="btn" onclick="closeCancelModal()">Keep Subscription</button>
+                <button class="btn" style="background: var(--danger); border-color: var(--danger); color: white;" onclick="cancelSubscription()">Cancel Subscription</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Authentication configuration
+        const AUTH_CONFIG = {
+            apiUrl: 'https://lupo-backend.fly.dev',
+            loginUrl: '/manager-login.html'
+        };
+        
+        let authToken = null;
+        let authHeaders = {};
+        let subscriptionData = null;
+        
+        // Authenticate user on page load
+        async function authenticateUser() {
+            // Try to get token from URL (redirected from dashboard)
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlToken = urlParams.get('token');
+            
+            if (urlToken) {
+                authToken = urlToken;
+                authHeaders = { 'Authorization': `Bearer ${authToken}` };
+                
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            } else {
+                // Try localStorage
+                const storedToken = localStorage.getItem('lupo_manager_token') || localStorage.getItem('lupo_session');
+                if (storedToken) {
+                    authToken = storedToken;
+                    authHeaders = { 'Authorization': `Bearer ${authToken}` };
+                } else {
+                    // No token found, redirect to login
+                    window.location.href = AUTH_CONFIG.loginUrl;
+                    return;
+                }
+            }
+            
+            // Validate token and load data
+            try {
+                await loadSubscriptionData();
+            } catch (error) {
+                console.error('Authentication error:', error);
+                if (error.status === 401) {
+                    window.location.href = AUTH_CONFIG.loginUrl;
+                }
+            }
+        }
+        
+        // Load subscription data from backend
+        async function loadSubscriptionData() {
+            try {
+                const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/subscription`, {
+                    headers: authHeaders,
+                    cache: 'no-cache'
+                });
+                
+                if (!response.ok) {
+                    throw { status: response.status, message: 'Failed to load subscription data' };
+                }
+                
+                subscriptionData = await response.json();
+                updateUI(subscriptionData);
+                loadBillingHistory();
+                
+            } catch (error) {
+                console.error('Failed to load subscription:', error);
+                throw error;
+            }
+        }
+        
+        // Update UI with subscription data
+        function updateUI(data) {
+            // Plan overview
+            document.getElementById('planName').textContent = data.plan || 'Enterprise';
+            document.getElementById('monthlyCost').textContent = `$${data.monthlyCost || 0}`;
+            
+            // Next billing date
+            if (data.nextBillingDate) {
+                const date = new Date(data.nextBillingDate);
+                document.getElementById('nextBillingDate').textContent = date.toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    year: 'numeric' 
+                });
+            }
+            
+            // Plan status
+            const statusEl = document.getElementById('planStatus');
+            if (data.status === 'trialing') {
+                statusEl.textContent = `Trial ends ${new Date(data.trialEndsAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+            } else if (data.status === 'active') {
+                statusEl.textContent = 'Active';
+            } else {
+                statusEl.textContent = data.status;
+            }
+            
+            // Seats
+            document.getElementById('activeSeats').textContent = data.activeSeats || 0;
+            document.getElementById('totalSeats').textContent = data.totalSeats || 0;
+            document.getElementById('newSeats').value = data.totalSeats || 5;
+            
+            // Payment method
+            if (data.paymentMethod) {
+                document.getElementById('cardBrand').textContent = (data.paymentMethod.brand || 'VISA').toUpperCase();
+                document.getElementById('cardType').textContent = data.paymentMethod.brand || 'Visa';
+                document.getElementById('cardLast4').textContent = `•••• ${data.paymentMethod.last4 || '4242'}`;
+            }
+        }
+        
+        // Load billing history
+        async function loadBillingHistory() {
+            try {
+                const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/history`, {
+                    headers: authHeaders,
+                    cache: 'no-cache'
+                });
+                
+                if (!response.ok) throw new Error('Failed to load billing history');
+                
+                const history = await response.json();
+                
+                const tbody = document.getElementById('billingTableBody');
+                
+                if (history.invoices && history.invoices.length > 0) {
+                    tbody.innerHTML = history.invoices.map(invoice => {
+                        const date = new Date(invoice.date).toLocaleDateString('en-US', { 
+                            month: 'short', 
+                            day: 'numeric', 
+                            year: 'numeric' 
+                        });
+                        
+                        const statusClass = invoice.status === 'paid' ? 'status-paid' : 'status-pending';
+                        
+                        return `
+                            <tr>
+                                <td>${date}</td>
+                                <td>$${invoice.amount}</td>
+                                <td><span class="status-badge ${statusClass}">${invoice.status}</span></td>
+                                <td><a href="${invoice.invoiceUrl}" target="_blank" class="invoice-link">Download</a></td>
+                            </tr>
+                        `;
+                    }).join('');
+                } else {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="4">
+                                <div class="empty-state">
+                                    <div class="empty-state-icon">📄</div>
+                                    <div class="empty-state-text">No billing history yet</div>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }
+                
+            } catch (error) {
+                console.error('Failed to load billing history:', error);
+            }
+        }
+        
+        // Seats modal
+        function openSeatsModal() {
+            document.getElementById('seatsModal').classList.add('show');
+            updateNewCost();
+        }
+        
+        function closeSeatsModal() {
+            document.getElementById('seatsModal').classList.remove('show');
+        }
+        
+        function updateNewCost() {
+            const seats = parseInt(document.getElementById('newSeats').value) || 0;
+            document.getElementById('newCost').textContent = `$${seats * 200}`;
+        }
+        
+        document.getElementById('newSeats')?.addEventListener('input', updateNewCost);
+        
+        async function updateSeats() {
+            const newSeats = parseInt(document.getElementById('newSeats').value);
+            
+            if (!newSeats || newSeats < 1) {
+                alert('Please enter a valid number of seats');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/seats`, {
+                    method: 'POST',
+                    headers: {
+                        ...authHeaders,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ seats: newSeats })
+                });
+                
+                if (!response.ok) throw new Error('Failed to update seats');
+                
+                alert('Seats updated successfully!');
+                closeSeatsModal();
+                await loadSubscriptionData();
+                
+            } catch (error) {
+                console.error('Failed to update seats:', error);
+                alert('Failed to update seats. Please try again.');
+            }
+        }
+        
+        // Payment method
+        async function updatePaymentMethod() {
+            try {
+                const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/portal`, {
+                    method: 'POST',
+                    headers: authHeaders
+                });
+                
+                if (!response.ok) throw new Error('Failed to create portal session');
+                
+                const data = await response.json();
+                
+                if (data.url) {
+                    window.location.href = data.url;
+                }
+                
+            } catch (error) {
+                console.error('Failed to open billing portal:', error);
+                alert('Unable to update payment method. Please try again.');
+            }
+        }
+        
+        // Cancel subscription
+        function openCancelModal(event) {
+            event.preventDefault();
+            document.getElementById('cancelModal').classList.add('show');
+        }
+        
+        function closeCancelModal() {
+            document.getElementById('cancelModal').classList.remove('show');
+        }
+        
+        async function cancelSubscription() {
+            try {
+                const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/cancel`, {
+                    method: 'POST',
+                    headers: authHeaders
+                });
+                
+                if (!response.ok) throw new Error('Failed to cancel subscription');
+                
+                alert('Subscription canceled. You will have access until the end of your billing period.');
+                closeCancelModal();
+                await loadSubscriptionData();
+                
+            } catch (error) {
+                console.error('Failed to cancel subscription:', error);
+                alert('Failed to cancel subscription. Please contact support.');
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            authenticateUser();
+        });
+        
+        // Close modals on outside click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
