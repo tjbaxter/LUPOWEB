@@ -49,6 +49,12 @@
             gap: 16px;
             font-size: 13px;
             color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .user-info:hover {
+            color: rgba(255,255,255,0.9);
         }
         
         .battlecard-btn {
@@ -1417,13 +1423,264 @@
             max-height: 400px;
             overflow-y: auto;
         }
+        
+        /* Profile Settings Panel */
+        .profile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+        
+        .profile-overlay.active {
+            display: block;
+        }
+        
+        .profile-panel {
+            position: fixed;
+            top: 0;
+            right: -500px;
+            width: 500px;
+            max-width: 90vw;
+            height: 100vh;
+            background: #0a0a0a;
+            border-left: 1px solid rgba(255,255,255,0.1);
+            z-index: 2001;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        
+        .profile-panel.active {
+            right: 0;
+        }
+        
+        .profile-panel-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .profile-panel-back {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        
+        .profile-panel-back:hover {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .profile-panel-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .profile-panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+        
+        .profile-pic-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            margin-bottom: 24px;
+        }
+        
+        .profile-pic-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .profile-pic-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .profile-pic-btn {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: rgba(255,255,255,0.8);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .profile-pic-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+        }
+        
+        .profile-form-group {
+            margin-bottom: 24px;
+        }
+        
+        .profile-form-label {
+            display: block;
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .profile-form-input {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .profile-form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255,255,255,0.08);
+        }
+        
+        .profile-form-input:disabled {
+            background: rgba(255,255,255,0.02);
+            border-color: rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.4);
+            cursor: not-allowed;
+        }
+        
+        .profile-form-hint {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 6px;
+        }
+        
+        .profile-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            margin: 24px 0;
+        }
+        
+        .profile-password-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+        }
+        
+        .profile-password-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .profile-password-label {
+            font-size: 14px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .profile-password-value {
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 2px;
+        }
+        
+        .profile-change-password-btn {
+            padding: 8px 16px;
+            background: rgba(59,130,246,0.15);
+            border: 1px solid rgba(59,130,246,0.3);
+            border-radius: 6px;
+            color: #3b82f6;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .profile-change-password-btn:hover {
+            background: rgba(59,130,246,0.25);
+            border-color: rgba(59,130,246,0.5);
+        }
+        
+        .profile-save-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 16px;
+        }
+        
+        .profile-save-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+        
+        .profile-help-btn {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .profile-help-btn:hover {
+            border-color: rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.9);
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="logo">LUPO</div>
-        <div class="user-info">
-            <button class="battlecard-btn" onclick="openBattlecard()">
+        <div class="user-info" onclick="openProfilePanel()">
+            <button class="battlecard-btn" onclick="event.stopPropagation(); openBattlecard()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                     <polyline points="14 2 14 8 20 8"></polyline>
@@ -3226,6 +3483,136 @@
         });
         
         // Preview removed - what you see in the editor is exactly what LUPO uses!
+        
+        // ============================================================================
+        // PROFILE SETTINGS PANEL
+        // ============================================================================
+        
+        function openProfilePanel() {
+            const overlay = document.getElementById('profileOverlay');
+            const panel = document.getElementById('profilePanel');
+            
+            // Populate with current user data
+            if (currentUser) {
+                document.getElementById('profileFirstName').value = currentUser.firstName || '';
+                document.getElementById('profileLastName').value = currentUser.lastName || '';
+                document.getElementById('profileEmail').value = currentUser.email || '';
+                
+                // Update avatar
+                const profileAvatar = document.getElementById('profileAvatar');
+                if (currentUser.firstName || currentUser.lastName) {
+                    const firstInitial = (currentUser.firstName || '').charAt(0).toUpperCase();
+                    const lastInitial = (currentUser.lastName || '').charAt(0).toUpperCase();
+                    profileAvatar.textContent = firstInitial + lastInitial || '?';
+                } else if (currentUser.email) {
+                    profileAvatar.textContent = currentUser.email.charAt(0).toUpperCase();
+                } else {
+                    profileAvatar.textContent = '?';
+                }
+            }
+            
+            overlay.classList.add('active');
+            setTimeout(() => {
+                panel.classList.add('active');
+            }, 10);
+        }
+        
+        function closeProfilePanel() {
+            const overlay = document.getElementById('profileOverlay');
+            const panel = document.getElementById('profilePanel');
+            
+            panel.classList.remove('active');
+            setTimeout(() => {
+                overlay.classList.remove('active');
+            }, 300);
+        }
+        
+        async function saveProfileSettings() {
+            const firstName = document.getElementById('profileFirstName').value.trim();
+            const lastName = document.getElementById('profileLastName').value.trim();
+            
+            if (!firstName || !lastName) {
+                alert('Please enter both first and last name');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/update-profile`, {
+                    method: 'PUT',
+                    headers: authHeaders(),
+                    body: JSON.stringify({
+                        firstName,
+                        lastName
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to update profile');
+                }
+                
+                // Update local user data
+                currentUser.firstName = firstName;
+                currentUser.lastName = lastName;
+                
+                // Update header display
+                document.getElementById('userName').textContent = `${firstName} ${lastName}`;
+                const avatar = document.getElementById('userAvatar');
+                avatar.textContent = firstName.charAt(0) + lastName.charAt(0);
+                
+                // Show success toast
+                const toast = document.getElementById('toast');
+                toast.textContent = 'Profile updated';
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+                
+                // Close panel
+                closeProfilePanel();
+                
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Failed to update profile. Please try again.');
+            }
+        }
+        
+        function uploadProfilePic() {
+            // Create file input
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                // For now, just show a message
+                // You can implement actual upload to S3/Cloudinary later
+                alert('Profile picture upload will be available soon');
+            };
+            input.click();
+        }
+        
+        function removeProfilePic() {
+            // For now, just reset to initials
+            alert('Profile picture removed');
+        }
+        
+        function changePassword() {
+            // For now, just alert - you can implement a modal later
+            alert('Password change will be available soon. Contact support if needed.');
+        }
+        
+        function openHelpSupport() {
+            window.location.href = 'mailto:tom@getlupo.ai?subject=LUPO Support Request';
+        }
+        
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const panel = document.getElementById('profilePanel');
+                if (panel.classList.contains('active')) {
+                    closeProfilePanel();
+                }
+            }
+        });
     </script>
     
     <!-- Battlecard Panel -->
@@ -3310,5 +3697,77 @@
     </div>
     
     <div class="toast" id="toast">Saved</div>
+    
+    <!-- Profile Settings Panel -->
+    <div class="profile-overlay" id="profileOverlay" onclick="closeProfilePanel()"></div>
+    <div class="profile-panel" id="profilePanel">
+        <div class="profile-panel-header">
+            <button class="profile-panel-back" onclick="closeProfilePanel()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back
+            </button>
+            <div class="profile-panel-title">Profile Settings</div>
+        </div>
+        
+        <div class="profile-panel-content">
+            <!-- Profile Picture -->
+            <div class="profile-pic-section">
+                <div class="profile-pic-avatar" id="profileAvatar">?</div>
+                <div class="profile-pic-buttons">
+                    <button class="profile-pic-btn" onclick="uploadProfilePic()">Upload Photo</button>
+                    <button class="profile-pic-btn" onclick="removeProfilePic()">Remove</button>
+                </div>
+            </div>
+            
+            <!-- First Name -->
+            <div class="profile-form-group">
+                <label class="profile-form-label">First Name</label>
+                <input type="text" class="profile-form-input" id="profileFirstName" placeholder="John">
+            </div>
+            
+            <!-- Last Name -->
+            <div class="profile-form-group">
+                <label class="profile-form-label">Last Name</label>
+                <input type="text" class="profile-form-input" id="profileLastName" placeholder="Smith">
+            </div>
+            
+            <div class="profile-divider"></div>
+            
+            <!-- Email (Disabled) -->
+            <div class="profile-form-group">
+                <label class="profile-form-label">Email Address</label>
+                <input type="email" class="profile-form-input" id="profileEmail" disabled>
+                <div class="profile-form-hint">Cannot be changed</div>
+            </div>
+            
+            <div class="profile-divider"></div>
+            
+            <!-- Password -->
+            <div class="profile-password-section">
+                <div class="profile-password-info">
+                    <div class="profile-password-label">Password</div>
+                    <div class="profile-password-value">••••••••</div>
+                </div>
+                <button class="profile-change-password-btn" onclick="changePassword()">Change Password</button>
+            </div>
+            
+            <div style="height: 24px;"></div>
+            
+            <!-- Save Button -->
+            <button class="profile-save-btn" onclick="saveProfileSettings()">Save Changes</button>
+            
+            <!-- Help Button -->
+            <button class="profile-help-btn" onclick="openHelpSupport()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Help & Support
+            </button>
+        </div>
+    </div>
 </body>
 </html>
