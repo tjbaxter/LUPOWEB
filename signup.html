@@ -975,6 +975,17 @@
             </div>
             
             <form onsubmit="handleSignupSubmit(event)">
+                <!-- Hidden email field for password managers -->
+                <input 
+                    type="email" 
+                    id="hiddenEmail" 
+                    name="email"
+                    autocomplete="email"
+                    style="display: none;"
+                    tabindex="-1"
+                    aria-hidden="true"
+                >
+                
                 <div class="name-fields">
                     <div class="form-group">
                         <label class="form-label" for="firstName">First name</label>
@@ -1319,6 +1330,12 @@
             const emailDisplay = document.getElementById('emailDisplay');
             if (emailDisplay) {
                 emailDisplay.textContent = email;
+            }
+            
+            // Populate hidden email field for password managers
+            const hiddenEmail = document.getElementById('hiddenEmail');
+            if (hiddenEmail) {
+                hiddenEmail.value = email;
             }
             
             // Move to name & password step
