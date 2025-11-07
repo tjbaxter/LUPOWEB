@@ -285,46 +285,6 @@
             color: var(--text-primary);
         }
         
-        /* Social Auth - Refined */
-        .social-auth {
-            margin-bottom: 24px;
-            display: flex;
-            gap: 12px;
-        }
-        
-        .social-button {
-            flex: 1;
-            padding: 14px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-primary);
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-decoration: none;
-            letter-spacing: -0.01em;
-        }
-        
-        .social-button:hover {
-            background: rgba(255, 255, 255, 0.03);
-            border-color: var(--border-focus);
-        }
-        
-        .social-icon {
-            width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.8;
-        }
-        
         /* Processing State - Sophisticated */
         .processing-container {
             text-align: center;
@@ -921,77 +881,60 @@
             <div class="company-invite-subtitle">You've been invited to join the team</div>
         </div>
         
-        <!-- Step 1: Email -->
-        <div class="form-step active" id="emailStep">
+        <!-- Single Step: All Info -->
+        <div class="form-step active" id="signupStep">
             <div class="signup-header">
                 <h1 id="signupTitle">Get Started</h1>
                 <p id="signupSubtitle">Real-time sales intelligence for closing more deals</p>
             </div>
             
-            <!-- Social Auth Options -->
-            <div class="social-auth">
-                <button class="social-button" onclick="signUpWithGoogle()">
-                    <span class="social-icon">
-                        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-                            <path d="M19.8 10.2273C19.8 9.51818 19.7364 8.83636 19.6182 8.18182H10.2V12.05H15.6109C15.3927 13.3 14.6564 14.3591 13.5491 15.0682V17.5773H16.8182C18.7164 15.8364 19.8 13.2727 19.8 10.2273Z" fill="#4285F4"/>
-                            <path d="M10.2 20C12.9 20 15.1727 19.1045 16.8182 17.5773L13.5491 15.0682C12.6091 15.6682 11.4227 16.0227 10.2 16.0227C7.59545 16.0227 5.38636 14.2636 4.58636 11.9H1.22727V14.4909C2.88182 17.7591 6.30909 20 10.2 20Z" fill="#34A853"/>
-                            <path d="M4.58636 11.9C4.38636 11.3 4.27273 10.6636 4.27273 10C4.27273 9.33636 4.38636 8.7 4.58636 8.1V5.50909H1.22727C0.545455 6.85909 0.2 8.38636 0.2 10C0.2 11.6136 0.545455 13.1409 1.22727 14.4909L4.58636 11.9Z" fill="#FBBC05"/>
-                            <path d="M10.2 3.97727C11.5455 3.97727 12.7455 4.42727 13.6955 5.30909L16.8909 2.11364C15.1682 0.5 12.8955 0 10.2 0C6.30909 0 2.88182 2.24091 1.22727 5.50909L4.58636 8.1C5.38636 5.73636 7.59545 3.97727 10.2 3.97727Z" fill="#EA4335"/>
-                        </svg>
-                    </span>
-                    Continue with Google
-                </button>
-                
-                <!-- LinkedIn button temporarily disabled
-                <button class="social-button" onclick="signUpWithLinkedIn()">
-                    <span class="social-icon">
-                        <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M18.5 0h-17C.7 0 0 .7 0 1.5v17c0 .8.7 1.5 1.5 1.5h17c.8 0 1.5-.7 1.5-1.5v-17C20 .7 19.3 0 18.5 0zM6 17H3V6h3v11zM4.5 4.7c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zM17 17h-3v-5.3c0-1.3 0-2.9-1.8-2.9-1.8 0-2.1 1.4-2.1 2.8V17H7V6h2.8v1.5h.1c.4-.8 1.5-1.6 3.1-1.6 3.3 0 3.9 2.2 3.9 5V17z"/>
-                        </svg>
-                    </span>
-                    Continue with LinkedIn
-                </button>
-                -->
-            </div>
-            
-            <form onsubmit="handleEmailSubmit(event)">
+            <form onsubmit="handleSignupSubmit(event)">
                 <div class="form-group">
-                    <label class="form-label" for="email">Email</label>
+                    <label class="form-label" for="firstName">First name</label>
+                    <input 
+                        type="text" 
+                        id="firstName" 
+                        class="form-input" 
+                        placeholder="John"
+                        required
+                        autocomplete="given-name"
+                    >
+                    <div class="error-message" id="firstNameError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="lastName">Last name</label>
+                    <input 
+                        type="text" 
+                        id="lastName" 
+                        class="form-input" 
+                        placeholder="Smith"
+                        required
+                        autocomplete="family-name"
+                    >
+                    <div class="error-message" id="lastNameError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="email">Work email address</label>
                     <input 
                         type="email" 
                         id="email" 
                         class="form-input" 
-                        placeholder="you@company.com"
+                        placeholder="john@company.com"
                         required
                         autocomplete="email"
                     >
                     <div class="error-message" id="emailError"></div>
                 </div>
                 
-                <button type="submit" class="form-button" id="emailButton">
-                    Continue
-                </button>
-            </form>
-            
-            <div class="signup-footer">
-                Already have an account? <a href="/login.html">Sign in</a>
-            </div>
-        </div>
-        
-        <!-- Step 2: Password -->
-        <div class="form-step" id="passwordStep">
-            <div class="signup-header">
-                <h1>Secure Your Account</h1>
-            </div>
-            
-            <form onsubmit="handlePasswordSubmit(event)">
                 <div class="form-group">
                     <label class="form-label" for="password">Password</label>
                     <input 
                         type="password" 
                         id="password" 
                         class="form-input" 
-                        placeholder="Enter password"
+                        placeholder="Minimum 8 characters"
                         required
                         minlength="8"
                         autocomplete="new-password"
@@ -1003,26 +946,14 @@
                     <div class="error-message" id="passwordError"></div>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label" for="confirmPassword">Confirm Password</label>
-                    <input 
-                        type="password" 
-                        id="confirmPassword" 
-                        class="form-input" 
-                        placeholder="Confirm password"
-                        required
-                        autocomplete="new-password"
-                    >
-                    <div class="error-message" id="confirmError"></div>
-                </div>
-                
-                <button type="submit" class="form-button" id="passwordButton">
+                <button type="submit" class="form-button" id="signupButton">
                     Create Account
                 </button>
-                <button type="button" class="form-button secondary-button" onclick="goBack()">
-                    Back
-                </button>
             </form>
+            
+            <div class="signup-footer">
+                Already have an account? <a href="/login.html">Sign in</a>
+            </div>
         </div>
         
         <!-- Processing State -->
@@ -1172,6 +1103,8 @@
         }
         
         let userData = {
+            firstName: '',
+            lastName: '',
             email: '',
             password: '',
             provider: 'email'
@@ -1217,39 +1150,8 @@
             }
         }
         
-        // Social Auth Functions
-        async function signUpWithGoogle() {
-            // Notify Electron app to show loading animation immediately
-            if (window.electronAPI) {
-                window.electronAPI.showAuthLoading();
-            }
-            
-            // FIXED: Store fromElectron flag in sessionStorage (survives redirects)
-            const urlParams = new URLSearchParams(window.location.search);
-            const fromElectron = urlParams.get('fromElectron') === 'true';
-            if (fromElectron) {
-                sessionStorage.setItem('fromElectron', 'true');
-            }
-            
-            const redirectUrl = window.location.origin + '/auth/callback.html';
-            window.location.href = 'https://lupo-backend.fly.dev/auth/google?redirect=' + encodeURIComponent(redirectUrl);
-        }
         
-        // LinkedIn function temporarily disabled
-        /*
-        async function signUpWithLinkedIn() {
-            // Notify Electron app to show loading animation immediately
-            if (window.electronAPI) {
-                window.electronAPI.showAuthLoading();
-            }
-            
-            const redirectUrl = window.location.origin + '/auth/callback.html';
-            window.location.href = 'https://lupo-backend.fly.dev/auth/linkedin?redirect=' + encodeURIComponent(redirectUrl);
-        }
-        */
-        
-        
-        // Check for OAuth callback and invite codes
+        // Check for invite codes and load page
         window.addEventListener('load', async () => {
             // ✅ CRITICAL: Store fromElectron flag in sessionStorage if present in URL
             // This preserves the flag even if URL changes (e.g., OAuth redirects)
@@ -1279,8 +1181,6 @@
             // Reuse urlParams from above (already declared at line 1256)
             const inviteCode = urlParams.get('invite');
             const orgName = urlParams.get('org');
-            const isOAuth = urlParams.get('oauth') === 'true';
-            const provider = urlParams.get('provider');
             
             // ✅ CHECK: Log what we're checking for
             console.log('🔍 Signup page loaded, checking for invite token...');
@@ -1306,89 +1206,62 @@
                 header.insertBefore(indicator, header.firstChild);
             }
             
-            // Handle OAuth callback
-            if (isOAuth && provider) {
-                let authData = null;
-                try {
-                    const stored = localStorage.getItem('lupo_oauth_temp');
-                    if (stored) {
-                        authData = JSON.parse(stored);
-                    }
-                } catch (e) {
-                    console.error('Auth data error:', e);
-                }
-                
-                if (authData && authData.email && authData.token) {
-                    userData.provider = provider;
-                    userData.token = authData.token;
-                    userData.email = authData.email;
-                    userData.name = authData.name;
-                    
-                    // Update processing message for OAuth
-                    const processingTitle = document.querySelector('#processingStep h2');
-                    if (processingTitle) {
-                        processingTitle.textContent = `Completing ${provider} signup`;
-                    }
-                    
-                    showProcessingState();
-                    setTimeout(autoCreateAccount, 500);
-                } else {
-                    console.error('❌ OAuth data missing or incomplete');
-                }
-            }
-            
-            // Focus email input
-            const emailInput = document.getElementById('email');
-            if (emailInput && !isOAuth) emailInput.focus();
+            // Focus first name input
+            const firstNameInput = document.getElementById('firstName');
+            if (firstNameInput) firstNameInput.focus();
         });
         
-        function handleEmailSubmit(event) {
+        function handleSignupSubmit(event) {
             event.preventDefault();
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
             const email = document.getElementById('email').value.trim().toLowerCase();
-            const emailError = document.getElementById('emailError');
+            const password = document.getElementById('password').value;
             
+            // Reset all errors
+            document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
+            document.querySelectorAll('.form-input').forEach(el => el.classList.remove('error'));
+            
+            // Validate first name
+            if (!firstName || firstName.length < 1) {
+                const firstNameError = document.getElementById('firstNameError');
+                firstNameError.textContent = 'Please enter your first name';
+                firstNameError.classList.add('show');
+                document.getElementById('firstName').classList.add('error');
+                return;
+            }
+            
+            // Validate last name
+            if (!lastName || lastName.length < 1) {
+                const lastNameError = document.getElementById('lastNameError');
+                lastNameError.textContent = 'Please enter your last name';
+                lastNameError.classList.add('show');
+                document.getElementById('lastName').classList.add('error');
+                return;
+            }
+            
+            // Validate email
             if (!isValidEmail(email)) {
-                emailError.textContent = 'Please enter a valid email address';
+                const emailError = document.getElementById('emailError');
+                emailError.textContent = 'Please enter a valid work email address';
                 emailError.classList.add('show');
                 document.getElementById('email').classList.add('error');
                 return;
             }
             
-            userData.email = email;
-            emailError.classList.remove('show');
-            document.getElementById('email').classList.remove('error');
-            
-            // Move to password step
-            document.getElementById('emailStep').classList.remove('active');
-            document.getElementById('passwordStep').classList.add('active');
-            document.getElementById('password').focus();
-        }
-        
-        function handlePasswordSubmit(event) {
-            event.preventDefault();
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const passwordError = document.getElementById('passwordError');
-            const confirmError = document.getElementById('confirmError');
-            
-            // Reset errors
-            passwordError.classList.remove('show');
-            confirmError.classList.remove('show');
-            
+            // Validate password
             if (password.length < 8) {
+                const passwordError = document.getElementById('passwordError');
                 passwordError.textContent = 'Password must be at least 8 characters';
                 passwordError.classList.add('show');
                 document.getElementById('password').classList.add('error');
                 return;
             }
             
-            if (password !== confirmPassword) {
-                confirmError.textContent = 'Passwords do not match';
-                confirmError.classList.add('show');
-                document.getElementById('confirmPassword').classList.add('error');
-                return;
-            }
-            
+            // Store user data
+            userData.firstName = firstName;
+            userData.lastName = lastName;
+            userData.email = email;
             userData.password = password;
             
             // Notify Electron app to show loading animation immediately
@@ -1426,7 +1299,9 @@
                     body: JSON.stringify({
                         email: userData.email,
                         password: userData.password,
-                        deviceFingerprint: deviceFingerprint // ✅ Added
+                        firstName: userData.firstName,
+                        lastName: userData.lastName,
+                        deviceFingerprint: deviceFingerprint
                     })
                 });
                 
@@ -1568,220 +1443,11 @@
             } catch (err) {
                 console.error('Account creation error:', err);
                 alert('Error: ' + err.message);
-                // Return to password step
-                showPasswordState();
-            }
-        }
-        
-        async function autoCreateAccount() {
-            try {
-                const authData = JSON.parse(
-                    localStorage.getItem('lupo_oauth_temp') || '{}'
-                );
-                
-                if (!authData.token || !authData.email) {
-                    throw new Error('No authentication data found');
-                }
-                
-                // ✅ FIX: Get invite token from URL params AND localStorage
-                const urlParams = new URLSearchParams(window.location.search);
-                let inviteToken = urlParams.get('invite');
-                
-                // Check localStorage/sessionStorage for pending invite (set by join.html)
-                if (!inviteToken) {
-                    inviteToken = localStorage.getItem('pendingInviteToken') || 
-                                 sessionStorage.getItem('pendingInviteToken');
-                    if (inviteToken) {
-                        console.log('✅ Found pending invite token in storage for OAuth:', inviteToken.substring(0, 8) + '...');
-                    }
-                }
-                
-                // Try OAuth signup endpoint first, fallback to regular signup if needed
-                let response, data;
-                try {
-                    response = await fetch('https://lupo-backend.fly.dev/auth/oauth-signup', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            email: authData.email,
-                            name: authData.name,
-                            provider: authData.provider,
-                            token: authData.token
-                        })
-                    });
-                    data = await response.json();
-                } catch (err) {
-                    // Fallback: OAuth is already complete, just show success
-                    console.log('OAuth signup endpoint not available, using existing token');
-                    data = { success: true, sessionKey: authData.token };
-                }
-                
-                if (data.success) {
-                    // If invite token exists, accept it to join organization
-                    if (inviteToken) {
-                        try {
-                            // ✅ FIX: First poll for the JWT token using session key
-                            const sessionKey = data.sessionKey || authData.token;
-                            console.log('📡 Polling for JWT token with session key:', sessionKey.substring(0, 8) + '...');
-                            
-                            const pollResponse = await fetch(`https://lupo-backend.fly.dev/auth/poll/${sessionKey}`, {
-                                method: 'GET',
-                                headers: { 'Content-Type': 'application/json' }
-                            });
-                            
-                            if (!pollResponse.ok) {
-                                throw new Error('Failed to get JWT token');
-                            }
-                            
-                            const pollData = await pollResponse.json();
-                            const jwtToken = pollData.token;
-                            
-                            if (!jwtToken) {
-                                throw new Error('No JWT token received');
-                            }
-                            
-                            console.log('✅ Got JWT token for invite acceptance');
-                            
-                            // Now accept invite with proper JWT token
-                            const acceptResponse = await fetch('https://lupo-backend.fly.dev/api/team/invite/accept', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${jwtToken}`  // ✅ Use JWT, not session key!
-                                },
-                                body: JSON.stringify({
-                                    token: inviteToken
-                                })
-                            });
-                            
-                            if (acceptResponse.ok) {
-                                const acceptData = await acceptResponse.json();
-                                console.log('✅ Successfully joined organization:', acceptData.companyName);
-                                
-                                // ✅ CRITICAL: Use the NEW session key from invite acceptance
-                                // This session key has the updated user data (now enterprise)
-                                const updatedSessionKey = acceptData.sessionKey || sessionKey;
-                                console.log('🔑 Using session key for deep link (OAuth):', updatedSessionKey.substring(0, 8) + '...');
-                                
-                                // ✅ Clean up pending invite token after successful join
-                                localStorage.removeItem('pendingInviteToken');
-                                sessionStorage.removeItem('pendingInviteToken');
-                                
-                                // Store session key for LUPO polling
-                                const pollDataForLupo = {
-                                    sessionKey: updatedSessionKey,
-                                    timestamp: Date.now()
-                                };
-                                
-                                // Check if opened from Electron (URL parameter OR sessionStorage)
-                                // Reuse urlParams from top of load event
-                                const fromElectron = urlParams.get('fromElectron') === 'true' || sessionStorage.getItem('fromElectron') === 'true';
-                                
-                                console.log('🔍 DEBUG (OAuth team invite): fromElectron =', fromElectron, ', window.electronAPI =', !!window.electronAPI);
-                                console.log('🔍 DEBUG: Current URL =', window.location.href);
-                                console.log('🔍 DEBUG: sessionStorage.fromElectron =', sessionStorage.getItem('fromElectron'));
-                                
-                                // FIXED: Use deep link for system browser, IPC for Electron window  
-                                if (fromElectron && !window.electronAPI) {
-                                    // Electron app opened this in system browser - use deep link
-                                    console.log('✅ Triggering deep link for Electron (OAuth team invite): lupo://auth-success');
-                                    window.location.href = `lupo://auth-success?sessionKey=${encodeURIComponent(updatedSessionKey)}`;
-                                    // Show success message while redirecting
-                                    localStorage.removeItem('lupo_oauth_temp');
-                                    showSuccessState();
-                                    const welcomeHeader = document.querySelector('.welcome-header');
-                                    if (welcomeHeader) {
-                                        welcomeHeader.innerHTML = `
-                                            <h1>Welcome to LUPO! 🎉</h1>
-                                            <p>You've joined ${acceptData.companyName}'s team workspace and your AI sales assistant is ready</p>
-                                        `;
-                                    }
-                                    return;
-                                } else if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
-                                    console.log('✅ Notifying Electron app via IPC:', pollDataForLupo.sessionKey);
-                                    window.electronAPI.notifyAuthSuccess(pollDataForLupo.sessionKey);
-                                } else {
-                                    localStorage.setItem('lupo_auth_poll', JSON.stringify(pollDataForLupo));
-                                }
-                                
-                                // Clean up temporary OAuth data
-                                localStorage.removeItem('lupo_oauth_temp');
-                                
-                                // Show success with organization name
-                                showSuccessState();
-                                const welcomeHeader = document.querySelector('.welcome-header');
-                                if (welcomeHeader) {
-                                    welcomeHeader.innerHTML = `
-                                        <h1>Welcome to LUPO! 🎉</h1>
-                                        <p>You've joined ${acceptData.companyName}'s team workspace and your AI sales assistant is ready</p>
-                                    `;
-                                }
-                                return;
-                            } else {
-                                const acceptError = await acceptResponse.json();
-                                console.warn('⚠️ Failed to accept invite (account created but not joined to org):', acceptError.error);
-                            }
-                        } catch (inviteErr) {
-                            console.error('Error accepting invite:', inviteErr);
-                            // Continue anyway
-                        }
-                    }
-                    
-                    // Store session key for LUPO polling (update with new key if different)
-                    const pollData = {
-                        sessionKey: data.sessionKey || authData.token,
-                        timestamp: Date.now()
-                    };
-                    
-                    // FIXED: Use IPC to notify Electron app (preferred method)
-                    if (window.electronAPI && window.electronAPI.notifyAuthSuccess) {
-                        console.log('✅ Notifying Electron app via IPC:', pollData.sessionKey);
-                        window.electronAPI.notifyAuthSuccess(pollData.sessionKey);
-                    } else {
-                        // Fallback to localStorage for web browser
-                        localStorage.setItem('lupo_auth_poll', JSON.stringify(pollData));
-                        console.log('✅ Stored session key in localStorage (fallback)');
-                    }
-                    
-                    // Clean up temporary OAuth data
-                    localStorage.removeItem('lupo_oauth_temp');
-                    
-                    // Show success state
-                    showSuccessState();
-                    
-                    // Customize message if joining team
-                    if (inviteToken && data.organization) {
-                        const welcomeHeader = document.querySelector('.welcome-header');
-                        if (welcomeHeader) {
-                            welcomeHeader.innerHTML = `
-                                <h1>Welcome to LUPO! 🎉</h1>
-                                <p>You've joined ${data.organization.name}'s team workspace and your AI sales assistant is ready</p>
-                            `;
-                        }
-                    }
-                    
-                    // ✅ NEW: Also check sessionStorage for company name
-                    const companyName = sessionStorage.getItem('inviteCompanyName');
-                    if (inviteToken && companyName) {
-                        const welcomeHeader = document.querySelector('.welcome-header');
-                        if (welcomeHeader) {
-                            welcomeHeader.innerHTML = `
-                                <h1>Welcome to LUPO! 🎉</h1>
-                                <p>You've joined ${companyName}'s team workspace and your AI sales assistant is ready</p>
-                            `;
-                        }
-                        // Clean up
-                        sessionStorage.removeItem('inviteCompanyName');
-                    }
-                } else {
-                    throw new Error(data.error || 'Failed to complete OAuth signup');
-                }
-                
-            } catch (err) {
-                console.error('OAuth account setup error:', err);
-                alert('Setup error: ' + err.message + '. Please try again.');
-                // Redirect back to login on error
-                setTimeout(() => window.location.href = '/login', 2000);
+                // Return to signup step
+                document.querySelectorAll('.form-step').forEach(step => {
+                    step.classList.remove('active');
+                });
+                document.getElementById('signupStep').classList.add('active');
             }
         }
         
@@ -1803,19 +1469,6 @@
             if (companyInviteBanner) {
                 companyInviteBanner.style.display = 'none';
             }
-        }
-        
-        function showPasswordState() {
-            document.querySelectorAll('.form-step').forEach(step => {
-                step.classList.remove('active');
-            });
-            document.getElementById('passwordStep').classList.add('active');
-        }
-        
-        function goBack() {
-            document.getElementById('passwordStep').classList.remove('active');
-            document.getElementById('emailStep').classList.add('active');
-            document.getElementById('email').focus();
         }
         
         function checkPasswordStrength() {
