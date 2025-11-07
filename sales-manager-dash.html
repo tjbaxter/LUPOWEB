@@ -3052,7 +3052,16 @@
                     currentUser.salesContext = data.user.salesContext;
                 }
                 
-                document.getElementById('contextEditor').value = context;
+                // NEW: If no saved context, show dummy template text
+                const DUMMY_TEXT = "I'm on the Enterprise team at Acme Corp selling our CRM platform ($99-$999/mo). I work with mid-market tech companies. My style is consultative - I focus on ROI and solving pain points, not pushy tactics.";
+                const finalContext = context.trim() === '' ? DUMMY_TEXT : context;
+                
+                document.getElementById('contextEditor').value = finalContext;
+                
+                // Show/hide dummy text warning
+                const isDummyText = context.trim() === '';
+                showDummyTextWarning(isDummyText);
+                
                 updateCharCount();
                 contextHasChanges = false;
                 
@@ -3108,6 +3117,18 @@
             const content = document.getElementById('contextEditor').value;
             const btn = document.getElementById('saveContextBtn');
             
+            // Don't save if it's still the dummy text
+            if (isDummyText(content)) {
+                showToast('⚠️ Please customize the text before saving. The example text is not saved to LUPO.', 'error');
+                return;
+            }
+            
+            // Don't save empty content either - just clear it
+            if (content.trim() === '') {
+                showToast('⚠️ Context is empty. Add your personal info or it will reset to the example.', 'error');
+                return;
+            }
+            
             btn.disabled = true;
             const originalText = btn.innerHTML;
             btn.innerHTML = '<span class="processing-spinner"></span> Saving...';
@@ -3137,6 +3158,9 @@
                     });
                     
                     console.log('✅ Context saved successfully to backend');
+                    
+                    // Hide dummy text warning since they've saved real content
+                    showDummyTextWarning(false);
                     
                     // ✅ FIX: Update local state after successful save
                     if (currentUser) {
@@ -3209,6 +3233,20 @@
                 btn.textContent = 'Save Profile';
                 showToast('Failed to save profile', 'error');
             }
+        }
+        
+        // Show/hide dummy text warning banner
+        function showDummyTextWarning(show) {
+            const warningEl = document.getElementById('dummyTextWarning');
+            if (warningEl) {
+                warningEl.style.display = show ? 'block' : 'none';
+            }
+        }
+        
+        // Check if current text is the dummy text
+        function isDummyText(text) {
+            const DUMMY_TEXT = "I'm on the Enterprise team at Acme Corp selling our CRM platform ($99-$999/mo). I work with mid-market tech companies. My style is consultative - I focus on ROI and solving pain points, not pushy tactics.";
+            return text.trim() === DUMMY_TEXT.trim();
         }
         
         function updateCharCount() {
@@ -3304,6 +3342,11 @@
                 <div class="context-header">
                     <div class="context-title">Personal Sales Context</div>
                     <div class="context-subtitle">Brief personal intro about you, your team, what you sell, and your style (up to 240 characters). What you write here is <strong>exactly</strong> what LUPO sees during your calls. Edit the text below to make it your own.</div>
+                </div>
+                
+                <!-- Dummy Text Warning Banner -->
+                <div id="dummyTextWarning" style="display: none; background: rgba(255, 152, 0, 0.1); border: 1px solid rgba(255, 152, 0, 0.3); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; color: rgba(255, 152, 0, 0.9);">
+                    ⚠️ <strong>Example text below</strong> - Edit it to add your own info. This template is NOT sent to LUPO until you customize and save it.
                 </div>
                 
                 <textarea 
