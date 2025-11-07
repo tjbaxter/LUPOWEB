@@ -407,18 +407,67 @@
             justify-content: flex-end;
         }
         
-        /* Loading State */
+        /* Loading State - Skeleton with Shimmer */
         .skeleton {
-            background: linear-gradient(90deg, var(--surface) 25%, var(--surface-hover) 50%, var(--surface) 75%);
+            background: linear-gradient(90deg, 
+                var(--surface) 0%, 
+                var(--surface-hover) 20%, 
+                var(--surface-hover) 40%,
+                var(--surface) 100%
+            );
             background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
+            animation: shimmer 1.8s ease-in-out infinite;
             border-radius: 4px;
-            color: transparent;
+            color: transparent !important;
+            pointer-events: none;
+            user-select: none;
         }
         
+        .skeleton::before,
+        .skeleton::after {
+            content: none !important;
+        }
+        
+        /* Shimmer animation - hardware accelerated */
         @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+            0% { 
+                background-position: 200% 0;
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.95;
+            }
+            100% { 
+                background-position: -200% 0;
+                opacity: 1;
+            }
+        }
+        
+        /* Skeleton for different content types */
+        .skeleton-text {
+            height: 1.25em;
+            width: 60%;
+            display: inline-block;
+        }
+        
+        .skeleton-number {
+            height: 1em;
+            width: 3em;
+            display: inline-block;
+        }
+        
+        .skeleton-large {
+            height: 1em;
+            width: 5em;
+            display: inline-block;
+        }
+        
+        /* Respect user preference for reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .skeleton {
+                animation: none;
+                opacity: 0.6;
+            }
         }
         
         /* Empty State */
@@ -487,17 +536,17 @@
                 <div class="plan-stat">
                     <div class="plan-stat-label">Plan</div>
                     <div class="plan-stat-value">
-                        <span id="planName">Enterprise</span>
-                        <div class="plan-badge" id="planStatus">Active</div>
+                        <span id="planName" class="skeleton skeleton-text">Loading</span>
+                        <div class="plan-badge skeleton" id="planStatus" style="width: 100px; height: 24px; margin-top: 0.5rem;">Loading</div>
                     </div>
                 </div>
                 <div class="plan-stat">
                     <div class="plan-stat-label">Monthly Cost</div>
-                    <div class="plan-stat-value highlight" id="monthlyCost">$--</div>
+                    <div class="plan-stat-value highlight skeleton skeleton-large" id="monthlyCost">$0000</div>
                 </div>
                 <div class="plan-stat">
-                    <div class="plan-stat-label">Next Billing Date</div>
-                    <div class="plan-stat-value" style="font-size: 1.25rem;" id="nextBillingDate">--</div>
+                    <div class="plan-stat-label" id="billingDateLabel">Next Billing Date</div>
+                    <div class="plan-stat-value skeleton skeleton-text" style="font-size: 1.25rem;" id="nextBillingDate">Nov 00, 2025</div>
                 </div>
             </div>
         </section>
@@ -508,7 +557,7 @@
             <div class="seats-info">
                 <div>
                     <div class="seats-label">
-                        <span class="seats-count" id="activeSeats">-</span> active / <span id="totalSeats">-</span> seats purchased
+                        <span class="seats-count skeleton skeleton-number" id="activeSeats">0</span> active / <span class="skeleton skeleton-number" id="totalSeats">00</span> seats purchased
                     </div>
                     <div class="seats-subtitle">$200/seat/month</div>
                 </div>
@@ -678,18 +727,39 @@
         
         // Update UI with subscription data
         function updateUI(data) {
+            // Remove skeleton classes
+            const removeSkeletons = (element) => {
+                if (element) {
+                    element.classList.remove('skeleton', 'skeleton-text', 'skeleton-number', 'skeleton-large');
+                }
+            };
+            
             // Plan overview
-            document.getElementById('planName').textContent = data.plan || 'Enterprise';
-            document.getElementById('monthlyCost').textContent = `$${data.monthlyCost || 0}`;
+            const planNameEl = document.getElementById('planName');
+            const monthlyCostEl = document.getElementById('monthlyCost');
+            const nextBillingEl = document.getElementById('nextBillingDate');
+            const statusEl = document.getElementById('planStatus');
+            const activeSeatsEl = document.getElementById('activeSeats');
+            const totalSeatsEl = document.getElementById('totalSeats');
+            
+            removeSkeletons(planNameEl);
+            removeSkeletons(monthlyCostEl);
+            removeSkeletons(nextBillingEl);
+            removeSkeletons(statusEl);
+            removeSkeletons(activeSeatsEl);
+            removeSkeletons(totalSeatsEl);
+            
+            planNameEl.textContent = data.plan || 'Enterprise';
+            monthlyCostEl.textContent = `$${data.monthlyCost?.toLocaleString() || 0}`;
             
             // Next billing date
-            const billingLabelEl = document.querySelector('.plan-stat-label');
+            const billingLabelEl = document.getElementById('billingDateLabel');
             if (data.isTrialing) {
                 // During trial - show "First Charge"
                 billingLabelEl.textContent = 'First Charge';
                 if (data.trialEndsAt) {
                     const date = new Date(data.trialEndsAt);
-                    document.getElementById('nextBillingDate').textContent = date.toLocaleDateString('en-US', { 
+                    nextBillingEl.textContent = date.toLocaleDateString('en-US', { 
                         month: 'short', 
                         day: 'numeric', 
                         year: 'numeric' 
@@ -700,7 +770,7 @@
                 billingLabelEl.textContent = 'Next Billing Date';
                 if (data.nextBillingDate) {
                     const date = new Date(data.nextBillingDate);
-                    document.getElementById('nextBillingDate').textContent = date.toLocaleDateString('en-US', { 
+                    nextBillingEl.textContent = date.toLocaleDateString('en-US', { 
                         month: 'short', 
                         day: 'numeric', 
                         year: 'numeric' 
@@ -709,16 +779,19 @@
             }
             
             // Plan status
-            const statusEl = document.getElementById('planStatus');
+            statusEl.style.width = 'auto';
+            statusEl.style.height = 'auto';
             if (data.status === 'trialing') {
                 const daysLeft = Math.ceil((new Date(data.trialEndsAt) - new Date()) / (1000 * 60 * 60 * 24));
                 statusEl.textContent = `Trial - ${daysLeft} days left`;
                 statusEl.style.background = 'rgba(59, 130, 246, 0.1)';
                 statusEl.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                statusEl.style.color = 'var(--accent)';
             } else if (data.status === 'active') {
                 statusEl.textContent = 'Active';
                 statusEl.style.background = 'rgba(16, 185, 129, 0.1)';
                 statusEl.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                statusEl.style.color = 'var(--success)';
             } else if (data.status === 'past_due') {
                 statusEl.textContent = 'Payment Failed';
                 statusEl.style.background = 'rgba(245, 158, 11, 0.1)';
@@ -734,8 +807,8 @@
             }
             
             // Seats
-            document.getElementById('activeSeats').textContent = data.activeSeats || 0;
-            document.getElementById('totalSeats').textContent = data.totalSeats || 0;
+            activeSeatsEl.textContent = data.activeSeats || 0;
+            totalSeatsEl.textContent = data.totalSeats || 0;
             document.getElementById('newSeats').value = data.totalSeats || 5;
             document.getElementById('newSeats').min = data.isTrialing ? data.totalSeats : 1; // Lock during trial
             
