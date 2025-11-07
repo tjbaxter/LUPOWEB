@@ -1025,6 +1025,8 @@
                             placeholder="Minimum 8 characters"
                             required
                             minlength="8"
+                            pattern="^\S+$"
+                            title="Password must be at least 8 characters with no spaces"
                             autocomplete="new-password"
                             oninput="checkPasswordStrength()"
                         >
@@ -1314,9 +1316,17 @@
             const email = document.getElementById('email').value.trim().toLowerCase();
             const emailError = document.getElementById('emailError');
             
-            // Validate email
+            // Validate email format
             if (!isValidEmail(email)) {
                 emailError.textContent = 'Please enter a valid work email address';
+                emailError.classList.add('show');
+                document.getElementById('email').classList.add('error');
+                return;
+            }
+            
+            // Block consumer email domains
+            if (isConsumerEmail(email)) {
+                emailError.textContent = 'Please use a work email address. Consumer emails (Gmail, Yahoo, etc.) are not allowed';
                 emailError.classList.add('show');
                 document.getElementById('email').classList.add('error');
                 return;
@@ -1631,6 +1641,28 @@
         
         function isValidEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+        
+        function isConsumerEmail(email) {
+            const consumerDomains = [
+                'gmail.com', 'googlemail.com',
+                'yahoo.com', 'yahoo.co.uk', 'yahoo.ca', 'yahoo.com.au', 'yahoo.fr', 'yahoo.de', 'yahoo.es',
+                'outlook.com', 'hotmail.com', 'live.com', 'msn.com',
+                'aol.com', 'aol.co.uk',
+                'icloud.com', 'me.com', 'mac.com',
+                'protonmail.com', 'proton.me',
+                'mail.com',
+                'zoho.com',
+                'yandex.com', 'yandex.ru',
+                'gmx.com', 'gmx.net',
+                'mail.ru',
+                'qq.com',
+                '163.com',
+                '126.com'
+            ];
+            
+            const domain = email.split('@')[1]?.toLowerCase();
+            return consumerDomains.includes(domain);
         }
         
         function togglePasswordVisibility() {

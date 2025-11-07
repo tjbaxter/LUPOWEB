@@ -462,7 +462,9 @@
                     placeholder="Enter your password"
                     required
                     autocomplete="current-password"
-                    minlength="6"
+                    minlength="8"
+                    pattern="^\S+$"
+                    title="Password must be at least 8 characters with no spaces"
                 >
                 <div class="error-message" id="passwordError"></div>
             </div>
