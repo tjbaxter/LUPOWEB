@@ -565,19 +565,27 @@
     <div class="modal" id="seatsModal">
         <div class="modal-content">
             <h3 class="modal-title">Adjust Team Seats</h3>
-            <p class="modal-description">
+            <p class="modal-description" id="seatsModalDescription">
                 Add or remove seats from your subscription. Changes will be prorated on your next invoice.
             </p>
+            <div id="trialWarning" style="display: none; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 6px; padding: 1rem; margin-bottom: 1rem;">
+                <div style="font-size: 0.875rem; font-weight: 600; color: var(--warning); margin-bottom: 0.5rem;">
+                    ⚠️ Trial Seat Policy
+                </div>
+                <div style="font-size: 0.875rem; color: var(--text-dim); line-height: 1.5;">
+                    You can add seats during your trial, but cannot remove them until after your first billing cycle.
+                </div>
+            </div>
             <label for="newSeats" style="display: block; font-size: 0.875rem; color: var(--text-dim); margin-bottom: 0.5rem;">
-                Number of seats
+                Number of seats <span id="currentSeatsLabel"></span>
             </label>
             <input type="number" id="newSeats" class="modal-input" min="1" max="100" placeholder="5">
             <div style="font-size: 0.875rem; color: var(--text-dim); margin-bottom: 1.5rem;">
-                New monthly cost: <strong style="color: var(--text);" id="newCost">$1,000</strong>
+                <span id="costLabel">New monthly cost:</span> <strong style="color: var(--text);" id="newCost">$1,000</strong>
             </div>
             <div class="modal-actions">
                 <button class="btn" onclick="closeSeatsModal()">Cancel</button>
-                <button class="btn btn-primary" onclick="updateSeats()">Update Seats</button>
+                <button class="btn btn-primary" onclick="updateSeats()" id="updateSeatsBtn">Update Seats</button>
             </div>
         </div>
     </div>
@@ -675,21 +683,52 @@
             document.getElementById('monthlyCost').textContent = `$${data.monthlyCost || 0}`;
             
             // Next billing date
-            if (data.nextBillingDate) {
-                const date = new Date(data.nextBillingDate);
-                document.getElementById('nextBillingDate').textContent = date.toLocaleDateString('en-US', { 
-                    month: 'short', 
-                    day: 'numeric', 
-                    year: 'numeric' 
-                });
+            const billingLabelEl = document.querySelector('.plan-stat-label');
+            if (data.isTrialing) {
+                // During trial - show "First Charge"
+                billingLabelEl.textContent = 'First Charge';
+                if (data.trialEndsAt) {
+                    const date = new Date(data.trialEndsAt);
+                    document.getElementById('nextBillingDate').textContent = date.toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric', 
+                        year: 'numeric' 
+                    });
+                }
+            } else {
+                // After trial - show "Next Billing Date"
+                billingLabelEl.textContent = 'Next Billing Date';
+                if (data.nextBillingDate) {
+                    const date = new Date(data.nextBillingDate);
+                    document.getElementById('nextBillingDate').textContent = date.toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric', 
+                        year: 'numeric' 
+                    });
+                }
             }
             
             // Plan status
             const statusEl = document.getElementById('planStatus');
             if (data.status === 'trialing') {
-                statusEl.textContent = `Trial ends ${new Date(data.trialEndsAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+                const daysLeft = Math.ceil((new Date(data.trialEndsAt) - new Date()) / (1000 * 60 * 60 * 24));
+                statusEl.textContent = `Trial - ${daysLeft} days left`;
+                statusEl.style.background = 'rgba(59, 130, 246, 0.1)';
+                statusEl.style.borderColor = 'rgba(59, 130, 246, 0.3)';
             } else if (data.status === 'active') {
                 statusEl.textContent = 'Active';
+                statusEl.style.background = 'rgba(16, 185, 129, 0.1)';
+                statusEl.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+            } else if (data.status === 'past_due') {
+                statusEl.textContent = 'Payment Failed';
+                statusEl.style.background = 'rgba(245, 158, 11, 0.1)';
+                statusEl.style.borderColor = 'rgba(245, 158, 11, 0.3)';
+                statusEl.style.color = 'var(--warning)';
+            } else if (data.cancelAtPeriodEnd) {
+                statusEl.textContent = 'Canceling';
+                statusEl.style.background = 'rgba(239, 68, 68, 0.1)';
+                statusEl.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+                statusEl.style.color = 'var(--danger)';
             } else {
                 statusEl.textContent = data.status;
             }
@@ -698,11 +737,12 @@
             document.getElementById('activeSeats').textContent = data.activeSeats || 0;
             document.getElementById('totalSeats').textContent = data.totalSeats || 0;
             document.getElementById('newSeats').value = data.totalSeats || 5;
+            document.getElementById('newSeats').min = data.isTrialing ? data.totalSeats : 1; // Lock during trial
             
             // Payment method
             if (data.paymentMethod) {
                 document.getElementById('cardBrand').textContent = (data.paymentMethod.brand || 'VISA').toUpperCase();
-                document.getElementById('cardType').textContent = data.paymentMethod.brand || 'Visa';
+                document.getElementById('cardType').textContent = (data.paymentMethod.brand || 'Visa').charAt(0).toUpperCase() + (data.paymentMethod.brand || 'Visa').slice(1);
                 document.getElementById('cardLast4').textContent = `•••• ${data.paymentMethod.last4 || '4242'}`;
             }
         }
@@ -710,7 +750,7 @@
         // Load billing history
         async function loadBillingHistory() {
             try {
-                const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/history`, {
+                const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/invoices`, {
                     headers: authHeaders,
                     cache: 'no-cache'
                 });
@@ -746,7 +786,7 @@
                             <td colspan="4">
                                 <div class="empty-state">
                                     <div class="empty-state-icon">📄</div>
-                                    <div class="empty-state-text">No billing history yet</div>
+                                    <div class="empty-state-text">No billing history yet${subscriptionData?.isTrialing ? ' - you\'re in your free trial' : ''}</div>
                                 </div>
                             </td>
                         </tr>
@@ -760,7 +800,34 @@
         
         // Seats modal
         function openSeatsModal() {
-            document.getElementById('seatsModal').classList.add('show');
+            const modal = document.getElementById('seatsModal');
+            const currentSeats = subscriptionData?.totalSeats || 0;
+            const isTrialing = subscriptionData?.isTrialing || false;
+            
+            // Update modal content based on trial status
+            const description = document.getElementById('seatsModalDescription');
+            const trialWarning = document.getElementById('trialWarning');
+            const currentSeatsLabel = document.getElementById('currentSeatsLabel');
+            const costLabel = document.getElementById('costLabel');
+            const input = document.getElementById('newSeats');
+            
+            currentSeatsLabel.textContent = `(currently ${currentSeats})`;
+            
+            if (isTrialing) {
+                // During trial - can only add, not remove
+                description.textContent = 'Add seats to your trial. You cannot remove seats until after your first billing cycle.';
+                trialWarning.style.display = 'block';
+                input.min = currentSeats; // Lock minimum to current count
+                costLabel.textContent = 'First charge will be:';
+            } else {
+                // After trial - can add or remove
+                description.textContent = 'Add or remove seats from your subscription. Changes will be prorated on your next invoice.';
+                trialWarning.style.display = 'none';
+                input.min = 1;
+                costLabel.textContent = 'New monthly cost:';
+            }
+            
+            modal.classList.add('show');
             updateNewCost();
         }
         
@@ -770,21 +837,64 @@
         
         function updateNewCost() {
             const seats = parseInt(document.getElementById('newSeats').value) || 0;
-            document.getElementById('newCost').textContent = `$${seats * 200}`;
+            const currentSeats = subscriptionData?.totalSeats || 0;
+            const isTrialing = subscriptionData?.isTrialing || false;
+            const cost = seats * 200;
+            
+            document.getElementById('newCost').textContent = `$${cost.toLocaleString()}`;
+            
+            // Update button text
+            const btn = document.getElementById('updateSeatsBtn');
+            if (isTrialing) {
+                if (seats > currentSeats) {
+                    btn.textContent = `Add ${seats - currentSeats} Seats`;
+                } else {
+                    btn.textContent = 'Update Seats';
+                }
+            } else {
+                btn.textContent = 'Update Seats';
+            }
         }
         
         document.getElementById('newSeats')?.addEventListener('input', updateNewCost);
         
         async function updateSeats() {
             const newSeats = parseInt(document.getElementById('newSeats').value);
+            const currentSeats = subscriptionData?.totalSeats || 0;
+            const isTrialing = subscriptionData?.isTrialing || false;
             
             if (!newSeats || newSeats < 1) {
                 alert('Please enter a valid number of seats');
                 return;
             }
             
+            // Validation: During trial, can't reduce seats
+            if (isTrialing && newSeats < currentSeats) {
+                alert(`Cannot reduce seats during trial.\n\nYou can add seats anytime, but cannot remove them until after your first billing cycle on ${new Date(subscriptionData.trialEndsAt).toLocaleDateString()}.`);
+                return;
+            }
+            
+            // Confirm if adding seats during trial
+            if (isTrialing && newSeats > currentSeats) {
+                const addedSeats = newSeats - currentSeats;
+                const newCost = newSeats * 200;
+                const trialEnd = new Date(subscriptionData.trialEndsAt).toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+                
+                if (!confirm(`Add ${addedSeats} seat${addedSeats > 1 ? 's' : ''}?\n\nYour first charge on ${trialEnd} will be $${newCost.toLocaleString()} (${newSeats} seats × $200).\n\nYou won't be able to remove these seats until after your first billing cycle.`)) {
+                    return;
+                }
+            }
+            
             try {
-                const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/seats`, {
+                const btn = document.getElementById('updateSeatsBtn');
+                btn.disabled = true;
+                btn.textContent = 'Updating...';
+                
+                const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/update-seats`, {
                     method: 'POST',
                     headers: {
                         ...authHeaders,
@@ -793,22 +903,31 @@
                     body: JSON.stringify({ seats: newSeats })
                 });
                 
-                if (!response.ok) throw new Error('Failed to update seats');
+                const data = await response.json();
                 
-                alert('Seats updated successfully!');
+                if (!response.ok) {
+                    throw new Error(data.message || 'Failed to update seats');
+                }
+                
+                alert(data.message || 'Seats updated successfully!');
                 closeSeatsModal();
                 await loadSubscriptionData();
                 
             } catch (error) {
                 console.error('Failed to update seats:', error);
-                alert('Failed to update seats. Please try again.');
+                alert(error.message || 'Failed to update seats. Please try again.');
+                
+                // Reset button
+                const btn = document.getElementById('updateSeatsBtn');
+                btn.disabled = false;
+                btn.textContent = 'Update Seats';
             }
         }
         
         // Payment method
         async function updatePaymentMethod() {
             try {
-                const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/portal`, {
+                const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/create-portal-session`, {
                     method: 'POST',
                     headers: authHeaders
                 });
