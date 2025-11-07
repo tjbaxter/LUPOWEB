@@ -1048,6 +1048,40 @@
             white-space: nowrap;
         }
         
+        /* Manager badge */
+        .manager-badge {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 2px 8px;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--accent);
+            vertical-align: middle;
+        }
+        
+        .team-member-item.is-manager {
+            border-left: 2px solid var(--accent);
+        }
+        
+        /* Member status */
+        .member-status {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 4px;
+        }
+        
+        .member-status.active {
+            color: var(--success);
+        }
+        
+        .member-status.pending {
+            color: rgba(255,255,255,0.3);
+        }
+        
         .empty-team-state {
             text-align: center;
             padding: 40px 20px;
@@ -1276,7 +1310,10 @@
             
             <!-- Team Members Section -->
             <div class="invite-section">
-                <div class="invite-section-title">Team Members (<span id="teamMemberCount">0/0</span> joined)</div>
+                <div class="invite-section-title">Team Members</div>
+                <div style="font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 12px;">
+                    <span id="teamMemberCount">0/0 seats active</span>
+                </div>
                 <div class="team-members-list" id="teamMembersList">
                     <!-- Will be populated dynamically -->
                     <div class="empty-team-state">
@@ -2043,10 +2080,14 @@
                 const members = data.members || [];
                 const totalSeats = data.totalSeats || 0;
                 
-                console.log(`👥 Processing ${members.length} members out of ${totalSeats} seats`);
+                // Count only members with call access (exclude dashboard-only managers)
+                const activeMembers = members.filter(m => m.hasCallAccess !== false).length;
                 
-                // Update count
-                memberCount.textContent = `${members.length}/${totalSeats}`;
+                console.log(`👥 Processing ${members.length} members out of ${totalSeats} seats`);
+                console.log(`📊 Active seats: ${activeMembers}/${totalSeats}`);
+                
+                // Update count - show active seats, not just joined members
+                memberCount.textContent = `${activeMembers}/${totalSeats} seats active`;
                 
                 // Render members
                 if (members.length === 0) {
@@ -2086,18 +2127,41 @@
                         const gradient = getAvatarGradient(displayName + (member.email || ''));
                         const joinDate = member.joinedAt ? formatJoinDate(member.joinedAt) : 'Recently';
                         
-                        console.log(`   - Rendering: ${displayName} (${member.email})`);
+                        // Check if this is the manager
+                        const isManager = member.role === 'Admin';
+                        const managerBadge = isManager ? '<span class="manager-badge">MANAGER</span>' : '';
+                        
+                        // Status text for managers
+                        let statusText = '';
+                        if (isManager) {
+                            // For managers, show if they have call access or not
+                            // We'll need to check has_call_access from the member data
+                            statusText = member.hasCallAccess === false ? 
+                                '<div class="member-status">Dashboard only</div>' : 
+                                member.lastActive ? 
+                                    `<div class="member-status active">Active • ${joinDate}</div>` : 
+                                    '<div class="member-status">Dashboard only</div>';
+                        } else {
+                            statusText = member.lastActive ? 
+                                `<div class="member-status active">Joined ${joinDate}</div>` : 
+                                `<div class="member-status pending">Invited • Not joined</div>`;
+                        }
+                        
+                        console.log(`   - Rendering: ${displayName} (${member.email})${isManager ? ' [MANAGER]' : ''}`);
                         
                         return `
-                            <div class="team-member-item">
+                            <div class="team-member-item ${isManager ? 'is-manager' : ''}">
                                 <div class="team-member-avatar" style="background: ${gradient}">
                                     ${initials}
                                 </div>
                                 <div class="team-member-info">
-                                    <div class="team-member-name">${displayName}</div>
+                                    <div class="team-member-name">
+                                        ${displayName}
+                                        ${managerBadge}
+                                    </div>
                                     <div class="team-member-email">${member.email || ''}</div>
+                                    ${statusText}
                                 </div>
-                                <div class="team-member-date">${joinDate}</div>
                             </div>
                         `;
                     }).join('');
