@@ -448,18 +448,22 @@
             height: 1.25em;
             width: 60%;
             display: inline-block;
+            min-width: 120px;
         }
         
         .skeleton-number {
             height: 1em;
             width: 3em;
             display: inline-block;
+            min-width: 40px;
         }
         
         .skeleton-large {
-            height: 1em;
-            width: 5em;
+            height: 1.2em;
+            width: 100%;
+            max-width: 180px;
             display: inline-block;
+            min-width: 100px;
         }
         
         /* Respect user preference for reduced motion */
@@ -542,7 +546,9 @@
                 </div>
                 <div class="plan-stat">
                     <div class="plan-stat-label">Monthly Cost</div>
-                    <div class="plan-stat-value highlight skeleton skeleton-large" id="monthlyCost">$0000</div>
+                    <div class="plan-stat-value highlight">
+                        <span id="monthlyCost" class="skeleton skeleton-large">$0,000</span>
+                    </div>
                 </div>
                 <div class="plan-stat">
                     <div class="plan-stat-label" id="billingDateLabel">Next Billing Date</div>
