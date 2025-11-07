@@ -508,7 +508,7 @@
             <div class="seats-info">
                 <div>
                     <div class="seats-label">
-                        <span class="seats-count" id="activeSeats">-</span> / <span id="totalSeats">-</span> seats
+                        <span class="seats-count" id="activeSeats">-</span> active / <span id="totalSeats">-</span> seats purchased
                     </div>
                     <div class="seats-subtitle">$200/seat/month</div>
                 </div>
@@ -761,8 +761,11 @@
                 
                 const tbody = document.getElementById('billingTableBody');
                 
-                if (history.invoices && history.invoices.length > 0) {
-                    tbody.innerHTML = history.invoices.map(invoice => {
+                // Filter out $0 invoices (trial shouldn't show invoices)
+                const paidInvoices = history.invoices?.filter(inv => parseFloat(inv.amount) > 0) || [];
+                
+                if (paidInvoices.length > 0) {
+                    tbody.innerHTML = paidInvoices.map(invoice => {
                         const date = new Date(invoice.date).toLocaleDateString('en-US', { 
                             month: 'short', 
                             day: 'numeric', 
