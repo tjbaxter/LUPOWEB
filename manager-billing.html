@@ -963,9 +963,10 @@
                 return;
             }
             
-            // SECURITY: Cap trial seats at 10
-            if (isTrialing && newSeats > 10) {
-                alert(`Trial Seat Limit\n\nTrials are limited to 10 seats to prevent abuse.\n\nTo test LUPO with a larger team, please contact tom@lupo.ai for a custom trial.`);
+            // SECURITY: Cap trial seats at 25
+            // Prevents: Add 100 seats day 6 → cancel day 7 → $0 paid, $1000+ API cost eaten
+            if (isTrialing && newSeats > 25) {
+                alert(`Trial Seat Limit\n\nTrials are limited to 25 seats to prevent abuse.\n\nTo test LUPO with a larger team (26+ seats), please contact tom@lupo.ai for a custom enterprise trial.`);
                 return;
             }
             
