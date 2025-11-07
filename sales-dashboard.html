@@ -2581,17 +2581,35 @@
         
         // Show context editor
         function showContextEditor() {
-            const panel = document.getElementById('battlecardPanel');
-            panel.classList.remove('onboarding-mode');
+            console.log('🎨 showContextEditor() called');
             
-            document.getElementById('onboardingContainer').classList.remove('active');
-            document.getElementById('contextSection').style.display = 'flex';
-            document.getElementById('battlecard-footer').style.display = 'flex';
+            const panel = document.getElementById('battlecardPanel');
+            if (panel) {
+                panel.classList.remove('onboarding-mode');
+            }
+            
+            // ✅ FIX: Add null checks to prevent crashes
+            const onboardingContainer = document.getElementById('onboardingContainer');
+            if (onboardingContainer) {
+                onboardingContainer.classList.remove('active');
+            }
+            
+            const contextSection = document.getElementById('contextSection');
+            if (contextSection) {
+                contextSection.style.display = 'flex';
+            }
+            
+            const footer = document.getElementById('battlecard-footer');
+            if (footer) {
+                footer.style.display = 'flex';
+            }
             
             // NEW: Reset editor state
             const editor = document.getElementById('contextEditor');
-            editor.disabled = false;
-            editor.style.opacity = '1';
+            if (editor) {
+                editor.disabled = false;
+                editor.style.opacity = '1';
+            }
             
             // NEW: Remove any existing apply button
             const existingApplyBtn = document.querySelector('.apply-company-btn');
@@ -2607,8 +2625,9 @@
                 
                 // Show PDF upload section for personal context (if empty)
                 const hasContent = currentUser?.salesContext?.content && currentUser.salesContext.content.trim() !== '';
-                if (!hasContent) {
-                    document.getElementById('pdfUploadSection').style.display = 'block';
+                const pdfSection = document.getElementById('pdfUploadSection');
+                if (!hasContent && pdfSection) {
+                    pdfSection.style.display = 'block';
                 }
             }
             
@@ -2989,8 +3008,20 @@
         
         async function loadUserContext() {
             try {
+                console.log('🔄 Loading user context from /sales/me...');
                 const data = await api.get('/sales/me');
                 const context = data.user?.salesContext?.content || '';
+                console.log('📥 Loaded context:', {
+                    length: context.length,
+                    preview: context.substring(0, 50) + (context.length > 50 ? '...' : ''),
+                    fullSalesContext: data.user?.salesContext
+                });
+                
+                // ✅ FIX: Update currentUser with fresh data
+                if (currentUser && data.user) {
+                    currentUser.salesContext = data.user.salesContext;
+                }
+                
                 document.getElementById('contextEditor').value = context;
                 updateCharCount();
                 contextHasChanges = false;
@@ -3065,10 +3096,30 @@
                     await loadCompanyContextStatus();
                 } else {
                     // Save personal context
+                    console.log('💾 Saving personal context:', {
+                        length: content.length,
+                        preview: content.substring(0, 50) + (content.length > 50 ? '...' : '')
+                    });
+                    
                     await api.post('/sales/update-context', { 
                         content: content,
                         source: 'manual'
                     });
+                    
+                    console.log('✅ Context saved successfully to backend');
+                    
+                    // ✅ FIX: Update local state after successful save
+                    if (currentUser) {
+                        currentUser.salesContext = {
+                            ...currentUser.salesContext,
+                            content: content,
+                            lastUpdated: new Date(),
+                            source: 'manual',
+                            contextSource: 'custom',
+                            customOverrides: content
+                        };
+                        console.log('✅ Updated currentUser.salesContext in memory');
+                    }
                     
                     showToast('Context saved!');
                 }
