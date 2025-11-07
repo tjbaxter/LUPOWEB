@@ -941,9 +941,13 @@
         document.getElementById('newSeats')?.addEventListener('input', updateNewCost);
         
         async function updateSeats() {
+            console.log('🔧 updateSeats() called');
+            
             const newSeats = parseInt(document.getElementById('newSeats').value);
             const currentSeats = subscriptionData?.totalSeats || 0;
             const isTrialing = subscriptionData?.isTrialing || false;
+            
+            console.log('📊 Seat data:', { newSeats, currentSeats, isTrialing, subscriptionData });
             
             if (!newSeats || newSeats < 1) {
                 alert('Please enter a valid number of seats');
@@ -971,10 +975,16 @@
                 }
             }
             
+            console.log('🚀 Sending update to API...');
+            
             try {
                 const btn = document.getElementById('updateSeatsBtn');
                 btn.disabled = true;
                 btn.textContent = 'Updating...';
+                
+                console.log('📡 Calling:', `${AUTH_CONFIG.apiUrl}/api/billing/update-seats`);
+                console.log('📝 Headers:', authHeaders);
+                console.log('💼 Body:', { seats: newSeats });
                 
                 const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/update-seats`, {
                     method: 'POST',
@@ -985,7 +995,10 @@
                     body: JSON.stringify({ seats: newSeats })
                 });
                 
+                console.log('📥 Response status:', response.status);
+                
                 const data = await response.json();
+                console.log('📦 Response data:', data);
                 
                 if (!response.ok) {
                     throw new Error(data.message || 'Failed to update seats');
@@ -996,7 +1009,7 @@
                 await loadSubscriptionData();
                 
             } catch (error) {
-                console.error('Failed to update seats:', error);
+                console.error('❌ Failed to update seats:', error);
                 alert(error.message || 'Failed to update seats. Please try again.');
                 
                 // Reset button
