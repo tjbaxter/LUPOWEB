@@ -841,101 +841,232 @@
         }
         
         /* Invite Modal - Clean and premium */
-        .invite-modal {
+        /* Invite Team Panel - Slide-out style like Sales Context */
+        .invite-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0,0,0,0.7);
             backdrop-filter: blur(4px);
-            display: none;
-            align-items: center;
-            justify-content: center;
+            -webkit-backdrop-filter: blur(4px);
             z-index: 2000;
+            display: none;
+            animation: fadeIn 0.2s ease;
         }
         
-        .invite-modal.active {
+        .invite-overlay.active {
+            display: block;
+        }
+        
+        .invite-panel {
+            position: fixed;
+            top: 0;
+            right: -600px;
+            width: 600px;
+            max-width: 90vw;
+            height: 100vh;
+            background: #0a0a0a;
+            border-left: 1px solid rgba(255,255,255,0.1);
+            z-index: 2001;
             display: flex;
+            flex-direction: column;
+            transition: right 0.3s cubic-bezier(0.4,0,0.2,1);
         }
         
-        .invite-modal-content {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
+        .invite-panel.active {
+            right: 0;
         }
         
-        .invite-modal-header {
+        .invite-panel-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
         }
         
-        .invite-modal-title {
-            font-size: 1.25rem;
+        .invite-panel-title {
+            font-size: 20px;
             font-weight: 600;
         }
         
-        .invite-modal-close {
+        .invite-panel-close {
             background: none;
             border: none;
-            color: var(--text-dim);
-            font-size: 1.5rem;
+            color: rgba(255,255,255,0.6);
+            font-size: 28px;
             cursor: pointer;
-            padding: 0;
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 4px;
+            border-radius: 6px;
+            transition: all 0.2s;
         }
         
-        .invite-modal-close:hover {
-            background: var(--surface-hover);
-            color: var(--text);
+        .invite-panel-close:hover {
+            background: rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.9);
         }
         
-        .invite-modal-description {
-            color: var(--text-dim);
-            margin-bottom: 1.5rem;
+        .invite-panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            color: #fff; /* Ensure text is visible */
+        }
+        
+        .invite-section {
+            margin-bottom: 32px;
+            background: rgba(255,255,255,0.02); /* Subtle visible background */
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .invite-section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .invite-description {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            margin-bottom: 16px;
             line-height: 1.5;
         }
         
         .invite-link-container {
             display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
+            gap: 8px;
         }
         
         .invite-link-input {
             flex: 1;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0.75rem;
-            color: var(--text);
-            font-size: 0.875rem;
-            font-family: 'Monaco', 'Courier New', monospace;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 12px 14px;
+            color: #fff !important; /* Force white text */
+            font-size: 13px;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
         }
         
         .invite-copy-btn {
-            padding: 0.75rem 1.5rem;
+            padding: 12px 20px;
             background: var(--accent);
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             color: white;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
+            white-space: nowrap;
         }
         
         .invite-copy-btn:hover {
             background: #2563eb;
+        }
+        
+        .invite-copy-btn.copied {
+            background: var(--success);
+        }
+        
+        .team-members-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .team-member-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideInPanel 0.3s ease;
+        }
+        
+        @keyframes slideInPanel {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .team-member-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+            color: white;
+        }
+        
+        .team-member-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .team-member-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+        
+        .team-member-email {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .team-member-date {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            white-space: nowrap;
+        }
+        
+        .empty-team-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.3);
+        }
+        
+        .empty-team-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.3;
+        }
+        
+        .empty-team-text {
+            font-size: 14px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         .invite-stats {
@@ -965,20 +1096,20 @@
             color: var(--text);
         }
         
-        /* Remove old invite section styling */
-        .invite-section {
+        /* Remove old invite section styling - but NOT the panel sections */
+        .container > .invite-section {
             display: none !important;
         }
         
-        .invite-card {
+        .container > .invite-card {
             display: none !important;
         }
         
-        .invite-title {
+        .container > .invite-title {
             display: none !important;
         }
         
-        .invite-subtitle {
+        .container > .invite-subtitle {
             display: none !important;
         }
 
@@ -1017,7 +1148,7 @@
                 <div class="header-stat-label">Live Now</div>
                 <div class="header-stat-value" id="liveCalls" style="color: var(--text-dim);">--</div>
             </div>
-            <button class="invite-btn" id="inviteBtn" onclick="openInviteModal()" title="Invite your team">
+            <button class="invite-btn" id="inviteBtn" onclick="openInvitePanel()" title="Invite your team">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                     <circle cx="9" cy="7" r="4"></circle>
@@ -1122,22 +1253,37 @@
     </div>
     
     <!-- Invite Team Modal -->
-    <div class="invite-modal" id="inviteModal">
-        <div class="invite-modal-content">
-            <div class="invite-modal-header">
-                <h3 class="invite-modal-title">Invite Your Team</h3>
-                <button class="invite-modal-close" onclick="closeInviteModal()">×</button>
+    <!-- Invite Team Overlay & Panel -->
+    <div class="invite-overlay" id="inviteOverlay" onclick="closeInvitePanel()"></div>
+    <div class="invite-panel" id="invitePanel">
+        <div class="invite-panel-header">
+            <div class="invite-panel-title">Invite Your Team</div>
+            <button class="invite-panel-close" onclick="closeInvitePanel()">×</button>
+        </div>
+        
+        <div class="invite-panel-content">
+            <!-- Invite Link Section -->
+            <div class="invite-section">
+                <div class="invite-section-title">Share Invite Link</div>
+                <p class="invite-description">Share this link with your sales reps to get them started with LUPO</p>
+                <div class="invite-link-container">
+                    <input type="text" id="inviteLink" class="invite-link-input" readonly value="Loading...">
+                    <button class="invite-copy-btn" onclick="copyInviteLink()">
+                        <span id="copyBtnText">Copy</span>
+                    </button>
+                </div>
             </div>
             
-            <p class="invite-modal-description">
-                Share this link with your sales reps to get them started with LUPO
-            </p>
-            
-            <div class="invite-link-container">
-                <input type="text" id="inviteLinkModal" class="invite-link-input" readonly value="Loading invite link...">
-                <button class="invite-copy-btn" onclick="copyInviteLinkModal()">
-                    <span id="copyBtnTextModal">Copy</span>
-                </button>
+            <!-- Team Members Section -->
+            <div class="invite-section">
+                <div class="invite-section-title">Team Members (<span id="teamMemberCount">0/0</span> joined)</div>
+                <div class="team-members-list" id="teamMembersList">
+                    <!-- Will be populated dynamically -->
+                    <div class="empty-team-state">
+                        <div class="empty-team-icon">👥</div>
+                        <div class="empty-team-text">No team members yet. Share the invite link above!</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1765,8 +1911,8 @@
                 const data = await response.json();
                 
                 if (data.success && data.inviteLink) {
-                    // Update modal with invite link only
-                    document.getElementById('inviteLinkModal').value = data.inviteLink;
+                    // Update panel with invite link
+                    document.getElementById('inviteLink').value = data.inviteLink;
                 }
             } catch (error) {
                 console.error('Error loading invite link:', error);
@@ -1774,50 +1920,39 @@
             }
         }
         
-        // Copy invite link to clipboard
-        function copyInviteLink() {
-            const inviteInput = document.getElementById('inviteLink');
-            const copyBtn = document.getElementById('copyInviteBtn');
-            const copyBtnText = document.getElementById('copyBtnText');
-            
-            inviteInput.select();
-            inviteInput.setSelectionRange(0, 99999); // For mobile devices
-            
-            try {
-                document.execCommand('copy');
-                
-                // Visual feedback
-                copyBtn.classList.add('copied');
-                copyBtnText.textContent = 'Copied!';
-                
-                setTimeout(() => {
-                    copyBtn.classList.remove('copied');
-                    copyBtnText.textContent = 'Copy';
-                }, 2000);
-            } catch (err) {
-                console.error('Failed to copy:', err);
-                // Fallback: show the link
-                alert('Invite link: ' + inviteInput.value);
-            }
-        }
         
         // Open invite modal
-        function openInviteModal() {
-            document.getElementById('inviteModal').classList.add('active');
-            // Load invite data into modal
+        function openInvitePanel() {
+            const overlay = document.getElementById('inviteOverlay');
+            const panel = document.getElementById('invitePanel');
+            
+            overlay.classList.add('active');
+            // Small delay for smooth animation
+            setTimeout(() => {
+                panel.classList.add('active');
+            }, 10);
+            
+            // Load invite data and team members
             loadInviteLink();
+            loadTeamMembers();
         }
         
-        // Close invite modal
-        function closeInviteModal() {
-            document.getElementById('inviteModal').classList.remove('active');
+        // Close invite panel
+        function closeInvitePanel() {
+            const overlay = document.getElementById('inviteOverlay');
+            const panel = document.getElementById('invitePanel');
+            
+            panel.classList.remove('active');
+            setTimeout(() => {
+                overlay.classList.remove('active');
+            }, 300);
         }
         
-        // Copy invite link from modal
-        function copyInviteLinkModal() {
-            const inviteInput = document.getElementById('inviteLinkModal');
-            const copyBtn = document.querySelector('#inviteModal .invite-copy-btn');
-            const copyBtnText = document.getElementById('copyBtnTextModal');
+        // Copy invite link
+        function copyInviteLink() {
+            const inviteInput = document.getElementById('inviteLink');
+            const copyBtn = document.querySelector('.invite-copy-btn');
+            const copyBtnText = document.getElementById('copyBtnText');
             
             inviteInput.select();
             inviteInput.setSelectionRange(0, 99999);
@@ -1827,9 +1962,11 @@
                 
                 // Visual feedback
                 copyBtnText.textContent = 'Copied!';
+                copyBtn.classList.add('copied');
                 
                 setTimeout(() => {
                     copyBtnText.textContent = 'Copy';
+                    copyBtn.classList.remove('copied');
                 }, 2000);
             } catch (err) {
                 console.error('Failed to copy:', err);
@@ -1837,11 +1974,131 @@
             }
         }
         
-        // Close modal on outside click
+        // Generate initials from name
+        function getInitials(firstName, lastName) {
+            const first = firstName ? firstName.charAt(0).toUpperCase() : '';
+            const last = lastName ? lastName.charAt(0).toUpperCase() : '';
+            return first + last || '?';
+        }
+        
+        // Get a gradient color based on name (deterministic)
+        function getAvatarGradient(name) {
+            const gradients = [
+                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+                'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)'
+            ];
+            
+            // Simple hash function to pick a consistent gradient for a name
+            let hash = 0;
+            for (let i = 0; i < name.length; i++) {
+                hash = name.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const index = Math.abs(hash) % gradients.length;
+            return gradients[index];
+        }
+        
+        // Format date nicely
+        function formatJoinDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffTime = Math.abs(now - date);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 0) return 'Today';
+            if (diffDays === 1) return 'Yesterday';
+            if (diffDays < 7) return `${diffDays} days ago`;
+            if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+            
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
+        
+        // Load team members
+        async function loadTeamMembers() {
+            const membersList = document.getElementById('teamMembersList');
+            const memberCount = document.getElementById('teamMemberCount');
+            
+            console.log('🔍 Loading team members...');
+            console.log('   membersList element:', membersList);
+            console.log('   memberCount element:', memberCount);
+            
+            try {
+                const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/team/members`, {
+                    headers: authHeaders,
+                    cache: 'no-cache'
+                });
+                
+                console.log('📡 Team members response status:', response.status);
+                
+                if (!response.ok) throw new Error('Failed to load team members');
+                
+                const data = await response.json();
+                console.log('📊 Team members data:', data);
+                
+                const members = data.members || [];
+                const totalSeats = data.totalSeats || 0;
+                
+                console.log(`👥 Processing ${members.length} members out of ${totalSeats} seats`);
+                
+                // Update count
+                memberCount.textContent = `${members.length}/${totalSeats}`;
+                
+                // Render members
+                if (members.length === 0) {
+                    console.log('📭 No members, showing empty state');
+                    membersList.innerHTML = `
+                        <div class="empty-team-state">
+                            <div class="empty-team-icon">👥</div>
+                            <div class="empty-team-text">No team members yet. Share the invite link above!</div>
+                        </div>
+                    `;
+                } else {
+                    console.log('✅ Rendering team members...');
+                    membersList.innerHTML = members.map(member => {
+                        const initials = getInitials(member.firstName || '', member.lastName || '');
+                        const gradient = getAvatarGradient((member.firstName || '') + (member.lastName || ''));
+                        const joinDate = member.joinedAt ? formatJoinDate(member.joinedAt) : 'Recently';
+                        const displayName = [member.firstName, member.lastName].filter(Boolean).join(' ') || 'Team Member';
+                        
+                        console.log(`   - Rendering: ${displayName} (${member.email})`);
+                        
+                        return `
+                            <div class="team-member-item">
+                                <div class="team-member-avatar" style="background: ${gradient}">
+                                    ${initials}
+                                </div>
+                                <div class="team-member-info">
+                                    <div class="team-member-name">${displayName}</div>
+                                    <div class="team-member-email">${member.email || ''}</div>
+                                </div>
+                                <div class="team-member-date">${joinDate}</div>
+                            </div>
+                        `;
+                    }).join('');
+                    console.log('✅ Team members rendered successfully');
+                }
+            } catch (error) {
+                console.error('❌ Failed to load team members:', error);
+                membersList.innerHTML = `
+                    <div class="empty-team-state">
+                        <div class="empty-team-icon">⚠️</div>
+                        <div class="empty-team-text">Failed to load team members</div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Close panel on outside click (already handled by onclick on overlay, but keeping for safety)
         document.addEventListener('click', (e) => {
-            const modal = document.getElementById('inviteModal');
-            if (e.target === modal) {
-                closeInviteModal();
+            const panel = document.getElementById('invitePanel');
+            const overlay = document.getElementById('inviteOverlay');
+            if (e.target === overlay) {
+                closeInvitePanel();
             }
         });
         
