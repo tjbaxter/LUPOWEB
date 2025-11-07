@@ -625,10 +625,12 @@
             </p>
             <div id="trialWarning" style="display: none; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 6px; padding: 1rem; margin-bottom: 1rem;">
                 <div style="font-size: 0.875rem; font-weight: 600; color: var(--warning); margin-bottom: 0.5rem;">
-                    ⚠️ Trial Seat Policy
+                    ⚠️ Trial Seat Limit
                 </div>
                 <div style="font-size: 0.875rem; color: var(--text-dim); line-height: 1.5;">
                     You can add seats during your trial, but cannot remove them until after your first billing cycle.
+                    <br><br>
+                    <strong>Maximum 25 seats during trial.</strong> Need to test with a larger team? Contact tom@lupo.ai for a custom enterprise trial.
                 </div>
             </div>
             <label for="newSeats" style="display: block; font-size: 0.875rem; color: var(--text-dim); margin-bottom: 0.5rem;">
@@ -900,6 +902,7 @@
                 description.textContent = 'Add seats to your trial. You cannot remove seats until after your first billing cycle.';
                 trialWarning.style.display = 'block';
                 input.min = currentSeats; // Lock minimum to current count
+                input.max = 25; // SECURITY: Cap trial at 25 seats (protects from $250+ API cost abuse)
                 costLabel.textContent = 'First charge will be:';
             } else {
                 // After trial - can add or remove
@@ -957,6 +960,12 @@
             // Validation: During trial, can't reduce seats
             if (isTrialing && newSeats < currentSeats) {
                 alert(`Cannot reduce seats during trial.\n\nYou can add seats anytime, but cannot remove them until after your first billing cycle on ${new Date(subscriptionData.trialEndsAt).toLocaleDateString()}.`);
+                return;
+            }
+            
+            // SECURITY: Cap trial seats at 10
+            if (isTrialing && newSeats > 10) {
+                alert(`Trial Seat Limit\n\nTrials are limited to 10 seats to prevent abuse.\n\nTo test LUPO with a larger team, please contact tom@lupo.ai for a custom trial.`);
                 return;
             }
             
