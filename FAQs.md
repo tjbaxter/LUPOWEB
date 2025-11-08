@@ -109,5 +109,5 @@ Email us anytime at support@lupolabs.ai or message us on LinkedIn. We respond wi
 **$200 per seat / month • 5-seat minimum**  
 White-glove onboarding included
 
-Still have questions? [Book a call](https://cal.com/thomas-b-fuchoy/lupo-product-demo) to discuss your needs.
+Still have questions? [Book a call](https://cal.com/tombaxter/lupo-product-demo) to discuss your needs.
 
