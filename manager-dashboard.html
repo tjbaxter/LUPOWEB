@@ -2465,6 +2465,7 @@
                 managerWS.onmessage = (event) => {
                     try {
                         const data = JSON.parse(event.data);
+                        console.log('📨 WebSocket message received:', data);  // DEBUG
                         
                         switch (data.type) {
                             case 'handshake':
@@ -2473,6 +2474,7 @@
                                 
                             case 'live_update':
                                 // Update the "Live Now" counter in real-time
+                                console.log(`🔴 Updating Live Now to: ${data.liveNow}`);  // DEBUG
                                 updateLiveNowDisplay(data.liveNow);
                                 break;
                                 
@@ -2513,44 +2515,37 @@
         }
         
         function updateLiveNowDisplay(count) {
-            // Find the "Live Now" element in the header
-            const headerStats = document.querySelectorAll('.header-stat-value');
-            let liveStatValue = null;
+            // Update the live calls counter directly by ID
+            const liveCallsEl = document.getElementById('liveCalls');
             
-            // Find which one is "Live Now"
-            headerStats.forEach(stat => {
-                if (stat.textContent.includes('Live Now')) {
-                    liveStatValue = stat;
-                }
-            });
-            
-            if (liveStatValue) {
-                const oldText = liveStatValue.textContent;
-                const oldValue = parseInt(oldText) || 0;
+            if (liveCallsEl) {
+                const oldValue = parseInt(liveCallsEl.textContent) || 0;
                 
                 // Only update if changed
                 if (oldValue !== count) {
-                    liveStatValue.textContent = `${count} Live Now`;
+                    liveCallsEl.textContent = count;
+                    
+                    // Update color
+                    liveCallsEl.style.color = count > 0 ? 'var(--success)' : 'var(--text-dim)';
                     
                     // Visual feedback when count changes
-                    liveStatValue.style.transition = 'all 0.3s ease';
-                    liveStatValue.style.transform = 'scale(1.15)';
+                    liveCallsEl.style.transition = 'all 0.3s ease';
+                    liveCallsEl.style.transform = 'scale(1.15)';
                     
                     if (count > oldValue) {
                         // Someone went live - pulse green
-                        liveStatValue.style.color = 'var(--success)';
                         console.log(`🟢 Live Now: ${count} ↑ (someone just went live!)`);
                     } else if (count < oldValue) {
                         // Someone went offline - pulse dim
-                        liveStatValue.style.color = 'var(--text-dim)';
                         console.log(`⚪ Live Now: ${count} ↓ (someone went offline)`);
                     }
                     
                     setTimeout(() => {
-                        liveStatValue.style.transform = 'scale(1)';
-                        liveStatValue.style.color = 'var(--text)';
+                        liveCallsEl.style.transform = 'scale(1)';
                     }, 300);
                 }
+            } else {
+                console.error('❌ Could not find #liveCalls element');
             }
         }
         

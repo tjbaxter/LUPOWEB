@@ -88,6 +88,8 @@
             font-size: 11px;
             font-weight: 600;
             color: white;
+            background-size: cover;
+            background-position: center;
         }
         
         /* Main Layout */
@@ -1507,6 +1509,10 @@
             margin-bottom: 24px;
         }
         
+        .profile-pic-container {
+            position: relative;
+        }
+        
         .profile-pic-avatar {
             width: 80px;
             height: 80px;
@@ -1517,6 +1523,39 @@
             justify-content: center;
             font-size: 32px;
             font-weight: 600;
+            color: white;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .profile-pic-avatar.has-image {
+            font-size: 0; /* Hide initials when image is present */
+        }
+        
+        .profile-pic-upload-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .profile-pic-upload-btn:hover {
+            background: #2563eb;
+            transform: scale(1.1);
+        }
+        
+        .profile-pic-upload-btn svg {
+            width: 14px;
+            height: 14px;
             color: white;
         }
         
@@ -2069,8 +2108,27 @@
                 const userName = document.getElementById('userName');
                 const userAvatar = document.getElementById('userAvatar');
                 
-                userName.textContent = currentUser?.name || currentUser?.email || 'User';
-                userAvatar.textContent = (currentUser?.name || currentUser?.email || 'U').charAt(0).toUpperCase();
+                // Display name
+                if (currentUser?.firstName && currentUser?.lastName) {
+                    userName.textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+                } else {
+                    userName.textContent = currentUser?.name || currentUser?.email || 'User';
+                }
+                
+                // Display avatar
+                if (currentUser?.profilePicture) {
+                    // Show profile picture
+                    userAvatar.style.backgroundImage = `url(${currentUser.profilePicture})`;
+                    userAvatar.style.backgroundSize = 'cover';
+                    userAvatar.style.backgroundPosition = 'center';
+                    userAvatar.style.fontSize = '0';
+                    userAvatar.textContent = '';
+                } else if (currentUser?.firstName && currentUser?.lastName) {
+                    // Show initials
+                    userAvatar.textContent = (currentUser.firstName.charAt(0) + currentUser.lastName.charAt(0)).toUpperCase();
+                } else {
+                    userAvatar.textContent = (currentUser?.name || currentUser?.email || 'U').charAt(0).toUpperCase();
+                }
                 
                 // NEW: Check if user is admin
                 const orgData = data.org;
@@ -3500,14 +3558,32 @@
                 
                 // Update avatar
                 const profileAvatar = document.getElementById('profileAvatar');
-                if (currentUser.firstName || currentUser.lastName) {
+                const removeBtn = document.getElementById('removePhotoBtn');
+                
+                if (currentUser.profilePicture) {
+                    // Show profile picture
+                    profileAvatar.style.backgroundImage = `url(${currentUser.profilePicture})`;
+                    profileAvatar.classList.add('has-image');
+                    profileAvatar.textContent = '';
+                    removeBtn.style.display = 'block';
+                } else if (currentUser.firstName || currentUser.lastName) {
+                    // Show initials
                     const firstInitial = (currentUser.firstName || '').charAt(0).toUpperCase();
                     const lastInitial = (currentUser.lastName || '').charAt(0).toUpperCase();
+                    profileAvatar.style.backgroundImage = 'none';
+                    profileAvatar.classList.remove('has-image');
                     profileAvatar.textContent = firstInitial + lastInitial || '?';
+                    removeBtn.style.display = 'none';
                 } else if (currentUser.email) {
+                    profileAvatar.style.backgroundImage = 'none';
+                    profileAvatar.classList.remove('has-image');
                     profileAvatar.textContent = currentUser.email.charAt(0).toUpperCase();
+                    removeBtn.style.display = 'none';
                 } else {
+                    profileAvatar.style.backgroundImage = 'none';
+                    profileAvatar.classList.remove('has-image');
                     profileAvatar.textContent = '?';
+                    removeBtn.style.display = 'none';
                 }
             }
             
@@ -3578,21 +3654,116 @@
             // Create file input
             const input = document.createElement('input');
             input.type = 'file';
-            input.accept = 'image/*';
+            input.accept = 'image/jpeg,image/png,image/jpg,image/webp';
             input.onchange = async (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
                 
-                // For now, just show a message
-                // You can implement actual upload to S3/Cloudinary later
-                alert('Profile picture upload will be available soon');
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Image must be smaller than 5MB');
+                    return;
+                }
+                
+                // Convert to base64
+                const reader = new FileReader();
+                reader.onload = async (event) => {
+                    const base64Image = event.target.result;
+                    
+                    try {
+                        // Upload to backend
+                        const response = await fetch(`${API_URL}/auth/upload-profile-picture`, {
+                            method: 'POST',
+                            headers: authHeaders(),
+                            body: JSON.stringify({
+                                profilePicture: base64Image
+                            })
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error('Failed to upload profile picture');
+                        }
+                        
+                        // Update local user data
+                        currentUser.profilePicture = base64Image;
+                        
+                        // Update avatar displays
+                        const profileAvatar = document.getElementById('profileAvatar');
+                        profileAvatar.style.backgroundImage = `url(${base64Image})`;
+                        profileAvatar.classList.add('has-image');
+                        profileAvatar.textContent = '';
+                        
+                        const headerAvatar = document.getElementById('userAvatar');
+                        headerAvatar.style.backgroundImage = `url(${base64Image})`;
+                        headerAvatar.style.fontSize = '0';
+                        
+                        // Show remove button
+                        document.getElementById('removePhotoBtn').style.display = 'block';
+                        
+                        // Show success toast
+                        const toast = document.getElementById('toast');
+                        toast.textContent = 'Profile picture updated';
+                        toast.classList.add('show');
+                        setTimeout(() => toast.classList.remove('show'), 2000);
+                        
+                    } catch (error) {
+                        console.error('Error uploading profile picture:', error);
+                        alert('Failed to upload profile picture. Please try again.');
+                    }
+                };
+                reader.readAsDataURL(file);
             };
             input.click();
         }
         
-        function removeProfilePic() {
-            // For now, just reset to initials
-            alert('Profile picture removed');
+        async function removeProfilePic() {
+            if (!confirm('Remove profile picture?')) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/remove-profile-picture`, {
+                    method: 'DELETE',
+                    headers: authHeaders()
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to remove profile picture');
+                }
+                
+                // Update local user data
+                currentUser.profilePicture = null;
+                
+                // Reset to initials
+                const profileAvatar = document.getElementById('profileAvatar');
+                profileAvatar.style.backgroundImage = 'none';
+                profileAvatar.classList.remove('has-image');
+                
+                const headerAvatar = document.getElementById('userAvatar');
+                headerAvatar.style.backgroundImage = 'none';
+                headerAvatar.style.fontSize = '11px';
+                
+                if (currentUser.firstName && currentUser.lastName) {
+                    const initials = currentUser.firstName.charAt(0) + currentUser.lastName.charAt(0);
+                    profileAvatar.textContent = initials.toUpperCase();
+                    headerAvatar.textContent = initials.toUpperCase();
+                } else if (currentUser.email) {
+                    const initial = currentUser.email.charAt(0).toUpperCase();
+                    profileAvatar.textContent = initial;
+                    headerAvatar.textContent = initial;
+                }
+                
+                // Hide remove button
+                document.getElementById('removePhotoBtn').style.display = 'none';
+                
+                // Show success toast
+                const toast = document.getElementById('toast');
+                toast.textContent = 'Profile picture removed';
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+                
+            } catch (error) {
+                console.error('Error removing profile picture:', error);
+                alert('Failed to remove profile picture. Please try again.');
+            }
         }
         
         function changePassword() {
@@ -3714,11 +3885,16 @@
         <div class="profile-panel-content">
             <!-- Profile Picture -->
             <div class="profile-pic-section">
-                <div class="profile-pic-avatar" id="profileAvatar">?</div>
-                <div class="profile-pic-buttons">
-                    <button class="profile-pic-btn" onclick="uploadProfilePic()">Upload Photo</button>
-                    <button class="profile-pic-btn" onclick="removeProfilePic()">Remove</button>
+                <div class="profile-pic-container">
+                    <div class="profile-pic-avatar" id="profileAvatar">?</div>
+                    <button class="profile-pic-upload-btn" onclick="uploadProfilePic()" title="Upload photo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </button>
                 </div>
+                <button class="profile-pic-btn" onclick="removeProfilePic()" id="removePhotoBtn" style="display: none;">Remove Photo</button>
             </div>
             
             <!-- First Name -->
