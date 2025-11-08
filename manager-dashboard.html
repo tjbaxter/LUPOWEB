@@ -1428,10 +1428,26 @@
                     // CRITICAL: If opened from Electron, trigger deep link to notify app
                     if (fromElectron) {
                         console.log('🔗 Electron detected - triggering deep link to update UI');
-                        // Trigger deep link IMMEDIATELY - Electron will catch this and refresh session
-                        window.location.href = `lupo://enterprise-upgraded?token=${encodeURIComponent(urlToken)}`;
-                        // Page will redirect away, so we return here
-                        return;
+                        
+                        // Try to trigger deep link (will open Electron if it's in background)
+                        try {
+                            window.location.href = `lupo://enterprise-upgraded?token=${encodeURIComponent(urlToken)}`;
+                            console.log('✅ Deep link triggered - Electron should open momentarily');
+                        } catch (err) {
+                            console.warn('⚠️ Deep link failed to trigger:', err);
+                        }
+                        
+                        // FALLBACK: If Electron doesn't respond within 3 seconds, continue loading dashboard
+                        // This prevents infinite hanging if deep link is blocked
+                        setTimeout(() => {
+                            console.log('⏰ Electron didn\'t respond - continuing in browser as fallback');
+                            // Don't return - let dashboard load below
+                        }, 3000);
+                        
+                        // Give Electron 3 seconds to catch the deep link and close this tab
+                        // If we're still here after 3 seconds, continue with browser dashboard
+                        await new Promise(resolve => setTimeout(resolve, 3000));
+                        console.log('⏰ 3 seconds elapsed - loading dashboard in browser');
                     }
                     
                     // Clean URL to remove token (browser flow only)
