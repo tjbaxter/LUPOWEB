@@ -1402,6 +1402,7 @@
                 // METHOD 0: Check for direct token in URL (from Stripe checkout success)
                 const urlParams = new URLSearchParams(window.location.search);
                 const urlToken = urlParams.get('token');
+                const fromElectron = urlParams.get('fromElectron') === 'true';
                 
                 if (urlToken) {
                     console.log('🔑 New token from URL detected - clearing old sessions');
@@ -1424,7 +1425,16 @@
                     expiry.setDate(expiry.getDate() + 7);
                     localStorage.setItem('lupo_manager_expiry', expiry.toISOString());
                     
-                    // Clean URL to remove token
+                    // CRITICAL: If opened from Electron, trigger deep link to notify app
+                    if (fromElectron) {
+                        console.log('🔗 Electron detected - triggering deep link to update UI');
+                        // Trigger deep link IMMEDIATELY - Electron will catch this and refresh session
+                        window.location.href = `lupo://enterprise-upgraded?token=${encodeURIComponent(urlToken)}`;
+                        // Page will redirect away, so we return here
+                        return;
+                    }
+                    
+                    // Clean URL to remove token (browser flow only)
                     const newParams = new URLSearchParams(urlParams);
                     newParams.delete('token');
                     const cleanUrl = window.location.origin + window.location.pathname + 

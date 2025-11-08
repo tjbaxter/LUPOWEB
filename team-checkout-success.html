@@ -71,9 +71,24 @@
         return;
       }
 
+      // CRITICAL: Check if opened from Electron to trigger deep link flow
+      // This preserves the fromElectron flag through the entire checkout flow
+      const fromElectron = sessionStorage.getItem('fromElectron') === 'true' || 
+                          urlParams.get('fromElectron') === 'true';
+      
+      console.log('🔍 Checkout success - fromElectron:', fromElectron);
+
+      // Build backend URL with fromElectron flag if needed
+      let backendUrl = `https://lupo-backend.fly.dev/api/team/checkout/success?session_id=${encodeURIComponent(sessionId)}&temp_id=${encodeURIComponent(tempId)}`;
+      
+      if (fromElectron) {
+        backendUrl += '&fromElectron=true';
+        console.log('✅ Adding fromElectron flag to backend request');
+      }
+
       // Immediately redirect to backend - backend will create org and redirect to dashboard
       // This works better than fetch because backend uses res.redirect() which requires a browser redirect
-      window.location.href = `https://lupo-backend.fly.dev/api/team/checkout/success?session_id=${encodeURIComponent(sessionId)}&temp_id=${encodeURIComponent(tempId)}`;
+      window.location.href = backendUrl;
     })();
   </script>
 </body>

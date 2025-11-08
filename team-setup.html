@@ -470,6 +470,13 @@
         // First check if email is in URL (from Electron app)
         const urlParams = new URLSearchParams(window.location.search);
         const urlEmail = urlParams.get('email');
+        const fromElectron = urlParams.get('fromElectron') === 'true';
+        
+        // CRITICAL: Store fromElectron flag in sessionStorage to persist through redirects
+        if (fromElectron) {
+          sessionStorage.setItem('fromElectron', 'true');
+          console.log('✅ Detected fromElectron flag - storing in sessionStorage');
+        }
         
         if (urlEmail) {
           // Email from URL - treat as authenticated
