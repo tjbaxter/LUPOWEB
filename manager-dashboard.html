@@ -367,6 +367,56 @@
             color: var(--text-muted);
         }
         
+        /* Shimmer Loading Animation */
+        .skeleton {
+            background: linear-gradient(90deg, 
+                var(--surface) 0%, 
+                var(--surface-hover) 20%, 
+                var(--surface-hover) 40%,
+                var(--surface) 100%
+            );
+            background-size: 200% 100%;
+            animation: shimmer 1.8s ease-in-out infinite;
+            border-radius: 4px;
+            color: transparent !important;
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        .skeleton::before,
+        .skeleton::after {
+            content: none !important;
+        }
+        
+        @keyframes shimmer {
+            0% { 
+                background-position: 200% 0;
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.95;
+            }
+            100% { 
+                background-position: -200% 0;
+                opacity: 1;
+            }
+        }
+        
+        .skeleton-metric {
+            height: 1em;
+            width: 80px;
+            display: inline-block;
+            min-width: 60px;
+        }
+        
+        /* Respect user preference for reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .skeleton {
+                animation: none;
+                opacity: 0.6;
+            }
+        }
+        
         /* Time Filter */
         .time-filter {
             display: flex;
@@ -1238,19 +1288,19 @@
         <!-- Three Key Metrics -->
         <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;">
             <div class="metric-card" style="padding: 2.5rem 2rem;">
-                <div class="metric-value" id="seatsActive" style="min-width: 100px; font-size: 3.5rem;">--</div>
+                <div class="metric-value skeleton skeleton-metric" id="seatsActive" style="min-width: 100px; font-size: 3.5rem;">--</div>
                 <div class="metric-label" style="font-size: 0.875rem; margin-top: 1rem;">Seats Active This Week</div>
                 <div class="metric-subtitle" id="seatsSubtitle">out of -- paid seats</div>
         </div>
         
             <div class="metric-card" style="padding: 2.5rem 2rem;">
-                <div class="metric-value" id="totalMinutes" style="min-width: 100px; font-size: 3.5rem;">--</div>
+                <div class="metric-value skeleton skeleton-metric" id="totalMinutes" style="min-width: 100px; font-size: 3.5rem;">--</div>
                 <div class="metric-label" style="font-size: 0.875rem; margin-top: 1rem;">Minutes of Live Coaching</div>
                 <div class="metric-subtitle" id="minutesSubtitle">this week</div>
             </div>
             
             <div class="metric-card" style="padding: 2.5rem 2rem;">
-                <div class="metric-value" id="totalCalls" style="min-width: 100px; font-size: 3.5rem;">--</div>
+                <div class="metric-value skeleton skeleton-metric" id="totalCalls" style="min-width: 100px; font-size: 3.5rem;">--</div>
                 <div class="metric-label" style="font-size: 0.875rem; margin-top: 1rem;">Calls Coached</div>
                 <div class="metric-subtitle" id="callsSubtitle">this week</div>
             </div>
@@ -2224,7 +2274,7 @@
             const activeSeats = metrics.activeSeats || 0;
             const totalSeats = metrics.totalSeats || 0;
             seatsActiveEl.textContent = `${activeSeats}/${totalSeats}`;
-            seatsActiveEl.classList.remove('skeleton');
+            seatsActiveEl.classList.remove('skeleton', 'skeleton-metric');
             seatsActiveEl.style = '';
             
             const seatsSubtitle = document.getElementById('seatsSubtitle');
@@ -2234,7 +2284,7 @@
             const totalMinutesEl = document.getElementById('totalMinutes');
             const totalMinutes = metrics.totalMinutes || 0;
             totalMinutesEl.textContent = totalMinutes;
-            totalMinutesEl.classList.remove('skeleton');
+            totalMinutesEl.classList.remove('skeleton', 'skeleton-metric');
             totalMinutesEl.style = '';
             
             const minutesSubtitle = document.getElementById('minutesSubtitle');
@@ -2244,7 +2294,7 @@
             const totalCallsEl = document.getElementById('totalCalls');
             const totalCalls = metrics.totalCalls || 0;
             totalCallsEl.textContent = totalCalls;
-                totalCallsEl.classList.remove('skeleton');
+                totalCallsEl.classList.remove('skeleton', 'skeleton-metric');
                 totalCallsEl.style = '';
             
             const callsSubtitle = document.getElementById('callsSubtitle');
