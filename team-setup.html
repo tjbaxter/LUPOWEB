@@ -217,95 +217,41 @@
     }
 
     .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 10px 12px;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .checkbox-group:hover {
-      background: rgba(255, 255, 255, 0.03);
-      border-color: var(--border-focus);
     }
 
     .checkbox-group input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
       margin-top: 2px;
-      width: 18px;
-      height: 18px;
       cursor: pointer;
-      accent-color: var(--accent);
+      flex-shrink: 0;
     }
 
-    .checkbox-content {
+    .checkbox-group label {
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      margin: 0;
       flex: 1;
     }
 
-    .checkbox-label {
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin-bottom: 1px;
-      cursor: pointer;
-    }
-
-    .checkbox-description {
-      font-size: 12px;
-      color: var(--text-secondary);
-      line-height: 1.35;
-    }
-
-    .pricing-summary {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px 14px;
-      margin-bottom: 12px;
-    }
-
-    .pricing-line {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-      margin-bottom: 6px;
-      color: var(--text-secondary);
-    }
-
-    .pricing-line.pricing-total {
-      margin-top: 8px;
-      margin-bottom: 0;
-      padding-top: 8px;
-      border-top: 1px solid var(--border);
-      font-weight: 500;
-      color: var(--text-primary);
-      font-size: 15px;
-    }
-
-    .pricing-label-secondary {
-      color: var(--text-secondary);
+    .checkbox-hint {
       font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      line-height: 1.4;
     }
 
-    .pricing-amount {
+    #priceDisplay {
+      font-weight: 500;
       color: var(--accent);
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .pricing-amount-secondary {
-      color: var(--text-secondary);
-      font-size: 13px;
-    }
-
-    .pricing-total .pricing-amount {
-      font-size: 15px;
     }
 
     .btn-primary {
@@ -380,55 +326,29 @@
     <div id="errorMessage" class="error-message"></div>
 
     <form id="setupForm">
-      <!-- Email field (hidden if user is authenticated) -->
-      <div class="form-group" id="emailFieldGroup">
-        <label class="form-label" for="email">Your Email *</label>
-        <input type="email" id="email" class="form-input" placeholder="you@company.com">
-        <div class="form-hint">We'll use this for your admin account</div>
-      </div>
-
       <div class="form-group">
-        <label class="form-label" for="teamName">Company Name *</label>
+        <label class="form-label" for="teamName">Team Name *</label>
         <input type="text" id="teamName" class="form-input" placeholder="e.g., Acme Sales Team" required>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="seats">Number of Seats *</label>
-        <input type="number" id="seats" class="form-input" value="5" min="2" max="25" required>
-        <div class="form-hint">Each rep can use Lupo during their sales calls. Trial limited to 25 seats - need more? Contact tom@lupo.ai</div>
+        <input type="number" id="seats" class="form-input" value="5" min="2" max="100" required>
+        <div class="form-hint" id="priceDisplay">$1,000/month after trial</div>
       </div>
 
-      <label class="checkbox-group" for="managerSeat">
-        <input type="checkbox" id="managerSeat">
-        <div class="checkbox-content">
-          <span class="checkbox-label">Add a seat for me too</span>
-          <div class="checkbox-description">
-            You'll get full dashboard access either way. This lets you use Lupo on your own calls.
-          </div>
-        </div>
-      </label>
-
-      <div class="pricing-summary">
-        <div class="pricing-line">
-          <span id="repSeatsText">5 rep seats</span>
-          <span class="pricing-amount" id="repSeatsPrice">$1,000/month</span>
-        </div>
-        <div class="pricing-line" id="managerSeatLine" style="display: none;">
-          <span class="pricing-label-secondary">+ Your seat</span>
-          <span class="pricing-amount-secondary">$200/month</span>
-        </div>
-        <div class="pricing-line pricing-total">
-          <span>Total</span>
-          <span class="pricing-amount" id="totalPrice">$1,000/month</span>
-        </div>
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="includeManagerSeat">
+        <label for="includeManagerSeat">Add a seat for me too</label>
+        <div class="checkbox-hint">You'll get full dashboard access either way. This lets you use Lupo on your own calls.</div>
       </div>
 
       <button type="submit" id="submitBtn" class="btn-primary">
-        Continue →
+        Continue to Payment →
       </button>
 
       <div class="security-note">
-        Free for 7 days • Cancel anytime
+        🔒 Secure payment via Stripe • Cancel anytime during trial
       </div>
     </form>
   </div>
@@ -436,115 +356,34 @@
   <script>
     const BACKEND_URL = 'https://lupo-backend.fly.dev';
     const seatsInput = document.getElementById('seats');
-    const managerSeatCheckbox = document.getElementById('managerSeat');
+    const priceDisplay = document.getElementById('priceDisplay');
     const errorDiv = document.getElementById('errorMessage');
 
-    function updatePrice() {
-      const repSeats = parseInt(seatsInput.value) || 0;
-      const managerSeatIncluded = managerSeatCheckbox.checked;
-      const repPrice = repSeats * 200;
-      const managerPrice = managerSeatIncluded ? 200 : 0;
-      const totalPrice = repPrice + managerPrice;
+    // FIX: Reset form state on page load (in case user clicked back from Stripe)
+    window.addEventListener('pageshow', (event) => {
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = false;
+      btn.innerHTML = 'Continue to Payment →';
+      errorDiv.classList.remove('show');
+    });
 
-      // Update text
-      document.getElementById('repSeatsText').textContent = `${repSeats} rep seat${repSeats !== 1 ? 's' : ''}`;
-      document.getElementById('repSeatsPrice').textContent = `$${repPrice.toLocaleString()}/month`;
-      document.getElementById('totalPrice').textContent = `$${totalPrice.toLocaleString()}/month`;
-
-      // Show/hide manager seat line
-      const managerSeatLine = document.getElementById('managerSeatLine');
-      if (managerSeatIncluded) {
-        managerSeatLine.style.display = 'flex';
-      } else {
-        managerSeatLine.style.display = 'none';
-      }
-    }
-
-    // Update pricing when seats change
-    seatsInput.addEventListener('input', updatePrice);
-    managerSeatCheckbox.addEventListener('change', updatePrice);
+    // Update price display when seats change
+    seatsInput.addEventListener('input', () => {
+      const seats = parseInt(seatsInput.value) || 0;
+      const price = seats * 200;
+      priceDisplay.textContent = `$${price.toLocaleString()}/month after trial`;
+    });
 
     // Handle form submission
-      // Check authentication status on page load
-      async function checkAuthStatus() {
-        // First check if email is in URL (from Electron app)
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlEmail = urlParams.get('email');
-        const fromElectron = urlParams.get('fromElectron') === 'true';
-        
-        // CRITICAL: Store fromElectron flag in sessionStorage to persist through redirects
-        if (fromElectron) {
-          sessionStorage.setItem('fromElectron', 'true');
-          console.log('✅ Detected fromElectron flag - storing in sessionStorage');
-        }
-        
-        if (urlEmail) {
-          // Email from URL - treat as authenticated
-          document.getElementById('emailFieldGroup').style.display = 'none';
-          document.getElementById('email').value = urlEmail;
-          document.getElementById('email').removeAttribute('required');
-          console.log('✅ Email from URL:', urlEmail);
-          return { userId: null, email: urlEmail, token: null };
-        }
-        
-        // Check localStorage for valid tokens
-        const tokenKeys = ['lupoToken', 'lupo_manager_token', 'lupo_session'];
-        
-        for (const key of tokenKeys) {
-          const token = localStorage.getItem(key);
-          if (token) {
-            try {
-              const authCheck = await fetch(`${BACKEND_URL}/auth/me`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-              });
-              
-              if (authCheck.ok) {
-                const userData = await authCheck.json();
-                // User is authenticated - hide email field and pre-fill it
-                document.getElementById('emailFieldGroup').style.display = 'none';
-                document.getElementById('email').value = userData.email;
-                document.getElementById('email').removeAttribute('required');
-                console.log('✅ Authenticated as:', userData.email);
-                return { userId: userData.userId, email: userData.email, token };
-              } else {
-                console.warn(`⚠️ Token from ${key} is invalid - removing`);
-                localStorage.removeItem(key); // Clean up invalid token
-              }
-            } catch (err) {
-              console.warn(`⚠️ Error validating token from ${key}:`, err);
-              localStorage.removeItem(key);
-            }
-          }
-        }
-        
-        // No valid token and no URL email - show email field
-        document.getElementById('emailFieldGroup').style.display = 'block';
-        document.getElementById('email').setAttribute('required', 'required');
-        console.log('⚠️ No authentication found - please log in or enter email');
-        console.log('💡 If you just tried to upgrade, you may need to log out and back in to refresh your token');
-        return null;
-      }
-      
-      // Check auth on page load
-      let authData = null;
-      checkAuthStatus().then(data => {
-        authData = data;
-      });
-
-      document.getElementById('setupForm').addEventListener('submit', async (e) => {
+    document.getElementById('setupForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const teamName = document.getElementById('teamName').value.trim();
       const seats = parseInt(document.getElementById('seats').value);
-      const managerSeatIncluded = managerSeatCheckbox.checked;
-      const emailInput = document.getElementById('email');
+      const includeManagerSeat = document.getElementById('includeManagerSeat').checked;
       const btn = document.getElementById('submitBtn');
 
-      // Get email from authenticated user OR from form field
-      let email = authData ? authData.email : emailInput.value.trim();
-      let userId = authData ? authData.userId : null;
-
-      if (!teamName || !seats || seats < 2 || !email) {
+      if (!teamName || !seats || seats < 2) {
         showError('Please fill in all required fields');
         return;
       }
@@ -554,22 +393,40 @@
       btn.innerHTML = '<span class="spinner"></span>Creating checkout...';
       errorDiv.classList.remove('show');
 
-        try {
-          
-          // Create Stripe Checkout session
-          const response = await fetch(`${BACKEND_URL}/api/team/checkout/create`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              teamName,
-              seats,
-              includeManagerSeat: managerSeatIncluded, // Backend expects includeManagerSeat
-              userId, // Send userId if available (authenticated upgrade flow)
-              email // Send email from token if available
-            })
-          });
+      try {
+        // Get userId and email from JWT token if available
+        let userId = null;
+        let email = null;
+        const token = localStorage.getItem('lupoToken') || 
+                      localStorage.getItem('lupo_manager_token') || 
+                      localStorage.getItem('lupo_session');
+        
+        if (token) {
+          try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            userId = payload.userId;
+            email = payload.email;
+            console.log('✅ Got userId from token:', userId);
+            console.log('✅ Got email from token:', email);
+          } catch (err) {
+            console.warn('Failed to decode token:', err);
+          }
+        }
+        
+        // Create Stripe Checkout session
+        const response = await fetch(`${BACKEND_URL}/api/team/checkout/create`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            teamName,
+            seats,
+            includeManagerSeat, // From checkbox
+            userId, // Send userId if available (authenticated upgrade flow)
+            email // Send email from token (fallback if userId not found)
+          })
+        });
 
         const data = await response.json();
 
@@ -584,7 +441,7 @@
         console.error('❌ Checkout error:', error);
         showError(error.message);
         btn.disabled = false;
-        btn.innerHTML = 'Continue →';
+        btn.innerHTML = 'Continue to Payment →';
       }
     });
 
