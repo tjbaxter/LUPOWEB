@@ -580,19 +580,19 @@
             </div>
             
             <h2>LUPO Desktop</h2>
-            <p class="version-info">Version 3.1.1 • Released October 2025</p>
+            <p class="version-info">Version 3.2.14 • Released October 2025</p>
 
             <!-- Platform Detection Buttons -->
             <div class="download-buttons">
-                <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-3.1.1-arm64.dmg" class="download-main-btn mac-download" id="macARMDownload" onclick="trackDownload('mac-arm64')">
+                <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-3.2.14-arm64.dmg" class="download-main-btn mac-download" id="macARMDownload" onclick="trackDownload('mac-arm64')">
                     Download for Mac (2020 or newer)
                     <small style="display: block; font-size: 12px; opacity: 0.8; margin-top: 4px;">M1, M2, M3, M4 chips</small>
                 </a>
-                <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-3.1.1.dmg" class="download-main-btn mac-download" id="macDownload" onclick="trackDownload('mac-intel')">
+                <a href="https://github.com/LUPOLABS/lupo-releases/releases/latest/download/LUPO-3.2.14.dmg" class="download-main-btn mac-download" id="macDownload" onclick="trackDownload('mac-intel')">
                     Download for Mac (2019 or older)
                     <small style="display: block; font-size: 12px; opacity: 0.8; margin-top: 4px;">Intel chips</small>
                 </a>
-                <a href="https://github.com/LUPOLABS/lupo-releases/releases/download/v3.1.1/LUPO.Setup.3.1.1.exe" class="download-main-btn win-download" id="winDownload" onclick="trackDownload('windows')">
+                <a href="https://github.com/LUPOLABS/lupo-releases/releases/download/v3.2.14/LUPO.Setup.3.2.14.exe" class="download-main-btn win-download" id="winDownload" onclick="trackDownload('windows')">
                     Download for Windows
                 </a>
             </div>
@@ -789,7 +789,7 @@
                 fetch('/api/track-download', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ platform, version: '3.1.1' })
+                    body: JSON.stringify({ platform, version: '3.2.14' })
                 }).catch(() => {}); // Fail silently
             } catch (e) {}
         }
