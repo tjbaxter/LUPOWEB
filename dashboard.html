@@ -782,27 +782,93 @@
             display: block;
         }
 
-        .demo-banner {
-            background: linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(59,130,246,0.05) 100%);
-            border-bottom: 1px solid rgba(59,130,246,0.2);
-            padding: 12px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 14px;
+        /* CSS Variables for Manager Dashboard */
+        :root {
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --surface-hover: #1a1a1a;
+            --border: #222;
+            --text: #fff;
+            --text-dim: #888;
+            --text-muted: #666;
+            --accent: #3b82f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
         }
 
+        /* Manager Dashboard Container */
+        .manager-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            width: 100%;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .metric-value {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+            margin-top: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Time Filter */
         .time-filter {
             display: flex;
             gap: 0.5rem;
+            margin-bottom: 3rem;
             justify-content: center;
         }
 
         .time-filter .filter-btn {
             padding: 0.75rem 1.5rem;
-            background: #111;
-            border: 1px solid #222;
-            color: rgba(255,255,255,0.6);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.875rem;
@@ -810,14 +876,102 @@
         }
 
         .time-filter .filter-btn:hover {
-            background: #1a1a1a;
-            color: rgba(255,255,255,0.9);
+            background: var(--surface-hover);
+            color: var(--text);
         }
 
         .time-filter .filter-btn.active {
-            background: #3b82f6;
-            border-color: #3b82f6;
-            color: white;
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
+        /* Action Section */
+        .action-section {
+            width: 100%;
+            text-align: center;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .primary-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: var(--text);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .primary-btn.secondary {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .primary-btn.secondary:hover {
+            background: var(--surface-hover);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Shimmer Loading Animation */
+        .skeleton {
+            background: linear-gradient(90deg, 
+                var(--surface) 0%, 
+                var(--surface-hover) 20%, 
+                var(--surface-hover) 40%,
+                var(--surface) 100%
+            );
+            background-size: 200% 100%;
+            animation: shimmer 1.8s ease-in-out infinite;
+            border-radius: 4px;
+            color: transparent !important;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .skeleton::before,
+        .skeleton::after {
+            content: none !important;
+        }
+
+        @keyframes shimmer {
+            0% { 
+                background-position: 200% 0;
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.95;
+            }
+            100% { 
+                background-position: -200% 0;
+                opacity: 1;
+            }
+        }
+
+        .skeleton-metric {
+            height: 1em;
+            width: 80px;
+            display: inline-block;
+            min-width: 60px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .skeleton {
+                animation: none;
+                opacity: 0.6;
+            }
         }
         
         /* AI Panel */
@@ -1021,38 +1175,6 @@
             50% { opacity: 0.5; }
         }
         
-        /* Manager Preview Styles */
-        .manager-metric-card {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .manager-metric-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(59,130,246,0.1), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .manager-metric-card:hover::before {
-            left: 100%;
-        }
-        
-        .manager-metric-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(59,130,246,0.3) !important;
-            box-shadow: 0 8px 24px rgba(59,130,246,0.15);
-        }
-        
-        .manager-metric-card:hover > div:first-child {
-            transform: scale(1.05);
-            color: #3b82f6;
-        }
-        
         /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -1163,74 +1285,39 @@
                 
                 <!-- Manager Preview View -->
                 <div class="manager-preview-view" id="managerPreviewView">
-                    <div class="demo-banner">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div>
-                                <span>📊 Manager Dashboard Preview</span>
-                                <span style="opacity: 0.6; font-size: 12px; margin-left: 12px;">Demo data for illustration purposes</span>
-                            </div>
-                            <div style="display: flex; gap: 2rem; align-items: center;">
-                                <div style="text-align: right;">
-                                    <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.5); margin-bottom: 2px;">Organization</div>
-                                    <div style="font-size: 14px; font-weight: 600;">Demo Company</div>
-                                </div>
-                                <div style="text-align: right;">
-                                    <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.5); margin-bottom: 2px;">Reps Active</div>
-                                    <div style="font-size: 14px; font-weight: 600;" id="managerRepsActive">12</div>
-                                </div>
-                                <div style="text-align: right;">
-                                    <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.5); margin-bottom: 2px;">Live Now</div>
-                                    <div style="font-size: 14px; font-weight: 600; color: #10b981;" id="managerLiveNow">
-                                        <span class="pulse-dot" style="display: inline-block; width: 6px; height: 6px; background: #10b981; border-radius: 50%; margin-right: 4px; animation: pulse 2s infinite;"></span>3
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="padding: 2rem; max-width: 1200px; margin: 0 auto;">
+                    <div class="manager-container">
                         <!-- Time Filter -->
-                        <div class="time-filter" style="margin-bottom: 3rem;">
-                            <button class="filter-btn active" onclick="updateManagerPreview('today')">Today</button>
-                            <button class="filter-btn" onclick="updateManagerPreview('week')">This Week</button>
-                            <button class="filter-btn" onclick="updateManagerPreview('month')">This Month</button>
+                        <div class="time-filter">
+                            <button class="filter-btn active" data-period="week" onclick="updateManagerPreview('week')">Last 7 days</button>
+                            <button class="filter-btn" data-period="month" onclick="updateManagerPreview('month')">Last 30 days</button>
+                            <button class="filter-btn" data-period="all" onclick="updateManagerPreview('all')">All time</button>
                         </div>
                         
-                        <!-- Main KPI -->
-                        <div style="text-align: center; margin-bottom: 3rem;">
-                            <div id="managerMainKPI" style="font-size: 5rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, #fff 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; transition: all 0.3s ease;">47</div>
-                            <div style="font-size: 1rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px;">Critical Moments Detected</div>
-                            <div style="font-size: 0.875rem; color: rgba(255,255,255,0.4); margin-top: 0.25rem;">Objections and risks LUPO flagged</div>
-                            <div style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: #111; border: 1px solid #222; border-radius: 6px; font-size: 0.875rem;">
-                                <span id="managerTrend" style="color: #10b981;">↑ 23%</span> <span id="managerTrendPeriod">from yesterday</span>
-                            </div>
+                        <!-- Three Key Metrics -->
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-value skeleton skeleton-metric" id="seatsActive">--</div>
+                                <div class="metric-label">Seats Active This Week</div>
+                                <div class="metric-subtitle" id="seatsSubtitle">out of -- paid seats</div>
                         </div>
                         
-                        <!-- Supporting Metrics -->
-                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 3rem;">
-                            <div class="manager-metric-card" style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center; transition: all 0.3s ease; cursor: pointer;">
-                                <div id="managerCoverage" style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem; transition: all 0.3s ease;">78%</div>
-                                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem;">LUPO Coverage</div>
-                                <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">% of calls with assistance</div>
+                            <div class="metric-card">
+                                <div class="metric-value skeleton skeleton-metric" id="totalMinutes">--</div>
+                                <div class="metric-label">Minutes of Live Coaching</div>
+                                <div class="metric-subtitle" id="minutesSubtitle">this week</div>
                             </div>
                             
-                            <div class="manager-metric-card" style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center; transition: all 0.3s ease; cursor: pointer;">
-                                <div id="managerMomentum" style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem; transition: all 0.3s ease;">64%</div>
-                                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem;">Forward Momentum</div>
-                                <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">% securing next steps</div>
+                            <div class="metric-card">
+                                <div class="metric-value skeleton skeleton-metric" id="totalCalls">--</div>
+                                <div class="metric-label">Calls Coached</div>
+                                <div class="metric-subtitle" id="callsSubtitle">this week</div>
+                            </div>
                             </div>
                             
-                            <div class="manager-metric-card" style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center; transition: all 0.3s ease; cursor: pointer;">
-                                <div id="managerObjection" style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem; transition: all 0.3s ease;">Price</div>
-                                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem;">Top Objection</div>
-                                <div id="managerObjectionCount" style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">appeared 12× today</div>
-                            </div>
-                            
-                            <div class="manager-metric-card" style="background: #111; border: 1px solid #222; border-radius: 8px; padding: 1.5rem; text-align: center; transition: all 0.3s ease; cursor: pointer;">
-                                <div id="managerTotalCalls" style="font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem; transition: all 0.3s ease;">34</div>
-                                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem;">Total Calls</div>
-                                <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">analyzed this period</div>
-                            </div>
+                        <!-- Action Buttons -->
+                        <div class="action-section">
+                            <a href="#" class="primary-btn" id="contextBtn">Team Settings</a>
+                            <a href="#" class="primary-btn secondary" id="billingBtn">Manage Subscription</a>
                         </div>
                     </div>
                 </div>
@@ -1391,44 +1478,29 @@
                 aiPanel.style.display = 'none';
                 aiResponse.classList.remove('show');
                 
-                // Start live updates for manager preview
-                startManagerPreviewUpdates();
+                // Load dashboard data
+                loadManagerDashboard('week');
             }
         }
         
-        // Manager preview live update interval
-        let managerUpdateInterval = null;
-        
-        function startManagerPreviewUpdates() {
-            // Clear any existing interval
-            if (managerUpdateInterval) {
-                clearInterval(managerUpdateInterval);
+        // Setup action button handlers
+        function setupManagerDashboardButtons() {
+            const contextBtn = document.getElementById('contextBtn');
+            const billingBtn = document.getElementById('billingBtn');
+            
+            if (contextBtn) {
+                contextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchView('context');
+                });
             }
             
-            // Update live metrics every 5 seconds
-            managerUpdateInterval = setInterval(() => {
-                if (currentView !== 'manager-preview') {
-                    clearInterval(managerUpdateInterval);
-                    return;
-                }
-                
-                // Randomly update live calls (0-8)
-                const currentLive = parseInt(document.getElementById('managerLiveNow').textContent) || 0;
-                const newLive = Math.max(0, currentLive + Math.floor(Math.random() * 3 - 1));
-                animateValue('managerLiveNow', newLive, true);
-                
-                // Occasionally increment critical moments
-                if (Math.random() > 0.7) {
-                    const currentKPI = parseInt(document.getElementById('managerMainKPI').textContent) || 0;
-                    animateValue('managerMainKPI', currentKPI + Math.floor(Math.random() * 3 + 1));
-                }
-                
-                // Update reps active occasionally
-                if (Math.random() > 0.85) {
-                    const currentReps = parseInt(document.getElementById('managerRepsActive').textContent) || 0;
-                    animateValue('managerRepsActive', Math.max(8, currentReps + Math.floor(Math.random() * 3 - 1)));
-                }
-            }, 5000);
+            if (billingBtn) {
+                billingBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = '/manager-billing.html';
+                });
+            }
         }
         
         // Load sales context
@@ -1865,6 +1937,7 @@
                 await loadCalls();
                 setupEventListeners();
                 setupUploadZone(); // Enable file upload functionality
+                setupManagerDashboardButtons(); // Setup manager dashboard buttons
                 
                 console.log('Dashboard initialized successfully');
                 
@@ -2252,73 +2325,117 @@
         }
         
         // Manager Preview Functions
-        function updateManagerPreview(period) {
+        async function updateManagerPreview(period) {
             // Update filter buttons
             document.querySelectorAll('#managerPreviewView .filter-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if (btn.textContent.toLowerCase().includes(period)) {
+                if (btn.dataset.period === period) {
                     btn.classList.add('active');
                 }
             });
             
-            // Demo data for different periods
+            // Load dashboard data
+            await loadManagerDashboard(period);
+        }
+        
+        // Load manager dashboard data
+        async function loadManagerDashboard(period = 'week') {
+            try {
+                const headers = getAuthHeaders();
+                
+                // Build API URL with period parameter
+                let url = 'https://lupo-backend.fly.dev/manager/metrics';
+                const params = new URLSearchParams();
+                
+                if (period === 'week') {
+                    const weekAgo = new Date();
+                    weekAgo.setDate(weekAgo.getDate() - 7);
+                    params.append('startDate', weekAgo.toISOString());
+                } else if (period === 'month') {
+                    const monthAgo = new Date();
+                    monthAgo.setMonth(monthAgo.getMonth() - 1);
+                    params.append('startDate', monthAgo.toISOString());
+                }
+                // 'all' doesn't need a startDate parameter
+                
+                if (params.toString()) {
+                    url += '?' + params.toString();
+                }
+                
+                const response = await fetch(url, { headers });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load dashboard data');
+                }
+                
+                const data = await response.json();
+                updateDashboard(data.metrics || data);
+                
+            } catch (err) {
+                console.error('Failed to load manager dashboard:', err);
+                // Show demo data on error
+                showDemoDashboard(period);
+            }
+        }
+        
+        // Update dashboard with real data
+        function updateDashboard(metrics) {
+            const seatsActiveEl = document.getElementById('seatsActive');
+            const seatsSubtitleEl = document.getElementById('seatsSubtitle');
+            const totalMinutesEl = document.getElementById('totalMinutes');
+            const totalCallsEl = document.getElementById('totalCalls');
+            
+            // Update seats active
+            const activeSeats = metrics.activeSeats || 0;
+            const totalSeats = metrics.totalSeats || 0;
+            if (seatsActiveEl) {
+                seatsActiveEl.classList.remove('skeleton', 'skeleton-metric');
+                seatsActiveEl.textContent = activeSeats;
+            }
+            if (seatsSubtitleEl) {
+                seatsSubtitleEl.textContent = `out of ${totalSeats} paid seats`;
+            }
+            
+            // Update total minutes
+            const totalMinutes = metrics.totalMinutes || 0;
+            if (totalMinutesEl) {
+                totalMinutesEl.classList.remove('skeleton', 'skeleton-metric');
+                totalMinutesEl.textContent = totalMinutes;
+            }
+            
+            // Update total calls
+            const totalCalls = metrics.totalCalls || 0;
+            if (totalCallsEl) {
+                totalCallsEl.classList.remove('skeleton', 'skeleton-metric');
+                totalCallsEl.textContent = totalCalls;
+            }
+        }
+        
+        // Show demo data (fallback)
+        function showDemoDashboard(period) {
             const demoData = {
-                today: {
-                    mainKPI: 47,
-                    trend: '↑ 23%',
-                    trendPeriod: 'from yesterday',
-                    coverage: '78%',
-                    momentum: '64%',
-                    objection: 'Price',
-                    objectionCount: 'appeared 12× today',
-                    totalCalls: 34
-                },
                 week: {
-                    mainKPI: 312,
-                    trend: '↑ 18%',
-                    trendPeriod: 'from last week',
-                    coverage: '82%',
-                    momentum: '71%',
-                    objection: 'Timeline',
-                    objectionCount: 'appeared 67× this week',
+                    activeSeats: 12,
+                    totalSeats: 15,
+                    totalMinutes: 1247,
                     totalCalls: 248
                 },
                 month: {
-                    mainKPI: 1428,
-                    trend: '↑ 34%',
-                    trendPeriod: 'from last month',
-                    coverage: '85%',
-                    momentum: '76%',
-                    objection: 'Budget',
-                    objectionCount: 'appeared 284× this month',
+                    activeSeats: 14,
+                    totalSeats: 15,
+                    totalMinutes: 5234,
                     totalCalls: 1165
+                },
+                all: {
+                    activeSeats: 15,
+                    totalSeats: 15,
+                    totalMinutes: 18432,
+                    totalCalls: 3421
                 }
             };
             
-            const data = demoData[period] || demoData.today;
-            
-            // Animate value changes
-            animateValue('managerMainKPI', data.mainKPI);
-            document.getElementById('managerTrend').innerHTML = data.trend;
-            document.getElementById('managerTrendPeriod').textContent = data.trendPeriod;
-            
-            // Update trend color based on direction
-            const trendEl = document.getElementById('managerTrend');
-            if (data.trend.includes('↑')) {
-                trendEl.style.color = '#10b981';
-            } else {
-                trendEl.style.color = '#ef4444';
-            }
-            
-            // Animate metric cards
-            animateMetric('managerCoverage', data.coverage);
-            animateMetric('managerMomentum', data.momentum);
-            document.getElementById('managerObjection').textContent = data.objection;
-            document.getElementById('managerObjectionCount').textContent = data.objectionCount;
-            animateValue('managerTotalCalls', data.totalCalls);
-            
-            // Note: Reps Active and Live Now are NOT updated here because they show current status,
-            // not historical data. They remain constant regardless of time period selected.
+            const data = demoData[period] || demoData.week;
+            updateDashboard(data);
         }
         
         // Animate numeric values
