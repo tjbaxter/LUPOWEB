@@ -776,10 +776,324 @@
             flex: 1;
             background: #000;
             overflow-y: auto;
+            flex-direction: column;
         }
 
         .manager-preview-view.active {
+            display: flex;
+        }
+
+        /* Manager Dashboard Header */
+        .manager-header {
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--surface);
+        }
+
+        .manager-header-info {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .manager-header-stat {
+            text-align: right;
+        }
+
+        .manager-header-stat-label {
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+        }
+
+        .manager-header-stat-value {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        /* Invite Button */
+        .invite-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--accent), #5090ff);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 0.813rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: 1rem;
+        }
+
+        .invite-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .invite-btn svg {
+            flex-shrink: 0;
+        }
+
+        /* Invite Panel - Slide-out style */
+        .invite-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .invite-overlay.active {
             display: block;
+        }
+
+        .invite-panel {
+            position: fixed;
+            top: 0;
+            right: -600px;
+            width: 600px;
+            max-width: 90vw;
+            height: 100vh;
+            background: #0a0a0a;
+            border-left: 1px solid rgba(255,255,255,0.1);
+            z-index: 2001;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .invite-panel.active {
+            right: 0;
+        }
+
+        .invite-panel-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .invite-panel-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .invite-panel-close {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.6);
+            font-size: 28px;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .invite-panel-close:hover {
+            background: rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.9);
+        }
+
+        .invite-panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            color: #fff;
+        }
+
+        .invite-section {
+            margin-bottom: 32px;
+            background: rgba(255,255,255,0.02);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .invite-section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .invite-description {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .invite-link-container {
+            display: flex;
+            gap: 8px;
+        }
+
+        .invite-link-input {
+            flex: 1;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 12px 14px;
+            color: #fff !important;
+            font-size: 13px;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+        }
+
+        .invite-copy-btn {
+            padding: 12px 20px;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .invite-copy-btn:hover {
+            background: #2563eb;
+        }
+
+        .invite-copy-btn.copied {
+            background: var(--success);
+        }
+
+        .team-members-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .team-member-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideInPanel 0.3s ease;
+        }
+
+        @keyframes slideInPanel {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .team-member-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+            color: white;
+        }
+
+        .team-member-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .team-member-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .team-member-email {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .team-member-date {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            white-space: nowrap;
+        }
+
+        .manager-badge {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 2px 8px;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--accent);
+            vertical-align: middle;
+        }
+
+        .team-member-item.is-manager {
+            border-left: 2px solid var(--accent);
+        }
+
+        .member-status {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 4px;
+        }
+
+        .member-status.active {
+            color: var(--success);
+        }
+
+        .member-status.pending {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .empty-team-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .empty-team-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.3;
+        }
+
+        .empty-team-text {
+            font-size: 14px;
         }
 
         /* CSS Variables for Manager Dashboard */
@@ -1285,6 +1599,32 @@
                 
                 <!-- Manager Preview View -->
                 <div class="manager-preview-view" id="managerPreviewView">
+                    <!-- Manager Dashboard Header -->
+                    <div class="manager-header">
+                        <div class="logo">LUPO</div>
+                        <div class="manager-header-info">
+                            <div class="manager-header-stat">
+                                <div class="manager-header-stat-label">Organization</div>
+                                <div class="manager-header-stat-value" id="managerOrgName">Demo Company</div>
+                            </div>
+                            <div class="manager-header-stat">
+                                <div class="manager-header-stat-label">Live Now</div>
+                                <div class="manager-header-stat-value" id="managerLiveCalls" style="color: var(--success);">
+                                        <span class="pulse-dot" style="display: inline-block; width: 6px; height: 6px; background: #10b981; border-radius: 50%; margin-right: 4px; animation: pulse 2s infinite;"></span>3
+                                    </div>
+                                </div>
+                            <button class="invite-btn" id="managerInviteBtn" onclick="openInvitePanel()" title="Invite your team">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <line x1="19" y1="8" x2="19" y2="14"></line>
+                                    <line x1="22" y1="11" x2="16" y2="11"></line>
+                                </svg>
+                                <span>Invite Team</span>
+                            </button>
+                        </div>
+                    </div>
+                    
                     <div class="manager-container">
                         <!-- Time Filter -->
                         <div class="time-filter">
@@ -1299,14 +1639,14 @@
                                 <div class="metric-value skeleton skeleton-metric" id="seatsActive">--</div>
                                 <div class="metric-label">Seats Active This Week</div>
                                 <div class="metric-subtitle" id="seatsSubtitle">out of -- paid seats</div>
-                        </div>
-                        
+                            </div>
+                            
                             <div class="metric-card">
                                 <div class="metric-value skeleton skeleton-metric" id="totalMinutes">--</div>
                                 <div class="metric-label">Minutes of Live Coaching</div>
                                 <div class="metric-subtitle" id="minutesSubtitle">this week</div>
-                            </div>
-                            
+                        </div>
+                        
                             <div class="metric-card">
                                 <div class="metric-value skeleton skeleton-metric" id="totalCalls">--</div>
                                 <div class="metric-label">Calls Coached</div>
@@ -1318,6 +1658,40 @@
                         <div class="action-section">
                             <a href="#" class="primary-btn" id="contextBtn">Team Settings</a>
                             <a href="#" class="primary-btn secondary" id="billingBtn">Manage Subscription</a>
+                        </div>
+                    </div>
+                            </div>
+                            
+                <!-- Invite Team Overlay & Panel -->
+                <div class="invite-overlay" id="inviteOverlay" onclick="closeInvitePanel()"></div>
+                <div class="invite-panel" id="invitePanel">
+                    <div class="invite-panel-header">
+                        <div class="invite-panel-title">Invite Your Team</div>
+                        <button class="invite-panel-close" onclick="closeInvitePanel()">×</button>
+                            </div>
+                            
+                    <div class="invite-panel-content">
+                        <!-- Invite Link Section -->
+                        <div class="invite-section">
+                            <div class="invite-section-title">Share Invite Link</div>
+                            <p class="invite-description">Share this link with your sales reps to get them started with LUPO</p>
+                            <div class="invite-link-container">
+                                <input type="text" id="inviteLink" class="invite-link-input" readonly value="https://lupo.app/join?invite=demo-invite-code-12345">
+                                <button class="invite-copy-btn" onclick="copyInviteLink()">
+                                    <span id="copyBtnText">Copy</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Team Members Section -->
+                        <div class="invite-section">
+                            <div class="invite-section-title">Team Members</div>
+                            <div style="font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 12px;">
+                                <span id="teamMemberCount">12/15 seats active</span>
+                            </div>
+                            <div class="team-members-list" id="teamMembersList">
+                                <!-- Will be populated with dummy data -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1501,6 +1875,109 @@
                     window.location.href = '/manager-billing.html';
                 });
             }
+        }
+        
+        // Invite Panel Functions
+        function openInvitePanel() {
+            const overlay = document.getElementById('inviteOverlay');
+            const panel = document.getElementById('invitePanel');
+            
+            if (overlay && panel) {
+                overlay.classList.add('active');
+                panel.classList.add('active');
+                loadTeamMembers(); // Load dummy data when panel opens
+            }
+        }
+        
+        function closeInvitePanel() {
+            const overlay = document.getElementById('inviteOverlay');
+            const panel = document.getElementById('invitePanel');
+            
+            if (overlay && panel) {
+                overlay.classList.remove('active');
+                panel.classList.remove('active');
+            }
+        }
+        
+        function copyInviteLink() {
+            const inviteLink = document.getElementById('inviteLink');
+            const copyBtn = document.getElementById('copyBtnText');
+            
+            if (inviteLink) {
+                inviteLink.select();
+                inviteLink.setSelectionRange(0, 99999); // For mobile devices
+                
+                try {
+                    document.execCommand('copy');
+                    if (copyBtn) {
+                        const originalText = copyBtn.textContent;
+                        copyBtn.textContent = 'Copied!';
+                        copyBtn.parentElement.classList.add('copied');
+                        
+                        setTimeout(() => {
+                            copyBtn.textContent = originalText;
+                            copyBtn.parentElement.classList.remove('copied');
+                        }, 2000);
+                    }
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+            }
+        }
+        
+        // Load team members with dummy data
+        function loadTeamMembers() {
+            const teamMembersList = document.getElementById('teamMembersList');
+            if (!teamMembersList) return;
+            
+            // Dummy team member data
+            const dummyMembers = [
+                { name: 'Sarah Johnson', email: 'sarah.johnson@demo.com', joined: '2024-01-15', isManager: true, status: 'active' },
+                { name: 'Michael Chen', email: 'michael.chen@demo.com', joined: '2024-01-20', isManager: false, status: 'active' },
+                { name: 'Emily Rodriguez', email: 'emily.rodriguez@demo.com', joined: '2024-02-01', isManager: false, status: 'active' },
+                { name: 'David Kim', email: 'david.kim@demo.com', joined: '2024-02-05', isManager: false, status: 'active' },
+                { name: 'Jessica Martinez', email: 'jessica.martinez@demo.com', joined: '2024-02-10', isManager: false, status: 'active' },
+                { name: 'Ryan Thompson', email: 'ryan.thompson@demo.com', joined: '2024-02-12', isManager: false, status: 'active' },
+                { name: 'Amanda Wilson', email: 'amanda.wilson@demo.com', joined: '2024-02-15', isManager: false, status: 'active' },
+                { name: 'James Brown', email: 'james.brown@demo.com', joined: '2024-02-18', isManager: false, status: 'active' },
+                { name: 'Lisa Anderson', email: 'lisa.anderson@demo.com', joined: '2024-02-20', isManager: false, status: 'active' },
+                { name: 'Robert Taylor', email: 'robert.taylor@demo.com', joined: '2024-02-22', isManager: false, status: 'active' },
+                { name: 'Jennifer Lee', email: 'jennifer.lee@demo.com', joined: '2024-02-25', isManager: false, status: 'active' },
+                { name: 'Christopher Davis', email: 'christopher.davis@demo.com', joined: '2024-02-28', isManager: false, status: 'pending' }
+            ];
+            
+            if (dummyMembers.length === 0) {
+                teamMembersList.innerHTML = `
+                    <div class="empty-team-state">
+                        <div class="empty-team-icon">👥</div>
+                        <div class="empty-team-text">No team members yet. Share the invite link above!</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            teamMembersList.innerHTML = dummyMembers.map((member, index) => {
+                const initials = member.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                const joinedDate = new Date(member.joined).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                const statusClass = member.status === 'active' ? 'active' : 'pending';
+                const statusText = member.status === 'active' ? 'Active' : 'Pending';
+                const managerClass = member.isManager ? 'is-manager' : '';
+                const managerBadge = member.isManager ? '<span class="manager-badge">Manager</span>' : '';
+                
+                return `
+                    <div class="team-member-item ${managerClass}" style="animation-delay: ${index * 0.05}s">
+                        <div class="team-member-avatar">${initials}</div>
+                        <div class="team-member-info">
+                            <div class="team-member-name">
+                                ${member.name}${managerBadge}
+                            </div>
+                            <div class="team-member-email">${member.email}</div>
+                            <div class="member-status ${statusClass}">${statusText}</div>
+                        </div>
+                        <div class="team-member-date">${joinedDate}</div>
+                    </div>
+                `;
+            }).join('');
         }
         
         // Load sales context
