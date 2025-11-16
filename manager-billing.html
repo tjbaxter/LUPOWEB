@@ -651,11 +651,11 @@
     <div class="modal" id="cancelModal">
         <div class="modal-content">
             <h3 class="modal-title">Cancel Subscription</h3>
-            <p class="modal-description">
-                We're sorry to see you go. Your subscription will remain active until the end of your current billing period.
+            <p class="modal-description" id="cancelModalText">
+                <!-- Will be dynamically filled based on trial/paid status -->
             </p>
-            <p class="modal-description" style="color: var(--warning);">
-                This action cannot be undone. All team members will lose access at the end of the billing period.
+            <p class="modal-description" style="color: var(--warning);" id="cancelModalWarning">
+                <!-- Will be dynamically filled -->
             </p>
             <div class="modal-actions">
                 <button class="btn" onclick="closeCancelModal()">Keep Subscription</button>
@@ -1054,6 +1054,29 @@
         // Cancel subscription
         function openCancelModal(event) {
             event.preventDefault();
+            
+            // Check if user is on trial or paid subscription
+            const isTrialing = subscriptionData && subscriptionData.status === 'trialing';
+            const isPaid = subscriptionData && (subscriptionData.status === 'active' || subscriptionData.status === 'canceling');
+            
+            const modalTextEl = document.getElementById('cancelModalText');
+            const modalWarningEl = document.getElementById('cancelModalWarning');
+            
+            if (isTrialing) {
+                // ON TRIAL: Immediate revoke
+                modalTextEl.textContent = "Your trial will end immediately and you'll lose access to all premium features.";
+                modalWarningEl.textContent = "This action cannot be undone. All team members will lose access immediately.";
+            } else if (isPaid) {
+                // PAID: Keep until period end
+                const endDate = subscriptionData.currentPeriodEnd ? new Date(subscriptionData.currentPeriodEnd).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'the end of your billing period';
+                modalTextEl.textContent = `Your subscription will remain active until ${endDate}. You'll continue to have access to all features until then.`;
+                modalWarningEl.textContent = `After ${endDate}, you and all team members will lose access to LUPO Enterprise.`;
+            } else {
+                // Fallback
+                modalTextEl.textContent = "We're sorry to see you go. Your subscription will remain active until the end of your current billing period.";
+                modalWarningEl.textContent = "This action cannot be undone. All team members will lose access at the end of the billing period.";
+            }
+            
             document.getElementById('cancelModal').classList.add('show');
         }
         
@@ -1063,6 +1086,8 @@
         
         async function cancelSubscription() {
             try {
+                const isTrialing = subscriptionData && subscriptionData.status === 'trialing';
+                
                 const response = await fetch(`${AUTH_CONFIG.apiUrl}/api/billing/cancel`, {
                     method: 'POST',
                     headers: authHeaders
@@ -1070,7 +1095,14 @@
                 
                 if (!response.ok) throw new Error('Failed to cancel subscription');
                 
-                alert('Subscription canceled. You will have access until the end of your billing period.');
+                // Show appropriate message based on trial/paid status
+                if (isTrialing) {
+                    alert('Your trial has been canceled. Access has been revoked immediately.');
+                } else {
+                    const endDate = subscriptionData.currentPeriodEnd ? new Date(subscriptionData.currentPeriodEnd).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'the end of your billing period';
+                    alert(`Subscription canceled. You will have access until ${endDate}.`);
+                }
+                
                 closeCancelModal();
                 await loadSubscriptionData();
                 
