@@ -682,6 +682,85 @@
             display: none;
         }
         
+        /* Upload Progress */
+        .upload-progress {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(20,20,20,0.95);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.25rem;
+            width: 320px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            transform: translateY(150%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10001;
+        }
+        
+        .upload-progress.active {
+            transform: translateY(0);
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .progress-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .progress-close {
+            width: 24px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+        
+        .progress-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        
+        .progress-file {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-status {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+        }
+        
         .paste-section {
             margin-bottom: 2rem;
         }
@@ -2519,9 +2598,31 @@
         // Upload a single file
         async function uploadFile(file, companyId) {
             try {
+                // Show progress
+                document.getElementById('progressFile').textContent = file.name;
+                document.getElementById('progressFill').style.width = '0%';
+                document.getElementById('progressStatus').textContent = 'Preparing upload...';
+                document.getElementById('uploadProgress').classList.add('active');
+                
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('companyId', companyId);
+                
+                // Simulate progress
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    if (progress < 90) {
+                        progress += 10;
+                        document.getElementById('progressFill').style.width = progress + '%';
+                        if (progress < 30) {
+                            document.getElementById('progressStatus').textContent = 'Uploading...';
+                        } else if (progress < 60) {
+                            document.getElementById('progressStatus').textContent = 'Processing...';
+                        } else {
+                            document.getElementById('progressStatus').textContent = 'Indexing...';
+                        }
+                    }
+                }, 300);
                 
                 const headers = getAuthHeaders();
                 const response = await fetch('https://lupo-backend.fly.dev/api/rag/upload', {
@@ -2530,14 +2631,25 @@
                     body: formData
                 });
                 
+                clearInterval(progressInterval);
+                
                 if (!response.ok) {
                     const error = await response.json();
                     throw new Error(error.error || 'Upload failed');
                 }
                 
+                // Complete progress
+                document.getElementById('progressFill').style.width = '100%';
+                document.getElementById('progressStatus').textContent = 'Complete!';
+                
+                setTimeout(() => {
+                    document.getElementById('uploadProgress').classList.remove('active');
+                }, 1500);
+                
                 showNotification(`${file.name} uploaded successfully!`, 'success');
             } catch (error) {
                 console.error('Upload error:', error);
+                document.getElementById('uploadProgress').classList.remove('active');
                 showNotification(error.message || 'Upload failed', 'error');
             }
         }
@@ -2669,6 +2781,11 @@
                 notification.style.opacity = '0';
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
+        }
+        
+        // Close upload progress
+        function closeUploadProgress() {
+            document.getElementById('uploadProgress').classList.remove('active');
         }
         
         // Global session management
@@ -3699,6 +3816,19 @@
                 Sign Out
             </button>
         </div>
+    </div>
+    
+    <!-- Upload Progress -->
+    <div class="upload-progress" id="uploadProgress">
+        <div class="progress-header">
+            <span class="progress-title">Uploading...</span>
+            <button class="progress-close" onclick="closeUploadProgress()">×</button>
+        </div>
+        <div class="progress-file" id="progressFile">document.pdf</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+        <div class="progress-status" id="progressStatus">Preparing upload...</div>
     </div>
 </body>
 </html>
