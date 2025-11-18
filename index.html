@@ -2089,7 +2089,7 @@
     </style>
     
     <script>
-        // Lazy load Vimeo video with Intersection Observer
+        // Preload Vimeo video on page load
         document.addEventListener('DOMContentLoaded', () => {
             const vimeoContainer = document.getElementById('vimeoContainer');
             const vimeoPlaceholder = document.getElementById('vimeoPlaceholder');
@@ -2104,7 +2104,7 @@
                 videoLoaded = true;
                 
                 const iframe = document.createElement('iframe');
-                iframe.src = 'https://player.vimeo.com/video/1131686366?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&quality=4k';
+                iframe.src = 'https://player.vimeo.com/video/1131686366?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&quality=4k&preload=auto';
                 iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;';
                 iframe.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
                 iframe.setAttribute('allowfullscreen', '');
@@ -2125,25 +2125,14 @@
                 };
             }
             
-            // Click to load
+            // Click to play (video already loaded)
             vimeoPlaceholder.addEventListener('click', loadVimeoVideo);
             
-            // Intersection Observer for scroll-based loading
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-                        loadVimeoVideo();
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.5 // Load when 50% visible
-            });
-            
-            observer.observe(vimeoContainer);
+            // Load video immediately on page load (preload)
+            loadVimeoVideo();
         });
         
-        // Lazy load Full Call Video with Intersection Observer
+        // Preload Full Call Video on page load
         document.addEventListener('DOMContentLoaded', () => {
             const fullCallVideoContainer = document.getElementById('fullCallVideoContainer');
             const fullCallVideoPlaceholder = document.getElementById('fullCallVideoPlaceholder');
@@ -2158,7 +2147,7 @@
                 fullCallVideoLoaded = true;
                 
                 const iframe = document.createElement('iframe');
-                iframe.src = 'https://player.vimeo.com/video/1131476355?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&quality=4k';
+                iframe.src = 'https://player.vimeo.com/video/1131476355?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&quality=4k&preload=auto';
                 iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;';
                 iframe.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write';
                 iframe.setAttribute('allowfullscreen', '');
@@ -2176,22 +2165,11 @@
                 // User can click play button manually
             }
             
-            // Click to load
+            // Click to play (video already loaded)
             fullCallVideoPlaceholder.addEventListener('click', loadFullCallVideo);
             
-            // Intersection Observer for scroll-based loading
-            const fullCallObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-                        loadFullCallVideo();
-                        fullCallObserver.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.5 // Load when 50% visible
-            });
-            
-            fullCallObserver.observe(fullCallVideoContainer);
+            // Load video immediately on page load (preload)
+            loadFullCallVideo();
         });
         
         // Scroll animations for premium features
