@@ -524,7 +524,7 @@
 <body>
     <header>
         <div class="header-actions">
-            <a href="/manager-dashboard.html" class="back-btn">← Back to Dashboard</a>
+            <a href="#" class="back-btn" id="backBtn">← Back to Dashboard</a>
         </div>
         <div class="logo">LUPO</div>
     </header>
@@ -703,12 +703,38 @@
             // Validate token and load data
             try {
                 await loadSubscriptionData();
+                
+                // Setup back button after user data is loaded
+                setupBackButton();
             } catch (error) {
                 console.error('Authentication error:', error);
                 if (error.status === 401) {
                     window.location.href = AUTH_CONFIG.loginUrl;
                 }
             }
+        }
+        
+        // Setup back button based on user type
+        function setupBackButton() {
+            const backBtn = document.getElementById('backBtn');
+            if (!backBtn) return;
+            
+            // Check user account type from subscription data
+            const userType = subscriptionData?.user?.accountType || 'individual';
+            
+            backBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Enterprise users go to manager dashboard
+                if (userType === 'enterprise_admin' || userType === 'team_member') {
+                    window.location.href = '/manager-dashboard.html';
+                } else {
+                    // Individual/free users go to regular dashboard
+                    window.location.href = '/dashboard.html';
+                }
+            });
+            
+            console.log(`✅ Back button configured for ${userType} → ${userType === 'enterprise_admin' || userType === 'team_member' ? 'manager-dashboard' : 'dashboard'}`);
         }
         
         // Load subscription data from backend
