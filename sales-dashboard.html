@@ -9,6 +9,7 @@
     <title>Calls - LUPO</title>
     <link rel="icon" type="image/png" href="/LUPO_LOGO copy 1.png">
     <link rel="apple-touch-icon" href="/LUPO_LOGO copy 1.png">
+    <link rel="stylesheet" href="/call-chat-component.css">
     <style>
         * {
             margin: 0;
@@ -1769,33 +1770,45 @@
                 <div class="empty-state">Select a call to view transcript</div>
             </div>
             
-            <!-- AI Panel -->
-            <div class="ai-panel" id="aiPanel">
-                <div class="ai-suggestions">
-                    <button class="suggestion-chip" onclick="quickAsk('Summarize the key points from this call')">Summarize</button>
-                    <button class="suggestion-chip" onclick="quickAsk('What objections were raised?')">Objections</button>
-                    <button class="suggestion-chip" onclick="quickAsk('What are the next steps?')">Next steps</button>
-                    <button class="suggestion-chip" onclick="quickAsk('Draft a follow-up email')">Email draft</button>
-                    <button class="suggestion-chip" onclick="quickAsk('What questions did they ask?')">Questions</button>
+            <!-- Call Chat Interface -->
+            <div class="call-chat-container" id="callChatContainer" style="display: none;">
+                <!-- Chat Messages Area -->
+                <div class="chat-messages-area" id="chatMessages">
+                    <!-- Empty state (shown when no messages) -->
+                    <div class="chat-empty-state" id="chatEmptyState">
+                        <div class="chat-empty-icon">💬</div>
+                        <div class="chat-empty-text">Ask anything about this call</div>
+                        <div class="chat-empty-subtitle">Use the quick actions below or type your question</div>
+                    </div>
+                    <!-- Chat messages will appear here -->
                 </div>
-                <div class="ai-input-container">
-                    <input type="text" class="ai-input" id="aiInput" placeholder="Ask anything about this call...">
-                    <button class="ai-send" id="aiSend" onclick="submitAI()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="22" y1="2" x2="11" y2="13"></line>
-                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                        </svg>
-                    </button>
+                
+                <!-- Scroll to bottom button -->
+                <div class="scroll-to-bottom" id="scrollToBottom">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M12 5v14M19 12l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </div>
-            </div>
-            
-            <!-- AI Response Overlay -->
-            <div class="ai-response-overlay" id="aiResponse">
-                <div class="ai-response-header">
-                    <div class="ai-response-title">AI Analysis</div>
-                    <button class="ai-close" onclick="closeAI()">×</button>
+                
+                <!-- Chat Input Panel -->
+                <div class="chat-input-panel">
+                    <div class="chat-quick-actions">
+                        <button class="quick-action-chip" onclick="quickAsk('Summarize the key points from this call')">Summarize</button>
+                        <button class="quick-action-chip" onclick="quickAsk('What objections were raised?')">Objections</button>
+                        <button class="quick-action-chip" onclick="quickAsk('What are the next steps?')">Next steps</button>
+                        <button class="quick-action-chip" onclick="quickAsk('Draft a follow-up email')">Email draft</button>
+                        <button class="quick-action-chip" onclick="quickAsk('What questions did they ask?')">Questions</button>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input-field" id="chatInput" placeholder="Ask anything about this call...">
+                        <button class="chat-send-btn" id="chatSendBtn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <div class="ai-response-content" id="aiContent"></div>
             </div>
         </div>
     </div>
@@ -2436,8 +2449,8 @@
             document.querySelectorAll('.call-item').forEach(el => el.classList.remove('active'));
             document.querySelector(`[data-id="${callId}"]`)?.classList.add('active');
             
-            // Clear AI response
-            closeAI();
+            // Clear chat and hide chat interface temporarily
+            toggleChatInterface(false);
             
             // Show loading
             document.getElementById('transcriptView').innerHTML = 
@@ -2454,12 +2467,38 @@
                 currentCall = data;
                 renderTranscript(data, messageIndex);
                 
+                // Show chat interface and reset it
+                resetChatInterface();
+                toggleChatInterface(true);
+                
             } catch (err) {
                 console.error('Failed to load call:', err);
                 showToast('Failed to load call transcript', 'error');
                 document.getElementById('transcriptView').innerHTML = 
                     '<div class="empty-state">Failed to load transcript</div>';
+                toggleChatInterface(false);
             }
+        }
+        
+        // Reset chat interface
+        function resetChatInterface() {
+            const chatMessages = document.getElementById('chatMessages');
+            const emptyState = document.getElementById('chatEmptyState');
+            
+            // Clear all chat messages
+            Array.from(chatMessages.children).forEach(child => {
+                if (!child.classList.contains('chat-empty-state')) {
+                    child.remove();
+                }
+            });
+            
+            // Show empty state
+            if (emptyState) {
+                emptyState.style.display = 'flex';
+            }
+            
+            // Clear input
+            document.getElementById('chatInput').value = '';
         }
         
         // Render transcript with optional highlight
@@ -2516,69 +2555,166 @@
         
         // Quick ask
         function quickAsk(question) {
-            document.getElementById('aiInput').value = question;
-            submitAI();
+            document.getElementById('chatInput').value = question;
+            submitChat();
         }
         
-        // Submit AI question
-        async function submitAI() {
-            const input = document.getElementById('aiInput');
+        // Submit chat question
+        async function submitChat() {
+            const input = document.getElementById('chatInput');
             const question = input.value.trim();
             
             if (!question || !currentCall) return;
             
-            const sendBtn = document.getElementById('aiSend');
-            const responseDiv = document.getElementById('aiResponse');
-            const contentDiv = document.getElementById('aiContent');
+            const chatMessages = document.getElementById('chatMessages');
+            const sendBtn = document.getElementById('chatSendBtn');
+            const emptyState = document.getElementById('chatEmptyState');
             
+            // Hide empty state
+            if (emptyState) {
+                emptyState.style.display = 'none';
+            }
+            
+            // Add user question bubble
+            addChatBubble('user', question);
+            
+            // Clear input and disable send button
+            input.value = '';
             sendBtn.disabled = true;
-            sendBtn.innerHTML = '<div class="loading" style="width: 16px; height: 16px;"></div>';
             
-            responseDiv.classList.add('show');
-            contentDiv.innerHTML = '<div class="loading"></div> Analyzing...';
+            // Add loading bubble
+            const loadingId = addLoadingBubble();
+            
+            // Scroll to bottom
+            scrollChatToBottom();
             
             try {
                 const data = await api.post('/sales/ai/analyze', {
-                        question: question,
-                        callContext: {
-                            customer: currentCall.call?.customerName,
-                            company: currentCall.call?.customerCompany,
-                            date: currentCall.call?.startTime,
-                            duration: currentCall.call?.duration,
-                            transcript: currentCall.transcript?.map(t => t.text).join('\n'),
-                            analysis: currentCall.analysis
-                        }
+                    question: question,
+                    callContext: {
+                        customer: currentCall.call?.customerName,
+                        company: currentCall.call?.customerCompany,
+                        date: currentCall.call?.startTime,
+                        duration: currentCall.call?.duration,
+                        transcript: currentCall.transcript?.map(t => t.text).join('\n'),
+                        analysis: currentCall.analysis
+                    }
                 });
                 
-                contentDiv.innerHTML = formatResponse(data.answer || data.response);
-                input.value = '';
+                // Remove loading bubble
+                removeLoadingBubble(loadingId);
+                
+                // Add LUPO answer bubble
+                addChatBubble('lupo', data.answer || data.response);
+                
+                // Scroll to bottom
+                scrollChatToBottom();
                 
             } catch (err) {
                 console.error('AI analysis failed:', err);
-                contentDiv.innerHTML = 'Analysis failed. Please try again.';
+                
+                // Remove loading bubble
+                removeLoadingBubble(loadingId);
+                
+                // Add error message
+                addChatBubble('lupo', 'Sorry, I encountered an error analyzing the call. Please try again.');
+                
+                scrollChatToBottom();
             } finally {
                 sendBtn.disabled = false;
-                sendBtn.innerHTML = `
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                `;
             }
         }
         
-        // Close AI response
-        function closeAI() {
-            document.getElementById('aiResponse').classList.remove('show');
+        // Add chat bubble
+        function addChatBubble(type, text) {
+            const chatMessages = document.getElementById('chatMessages');
+            const entry = document.createElement('div');
+            entry.className = 'chat-entry';
+            
+            const bubble = document.createElement('div');
+            bubble.className = type === 'user' ? 'user-question-bubble' : 'lupo-answer-bubble';
+            bubble.innerHTML = formatChatText(text);
+            
+            entry.appendChild(bubble);
+            chatMessages.appendChild(entry);
+            
+            return entry;
         }
         
-        // Format response
-        function formatResponse(text) {
+        // Add loading bubble
+        function addLoadingBubble() {
+            const chatMessages = document.getElementById('chatMessages');
+            const loadingId = 'loading-' + Date.now();
+            
+            const entry = document.createElement('div');
+            entry.className = 'chat-entry';
+            entry.id = loadingId;
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'loading-bubble';
+            bubble.innerHTML = `
+                <div class="loading-dots">
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                </div>
+                <span>Analyzing...</span>
+            `;
+            
+            entry.appendChild(bubble);
+            chatMessages.appendChild(entry);
+            
+            return loadingId;
+        }
+        
+        // Remove loading bubble
+        function removeLoadingBubble(loadingId) {
+            const loadingElement = document.getElementById(loadingId);
+            if (loadingElement) {
+                loadingElement.remove();
+            }
+        }
+        
+        // Scroll chat to bottom
+        function scrollChatToBottom(smooth = true) {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.scrollTo({
+                top: chatMessages.scrollHeight,
+                behavior: smooth ? 'smooth' : 'auto'
+            });
+        }
+        
+        // Format chat text (basic markdown support)
+        function formatChatText(text) {
             return text
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\n\n/g, '</p><p>')
-                .replace(/^/, '<p>')
-                .replace(/$/, '</p>');
+                .replace(/^(.+)$/gm, '<p>$1</p>')
+                .replace(/<p><\/p>/g, '');
+        }
+        
+        // Show/hide chat container when call is selected
+        function toggleChatInterface(show) {
+            const chatContainer = document.getElementById('callChatContainer');
+            const transcriptView = document.getElementById('transcriptView');
+            
+            if (show) {
+                chatContainer.style.display = 'flex';
+                transcriptView.style.paddingBottom = '180px'; // Make room for chat input
+            } else {
+                chatContainer.style.display = 'none';
+                transcriptView.style.paddingBottom = '140px';
+            }
+        }
+        
+        // Legacy function for compatibility - now redirects to submitChat
+        async function submitAI() {
+            await submitChat();
+        }
+        
+        // Legacy function for compatibility
+        function closeAI() {
+            // No longer needed with chat interface
         }
         
         // Setup event listeners
@@ -2630,13 +2766,37 @@
                 });
             });
             
-            // AI input enter
-            document.getElementById('aiInput').addEventListener('keydown', (e) => {
+            // Chat input enter
+            document.getElementById('chatInput').addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
-                    submitAI();
+                    submitChat();
                 }
             });
+            
+            // Chat send button
+            document.getElementById('chatSendBtn').addEventListener('click', () => {
+                submitChat();
+            });
+            
+            // Scroll to bottom button
+            const scrollBtn = document.getElementById('scrollToBottom');
+            const chatMessages = document.getElementById('chatMessages');
+            
+            if (chatMessages && scrollBtn) {
+                chatMessages.addEventListener('scroll', () => {
+                    const isNearBottom = chatMessages.scrollHeight - chatMessages.scrollTop - chatMessages.clientHeight < 100;
+                    if (isNearBottom) {
+                        scrollBtn.classList.remove('show');
+                    } else {
+                        scrollBtn.classList.add('show');
+                    }
+                });
+                
+                scrollBtn.addEventListener('click', () => {
+                    scrollChatToBottom();
+                });
+            }
         }
         
         // Helpers
