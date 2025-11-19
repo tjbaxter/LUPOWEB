@@ -1766,48 +1766,33 @@
                 </div>
             </div>
             
+            <!-- Combined scrollable view for transcript + chat -->
             <div class="transcript-view" id="transcriptView">
                 <div class="empty-state">Select a call to view transcript</div>
+                
+                <!-- Chat messages appear HERE, inside the scrollable transcript view -->
+                <div class="call-chat-messages" id="chatMessages" style="display: none;">
+                    <!-- Chat bubbles will appear here, part of the same scroll -->
+                </div>
             </div>
             
-            <!-- Call Chat Interface -->
-            <div class="call-chat-container" id="callChatContainer" style="display: none;">
-                <!-- Chat Messages Area -->
-                <div class="chat-messages-area" id="chatMessages">
-                    <!-- Empty state (shown when no messages) -->
-                    <div class="chat-empty-state" id="chatEmptyState">
-                        <div class="chat-empty-icon">💬</div>
-                        <div class="chat-empty-text">Ask anything about this call</div>
-                        <div class="chat-empty-subtitle">Use the quick actions below or type your question</div>
-                    </div>
-                    <!-- Chat messages will appear here -->
+            <!-- Chat Input Panel - Fixed at bottom -->
+            <div class="chat-input-panel" id="chatInputPanel" style="display: none;">
+                <div class="chat-quick-actions">
+                    <button class="quick-action-chip" onclick="quickAsk('Summarize the key points from this call')">Summarize</button>
+                    <button class="quick-action-chip" onclick="quickAsk('What objections were raised?')">Objections</button>
+                    <button class="quick-action-chip" onclick="quickAsk('What are the next steps?')">Next steps</button>
+                    <button class="quick-action-chip" onclick="quickAsk('Draft a follow-up email')">Email draft</button>
+                    <button class="quick-action-chip" onclick="quickAsk('What questions did they ask?')">Questions</button>
                 </div>
-                
-                <!-- Scroll to bottom button -->
-                <div class="scroll-to-bottom" id="scrollToBottom">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <path d="M12 5v14M19 12l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                
-                <!-- Chat Input Panel -->
-                <div class="chat-input-panel">
-                    <div class="chat-quick-actions">
-                        <button class="quick-action-chip" onclick="quickAsk('Summarize the key points from this call')">Summarize</button>
-                        <button class="quick-action-chip" onclick="quickAsk('What objections were raised?')">Objections</button>
-                        <button class="quick-action-chip" onclick="quickAsk('What are the next steps?')">Next steps</button>
-                        <button class="quick-action-chip" onclick="quickAsk('Draft a follow-up email')">Email draft</button>
-                        <button class="quick-action-chip" onclick="quickAsk('What questions did they ask?')">Questions</button>
-                    </div>
-                    <div class="chat-input-container">
-                        <input type="text" class="chat-input-field" id="chatInput" placeholder="Ask anything about this call...">
-                        <button class="chat-send-btn" id="chatSendBtn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                            </svg>
-                        </button>
-                    </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input-field" id="chatInput" placeholder="Ask anything about this call...">
+                    <button class="chat-send-btn" id="chatSendBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
@@ -1819,6 +1804,33 @@
         let callsWithTranscripts = new Map(); // Store full data for each call
         let currentFilter = 'all';
         let currentSearchQuery = '';
+        let chatHistory = new Map(); // Store chat history per call ID
+        
+        // Load chat history from localStorage on page load
+        function loadChatHistoryFromStorage() {
+            try {
+                const stored = localStorage.getItem('lupo_chat_history');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    chatHistory = new Map(Object.entries(parsed));
+                }
+            } catch (e) {
+                console.error('Failed to load chat history:', e);
+            }
+        }
+        
+        // Save chat history to localStorage
+        function saveChatHistoryToStorage() {
+            try {
+                const obj = Object.fromEntries(chatHistory);
+                localStorage.setItem('lupo_chat_history', JSON.stringify(obj));
+            } catch (e) {
+                console.error('Failed to save chat history:', e);
+            }
+        }
+        
+        // Load chat history on page load
+        loadChatHistoryFromStorage();
         let currentUser = null;
         let currentStep = 1;
         const totalSteps = 3;
@@ -2467,9 +2479,10 @@
                 currentCall = data;
                 renderTranscript(data, messageIndex);
                 
-                // Show chat interface and reset it
+                // Show chat interface and restore previous messages
                 resetChatInterface();
                 toggleChatInterface(true);
+                restoreChatInterface(callId);
                 
             } catch (err) {
                 console.error('Failed to load call:', err);
@@ -2483,22 +2496,45 @@
         // Reset chat interface
         function resetChatInterface() {
             const chatMessages = document.getElementById('chatMessages');
-            const emptyState = document.getElementById('chatEmptyState');
             
-            // Clear all chat messages
-            Array.from(chatMessages.children).forEach(child => {
-                if (!child.classList.contains('chat-empty-state')) {
-                    child.remove();
-                }
-            });
-            
-            // Show empty state
-            if (emptyState) {
-                emptyState.style.display = 'flex';
+            if (!chatMessages) {
+                console.warn('chatMessages element not found');
+                return;
             }
             
+            // Save current chat history if there's a current call
+            if (currentCall && currentCall.call?.id) {
+                const messages = Array.from(chatMessages.children).map(child => ({
+                    html: child.outerHTML,
+                    classes: child.className
+                }));
+                chatHistory.set(currentCall.call.id, messages);
+                saveChatHistoryToStorage(); // Persist to localStorage
+            }
+            
+            // Clear all chat messages
+            chatMessages.innerHTML = '';
+            
             // Clear input
-            document.getElementById('chatInput').value = '';
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                chatInput.value = '';
+            }
+        }
+        
+        // Restore chat interface for a call
+        function restoreChatInterface(callId) {
+            const chatMessages = document.getElementById('chatMessages');
+            const savedMessages = chatHistory.get(callId);
+            
+            if (savedMessages && savedMessages.length > 0) {
+                // Restore saved messages
+                savedMessages.forEach(msg => {
+                    const div = document.createElement('div');
+                    div.outerHTML = msg.html;
+                    chatMessages.appendChild(div.firstElementChild || div);
+                });
+            }
         }
         
         // Render transcript with optional highlight
@@ -2568,12 +2604,6 @@
             
             const chatMessages = document.getElementById('chatMessages');
             const sendBtn = document.getElementById('chatSendBtn');
-            const emptyState = document.getElementById('chatEmptyState');
-            
-            // Hide empty state
-            if (emptyState) {
-                emptyState.style.display = 'none';
-            }
             
             // Add user question bubble
             addChatBubble('user', question);
@@ -2638,6 +2668,16 @@
             entry.appendChild(bubble);
             chatMessages.appendChild(entry);
             
+            // Save to history after adding message
+            if (currentCall && currentCall.call?.id) {
+                const messages = Array.from(chatMessages.children).map(child => ({
+                    html: child.outerHTML,
+                    classes: child.className
+                }));
+                chatHistory.set(currentCall.call.id, messages);
+                saveChatHistoryToStorage(); // Persist to localStorage
+            }
+            
             return entry;
         }
         
@@ -2677,9 +2717,9 @@
         
         // Scroll chat to bottom
         function scrollChatToBottom(smooth = true) {
-            const chatMessages = document.getElementById('chatMessages');
-            chatMessages.scrollTo({
-                top: chatMessages.scrollHeight,
+            const transcriptView = document.getElementById('transcriptView');
+            transcriptView.scrollTo({
+                top: transcriptView.scrollHeight,
                 behavior: smooth ? 'smooth' : 'auto'
             });
         }
@@ -2695,15 +2735,27 @@
         
         // Show/hide chat container when call is selected
         function toggleChatInterface(show) {
-            const chatContainer = document.getElementById('callChatContainer');
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInputPanel = document.getElementById('chatInputPanel');
             const transcriptView = document.getElementById('transcriptView');
             
+            if (!chatMessages || !chatInputPanel || !transcriptView) {
+                console.warn('Chat elements not found:', {
+                    chatMessages: !!chatMessages,
+                    chatInputPanel: !!chatInputPanel,
+                    transcriptView: !!transcriptView
+                });
+                return;
+            }
+            
             if (show) {
-                chatContainer.style.display = 'flex';
-                transcriptView.style.paddingBottom = '180px'; // Make room for chat input
+                chatMessages.style.display = 'flex';
+                chatInputPanel.style.display = 'block';
+                transcriptView.style.paddingBottom = '180px'; // Space for fixed input
             } else {
-                chatContainer.style.display = 'none';
-                transcriptView.style.paddingBottom = '140px';
+                chatMessages.style.display = 'none';
+                chatInputPanel.style.display = 'none';
+                transcriptView.style.paddingBottom = '40px';
             }
         }
         
@@ -2767,17 +2819,24 @@
             });
             
             // Chat input enter
-            document.getElementById('chatInput').addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    submitChat();
-                }
-            });
+            const chatInput = document.getElementById('chatInput');
+            const chatSendBtn = document.getElementById('chatSendBtn');
+            
+            if (chatInput) {
+                chatInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        submitChat();
+                    }
+                });
+            }
             
             // Chat send button
-            document.getElementById('chatSendBtn').addEventListener('click', () => {
-                submitChat();
-            });
+            if (chatSendBtn) {
+                chatSendBtn.addEventListener('click', () => {
+                    submitChat();
+                });
+            }
             
             // Scroll to bottom button
             const scrollBtn = document.getElementById('scrollToBottom');
