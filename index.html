@@ -2018,7 +2018,7 @@
             </div>
             
             <!-- Privacy & Security Section -->
-            <section style="max-width: 1200px; margin: 100px auto 80px; padding: 0 20px;">
+            <section id="privacy-section" style="max-width: 1200px; margin: 100px auto 80px; padding: 0 20px; opacity: 0; transform: translateY(40px); transition: all 0.8s ease;">
                 <div style="text-align: center; margin-bottom: 60px;">
                     <h2 style="font-size: 48px; font-weight: 700; margin-bottom: 20px;">
                         <span style="color: var(--text-primary);">Private. Invisible. Untouchable.</span>
@@ -2314,6 +2314,26 @@
             
             // Initial check
             updateFloatingButton();
+        });
+        
+        // Privacy Section Fade-in Animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const privacySection = document.getElementById('privacy-section');
+            if (!privacySection) return;
+            
+            const privacyObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        privacySection.style.opacity = '1';
+                        privacySection.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.2,
+                rootMargin: '0px 0px -100px 0px'
+            });
+            
+            privacyObserver.observe(privacySection);
         });
         
         // Floating particles effect
