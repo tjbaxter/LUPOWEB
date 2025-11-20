@@ -2207,6 +2207,9 @@
             
             // Make function globally accessible
             window.loadTranslationVideo = loadTranslationVideo;
+            
+            // Preload video on page load
+            loadTranslationVideo(false);
         });
         
         // Handle "Watch demo" link click
