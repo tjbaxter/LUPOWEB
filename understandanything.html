@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Translation - LUPO AI</title>
+    <meta name="description" content="See how LUPO AI translates unfamiliar terms into plain English instantly during sales calls.">
+    <link rel="icon" type="image/x-icon" href="lupo-icon.ico">
+    <style>
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #161617;
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --border: rgba(255, 255, 255, 0.1);
+            --blue: #0071e3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--blue);
+            font-size: 17px;
+            font-weight: 500;
+            text-decoration: none;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .back-button svg {
+            transition: transform 0.2s ease;
+        }
+
+        .back-button:hover svg {
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                top: 20px;
+                left: 20px;
+                padding: 10px 16px;
+                font-size: 15px;
+            }
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            line-height: 1.05;
+            letter-spacing: -0.015em;
+        }
+
+        .subtitle {
+            font-size: 28px;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 32px;
+            line-height: 1.4;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto 60px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.4);
+            background: var(--bg-secondary);
+            aspect-ratio: 16/9;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            background: linear-gradient(135deg, rgba(22, 22, 23, 0.95), rgba(22, 22, 23, 0.85));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-placeholder:hover .play-button {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .play-button {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .quality-badge {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content-section {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+        }
+
+        .description {
+            font-size: 21px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .feature-description {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            h1 {
+                font-size: 40px;
+            }
+
+            .subtitle {
+                font-size: 21px;
+            }
+
+            h2 {
+                font-size: 32px;
+            }
+
+            .description {
+                font-size: 19px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-button">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back
+        </a>
+
+        <div class="hero-section">
+            <h1>Understand Anything</h1>
+            <p class="subtitle">
+                Never let technical jargon slow you down. LUPO translates unfamiliar terms into plain English in real-time.
+            </p>
+        </div>
+
+        <div class="video-container" id="videoContainer">
+            <div class="video-placeholder" id="videoPlaceholder">
+                <div class="play-button">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="white" style="margin-left: 4px;">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </div>
+                <div class="quality-badge">4K Quality</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>How it works</h2>
+            <p class="description">
+                When your prospect uses technical terms, industry jargon, or unfamiliar acronyms, LUPO instantly translates them into plain English. This means your entire team can handle complex conversations with confidence, even if they're new to the industry.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Auto-play video on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const videoContainer = document.getElementById('videoContainer');
+            const videoPlaceholder = document.getElementById('videoPlaceholder');
+
+            // Load and play video immediately
+            const iframe = document.createElement('iframe');
+            iframe.src = 'https://player.vimeo.com/video/1131686366?badge=0&autopause=0&autoplay=1&player_id=0&app_id=58479&title=0&byline=0&portrait=0&quality=4k&preload=auto';
+            iframe.frameBorder = '0';
+            iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+            iframe.style.position = 'absolute';
+            iframe.style.top = '0';
+            iframe.style.left = '0';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.title = 'LUPO AI Live Translation Demo';
+
+            // Hide placeholder and show video
+            videoPlaceholder.style.display = 'none';
+            videoContainer.appendChild(iframe);
+
+            // Load Vimeo Player API
+            const script = document.createElement('script');
+            script.src = 'https://player.vimeo.com/api/player.js';
+            document.head.appendChild(script);
+        });
+    </script>
+</body>
+</html>
+
