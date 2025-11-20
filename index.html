@@ -301,6 +301,54 @@
             gap: 12px;
         }
         
+        /* Floating Book Demo Button */
+        .floating-book-demo {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            background: linear-gradient(135deg, var(--accent), #5090ff);
+            color: white;
+            padding: 16px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 12px 40px rgba(41, 151, 255, 0.4);
+            z-index: 1001;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.4s ease;
+            pointer-events: none;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .floating-book-demo.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+        
+        .floating-book-demo:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(41, 151, 255, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .floating-book-demo {
+                top: auto;
+                bottom: 20px;
+                right: 20px;
+                padding: 14px 24px;
+                font-size: 15px;
+                transform: translateY(20px);
+            }
+            
+            .floating-book-demo.visible {
+                transform: translateY(0);
+            }
+        }
+        
         .download-version {
             font-size: 11px;
             opacity: 0.7;
@@ -1285,6 +1333,11 @@
     </script>
 </head>
 <body>
+    <!-- Floating Book Demo Button -->
+    <a href="https://cal.com/tombaxter/lupo" class="floating-book-demo" id="floatingBookDemo">
+        Book a Demo
+    </a>
+    
     <!-- Update Notification Tile (Hidden by default) -->
     <div id="updateNotification" style="
         display: none;
@@ -1920,8 +1973,13 @@
             }
             </style>
             
+            <!-- Divider -->
+            <div style="max-width: 1400px; margin: 140px auto 0; padding: 0 40px;">
+                <div style="height: 2px; background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.25), transparent);"></div>
+            </div>
+            
             <!-- Live Translation Demo Section -->
-            <section id="translation-demo" style="max-width: 1400px; margin: 140px auto 100px; padding: 0 40px;">
+            <section id="translation-demo" style="max-width: 1400px; margin: 80px auto 80px; padding: 0 40px;">
                 <div style="text-align: center; margin-bottom: 60px;">
                     <h2 style="font-size: 64px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.05; letter-spacing: -0.015em;">
                         Understand Anything
@@ -1953,6 +2011,11 @@
                     </p>
                 </div>
             </section>
+            
+            <!-- Divider -->
+            <div style="max-width: 1400px; margin: 0 auto 140px; padding: 0 40px;">
+                <div style="height: 2px; background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.25), transparent);"></div>
+            </div>
             
             <!-- Privacy & Security Section -->
             <section style="max-width: 1200px; margin: 100px auto 80px; padding: 0 20px;">
@@ -2218,6 +2281,36 @@
             document.querySelectorAll('.scroll-animate').forEach(el => {
                 scrollObserver.observe(el);
             });
+        });
+        
+        // Floating Book Demo Button Control
+        document.addEventListener('DOMContentLoaded', () => {
+            const floatingBtn = document.getElementById('floatingBookDemo');
+            if (!floatingBtn) return;
+            
+            function updateFloatingButton() {
+                const scrollY = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                
+                // Hide on first screen (hero section) - first 80vh
+                const hideOnTop = scrollY < (windowHeight * 0.8);
+                
+                // Hide near bottom - last 600px of page (where footer CTA is)
+                const hideOnBottom = (documentHeight - scrollY - windowHeight) < 600;
+                
+                if (hideOnTop || hideOnBottom) {
+                    floatingBtn.classList.remove('visible');
+                } else {
+                    floatingBtn.classList.add('visible');
+                }
+            }
+            
+            // Update on scroll
+            window.addEventListener('scroll', updateFloatingButton, { passive: true });
+            
+            // Initial check
+            updateFloatingButton();
         });
         
         // Floating particles effect
