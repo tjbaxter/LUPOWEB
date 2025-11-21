@@ -1421,23 +1421,23 @@
             
             <!-- Video Demo Section -->
             <div class="video-demo-section" style="margin: 100px 0 60px 0; padding: 40px; background: linear-gradient(145deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05)); border-radius: 24px; border: 1px solid var(--border);">
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <h3 style="font-size: 24px; font-weight: 600; color: white; margin-bottom: 12px;">
-                        See LUPO on a live call
-                    </h3>
-                </div>
-                
-                <!-- Full Call Video Container -->
-                <div id="fullCallVideoContainer" style="position: relative; width: 100%; max-width: 1200px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); background: var(--bg-secondary); aspect-ratio: 16/9;">
-                    <div id="fullCallVideoPlaceholder" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; background: linear-gradient(135deg, rgba(22, 22, 23, 0.95), rgba(22, 22, 23, 0.85)); display: flex; align-items: center; justify-content: center;">
-                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2;">
-                            <div style="width: 70px; height: 70px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; transition: all 0.3s ease;">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="white" style="margin-left: 3px;">
-                                    <path d="M8 5v14l11-7z"/>
-                                </svg>
-                            </div>
-                            <div style="font-size: 16px; color: white; font-weight: 600; margin-bottom: 6px;">Watch Full Call Demo</div>
-                            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.7);">1:10 • Click to play</div>
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h3 style="font-size: 24px; font-weight: 600; color: white; margin-bottom: 12px;">
+                            See LUPO on a live call
+                        </h3>
+                    </div>
+                    
+                    <!-- Full Call Video Container -->
+                    <div id="fullCallVideoContainer" style="position: relative; width: 100%; max-width: 1200px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); background: var(--bg-secondary); aspect-ratio: 16/9;">
+                        <div id="fullCallVideoPlaceholder" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; background: linear-gradient(135deg, rgba(22, 22, 23, 0.95), rgba(22, 22, 23, 0.85)); display: flex; align-items: center; justify-content: center;">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2;">
+                                <div style="width: 70px; height: 70px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; transition: all 0.3s ease;">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="white" style="margin-left: 3px;">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </div>
+                                <div style="font-size: 16px; color: white; font-weight: 600; margin-bottom: 6px;">Watch Full Call Demo</div>
+                                <div style="font-size: 12px; color: rgba(255, 255, 255, 0.7);">1:10 • Click to play</div>
                         </div>
                     </div>
                 </div>
@@ -1450,21 +1450,190 @@
                 </div>
             </div>
             
-            <!-- Features Section -->
-            <!-- PREMIUM FEATURES SECTION - Apple Style -->
-            <section style="max-width: 1400px; margin: 140px auto; padding: 0 40px;">
+            <!-- How LUPO Works Section -->
+            <section style="max-width: 1200px; margin: 140px auto; padding: 0 40px;">
                 
-                <!-- Section Header -->
-                <div style="text-align: center; margin-bottom: 100px;">
-                    <h2 style="font-size: 56px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px; background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                        Everything you need<br>on every call.
-                    </h2>
-                    <p style="font-size: 24px; color: var(--text-secondary); font-weight: 400; line-height: 1.4;">
-                        From setup to close, LUPO has you covered
+                <!-- SECTION 1: BEFORE THE CALL -->
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <div style="display: inline-flex; align-items: center; gap: 20px; margin-bottom: 24px;">
+                        <div style="width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center;">
+                            <span style="font-size: 24px; font-weight: 700; color: var(--accent);">1</span>
+                        </div>
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin: 0;">Before the Call</h3>
+                    </div>
+                    <p style="font-size: 20px; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+                        Upload your product docs, pricing, and technical specs. LUPO learns what you sell.
                     </p>
                 </div>
                 
-                <!-- Feature 1: 90-Second Setup (TEXT LEFT, ANIMATED PANEL RIGHT) -->
+                <!-- Feature: Upload Company Context (TEXT LEFT, ICON RIGHT) -->
+                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 180px;">
+                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
+                            Upload Your Company Info
+                        </h3>
+                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
+                            Product docs, pricing sheets, technical specs. Your sales manager sets this up once. Every rep gets instant access.
+                        </p>
+                    </div>
+                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 20px; padding: 60px; display: flex; align-items: center; justify-content: center;">
+                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="12" y1="18" x2="12" y2="12"></line>
+                            <line x1="9" y1="15" x2="15" y2="15"></line>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- SECTION 2: DURING THE CALL -->
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <div style="display: inline-flex; align-items: center; gap: 20px; margin-bottom: 24px;">
+                        <div style="width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center;">
+                            <span style="font-size: 24px; font-weight: 700; color: var(--accent);">2</span>
+                        </div>
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin: 0;">During the Call</h3>
+                    </div>
+                    <p style="font-size: 20px; color: var(--text-secondary); max-width: 700px; margin: 0 auto;">
+                        Set your call objective. LUPO gives you real-time answers, handles objections, and shows what to say next.
+                    </p>
+                </div>
+                
+                <!-- Feature: Live Translation (IMAGE LEFT, TEXT RIGHT) -->
+                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
+                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('setup-translation.png')">
+                        <img 
+                            src="setup-translation.png" 
+                            alt="LUPO AI live translation feature"
+                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px; transition: transform 0.4s ease;">
+                        <div class="image-hover-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to expand</span>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
+                        </div>
+                    </div>
+                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
+                            Live Translation
+                        </h3>
+                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
+                            Prospect uses unfamiliar terms? LUPO translates them into plain English instantly.
+                        </p>
+                        <div style="display: flex; justify-content: center;">
+                            <a href="#translation-demo" class="secondary-link" onclick="playTranslationVideo(event)">
+                                Watch demo
+                                <span>→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature: Smart Alerts (TEXT LEFT, IMAGE RIGHT) -->
+                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
+                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
+                            Smart Alerts
+                        </h3>
+                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
+                            Detects objections and buying signals as they happen. Get instant answers from your company knowledge.
+                        </p>
+                    </div>
+                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('smart-alerts.png')">
+                        <img 
+                            src="smart-alerts.png" 
+                            alt="LUPO AI smart alerts feature"
+                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px; transition: transform 0.4s ease;">
+                        <div class="image-hover-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to expand</span>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature: Quick Guidance (IMAGE LEFT, TEXT RIGHT) -->
+                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; align-items: center; margin-bottom: 180px;">
+                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('quick-guidance.png')">
+                        <img 
+                            src="quick-guidance.png" 
+                            alt="LUPO AI quick guidance feature"
+                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px; transition: transform 0.4s ease;">
+                        <div class="image-hover-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to expand</span>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
+                        </div>
+                    </div>
+                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
+                            Instant Answers
+                        </h3>
+                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
+                            Type "what should I say?" and get instant tactical responses. Never go blank on a call.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- SECTION 3: AFTER THE CALL -->
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <div style="display: inline-flex; align-items: center; gap: 20px; margin-bottom: 24px;">
+                        <div style="width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center;">
+                            <span style="font-size: 24px; font-weight: 700; color: var(--accent);">3</span>
+                        </div>
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin: 0;">After the Call</h3>
+                    </div>
+                    <p style="font-size: 20px; color: var(--text-secondary); max-width: 700px; margin: 0 auto;">
+                        Get instant call summaries, next steps, and deep research automatically.
+                    </p>
+                </div>
+                
+                <!-- Feature: Instant Next Steps (TEXT LEFT, IMAGE RIGHT) -->
+                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
+                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
+                            Instant Next Steps
+                        </h3>
+                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
+                            Generate next steps, call summaries, or follow-up emails in 1 second. Copy-paste into your CRM.
+                        </p>
+                    </div>
+                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('postcallactions.png')">
+                        <img 
+                            src="postcallactions.png" 
+                            alt="LUPO AI post-call actions"
+                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px; transition: transform 0.4s ease;">
+                        <div class="image-hover-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to expand</span>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature: Deep Research (IMAGE LEFT, TEXT RIGHT) -->
+                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
+                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; aspect-ratio: 16/10; border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: all 0.4s ease;" onclick="openImageModal('deep-research-screenshot.png')">
+                        <img 
+                            src="deep-research-screenshot.png" 
+                            alt="LUPO AI deep research report"
+                            style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
+                        <div class="research-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to view full screenshot</span>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
+                        </div>
+                    </div>
+                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
+                        <div style="display: inline-block; padding: 6px 12px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2)); border-radius: 20px; margin-bottom: 20px;">
+                            <span style="font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">NEW</span>
+                        </div>
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
+                            Deep Research
+                        </h3>
+                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
+                            One-click tactical brief with company intel, competitive positioning, and exact follow-up phrases to use.
+                        </p>
+                    </div>
+                </div>
+                    
+            </section>
+            
+            <style>
                 <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
                     <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
                         <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
@@ -1473,7 +1642,7 @@
                         <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
                             Takes 7 seconds, makes the whole call sharper
                         </p>
-                        </div>
+                </div>
                     <div class="premium-feature-image no-hover scroll-animate" style="position: relative; background: transparent; border-radius: 20px; border: none; padding: 20px; display: flex; align-items: center; justify-content: center;">
                         <!-- Call Objective Panel Demo -->
                         <div class="call-objective-demo">
@@ -1498,154 +1667,37 @@
                             </svg>
                         </div>
                     </div>
-                        </div>
-                    </div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                    
-                <!-- Feature 2: Live Translation (VIDEO LEFT, TEXT RIGHT) -->
-                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
-                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('setup-translation.png')">
-                        <img 
-                            src="setup-translation.png" 
-                            alt="LUPO AI desktop assistant interface showing real-time live translation feature for sales calls"
-                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px; transition: transform 0.4s ease;">
-                        <div class="image-hover-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
-                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to expand</span>
-                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
-                        </div>
-                    </div>
-                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
-                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
-                            Live Translation
-                        </h3>
-                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
-                            Prospect uses unfamiliar terms? LUPO translates them into plain English instantly
-                        </p>
-                        <div style="display: flex; justify-content: center;">
-                            <a href="#translation-demo" class="secondary-link" onclick="playTranslationVideo(event)">
-                                Watch demo
-                                <span>→</span>
-                            </a>
-                        </div>
-                    </div>
-                    </div>
-                    
-                <!-- Feature 3: Smart Alerts (TEXT LEFT, IMAGE RIGHT) -->
-                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
-                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
-                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
-                            Smart Alerts
-                        </h3>
-                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
-                            Never say "I'll get back to you" again. LUPO retrieves verified answers from your company knowledge in real time.
-                        </p>
-                        </div>
-                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('smart-alerts.png')">
-                        <img 
-                            src="smart-alerts.png" 
-                            alt="LUPO AI smart alerts feature showing real-time objection detection and instant answers for sales calls"
-                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px; transition: transform 0.4s ease;">
-                        <div class="image-hover-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
-                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to expand</span>
-                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
-                        </div>
-                    </div>
                 </div>
-                
-                <!-- Feature 4: Quick Guidance (IMAGE LEFT, TEXT RIGHT) -->
-                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
-                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('quick-guidance.png')">
-                        <img 
-                            src="quick-guidance.png" 
-                            alt="LUPO AI quick guidance feature providing instant tactical responses during sales calls"
-                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px; transition: transform 0.4s ease;">
-                        <div class="image-hover-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
-                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to expand</span>
-                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
-                        </div>
-                    </div>
-                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
-                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
-                            Quick Guidance
-                        </h3>
-                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
-                            Click "what should I say?" and get instant tactical responses. Never go blank on a call.
-                        </p>
-                    </div>
-                </div>
-                
-                <!-- Feature 5: Instant Next Steps (TEXT LEFT, IMAGE RIGHT) -->
-                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
-                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
-                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
-                            Instant Next Steps
-                            </h3>
-                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
-                            Generate next steps, call summaries, or follow-up emails in 1 second. Copy-paste into your CRM.
-                            </p>
-                        </div>
-                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('postcallactions.png')">
-                        <img 
-                            src="postcallactions.png" 
-                            alt="LUPO AI post-call actions showing automated next steps, call summaries, and follow-up emails for sales teams"
-                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px; transition: transform 0.4s ease;">
-                        <div class="image-hover-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
-                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to expand</span>
-                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
-                        </div>
                     </div>
                         </div>
-                        
-                <!-- Feature 6: Deep Research (IMAGE LEFT, TEXT RIGHT - PREMIUM SHOWCASE) -->
-                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
-                    <div class="premium-feature-image" style="position: relative; background: var(--bg-secondary); border-radius: 20px; aspect-ratio: 16/10; border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: all 0.4s ease;" onclick="openImageModal('deep-research-screenshot.png')">
-                            <img 
-                                src="deep-research-screenshot.png" 
-                                alt="LUPO AI deep research report showing automated post-call analysis and prospect intelligence for sales teams"
-                            style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
-                        <div class="research-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
-                                <span style="color: white; font-size: 18px; font-weight: 600;">Click to view full screenshot</span>
-                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
-                            </div>
-                        </div>
-                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
-                        <div style="display: inline-block; padding: 6px 12px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2)); border-radius: 20px; margin-bottom: 20px;">
-                            <span style="font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">NEW</span>
-                        </div>
-                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
-                            Deep Research
-                        </h3>
-                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
-                            One-click tactical brief with company intel, competitive positioning, and exact follow-up phrases to use. LUPO analyzes your entire call, researches the prospect's company (latest news, funding, competitors), and generates a complete tactical playbook.
-                        </p>
-                    </div>
-                    </div>
-                    
-                <!-- TEMPORARILY HIDDEN: Feature 7: Connect Your Company Knowledge (TEXT LEFT, IMAGE RIGHT)
-                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
-                    <div class="premium-feature-text" style="padding: 40px 0;">
-                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
-                            Connect Your Company's Knowledge
-                        </h3>
-                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
-                            Product info, pricing, winning transcripts. LUPO becomes the breathing soul of your company. Personify LUPO with everything that makes your team win.
-                        </p>
-                </div>
-                    <div class="premium-feature-image no-hover" style="position: relative; background: rgba(255, 255, 255, 0.02); border-radius: 20px; aspect-ratio: 16/10; border: 1px solid var(--border); overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 40px;">
-                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(102, 126, 234, 0.6);">
-                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                            </svg>
                         </div>
                     </div>
-                </div>
-                -->
+                    </div>
                 
             </section>
+            
+            <style>
+                /* Step section fade-in animations */
+                .step-section.visible {
+                    opacity: 1 !important;
+                    transform: translateY(0) !important;
+                }
+                
+                @media (max-width: 768px) {
+                    .step-section {
+                        margin-bottom: 100px !important;
+                    }
+                    
+                    .step-section > div:first-child h3 {
+                        font-size: 32px !important;
+                    }
+                    
+                    .step-section > div:last-child > div {
+                        grid-template-columns: 1fr !important;
+                    }
+                }
+                
+            </style>
             
             <style>
             /* Call Objective Demo Panel - Horizontal Layout */
@@ -2196,9 +2248,9 @@
                 
                 // Load Vimeo Player API if not already loaded
                 if (!window.Vimeo) {
-                    const script = document.createElement('script');
-                    script.src = 'https://player.vimeo.com/api/player.js';
-                    document.head.appendChild(script);
+                const script = document.createElement('script');
+                script.src = 'https://player.vimeo.com/api/player.js';
+                document.head.appendChild(script);
                 }
             }
             
@@ -2334,6 +2386,29 @@
             });
             
             privacyObserver.observe(privacySection);
+        });
+        
+        // Step Sections Fade-in Animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const stepSections = document.querySelectorAll('.step-section');
+            if (stepSections.length === 0) return;
+            
+            const stepObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.2,
+                rootMargin: '0px 0px -80px 0px'
+            });
+            
+            stepSections.forEach(section => {
+                stepObserver.observe(section);
+            });
         });
         
         // Floating particles effect
