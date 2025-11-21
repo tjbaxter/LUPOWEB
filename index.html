@@ -1476,13 +1476,81 @@
                             Product docs, pricing sheets, technical specs. Your sales manager sets this up once. Every rep gets instant access.
                         </p>
                     </div>
-                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 20px; padding: 60px; display: flex; align-items: center; justify-content: center;">
-                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="12" y1="18" x2="12" y2="12"></line>
-                            <line x1="9" y1="15" x2="15" y2="15"></line>
-                        </svg>
+                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 20px; padding: 40px; display: flex; align-items: center; justify-content: center; min-height: 450px; overflow: visible;">
+                        <div style="position: relative; width: 100%; max-width: 500px; height: 450px;">
+                            <!-- SVG Canvas for neural network -->
+                            <svg style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Gradient definition -->
+                                <defs>
+                                    <linearGradient id="neuralGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:rgb(102, 126, 234);stop-opacity:0.8" />
+                                        <stop offset="100%" style="stop-color:rgb(118, 75, 162);stop-opacity:0.8" />
+                                    </linearGradient>
+                                </defs>
+                                
+                                <!-- Neural connection lines -->
+                                <g stroke="url(#neuralGrad)" stroke-width="2.5" fill="none">
+                                    <!-- Line to top-left PDF -->
+                                    <path d="M 250 225 Q 180 150, 90 80" stroke-dasharray="6,4">
+                                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="1.5s" repeatCount="indefinite"/>
+                                    </path>
+                                    <!-- Line to top-right PDF -->
+                                    <path d="M 250 225 Q 320 150, 410 80" stroke-dasharray="6,4">
+                                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="1.5s" repeatCount="indefinite"/>
+                                    </path>
+                                    <!-- Line to bottom-left PDF -->
+                                    <path d="M 250 225 Q 180 290, 90 370" stroke-dasharray="6,4">
+                                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="1.5s" repeatCount="indefinite"/>
+                                    </path>
+                                    <!-- Line to bottom-right PDF -->
+                                    <path d="M 250 225 Q 320 290, 410 370" stroke-dasharray="6,4">
+                                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="1.5s" repeatCount="indefinite"/>
+                                    </path>
+                                </g>
+                                
+                                <!-- PDF Icons with animations -->
+                                <!-- Top-left PDF -->
+                                <g>
+                                    <rect x="60" y="50" width="50" height="65" rx="6" fill="rgba(22, 22, 23, 0.9)" stroke="var(--accent)" stroke-width="2.5"/>
+                                    <line x1="70" y1="70" x2="100" y2="70" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="70" y1="85" x2="100" y2="85" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="70" y1="100" x2="90" y2="100" stroke="var(--accent)" stroke-width="2"/>
+                                    <animateTransform attributeName="transform" type="translate" values="0,0; 0,-5; 0,0" dur="2s" repeatCount="indefinite"/>
+                                </g>
+                                
+                                <!-- Top-right PDF -->
+                                <g>
+                                    <rect x="390" y="50" width="50" height="65" rx="6" fill="rgba(22, 22, 23, 0.9)" stroke="var(--accent)" stroke-width="2.5"/>
+                                    <line x1="400" y1="70" x2="430" y2="70" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="400" y1="85" x2="430" y2="85" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="400" y1="100" x2="420" y2="100" stroke="var(--accent)" stroke-width="2"/>
+                                    <animateTransform attributeName="transform" type="translate" values="0,0; 0,-5; 0,0" dur="2.3s" repeatCount="indefinite"/>
+                                </g>
+                                
+                                <!-- Bottom-left PDF -->
+                                <g>
+                                    <rect x="60" y="335" width="50" height="65" rx="6" fill="rgba(22, 22, 23, 0.9)" stroke="var(--accent)" stroke-width="2.5"/>
+                                    <line x1="70" y1="355" x2="100" y2="355" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="70" y1="370" x2="100" y2="370" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="70" y1="385" x2="90" y2="385" stroke="var(--accent)" stroke-width="2"/>
+                                    <animateTransform attributeName="transform" type="translate" values="0,0; 0,-5; 0,0" dur="2.6s" repeatCount="indefinite"/>
+                                </g>
+                                
+                                <!-- Bottom-right PDF -->
+                                <g>
+                                    <rect x="390" y="335" width="50" height="65" rx="6" fill="rgba(22, 22, 23, 0.9)" stroke="var(--accent)" stroke-width="2.5"/>
+                                    <line x1="400" y1="355" x2="430" y2="355" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="400" y1="370" x2="430" y2="370" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="400" y1="385" x2="420" y2="385" stroke="var(--accent)" stroke-width="2"/>
+                                    <animateTransform attributeName="transform" type="translate" values="0,0; 0,-5; 0,0" dur="1.9s" repeatCount="indefinite"/>
+                                </g>
+                            </svg>
+                            
+                            <!-- Center LUPO Logo on top of SVG -->
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <img src="lupo-head-logo.png" alt="LUPO Logo" style="width: 140px; height: 140px; filter: drop-shadow(0 0 25px rgba(102, 126, 234, 0.5));">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -1495,7 +1563,7 @@
                         <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
                             Takes 7 seconds, makes the whole call sharper
                         </p>
-                    </div>
+                        </div>
                     <div class="premium-feature-image no-hover scroll-animate" style="position: relative; background: transparent; border-radius: 20px; border: none; padding: 20px; display: flex; align-items: center; justify-content: center;">
                         <!-- Call Objective Panel Demo -->
                         <div class="call-objective-demo">
@@ -1503,7 +1571,7 @@
                                 <div class="demo-vertical-container">
                                     <div class="demo-objective-header">
                                         <div class="demo-objective-title">CALL OBJECTIVE</div>
-                                    </div>
+                    </div>
                                     <div class="demo-input-wrapper">
                                         <div class="demo-placeholder-container">
                                             <div class="demo-placeholder-text" id="demoPlaceholder">What is the objective of this call?</div>
@@ -1517,16 +1585,16 @@
                                                     <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
                                                     <line x1="12" y1="19" x2="12" y2="23"></line>
                                                     <line x1="8" y1="23" x2="16" y2="23"></line>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </svg>
                         </div>
                     </div>
-                </div>
-                
+                        </div>
+                    </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    
                 <!-- SECTION 2: DURING THE CALL -->
                 <div style="text-align: center; margin-bottom: 100px;">
                     <div style="display: inline-flex; align-items: center; gap: 24px; margin-bottom: 32px;">
@@ -1566,8 +1634,8 @@
                             </a>
                         </div>
                     </div>
-                </div>
-                
+                    </div>
+                    
                 <!-- Feature: Smart Alerts (TEXT LEFT, IMAGE RIGHT) -->
                 <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
                     <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
@@ -1577,7 +1645,7 @@
                         <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
                             Detects objections and buying signals as they happen. Get instant answers from your company knowledge.
                         </p>
-                    </div>
+                        </div>
                     <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('smart-alerts.png')">
                         <img 
                             src="smart-alerts.png" 
@@ -1630,11 +1698,11 @@
                     <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
                         <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
                             Instant Next Steps
-                        </h3>
+                            </h3>
                         <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
                             Generate next steps, call summaries, or follow-up emails in 1 second. Copy-paste into your CRM.
-                        </p>
-                    </div>
+                            </p>
+                        </div>
                     <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('postcallactions.png')">
                         <img 
                             src="postcallactions.png" 
@@ -1645,20 +1713,20 @@
                             <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
                         </div>
                     </div>
-                </div>
-                
+                        </div>
+                        
                 <!-- Feature: Deep Research (IMAGE LEFT, TEXT RIGHT) -->
                 <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
                     <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; aspect-ratio: 16/10; border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: all 0.4s ease;" onclick="openImageModal('deep-research-screenshot.png')">
-                        <img 
-                            src="deep-research-screenshot.png" 
+                            <img 
+                                src="deep-research-screenshot.png" 
                             alt="LUPO AI deep research report"
                             style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
                         <div class="research-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
-                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to view full screenshot</span>
+                                <span style="color: white; font-size: 18px; font-weight: 600;">Click to view full screenshot</span>
                             <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
+                            </div>
                         </div>
-                    </div>
                     <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
                         <div style="display: inline-block; padding: 6px 12px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2)); border-radius: 20px; margin-bottom: 20px;">
                             <span style="font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">NEW</span>
@@ -1670,7 +1738,7 @@
                             One-click tactical brief with company intel, competitive positioning, and exact follow-up phrases to use.
                         </p>
                     </div>
-                </div>
+                    </div>
                     
             </section>
             
