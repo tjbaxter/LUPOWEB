@@ -1586,33 +1586,95 @@
                     </div>
                 </div>
                 
-                <!-- Feature: Select Your Prospect (ANIMATED PANEL LEFT, TEXT RIGHT) -->
+                <!-- Feature: Select Your Prospect (DROPDOWN SVG LEFT, TEXT RIGHT) -->
                 <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 180px;">
-                    <div class="premium-feature-image no-hover scroll-animate" style="position: relative; background: transparent; border-radius: 20px; border: none; padding: 20px; display: flex; align-items: center; justify-content: center;">
-                        <!-- Call Objective Panel Demo -->
-                        <div class="call-objective-demo">
-                            <div class="demo-window-frame">
-                                <div class="demo-vertical-container">
-                                    <div class="demo-objective-header">
-                                        <div class="demo-objective-title">SELECT YOUR PROSPECT</div>
-                    </div>
-                                    <div class="demo-input-wrapper">
-                                        <div class="demo-placeholder-container">
-                                            <div class="demo-placeholder-text" id="demoPlaceholder">Search prospect name...</div>
-                                        </div>
-                                        <!-- Controls at bottom -->
-                                        <div class="demo-input-controls">
-                                            <div class="demo-word-counter">From CRM</div>
-                                            <div class="demo-mic-button">
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <circle cx="11" cy="11" r="8"></circle>
-                                                    <path d="m21 21-4.35-4.35"></path>
+                    <div class="premium-feature-image no-hover scroll-animate" style="position: relative; padding: 40px; display: flex; align-items: center; justify-content: center; min-height: 500px; overflow: visible;">
+                        <div style="position: relative; width: 100%; max-width: 500px; height: 500px;">
+                            <!-- SVG Canvas for prospect dropdown -->
+                            <svg style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <!-- Gradient for accent elements -->
+                                    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:rgb(102, 126, 234);stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:rgb(118, 75, 162);stop-opacity:1" />
+                                    </linearGradient>
+                                    <!-- Hover gradient -->
+                                    <linearGradient id="hoverGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:rgba(102, 126, 234, 0.1);stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:rgba(118, 75, 162, 0.1);stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                
+                                <!-- Main container background -->
+                                <rect x="50" y="80" width="400" height="380" rx="16" fill="rgba(22, 22, 23, 0.95)" stroke="rgba(102, 126, 234, 0.3)" stroke-width="1.5"/>
+                                
+                                <!-- Search bar container -->
+                                <rect x="70" y="110" width="360" height="50" rx="12" fill="rgba(40, 40, 42, 1)" stroke="rgba(102, 126, 234, 0.5)" stroke-width="2"/>
+                                
+                                <!-- Search icon -->
+                                <g transform="translate(85, 125)">
+                                    <circle cx="8" cy="8" r="7" fill="none" stroke="url(#accentGrad)" stroke-width="2"/>
+                                    <line x1="13" y1="13" x2="18" y2="18" stroke="url(#accentGrad)" stroke-width="2" stroke-linecap="round"/>
+                                </g>
+                                
+                                <!-- Typed text "Sar" with cursor -->
+                                <text x="115" y="140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" fill="rgba(255, 255, 255, 0.95)" font-weight="400">Sar</text>
+                                
+                                <!-- Blinking cursor -->
+                                <rect x="147" y="127" width="2" height="20" fill="url(#accentGrad)">
+                                    <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+                                </rect>
+                                
+                                <!-- Dropdown divider line -->
+                                <line x1="70" y1="175" x2="430" y2="175" stroke="rgba(102, 126, 234, 0.2)" stroke-width="1"/>
+                                
+                                <!-- Prospect Result 1 (Not hovered) -->
+                                <g>
+                                    <rect x="70" y="185" width="360" height="70" rx="8" fill="transparent"/>
+                                    <text x="90" y="210" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="17" fill="rgba(255, 255, 255, 0.95)" font-weight="600">Sarah Mitchell</text>
+                                    <text x="90" y="233" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" fill="rgba(255, 255, 255, 0.6)" font-weight="400">VP of Sales</text>
+                                    <text x="90" y="250" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="rgba(102, 126, 234, 0.8)" font-weight="500">TechCorp Solutions</text>
+                                </g>
+                                
+                                <!-- Prospect Result 2 (HOVERED - with mouse cursor) -->
+                                <g>
+                                    <!-- Hover background with animation -->
+                                    <rect x="70" y="265" width="360" height="70" rx="8" fill="url(#hoverGrad)">
+                                        <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+                                    </rect>
+                                    <!-- Accent border on hover -->
+                                    <rect x="70" y="265" width="360" height="70" rx="8" fill="none" stroke="url(#accentGrad)" stroke-width="1.5">
+                                        <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+                                    </rect>
+                                    <text x="90" y="290" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="17" fill="rgba(255, 255, 255, 1)" font-weight="600">Sarah Chen</text>
+                                    <text x="90" y="313" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" fill="rgba(255, 255, 255, 0.7)" font-weight="400">Director of Operations</text>
+                                    <text x="90" y="330" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="rgba(102, 126, 234, 0.9)" font-weight="500">Innovate Industries</text>
+                                    
+                                    <!-- Mouse cursor pointer -->
+                                    <g transform="translate(380, 295)">
+                                        <path d="M 0,0 L 0,16 L 4,12 L 7,18 L 10,17 L 7,11 L 12,11 Z" fill="white" stroke="rgba(0,0,0,0.3)" stroke-width="0.5">
+                                            <animateTransform attributeName="transform" type="translate" values="0,0; 3,3; 0,0" dur="2s" repeatCount="indefinite" additive="sum"/>
+                                        </path>
+                                    </g>
+                                </g>
+                                
+                                <!-- Prospect Result 3 (Not hovered) -->
+                                <g>
+                                    <rect x="70" y="345" width="360" height="70" rx="8" fill="transparent"/>
+                                    <text x="90" y="370" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="17" fill="rgba(255, 255, 255, 0.95)" font-weight="600">Sam Rodriguez</text>
+                                    <text x="90" y="393" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" fill="rgba(255, 255, 255, 0.6)" font-weight="400">Head of Procurement</text>
+                                    <text x="90" y="410" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="rgba(102, 126, 234, 0.8)" font-weight="500">Global Ventures Inc</text>
+                                </g>
+                                
+                                <!-- "From CRM" badge at bottom -->
+                                <g>
+                                    <rect x="180" y="435" width="140" height="28" rx="14" fill="rgba(102, 126, 234, 0.15)" stroke="url(#accentGrad)" stroke-width="1.5"/>
+                                    <text x="250" y="453" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="url(#accentGrad)" font-weight="600" text-anchor="middle">FROM CRM</text>
+                                    <circle cx="195" cy="449" r="3" fill="url(#accentGrad)">
+                                        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+                                    </circle>
+                                </g>
                             </svg>
-                        </div>
-                    </div>
-                        </div>
-                    </div>
-                        </div>
                         </div>
                     </div>
                     <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
