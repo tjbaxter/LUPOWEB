@@ -1809,17 +1809,124 @@
                     transform: translateY(0) !important;
                 }
                 
+                /* Mobile responsive styles - Best Practices 2024 */
                 @media (max-width: 768px) {
-                    .step-section {
-                        margin-bottom: 100px !important;
+                    /* All feature rows stack vertically on mobile */
+                    .premium-feature-row {
+                        grid-template-columns: 1fr !important;
+                        gap: 40px !important;
+                        margin-bottom: 80px !important;
                     }
                     
-                    .step-section > div:first-child h3 {
+                    /* Section container padding */
+                    section[style*="max-width: 1200px"] {
+                        padding: 0 20px !important;
+                        margin: 80px auto !important;
+                    }
+                    
+                    /* Section headers - numbered badges with titles */
+                    section > div[style*="text-align: center"]:first-of-type {
+                        margin-bottom: 60px !important;
+                    }
+                    
+                    section > div[style*="text-align: center"] > div[style*="inline-flex"] {
+                        flex-direction: column !important;
+                        gap: 16px !important;
+                        margin-bottom: 20px !important;
+                    }
+                    
+                    /* Badge circles */
+                    section > div[style*="text-align: center"] > div[style*="inline-flex"] > div {
+                        width: 56px !important;
+                        height: 56px !important;
+                        border-width: 2px !important;
+                    }
+                    
+                    section > div[style*="text-align: center"] > div[style*="inline-flex"] > div > span {
+                        font-size: 24px !important;
+                    }
+                    
+                    /* Section main titles (Before the Call, During the Call, etc.) */
+                    section > div[style*="text-align: center"] h2 {
+                        font-size: 36px !important;
+                        line-height: 1.2 !important;
+                    }
+                    
+                    /* Section descriptions under titles */
+                    section > div[style*="text-align: center"] > p {
+                        font-size: 18px !important;
+                        line-height: 1.5 !important;
+                        padding: 0 10px !important;
+                    }
+                    
+                    /* Feature titles (Live Translation, Smart Alerts, etc.) - min 16px for readability */
+                    .premium-feature-text h3 {
+                        font-size: 28px !important;
+                        margin-bottom: 16px !important;
+                    }
+                    
+                    /* Feature descriptions - min 14px per best practices */
+                    .premium-feature-text p {
+                        font-size: 17px !important;
+                        line-height: 1.6 !important;
+                    }
+                    
+                    /* Feature text padding */
+                    .premium-feature-text {
+                        padding: 20px 0 !important;
+                    }
+                    
+                    /* LUPO logo neural network animation - make smaller and centered on mobile */
+                    .premium-feature-image.no-hover[style*="min-height: 450px"] {
+                        min-height: 280px !important;
+                        padding: 20px 10px !important;
+                    }
+                    
+                    .premium-feature-image.no-hover[style*="min-height: 450px"] > div {
+                        max-width: 100% !important;
+                        height: 280px !important;
+                    }
+                    
+                    .premium-feature-image.no-hover[style*="min-height: 450px"] img {
+                        width: 90px !important;
+                        height: 90px !important;
+                    }
+                    
+                    /* Make touch targets at least 44x44px per Apple guidelines */
+                    .secondary-link {
+                        padding: 12px 16px !important;
+                        font-size: 16px !important;
+                        display: inline-flex !important;
+                    }
+                    
+                    /* Image containers on mobile */
+                    .premium-feature-image {
+                        padding: 20px !important;
+                    }
+                    
+                    /* Ensure images don't overflow on mobile */
+                    .premium-feature-image img {
+                        max-width: 100% !important;
+                        height: auto !important;
+                    }
+                }
+                
+                /* Small mobile phones (iPhone SE, etc.) */
+                @media (max-width: 375px) {
+                    section > div[style*="text-align: center"] h2 {
                         font-size: 32px !important;
                     }
                     
-                    .step-section > div:last-child > div {
-                        grid-template-columns: 1fr !important;
+                    .premium-feature-text h3 {
+                        font-size: 24px !important;
+                    }
+                    
+                    .premium-feature-text p {
+                        font-size: 16px !important;
+                    }
+                    
+                    section > div[style*="text-align: center"] > p {
+                        font-size: 16px !important;
                     }
                 }
                 
