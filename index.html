@@ -1588,10 +1588,10 @@
                 
                 <!-- Feature: Select Your Prospect (DROPDOWN SVG LEFT, TEXT RIGHT) -->
                 <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 180px;">
-                    <div class="premium-feature-image no-hover scroll-animate" style="position: relative; padding: 40px; display: flex; align-items: center; justify-content: center; min-height: 500px; overflow: visible;">
-                        <div style="position: relative; width: 100%; max-width: 500px; height: 500px;">
+                    <div class="premium-feature-image no-hover scroll-animate" style="position: relative; padding: 40px; display: flex; align-items: center; justify-content: center; min-height: 550px; overflow: visible;">
+                        <div style="position: relative; width: 100%; max-width: 500px; height: 550px;">
                             <!-- SVG Canvas for prospect dropdown -->
-                            <svg style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                            <svg style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" viewBox="0 0 500 550" xmlns="http://www.w3.org/2000/svg">
                                 <defs>
                                     <!-- Gradient for accent elements -->
                                     <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1600,79 +1600,95 @@
                                     </linearGradient>
                                     <!-- Hover gradient -->
                                     <linearGradient id="hoverGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" style="stop-color:rgba(102, 126, 234, 0.1);stop-opacity:1" />
-                                        <stop offset="100%" style="stop-color:rgba(118, 75, 162, 0.1);stop-opacity:1" />
+                                        <stop offset="0%" style="stop-color:rgba(102, 126, 234, 0.15);stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:rgba(118, 75, 162, 0.15);stop-opacity:1" />
                                     </linearGradient>
                                 </defs>
                                 
                                 <!-- Main container background -->
-                                <rect x="50" y="80" width="400" height="380" rx="16" fill="rgba(22, 22, 23, 0.95)" stroke="rgba(102, 126, 234, 0.3)" stroke-width="1.5"/>
+                                <rect x="50" y="60" width="400" height="450" rx="16" fill="rgba(22, 22, 23, 0.95)" stroke="rgba(102, 126, 234, 0.3)" stroke-width="1.5"/>
                                 
                                 <!-- Search bar container -->
-                                <rect x="70" y="110" width="360" height="50" rx="12" fill="rgba(40, 40, 42, 1)" stroke="rgba(102, 126, 234, 0.5)" stroke-width="2"/>
+                                <rect x="70" y="90" width="360" height="52" rx="12" fill="rgba(40, 40, 42, 1)" stroke="rgba(102, 126, 234, 0.5)" stroke-width="2"/>
                                 
                                 <!-- Search icon -->
-                                <g transform="translate(85, 125)">
+                                <g transform="translate(85, 106)">
                                     <circle cx="8" cy="8" r="7" fill="none" stroke="url(#accentGrad)" stroke-width="2"/>
                                     <line x1="13" y1="13" x2="18" y2="18" stroke="url(#accentGrad)" stroke-width="2" stroke-linecap="round"/>
                                 </g>
                                 
                                 <!-- Typed text "Sar" with cursor -->
-                                <text x="115" y="140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" fill="rgba(255, 255, 255, 0.95)" font-weight="400">Sar</text>
+                                <text x="115" y="120" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" fill="rgba(255, 255, 255, 0.95)" font-weight="400">Sar</text>
                                 
                                 <!-- Blinking cursor -->
-                                <rect x="147" y="127" width="2" height="20" fill="url(#accentGrad)">
+                                <rect x="143" y="108" width="2" height="19" fill="url(#accentGrad)">
                                     <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
                                 </rect>
                                 
+                                <!-- "FROM CRM" badge with Salesforce logo (top-right of search) -->
+                                <g>
+                                    <rect x="300" y="98" width="115" height="24" rx="12" fill="rgba(102, 126, 234, 0.15)" stroke="url(#accentGrad)" stroke-width="1.2"/>
+                                    <!-- Salesforce logo placeholder (will overlay with actual image) -->
+                                    <image href="salesforce-logo.png" x="308" y="103" width="16" height="16" opacity="0.9"/>
+                                    <text x="330" y="113" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="url(#accentGrad)" font-weight="600">FROM CRM</text>
+                                    <circle cx="405" cy="110" r="2.5" fill="url(#accentGrad)">
+                                        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+                                    </circle>
+                                </g>
+                                
                                 <!-- Dropdown divider line -->
-                                <line x1="70" y1="175" x2="430" y2="175" stroke="rgba(102, 126, 234, 0.2)" stroke-width="1"/>
+                                <line x1="70" y1="157" x2="430" y2="157" stroke="rgba(102, 126, 234, 0.2)" stroke-width="1"/>
+                                
+                                <!-- "Recent Calls" section header -->
+                                <text x="85" y="180" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" fill="rgba(255, 255, 255, 0.5)" font-weight="600" letter-spacing="0.5">RECENT CALLS</text>
                                 
                                 <!-- Prospect Result 1 (Not hovered) -->
                                 <g>
-                                    <rect x="70" y="185" width="360" height="70" rx="8" fill="transparent"/>
-                                    <text x="90" y="210" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="17" fill="rgba(255, 255, 255, 0.95)" font-weight="600">Sarah Mitchell</text>
-                                    <text x="90" y="233" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" fill="rgba(255, 255, 255, 0.6)" font-weight="400">VP of Sales</text>
-                                    <text x="90" y="250" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="rgba(102, 126, 234, 0.8)" font-weight="500">TechCorp Solutions</text>
+                                    <rect x="75" y="195" width="350" height="85" rx="10" fill="transparent"/>
+                                    <text x="90" y="218" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" fill="rgba(255, 255, 255, 0.95)" font-weight="600">Sarah Mitchell</text>
+                                    <text x="90" y="238" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="rgba(255, 255, 255, 0.6)" font-weight="400">VP of Sales · TechCorp Solutions</text>
+                                    <text x="90" y="256" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="rgba(102, 126, 234, 0.8)" font-weight="500">Discovery · $32K · Last contact: 1 day ago</text>
+                                    <text x="90" y="272" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" fill="rgba(255, 255, 255, 0.4)" font-weight="400">Interested in API integration</text>
                                 </g>
                                 
-                                <!-- Prospect Result 2 (HOVERED - with mouse cursor) -->
+                                <!-- Prospect Result 2 (HOVERED - with mouse cursor and checkmark) -->
                                 <g>
                                     <!-- Hover background with animation -->
-                                    <rect x="70" y="265" width="360" height="70" rx="8" fill="url(#hoverGrad)">
-                                        <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+                                    <rect x="75" y="290" width="350" height="85" rx="10" fill="url(#hoverGrad)">
+                                        <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
                                     </rect>
                                     <!-- Accent border on hover -->
-                                    <rect x="70" y="265" width="360" height="70" rx="8" fill="none" stroke="url(#accentGrad)" stroke-width="1.5">
-                                        <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+                                    <rect x="75" y="290" width="350" height="85" rx="10" fill="none" stroke="url(#accentGrad)" stroke-width="2">
+                                        <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
                                     </rect>
-                                    <text x="90" y="290" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="17" fill="rgba(255, 255, 255, 1)" font-weight="600">Sarah Chen</text>
-                                    <text x="90" y="313" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" fill="rgba(255, 255, 255, 0.7)" font-weight="400">Director of Operations</text>
-                                    <text x="90" y="330" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="rgba(102, 126, 234, 0.9)" font-weight="500">Innovate Industries</text>
+                                    <text x="90" y="313" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" fill="rgba(255, 255, 255, 1)" font-weight="600">Sarah Chen</text>
+                                    <text x="90" y="333" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="rgba(255, 255, 255, 0.75)" font-weight="400">Director of Operations · Innovate Industries</text>
+                                    <text x="90" y="351" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="rgba(102, 126, 234, 1)" font-weight="600">Proposal · $67K · Last contact: 3 days ago</text>
+                                    <text x="90" y="367" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" fill="rgba(255, 255, 255, 0.5)" font-weight="400">Security compliance review pending</text>
+                                    
+                                    <!-- Checkmark icon (top-right of card) -->
+                                    <g transform="translate(395, 300)">
+                                        <circle cx="10" cy="10" r="10" fill="url(#accentGrad)">
+                                            <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+                                        </circle>
+                                        <path d="M 6,10 L 9,13 L 15,7" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </g>
                                     
                                     <!-- Mouse cursor pointer -->
-                                    <g transform="translate(380, 295)">
+                                    <g transform="translate(360, 320)">
                                         <path d="M 0,0 L 0,16 L 4,12 L 7,18 L 10,17 L 7,11 L 12,11 Z" fill="white" stroke="rgba(0,0,0,0.3)" stroke-width="0.5">
-                                            <animateTransform attributeName="transform" type="translate" values="0,0; 3,3; 0,0" dur="2s" repeatCount="indefinite" additive="sum"/>
+                                            <animateTransform attributeName="transform" type="translate" values="0,0; 2,2; 0,0" dur="2s" repeatCount="indefinite" additive="sum"/>
                                         </path>
                                     </g>
                                 </g>
                                 
                                 <!-- Prospect Result 3 (Not hovered) -->
                                 <g>
-                                    <rect x="70" y="345" width="360" height="70" rx="8" fill="transparent"/>
-                                    <text x="90" y="370" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="17" fill="rgba(255, 255, 255, 0.95)" font-weight="600">Sam Rodriguez</text>
-                                    <text x="90" y="393" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" fill="rgba(255, 255, 255, 0.6)" font-weight="400">Head of Procurement</text>
-                                    <text x="90" y="410" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="rgba(102, 126, 234, 0.8)" font-weight="500">Global Ventures Inc</text>
-                                </g>
-                                
-                                <!-- "From CRM" badge at bottom -->
-                                <g>
-                                    <rect x="180" y="435" width="140" height="28" rx="14" fill="rgba(102, 126, 234, 0.15)" stroke="url(#accentGrad)" stroke-width="1.5"/>
-                                    <text x="250" y="453" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="url(#accentGrad)" font-weight="600" text-anchor="middle">FROM CRM</text>
-                                    <circle cx="195" cy="449" r="3" fill="url(#accentGrad)">
-                                        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
-                                    </circle>
+                                    <rect x="75" y="385" width="350" height="85" rx="10" fill="transparent"/>
+                                    <text x="90" y="408" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" fill="rgba(255, 255, 255, 0.95)" font-weight="600">Sam Rodriguez</text>
+                                    <text x="90" y="428" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" fill="rgba(255, 255, 255, 0.6)" font-weight="400">Head of Procurement · Global Ventures Inc</text>
+                                    <text x="90" y="446" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="rgba(102, 126, 234, 0.8)" font-weight="500">Negotiation · $89K · Last contact: 5 days ago</text>
+                                    <text x="90" y="462" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" fill="rgba(255, 255, 255, 0.4)" font-weight="400">Budget approved, awaiting legal</text>
                                 </g>
                             </svg>
                         </div>
