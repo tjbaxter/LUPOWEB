@@ -1466,7 +1466,167 @@
                     </p>
                 </div>
                 
-                <!-- Feature: Upload Company Context (TEXT LEFT, ICON RIGHT) -->
+                <!-- Feature: Upload Company Context (TEXT LEFT, NEURAL NETWORK RIGHT) -->
+                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
+                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
+                            Upload Your Company Info
+                        </h3>
+                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
+                            Product docs, pricing sheets, technical specs. Your sales manager sets this up once. Every rep gets instant access to your knowledge base.
+                        </p>
+                    </div>
+                    <div class="premium-feature-image no-hover scroll-animate" style="position: relative; padding: 40px; display: flex; align-items: center; justify-content: center; min-height: 450px; overflow: visible;">
+                        <div style="position: relative; width: 100%; max-width: 500px; height: 450px;">
+                            <!-- SVG Canvas for neural network -->
+                            <svg style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Gradient definitions -->
+                                <defs>
+                                    <!-- Gradient with fade to transparent -->
+                                    <linearGradient id="neuralGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:rgb(102, 126, 234);stop-opacity:0.9" />
+                                        <stop offset="80%" style="stop-color:rgb(118, 75, 162);stop-opacity:0.6" />
+                                        <stop offset="100%" style="stop-color:rgb(118, 75, 162);stop-opacity:0" />
+                                    </linearGradient>
+                                    <linearGradient id="neuralGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:rgb(102, 126, 234);stop-opacity:0.9" />
+                                        <stop offset="80%" style="stop-color:rgb(118, 75, 162);stop-opacity:0.6" />
+                                        <stop offset="100%" style="stop-color:rgb(118, 75, 162);stop-opacity:0" />
+                                    </linearGradient>
+                                    <linearGradient id="neuralGrad3" x1="0%" y1="100%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:rgb(102, 126, 234);stop-opacity:0.9" />
+                                        <stop offset="80%" style="stop-color:rgb(118, 75, 162);stop-opacity:0.6" />
+                                        <stop offset="100%" style="stop-color:rgb(118, 75, 162);stop-opacity:0" />
+                                    </linearGradient>
+                                    <linearGradient id="neuralGrad4" x1="100%" y1="100%" x2="0%" y2="0%">
+                                        <stop offset="0%" style="stop-color:rgb(102, 126, 234);stop-opacity:0.9" />
+                                        <stop offset="80%" style="stop-color:rgb(118, 75, 162);stop-opacity:0.6" />
+                                        <stop offset="100%" style="stop-color:rgb(118, 75, 162);stop-opacity:0" />
+                                    </linearGradient>
+                                </defs>
+                                
+                                <!-- Neural connection lines - stop before reaching logo -->
+                                <g stroke-width="2.5" fill="none">
+                                    <!-- Line to top-left PDF (stops at edge of logo) -->
+                                    <path d="M 90 80 Q 180 150, 180 180" stroke="url(#neuralGrad1)" stroke-dasharray="6,4">
+                                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="1.5s" repeatCount="indefinite"/>
+                                    </path>
+                                    <!-- Line to top-right PDF (stops at edge of logo) -->
+                                    <path d="M 410 80 Q 320 150, 320 180" stroke="url(#neuralGrad2)" stroke-dasharray="6,4">
+                                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="1.5s" repeatCount="indefinite"/>
+                                    </path>
+                                    <!-- Line to bottom-left PDF (stops at edge of logo) -->
+                                    <path d="M 90 370 Q 180 290, 180 270" stroke="url(#neuralGrad3)" stroke-dasharray="6,4">
+                                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="1.5s" repeatCount="indefinite"/>
+                                    </path>
+                                    <!-- Line to bottom-right PDF (stops at edge of logo) -->
+                                    <path d="M 410 370 Q 320 290, 320 270" stroke="url(#neuralGrad4)" stroke-dasharray="6,4">
+                                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="1.5s" repeatCount="indefinite"/>
+                                    </path>
+                                </g>
+                                
+                                <!-- PDF Icons with animations -->
+                                <!-- Top-left PDF -->
+                                <g>
+                                    <rect x="60" y="50" width="50" height="65" rx="6" fill="rgba(22, 22, 23, 0.9)" stroke="var(--accent)" stroke-width="2.5"/>
+                                    <line x1="70" y1="70" x2="100" y2="70" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="70" y1="85" x2="100" y2="85" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="70" y1="100" x2="90" y2="100" stroke="var(--accent)" stroke-width="2"/>
+                                    <animateTransform attributeName="transform" type="translate" values="0,0; 0,-5; 0,0" dur="2s" repeatCount="indefinite"/>
+                                </g>
+                                
+                                <!-- Top-right PDF -->
+                                <g>
+                                    <rect x="390" y="50" width="50" height="65" rx="6" fill="rgba(22, 22, 23, 0.9)" stroke="var(--accent)" stroke-width="2.5"/>
+                                    <line x1="400" y1="70" x2="430" y2="70" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="400" y1="85" x2="430" y2="85" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="400" y1="100" x2="420" y2="100" stroke="var(--accent)" stroke-width="2"/>
+                                    <animateTransform attributeName="transform" type="translate" values="0,0; 0,-5; 0,0" dur="2.3s" repeatCount="indefinite"/>
+                                </g>
+                                
+                                <!-- Bottom-left PDF -->
+                                <g>
+                                    <rect x="60" y="335" width="50" height="65" rx="6" fill="rgba(22, 22, 23, 0.9)" stroke="var(--accent)" stroke-width="2.5"/>
+                                    <line x1="70" y1="355" x2="100" y2="355" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="70" y1="370" x2="100" y2="370" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="70" y1="385" x2="90" y2="385" stroke="var(--accent)" stroke-width="2"/>
+                                    <animateTransform attributeName="transform" type="translate" values="0,0; 0,-5; 0,0" dur="2.6s" repeatCount="indefinite"/>
+                                </g>
+                                
+                                <!-- Bottom-right PDF -->
+                                <g>
+                                    <rect x="390" y="335" width="50" height="65" rx="6" fill="rgba(22, 22, 23, 0.9)" stroke="var(--accent)" stroke-width="2.5"/>
+                                    <line x1="400" y1="355" x2="430" y2="355" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="400" y1="370" x2="430" y2="370" stroke="var(--accent)" stroke-width="2"/>
+                                    <line x1="400" y1="385" x2="420" y2="385" stroke="var(--accent)" stroke-width="2"/>
+                                    <animateTransform attributeName="transform" type="translate" values="0,0; 0,-5; 0,0" dur="1.9s" repeatCount="indefinite"/>
+                                </g>
+                            </svg>
+                            
+                            <!-- Center LUPO Logo on top of SVG -->
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                                <img src="lupo-head-logo.png" alt="LUPO Logo" style="width: 140px; height: 140px; filter: drop-shadow(0 0 25px rgba(102, 126, 234, 0.5));">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature: Connect Your CRM (NEW - TEXT LEFT, ICON RIGHT) -->
+                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
+                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
+                            Connect Your CRM
+                        </h3>
+                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
+                            LUPO pulls deal context, prospect history, and recent activity from your CRM during onboarding. Works with Salesforce, HubSpot, Pipedrive, and other major CRMs.
+                        </p>
+                    </div>
+                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 20px; padding: 60px; display: flex; align-items: center; justify-content: center;">
+                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Feature: Select Your Prospect (ANIMATED PANEL LEFT, TEXT RIGHT) -->
+                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 180px;">
+                    <div class="premium-feature-image no-hover scroll-animate" style="position: relative; background: transparent; border-radius: 20px; border: none; padding: 20px; display: flex; align-items: center; justify-content: center;">
+                        <!-- Call Objective Panel Demo -->
+                        <div class="call-objective-demo">
+                            <div class="demo-window-frame">
+                                <div class="demo-vertical-container">
+                                    <div class="demo-objective-header">
+                                        <div class="demo-objective-title">SELECT YOUR PROSPECT</div>
+                                    </div>
+                                    <div class="demo-input-wrapper">
+                                        <div class="demo-placeholder-container">
+                                            <div class="demo-placeholder-text" id="demoPlaceholder">Search prospect name...</div>
+                                        </div>
+                                        <!-- Controls at bottom -->
+                                        <div class="demo-input-controls">
+                                            <div class="demo-word-counter">From CRM</div>
+                                            <div class="demo-mic-button">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <circle cx="11" cy="11" r="8"></circle>
+                                                    <path d="m21 21-4.35-4.35"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
+                            Select Your Prospect
+                        </h3>
+                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
+                            Choose who you're calling from your CRM. LUPO automatically pulls their deal stage, past conversations, and notes—building a pre-call brief in seconds.
+                        </p>
+                    </div>
+                </div>
                 <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 180px;">
                     <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
                         <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
@@ -1621,7 +1781,7 @@
                         <h2 style="font-size: 64px; font-weight: 700; color: var(--text-primary); margin: 0; line-height: 1;">During the Call</h2>
                     </div>
                     <p style="font-size: 24px; color: var(--text-secondary); max-width: 800px; margin: 0 auto; line-height: 1.4;">
-                        Set your call objective. LUPO gives you real-time answers, handles objections, and shows what to say next.
+                        LUPO has full context from your CRM. Get real-time answers, handle objections, and see what to say next—all informed by your prospect's history.
                     </p>
                 </div>
                 
@@ -1710,7 +1870,52 @@
                     </p>
                 </div>
                 
-                <!-- Feature: Instant Next Steps (TEXT LEFT, IMAGE RIGHT) -->
+                <!-- Feature: One-Click CRM Summary (TEXT LEFT, IMAGE RIGHT) -->
+                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
+                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
+                            One-Click CRM Summary
+                        </h3>
+                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
+                            Generate call summaries, next steps, and follow-up emails instantly—then push them directly to your CRM with one click. No copy-paste.
+                        </p>
+                    </div>
+                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; padding: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openImageModal('postcallactions.png')">
+                        <img 
+                            src="postcallactions.png" 
+                            alt="LUPO AI post-call actions"
+                            style="width: 100%; height: auto; object-fit: contain; border-radius: 12px; transition: transform 0.4s ease;">
+                        <div class="image-hover-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to expand</span>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature: Deep Research (IMAGE LEFT, TEXT RIGHT) -->
+                <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
+                    <div class="premium-feature-image scroll-animate" style="position: relative; background: var(--bg-secondary); border-radius: 20px; aspect-ratio: 16/10; border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: all 0.4s ease;" onclick="openImageModal('deep-research-screenshot.png')">
+                        <img 
+                            src="deep-research-screenshot.png" 
+                            alt="LUPO AI deep research report"
+                            style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
+                        <div class="research-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41, 151, 255, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+                            <span style="color: white; font-size: 18px; font-weight: 600;">Click to view full screenshot</span>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 24px;">→</span>
+                        </div>
+                    </div>
+                    <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
+                        <div style="display: inline-block; padding: 6px 12px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2)); border-radius: 20px; margin-bottom: 20px;">
+                            <span style="font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">NEW</span>
+                        </div>
+                        <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
+                            Deep Research
+                        </h3>
+                        <p style="font-size: 21px; color: var(--text-secondary); line-height: 1.5;">
+                            One-click tactical brief with company intel, competitive positioning, and exact follow-up phrases—built from the prospect you selected before the call.
+                        </p>
+                    </div>
+                </div>
                 <div class="premium-feature-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 140px;">
                     <div class="premium-feature-text scroll-animate" style="padding: 40px 0;">
                         <h3 style="font-size: 40px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.01em;">
