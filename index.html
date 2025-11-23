@@ -629,7 +629,7 @@
             <h3 class="modal-title">Join Early Access</h3>
             <p class="modal-subtitle">Get priority access when we launch in Q1 2026.</p>
             
-            <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="return handleWaitlistSubmit(event)">
+            <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleWaitlistSubmit(event)">
                 <input type="hidden" name="form-name" value="waitlist" />
                 <p style="display:none;">
                     <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -650,7 +650,8 @@
                     <input type="text" id="company" name="company" class="form-input" />
             </div>
             
-                <button type="submit" class="form-submit">Request Early Access</button>
+                <button type="submit" class="form-submit" id="submitBtn">Request Early Access</button>
+                <p id="successMessage" style="display: none; color: var(--accent); text-align: center; margin-top: 16px; font-size: 15px;">✓ Thanks! We'll be in touch soon.</p>
             </form>
         </div>
     </div>
@@ -683,12 +684,45 @@
         }
         
         function handleWaitlistSubmit(e) {
-            // Form will be handled by Netlify
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('successMessage');
+            
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            
+            // Submit to Netlify
+            fetch('/', {
+                method: 'POST',
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                // Show success message
+                form.style.display = 'none';
+                successMsg.style.display = 'block';
+                
+                // Close modal after 2 seconds
                 setTimeout(() => {
-                closeWaitlist();
-                alert('Thanks for joining! We\'ll be in touch soon.');
-            }, 100);
-            return true;
+                    closeWaitlist();
+                    form.style.display = 'block';
+                    successMsg.style.display = 'none';
+                    form.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Request Early Access';
+                }, 2000);
+            })
+            .catch(error => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Request Early Access';
+                alert('Something went wrong. Please try again.');
+            });
+            
+            return false;
         }
         
         // Close modal when clicking outside
