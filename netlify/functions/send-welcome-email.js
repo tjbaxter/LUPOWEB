@@ -16,7 +16,7 @@ exports.handler = async (event, context) => {
     const companyLine = company ? `at ${company}` : '';
 
     const { data: emailData, error } = await resend.emails.send({
-      from: 'Tom from LUPO <onboarding@resend.dev>',
+      from: 'Tom from LUPO <tom@lupolabs.ai>',
       to: email,
       subject: 'Welcome to LUPO Early Access',
       text: `Hi ${name},
