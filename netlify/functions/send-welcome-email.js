@@ -1,4 +1,4 @@
-const sgMail = require('@sendgrid/mail');
+const { Resend } = require('resend');
 
 exports.handler = async (event, context) => {
   // Only allow POST
@@ -10,17 +10,14 @@ exports.handler = async (event, context) => {
     const data = JSON.parse(event.body);
     const { name, email, company } = data;
 
-    // Set SendGrid API key from environment variable
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    // Initialize Resend with API key from environment variable
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     const companyLine = company ? `at ${company}` : '';
 
-    const msg = {
+    const { data: emailData, error } = await resend.emails.send({
+      from: 'Tom from LUPO <onboarding@resend.dev>',
       to: email,
-      from: {
-        email: 'tom@lupolabs.ai',
-        name: 'Tom from LUPO'
-      },
       subject: 'Welcome to LUPO Early Access',
       text: `Hi ${name},
 
@@ -170,13 +167,19 @@ https://lupolabs.ai`,
 </body>
 </html>
       `
-    };
+    });
 
-    await sgMail.send(msg);
+    if (error) {
+      console.error('Error sending email:', error);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Failed to send email' })
+      };
+    }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ success: true })
+      body: JSON.stringify({ success: true, id: emailData?.id })
     };
   } catch (error) {
     console.error('Error sending email:', error);
