@@ -103,7 +103,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 100px 20px 60px;
+            padding: 145px 20px 60px;
             position: relative;
             overflow: hidden;
         }
@@ -1236,6 +1236,92 @@
                 transform: translateX(-50%) translateY(-20px);
             }
         }
+        
+        /* Inbound AI Announcement Banner */
+        .announcement-banner {
+            position: fixed;
+            top: 52px;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 400;
+            letter-spacing: -0.015em;
+            color: white;
+            animation: bannerSlideDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .announcement-banner-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 1200px;
+        }
+        
+        .announcement-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        
+        .announcement-text {
+            font-size: 15px;
+            font-weight: 400;
+            opacity: 0.95;
+        }
+        
+        .announcement-text strong {
+            font-weight: 600;
+            color: white;
+        }
+        
+        @keyframes bannerSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .announcement-banner {
+                font-size: 13px;
+                padding: 10px 16px;
+                text-align: center;
+            }
+            
+            .announcement-banner-content {
+                flex-direction: column;
+                gap: 6px;
+            }
+            
+            .announcement-badge {
+                font-size: 11px;
+            }
+            
+            .announcement-text {
+                font-size: 13px;
+            }
+        }
     </style>
     
     <!-- Structured Data (JSON-LD) -->
@@ -1379,6 +1465,16 @@
             </a>
         </div>
     </nav>
+    
+    <!-- Inbound AI Announcement Banner -->
+    <div class="announcement-banner">
+        <div class="announcement-banner-content">
+            <span class="announcement-badge">Coming Soon</span>
+            <span class="announcement-text">
+                <strong>AI-Powered Inbound Sales Agent</strong> — Autonomous AI that handles your incoming calls with precision
+            </span>
+        </div>
+    </div>
     
     <!-- Main Container -->
     <div class="main-container">
