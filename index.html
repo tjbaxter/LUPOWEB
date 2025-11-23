@@ -453,10 +453,10 @@
         
         .footer-left-section {
             display: flex;
-            flex-direction: column;
+                flex-direction: column;
             gap: 2px;
             text-align: left;
-        }
+            }
         
         .footer-right-section {
             display: none;
@@ -627,8 +627,8 @@
     <div class="modal-overlay" id="waitlistModal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeWaitlist()">&times;</button>
-            <h3 class="modal-title">Join Early Access</h3>
-            <p class="modal-subtitle">Get priority access when we launch in Q1 2026.</p>
+            <h3 class="modal-title" id="modalTitle">Join Early Access</h3>
+            <p class="modal-subtitle" id="modalSubtitle">Get priority access when we launch in Q1 2026.</p>
             
             <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleWaitlistSubmit(event)">
                 <input type="hidden" name="form-name" value="waitlist" />
@@ -716,19 +716,26 @@
                 });
             })
             .then(() => {
+                // Change modal title and subtitle
+                document.getElementById('modalTitle').textContent = 'You\'re In! ✓';
+                document.getElementById('modalSubtitle').textContent = 'Check your email for confirmation. We\'ll be in touch soon.';
+                
                 // Show success message
                 form.style.display = 'none';
                 successMsg.style.display = 'block';
                 
-                // Close modal after 2 seconds
+                // Close modal after 3 seconds
                 setTimeout(() => {
                     closeWaitlist();
+                    // Reset everything
+                    document.getElementById('modalTitle').textContent = 'Join Early Access';
+                    document.getElementById('modalSubtitle').textContent = 'Get priority access when we launch in Q1 2026.';
                     form.style.display = 'block';
                     successMsg.style.display = 'none';
                     form.reset();
                     submitBtn.disabled = false;
                     submitBtn.textContent = 'Request Early Access';
-                }, 2000);
+                }, 3000);
             })
             .catch(error => {
                 console.error('Error:', error);
