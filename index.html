@@ -55,57 +55,18 @@
             left: 0;
             right: 0;
             bottom: 0;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
+            z-index: -1;
+            opacity: 0.03;
+            background: radial-gradient(circle at 20% 50%, var(--accent) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, #667eea 0%, transparent 50%);
+            animation: bgShift 30s ease-in-out infinite;
         }
         
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
-            animation: float 20s ease-in-out infinite;
-        }
-        
-        .orb:nth-child(1) {
-            width: 600px;
-            height: 600px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            top: -200px;
-            left: -200px;
-            animation-delay: 0s;
-        }
-        
-        .orb:nth-child(2) {
-            width: 500px;
-            height: 500px;
-            background: linear-gradient(135deg, #2997ff, #667eea);
-            bottom: -150px;
-            right: -150px;
-            animation-delay: 7s;
-        }
-        
-        .orb:nth-child(3) {
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(135deg, #764ba2, #2997ff);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: 14s;
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            33% {
-                transform: translate(50px, -50px) scale(1.1);
-            }
-            66% {
-                transform: translate(-50px, 50px) scale(0.9);
-            }
+        @keyframes bgShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            33% { transform: rotate(120deg) scale(1.1); }
+            66% { transform: rotate(240deg) scale(0.9); }
         }
         
         /* Navigation */
@@ -173,6 +134,19 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .gradient-text {
@@ -192,6 +166,8 @@
             max-width: 720px;
             margin-left: auto;
             margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.2s forwards;
         }
         
         /* CTA Buttons */
@@ -201,6 +177,8 @@
             align-items: center;
             gap: 20px;
             margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s forwards;
         }
         
         .btn-primary {
@@ -281,7 +259,8 @@
             flex-wrap: wrap;
             font-size: 13px;
             color: var(--text-secondary);
-            opacity: 0.7;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
         }
         
         .tech-stack::before {
@@ -297,37 +276,62 @@
         footer {
             position: relative;
             z-index: 1;
-            padding: 40px 22px;
+            padding: 60px 40px;
             border-top: 1px solid var(--border);
             display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            gap: 24px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
         }
         
-        .footer-links {
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
+        .footer-left-section {
+            display: none;
         }
         
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.2s ease;
+        .footer-right-section {
+            text-align: center;
         }
         
-        .footer-links a:hover {
+        .footer-logo {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
             color: var(--text-primary);
         }
         
-        .company-address {
+        .footer-text {
             font-size: 13px;
             color: var(--text-secondary);
-            text-align: right;
-            line-height: 1.6;
+        }
+        
+        .footer-links-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .footer-links-container a {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .footer-links-container a:hover {
+            color: var(--text-primary);
+        }
+        
+        .footer-address {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 16px;
+            line-height: 1.5;
+            font-weight: 400;
         }
         
         /* Responsive */
@@ -357,12 +361,27 @@
             }
             
             footer {
-                flex-direction: column;
-                align-items: flex-start;
+                padding: 40px 20px;
             }
             
-            .company-address {
-                text-align: left;
+            .footer-right-section {
+                text-align: center;
+            }
+            
+            .footer-links-container {
+                justify-content: center;
+            }
+            
+            .footer-logo {
+                font-size: 16px;
+            }
+            
+            .footer-text {
+                font-size: 12px;
+            }
+            
+            .footer-address {
+                font-size: 10px;
             }
             
             .tech-stack {
@@ -373,11 +392,7 @@
 </head>
 <body>
     <!-- Background Animation -->
-    <div class="animated-bg">
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
-    </div>
+    <div class="animated-bg"></div>
     
     <!-- Navigation -->
     <nav>
@@ -407,7 +422,7 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
                             <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
                         </svg>
-                    Book a 20-min intro call
+                    Book a 15-min intro call
                 </a>
                 
                 <a href="#waitlist" class="btn-secondary" onclick="showWaitlist(event)">
@@ -419,33 +434,75 @@
             <div class="tech-stack">
                 Twilio · LiveKit · Deepgram · Cerebras · Cartesia
                         </div>
-                    </div>
-                </div>
-                
+        </div>
+    </div>
+    
     <!-- Footer -->
     <footer>
-        <div class="footer-links">
-            <a href="privacy.html">Privacy</a>
-            <a href="terms.html">Terms</a>
-            <a href="dpa.html">Data Processing Addendum</a>
-                </div>
-                
-        <div class="company-address">
-            Flair Technologies Ltd<br>
-            45 Fitzroy St, Fitzrovia<br>
-            London, W1T 6EB, United Kingdom
+        <div class="footer-left-section">
+            </div>
+        
+        <div class="footer-right-section">
+            <div class="footer-logo">LUPO</div>
+            <p class="footer-text">© 2025 LUPO, a product of Flair Technologies Ltd. All rights reserved.</p>
+            <div class="footer-links-container">
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/terms.html">Terms of Service</a>
+            </div>
+            <p class="footer-address">
+                Registered Office · 45 Fitzroy St, Fitzrovia · London, W1T 6EB, United Kingdom
+            </p>
         </div>
     </footer>
     
     <script>
         function showWaitlist(e) {
-                        e.preventDefault();
+            e.preventDefault();
             const email = prompt('Enter your email to join early access:');
             if (email && email.includes('@')) {
                 alert('Thanks! We\'ll be in touch soon.');
                 // You can add actual form handling here later
             }
         }
+        
+        // Floating particles effect
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: ${Math.random() * 4 + 2}px;
+                height: ${Math.random() * 4 + 2}px;
+                background: var(--accent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+                opacity: ${Math.random() * 0.4 + 0.1};
+                box-shadow: 0 0 ${Math.random() * 10 + 5}px var(--accent);
+            `;
+            
+            const startX = Math.random() * window.innerWidth;
+            const startY = window.innerHeight + 10;
+            
+            particle.style.left = startX + 'px';
+            particle.style.top = startY + 'px';
+            
+            document.body.appendChild(particle);
+            
+            const duration = Math.random() * 20000 + 10000;
+            const horizontalMovement = (Math.random() - 0.5) * 100;
+            
+            particle.animate([
+                { transform: `translate(0, 0)`, opacity: 0 },
+                { transform: `translate(${horizontalMovement}px, -${window.innerHeight + 20}px)`, opacity: particle.style.opacity },
+                { transform: `translate(${horizontalMovement * 2}px, -${window.innerHeight * 2}px)`, opacity: 0 }
+            ], {
+                duration: duration,
+                easing: 'linear'
+            }).onfinish = () => particle.remove();
+        }
+        
+        // Start particle animation
+        setInterval(createParticle, 1000);
     </script>
 </body>
 </html>
