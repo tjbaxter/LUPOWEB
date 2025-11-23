@@ -40,10 +40,10 @@
             line-height: 1.47059;
             font-weight: 400;
             letter-spacing: -0.022em;
-            overflow-x: hidden;
+            overflow: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
         }
@@ -110,7 +110,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 100px 20px 60px;
+            padding: 80px 20px 20px;
             position: relative;
             z-index: 1;
         }
@@ -119,6 +119,20 @@
             max-width: 980px;
             margin: 0 auto;
             text-align: center;
+            position: relative;
+        }
+        
+        .content-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(41, 151, 255, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
         }
         
         /* Hero */
@@ -127,7 +141,7 @@
             font-weight: 600;
             letter-spacing: -0.015em;
             line-height: 1.0625;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             background: linear-gradient(180deg, 
                 var(--text-primary) 0%, 
                 rgba(255, 255, 255, 0.7) 100%);
@@ -162,7 +176,7 @@
             letter-spacing: 0.007em;
             line-height: 1.33341;
             color: var(--text-secondary);
-            margin-bottom: 48px;
+            margin-bottom: 36px;
             max-width: 720px;
             margin-left: auto;
             margin-right: auto;
@@ -175,8 +189,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
-            margin-bottom: 60px;
+            gap: 16px;
+            margin-bottom: 40px;
             opacity: 0;
             animation: fadeInUp 1s ease 0.4s forwards;
         }
@@ -250,6 +264,147 @@
             transform: translateY(-1px);
         }
         
+        .trust-marker {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.8s forwards;
+        }
+        
+        /* Waitlist Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px;
+            max-width: 480px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+        }
+        
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+        
+        .modal-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        
+        .modal-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 16px;
+            font-family: inherit;
+            transition: border-color 0.2s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .form-submit {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+        }
+        
+        .form-submit:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+        
+        .form-submit:active {
+            transform: translateY(0);
+        }
+        
         /* Tech Stack */
         .tech-stack {
             display: flex;
@@ -257,10 +412,21 @@
             justify-content: center;
             gap: 12px;
             flex-wrap: wrap;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-secondary);
             opacity: 0;
-            animation: fadeInUp 1s ease 0.6s forwards;
+            animation: fadeInUpSubtle 1s ease 0.6s forwards;
+        }
+        
+        @keyframes fadeInUpSubtle {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 0.5;
+                transform: translateY(0);
+            }
         }
         
         .tech-stack::before {
@@ -276,28 +442,30 @@
         footer {
             position: relative;
             z-index: 1;
-            padding: 60px 40px;
+            padding: 30px 40px;
             border-top: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            justify-content: flex-start;
+            align-items: flex-start;
             background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
         }
         
         .footer-left-section {
-            display: none;
-        }
+            display: flex;
+                flex-direction: column;
+            gap: 8px;
+            text-align: left;
+            }
         
         .footer-right-section {
-            text-align: center;
+            display: none;
         }
         
         .footer-logo {
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             color: var(--text-primary);
         }
         
@@ -309,9 +477,9 @@
         .footer-links-container {
             display: flex;
             gap: 20px;
-            margin-top: 12px;
+            margin-top: 4px;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: flex-start;
         }
         
         .footer-links-container a {
@@ -329,21 +497,27 @@
         .footer-address {
             font-size: 11px;
             color: rgba(255, 255, 255, 0.35);
-            margin-top: 16px;
+            margin-top: 4px;
             line-height: 1.5;
             font-weight: 400;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                height: auto;
+                min-height: 100vh;
+            }
+            
             h1 {
                 font-size: 40px;
-                margin-bottom: 20px;
+                margin-bottom: 16px;
             }
             
             .subtitle {
                 font-size: 19px;
-                margin-bottom: 36px;
+                margin-bottom: 28px;
             }
             
             .btn-primary {
@@ -357,19 +531,15 @@
             }
             
             .main-container {
-                padding: 80px 20px 40px;
+                padding: 80px 20px 20px;
+            }
+            
+            .cta-section {
+                margin-bottom: 30px;
             }
             
             footer {
-                padding: 40px 20px;
-            }
-            
-            .footer-right-section {
-                text-align: center;
-            }
-            
-            .footer-links-container {
-                justify-content: center;
+                padding: 20px;
             }
             
             .footer-logo {
@@ -384,8 +554,21 @@
                 font-size: 10px;
             }
             
-            .tech-stack {
+            .footer-links-container a {
                 font-size: 12px;
+            }
+            
+            .tech-stack {
+                font-size: 11px;
+            }
+            
+            .trust-marker {
+                font-size: 12px;
+            }
+            
+            .content-wrapper::before {
+                width: 400px;
+                height: 300px;
             }
         }
     </style>
@@ -413,7 +596,7 @@
             </h1>
             
             <p class="subtitle">
-                Real-time response. Precise BANT qualification. Seamless human handoffs. Built for teams where speed decides revenue.
+                Real-time response. Precise BANT qualification. Seamless human handoffs. Built for teams where speed determines revenue.
             </p>
             
             <!-- CTA Buttons -->
@@ -428,21 +611,53 @@
                 <a href="#waitlist" class="btn-secondary" onclick="showWaitlist(event)">
                     Join early access
                 </a>
-                    </div>
-                    
+                
+                <p class="trust-marker">Now onboarding select teams for Q1 2026.</p>
+                </div>
+                
             <!-- Tech Stack -->
             <div class="tech-stack">
                 Twilio · LiveKit · Deepgram · Cerebras · Cartesia
                         </div>
+                    </div>
+                </div>
+                
+    <!-- Waitlist Modal -->
+    <div class="modal-overlay" id="waitlistModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeWaitlist()">&times;</button>
+            <h3 class="modal-title">Join Early Access</h3>
+            <p class="modal-subtitle">Get priority access when we launch in Q1 2026.</p>
+            
+            <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="return handleWaitlistSubmit(event)">
+                <input type="hidden" name="form-name" value="waitlist" />
+                <p style="display:none;">
+                    <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                </p>
+                
+                <div class="form-group">
+                    <label class="form-label" for="name">Name</label>
+                    <input type="text" id="name" name="name" class="form-input" required />
+                    </div>
+                    
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-input" required />
+                    </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="company">Company (optional)</label>
+                    <input type="text" id="company" name="company" class="form-input" />
+            </div>
+            
+                <button type="submit" class="form-submit">Request Early Access</button>
+            </form>
         </div>
     </div>
     
     <!-- Footer -->
     <footer>
         <div class="footer-left-section">
-            </div>
-        
-        <div class="footer-right-section">
             <div class="footer-logo">LUPO</div>
             <p class="footer-text">© 2025 LUPO, a product of Flair Technologies Ltd. All rights reserved.</p>
             <div class="footer-links-container">
@@ -458,12 +673,30 @@
     <script>
         function showWaitlist(e) {
             e.preventDefault();
-            const email = prompt('Enter your email to join early access:');
-            if (email && email.includes('@')) {
-                alert('Thanks! We\'ll be in touch soon.');
-                // You can add actual form handling here later
-            }
+            document.getElementById('waitlistModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
+        
+        function closeWaitlist() {
+            document.getElementById('waitlistModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function handleWaitlistSubmit(e) {
+            // Form will be handled by Netlify
+                setTimeout(() => {
+                closeWaitlist();
+                alert('Thanks for joining! We\'ll be in touch soon.');
+            }, 100);
+            return true;
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('waitlistModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeWaitlist();
+            }
+        });
         
         // Floating particles effect
         function createParticle() {
