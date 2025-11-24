@@ -18,16 +18,16 @@ exports.handler = async (event, context) => {
     const { data: emailData, error } = await resend.emails.send({
       from: 'Tom from LUPO <tom@lupolabs.ai>',
       to: email,
-      subject: 'Welcome to LUPO Early Access',
+      subject: 'You\'re on the list for LUPO',
       text: `Hi ${name},
 
-Thanks for joining the LUPO early access program.
+Thanks for joining the LUPO private beta waitlist.
 
 We're building an AI SDR that answers every inbound call and qualifies leads instantly — real-time response, precise BANT qualification, and seamless human handoffs.
 
-You're on the list for Q1 2026.
+Our first cohort launches in January 2026.
 
-I'll reach out personally when we're ready for your team to go live.
+I'll reach out personally before then to discuss your inbound workflow and make sure you're set up for the first wave.
 
 In the meantime, if you'd like to chat about your current inbound call workflow or have specific requirements, just reply to this email.
 
@@ -136,17 +136,17 @@ https://lupolabs.ai`,
     <div class="logo">LUPO</div>
     
     <div class="content">
-      <h1>Welcome to LUPO Early Access</h1>
+      <h1>Welcome to LUPO Private Beta</h1>
       
       <p>Hi ${name},</p>
       
-      <p>Thanks for joining the LUPO early access program.</p>
+      <p>Thanks for joining the LUPO private beta waitlist.</p>
       
       <p class="highlight">We're building an AI SDR that answers every inbound call and qualifies leads instantly — real-time response, precise BANT qualification, and seamless human handoffs.</p>
       
-      <p>You're on the list for <strong>Q1 2026</strong>.</p>
+      <p><strong>Our first cohort launches in January 2026.</strong></p>
       
-      <p>I'll reach out personally when we're ready for your team to go live.</p>
+      <p>I'll reach out personally before then to discuss your inbound workflow and make sure you're set up for the first wave.</p>
       
       <p>In the meantime, if you'd like to chat about your current inbound call workflow or have specific requirements, just reply to this email.</p>
       

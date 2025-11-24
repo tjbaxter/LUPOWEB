@@ -613,7 +613,7 @@
                     Join early access
                 </a>
                 
-                <p class="trust-marker">Now onboarding select teams for Q1 2026.</p>
+                <p class="trust-marker">Private beta. First teams onboarding January 2026.</p>
                 </div>
                 
             <!-- Tech Stack -->
@@ -627,8 +627,8 @@
     <div class="modal-overlay" id="waitlistModal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeWaitlist()">&times;</button>
-            <h3 class="modal-title" id="modalTitle">Join Early Access</h3>
-            <p class="modal-subtitle" id="modalSubtitle">Get priority access when we launch in Q1 2026.</p>
+            <h3 class="modal-title" id="modalTitle">Join Private Beta</h3>
+            <p class="modal-subtitle" id="modalSubtitle">Limited spots for first cohort launching January 2026.</p>
             
             <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleWaitlistSubmit(event)">
                 <input type="hidden" name="form-name" value="waitlist" />
@@ -728,8 +728,8 @@
                 setTimeout(() => {
                     closeWaitlist();
                     // Reset everything
-                    document.getElementById('modalTitle').textContent = 'Join Early Access';
-                    document.getElementById('modalSubtitle').textContent = 'Get priority access when we launch in Q1 2026.';
+                    document.getElementById('modalTitle').textContent = 'Join Private Beta';
+                    document.getElementById('modalSubtitle').textContent = 'Limited spots for first cohort launching January 2026.';
                     form.style.display = 'block';
                     successMsg.style.display = 'none';
                     form.reset();
