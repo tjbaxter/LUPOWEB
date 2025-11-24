@@ -612,8 +612,8 @@
                 <a href="#waitlist" class="btn-secondary" onclick="showWaitlist(event)">
                     Join early access
                 </a>
-            </div>
-                
+                    </div>
+                    
             <!-- Tech Stack -->
             <div class="tech-stack">
                 Twilio · LiveKit · Deepgram · Cerebras · Cartesia
@@ -625,8 +625,8 @@
     <div class="modal-overlay" id="waitlistModal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeWaitlist()">&times;</button>
-            <h3 class="modal-title" id="modalTitle">Join Private Beta</h3>
-            <p class="modal-subtitle" id="modalSubtitle">Limited spots for first cohort launching January 2026.</p>
+            <h3 class="modal-title" id="modalTitle">Get Early Access</h3>
+            <p class="modal-subtitle" id="modalSubtitle"></p>
             
             <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleWaitlistSubmit(event)">
                 <input type="hidden" name="form-name" value="waitlist" />
@@ -637,19 +637,19 @@
                 <div class="form-group">
                     <label class="form-label" for="name">Name</label>
                     <input type="text" id="name" name="name" class="form-input" required />
-                    </div>
-                    
+                        </div>
+                        
                 <div class="form-group">
                     <label class="form-label" for="email">Email</label>
                     <input type="email" id="email" name="email" class="form-input" required />
                     </div>
-                
+                    
                 <div class="form-group">
                     <label class="form-label" for="company">Company (optional)</label>
                     <input type="text" id="company" name="company" class="form-input" />
-            </div>
-            
-                <button type="submit" class="form-submit" id="submitBtn">Request Early Access</button>
+                    </div>
+                
+                <button type="submit" class="form-submit" id="submitBtn">Get Access</button>
                 <p id="successMessage" style="display: none; color: #34c759; text-align: center; margin-top: 16px; font-size: 16px; font-weight: 500;">✓ Successfully submitted! Check your email for confirmation.</p>
             </form>
         </div>
@@ -726,13 +726,13 @@
                 setTimeout(() => {
                     closeWaitlist();
                     // Reset everything
-                    document.getElementById('modalTitle').textContent = 'Join Private Beta';
-                    document.getElementById('modalSubtitle').textContent = 'Limited spots for first cohort launching January 2026.';
+                    document.getElementById('modalTitle').textContent = 'Get Early Access';
+                    document.getElementById('modalSubtitle').textContent = '';
                     form.style.display = 'block';
                     successMsg.style.display = 'none';
                     form.reset();
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Request Early Access';
+                    submitBtn.textContent = 'Get Access';
                 }, 3000);
             })
             .catch(error => {

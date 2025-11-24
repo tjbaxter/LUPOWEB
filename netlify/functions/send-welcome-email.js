@@ -18,22 +18,22 @@ exports.handler = async (event, context) => {
     const { data: emailData, error } = await resend.emails.send({
       from: 'Tom from LUPO <tom@lupolabs.ai>',
       to: email,
-      subject: 'You\'re on the list for LUPO',
-      text: `Hi ${name},
+      subject: 'You\'re in - LUPO Beta Access',
+      text: `Hey ${name},
 
-Thanks for joining the LUPO private beta waitlist.
+Thanks for signing up. You're on the list for LUPO beta access.
 
-We're building an AI SDR that answers every inbound call and qualifies leads instantly — real-time response, precise BANT qualification, and seamless human handoffs.
+Quick reminder what we're building: AI SDR that answers your inbound calls, qualifies leads on BANT, and books meetings with your team. No more calls to voicemail.
 
-Our first cohort launches in January 2026.
+We're onboarding first customers in the next few weeks. Want to jump on a quick call so I can understand your setup and see if you're a good fit for the first batch?
 
-I'll reach out personally before then to discuss your inbound workflow and make sure you're set up for the first wave.
+Book a 20-min call: https://cal.com/tombaxter/lupo
 
-In the meantime, if you'd like to chat about your current inbound call workflow or have specific requirements, just reply to this email.
+Or just reply to this if you have questions.
 
-Tom Baxter
+Tom
 Founder, LUPO
-https://lupolabs.ai`,
+lupolabs.ai`,
       html: `
 <!DOCTYPE html>
 <html>
@@ -71,10 +71,7 @@ https://lupolabs.ai`,
       font-weight: 600;
       line-height: 1.3;
       margin: 0 0 24px 0;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #ffffff !important;
     }
     p {
       font-size: 16px;
@@ -136,24 +133,22 @@ https://lupolabs.ai`,
     <div class="logo">LUPO</div>
     
     <div class="content">
-      <h1>Welcome to LUPO Private Beta</h1>
+      <h1 style="color: #ffffff !important;">You're In - LUPO Beta Access</h1>
       
-      <p>Hi ${name},</p>
+      <p>Hey ${name},</p>
       
-      <p>Thanks for joining the LUPO private beta waitlist.</p>
+      <p>Thanks for signing up. You're on the list for LUPO beta access.</p>
       
-      <p class="highlight">We're building an AI SDR that answers every inbound call and qualifies leads instantly — real-time response, precise BANT qualification, and seamless human handoffs.</p>
+      <p class="highlight">Quick reminder what we're building: AI SDR that answers your inbound calls, qualifies leads on BANT, and books meetings with your team. No more calls to voicemail.</p>
       
-      <p><strong>Our first cohort launches in January 2026.</strong></p>
+      <p><strong>We're onboarding first customers in the next few weeks.</strong> Want to jump on a quick call so I can understand your setup and see if you're a good fit for the first batch?</p>
       
-      <p>I'll reach out personally before then to discuss your inbound workflow and make sure you're set up for the first wave.</p>
+      <a href="https://cal.com/tombaxter/lupo" class="cta">Book a 20-min call</a>
       
-      <p>In the meantime, if you'd like to chat about your current inbound call workflow or have specific requirements, just reply to this email.</p>
-      
-      <a href="https://cal.com/tombaxter/lupo" class="cta">Book a Quick Chat</a>
+      <p style="margin-top: 24px; font-size: 15px; color: #a1a1a6;">Or just reply to this if you have questions.</p>
       
       <div class="signature">
-        <p class="name">Tom Baxter</p>
+        <p class="name">Tom</p>
         <p class="title">Founder, LUPO</p>
         <p class="title"><a href="https://lupolabs.ai" style="color: #2997ff;">lupolabs.ai</a></p>
       </div>
