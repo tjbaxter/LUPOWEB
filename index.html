@@ -89,7 +89,7 @@
             height: 52px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
         }
         
         .logo {
@@ -102,6 +102,42 @@
             display: flex;
             align-items: center;
             gap: 12px;
+        }
+        
+        .nav-login-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 18px;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .nav-login-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .nav-login-btn:active {
+            transform: translateY(0);
+        }
+        
+        .nav-login-btn svg {
+            width: 16px;
+            height: 16px;
+            opacity: 0.9;
         }
         
         /* Main Container */
@@ -511,6 +547,28 @@
                 min-height: 100vh;
             }
             
+            .nav-content {
+                padding: 0 16px;
+            }
+            
+            .logo span {
+                font-size: 20px;
+            }
+            
+            .logo img {
+                height: 32px !important;
+            }
+            
+            .nav-login-btn {
+                font-size: 13px;
+                padding: 7px 14px;
+            }
+            
+            .nav-login-btn svg {
+                width: 14px;
+                height: 14px;
+            }
+            
             h1 {
                 font-size: 40px;
                 margin-bottom: 16px;
@@ -584,6 +642,12 @@
             <a href="/" class="logo">
                 <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 40px; width: auto;">
                 <span style="font-size: 24px; font-weight: 600;">LUPO</span>
+            </a>
+            <a href="/login.html" class="nav-login-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+                </svg>
+                Login
             </a>
         </div>
     </nav>

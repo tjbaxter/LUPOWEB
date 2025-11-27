@@ -5,4 +5,6 @@
 /terms               /terms.html          200
 /download            /download-page.html  200
 /join/*              /join.html?token=:splat  200!
+/login               /login.html          200
+/portal/*            /portal/:splat       200
 /                    /index.html          200
