@@ -125,6 +125,45 @@
             localStorage.removeItem('lupo_user');
             window.location.href = '/login.html';
         }
+        
+        // Floating particles effect (blue orbs)
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: ${Math.random() * 4 + 2}px;
+                height: ${Math.random() * 4 + 2}px;
+                background: var(--accent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+                opacity: ${Math.random() * 0.4 + 0.1};
+                box-shadow: 0 0 ${Math.random() * 10 + 5}px var(--accent);
+            `;
+            
+            const startX = Math.random() * window.innerWidth;
+            const startY = window.innerHeight + 10;
+            
+            particle.style.left = startX + 'px';
+            particle.style.top = startY + 'px';
+            
+            document.body.appendChild(particle);
+            
+            const duration = Math.random() * 20000 + 10000;
+            const horizontalMovement = (Math.random() - 0.5) * 100;
+            
+            particle.animate([
+                { transform: `translate(0, 0)`, opacity: 0 },
+                { transform: `translate(${horizontalMovement}px, -${window.innerHeight + 20}px)`, opacity: particle.style.opacity },
+                { transform: `translate(${horizontalMovement * 2}px, -${window.innerHeight * 2}px)`, opacity: 0 }
+            ], {
+                duration: duration,
+                easing: 'linear'
+            }).onfinish = () => particle.remove();
+        }
+        
+        // Start particle animation
+        setInterval(createParticle, 1000);
     </script>
 </body>
 </html>
