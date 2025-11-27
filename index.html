@@ -625,7 +625,7 @@
     <div class="modal-overlay" id="waitlistModal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeWaitlist()">&times;</button>
-            <h3 class="modal-title" id="modalTitle">Get Early Access</h3>
+            <h3 class="modal-title" id="modalTitle">Interested in LUPO?</h3>
             <p class="modal-subtitle" id="modalSubtitle"></p>
             
             <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleWaitlistSubmit(event)">
@@ -649,7 +649,7 @@
                     <input type="text" id="company" name="company" class="form-input" />
                     </div>
                 
-                <button type="submit" class="form-submit" id="submitBtn">Get Access</button>
+                <button type="submit" class="form-submit" id="submitBtn">Let's Talk</button>
                 <p id="successMessage" style="display: none; color: #34c759; text-align: center; margin-top: 16px; font-size: 16px; font-weight: 500;">✓ Successfully submitted! Check your email for confirmation.</p>
             </form>
         </div>
@@ -726,13 +726,13 @@
                 setTimeout(() => {
                     closeWaitlist();
                     // Reset everything
-                    document.getElementById('modalTitle').textContent = 'Get Early Access';
+                    document.getElementById('modalTitle').textContent = 'Interested in LUPO?';
                     document.getElementById('modalSubtitle').textContent = '';
                     form.style.display = 'block';
                     successMsg.style.display = 'none';
                     form.reset();
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Get Access';
+                    submitBtn.textContent = 'Let\'s Talk';
                 }, 3000);
             })
             .catch(error => {
