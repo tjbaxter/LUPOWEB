@@ -449,6 +449,7 @@
             <div class="nav-links">
                 <a href="/portal/dashboard.html" class="nav-link active">Dashboard</a>
                 <a href="/portal/calls.html" class="nav-link">Calls</a>
+                <a href="/portal/knowledge.html" class="nav-link">Knowledge</a>
                 <a href="/portal/settings.html" class="nav-link">Settings</a>
             </div>
             <div class="nav-user">
@@ -534,9 +535,9 @@
             });
             
             if (response.status === 401) {
-                localStorage.removeItem('lupo_token');
-                localStorage.removeItem('lupo_user');
-                window.location.href = '/login.html';
+            localStorage.removeItem('lupo_token');
+            localStorage.removeItem('lupo_user');
+            window.location.href = '/login.html';
                 return;
             }
             

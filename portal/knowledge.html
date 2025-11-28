@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Base – LUPO</title>
+    <link rel="icon" type="image/png" href="/lupo-head-logo copy.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --bg-primary: #000000;
+            --bg-secondary: #161617;
+            --accent: #2997ff;
+            --accent-hover: #409cff;
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #34c759;
+            --warning: #ff9500;
+            --error: #ff3b30;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+        }
+        
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.03;
+            background: radial-gradient(circle at 20% 50%, var(--accent) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, #667eea 0%, transparent 50%);
+            animation: bgShift 30s ease-in-out infinite;
+        }
+        
+        @keyframes bgShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            33% { transform: rotate(120deg) scale(1.1); }
+            66% { transform: rotate(240deg) scale(0.9); }
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(0, 0, 0, 0.72);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            position: relative;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-primary);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .user-menu:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+        }
+        
+        .main-content {
+            margin-top: 60px;
+            padding: 48px 24px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .page-header {
+            margin-bottom: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .page-title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.03em;
+        }
+        
+        .page-subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .btn-danger {
+            background: rgba(255, 59, 48, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+        }
+        
+        .btn-danger:hover {
+            background: rgba(255, 59, 48, 0.15);
+        }
+        
+        .upload-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 48px;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 48px;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--accent);
+            background: rgba(41, 151, 255, 0.05);
+        }
+        
+        .upload-area.dragover {
+            border-color: var(--accent);
+            background: rgba(41, 151, 255, 0.1);
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .upload-text {
+            font-size: 16px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .upload-hint {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        #fileInput {
+            display: none;
+        }
+        
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        
+        .document-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .document-card:hover {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+        
+        .document-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        
+        .document-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+            word-break: break-word;
+        }
+        
+        .document-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-badge.pending {
+            background: rgba(255, 149, 0, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(255, 149, 0, 0.2);
+        }
+        
+        .status-badge.embedded {
+            background: rgba(52, 199, 89, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(52, 199, 89, 0.2);
+        }
+        
+        .status-badge.error {
+            background: rgba(255, 59, 48, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+        }
+        
+        .document-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .empty-state-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 900px;
+            max-height: 90vh;
+            width: 90%;
+            overflow: auto;
+            position: relative;
+        }
+        
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+        
+        .pdf-preview {
+            width: 100%;
+            height: 600px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: white;
+        }
+        
+        .pdf-preview iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .edit-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .upload-progress {
+            margin-top: 16px;
+            display: none;
+        }
+        
+        .upload-progress.active {
+            display: block;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 24px;
+            }
+            
+            .documents-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 32px 16px;
+            }
+            
+            .page-title {
+                font-size: 32px;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <nav>
+        <div class="nav-content">
+            <a href="/portal/dashboard.html" class="logo">LUPO</a>
+            <div class="nav-links">
+                <a href="/portal/dashboard.html" class="nav-link">Dashboard</a>
+                <a href="/portal/calls.html" class="nav-link">Calls</a>
+                <a href="/portal/knowledge.html" class="nav-link active">Knowledge</a>
+                <a href="/portal/settings.html" class="nav-link">Settings</a>
+            </div>
+            <div class="nav-user">
+                <div class="user-menu" onclick="showUserMenu()">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <span id="userName">User</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Knowledge Base</h1>
+                <p class="page-subtitle">Upload and manage your company knowledge documents</p>
+            </div>
+        </div>
+        
+        <div class="upload-section">
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">📄</div>
+                <div class="upload-text">Click to upload or drag and drop</div>
+                <div class="upload-hint">PDF, TXT, MD files (max 10MB)</div>
+            </div>
+            <input type="file" id="fileInput" accept=".pdf,.txt,.md" />
+            <div class="upload-progress" id="uploadProgress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="documentsList" class="documents-grid">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Loading documents...</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- PDF Preview Modal -->
+    <div class="modal" id="previewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="previewTitle">Document Preview</h2>
+                <button class="modal-close" onclick="closePreview()">&times;</button>
+            </div>
+            <div class="pdf-preview" id="pdfPreview">
+                <iframe id="pdfFrame" src=""></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Document</h2>
+                <button class="modal-close" onclick="closeEdit()">&times;</button>
+            </div>
+            <form class="edit-form" id="editForm" onsubmit="saveEdit(event)">
+                <div class="form-group">
+                    <label class="form-label">Document Title</label>
+                    <input type="text" class="form-input" id="editTitle" required />
+                </div>
+                <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="closeEdit()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:3000'
+            : 'https://lupo-sales-api.fly.dev';
+        
+        const token = localStorage.getItem('lupo_token');
+        const userStr = localStorage.getItem('lupo_user');
+        
+        if (!token || !userStr) {
+            window.location.href = '/login.html';
+        }
+        
+        const user = JSON.parse(userStr);
+        
+        document.getElementById('userName').textContent = user.email.split('@')[0];
+        document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
+        
+        let currentEditId = null;
+        
+        async function apiRequest(endpoint, options = {}) {
+            const response = await fetch(`${API_URL}${endpoint}`, {
+                ...options,
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    ...options.headers
+                }
+            });
+            
+            if (response.status === 401) {
+                localStorage.removeItem('lupo_token');
+                localStorage.removeItem('lupo_user');
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            if (!response.ok) {
+                const error = await response.json().catch(() => ({ error: response.statusText }));
+                throw new Error(error.error || `API Error: ${response.statusText}`);
+            }
+            
+            if (response.status === 204) {
+                return null;
+            }
+            
+            return response.json();
+        }
+        
+        // File upload handling
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const progressFill = document.getElementById('progressFill');
+        
+        fileInput.addEventListener('change', handleFileSelect);
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                handleFileSelect({ target: fileInput });
+            }
+        });
+        
+        async function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            // Validate file type
+            const validTypes = ['application/pdf', 'text/plain', 'text/markdown'];
+            const validExtensions = ['.pdf', '.txt', '.md'];
+            const isValidType = validTypes.includes(file.type);
+            const isValidExtension = validExtensions.some(ext => file.name.toLowerCase().endsWith(ext));
+            
+            if (!isValidType && !isValidExtension) {
+                alert('Invalid file type. Please upload a PDF, TXT, or MD file.');
+                return;
+            }
+            
+            // Validate file size (10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                alert('File size exceeds 10MB limit.');
+                return;
+            }
+            
+            await uploadFile(file);
+        }
+        
+        async function uploadFile(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            uploadProgress.classList.add('active');
+            progressFill.style.width = '0%';
+            
+            try {
+                const xhr = new XMLHttpRequest();
+                
+                xhr.upload.addEventListener('progress', (e) => {
+                    if (e.lengthComputable) {
+                        const percent = (e.loaded / e.total) * 100;
+                        progressFill.style.width = percent + '%';
+                    }
+                });
+                
+                xhr.addEventListener('load', async () => {
+                    if (xhr.status === 201) {
+                        progressFill.style.width = '100%';
+                        setTimeout(() => {
+                            uploadProgress.classList.remove('active');
+                            progressFill.style.width = '0%';
+                            fileInput.value = '';
+                            loadDocuments();
+                        }, 500);
+                    } else {
+                        const error = JSON.parse(xhr.responseText);
+                        alert(error.error || 'Failed to upload document');
+                        uploadProgress.classList.remove('active');
+                        progressFill.style.width = '0%';
+                    }
+                });
+                
+                xhr.addEventListener('error', () => {
+                    alert('Upload failed. Please try again.');
+                    uploadProgress.classList.remove('active');
+                    progressFill.style.width = '0%';
+                });
+                
+                xhr.open('POST', `${API_URL}/v1/knowledge/documents/upload`);
+                xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+                xhr.send(formData);
+            } catch (error) {
+                alert('Upload failed: ' + error.message);
+                uploadProgress.classList.remove('active');
+                progressFill.style.width = '0%';
+            }
+        }
+        
+        // Load documents
+        async function loadDocuments() {
+            try {
+                const documents = await apiRequest('/v1/knowledge/documents');
+                renderDocuments(documents);
+            } catch (error) {
+                console.error('Error loading documents:', error);
+                document.getElementById('documentsList').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-title">Failed to load documents</div>
+                        <p>Please refresh the page or contact support if the issue persists.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function renderDocuments(documents) {
+            const container = document.getElementById('documentsList');
+            
+            if (documents.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div class="empty-state-title">No documents yet</div>
+                        <p>Upload your first knowledge document to get started.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = documents.map(doc => {
+                const statusClass = doc.embeddingStatus.toLowerCase();
+                const statusLabel = {
+                    'pending': 'Processing',
+                    'embedded': 'Ready',
+                    'error': 'Error'
+                }[statusClass] || doc.embeddingStatus;
+                
+                const date = new Date(doc.createdAt);
+                const isPDF = doc.sourceUrl && doc.sourceUrl.toLowerCase().endsWith('.pdf');
+                
+                return `
+                    <div class="document-card">
+                        <div class="document-header">
+                            <div style="flex: 1;">
+                                <div class="document-title">${escapeHtml(doc.title)}</div>
+                                <div class="document-meta">
+                                    <span class="status-badge ${statusClass}">${statusLabel}</span>
+                                    <span>${formatDate(date)}</span>
+                                    ${doc._count && doc._count.chunks > 0 
+                                        ? `<span>• ${doc._count.chunks} chunks</span>` 
+                                        : ''
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-actions">
+                            ${isPDF 
+                                ? `<button class="btn btn-secondary btn-sm" onclick="previewPDF('${doc.id}', '${escapeHtml(doc.title)}')">Preview</button>`
+                                : ''
+                            }
+                            <button class="btn btn-secondary btn-sm" onclick="editDocument('${doc.id}', '${escapeHtml(doc.title)}')">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteDocument('${doc.id}', '${escapeHtml(doc.title)}')">Delete</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function formatDate(date) {
+            const now = new Date();
+            const diff = now - date;
+            const days = Math.floor(diff / 86400000);
+            
+            if (days === 0) return 'Today';
+            if (days === 1) return 'Yesterday';
+            if (days < 7) return `${days} days ago`;
+            
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined });
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Preview PDF
+        async function previewPDF(docId, title) {
+            try {
+                const doc = await apiRequest(`/v1/knowledge/documents/${docId}`);
+                
+                // Create a blob URL from the raw text (for PDF, we'd need the actual file)
+                // For now, show the text content
+                const modal = document.getElementById('previewModal');
+                const previewTitle = document.getElementById('previewTitle');
+                const pdfFrame = document.getElementById('pdfFrame');
+                
+                previewTitle.textContent = title;
+                
+                // Since we only store text, we'll show it in a textarea for now
+                // In production, you'd want to store the actual PDF file and serve it
+                pdfFrame.src = 'about:blank';
+                pdfFrame.onload = () => {
+                    const iframeDoc = pdfFrame.contentDocument || pdfFrame.contentWindow.document;
+                    iframeDoc.open();
+                    iframeDoc.write(`
+                        <html>
+                            <head>
+                                <style>
+                                    body { 
+                                        font-family: -apple-system, sans-serif; 
+                                        padding: 20px; 
+                                        line-height: 1.6;
+                                        max-width: 800px;
+                                        margin: 0 auto;
+                                    }
+                                    pre { white-space: pre-wrap; word-wrap: break-word; }
+                                </style>
+                            </head>
+                            <body>
+                                <h1>${escapeHtml(title)}</h1>
+                                <pre>${escapeHtml(doc.rawText.substring(0, 10000))}${doc.rawText.length > 10000 ? '\n\n... (truncated)' : ''}</pre>
+                            </body>
+                        </html>
+                    `);
+                    iframeDoc.close();
+                };
+                
+                modal.classList.add('active');
+            } catch (error) {
+                alert('Failed to load document: ' + error.message);
+            }
+        }
+        
+        function closePreview() {
+            document.getElementById('previewModal').classList.remove('active');
+        }
+        
+        // Edit document
+        function editDocument(docId, currentTitle) {
+            currentEditId = docId;
+            document.getElementById('editTitle').value = currentTitle;
+            document.getElementById('editModal').classList.add('active');
+        }
+        
+        async function saveEdit(e) {
+            e.preventDefault();
+            const title = document.getElementById('editTitle').value.trim();
+            
+            if (!title) {
+                alert('Title cannot be empty');
+                return;
+            }
+            
+            try {
+                await apiRequest(`/v1/knowledge/documents/${currentEditId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ title })
+                });
+                
+                closeEdit();
+                loadDocuments();
+            } catch (error) {
+                alert('Failed to update document: ' + error.message);
+            }
+        }
+        
+        function closeEdit() {
+            document.getElementById('editModal').classList.remove('active');
+            currentEditId = null;
+        }
+        
+        // Delete document
+        async function deleteDocument(docId, title) {
+            if (!confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) {
+                return;
+            }
+            
+            try {
+                await apiRequest(`/v1/knowledge/documents/${docId}`, {
+                    method: 'DELETE'
+                });
+                
+                loadDocuments();
+            } catch (error) {
+                alert('Failed to delete document: ' + error.message);
+            }
+        }
+        
+        function showUserMenu() {
+            if (confirm('Do you want to logout?')) {
+                localStorage.removeItem('lupo_token');
+                localStorage.removeItem('lupo_user');
+                window.location.href = '/login.html';
+            }
+        }
+        
+        // Close modals on outside click
+        document.getElementById('previewModal').addEventListener('click', (e) => {
+            if (e.target.id === 'previewModal') {
+                closePreview();
+            }
+        });
+        
+        document.getElementById('editModal').addEventListener('click', (e) => {
+            if (e.target.id === 'editModal') {
+                closeEdit();
+            }
+        });
+        
+        loadDocuments();
+    </script>
+</body>
+</html>
+
