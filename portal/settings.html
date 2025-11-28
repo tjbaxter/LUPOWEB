@@ -21,6 +21,8 @@
             --accent: #2997ff;
             --accent-hover: #409cff;
             --border: rgba(255, 255, 255, 0.08);
+            --success: #34c759;
+            --error: #ff3b30;
         }
         
         body {
@@ -183,20 +185,19 @@
         .info-list {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 0;
         }
         
         .info-item {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            padding-bottom: 24px;
+            align-items: center;
+            padding: 20px 0;
             border-bottom: 1px solid var(--border);
         }
         
         .info-item:last-child {
             border-bottom: none;
-            padding-bottom: 0;
         }
         
         .info-content {
@@ -216,6 +217,11 @@
             font-size: 16px;
             color: var(--text-primary);
             font-weight: 500;
+        }
+        
+        .info-value-large {
+            font-size: 24px;
+            font-weight: 600;
         }
         
         .info-description {
@@ -257,6 +263,43 @@
             background: rgba(255, 255, 255, 0.08);
         }
         
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(41, 151, 255, 0.1);
+        }
+        
+        .btn-danger {
+            background: transparent;
+            color: var(--error);
+            border: 1px solid var(--error);
+        }
+        
+        .btn-danger:hover {
+            background: rgba(255, 59, 48, 0.1);
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-badge.active {
+            background: rgba(52, 199, 89, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(52, 199, 89, 0.2);
+        }
+        
         .plan-badge {
             display: inline-flex;
             align-items: center;
@@ -269,6 +312,26 @@
             background: rgba(41, 151, 255, 0.1);
             color: var(--accent);
             border: 1px solid rgba(41, 151, 255, 0.2);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .danger-zone {
+            background: rgba(255, 59, 48, 0.05);
+            border-color: rgba(255, 59, 48, 0.2);
+        }
+        
+        .danger-zone .section-title {
+            color: var(--error);
+        }
+        
+        .danger-zone .info-description {
+            margin-top: 8px;
         }
         
         .loading {
@@ -289,6 +352,17 @@
         
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -383,7 +457,7 @@
         
         function renderSettings(tenant, usage) {
             const phoneNumbers = tenant.phoneNumbers || [];
-            const config = tenant.config || {};
+            const primaryPhone = phoneNumbers.find(pn => pn.isActive) || phoneNumbers[0];
             
             document.getElementById('settingsContent').innerHTML = `
                 <div class="settings-section">
@@ -403,35 +477,43 @@
                         </div>
                         <div class="info-item">
                             <div class="info-content">
-                                <div class="info-label">Role</div>
-                                <div class="info-value">${user.role}</div>
+                                <div class="info-label">Password</div>
+                                <div class="info-value">••••••••</div>
                             </div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-content">
-                                <div class="info-label">Tenant ID</div>
-                                <div class="info-value" style="font-family: monospace; font-size: 13px;">${tenant.id}</div>
-                            </div>
+                            <button class="btn btn-outline" onclick="changePassword()">
+                                Change Password
+                            </button>
                         </div>
                     </div>
                 </div>
                 
                 <div class="settings-section">
-                    <h2 class="section-title">Phone Numbers</h2>
+                    <h2 class="section-title">Phone Number</h2>
                     <div class="info-list">
-                        ${phoneNumbers.length > 0 
-                            ? phoneNumbers.map(pn => `
-                                <div class="info-item">
-                                    <div class="info-content">
-                                        <div class="info-label">Phone Number</div>
-                                        <div class="info-value">${pn.twilioNumber}</div>
-                                        <div class="info-description">${pn.friendlyName}</div>
-                                    </div>
-                                    <span style="color: var(--text-secondary); font-size: 13px;">${pn.isActive ? 'Active' : 'Inactive'}</span>
+                        <div class="info-item">
+                            <div class="info-content">
+                                <div class="info-label">LUPO Number</div>
+                                <div class="info-value" style="font-family: monospace;">${primaryPhone ? primaryPhone.twilioNumber : 'Not configured'}</div>
+                                ${primaryPhone ? `<div class="info-description">${primaryPhone.friendlyName}</div>` : ''}
+                            </div>
+                            ${primaryPhone ? '<span class="status-badge active">Active</span>' : ''}
+                        </div>
+                        ${usage ? `
+                            <div class="info-item">
+                                <div class="info-content">
+                                    <div class="info-label">Usage This Month</div>
+                                    <div class="info-value">${usage.usage.callCount} calls</div>
+                                    ${usage.usage.qualifiedLeads > 0 || usage.usage.meetings > 0 
+                                        ? `<div class="info-description">
+                                            ${usage.usage.qualifiedLeads > 0 ? `${usage.usage.qualifiedLeads} qualified` : ''}
+                                            ${usage.usage.qualifiedLeads > 0 && usage.usage.meetings > 0 ? ' • ' : ''}
+                                            ${usage.usage.meetings > 0 ? `${usage.usage.meetings} meetings` : ''}
+                                        </div>`
+                                        : ''
+                                    }
                                 </div>
-                            `).join('')
-                            : '<p style="color: var(--text-secondary);">No phone numbers configured.</p>'
-                        }
+                            </div>
+                        ` : ''}
                     </div>
                 </div>
                 
@@ -441,79 +523,61 @@
                         <div class="info-list">
                             <div class="info-item">
                                 <div class="info-content">
-                                    <div class="info-label">Plan</div>
+                                    <div class="info-label">Current Plan</div>
                                     <div class="info-value">
                                         <span class="plan-badge">${usage.customer.plan}</span>
+                                        ${usage.pricing ? ` - £${(usage.pricing.monthlyFee / 100).toFixed(2)}/month` : ''}
                                     </div>
                                 </div>
+                                <button class="btn btn-outline" onclick="upgradePlan()">
+                                    Upgrade Plan
+                                </button>
                             </div>
-                            ${usage.pricing ? `
-                                <div class="info-item">
-                                    <div class="info-content">
-                                        <div class="info-label">Monthly Fee</div>
-                                        <div class="info-value">£${(usage.pricing.monthlyFee / 100).toFixed(2)}</div>
-                                    </div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-content">
-                                        <div class="info-label">Included Calls</div>
-                                        <div class="info-value">${usage.pricing.includedCalls}</div>
-                                    </div>
-                                </div>
-                            ` : ''}
                             <div class="info-item">
                                 <div class="info-content">
-                                    <div class="info-label">Billing Cycle</div>
-                                    <div class="info-value">
-                                        ${formatDate(usage.customer.billingCycleStart)} - ${formatDate(usage.customer.billingCycleEnd)}
-                                    </div>
+                                    <div class="info-label">Payment Method</div>
+                                    <div class="info-value">${usage.paymentMethod || 'No payment method on file'}</div>
                                 </div>
                             </div>
                             <div class="info-item">
                                 <div class="info-content">
-                                    <div class="info-label">Usage This Period</div>
-                                    <div class="info-value">
-                                        ${usage.usage.callCount} calls
-                                        ${usage.usage.qualifiedLeads > 0 ? `• ${usage.usage.qualifiedLeads} qualified` : ''}
-                                        ${usage.usage.meetings > 0 ? `• ${usage.usage.meetings} meetings` : ''}
+                                    <div class="info-label">Next Invoice</div>
+                                    <div class="info-value">${formatDate(usage.customer.billingCycleEnd)}</div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-content">
+                                    <div class="info-label">Amount Due</div>
+                                    <div class="info-value info-value-large">
+                                        ${usage.pricing ? `£${(usage.pricing.estimatedTotal / 100).toFixed(2)}` : '£0.00'}
                                     </div>
                                 </div>
                             </div>
-                            ${usage.pricing ? `
-                                <div class="info-item">
-                                    <div class="info-content">
-                                        <div class="info-label">Estimated Total</div>
-                                        <div class="info-value" style="font-size: 20px; font-weight: 600;">
-                                            £${(usage.pricing.estimatedTotal / 100).toFixed(2)}
-                                        </div>
-                                    </div>
-                                </div>
-                            ` : ''}
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary" onclick="updatePaymentMethod()">
+                                Update Payment Method
+                            </button>
+                            <button class="btn btn-secondary" onclick="viewInvoices()">
+                                View Invoices
+                            </button>
                         </div>
                     </div>
                 ` : ''}
                 
-                <div class="settings-section">
-                    <h2 class="section-title">Configuration</h2>
+                <div class="settings-section danger-zone">
+                    <h2 class="section-title">Danger Zone</h2>
                     <div class="info-list">
                         <div class="info-item">
                             <div class="info-content">
-                                <div class="info-label">Default Language</div>
-                                <div class="info-value">${config.defaultLanguage || 'auto'}</div>
+                                <div class="info-label">Cancel Subscription</div>
+                                <div class="info-description">
+                                    Once you cancel your subscription, your phone number will be released and all data will be permanently deleted.
+                                </div>
                             </div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-content">
-                                <div class="info-label">Qualification Threshold</div>
-                                <div class="info-value">${config.qualificationThreshold || 7}/10</div>
-                                <div class="info-description">BANT score required for qualification</div>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-content">
-                                <div class="info-label">Max Call Duration</div>
-                                <div class="info-value">${config.maxCallDurationSeconds ? Math.floor(config.maxCallDurationSeconds / 60) : 15} minutes</div>
-                            </div>
+                            <button class="btn btn-danger" onclick="cancelSubscription()">
+                                Cancel Subscription
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -522,7 +586,44 @@
         
         function formatDate(dateString) {
             const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        }
+        
+        function changePassword() {
+            window.location.href = '/portal/change-password.html';
+        }
+        
+        async function updatePaymentMethod() {
+            try {
+                const response = await apiRequest('/v1/billing/portal', { method: 'POST' });
+                if (response.url) {
+                    window.location.href = response.url;
+                } else {
+                    alert('Payment portal not available. Please contact support.');
+                }
+            } catch (error) {
+                console.error('Error opening payment portal:', error);
+                alert('Failed to open payment portal. Please contact support.');
+            }
+        }
+        
+        function viewInvoices() {
+            // TODO: Create invoices page or show modal
+            alert('Invoices page coming soon. For now, please contact support for invoice history.');
+        }
+        
+        function upgradePlan() {
+            // TODO: Create upgrade flow
+            alert('Plan upgrade coming soon. Please contact support to upgrade your plan.');
+        }
+        
+        function cancelSubscription() {
+            if (confirm('Are you sure you want to cancel your subscription? This action cannot be undone. Your phone number will be released and all data will be permanently deleted.')) {
+                if (confirm('This is your final confirmation. Are you absolutely sure?')) {
+                    // TODO: Implement cancellation
+                    alert('Subscription cancellation must be processed by support. Please contact us to cancel.');
+                }
+            }
         }
         
         function showUserMenu() {
@@ -537,4 +638,3 @@
     </script>
 </body>
 </html>
-
