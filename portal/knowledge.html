@@ -650,6 +650,7 @@
         document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
         
         let currentEditId = null;
+        let statusPollInterval = null;
         
         async function apiRequest(endpoint, options = {}) {
             const response = await fetch(`${API_URL}${endpoint}`, {
@@ -754,7 +755,7 @@
                             uploadProgress.classList.remove('active');
                             progressFill.style.width = '0%';
                             fileInput.value = '';
-                            loadDocuments();
+                            loadDocuments(); // This will start polling automatically
                         }, 500);
                     } else {
                         const error = JSON.parse(xhr.responseText);
@@ -785,6 +786,9 @@
             try {
                 const documents = await apiRequest('/v1/knowledge/documents');
                 renderDocuments(documents);
+                
+                // Start polling if there are documents with pending status
+                startStatusPolling(documents);
             } catch (error) {
                 console.error('Error loading documents:', error);
                 document.getElementById('documentsList').innerHTML = `
@@ -794,6 +798,57 @@
                     </div>
                 `;
             }
+        }
+        
+        // Poll for status updates on documents that are still processing
+        function startStatusPolling(documents) {
+            // Clear any existing polling
+            if (statusPollInterval) {
+                clearInterval(statusPollInterval);
+                statusPollInterval = null;
+            }
+            
+            // Check if there are any pending documents
+            const hasPending = documents.some(doc => 
+                doc.embeddingStatus === 'PENDING'
+            );
+            
+            if (!hasPending) {
+                return; // No need to poll
+            }
+            
+            // Poll every 2 seconds
+            statusPollInterval = setInterval(async () => {
+                try {
+                    const updatedDocuments = await apiRequest('/v1/knowledge/documents');
+                    
+                    // Always re-render to get the latest status
+                    renderDocuments(updatedDocuments);
+                    
+                    // Stop polling if no documents are pending
+                    const stillPending = updatedDocuments.some(doc => 
+                        doc.embeddingStatus === 'PENDING'
+                    );
+                    
+                    if (!stillPending) {
+                        clearInterval(statusPollInterval);
+                        statusPollInterval = null;
+                    }
+                } catch (error) {
+                    console.error('Error polling document status:', error);
+                    // Stop polling on error
+                    clearInterval(statusPollInterval);
+                    statusPollInterval = null;
+                }
+            }, 2000); // Poll every 2 seconds
+            
+            // Stop polling after 5 minutes to avoid infinite polling
+            setTimeout(() => {
+                if (statusPollInterval) {
+                    clearInterval(statusPollInterval);
+                    statusPollInterval = null;
+                }
+            }, 5 * 60 * 1000);
         }
         
         function renderDocuments(documents) {
