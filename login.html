@@ -535,7 +535,9 @@
                         }, 500);
                     }
                 } else {
-                    const error = await response.json();
+                    const error = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    console.error('Login failed:', response.status, error);
+                    console.error('Request body:', { email, password: '***' });
                     // Show error
                     errorMessage.textContent = error.error || 'Invalid email or password';
                     errorMessage.classList.add('active');
