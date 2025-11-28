@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Details – LUPO</title>
+    <link rel="icon" type="image/png" href="/lupo-head-logo copy.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --bg-primary: #000000;
+            --bg-secondary: #161617;
+            --accent: #2997ff;
+            --accent-hover: #409cff;
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #34c759;
+            --warning: #ff9500;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+        }
+        
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.03;
+            background: radial-gradient(circle at 20% 50%, var(--accent) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, #667eea 0%, transparent 50%);
+            animation: bgShift 30s ease-in-out infinite;
+        }
+        
+        @keyframes bgShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            33% { transform: rotate(120deg) scale(1.1); }
+            66% { transform: rotate(240deg) scale(0.9); }
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(0, 0, 0, 0.72);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            position: relative;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+        
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .user-menu:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+        }
+        
+        .main-content {
+            margin-top: 60px;
+            padding: 48px 24px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            transition: color 0.2s ease;
+        }
+        
+        .back-link:hover {
+            color: var(--accent-hover);
+        }
+        
+        .page-title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            letter-spacing: -0.03em;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 32px;
+        }
+        
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+        }
+        
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+        }
+        
+        .audio-player {
+            margin-bottom: 32px;
+        }
+        
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .audio-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.2s ease;
+        }
+        
+        .audio-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.05);
+        }
+        
+        .audio-btn.secondary {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+        }
+        
+        .audio-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+        
+        .audio-time {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .audio-progress {
+            flex: 1;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .audio-progress-bar {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+        
+        .transcript {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .transcript-item {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .transcript-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .transcript-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .transcript-speaker {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .transcript-speaker.ai {
+            color: var(--accent);
+        }
+        
+        .transcript-speaker.caller {
+            color: var(--text-secondary);
+        }
+        
+        .transcript-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .transcript-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+        
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-badge.qualified {
+            background: rgba(52, 199, 89, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(52, 199, 89, 0.2);
+        }
+        
+        .status-badge.unqualified {
+            background: rgba(255, 149, 0, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(255, 149, 0, 0.2);
+        }
+        
+        .bant-breakdown {
+            margin-top: 24px;
+        }
+        
+        .bant-item {
+            margin-bottom: 20px;
+        }
+        
+        .bant-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .bant-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        .bant-score {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .bant-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+        
+        .bant-bar-fill {
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .bant-notes {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <nav>
+        <div class="nav-content">
+            <a href="/portal/dashboard.html" class="logo">LUPO</a>
+            <div class="nav-links">
+                <a href="/portal/dashboard.html" class="nav-link">Dashboard</a>
+                <a href="/portal/calls.html" class="nav-link">Calls</a>
+                <a href="/portal/settings.html" class="nav-link">Settings</a>
+            </div>
+            <div class="nav-user">
+                <div class="user-menu" onclick="showUserMenu()">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <span id="userName">User</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <a href="/portal/calls.html" class="back-link">← Back to Calls</a>
+        <h1 class="page-title">Call Details</h1>
+        
+        <div id="callContent">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Loading call details...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:3000'
+            : 'https://lupo-sales-api.fly.dev';
+        
+        const token = localStorage.getItem('lupo_token');
+        const userStr = localStorage.getItem('lupo_user');
+        
+        if (!token || !userStr) {
+            window.location.href = '/login.html';
+        }
+        
+        const user = JSON.parse(userStr);
+        document.getElementById('userName').textContent = user.email.split('@')[0];
+        document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const callId = urlParams.get('id');
+        
+        if (!callId) {
+            window.location.href = '/portal/calls.html';
+        }
+        
+        let audio = null;
+        
+        async function apiRequest(endpoint, options = {}) {
+            const response = await fetch(`${API_URL}${endpoint}`, {
+                ...options,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                    ...options.headers
+                }
+            });
+            
+            if (response.status === 401) {
+                localStorage.removeItem('lupo_token');
+                localStorage.removeItem('lupo_user');
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.statusText}`);
+            }
+            
+            return response.json();
+        }
+        
+        async function loadCall() {
+            try {
+                const call = await apiRequest(`/v1/calls/${callId}`);
+                renderCall(call);
+            } catch (error) {
+                console.error('Error loading call:', error);
+                document.getElementById('callContent').innerHTML = `
+                    <div class="card">
+                        <p style="color: var(--text-secondary);">Failed to load call details. Please try again.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function renderCall(call) {
+            const callDate = new Date(call.startedAt);
+            const duration = call.durationSeconds 
+                ? `${Math.floor(call.durationSeconds / 60)}:${String(call.durationSeconds % 60).padStart(2, '0')}`
+                : 'N/A';
+            const isQualified = call.qualified || (call.finalBantScore && call.finalBantScore >= 7);
+            
+            const transcriptHtml = call.messages && call.messages.length > 0
+                ? call.messages.map(msg => {
+                    const isAI = msg.role === 'ASSISTANT';
+                    const time = formatTime(msg.timestamp ? new Date(msg.timestamp) : new Date());
+                    return `
+                        <div class="transcript-item">
+                            <div class="transcript-header">
+                                <span class="transcript-speaker ${isAI ? 'ai' : 'caller'}">
+                                    ${isAI ? 'AI' : 'Caller'}
+                                </span>
+                                <span class="transcript-time">${time}</span>
+                            </div>
+                            <div class="transcript-text">${msg.content}</div>
+                        </div>
+                    `;
+                }).join('')
+                : '<p style="color: var(--text-secondary);">No transcript available.</p>';
+            
+            document.getElementById('callContent').innerHTML = `
+                <div class="content-grid">
+                    <div>
+                        ${call.recordingUrl ? `
+                            <div class="card audio-player">
+                                <h2 class="card-title">Recording</h2>
+                                <div class="audio-controls">
+                                    <button class="audio-btn" id="playBtn" onclick="togglePlay()">
+                                        <span id="playIcon">▶</span>
+                                    </button>
+                                    <div class="audio-progress" onclick="seek(event)">
+                                        <div class="audio-progress-bar" id="progressBar" style="width: 0%"></div>
+                                    </div>
+                                    <span class="audio-time" id="currentTime">0:00</span>
+                                    <span class="audio-time" id="duration">0:00</span>
+                                </div>
+                                <audio id="audioElement" src="${call.recordingUrl}" preload="metadata"></audio>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="card">
+                            <h2 class="card-title">Transcript</h2>
+                            <div class="transcript">
+                                ${transcriptHtml}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="card">
+                            <h2 class="card-title">Call Information</h2>
+                            <div class="info-list">
+                                <div class="info-item">
+                                    <span class="info-label">Caller</span>
+                                    <span class="info-value">${call.callerNumber || 'Unknown'}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Date</span>
+                                    <span class="info-value">${formatDateTime(callDate)}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Duration</span>
+                                    <span class="info-value">${duration}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Outcome</span>
+                                    <span class="info-value">
+                                        ${isQualified 
+                                            ? '<span class="status-badge qualified">Qualified</span>' 
+                                            : '<span class="status-badge unqualified">Unqualified</span>'
+                                        }
+                                    </span>
+                                </div>
+                                ${call.finalBantScore ? `
+                                    <div class="info-item">
+                                        <span class="info-label">BANT Score</span>
+                                        <span class="info-value" style="font-size: 24px; font-weight: 600;">${call.finalBantScore}/10</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                        
+                        ${call.finalBantScore ? `
+                            <div class="card bant-breakdown">
+                                <h2 class="card-title">BANT Breakdown</h2>
+                                <div class="bant-item">
+                                    <div class="bant-header">
+                                        <span class="bant-label">Budget</span>
+                                        <span class="bant-score">${Math.round(call.finalBantScore * 0.3)}/3</span>
+                                    </div>
+                                    <div class="bant-bar">
+                                        <div class="bant-bar-fill" style="width: ${(call.finalBantScore * 0.3 / 3) * 100}%"></div>
+                                    </div>
+                                </div>
+                                <div class="bant-item">
+                                    <div class="bant-header">
+                                        <span class="bant-label">Authority</span>
+                                        <span class="bant-score">${Math.round(call.finalBantScore * 0.3)}/3</span>
+                                    </div>
+                                    <div class="bant-bar">
+                                        <div class="bant-bar-fill" style="width: ${(call.finalBantScore * 0.3 / 3) * 100}%"></div>
+                                    </div>
+                                </div>
+                                <div class="bant-item">
+                                    <div class="bant-header">
+                                        <span class="bant-label">Need</span>
+                                        <span class="bant-score">${Math.round(call.finalBantScore * 0.2)}/2</span>
+                                    </div>
+                                    <div class="bant-bar">
+                                        <div class="bant-bar-fill" style="width: ${(call.finalBantScore * 0.2 / 2) * 100}%"></div>
+                                    </div>
+                                </div>
+                                <div class="bant-item">
+                                    <div class="bant-header">
+                                        <span class="bant-label">Timeline</span>
+                                        <span class="bant-score">${Math.round(call.finalBantScore * 0.2)}/2</span>
+                                    </div>
+                                    <div class="bant-bar">
+                                        <div class="bant-bar-fill" style="width: ${(call.finalBantScore * 0.2 / 2) * 100}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            
+            if (call.recordingUrl) {
+                audio = document.getElementById('audioElement');
+                audio.addEventListener('loadedmetadata', () => {
+                    document.getElementById('duration').textContent = formatTime(audio.duration);
+                });
+                audio.addEventListener('timeupdate', updateProgress);
+                audio.addEventListener('ended', () => {
+                    document.getElementById('playIcon').textContent = '▶';
+                });
+            }
+        }
+        
+        function togglePlay() {
+            if (!audio) return;
+            
+            if (audio.paused) {
+                audio.play();
+                document.getElementById('playIcon').textContent = '⏸';
+            } else {
+                audio.pause();
+                document.getElementById('playIcon').textContent = '▶';
+            }
+        }
+        
+        function updateProgress() {
+            if (!audio) return;
+            const progress = (audio.currentTime / audio.duration) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('currentTime').textContent = formatTime(audio.currentTime);
+        }
+        
+        function seek(event) {
+            if (!audio) return;
+            const rect = event.currentTarget.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const percent = x / rect.width;
+            audio.currentTime = percent * audio.duration;
+        }
+        
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        function formatDateTime(date) {
+            return date.toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+        }
+        
+        function showUserMenu() {
+            if (confirm('Do you want to logout?')) {
+                localStorage.removeItem('lupo_token');
+                localStorage.removeItem('lupo_user');
+                window.location.href = '/login.html';
+            }
+        }
+        
+        loadCall();
+    </script>
+</body>
+</html>
+

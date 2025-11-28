@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings – LUPO</title>
+    <link rel="icon" type="image/png" href="/lupo-head-logo copy.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --bg-primary: #000000;
+            --bg-secondary: #161617;
+            --accent: #2997ff;
+            --accent-hover: #409cff;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+        }
+        
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.03;
+            background: radial-gradient(circle at 20% 50%, var(--accent) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, #667eea 0%, transparent 50%);
+            animation: bgShift 30s ease-in-out infinite;
+        }
+        
+        @keyframes bgShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            33% { transform: rotate(120deg) scale(1.1); }
+            66% { transform: rotate(240deg) scale(0.9); }
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(0, 0, 0, 0.72);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            position: relative;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-primary);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .user-menu:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+        }
+        
+        .main-content {
+            margin-top: 60px;
+            padding: 48px 24px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .page-title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 48px;
+            letter-spacing: -0.03em;
+        }
+        
+        .settings-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            letter-spacing: -0.01em;
+        }
+        
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .info-content {
+            flex: 1;
+        }
+        
+        .info-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .info-value {
+            font-size: 16px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .info-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .plan-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(41, 151, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(41, 151, 255, 0.2);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <nav>
+        <div class="nav-content">
+            <a href="/portal/dashboard.html" class="logo">LUPO</a>
+            <div class="nav-links">
+                <a href="/portal/dashboard.html" class="nav-link">Dashboard</a>
+                <a href="/portal/calls.html" class="nav-link">Calls</a>
+                <a href="/portal/settings.html" class="nav-link active">Settings</a>
+            </div>
+            <div class="nav-user">
+                <div class="user-menu" onclick="showUserMenu()">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <span id="userName">User</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <h1 class="page-title">Settings</h1>
+        
+        <div id="settingsContent">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Loading settings...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:3000'
+            : 'https://lupo-sales-api.fly.dev';
+        
+        const token = localStorage.getItem('lupo_token');
+        const userStr = localStorage.getItem('lupo_user');
+        
+        if (!token || !userStr) {
+            window.location.href = '/login.html';
+        }
+        
+        const user = JSON.parse(userStr);
+        document.getElementById('userName').textContent = user.email.split('@')[0];
+        document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
+        
+        async function apiRequest(endpoint, options = {}) {
+            const response = await fetch(`${API_URL}${endpoint}`, {
+                ...options,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                    ...options.headers
+                }
+            });
+            
+            if (response.status === 401) {
+                localStorage.removeItem('lupo_token');
+                localStorage.removeItem('lupo_user');
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.statusText}`);
+            }
+            
+            return response.json();
+        }
+        
+        async function loadSettings() {
+            try {
+                const [tenant, usage] = await Promise.all([
+                    apiRequest('/v1/tenant'),
+                    apiRequest('/v1/billing/usage').catch(() => null)
+                ]);
+                
+                renderSettings(tenant, usage);
+            } catch (error) {
+                console.error('Error loading settings:', error);
+                document.getElementById('settingsContent').innerHTML = `
+                    <div class="settings-section">
+                        <p style="color: var(--text-secondary);">Failed to load settings. Please refresh the page.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function renderSettings(tenant, usage) {
+            const phoneNumbers = tenant.phoneNumbers || [];
+            const config = tenant.config || {};
+            
+            document.getElementById('settingsContent').innerHTML = `
+                <div class="settings-section">
+                    <h2 class="section-title">Account</h2>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <div class="info-content">
+                                <div class="info-label">Company Name</div>
+                                <div class="info-value">${tenant.name}</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-content">
+                                <div class="info-label">Email</div>
+                                <div class="info-value">${user.email}</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-content">
+                                <div class="info-label">Role</div>
+                                <div class="info-value">${user.role}</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-content">
+                                <div class="info-label">Tenant ID</div>
+                                <div class="info-value" style="font-family: monospace; font-size: 13px;">${tenant.id}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h2 class="section-title">Phone Numbers</h2>
+                    <div class="info-list">
+                        ${phoneNumbers.length > 0 
+                            ? phoneNumbers.map(pn => `
+                                <div class="info-item">
+                                    <div class="info-content">
+                                        <div class="info-label">Phone Number</div>
+                                        <div class="info-value">${pn.twilioNumber}</div>
+                                        <div class="info-description">${pn.friendlyName}</div>
+                                    </div>
+                                    <span style="color: var(--text-secondary); font-size: 13px;">${pn.isActive ? 'Active' : 'Inactive'}</span>
+                                </div>
+                            `).join('')
+                            : '<p style="color: var(--text-secondary);">No phone numbers configured.</p>'
+                        }
+                    </div>
+                </div>
+                
+                ${usage ? `
+                    <div class="settings-section">
+                        <h2 class="section-title">Billing</h2>
+                        <div class="info-list">
+                            <div class="info-item">
+                                <div class="info-content">
+                                    <div class="info-label">Plan</div>
+                                    <div class="info-value">
+                                        <span class="plan-badge">${usage.customer.plan}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            ${usage.pricing ? `
+                                <div class="info-item">
+                                    <div class="info-content">
+                                        <div class="info-label">Monthly Fee</div>
+                                        <div class="info-value">£${(usage.pricing.monthlyFee / 100).toFixed(2)}</div>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-content">
+                                        <div class="info-label">Included Calls</div>
+                                        <div class="info-value">${usage.pricing.includedCalls}</div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                            <div class="info-item">
+                                <div class="info-content">
+                                    <div class="info-label">Billing Cycle</div>
+                                    <div class="info-value">
+                                        ${formatDate(usage.customer.billingCycleStart)} - ${formatDate(usage.customer.billingCycleEnd)}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-content">
+                                    <div class="info-label">Usage This Period</div>
+                                    <div class="info-value">
+                                        ${usage.usage.callCount} calls
+                                        ${usage.usage.qualifiedLeads > 0 ? `• ${usage.usage.qualifiedLeads} qualified` : ''}
+                                        ${usage.usage.meetings > 0 ? `• ${usage.usage.meetings} meetings` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                            ${usage.pricing ? `
+                                <div class="info-item">
+                                    <div class="info-content">
+                                        <div class="info-label">Estimated Total</div>
+                                        <div class="info-value" style="font-size: 20px; font-weight: 600;">
+                                            £${(usage.pricing.estimatedTotal / 100).toFixed(2)}
+                                        </div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                ` : ''}
+                
+                <div class="settings-section">
+                    <h2 class="section-title">Configuration</h2>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <div class="info-content">
+                                <div class="info-label">Default Language</div>
+                                <div class="info-value">${config.defaultLanguage || 'auto'}</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-content">
+                                <div class="info-label">Qualification Threshold</div>
+                                <div class="info-value">${config.qualificationThreshold || 7}/10</div>
+                                <div class="info-description">BANT score required for qualification</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-content">
+                                <div class="info-label">Max Call Duration</div>
+                                <div class="info-value">${config.maxCallDurationSeconds ? Math.floor(config.maxCallDurationSeconds / 60) : 15} minutes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+        
+        function showUserMenu() {
+            if (confirm('Do you want to logout?')) {
+                localStorage.removeItem('lupo_token');
+                localStorage.removeItem('lupo_user');
+                window.location.href = '/login.html';
+            }
+        }
+        
+        loadSettings();
+    </script>
+</body>
+</html>
+
