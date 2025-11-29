@@ -1149,10 +1149,12 @@
             try {
                 iconEl.textContent = '⏳';
                 
-                // Get preview from backend API
-                const response = await fetch(`${API_URL}/v1/tenant/voice-preview/${voiceId}`, {
+                // Get preview from backend API (disable caching to ensure fresh audio)
+                const cacheBuster = Date.now();
+                const response = await fetch(`${API_URL}/v1/tenant/voice-preview/${voiceId}?t=${cacheBuster}`, {
                     headers: {
-                        'Authorization': `Bearer ${token}`
+                        'Authorization': `Bearer ${token}`,
+                        'Cache-Control': 'no-cache'
                     }
                 });
                 
