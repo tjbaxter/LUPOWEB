@@ -304,14 +304,15 @@
         .voice-description {
             font-size: 13px;
             color: var(--text-secondary);
-            margin-bottom: 16px;
             line-height: 1.5;
+            margin-bottom: 12px;
         }
         
-        .voice-preview-btn {
-            padding: 8px 14px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
+        .preview-btn {
+            width: 100%;
+            padding: 8px 12px;
+            background: rgba(41, 151, 255, 0.1);
+            border: 1px solid rgba(41, 151, 255, 0.3);
             border-radius: 8px;
             color: var(--accent);
             font-size: 13px;
@@ -320,11 +321,22 @@
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
         }
         
-        .voice-preview-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
+        .preview-btn:hover {
+            background: rgba(41, 151, 255, 0.15);
+            border-color: rgba(41, 151, 255, 0.5);
+        }
+        
+        .preview-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .preview-btn.playing {
+            background: rgba(41, 151, 255, 0.2);
             border-color: var(--accent);
         }
         
@@ -967,8 +979,8 @@
                         <div class="voice-check">✓</div>
                     </div>
                     <div class="voice-description">${voice.description}</div>
-                    <button class="voice-preview-btn" onclick="event.stopPropagation(); playVoicePreview('${voice.id}')">
-                        ▶ Preview
+                    <button class="preview-btn" onclick="event.stopPropagation(); playVoicePreview('${voice.id}', '${voice.name}')">
+                        <span id="preview-icon-${voice.id}">▶</span> Preview
                     </button>
                 </div>
             `).join('');
@@ -978,33 +990,6 @@
             selectedVoiceId = voiceId;
             renderVoices();
             updateSaveButtonVisibility();
-        }
-        
-        function playVoicePreview(voiceId) {
-            const voice = VOICES.find(v => v.id === voiceId);
-            if (!voice) return;
-            
-            // Map voice ID to preview filename
-            const filenameMap = {
-                "79a125e8-cd45-4c13-8a67-188112f4dd22": "professional-male.mp3",
-                "a0e99841-438c-4a64-b679-ae501e7d6091": "friendly-female.mp3",
-                "694f9389-aac1-45b6-b726-9d9369183238": "authoritative-male.mp3",
-                "b7d50908-b17c-442d-ad8d-810c63997ed9": "energetic-female.mp3",
-                "f786b574-daa5-4673-aa0c-cbe3e8534c02": "katie.mp3"
-            };
-            
-            const filename = filenameMap[voiceId];
-            if (!filename) {
-                alert('Preview not available for this voice yet.');
-                return;
-            }
-            
-            // Play audio preview
-            const audio = new Audio(`/voice-previews/${filename}`);
-            audio.play().catch(err => {
-                console.error('Error playing preview:', err);
-                alert('Could not play preview. Audio files may need to be generated.');
-            });
         }
         
         function setTransferStrategy(strategy) {
@@ -1133,6 +1118,81 @@
                 localStorage.removeItem('lupo_token');
                 localStorage.removeItem('lupo_user');
                 window.location.href = '/login.html';
+            }
+        }
+        
+        // Voice preview functionality
+        let currentAudio = null;
+        let currentPlayingVoiceId = null;
+        
+        async function playVoicePreview(voiceId, voiceName) {
+            const iconEl = document.getElementById(`preview-icon-${voiceId}`);
+            
+            // If already playing this voice, stop it
+            if (currentAudio && currentPlayingVoiceId === voiceId) {
+                currentAudio.pause();
+                currentAudio = null;
+                currentPlayingVoiceId = null;
+                iconEl.textContent = '▶';
+                return;
+            }
+            
+            // Stop any currently playing audio
+            if (currentAudio) {
+                currentAudio.pause();
+                if (currentPlayingVoiceId) {
+                    const oldIcon = document.getElementById(`preview-icon-${currentPlayingVoiceId}`);
+                    if (oldIcon) oldIcon.textContent = '▶';
+                }
+            }
+            
+            try {
+                iconEl.textContent = '⏳';
+                
+                // Get preview from backend API
+                const response = await fetch(`${API_URL}/v1/tenant/voice-preview/${voiceId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to load preview: ${response.status}`);
+                }
+                
+                const audioBlob = await response.blob();
+                const audioUrl = URL.createObjectURL(audioBlob);
+                
+                currentAudio = new Audio(audioUrl);
+                currentPlayingVoiceId = voiceId;
+                
+                currentAudio.onplay = () => {
+                    iconEl.textContent = '⏸';
+                };
+                
+                currentAudio.onended = () => {
+                    iconEl.textContent = '▶';
+                    currentAudio = null;
+                    currentPlayingVoiceId = null;
+                    URL.revokeObjectURL(audioUrl);
+                };
+                
+                currentAudio.onerror = (e) => {
+                    console.error('Error playing preview:', e);
+                    iconEl.textContent = '▶';
+                    currentAudio = null;
+                    currentPlayingVoiceId = null;
+                    alert('Error playing voice preview');
+                };
+                
+                await currentAudio.play();
+                
+            } catch (error) {
+                console.error('Error generating preview:', error);
+                iconEl.textContent = '▶';
+                currentAudio = null;
+                currentPlayingVoiceId = null;
+                alert(`Failed to generate voice preview: ${error.message}`);
             }
         }
         
