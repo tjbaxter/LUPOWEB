@@ -155,7 +155,7 @@
         .main-content {
             margin-top: 60px;
             padding: 48px 24px;
-            max-width: 900px;
+            max-width: 1400px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -254,7 +254,7 @@
         
         .voice-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(5, 1fr);
             gap: 16px;
         }
         
@@ -486,6 +486,12 @@
         
         .success-message.show {
             display: block;
+        }
+        
+            @media (max-width: 1200px) {
+            .voice-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
         
         @media (max-width: 768px) {
