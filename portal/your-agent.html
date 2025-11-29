@@ -576,6 +576,24 @@
                 <h2 class="section-title">Greeting & Introduction</h2>
                 
                 <div class="form-group">
+                    <label class="form-label">Greeting Message</label>
+                    <textarea id="greetingMessage" class="input" rows="4" placeholder="Hi, thanks for calling {company}. This is your AI assistant. How can I help you today?" maxlength="500"></textarea>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                        <span class="form-hint">This is what your AI will say when answering calls. Use <code style="color: var(--accent); background: rgba(41, 151, 255, 0.1); padding: 2px 6px; border-radius: 4px; font-size: 12px;">{company}</code> to insert your company name.</span>
+                        <span id="greetingCharCount" style="font-size: 12px; color: var(--text-secondary);">0/500</span>
+                    </div>
+                    <div id="greetingPreview" style="margin-top: 12px; padding: 12px; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; display: none;">
+                        <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px;">Preview:</div>
+                        <div style="font-size: 14px; color: var(--text-primary); font-weight: 500;">🤖 <span id="greetingPreviewText"></span></div>
+                    </div>
+                    <div style="margin-top: 12px; padding: 12px; background: rgba(41, 151, 255, 0.1); border: 1px solid rgba(41, 151, 255, 0.2); border-radius: 8px;">
+                        <div style="font-size: 12px; color: var(--accent);">
+                            💡 <strong>Tip:</strong> Keep it under 30 seconds when spoken. Test your greeting by calling your LUPO number after saving.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
                     <label class="form-label">System Prompt</label>
                     <textarea id="systemPrompt" class="input" rows="8" placeholder="Define how your agent should behave, what it should say, and how it should handle conversations..."></textarea>
                     <span class="form-hint">This controls your agent's personality, goals, and conversation style. Leave blank to use the default sales agent prompt.</span>
@@ -714,16 +732,47 @@
             return response.json();
         }
         
+        function updateGreetingCharCount(text) {
+            const count = text.length;
+            document.getElementById('greetingCharCount').textContent = `${count}/500`;
+            if (count > 500) {
+                document.getElementById('greetingCharCount').style.color = 'var(--warning)';
+            } else {
+                document.getElementById('greetingCharCount').style.color = 'var(--text-secondary)';
+            }
+        }
+        
+        function updateGreetingPreview(text) {
+            const previewDiv = document.getElementById('greetingPreview');
+            const previewText = document.getElementById('greetingPreviewText');
+            
+            if (text && text.includes('{company}')) {
+                // Get tenant name from loaded config or use placeholder
+                const tenantName = currentConfig.name || 'YourCompany';
+                const preview = text.replace(/{company}/g, tenantName);
+                previewText.textContent = preview;
+                previewDiv.style.display = 'block';
+            } else {
+                previewDiv.style.display = 'none';
+            }
+        }
+        
         async function loadConfig() {
             try {
                 const tenant = await apiRequest('/v1/tenant');
                 currentConfig = tenant.config || {};
+                currentConfig.name = tenant.name; // Store tenant name for preview
                 
                 // Set voice selection
                 selectedVoiceId = currentConfig.voiceId || VOICES[4].id; // Default to Katie
                 renderVoices();
                 
                 // Set form values
+                const greetingMessage = currentConfig.greetingMessage || '';
+                document.getElementById('greetingMessage').value = greetingMessage;
+                updateGreetingPreview(greetingMessage);
+                updateGreetingCharCount(greetingMessage);
+                
                 document.getElementById('systemPrompt').value = currentConfig.systemPrompt || '';
                 document.getElementById('qualificationThreshold').value = currentConfig.qualificationThreshold || 7;
                 document.getElementById('thresholdValue').textContent = currentConfig.qualificationThreshold || 7;
@@ -828,6 +877,16 @@
             document.getElementById('maxDuration').addEventListener('input', function() {
                 document.getElementById('durationValue').textContent = this.value;
             });
+            
+            // Greeting message handlers
+            const greetingInput = document.getElementById('greetingMessage');
+            if (greetingInput) {
+                greetingInput.addEventListener('input', function() {
+                    const text = this.value;
+                    updateGreetingCharCount(text);
+                    updateGreetingPreview(text);
+                });
+            }
         });
         
         async function saveConfig() {
@@ -838,8 +897,17 @@
             try {
                 const transferStrategy = document.querySelector('.radio-option.selected').dataset.value;
                 
+                const greetingMessage = document.getElementById('greetingMessage').value.trim();
+                if (greetingMessage.length > 500) {
+                    alert('Greeting message must be 500 characters or less.');
+                    saveBtn.textContent = 'Save Changes';
+                    saveBtn.disabled = false;
+                    return;
+                }
+                
                 const updates = {
                     voiceId: selectedVoiceId,
+                    greetingMessage: greetingMessage || null,
                     systemPrompt: document.getElementById('systemPrompt').value || null,
                     qualificationThreshold: parseInt(document.getElementById('qualificationThreshold').value),
                     maxCallDurationSeconds: parseInt(document.getElementById('maxDuration').value) * 60,
