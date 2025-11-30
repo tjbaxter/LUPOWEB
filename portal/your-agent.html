@@ -1536,7 +1536,7 @@
             saveBtnText.textContent = 'Saving...';
             
             try {
-                const transferStrategy = document.querySelector('.radio-option.selected').dataset.value;
+                const transferStrategy = document.querySelector('input[name="transferStrategy"]:checked')?.value || 'SMART';
                 
                 const greetingMessage = document.getElementById('greetingMessage').value.trim();
                 if (greetingMessage.length > 500) {
