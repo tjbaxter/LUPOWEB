@@ -699,52 +699,27 @@
                 </div>
             </div>
             
-            <!-- Qualification Settings -->
-            <div class="section">
-                <h2 class="section-title">Lead Qualification</h2>
-                
-                <div class="form-group">
-                    <label class="form-label">
-                        BANT Qualification Threshold: <span class="slider-value" id="thresholdValue">7</span>/10
-                    </label>
-                    <input type="range" id="qualificationThreshold" class="slider" min="1" max="10" value="7">
-                    <span class="form-hint">Leads with a BANT score above this threshold are considered qualified</span>
-                </div>
-            </div>
-            
             <!-- Call Handling -->
             <div class="section">
                 <h2 class="section-title">Call Handling</h2>
                 
                 <div class="form-group">
-                    <label class="form-label">
-                        Maximum Call Duration: <span class="slider-value" id="durationValue">15</span> minutes
-                    </label>
-                    <input type="range" id="maxDuration" class="slider" min="5" max="30" value="15" step="5">
-                    <span class="form-hint">Agent will politely end calls after this duration</span>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Warm Transfer Strategy</label>
+                    <label class="form-label">Warm Transfer Settings</label>
                     <div class="radio-group" id="transferStrategy">
-                        <div class="radio-option" data-value="NEVER">
-                            <input type="radio" name="transfer" value="NEVER" class="radio-input">
-                            <label class="radio-label">Never transfer calls</label>
-                        </div>
                         <div class="radio-option selected" data-value="QUALIFIED_ONLY">
                             <input type="radio" name="transfer" value="QUALIFIED_ONLY" class="radio-input" checked>
-                            <label class="radio-label">Transfer only qualified leads</label>
+                            <label class="radio-label">Transfer qualified leads to sales rep (recommended)</label>
                         </div>
-                        <div class="radio-option" data-value="ALWAYS">
-                            <input type="radio" name="transfer" value="ALWAYS" class="radio-input">
-                            <label class="radio-label">Always offer to transfer</label>
+                        <div class="radio-option" data-value="NEVER">
+                            <input type="radio" name="transfer" value="NEVER" class="radio-input">
+                            <label class="radio-label">Book meetings only (no live transfers)</label>
                         </div>
                     </div>
                 </div>
                 
                 <div class="form-group" id="transferNumberGroup">
-                    <label class="form-label">Warm Transfer Phone Number</label>
-                    <input type="tel" id="warmTransferNumber" class="input" placeholder="+1 555 123 4567">
+                    <label class="form-label">Sales Rep Phone Number</label>
+                    <input type="tel" id="warmTransferNumber" class="input" placeholder="+14155551234">
                     <span class="form-hint">E.164 format (e.g., +14155551234)</span>
                 </div>
             </div>
@@ -865,13 +840,6 @@
                 updateGreetingPreview(greetingMessage);
                 updateGreetingCharCount(greetingMessage);
                 
-                document.getElementById('qualificationThreshold').value = currentConfig.qualificationThreshold || 7;
-                document.getElementById('thresholdValue').textContent = currentConfig.qualificationThreshold || 7;
-                
-                const maxDurationMinutes = Math.round((currentConfig.maxCallDurationSeconds || 900) / 60);
-                document.getElementById('maxDuration').value = maxDurationMinutes;
-                document.getElementById('durationValue').textContent = maxDurationMinutes;
-                
                 document.getElementById('warmTransferNumber').value = currentConfig.warmTransferNumber || '';
                 
                 const transferStrategy = currentConfig.warmTransferStrategy || 'QUALIFIED_ONLY';
@@ -897,8 +865,6 @@
             return {
                 voiceId: selectedVoiceId,
                 greetingMessage: document.getElementById('greetingMessage')?.value || '',
-                qualificationThreshold: parseInt(document.getElementById('qualificationThreshold')?.value || 7),
-                maxDuration: parseInt(document.getElementById('maxDuration')?.value || 15),
                 warmTransferStrategy: document.querySelector('.radio-option.selected')?.dataset.value || 'QUALIFIED_ONLY',
                 warmTransferNumber: document.getElementById('warmTransferNumber')?.value || '',
             };
@@ -938,12 +904,6 @@
             
             // Text inputs
             ['greetingMessage', 'warmTransferNumber'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.addEventListener('input', updateSaveButtonVisibility);
-            });
-            
-            // Sliders
-            ['qualificationThreshold', 'maxDuration'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.addEventListener('input', updateSaveButtonVisibility);
             });
@@ -1003,15 +963,6 @@
                 });
             });
             
-            // Slider handlers
-            document.getElementById('qualificationThreshold').addEventListener('input', function() {
-                document.getElementById('thresholdValue').textContent = this.value;
-            });
-            
-            document.getElementById('maxDuration').addEventListener('input', function() {
-                document.getElementById('durationValue').textContent = this.value;
-            });
-            
             // Greeting message handlers
             const greetingInput = document.getElementById('greetingMessage');
             if (greetingInput) {
@@ -1046,8 +997,6 @@
                 const updates = {
                     voiceId: selectedVoiceId,
                     greetingMessage: greetingMessage || null,
-                    qualificationThreshold: parseInt(document.getElementById('qualificationThreshold').value),
-                    maxCallDurationSeconds: parseInt(document.getElementById('maxDuration').value) * 60,
                     warmTransferStrategy: transferStrategy,
                     warmTransferNumber: document.getElementById('warmTransferNumber').value || null,
                 };
