@@ -254,8 +254,8 @@
         
         .voice-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 16px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
         
         .voice-card {
@@ -599,12 +599,6 @@
             display: block;
         }
         
-            @media (max-width: 1200px) {
-            .voice-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
         @media (max-width: 768px) {
             .nav-links {
                 gap: 20px;
@@ -782,32 +776,22 @@
         document.getElementById('userName').textContent = user.email.split('@')[0];
         document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
         
-        // Cartesia Sonic 3 Voice Options
+        // Cartesia Sonic 3 Voice Options - Curated Selection
         const VOICES = [
             {
-                id: "79a125e8-cd45-4c13-8a67-188112f4dd22",
-                name: "Professional Male",
-                description: "Confident, clear, business-appropriate voice for professional settings"
-            },
-            {
-                id: "a0e99841-438c-4a64-b679-ae501e7d6091",
-                name: "Friendly Female",
-                description: "Warm, approachable, conversational tone perfect for customer service"
-            },
-            {
-                id: "694f9389-aac1-45b6-b726-9d9369183238",
-                name: "Authoritative Male",
-                description: "Deep, commanding voice that conveys expertise and trust"
-            },
-            {
-                id: "b7d50908-b17c-442d-ad8d-810c63997ed9",
-                name: "Energetic Female",
-                description: "Upbeat, enthusiastic voice ideal for modern, dynamic brands"
+                id: "228fca29-3a0a-435c-8728-5cb483251068",
+                name: "Kiefer",
+                description: "Neutral, confident voice - the safe, professional choice for any business"
             },
             {
                 id: "f786b574-daa5-4673-aa0c-cbe3e8534c02",
                 name: "Katie",
-                description: "Friendly, helpful voice with excellent clarity"
+                description: "Warm, engaging voice - friendly and approachable for customer service"
+            },
+            {
+                id: "9626c31c-bec5-4cca-baa8-f8ba9e84c8bc",
+                name: "Jacqueline",
+                description: "Polished, premium voice - sophisticated and professional for high-end brands"
             }
         ];
         
@@ -872,7 +856,7 @@
                 currentConfig.name = tenant.name; // Store tenant name for preview
                 
                 // Set voice selection
-                selectedVoiceId = currentConfig.voiceId || VOICES[4].id; // Default to Katie
+                selectedVoiceId = currentConfig.voiceId || VOICES[1].id; // Default to Katie
                 renderVoices();
                 
                 // Set form values
