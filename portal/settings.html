@@ -699,7 +699,7 @@
                 </div>
                 
                 <div class="settings-section billing-section">
-                    <h2 class="section-title">Billing</h2>
+                        <h2 class="section-title">Billing</h2>
                     
                     ${usage && usage.customer ? `
                         ${usage.customer.plan === 'ENTERPRISE' ? `
@@ -758,28 +758,28 @@
                             <!-- Standard Plans (Growth/Scale) -->
                             <div class="billing-plan-card">
                                 <div class="plan-header">
-                                    <span class="plan-badge">${usage.customer.plan}</span>
+                                        <span class="plan-badge">${usage.customer.plan}</span>
                                     <div class="plan-price">${usage.pricing ? `£${(usage.pricing.monthlyFee / 100).toFixed(2)}` : '—'}<span class="plan-period">/month</span></div>
-                                </div>
+                                    </div>
                                 
                                 <div class="billing-details">
                                     <div class="billing-row">
                                         <span class="billing-label">Calls This Month</span>
                                         <span class="billing-value">${usage.usage.callCount}</span>
-                                    </div>
+                                </div>
                                     
                                     ${usage.usage.qualifiedLeads > 0 ? `
                                         <div class="billing-row">
                                             <span class="billing-label">Qualified Leads</span>
                                             <span class="billing-value">${usage.usage.qualifiedLeads}</span>
-                                        </div>
+                            </div>
                                     ` : ''}
                                     
                                     ${usage.usage.meetings > 0 ? `
                                         <div class="billing-row">
                                             <span class="billing-label">Meetings Booked</span>
                                             <span class="billing-value">${usage.usage.meetings}</span>
-                                        </div>
+                                </div>
                                     ` : ''}
                                     
                                     ${usage.pricing ? `
@@ -787,7 +787,7 @@
                                         <div class="billing-row total-row">
                                             <span class="billing-label">Estimated Total</span>
                                             <span class="billing-value total-value">£${(usage.pricing.estimatedTotal / 100).toFixed(2)}</span>
-                                        </div>
+                            </div>
                                     ` : ''}
                                 </div>
                             </div>
@@ -800,7 +800,7 @@
                                     <button class="btn btn-outline btn-small" onclick="updatePaymentMethod()">
                                         ${usage.paymentMethod ? 'Update' : 'Add Card'}
                                     </button>
-                                </div>
+                                    </div>
                                 <div class="payment-method-value">
                                     ${usage.paymentMethod || 'No payment method on file'}
                                 </div>
@@ -809,22 +809,80 @@
                             <div class="billing-cycle-section">
                                 <span class="billing-label">Next Invoice</span>
                                 <span class="billing-value">${usage.customer.billingCycleEnd ? formatDate(usage.customer.billingCycleEnd) : 'N/A'}</span>
-                            </div>
+                        </div>
                             
                             <button class="btn btn-secondary btn-full" onclick="viewInvoices()">
                                 View Billing History
                             </button>
                         </div>
                     ` : `
+                        <!-- Demo/Placeholder Enterprise Plan -->
+                        <div style="margin-bottom: 16px; padding: 12px 16px; background: rgba(255, 149, 0, 0.08); border: 1px solid rgba(255, 149, 0, 0.2); border-radius: 12px;">
+                            <p style="font-size: 13px; color: #ff9500; margin: 0;">
+                                <strong>Preview Mode:</strong> Billing not yet configured. Contact support to set up your account.
+                            </p>
+                    </div>
                         <div class="billing-plan-card">
-                            <div style="text-align: center; padding: 40px 20px;">
-                                <p style="color: var(--text-secondary); font-size: 15px; margin-bottom: 16px;">
-                                    Billing information is being set up.
-                                </p>
-                                <p style="color: var(--text-secondary); font-size: 13px;">
-                                    Contact support to complete your billing setup.
-                                </p>
+                            <div class="plan-header">
+                                <span class="plan-badge enterprise-badge">Enterprise</span>
+                                <div class="plan-price">£3,000<span class="plan-period">/month</span></div>
                             </div>
+                            
+                            <div class="billing-details">
+                                <div class="billing-row">
+                                    <span class="billing-label">Implementation Fee</span>
+                                    <span class="billing-value status-unpaid">Unpaid</span>
+                                </div>
+                                
+                                <div class="billing-row">
+                                    <span class="billing-label">Monthly Retainer</span>
+                                    <span class="billing-value">£3,000</span>
+                                </div>
+                                
+                                <div class="billing-row">
+                                    <span class="billing-label">Included Minutes</span>
+                                    <span class="billing-value">10,000</span>
+                                </div>
+                                
+                                <div class="billing-row">
+                                    <span class="billing-label">Minutes Used</span>
+                                    <span class="billing-value">12,847</span>
+                                </div>
+                                
+                                <div class="billing-row overage-row">
+                                    <span class="billing-label">Overage Minutes</span>
+                                    <span class="billing-value overage-value">+2,847</span>
+                                </div>
+                                
+                                <div class="billing-row">
+                                    <span class="billing-label">Overage Cost</span>
+                                    <span class="billing-value">£427.05</span>
+                                </div>
+                                
+                                <div class="billing-divider"></div>
+                                
+                                <div class="billing-row total-row">
+                                    <span class="billing-label">Estimated Total</span>
+                                    <span class="billing-value total-value">£3,427.05</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="billing-actions">
+                            <div class="payment-method-section">
+                                <div class="payment-method-header">
+                                    <span class="billing-label">Payment Method</span>
+                                    <button class="btn btn-outline btn-small" onclick="updatePaymentMethod()">Update</button>
+                                </div>
+                                <div class="payment-method-value">Visa •••• 4242</div>
+                            </div>
+                            
+                            <div class="billing-cycle-section">
+                                <span class="billing-label">Next Invoice</span>
+                                <span class="billing-value">${new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                            </div>
+                            
+                            <button class="btn btn-secondary btn-full" onclick="viewInvoices()">View Billing History</button>
                         </div>
                     `}
                 </div>
@@ -851,9 +909,9 @@
         function formatDate(dateString) {
             if (!dateString) return 'N/A';
             try {
-                const date = new Date(dateString);
+            const date = new Date(dateString);
                 if (isNaN(date.getTime())) return 'Invalid date';
-                return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
             } catch (e) {
                 return 'Invalid date';
             }
@@ -876,7 +934,7 @@
                 if (error.message && error.message.includes('404')) {
                     alert('Billing account not found. Please contact support to set up billing.');
                 } else {
-                    alert('Failed to open payment portal. Please contact support.');
+                alert('Failed to open payment portal. Please contact support.');
                 }
             }
         }
