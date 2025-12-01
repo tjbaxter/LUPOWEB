@@ -354,7 +354,176 @@
             to { transform: rotate(360deg); }
         }
         
+        /* Premium Billing Styles */
+        .billing-section {
+            padding: 40px;
+        }
+        
+        .billing-plan-card {
+            background: linear-gradient(135deg, rgba(41, 151, 255, 0.05) 0%, rgba(41, 151, 255, 0.02) 100%);
+            border: 1px solid rgba(41, 151, 255, 0.15);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .plan-price {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+        
+        .plan-period {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-left: 4px;
+        }
+        
+        .enterprise-badge {
+            background: linear-gradient(135deg, rgba(41, 151, 255, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            border-color: rgba(41, 151, 255, 0.3);
+            font-size: 13px;
+            padding: 8px 16px;
+        }
+        
+        .billing-details {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .billing-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+        }
+        
+        .billing-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+        
+        .billing-value {
+            font-size: 16px;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .billing-value.total-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .billing-value.overage-value {
+            color: #ff9500;
+        }
+        
+        .status-paid {
+            color: var(--success);
+        }
+        
+        .status-unpaid {
+            color: var(--error);
+        }
+        
+        .overage-row {
+            background: rgba(255, 149, 0, 0.05);
+            margin: 0 -16px;
+            padding: 12px 16px;
+            border-radius: 8px;
+        }
+        
+        .total-row {
+            margin-top: 8px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .billing-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 8px 0;
+        }
+        
+        .billing-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .payment-method-section {
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+        
+        .payment-method-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .payment-method-value {
+            font-size: 15px;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+        }
+        
+        .billing-cycle-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+        }
+        
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+        
+        .btn-full {
+            width: 100%;
+            justify-content: center;
+        }
+        
         @media (max-width: 768px) {
+            .billing-section {
+                padding: 24px;
+            }
+            
+            .billing-plan-card {
+                padding: 24px;
+            }
+            
+            .plan-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .plan-price {
+                font-size: 28px;
+            }
+            
             .action-buttons {
                 flex-direction: column;
             }
@@ -441,10 +610,19 @@
         
         async function loadSettings() {
             try {
-                const [tenant, usage] = await Promise.all([
-                    apiRequest('/v1/tenant'),
-                    apiRequest('/v1/billing/usage').catch(() => null)
-                ]);
+                console.log('Loading settings...');
+                const tenant = await apiRequest('/v1/tenant');
+                console.log('Tenant loaded:', tenant);
+                
+                let usage = null;
+                try {
+                    usage = await apiRequest('/v1/billing/usage');
+                    console.log('Billing usage loaded:', usage);
+                } catch (error) {
+                    console.warn('Billing data not available:', error);
+                    console.warn('Error details:', error.message, error.status);
+                    // Continue without usage data - billing section will show "No billing data"
+                }
                 
                 renderSettings(tenant, usage);
             } catch (error) {
@@ -452,6 +630,7 @@
                 document.getElementById('settingsContent').innerHTML = `
                     <div class="settings-section">
                         <p style="color: var(--text-secondary);">Failed to load settings. Please refresh the page.</p>
+                        <p style="color: var(--text-secondary); font-size: 12px; margin-top: 8px;">Error: ${error.message}</p>
                     </div>
                 `;
             }
@@ -519,53 +698,136 @@
                     </div>
                 </div>
                 
-                ${usage ? `
-                    <div class="settings-section">
-                        <h2 class="section-title">Billing</h2>
-                        <div class="info-list">
-                            <div class="info-item">
-                                <div class="info-content">
-                                    <div class="info-label">Current Plan</div>
-                                    <div class="info-value">
-                                        <span class="plan-badge">${usage.customer.plan}</span>
-                                        ${usage.pricing ? ` - £${(usage.pricing.monthlyFee / 100).toFixed(2)}/month` : ''}
+                <div class="settings-section billing-section">
+                    <h2 class="section-title">Billing</h2>
+                    
+                    ${usage && usage.customer ? `
+                        ${usage.customer.plan === 'ENTERPRISE' ? `
+                            <!-- Enterprise Plan -->
+                            <div class="billing-plan-card">
+                                <div class="plan-header">
+                                    <span class="plan-badge enterprise-badge">Enterprise</span>
+                                    <div class="plan-price">£3,000<span class="plan-period">/month</span></div>
+                                </div>
+                                
+                                <div class="billing-details">
+                                    <div class="billing-row">
+                                        <span class="billing-label">Implementation Fee</span>
+                                        <span class="billing-value ${usage.enterprise?.implementationFeePaid ? 'status-paid' : 'status-unpaid'}">
+                                            ${usage.enterprise?.implementationFeePaid ? 'Paid' : 'Unpaid'}
+                                        </span>
                                     </div>
-                                </div>
-                                <button class="btn btn-outline" onclick="upgradePlan()">
-                                    Upgrade Plan
-                                </button>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-content">
-                                    <div class="info-label">Payment Method</div>
-                                    <div class="info-value">${usage.paymentMethod || 'No payment method on file'}</div>
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-content">
-                                    <div class="info-label">Next Invoice</div>
-                                    <div class="info-value">${formatDate(usage.customer.billingCycleEnd)}</div>
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-content">
-                                    <div class="info-label">Amount Due</div>
-                                    <div class="info-value info-value-large">
-                                        ${usage.pricing ? `£${(usage.pricing.estimatedTotal / 100).toFixed(2)}` : '£0.00'}
+                                    
+                                    <div class="billing-row">
+                                        <span class="billing-label">Monthly Retainer</span>
+                                        <span class="billing-value">£3,000</span>
                                     </div>
+                                    
+                                    <div class="billing-row">
+                                        <span class="billing-label">Included Minutes</span>
+                                        <span class="billing-value">${usage.pricing?.includedMinutes?.toLocaleString() || '10,000'}</span>
+                                    </div>
+                                    
+                                    ${usage.pricing?.totalMinutes !== undefined ? `
+                                        <div class="billing-row">
+                                            <span class="billing-label">Minutes Used</span>
+                                            <span class="billing-value">${usage.pricing.totalMinutes.toLocaleString()}</span>
+                                        </div>
+                                        
+                                        ${usage.pricing.overageMinutes > 0 ? `
+                                            <div class="billing-row overage-row">
+                                                <span class="billing-label">Overage Minutes</span>
+                                                <span class="billing-value overage-value">+${usage.pricing.overageMinutes.toLocaleString()}</span>
+                                            </div>
+                                            <div class="billing-row">
+                                                <span class="billing-label">Overage Cost</span>
+                                                <span class="billing-value">£${(usage.pricing.overageCost / 100).toFixed(2)}</span>
+                                            </div>
+                                        ` : ''}
+                                        
+                                        <div class="billing-divider"></div>
+                                        
+                                        <div class="billing-row total-row">
+                                            <span class="billing-label">Estimated Total</span>
+                                            <span class="billing-value total-value">£${(usage.pricing.estimatedTotal / 100).toFixed(2)}</span>
+                                        </div>
+                                    ` : ''}
                                 </div>
+                            </div>
+                        ` : `
+                            <!-- Standard Plans (Growth/Scale) -->
+                            <div class="billing-plan-card">
+                                <div class="plan-header">
+                                    <span class="plan-badge">${usage.customer.plan}</span>
+                                    <div class="plan-price">${usage.pricing ? `£${(usage.pricing.monthlyFee / 100).toFixed(2)}` : '—'}<span class="plan-period">/month</span></div>
+                                </div>
+                                
+                                <div class="billing-details">
+                                    <div class="billing-row">
+                                        <span class="billing-label">Calls This Month</span>
+                                        <span class="billing-value">${usage.usage.callCount}</span>
+                                    </div>
+                                    
+                                    ${usage.usage.qualifiedLeads > 0 ? `
+                                        <div class="billing-row">
+                                            <span class="billing-label">Qualified Leads</span>
+                                            <span class="billing-value">${usage.usage.qualifiedLeads}</span>
+                                        </div>
+                                    ` : ''}
+                                    
+                                    ${usage.usage.meetings > 0 ? `
+                                        <div class="billing-row">
+                                            <span class="billing-label">Meetings Booked</span>
+                                            <span class="billing-value">${usage.usage.meetings}</span>
+                                        </div>
+                                    ` : ''}
+                                    
+                                    ${usage.pricing ? `
+                                        <div class="billing-divider"></div>
+                                        <div class="billing-row total-row">
+                                            <span class="billing-label">Estimated Total</span>
+                                            <span class="billing-value total-value">£${(usage.pricing.estimatedTotal / 100).toFixed(2)}</span>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `}
+                        
+                        <div class="billing-actions">
+                            <div class="payment-method-section">
+                                <div class="payment-method-header">
+                                    <span class="billing-label">Payment Method</span>
+                                    <button class="btn btn-outline btn-small" onclick="updatePaymentMethod()">
+                                        ${usage.paymentMethod ? 'Update' : 'Add Card'}
+                                    </button>
+                                </div>
+                                <div class="payment-method-value">
+                                    ${usage.paymentMethod || 'No payment method on file'}
+                                </div>
+                            </div>
+                            
+                            <div class="billing-cycle-section">
+                                <span class="billing-label">Next Invoice</span>
+                                <span class="billing-value">${usage.customer.billingCycleEnd ? formatDate(usage.customer.billingCycleEnd) : 'N/A'}</span>
+                            </div>
+                            
+                            <button class="btn btn-secondary btn-full" onclick="viewInvoices()">
+                                View Billing History
+                            </button>
+                        </div>
+                    ` : `
+                        <div class="billing-plan-card">
+                            <div style="text-align: center; padding: 40px 20px;">
+                                <p style="color: var(--text-secondary); font-size: 15px; margin-bottom: 16px;">
+                                    Billing information is being set up.
+                                </p>
+                                <p style="color: var(--text-secondary); font-size: 13px;">
+                                    Contact support to complete your billing setup.
+                                </p>
                             </div>
                         </div>
-                        <div class="action-buttons">
-                            <button class="btn btn-secondary" onclick="updatePaymentMethod()">
-                                Update Payment Method
-                            </button>
-                            <button class="btn btn-secondary" onclick="viewInvoices()">
-                                View Invoices
-                            </button>
-                        </div>
-                    </div>
-                ` : ''}
+                    `}
+                </div>
                 
                 <div class="settings-section danger-zone">
                     <h2 class="section-title">Danger Zone</h2>
@@ -587,8 +849,14 @@
         }
         
         function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            if (!dateString) return 'N/A';
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) return 'Invalid date';
+                return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            } catch (e) {
+                return 'Invalid date';
+            }
         }
         
         function changePassword() {
@@ -598,25 +866,152 @@
         async function updatePaymentMethod() {
             try {
                 const response = await apiRequest('/v1/billing/portal', { method: 'POST' });
-                if (response.url) {
+                if (response && response.url) {
                     window.location.href = response.url;
                 } else {
-                    alert('Payment portal not available. Please contact support.');
+                    alert('Payment portal not available. Please ensure billing is set up or contact support.');
                 }
             } catch (error) {
                 console.error('Error opening payment portal:', error);
-                alert('Failed to open payment portal. Please contact support.');
+                if (error.message && error.message.includes('404')) {
+                    alert('Billing account not found. Please contact support to set up billing.');
+                } else {
+                    alert('Failed to open payment portal. Please contact support.');
+                }
             }
         }
         
-        function viewInvoices() {
-            // TODO: Create invoices page or show modal
-            alert('Invoices page coming soon. For now, please contact support for invoice history.');
+        async function viewInvoices() {
+            try {
+                const invoices = await apiRequest('/v1/billing/invoices').catch(error => {
+                    console.error('Error loading invoices:', error);
+                    alert('Unable to load invoices. Please ensure billing is set up or contact support.');
+                    return [];
+                });
+                
+                if (invoices.length === 0) {
+                    alert('No invoices found.');
+                    return;
+                }
+                
+                // Create modal for invoices
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.8);
+                    backdrop-filter: blur(20px);
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 24px;
+                `;
+                
+                const modalContent = document.createElement('div');
+                modalContent.style.cssText = `
+                    background: var(--bg-secondary);
+                    border: 1px solid var(--border);
+                    border-radius: 20px;
+                    padding: 32px;
+                    max-width: 600px;
+                    width: 100%;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                `;
+                
+                let invoicesHTML = '<h2 style="font-size: 24px; font-weight: 600; margin-bottom: 24px;">Billing History</h2>';
+                invoicesHTML += '<div style="display: flex; flex-direction: column; gap: 16px;">';
+                
+                invoices.forEach(invoice => {
+                    const date = new Date(invoice.created * 1000);
+                    const status = invoice.status === 'paid' ? 'Paid' : invoice.status === 'open' ? 'Pending' : 'Draft';
+                    const statusColor = invoice.status === 'paid' ? 'var(--success)' : invoice.status === 'open' ? '#ff9500' : 'var(--text-secondary)';
+                    const amount = invoice.amount_paid || invoice.amount_due || 0;
+                    
+                    invoicesHTML += `
+                        <div style="
+                            padding: 20px;
+                            background: rgba(255, 255, 255, 0.02);
+                            border: 1px solid var(--border);
+                            border-radius: 12px;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        ">
+                            <div style="flex: 1;">
+                                <div style="font-size: 15px; font-weight: 500; margin-bottom: 4px;">
+                                    ${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                                </div>
+                                <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">
+                                    Invoice #${invoice.number || invoice.id.slice(-8)}
+                                </div>
+                                ${invoice.invoice_pdf ? `
+                                    <a href="${invoice.invoice_pdf}" target="_blank" style="
+                                        font-size: 13px;
+                                        color: var(--accent);
+                                        text-decoration: none;
+                                        display: inline-flex;
+                                        align-items: center;
+                                        gap: 4px;
+                                    ">
+                                        Download PDF →
+                                    </a>
+                                ` : ''}
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 18px; font-weight: 600; margin-bottom: 4px;">
+                                    £${(amount / 100).toFixed(2)}
+                                </div>
+                                <div style="font-size: 12px; color: ${statusColor}; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500;">
+                                    ${status}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                invoicesHTML += '</div>';
+                invoicesHTML += `
+                    <button onclick="this.closest('div[style*=\"position: fixed\"]').remove()" 
+                            style="
+                                margin-top: 24px;
+                                width: 100%;
+                                padding: 12px;
+                                background: var(--bg-primary);
+                                border: 1px solid var(--border);
+                                border-radius: 10px;
+                                color: var(--text-primary);
+                                font-size: 14px;
+                                font-weight: 500;
+                                cursor: pointer;
+                            ">
+                        Close
+                    </button>
+                `;
+                
+                modalContent.innerHTML = invoicesHTML;
+                modal.appendChild(modalContent);
+                document.body.appendChild(modal);
+                
+                // Close on background click
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.remove();
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading invoices:', error);
+                alert('Failed to load invoices. Please try again or contact support.');
+            }
         }
         
         function upgradePlan() {
-            // TODO: Create upgrade flow
-            alert('Plan upgrade coming soon. Please contact support to upgrade your plan.');
+            // Enterprise plans are set up manually via Stripe
+            alert('To upgrade your plan, please contact support. Enterprise plans are configured with custom pricing.');
         }
         
         function cancelSubscription() {
