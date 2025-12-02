@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrations – LUPO</title>
+    <link rel="icon" type="image/png" href="/lupo-head-logo copy.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --bg-primary: #000000;
+            --bg-secondary: #161617;
+            --accent: #2997ff;
+            --accent-hover: #409cff;
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #34c759;
+            --warning: #ff9500;
+            --error: #ff3b30;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+        }
+        
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.03;
+            background: radial-gradient(circle at 20% 50%, var(--accent) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, #667eea 0%, transparent 50%);
+            animation: bgShift 30s ease-in-out infinite;
+        }
+        
+        @keyframes bgShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            33% { transform: rotate(120deg) scale(1.1); }
+            66% { transform: rotate(240deg) scale(0.9); }
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(0, 0, 0, 0.72);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            position: relative;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-primary);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .user-menu:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+        }
+        
+        .main-content {
+            margin-top: 60px;
+            padding: 48px 24px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .page-header {
+            margin-bottom: 48px;
+        }
+        
+        .page-title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.03em;
+        }
+        
+        .page-subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        
+        .integration-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .integration-section:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .section-icon {
+            font-size: 24px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        
+        .section-badge {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-optional {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+        }
+        
+        .badge-required {
+            background: rgba(255, 59, 48, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+        }
+        
+        .section-description {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+        }
+        
+        /* Not Connected State */
+        .not-connected {
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .not-connected-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        
+        .provider-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .provider-btn {
+            padding: 14px 20px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .provider-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        /* Connected State */
+        .connected-card {
+            background: rgba(52, 199, 89, 0.05);
+            border: 1px solid rgba(52, 199, 89, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        
+        .connected-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        
+        .connected-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .connected-badge {
+            color: var(--success);
+            font-size: 18px;
+        }
+        
+        .connected-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .detail-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        
+        .detail-value {
+            font-size: 15px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .connected-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .btn-danger {
+            background: rgba(255, 59, 48, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+        }
+        
+        .btn-danger:hover {
+            background: rgba(255, 59, 48, 0.2);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+            color: var(--text-primary);
+        }
+        
+        .form-help {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+        
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+        
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .radio-option {
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .radio-option:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        
+        .radio-option.selected {
+            background: rgba(41, 151, 255, 0.1);
+            border-color: var(--accent);
+        }
+        
+        .radio-input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+        
+        /* Coming Soon Section */
+        .coming-soon {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        .coming-soon-badge {
+            background: rgba(255, 149, 0, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(255, 149, 0, 0.2);
+        }
+        
+        /* Warning Alert */
+        .warning-alert {
+            background: rgba(255, 149, 0, 0.1);
+            border: 1px solid rgba(255, 149, 0, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 12px;
+        }
+        
+        .alert-icon {
+            font-size: 20px;
+        }
+        
+        .alert-content {
+            flex: 1;
+        }
+        
+        .alert-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .alert-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 24px;
+            }
+            
+            .main-content {
+                padding: 32px 16px;
+            }
+            
+            .page-title {
+                font-size: 32px;
+            }
+            
+            .provider-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .connected-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <nav>
+        <div class="nav-content">
+            <a href="/portal/dashboard.html" class="logo">LUPO</a>
+            <div class="nav-links">
+                <a href="/portal/dashboard.html" class="nav-link">Dashboard</a>
+                <a href="/portal/calls.html" class="nav-link">Calls</a>
+                <a href="/portal/knowledge.html" class="nav-link">Knowledge</a>
+                <a href="/portal/your-agent.html" class="nav-link">Your Agent</a>
+                <a href="/portal/integrations.html" class="nav-link active">Integrations</a>
+                <a href="/portal/settings.html" class="nav-link">Settings</a>
+            </div>
+            <div class="nav-user">
+                <div class="user-menu" onclick="showUserMenu()">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <span id="userName">User</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Integrations</h1>
+            <p class="page-subtitle">Connect LUPO to your existing tools</p>
+        </div>
+        
+        <!-- CRM Integration Section -->
+        <div class="integration-section">
+            <div class="section-header">
+                <span class="section-icon">📊</span>
+                <h2 class="section-title">CRM Integration</h2>
+                <span class="section-badge badge-optional">Optional</span>
+            </div>
+            <p class="section-description">Store qualified leads and call data in your CRM</p>
+            
+            <div id="crmContent">
+                <div class="not-connected">
+                    <p class="not-connected-text">Not connected – Lead data will be stored in LUPO only</p>
+                    <div class="provider-grid">
+                        <button class="provider-btn" onclick="connectCRM('salesforce')">
+                            <span>⚡</span>
+                            Connect Salesforce
+                        </button>
+                        <button class="provider-btn" onclick="connectCRM('hubspot')">
+                            <span>🔶</span>
+                            Connect HubSpot
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Meeting Booking Section -->
+        <div class="integration-section">
+            <div class="section-header">
+                <span class="section-icon">📅</span>
+                <h2 class="section-title">Meeting Booking</h2>
+                <span class="section-badge badge-required">Required</span>
+            </div>
+            <p class="section-description">How LUPO schedules demos and calls</p>
+            
+            <div id="bookingContent">
+                <div class="warning-alert">
+                    <span class="alert-icon">⚠️</span>
+                    <div class="alert-content">
+                        <div class="alert-title">No booking system connected</div>
+                        <div class="alert-text">LUPO cannot book meetings until you connect a booking system</div>
+                    </div>
+                </div>
+                
+                <div class="not-connected">
+                    <p class="not-connected-text"><strong>Enterprise (10+ reps):</strong></p>
+                    <div class="provider-grid">
+                        <button class="provider-btn" onclick="connectBooking('chilipiper')">
+                            <span>🌶️</span>
+                            Connect Chili Piper
+                        </button>
+                        <button class="provider-btn" onclick="connectBooking('calendly-teams')">
+                            <span>📆</span>
+                            Connect Calendly Teams
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="not-connected" style="margin-top: 16px;">
+                    <p class="not-connected-text"><strong>Small Business (1-10 reps):</strong></p>
+                    <div class="provider-grid">
+                        <button class="provider-btn" onclick="connectBooking('calcom')">
+                            <span>📅</span>
+                            Connect Cal.com
+                        </button>
+                        <button class="provider-btn" onclick="connectBooking('calendly')">
+                            <span>📆</span>
+                            Connect Calendly
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="not-connected" style="margin-top: 16px;">
+                    <p class="not-connected-text"><strong>Solo / Founder:</strong></p>
+                    <div class="provider-grid">
+                        <button class="provider-btn" onclick="connectBooking('google')">
+                            <span>🗓️</span>
+                            Connect Google Calendar
+                        </button>
+                        <button class="provider-btn" onclick="connectBooking('outlook')">
+                            <span>📨</span>
+                            Connect Outlook
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Coming Soon Section -->
+        <div class="integration-section coming-soon">
+            <div class="section-header">
+                <span class="section-icon">🔔</span>
+                <h2 class="section-title">Notifications</h2>
+                <span class="section-badge coming-soon-badge">Coming Soon</span>
+            </div>
+            <p class="section-description">Get alerts for qualified leads</p>
+            
+            <div class="not-connected">
+                <p class="not-connected-text">Coming soon:</p>
+                <ul style="margin-left: 20px; margin-top: 12px; color: var(--text-secondary); font-size: 14px;">
+                    <li style="margin-bottom: 6px;">Slack notifications</li>
+                    <li style="margin-bottom: 6px;">Email digests</li>
+                    <li>SMS alerts</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Settings Modal (Google Calendar Example) -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Google Calendar Settings</h3>
+                <button class="modal-close" onclick="closeSettingsModal()">✕</button>
+            </div>
+            
+            <form onsubmit="saveSettings(event)">
+                <div class="form-group">
+                    <label class="form-label">Meeting Duration</label>
+                    <div class="radio-group">
+                        <label class="radio-option" onclick="selectDuration(15)">
+                            <input type="radio" name="duration" value="15" class="radio-input">
+                            <span>15 minutes</span>
+                        </label>
+                        <label class="radio-option selected" onclick="selectDuration(30)">
+                            <input type="radio" name="duration" value="30" class="radio-input" checked>
+                            <span>30 minutes</span>
+                        </label>
+                        <label class="radio-option" onclick="selectDuration(45)">
+                            <input type="radio" name="duration" value="45" class="radio-input">
+                            <span>45 minutes</span>
+                        </label>
+                        <label class="radio-option" onclick="selectDuration(60)">
+                            <input type="radio" name="duration" value="60" class="radio-input">
+                            <span>60 minutes</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Meeting Title Template</label>
+                    <input type="text" class="form-input" value="Demo with {company}" placeholder="Demo with {company}">
+                    <p class="form-help">Available variables: {company}, {name}, {title}</p>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Meeting Description Template</label>
+                    <textarea class="form-textarea" placeholder="Sales demo with {name} from {company}.
+
+Call notes: {notes}
+
+LUPO call recording will be attached."></textarea>
+                    <p class="form-help">Customize the meeting description that appears in calendar invites</p>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Video Conference</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="addMeet" checked style="width: 18px; height: 18px; accent-color: var(--accent);">
+                        <label for="addMeet" style="cursor: pointer; user-select: none;">Add Google Meet link automatically</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Buffer Time</label>
+                    <select class="form-select">
+                        <option value="0">No buffer</option>
+                        <option value="5">5 minutes</option>
+                        <option value="10">10 minutes</option>
+                        <option value="15">15 minutes</option>
+                        <option value="30">30 minutes</option>
+                    </select>
+                    <p class="form-help">Add buffer time before/after meetings to prevent back-to-back bookings</p>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeSettingsModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Disconnect Confirmation Modal -->
+    <div id="disconnectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">⚠️ Disconnect Integration?</h3>
+                <button class="modal-close" onclick="closeDisconnectModal()">✕</button>
+            </div>
+            
+            <div style="margin-bottom: 24px;">
+                <p style="margin-bottom: 16px; color: var(--text-primary);">This will:</p>
+                <ul style="margin-left: 20px; color: var(--text-secondary); font-size: 14px;">
+                    <li style="margin-bottom: 8px;">Stop LUPO from booking meetings</li>
+                    <li style="margin-bottom: 8px;">Revoke access to your account</li>
+                    <li style="margin-bottom: 8px;">Require reconfiguration if reconnected</li>
+                </ul>
+                <p style="margin-top: 16px; color: var(--text-secondary); font-size: 14px;">
+                    Active calls will fail to book meetings until you connect a new booking system.
+                </p>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeDisconnectModal()">Cancel</button>
+                <button class="btn btn-danger" onclick="confirmDisconnect()">Yes, Disconnect</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:3000'
+            : 'https://lupo-sales-api.fly.dev';
+        
+        const token = localStorage.getItem('lupo_token');
+        const userStr = localStorage.getItem('lupo_user');
+        
+        if (!token || !userStr) {
+            window.location.href = '/login.html';
+        }
+        
+        const user = JSON.parse(userStr);
+        
+        document.getElementById('userName').textContent = user.email.split('@')[0];
+        document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
+        
+        let currentIntegrations = {
+            crm: null,
+            booking: null
+        };
+        
+        // Load integrations on page load
+        async function loadIntegrations() {
+            try {
+                // TODO: Replace with actual API endpoint when backend is ready
+                // const response = await fetch(`${API_URL}/v1/integrations`, {
+                //     headers: {
+                //         'Authorization': `Bearer ${token}`
+                //     }
+                // });
+                // const data = await response.json();
+                // currentIntegrations = data;
+                
+                // For now, check localStorage for demo purposes
+                const savedCRM = localStorage.getItem('lupo_crm_integration');
+                const savedBooking = localStorage.getItem('lupo_booking_integration');
+                
+                if (savedCRM) {
+                    currentIntegrations.crm = JSON.parse(savedCRM);
+                    renderCRMConnected(currentIntegrations.crm);
+                }
+                
+                if (savedBooking) {
+                    currentIntegrations.booking = JSON.parse(savedBooking);
+                    renderBookingConnected(currentIntegrations.booking);
+                }
+            } catch (error) {
+                console.error('Failed to load integrations:', error);
+            }
+        }
+        
+        function renderCRMConnected(integration) {
+            const crmContent = document.getElementById('crmContent');
+            crmContent.innerHTML = `
+                <div class="connected-card">
+                    <div class="connected-header">
+                        <div class="connected-title">
+                            <span class="connected-badge">✓</span>
+                            <span>Connected to ${integration.provider === 'salesforce' ? 'Salesforce' : 'HubSpot'}</span>
+                        </div>
+                    </div>
+                    <div class="connected-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Account</span>
+                            <span class="detail-value">${integration.account || 'sales@company.com'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Connected</span>
+                            <span class="detail-value">${new Date(integration.connectedAt).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                    <div class="connected-actions">
+                        <button class="btn btn-danger" onclick="disconnectIntegration('crm', '${integration.provider}')">Disconnect</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderBookingConnected(integration) {
+            const bookingContent = document.getElementById('bookingContent');
+            const providerNames = {
+                'google': 'Google Calendar',
+                'outlook': 'Outlook',
+                'chilipiper': 'Chili Piper',
+                'calcom': 'Cal.com',
+                'calendly': 'Calendly',
+                'calendly-teams': 'Calendly Teams'
+            };
+            
+            bookingContent.innerHTML = `
+                <div class="connected-card">
+                    <div class="connected-header">
+                        <div class="connected-title">
+                            <span class="connected-badge">✓</span>
+                            <span>Connected to ${providerNames[integration.provider]}</span>
+                        </div>
+                    </div>
+                    <div class="connected-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Account</span>
+                            <span class="detail-value">${integration.account || user.email}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Default Duration</span>
+                            <span class="detail-value">${integration.settings?.duration || 30} minutes</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Meetings Booked</span>
+                            <span class="detail-value">${integration.meetingsBooked || 0} this month</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Connected</span>
+                            <span class="detail-value">${new Date(integration.connectedAt).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                    <div class="connected-actions">
+                        ${integration.provider === 'google' || integration.provider === 'outlook' ? 
+                            '<button class="btn btn-primary" onclick="openSettingsModal()">View Settings</button>' : 
+                            ''}
+                        <button class="btn btn-danger" onclick="disconnectIntegration('booking', '${integration.provider}')">Disconnect</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        async function connectCRM(provider) {
+            // Check if already have a CRM connected
+            if (currentIntegrations.crm) {
+                alert(`You're already connected to ${currentIntegrations.crm.provider}. Please disconnect it first before connecting a new CRM.`);
+                return;
+            }
+            
+            // TODO: Replace with actual OAuth flow when backend is ready
+            alert(`Redirecting to ${provider} OAuth...\n\nIn production, this will:\n1. Redirect to ${provider} authorization\n2. Get OAuth tokens\n3. Save to database\n4. Return here with connected status`);
+            
+            // For demo purposes, simulate connection
+            const integration = {
+                provider: provider,
+                account: user.email,
+                connectedAt: new Date().toISOString()
+            };
+            
+            localStorage.setItem('lupo_crm_integration', JSON.stringify(integration));
+            currentIntegrations.crm = integration;
+            renderCRMConnected(integration);
+        }
+        
+        async function connectBooking(provider) {
+            // Check if already have a booking system connected
+            if (currentIntegrations.booking) {
+                const providerNames = {
+                    'google': 'Google Calendar',
+                    'outlook': 'Outlook',
+                    'chilipiper': 'Chili Piper',
+                    'calcom': 'Cal.com',
+                    'calendly': 'Calendly',
+                    'calendly-teams': 'Calendly Teams'
+                };
+                alert(`You're already connected to ${providerNames[currentIntegrations.booking.provider]}. Please disconnect it first before connecting a new booking system.`);
+                return;
+            }
+            
+            // TODO: Replace with actual OAuth flow when backend is ready
+            alert(`Redirecting to ${provider} OAuth...\n\nIn production, this will:\n1. Redirect to ${provider} authorization\n2. Get OAuth tokens\n3. Save to database\n4. Return here with connected status`);
+            
+            // For demo purposes, simulate connection
+            const integration = {
+                provider: provider,
+                account: user.email,
+                connectedAt: new Date().toISOString(),
+                meetingsBooked: 0,
+                settings: {
+                    duration: 30,
+                    titleTemplate: 'Demo with {company}',
+                    addMeet: true
+                }
+            };
+            
+            localStorage.setItem('lupo_booking_integration', JSON.stringify(integration));
+            currentIntegrations.booking = integration;
+            renderBookingConnected(integration);
+        }
+        
+        let disconnectType = null;
+        let disconnectProvider = null;
+        
+        function disconnectIntegration(type, provider) {
+            disconnectType = type;
+            disconnectProvider = provider;
+            document.getElementById('disconnectModal').classList.add('active');
+        }
+        
+        async function confirmDisconnect() {
+            try {
+                // TODO: Replace with actual API call when backend is ready
+                // await fetch(`${API_URL}/v1/integrations/${disconnectType}`, {
+                //     method: 'DELETE',
+                //     headers: {
+                //         'Authorization': `Bearer ${token}`
+                //     }
+                // });
+                
+                // For demo purposes, clear from localStorage
+                if (disconnectType === 'crm') {
+                    localStorage.removeItem('lupo_crm_integration');
+                    currentIntegrations.crm = null;
+                } else {
+                    localStorage.removeItem('lupo_booking_integration');
+                    currentIntegrations.booking = null;
+                }
+                
+                closeDisconnectModal();
+                
+                // Reload page to show disconnected state
+                window.location.reload();
+            } catch (error) {
+                console.error('Failed to disconnect:', error);
+                alert('Failed to disconnect. Please try again.');
+            }
+        }
+        
+        function closeDisconnectModal() {
+            document.getElementById('disconnectModal').classList.remove('active');
+            disconnectType = null;
+            disconnectProvider = null;
+        }
+        
+        function openSettingsModal() {
+            document.getElementById('settingsModal').classList.add('active');
+        }
+        
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+        
+        function selectDuration(minutes) {
+            const radioOptions = document.querySelectorAll('.radio-option');
+            radioOptions.forEach(option => option.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+        }
+        
+        function saveSettings(event) {
+            event.preventDefault();
+            
+            // TODO: Save to backend API
+            alert('Settings saved successfully!');
+            closeSettingsModal();
+        }
+        
+        function showUserMenu() {
+            if (confirm('Do you want to logout?')) {
+                localStorage.removeItem('lupo_token');
+                localStorage.removeItem('lupo_user');
+                window.location.href = '/login.html';
+            }
+        }
+        
+        // Load integrations on page load
+        loadIntegrations();
+    </script>
+</body>
+</html>
+
