@@ -672,15 +672,11 @@
                         </svg>
                     Book a 15-min intro call
                 </a>
-                
-                <a href="#waitlist" class="btn-secondary" onclick="showWaitlist(event)">
-                    Join early access
-                </a>
                     </div>
                     
             <!-- Tech Stack -->
             <div class="tech-stack">
-                Telnyx · LiveKit · Deepgram · Groq · ZeroEntropy
+                Telnyx · OpenAI Realtime · Qdrant
                         </div>
                     </div>
                 </div>
@@ -802,7 +798,7 @@
             .catch(error => {
                 console.error('Error:', error);
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Request Early Access';
+                submitBtn.textContent = 'Let\'s Talk';
                 alert('Something went wrong. Please try again.');
             });
             
