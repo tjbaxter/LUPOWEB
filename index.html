@@ -8,6 +8,11 @@
     <link rel="icon" type="image/png" href="/lupo-head-logo copy.png">
     <link rel="apple-touch-icon" href="/lupo-head-logo copy.png">
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <!-- Open Graph -->
     <meta property="og:title" content="LUPO – AI for Inbound Sales Calls">
     <meta property="og:description" content="An AI SDR that answers your inbound calls and qualifies leads in real time.">
@@ -40,12 +45,14 @@
             line-height: 1.47059;
             font-weight: 400;
             letter-spacing: -0.022em;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            scroll-behavior: smooth;
         }
         
         /* Animated Background */
@@ -146,9 +153,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 80px 20px 20px;
+            padding: 140px 20px 100px;
             position: relative;
             z-index: 1;
+            min-height: 100vh;
         }
         
         .content-wrapper {
@@ -590,7 +598,7 @@
             }
             
             .main-container {
-                padding: 80px 20px 20px;
+                padding: 100px 20px 60px;
             }
             
             .cta-section {
@@ -630,6 +638,157 @@
                 height: 300px;
             }
         }
+        
+        /* Value Props Section Styles */
+        #value-props {
+            /* background removed - Vanta.js will inject animated canvas */
+            position: relative;
+            padding: 12rem 1.5rem 6rem 1.5rem;
+            overflow: hidden;
+        }
+        
+        #value-props * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+        }
+        
+        .value-props-bg-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.05), transparent);
+            pointer-events: none;
+        }
+        
+        .value-props-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .value-props-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .value-props-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .value-props-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .value-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+        }
+        
+        .value-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .value-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.15);
+        }
+        
+        .value-card:hover::before {
+            opacity: 1;
+        }
+        
+        .value-card-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1.5rem;
+            color: #3B82F6;
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover .value-card-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+        }
+        
+        .value-card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 0.5rem;
+        }
+        
+        .value-card-stat {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #3B82F6;
+            margin-bottom: 1rem;
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 6px;
+        }
+        
+        .value-card-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #A0A0A0;
+        }
+        
+        /* Responsive adjustments for value props */
+        @media (max-width: 767px) {
+            #value-props {
+                padding: 8rem 1.5rem 4rem 1.5rem;
+            }
+            
+            .value-props-title {
+                font-size: 2rem;
+            }
+            
+            .value-props-subtitle {
+                font-size: 1rem;
+            }
+            
+            .value-card {
+                padding: 2rem;
+            }
+        }
+        
+        /* Animation delays for stagger effect */
+        .value-card:nth-child(1) { transition-delay: 0.1s; }
+        .value-card:nth-child(2) { transition-delay: 0.2s; }
+        .value-card:nth-child(3) { transition-delay: 0.3s; }
+        .value-card:nth-child(4) { transition-delay: 0.4s; }
+        .value-card:nth-child(5) { transition-delay: 0.5s; }
+        .value-card:nth-child(6) { transition-delay: 0.6s; }
     </style>
 </head>
 <body>
@@ -680,6 +839,78 @@
                         </div>
                     </div>
                 </div>
+    
+    <!-- Value Propositions Section -->
+    <section id="value-props">
+        <div class="value-props-bg-gradient"></div>
+        
+        <div class="value-props-container">
+            <!-- Cards Grid -->
+            <div class="value-props-grid">
+                
+                <!-- Card 1: Speed -->
+                <div class="value-card">
+                    <svg class="value-card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    <h3 class="value-card-title">Instant Response</h3>
+                    <span class="value-card-stat">&lt;1 Second Pickup</span>
+                    <p class="value-card-description">LUPO answers every call instantly. While competitors are still ringing, you're already qualifying. 35-50% of sales go to the first responder.</p>
+                </div>
+                
+                <!-- Card 2: Coverage -->
+                <div class="value-card">
+                    <svg class="value-card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <h3 class="value-card-title">Always On</h3>
+                    <span class="value-card-stat">24/7/365 Coverage</span>
+                    <p class="value-card-description">After hours, weekends, holidays, PTO, volume spikes—LUPO never misses. Zero abandoned calls, zero revenue lost to timing.</p>
+                </div>
+                
+                <!-- Card 3: Consistency -->
+                <div class="value-card">
+                    <svg class="value-card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <h3 class="value-card-title">Perfect Qualification</h3>
+                    <span class="value-card-stat">100% Consistency</span>
+                    <p class="value-card-description">Every prospect gets identical BANT qualification. No variance, no bad days, no training ramp. Just consistent, high-quality pipeline.</p>
+                </div>
+                
+                <!-- Card 4: Handoff -->
+                <div class="value-card">
+                    <svg class="value-card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <h3 class="value-card-title">Warm Handoff</h3>
+                    <span class="value-card-stat">Context-Aware Transfer</span>
+                    <p class="value-card-description">LUPO qualifies, reaches your rep, briefs them, then introduces the prospect. Your team only talks to qualified buyers with full context.</p>
+                </div>
+                
+                <!-- Card 5: Integration -->
+                <div class="value-card">
+                    <svg class="value-card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
+                    </svg>
+                    <h3 class="value-card-title">Native CRM</h3>
+                    <span class="value-card-stat">HubSpot • Salesforce</span>
+                    <p class="value-card-description">Automatic CRM updates, meeting booking, call transcripts, and BANT notes. Zero manual data entry. Direct integration with your existing stack.</p>
+                </div>
+                
+                <!-- Card 6: ROI -->
+                <div class="value-card">
+                    <svg class="value-card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                    <h3 class="value-card-title">Clear Economics</h3>
+                    <span class="value-card-stat">3-4 Deals to Break Even</span>
+                    <p class="value-card-description">One human SDR: $6k/month, 40 hours/week. LUPO: Similar cost, 168 hours/week. Pays for itself with just 3-4 closed deals per year.</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
                 
     <!-- Waitlist Modal -->
     <div class="modal-overlay" id="waitlistModal">
@@ -850,6 +1081,57 @@
         
         // Start particle animation
         setInterval(createParticle, 1000);
+        
+        // Value Props Scroll Animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all cards
+            const cards = document.querySelectorAll('.value-card');
+            cards.forEach(card => observer.observe(card));
+        });
+    </script>
+    
+    <!-- Three.js library (required for Vanta) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    
+    <!-- Vanta.js NET effect -->
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    
+    <!-- Initialize Vanta animated background -->
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            // Only load on desktop for better performance
+            if (window.innerWidth > 768) {
+                VANTA.NET({
+                    el: "#value-props",
+                    mouseControls: true,
+                    touchControls: true,
+                    gyroControls: false,
+                    minHeight: 200.00,
+                    minWidth: 200.00,
+                    scale: 1.00,
+                    scaleMobile: 1.00,
+                    color: 0x3B82F6,        // Blue accent matching your CTA
+                    backgroundColor: 0x000000, // Pure black
+                    points: 8.00,           // Number of connection points
+                    maxDistance: 20.00,     // Max connection distance
+                    spacing: 18.00,         // Space between points
+                    showDots: true          // Show the mesh points
+                });
+            }
+        });
     </script>
 </body>
 </html>
