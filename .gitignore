@@ -8,7 +8,17 @@ downloads/
 .netlify
 
 
-git checkout -b main99.4
+git checkout -b main190.2
 git add .
-git commit -m "onboarding"
-git push -u origin main99.4
+git commit -m " biige rtext old design"
+git push -u origin main190.2
+
+
+
+
+
+
+netlify deploy --prod --dir . 
+
+
+
