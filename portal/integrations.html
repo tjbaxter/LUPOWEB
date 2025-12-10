@@ -932,6 +932,39 @@ LUPO call recording will be attached."></textarea>
                     </div>
                 </div>
                 
+                <!-- Notification Preferences Section -->
+                <div class="form-group" style="border-top: 1px solid var(--border); padding-top: 24px; margin-top: 24px;">
+                    <label class="form-label">📧 Booking Notification Recipients</label>
+                    <p class="form-help" style="margin-bottom: 16px;">Choose who receives email notifications when appointments are booked</p>
+                    
+                    <div id="notificationEmailsList" style="display: flex; flex-direction: column; gap: 12px;">
+                        <!-- Email checkboxes will be populated by JavaScript -->
+                    </div>
+                    
+                    <div style="margin-top: 16px;">
+                        <div style="display: flex; gap: 8px;">
+                            <input 
+                                type="email" 
+                                id="customEmailInput" 
+                                class="form-input" 
+                                placeholder="Add custom email (team member, receptionist, etc.)"
+                                style="flex: 1;"
+                            >
+                            <button 
+                                type="button" 
+                                class="btn btn-secondary" 
+                                onclick="addCustomEmail()"
+                                style="padding: 8px 16px; white-space: nowrap;"
+                            >
+                                ➕ Add
+                            </button>
+                        </div>
+                        <p class="form-help" style="margin-top: 8px; font-size: 12px;">
+                            💡 Add multiple recipients - perfect for teams
+                        </p>
+                    </div>
+                </div>
+                
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeConfigureModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">💾 Save Configuration</button>
@@ -1333,6 +1366,9 @@ LUPO call recording will be attached."></textarea>
         }
         
         function populateConfigForm(integration) {
+            // Store integration data globally for notification preferences
+            window.currentIntegration = integration;
+            
             // Timezone
             document.getElementById('configTimezone').value = integration.timezone || 'America/New_York';
             
@@ -1348,6 +1384,9 @@ LUPO call recording will be attached."></textarea>
             // Business Hours
             const businessHours = integration.businessHours || getDefaultBusinessHours();
             populateBusinessHours(businessHours);
+            
+            // Notification Emails ✅
+            populateNotificationEmails(integration);
         }
         
         function getDefaultBusinessHours() {
@@ -1419,6 +1458,9 @@ LUPO call recording will be attached."></textarea>
                 };
             });
             
+            // Gather notification emails (selected checkboxes)
+            const notificationEmails = getSelectedNotificationEmails();
+            
             // Build configuration update
             const config = {
                 timezone: document.getElementById('configTimezone').value,
@@ -1428,7 +1470,8 @@ LUPO call recording will be attached."></textarea>
                 minBookingNoticeHours: parseInt(document.getElementById('configMinNotice').value),
                 maxBookingDaysAhead: parseInt(document.getElementById('configMaxDays').value),
                 dateRangeStartDays: document.getElementById('configSameDay').checked ? 0 : 1,
-                allowSameDayBooking: document.getElementById('configSameDay').checked
+                allowSameDayBooking: document.getElementById('configSameDay').checked,
+                notificationEmails: notificationEmails // ✅ Include selected notification emails
             };
             
             console.log('Saving configuration:', config);
@@ -1465,9 +1508,195 @@ LUPO call recording will be attached."></textarea>
             }
         }
         
+        // Notification Email Management Functions
+        function populateNotificationEmails(integration) {
+            const container = document.getElementById('notificationEmailsList');
+            container.innerHTML = '';
+            
+            const notificationEmails = integration.notificationEmails || [];
+            const googleEmail = integration.googleAccountEmail;
+            
+            // Get tenant email from localStorage
+            const userStr = localStorage.getItem('lupo_user');
+            const tenantEmail = userStr ? JSON.parse(userStr).email : null;
+            
+            // Build list of all possible emails
+            const availableEmails = [];
+            
+            // Google Calendar Email (if connected)
+            if (googleEmail) {
+                availableEmails.push({
+                    email: googleEmail,
+                    label: '🗓️ Google Calendar Email',
+                    description: 'Email from your connected Google account',
+                    isDefault: true,
+                    category: 'google'
+                });
+            }
+            
+            // Signup Email (if different from Google)
+            if (tenantEmail && tenantEmail !== googleEmail) {
+                availableEmails.push({
+                    email: tenantEmail,
+                    label: '👤 Account Email',
+                    description: 'Email you used to sign up for LUPO',
+                    isDefault: true,
+                    category: 'signup'
+                });
+            }
+            
+            // Custom emails (any emails that aren't Google or signup)
+            notificationEmails.forEach(email => {
+                if (email !== googleEmail && email !== tenantEmail) {
+                    availableEmails.push({
+                        email: email,
+                        label: '✉️ Custom Email',
+                        description: 'Additional recipient',
+                        isDefault: false,
+                        category: 'custom'
+                    });
+                }
+            });
+            
+            // Render each email option
+            availableEmails.forEach(emailOption => {
+                const isChecked = notificationEmails.includes(emailOption.email);
+                
+                const emailDiv = document.createElement('div');
+                emailDiv.className = 'notification-email-item';
+                emailDiv.dataset.email = emailOption.email;
+                emailDiv.dataset.category = emailOption.category;
+                emailDiv.style.cssText = `
+                    display: flex;
+                    align-items: start;
+                    gap: 12px;
+                    padding: 16px;
+                    background: rgba(255,255,255,0.03);
+                    border: 1px solid ${isChecked ? 'var(--accent)' : 'var(--border)'};
+                    border-radius: 10px;
+                    transition: all 0.2s ease;
+                `;
+                
+                emailDiv.innerHTML = `
+                    <input 
+                        type="checkbox" 
+                        class="notification-email-checkbox"
+                        data-email="${emailOption.email}"
+                        ${isChecked ? 'checked' : ''}
+                        style="width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); cursor: pointer;"
+                        onchange="toggleEmailNotification(this)"
+                    >
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                            <span style="font-weight: 500; font-size: 14px;">${emailOption.label}</span>
+                            ${emailOption.isDefault ? '<span style="font-size: 11px; padding: 2px 8px; background: rgba(41,151,255,0.15); color: var(--accent); border-radius: 4px; font-weight: 500;">SUGGESTED</span>' : ''}
+                        </div>
+                        <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">
+                            ${emailOption.description}
+                        </div>
+                        <div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: var(--accent);">
+                            ${emailOption.email}
+                        </div>
+                    </div>
+                    ${emailOption.category === 'custom' ? `
+                        <button 
+                            type="button"
+                            onclick="removeCustomEmail('${emailOption.email}')"
+                            style="padding: 6px 12px; background: transparent; border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); cursor: pointer; font-size: 12px; transition: all 0.2s;"
+                            onmouseover="this.style.borderColor='var(--error)'; this.style.color='var(--error)'"
+                            onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-secondary)'"
+                        >
+                            🗑️ Remove
+                        </button>
+                    ` : ''}
+                `;
+                
+                container.appendChild(emailDiv);
+            });
+            
+            // If no emails available yet, show helpful message
+            if (availableEmails.length === 0) {
+                container.innerHTML = `
+                    <div style="padding: 20px; text-align: center; color: var(--text-secondary); background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px;">
+                        <div style="font-size: 32px; margin-bottom: 12px;">📧</div>
+                        <div style="font-size: 14px;">No notification emails configured</div>
+                        <div style="font-size: 13px; margin-top: 8px;">Add custom emails below to receive booking notifications</div>
+                    </div>
+                `;
+            }
+        }
+        
+        function toggleEmailNotification(checkbox) {
+            const emailDiv = checkbox.closest('.notification-email-item');
+            if (emailDiv) {
+                emailDiv.style.borderColor = checkbox.checked ? 'var(--accent)' : 'var(--border)';
+            }
+        }
+        
+        function addCustomEmail() {
+            const input = document.getElementById('customEmailInput');
+            const email = input.value.trim();
+            
+            if (!email) {
+                alert('Please enter an email address');
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // Check if email already exists
+            const existingEmails = Array.from(document.querySelectorAll('.notification-email-checkbox'))
+                .map(cb => cb.dataset.email);
+            
+            if (existingEmails.includes(email)) {
+                alert('This email is already in the list');
+                return;
+            }
+            
+            // Add to current integration data
+            const integration = window.currentIntegration || {};
+            integration.notificationEmails = integration.notificationEmails || [];
+            integration.notificationEmails.push(email);
+            
+            // Re-render
+            populateNotificationEmails(integration);
+            
+            // Clear input
+            input.value = '';
+            
+            // Show success feedback
+            const addedItem = document.querySelector(`[data-email="${email}"]`);
+            if (addedItem) {
+                addedItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+        
+        function removeCustomEmail(email) {
+            if (!confirm(`Remove ${email} from notification recipients?`)) {
+                return;
+            }
+            
+            const integration = window.currentIntegration || {};
+            integration.notificationEmails = (integration.notificationEmails || []).filter(e => e !== email);
+            
+            // Re-render
+            populateNotificationEmails(integration);
+        }
+        
+        function getSelectedNotificationEmails() {
+            const checkboxes = document.querySelectorAll('.notification-email-checkbox:checked');
+            return Array.from(checkboxes).map(cb => cb.dataset.email);
+        }
+        
         function closeConfigureModal() {
             document.getElementById('configureModal').classList.remove('active');
             window.currentConfigIntegrationId = null;
+            window.currentIntegration = null;
         }
         
         function openSettingsModal() {
