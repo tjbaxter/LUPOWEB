@@ -656,64 +656,43 @@
             </div>
         </div>
         
-        <!-- Meeting Booking Section -->
+        <!-- Calendar Integration Section -->
         <div class="integration-section">
             <div class="section-header">
                 <span class="section-icon">📅</span>
-                <h2 class="section-title">Meeting Booking</h2>
+                <h2 class="section-title">Calendar Integration</h2>
                 <span class="section-badge badge-required">Required</span>
             </div>
-            <p class="section-description">How LUPO schedules demos and calls</p>
+            <p class="section-description">LUPO will check availability and book appointments during calls</p>
             
             <div id="bookingContent">
-                <div class="warning-alert">
+                <div class="warning-alert" id="noCalendarWarning">
                     <span class="alert-icon">⚠️</span>
                     <div class="alert-content">
-                        <div class="alert-title">No booking system connected</div>
-                        <div class="alert-text">LUPO cannot book meetings until you connect a booking system</div>
+                        <div class="alert-title">No calendar connected</div>
+                        <div class="alert-text">LUPO cannot book appointments until you connect a calendar</div>
                     </div>
                 </div>
                 
-                <div class="not-connected">
-                    <p class="not-connected-text"><strong>Enterprise (10+ reps):</strong></p>
+                <div class="not-connected" id="calendarOptions">
+                    <p class="not-connected-text">Connect your calendar to enable automatic appointment booking:</p>
                     <div class="provider-grid">
-                        <button class="provider-btn" onclick="connectBooking('chilipiper')">
-                            <span>🌶️</span>
-                            Connect Chili Piper
-                        </button>
-                        <button class="provider-btn" onclick="connectBooking('calendly-teams')">
-                            <span>📆</span>
-                            Connect Calendly Teams
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="not-connected" style="margin-top: 16px;">
-                    <p class="not-connected-text"><strong>Small Business (1-10 reps):</strong></p>
-                    <div class="provider-grid">
-                        <button class="provider-btn" onclick="connectBooking('calcom')">
-                            <span>📅</span>
-                            Connect Cal.com
-                        </button>
-                        <button class="provider-btn" onclick="connectBooking('calendly')">
+                        <button class="provider-btn" onclick="connectCalendly()">
                             <span>📆</span>
                             Connect Calendly
                         </button>
-                    </div>
-                </div>
-                
-                <div class="not-connected" style="margin-top: 16px;">
-                    <p class="not-connected-text"><strong>Solo / Founder:</strong></p>
-                    <div class="provider-grid">
-                        <button class="provider-btn" onclick="connectBooking('google')">
+                        <button class="provider-btn" onclick="connectGoogleCalendar()">
                             <span>🗓️</span>
                             Connect Google Calendar
                         </button>
-                        <button class="provider-btn" onclick="connectBooking('outlook')">
-                            <span>📨</span>
-                            Connect Outlook
+                        <button class="provider-btn" onclick="showCalComModal()">
+                            <span>📅</span>
+                            Connect Cal.com
                         </button>
                     </div>
+                    <p class="form-help" style="margin-top: 16px; text-align: center;">
+                        ℹ️ Calendly and Google use OAuth (click to connect). Cal.com uses an API key.
+                    </p>
                 </div>
             </div>
         </div>
@@ -813,29 +792,84 @@ LUPO call recording will be attached."></textarea>
         </div>
     </div>
     
+    <!-- Cal.com API Key Modal -->
+    <div id="calcomModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Connect Cal.com</h3>
+                <button class="modal-close" onclick="closeCalComModal()">✕</button>
+            </div>
+            
+            <p style="margin-bottom: 20px; color: var(--text-secondary); font-size: 15px;">
+                Enter your Cal.com API key to enable appointment booking.
+            </p>
+            
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 24px;">
+                <p style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--text-primary);">How to get your API key:</p>
+                <ol style="margin-left: 20px; color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 8px;">Go to <a href="https://app.cal.com/settings/developer/api-keys" target="_blank" style="color: var(--accent); text-decoration: none;">Cal.com API Keys</a></li>
+                    <li style="margin-bottom: 8px;">Click "Create API Key"</li>
+                    <li style="margin-bottom: 8px;">Name it "LUPO AI Voice Agent"</li>
+                    <li>Copy the key and paste it below</li>
+                </ol>
+            </div>
+            
+            <form onsubmit="connectCalCom(event)">
+                <div class="form-group">
+                    <label class="form-label">Cal.com API Key</label>
+                    <input 
+                        type="password" 
+                        id="calcomApiKey"
+                        class="form-input" 
+                        placeholder="cal_live_xxxxxxxxxxxxx"
+                        required
+                    >
+                    <p class="form-help">Your API key starts with "cal_"</p>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Event Type ID</label>
+                    <input 
+                        type="text" 
+                        id="calcomEventTypeId"
+                        class="form-input" 
+                        placeholder="123456"
+                        required
+                    >
+                    <p class="form-help">Find this in your Cal.com event type settings URL</p>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeCalComModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Connect Cal.com</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
     <!-- Disconnect Confirmation Modal -->
     <div id="disconnectModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">⚠️ Disconnect Integration?</h3>
+                <h3 class="modal-title">⚠️ Disconnect Calendar?</h3>
                 <button class="modal-close" onclick="closeDisconnectModal()">✕</button>
             </div>
             
             <div style="margin-bottom: 24px;">
                 <p style="margin-bottom: 16px; color: var(--text-primary);">This will:</p>
                 <ul style="margin-left: 20px; color: var(--text-secondary); font-size: 14px;">
-                    <li style="margin-bottom: 8px;">Stop LUPO from booking meetings</li>
-                    <li style="margin-bottom: 8px;">Revoke access to your account</li>
+                    <li style="margin-bottom: 8px;">Stop LUPO from booking appointments</li>
+                    <li style="margin-bottom: 8px;">Revoke access to your calendar</li>
                     <li style="margin-bottom: 8px;">Require reconfiguration if reconnected</li>
                 </ul>
                 <p style="margin-top: 16px; color: var(--text-secondary); font-size: 14px;">
-                    Active calls will fail to book meetings until you connect a new booking system.
+                    Active calls will fail to book appointments until you connect a new calendar.
                 </p>
             </div>
             
             <div class="modal-actions">
                 <button class="btn btn-secondary" onclick="closeDisconnectModal()">Cancel</button>
-                <button class="btn btn-danger" onclick="confirmDisconnect()">Yes, Disconnect</button>
+                <button class="btn btn-danger" onclick="confirmDisconnectCalendar()">Yes, Disconnect</button>
             </div>
         </div>
     </div>
@@ -859,33 +893,32 @@ LUPO call recording will be attached."></textarea>
         
         let currentIntegrations = {
             crm: null,
-            booking: null
+            calendar: null
         };
         
         // Load integrations on page load
         async function loadIntegrations() {
             try {
-                // TODO: Replace with actual API endpoint when backend is ready
-                // const response = await fetch(`${API_URL}/v1/integrations`, {
-                //     headers: {
-                //         'Authorization': `Bearer ${token}`
-                //     }
-                // });
-                // const data = await response.json();
-                // currentIntegrations = data;
+                // Load calendar integrations from backend
+                const response = await fetch(`${API_URL}/v1/integrations/calendar`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 
-                // For now, check localStorage for demo purposes
+                if (response.ok) {
+                    const integrations = await response.json();
+                    if (integrations.length > 0) {
+                        currentIntegrations.calendar = integrations[0]; // Use first active integration
+                        renderCalendarConnected(currentIntegrations.calendar);
+                    }
+                }
+                
+                // Check localStorage for CRM (not implemented in backend yet)
                 const savedCRM = localStorage.getItem('lupo_crm_integration');
-                const savedBooking = localStorage.getItem('lupo_booking_integration');
-                
                 if (savedCRM) {
                     currentIntegrations.crm = JSON.parse(savedCRM);
                     renderCRMConnected(currentIntegrations.crm);
-                }
-                
-                if (savedBooking) {
-                    currentIntegrations.booking = JSON.parse(savedBooking);
-                    renderBookingConnected(currentIntegrations.booking);
                 }
             } catch (error) {
                 console.error('Failed to load integrations:', error);
@@ -919,15 +952,25 @@ LUPO call recording will be attached."></textarea>
             `;
         }
         
-        function renderBookingConnected(integration) {
+        function renderCalendarConnected(integration) {
             const bookingContent = document.getElementById('bookingContent');
+            const noCalendarWarning = document.getElementById('noCalendarWarning');
+            const calendarOptions = document.getElementById('calendarOptions');
+            
+            // Hide warning and options
+            if (noCalendarWarning) noCalendarWarning.style.display = 'none';
+            if (calendarOptions) calendarOptions.style.display = 'none';
+            
             const providerNames = {
-                'google': 'Google Calendar',
-                'outlook': 'Outlook',
-                'chilipiper': 'Chili Piper',
-                'calcom': 'Cal.com',
-                'calendly': 'Calendly',
-                'calendly-teams': 'Calendly Teams'
+                'CALENDLY': 'Calendly',
+                'GOOGLE_CALENDAR': 'Google Calendar',
+                'CAL_COM': 'Cal.com'
+            };
+            
+            const providerIcons = {
+                'CALENDLY': '📆',
+                'GOOGLE_CALENDAR': '🗓️',
+                'CAL_COM': '📅'
             };
             
             bookingContent.innerHTML = `
@@ -935,35 +978,32 @@ LUPO call recording will be attached."></textarea>
                     <div class="connected-header">
                         <div class="connected-title">
                             <span class="connected-badge">✓</span>
-                            <span>Connected to ${providerNames[integration.provider]}</span>
+                            <span>${providerIcons[integration.integrationType]} Connected to ${providerNames[integration.integrationType]}</span>
                         </div>
                     </div>
                     <div class="connected-details">
                         <div class="detail-item">
-                            <span class="detail-label">Account</span>
-                            <span class="detail-value">${integration.account || user.email}</span>
+                            <span class="detail-label">Status</span>
+                            <span class="detail-value" style="color: var(--success);">Active</span>
                         </div>
                         <div class="detail-item">
-                            <span class="detail-label">Default Duration</span>
-                            <span class="detail-value">${integration.settings?.duration || 30} minutes</span>
+                            <span class="detail-label">Appointment Duration</span>
+                            <span class="detail-value">${integration.appointmentDurationMinutes} minutes</span>
                         </div>
                         <div class="detail-item">
-                            <span class="detail-label">Meetings Booked</span>
-                            <span class="detail-value">${integration.meetingsBooked || 0} this month</span>
+                            <span class="detail-label">Buffer Time</span>
+                            <span class="detail-value">${integration.bufferMinutes} minutes</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Connected</span>
-                            <span class="detail-value">${new Date(integration.connectedAt).toLocaleDateString()}</span>
+                            <span class="detail-value">${new Date(integration.createdAt).toLocaleDateString()}</span>
                         </div>
                     </div>
                     <div class="connected-actions">
-                        ${integration.provider === 'google' || integration.provider === 'outlook' ? 
-                            '<button class="btn btn-primary" onclick="openSettingsModal()">View Settings</button>' : 
-                            ''}
-                        <button class="btn btn-danger" onclick="disconnectIntegration('booking', '${integration.provider}')">Disconnect</button>
+                        <button class="btn btn-danger" onclick="disconnectCalendar('${integration.id}')">Disconnect</button>
                     </div>
                 </div>
-            `;
+            ` + (noCalendarWarning ? '' : bookingContent.innerHTML);
         }
         
         async function connectCRM(provider) {
@@ -988,84 +1028,158 @@ LUPO call recording will be attached."></textarea>
             renderCRMConnected(integration);
         }
         
-        async function connectBooking(provider) {
-            // Check if already have a booking system connected
-            if (currentIntegrations.booking) {
-                const providerNames = {
-                    'google': 'Google Calendar',
-                    'outlook': 'Outlook',
-                    'chilipiper': 'Chili Piper',
-                    'calcom': 'Cal.com',
-                    'calendly': 'Calendly',
-                    'calendly-teams': 'Calendly Teams'
-                };
-                alert(`You're already connected to ${providerNames[currentIntegrations.booking.provider]}. Please disconnect it first before connecting a new booking system.`);
+        // ========================================
+        // CALENDAR INTEGRATION FUNCTIONS
+        // ========================================
+        
+        function connectCalendly() {
+            if (currentIntegrations.calendar) {
+                alert('You already have a calendar connected. Please disconnect it first.');
                 return;
             }
             
-            // TODO: Replace with actual OAuth flow when backend is ready
-            alert(`Redirecting to ${provider} OAuth...\n\nIn production, this will:\n1. Redirect to ${provider} authorization\n2. Get OAuth tokens\n3. Save to database\n4. Return here with connected status`);
-            
-            // For demo purposes, simulate connection
-            const integration = {
-                provider: provider,
-                account: user.email,
-                connectedAt: new Date().toISOString(),
-                meetingsBooked: 0,
-                settings: {
-                    duration: 30,
-                    titleTemplate: 'Demo with {company}',
-                    addMeet: true
-                }
-            };
-            
-            localStorage.setItem('lupo_booking_integration', JSON.stringify(integration));
-            currentIntegrations.booking = integration;
-            renderBookingConnected(integration);
+            // Redirect to backend OAuth endpoint (backend handles the OAuth flow)
+            const returnTo = encodeURIComponent('/portal/integrations.html');
+            window.location.href = `${API_URL}/v1/integrations/calendar/calendly/auth?return_to=${returnTo}&token=${token}`;
         }
         
-        let disconnectType = null;
-        let disconnectProvider = null;
+        function connectGoogleCalendar() {
+            if (currentIntegrations.calendar) {
+                alert('You already have a calendar connected. Please disconnect it first.');
+                return;
+            }
+            
+            // Redirect to backend OAuth endpoint (backend handles the OAuth flow)
+            const returnTo = encodeURIComponent('/portal/integrations.html');
+            window.location.href = `${API_URL}/v1/integrations/calendar/google/auth?return_to=${returnTo}&token=${token}`;
+        }
+        
+        function showCalComModal() {
+            if (currentIntegrations.calendar) {
+                alert('You already have a calendar connected. Please disconnect it first.');
+                return;
+            }
+            document.getElementById('calcomModal').classList.add('active');
+        }
+        
+        function closeCalComModal() {
+            document.getElementById('calcomModal').classList.remove('active');
+            document.getElementById('calcomApiKey').value = '';
+            document.getElementById('calcomEventTypeId').value = '';
+        }
+        
+        async function connectCalCom(event) {
+            event.preventDefault();
+            
+            const apiKey = document.getElementById('calcomApiKey').value.trim();
+            const eventTypeId = document.getElementById('calcomEventTypeId').value.trim();
+            
+            // Validate API key format
+            if (!apiKey.startsWith('cal_')) {
+                alert('Invalid API key format. Cal.com API keys start with "cal_"');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/v1/integrations/calendar/calcom`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        apiKey: apiKey,
+                        eventTypeId: eventTypeId
+                    })
+                });
+                
+                if (response.ok) {
+                    const integration = await response.json();
+                    alert('✅ Cal.com connected successfully!');
+                    closeCalComModal();
+                    currentIntegrations.calendar = integration;
+                    renderCalendarConnected(integration);
+                } else {
+                    const error = await response.json();
+                    alert(`❌ Failed to connect Cal.com: ${error.message || 'Unknown error'}`);
+                }
+            } catch (error) {
+                console.error('Cal.com connection error:', error);
+                alert('❌ Connection error. Please check your API key and try again.');
+            }
+        }
+        
+        async function disconnectCalendar(integrationId) {
+            document.getElementById('disconnectModal').classList.add('active');
+            window.pendingDisconnectId = integrationId;
+        }
+        
+        async function confirmDisconnectCalendar() {
+            const integrationId = window.pendingDisconnectId;
+            if (!integrationId) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/v1/integrations/calendar/${integrationId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    currentIntegrations.calendar = null;
+                    closeDisconnectModal();
+                    window.location.reload();
+                } else {
+                    alert('Failed to disconnect. Please try again.');
+                }
+            } catch (error) {
+                console.error('Disconnect error:', error);
+                alert('Failed to disconnect. Please try again.');
+            }
+        }
+        
+        // Handle OAuth callback (backend redirects here with success/error)
+        async function handleOAuthCallback() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const success = urlParams.get('success');
+            const error = urlParams.get('error');
+            
+            if (error) {
+                alert(`❌ Calendar connection failed: ${decodeURIComponent(error)}`);
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+                return;
+            }
+            
+            if (success) {
+                const providerName = success === 'calendly_connected' ? 'Calendly' : 
+                                   success === 'google_connected' ? 'Google Calendar' : 'Calendar';
+                alert(`✅ ${providerName} connected successfully!`);
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+                // Reload integrations
+                await loadIntegrations();
+            }
+        }
+        
+        // ========================================
+        // CRM FUNCTIONS (kept for backwards compatibility)
+        // ========================================
         
         function disconnectIntegration(type, provider) {
-            disconnectType = type;
-            disconnectProvider = provider;
-            document.getElementById('disconnectModal').classList.add('active');
-        }
-        
-        async function confirmDisconnect() {
-            try {
-                // TODO: Replace with actual API call when backend is ready
-                // await fetch(`${API_URL}/v1/integrations/${disconnectType}`, {
-                //     method: 'DELETE',
-                //     headers: {
-                //         'Authorization': `Bearer ${token}`
-                //     }
-                // });
-                
-                // For demo purposes, clear from localStorage
-                if (disconnectType === 'crm') {
+            if (type === 'crm') {
+                if (confirm('Disconnect CRM integration?')) {
                     localStorage.removeItem('lupo_crm_integration');
                     currentIntegrations.crm = null;
-                } else {
-                    localStorage.removeItem('lupo_booking_integration');
-                    currentIntegrations.booking = null;
+                    window.location.reload();
                 }
-                
-                closeDisconnectModal();
-                
-                // Reload page to show disconnected state
-                window.location.reload();
-            } catch (error) {
-                console.error('Failed to disconnect:', error);
-                alert('Failed to disconnect. Please try again.');
             }
         }
         
         function closeDisconnectModal() {
             document.getElementById('disconnectModal').classList.remove('active');
-            disconnectType = null;
-            disconnectProvider = null;
+            window.pendingDisconnectId = null;
         }
         
         function openSettingsModal() {
@@ -1098,8 +1212,9 @@ LUPO call recording will be attached."></textarea>
             }
         }
         
-        // Load integrations on page load
-        loadIntegrations();
+        // Initialize page
+        handleOAuthCallback(); // Check if returning from OAuth
+        loadIntegrations();    // Load existing integrations
     </script>
 </body>
 </html>
