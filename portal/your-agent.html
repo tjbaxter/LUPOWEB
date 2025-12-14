@@ -1096,28 +1096,72 @@
                     </div>
                 </div>
                 
-                <!-- Transfer Phone Number - Shown for smart/always strategies -->
+                <!-- Emergency Dispatch Numbers - NEW (Dec 2025) -->
                 <div id="transferPhoneSection" class="subsection">
-                    <div class="form-group">
-                        <label class="form-label">Sales Rep Phone Number</label>
-                        <input 
-                            type="tel" 
-                            id="warmTransferNumber"
-                            placeholder="+14155551234"
-                            class="input"
-                        >
-                        <span class="form-hint">E.164 format required (e.g., +1 for US, +44 for UK)</span>
+                    <!-- Warning Box -->
+                    <div style="background: linear-gradient(135deg, rgba(255, 149, 0, 0.1), rgba(255, 69, 0, 0.05)); border: 1px solid rgba(255, 149, 0, 0.2); border-radius: 12px; padding: 16px; margin-bottom: 24px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                            <span style="font-size: 24px;">🚨</span>
+                            <span style="font-weight: 600; color: var(--warning);">Critical: Emergency Dispatch Configuration</span>
+                        </div>
+                        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                            Emergency calls will be texted to these numbers IMMEDIATELY. Make sure these are monitored 24/7 for restoration emergencies (burst pipes, flooding, fires).
+                        </p>
                     </div>
                     
+                    <!-- Dispatch Numbers List -->
                     <div class="form-group">
-                        <label class="form-label">Sales Rep Name <span style="color: var(--text-secondary); font-weight: 400;">(Optional)</span></label>
-                        <input 
-                            type="text" 
-                            id="salesRepName"
-                            placeholder="e.g., John Smith"
-                            class="input"
-                        >
-                        <span class="form-hint">AI will say "Let me connect you with John" instead of "our sales team"</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <label class="form-label">On-Call Dispatch Numbers</label>
+                            <button 
+                                type="button"
+                                onclick="addDispatchNumber()" 
+                                class="btn" 
+                                style="background: var(--accent); color: white; padding: 8px 16px; font-size: 13px; border-radius: 8px;"
+                            >
+                                + Add Number
+                            </button>
+                        </div>
+                        
+                        <div id="dispatchNumbersList" style="display: flex; flex-direction: column; gap: 12px;">
+                            <!-- Dispatch numbers will be added here dynamically -->
+                            <div style="text-align: center; padding: 40px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--border);">
+                                <div style="font-size: 48px; margin-bottom: 12px; opacity: 0.3;">📱</div>
+                                <p style="color: var(--text-secondary); font-size: 14px;">No dispatch numbers configured yet</p>
+                                <p style="color: var(--text-secondary); font-size: 12px; margin-top: 8px;">Click "+ Add Number" above to add your first on-call tech</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dispatch Mode -->
+                    <div class="form-group" style="margin-top: 32px;">
+                        <label class="form-label">Dispatch Mode</label>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+                            <label style="display: flex; align-items: start; padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.2s;">
+                                <input type="radio" name="dispatchMode" value="sms_all" id="dispatchModeAll" checked style="margin-top: 4px; margin-right: 12px;">
+                                <div>
+                                    <div style="font-weight: 500; color: var(--text-primary); margin-bottom: 4px;">
+                                        Text All Numbers (Recommended)
+                                    </div>
+                                    <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+                                        Send emergency dispatch to all active numbers simultaneously. Fastest response time.
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label style="display: flex; align-items: start; padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.2s;">
+                                <input type="radio" name="dispatchMode" value="sms_priority" id="dispatchModePriority" style="margin-top: 4px; margin-right: 12px;">
+                                <div>
+                                    <div style="font-weight: 500; color: var(--text-primary); margin-bottom: 4px;">
+                                        Text Priority Number Only
+                                    </div>
+                                    <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+                                        Only text highest priority number first. Use if one primary on-call person.
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1295,6 +1339,127 @@
             };
         }
         
+        // ============================================================================
+        // DISPATCH NUMBERS MANAGEMENT (NEW - Dec 2025)
+        // ============================================================================
+        
+        let dispatchNumbers = [];
+        
+        function addDispatchNumber() {
+            const newNumber = {
+                phoneNumber: '',
+                label: '',
+                priority: dispatchNumbers.length + 1,
+                isActive: true
+            };
+            dispatchNumbers.push(newNumber);
+            renderDispatchNumbers();
+            updateSaveButtonVisibility();
+        }
+        
+        function removeDispatchNumber(index) {
+            dispatchNumbers.splice(index, 1);
+            // Reorder priorities
+            dispatchNumbers.forEach((num, idx) => {
+                num.priority = idx + 1;
+            });
+            renderDispatchNumbers();
+            updateSaveButtonVisibility();
+        }
+        
+        function renderDispatchNumbers() {
+            const container = document.getElementById('dispatchNumbersList');
+            
+            if (dispatchNumbers.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--border);">
+                        <div style="font-size: 48px; margin-bottom: 12px; opacity: 0.3;">📱</div>
+                        <p style="color: var(--text-secondary); font-size: 14px;">No dispatch numbers configured yet</p>
+                        <p style="color: var(--text-secondary); font-size: 12px; margin-top: 8px;">Click "+ Add Number" above to add your first on-call tech</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = dispatchNumbers.map((num, index) => `
+                <div style="display: flex; gap: 12px; padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px;">
+                    <div style="flex: 1;">
+                        <input 
+                            type="text" 
+                            placeholder="Label (e.g., John - Owner)" 
+                            value="${num.label}"
+                            onchange="dispatchNumbers[${index}].label = this.value; updateSaveButtonVisibility();"
+                            class="input"
+                            style="margin-bottom: 8px;"
+                        >
+                        <input 
+                            type="tel" 
+                            placeholder="+1 312 555 1234" 
+                            value="${num.phoneNumber}"
+                            onchange="dispatchNumbers[${index}].phoneNumber = this.value; updateSaveButtonVisibility();"
+                            class="input"
+                        >
+                    </div>
+                    <div style="width: 80px;">
+                        <label style="display: block; font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Priority</label>
+                        <input 
+                            type="number" 
+                            min="1" 
+                            value="${num.priority}"
+                            onchange="dispatchNumbers[${index}].priority = parseInt(this.value); updateSaveButtonVisibility();"
+                            class="input"
+                            style="text-align: center;"
+                        >
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;">
+                        <label style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
+                            <input 
+                                type="checkbox" 
+                                ${num.isActive ? 'checked' : ''}
+                                onchange="dispatchNumbers[${index}].isActive = this.checked; updateSaveButtonVisibility();"
+                                style="margin-right: 6px;"
+                            >
+                            Active
+                        </label>
+                        <button 
+                            type="button"
+                            onclick="removeDispatchNumber(${index})"
+                            style="padding: 8px; background: rgba(255,69,58,0.1); color: #ff453a; border: 1px solid rgba(255,69,58,0.2); border-radius: 8px; cursor: pointer; font-size: 20px; line-height: 1;"
+                            title="Remove"
+                        >
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        async function loadDispatchConfig() {
+            try {
+                // Load dispatch configuration from API
+                const dispatchConfig = await apiRequest('/v1/dispatch/config');
+                
+                if (dispatchConfig && dispatchConfig.dispatchNumbers) {
+                    dispatchNumbers = dispatchConfig.dispatchNumbers;
+                    renderDispatchNumbers();
+                    
+                    // Set dispatch mode
+                    const dispatchMode = dispatchConfig.dispatchMode || 'sms_all';
+                    const modeInput = document.getElementById(
+                        dispatchMode === 'sms_all' ? 'dispatchModeAll' : 'dispatchModePriority'
+                    );
+                    if (modeInput) {
+                        modeInput.checked = true;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading dispatch config:', error);
+                // Continue gracefully - will show empty dispatch numbers
+                dispatchNumbers = [];
+                renderDispatchNumbers();
+            }
+        }
+        
         async function loadConfig() {
             try {
                 const tenant = await apiRequest('/v1/tenant');
@@ -1311,16 +1476,11 @@
                 updateGreetingPreview(greetingMessage);
                 updateGreetingCharCount(greetingMessage);
                 
-                document.getElementById('warmTransferNumber').value = currentConfig.warmTransferNumber || '';
-                
-                // Load sales rep name if available
-                const salesRepNameEl = document.getElementById('salesRepName');
-                if (salesRepNameEl) {
-                    salesRepNameEl.value = currentConfig.salesRepName || '';
-                }
-                
                 const transferStrategy = currentConfig.warmTransferStrategy || 'SMART';
                 setTransferStrategy(transferStrategy);
+                
+                // ✅ Load dispatch numbers (NEW)
+                await loadDispatchConfig();
                 
                 // Load business hours
                 businessHours = currentConfig.businessHours || JSON.parse(JSON.stringify(DEFAULT_BUSINESS_HOURS));
@@ -1553,14 +1713,26 @@
                     voiceId: selectedVoiceId,
                     greetingMessage: greetingMessage || null,
                     warmTransferStrategy: transferStrategy,
-                    warmTransferNumber: document.getElementById('warmTransferNumber').value || null,
-                    salesRepName: document.getElementById('salesRepName')?.value || null,
                     businessHours: currentBusinessHours,
                 };
                 
+                // Save tenant config
                 await apiRequest('/v1/tenant/config', {
                     method: 'PATCH',
                     body: JSON.stringify(updates)
+                });
+                
+                // ✅ Save dispatch configuration (NEW - Dec 2025)
+                const dispatchMode = document.querySelector('input[name="dispatchMode"]:checked')?.value || 'sms_all';
+                
+                await apiRequest('/v1/dispatch/config', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        dispatchNumbers: dispatchNumbers,
+                        dispatchMode: dispatchMode,
+                        warmTransferEnabled: false,
+                        collectInsurance: true
+                    })
                 });
                 
                 // Success state
