@@ -1248,11 +1248,12 @@
                 return;
             }
             
+            const text = await response.text();
             if (!response.ok) {
-                throw new Error(`API Error: ${response.statusText}`);
+                throw new Error(`API ${response.status}: ${text}`);
             }
             
-            return response.json();
+            return text ? JSON.parse(text) : null;
         }
         
         function updateGreetingCharCount(text) {
@@ -1505,6 +1506,7 @@
         function captureCurrentState() {
             const strategy = document.querySelector('input[name="transferStrategy"]:checked')?.value || 'SMART';
             const currentBusinessHours = strategy === 'SMART' ? captureBusinessHoursFromUI() : null;
+            const dispatchMode = document.querySelector('input[name="dispatchMode"]:checked')?.value || 'sms_all';
             
             return {
                 voiceId: selectedVoiceId,
@@ -1513,6 +1515,8 @@
                 warmTransferNumber: document.getElementById('warmTransferNumber')?.value || '',
                 salesRepName: document.getElementById('salesRepName')?.value || '',
                 businessHours: currentBusinessHours ? JSON.stringify(currentBusinessHours) : null,
+                dispatchNumbers: JSON.stringify(dispatchNumbers),
+                dispatchMode: dispatchMode,
             };
         }
         
@@ -1560,6 +1564,11 @@
             
             // Transfer strategy radio buttons
             document.querySelectorAll('input[name="transferStrategy"]').forEach(radio => {
+                radio.addEventListener('change', updateSaveButtonVisibility);
+            });
+            
+            // Dispatch mode radio buttons
+            document.querySelectorAll('input[name="dispatchMode"]').forEach(radio => {
                 radio.addEventListener('change', updateSaveButtonVisibility);
             });
         }
