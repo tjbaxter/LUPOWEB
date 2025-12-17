@@ -1359,12 +1359,16 @@
         }
         
         function removeDispatchNumber(index) {
+            console.log('🗑️ Removing dispatch number at index:', index);
+            console.log('🗑️ Before removal:', dispatchNumbers.length, 'numbers');
             dispatchNumbers.splice(index, 1);
+            console.log('🗑️ After removal:', dispatchNumbers.length, 'numbers');
             // Reorder priorities
             dispatchNumbers.forEach((num, idx) => {
                 num.priority = idx + 1;
             });
             renderDispatchNumbers();
+            console.log('🗑️ Calling updateSaveButtonVisibility()');
             updateSaveButtonVisibility();
         }
         
@@ -1437,11 +1441,15 @@
         
         async function loadDispatchConfig() {
             try {
+                console.log('📡 Loading dispatch config from API...');
                 // Load dispatch configuration from API
                 const dispatchConfig = await apiRequest('/v1/dispatch/config');
+                console.log('📡 Dispatch config received:', dispatchConfig);
                 
                 if (dispatchConfig && dispatchConfig.dispatchNumbers) {
                     dispatchNumbers = dispatchConfig.dispatchNumbers;
+                    console.log('📡 Loaded', dispatchNumbers.length, 'dispatch numbers');
+                    console.log('📡 Dispatch numbers:', JSON.stringify(dispatchNumbers, null, 2));
                     renderDispatchNumbers();
                     
                     // Set dispatch mode
@@ -1452,9 +1460,11 @@
                     if (modeInput) {
                         modeInput.checked = true;
                     }
+                } else {
+                    console.log('📡 No dispatch numbers in config');
                 }
             } catch (error) {
-                console.error('Error loading dispatch config:', error);
+                console.error('❌ Error loading dispatch config:', error);
                 // Continue gracefully - will show empty dispatch numbers
                 dispatchNumbers = [];
                 renderDispatchNumbers();
@@ -1532,16 +1542,25 @@
             const hasChanges = detectChanges();
             const floatingBtn = document.getElementById('floatingSaveBtn');
             
+            console.log('💾 updateSaveButtonVisibility called');
+            console.log('💾 hasChanges:', hasChanges);
+            console.log('💾 hasUnsavedChanges:', hasUnsavedChanges);
+            console.log('💾 Current dispatch numbers:', dispatchNumbers.length);
+            
             if (hasChanges && !hasUnsavedChanges) {
                 hasUnsavedChanges = true;
                 floatingBtn.style.display = 'block';
+                console.log('💾 ✅ Showing save button');
             } else if (!hasChanges && hasUnsavedChanges) {
                 hasUnsavedChanges = false;
                 floatingBtn.classList.add('hiding');
+                console.log('💾 ❌ Hiding save button');
                 setTimeout(() => {
                     floatingBtn.style.display = 'none';
                     floatingBtn.classList.remove('hiding');
                 }, 300);
+            } else {
+                console.log('💾 No change in button visibility');
             }
         }
         
