@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Details – LUPO Admin</title>
+    <link rel="icon" type="image/png" href="/lupo-head-logo copy.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #000000;
+            color: #f5f5f7;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Back Button */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #a1a1aa;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 32px;
+            transition: all 0.2s ease;
+        }
+        
+        .back-button:hover {
+            color: #f5f5f7;
+            transform: translateX(-4px);
+        }
+        
+        /* Header */
+        .client-header {
+            margin-bottom: 40px;
+        }
+        
+        .client-title {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+        
+        .client-subtitle {
+            color: #a1a1aa;
+            font-size: 14px;
+        }
+        
+        /* Grid Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        
+        /* Card */
+        .card {
+            background: rgba(39, 39, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 32px;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .card-icon {
+            font-size: 24px;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        
+        .card-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        
+        .card-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .card-row:first-child {
+            padding-top: 0;
+        }
+        
+        .row-label {
+            color: #a1a1aa;
+            font-size: 14px;
+        }
+        
+        .row-value {
+            font-weight: 500;
+            font-size: 15px;
+        }
+        
+        .row-value.highlight {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        /* Prompt Editor */
+        .prompt-editor {
+            grid-column: 1 / -1;
+        }
+        
+        .prompt-textarea {
+            width: 100%;
+            min-height: 300px;
+            background: rgba(24, 24, 27, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 20px;
+            color: #f5f5f7;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            resize: vertical;
+            transition: all 0.2s ease;
+        }
+        
+        .prompt-textarea:focus {
+            outline: none;
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .char-count {
+            text-align: right;
+            color: #71717a;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        
+        .char-count.warning {
+            color: #fbbf24;
+        }
+        
+        .char-count.error {
+            color: #ef4444;
+        }
+        
+        /* Client Settings */
+        .settings-grid {
+            display: grid;
+            gap: 16px;
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: rgba(24, 24, 27, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        
+        .setting-label {
+            font-size: 14px;
+            color: #a1a1aa;
+        }
+        
+        .setting-value {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 32px;
+        }
+        
+        .btn {
+            padding: 12px 32px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+        
+        .btn-save:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+        
+        .btn-save:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        
+        .btn-delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+        
+        .btn-test {
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+        
+        .btn-test:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+        
+        /* Success message */
+        .success-message {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .success-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/portal/admin/motherboard.html" class="back-button">
+            ← Back to Motherboard
+        </a>
+        
+        <div class="client-header">
+            <h1 class="client-title" id="clientName">Loading...</h1>
+            <p class="client-subtitle" id="clientPhone">...</p>
+        </div>
+        
+        <div class="content-grid">
+            <!-- Billing Card -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">💰</span>
+                    <h2 class="card-title">Billing</h2>
+                </div>
+                <div class="card-row">
+                    <span class="row-label">MRR</span>
+                    <span class="row-value highlight" id="clientMrr">$0</span>
+                </div>
+                <div class="card-row">
+                    <span class="row-label">Next Payment</span>
+                    <span class="row-value" id="nextPayment">Loading...</span>
+                </div>
+                <div class="card-row">
+                    <span class="row-label">Total Revenue</span>
+                    <span class="row-value" id="totalRevenue">$0</span>
+                </div>
+                <div class="card-row">
+                    <span class="row-label">Subscription Start</span>
+                    <span class="row-value" id="subStart">Loading...</span>
+                </div>
+            </div>
+            
+            <!-- Usage Card -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📞</span>
+                    <h2 class="card-title">Usage</h2>
+                </div>
+                <div class="card-row">
+                    <span class="row-label">Total Calls</span>
+                    <span class="row-value" id="totalCalls">0</span>
+                </div>
+                <div class="card-row">
+                    <span class="row-label">Emergency Dispatches</span>
+                    <span class="row-value" id="dispatches">0</span>
+                </div>
+                <div class="card-row">
+                    <span class="row-label">Avg Call Duration</span>
+                    <span class="row-value" id="avgDuration">0:00</span>
+                </div>
+                <div class="card-row">
+                    <span class="row-label">Last Call</span>
+                    <span class="row-value" id="lastCall">Never</span>
+                </div>
+            </div>
+            
+            <!-- System Prompt Editor -->
+            <div class="card prompt-editor">
+                <div class="card-header">
+                    <span class="card-icon">🤖</span>
+                    <h2 class="card-title">System Prompt (Admin Only)</h2>
+                </div>
+                <textarea 
+                    class="prompt-textarea" 
+                    id="systemPrompt"
+                    placeholder="Enter custom system prompt for this company...
+
+Example:
+You are the AI receptionist for [Company Name], a family-owned restoration business serving [Area] since [Year]. 
+
+Your specializations:
+- Emergency water damage restoration
+- Fire and smoke damage repair
+- Mold remediation
+- Storm damage response
+
+Service area: [Coverage area]
+Certifications: IICRC certified
+Response time: 24/7 emergency dispatch
+
+When customers call, you help them by:
+1. Understanding their emergency situation
+2. Collecting address and damage type  
+3. Dispatching emergency team for active damage
+4. Being empathetic and professional"
+                ></textarea>
+                <div class="char-count">
+                    <span id="charCount">0</span> / 10000 characters
+                </div>
+            </div>
+            
+            <!-- Client Settings -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">⚙️</span>
+                    <h2 class="card-title">Client Settings</h2>
+                </div>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <span class="setting-label">Business Name</span>
+                        <span class="setting-value" id="businessName">Loading...</span>
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Greeting Message</span>
+                        <span class="setting-value" id="greetingMsg">Loading...</span>
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Warm Transfer</span>
+                        <span class="setting-value" id="warmTransfer">Loading...</span>
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Voice Provider</span>
+                        <span class="setting-value" id="voiceProvider">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-delete" onclick="deleteClient()">Delete Client</button>
+            <button class="btn btn-test" onclick="testCall()">Test Call</button>
+            <button class="btn btn-save" id="saveBtn" onclick="saveChanges()">Save Changes</button>
+        </div>
+    </div>
+    
+    <div class="success-message" id="successMessage">
+        ✓ Changes saved successfully
+    </div>
+    
+    <script>
+        // Determine API URL
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:3000'
+            : 'https://lupo-sales-api.fly.dev';
+        
+        const textarea = document.getElementById('systemPrompt');
+        const charCount = document.getElementById('charCount');
+        const saveBtn = document.getElementById('saveBtn');
+        
+        let currentClientId = null;
+        let hasUnsavedChanges = false;
+        
+        // Get client ID from URL
+        function getClientId() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+        
+        // Check authentication
+        async function checkAuth() {
+            const token = localStorage.getItem('lupo_token');
+            const user = JSON.parse(localStorage.getItem('lupo_user') || '{}');
+            
+            if (!token || user.role !== 'ADMIN') {
+                window.location.href = '/login.html';
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Update character count
+        function updateCharCount() {
+            const count = textarea.value.length;
+            charCount.textContent = count;
+            
+            if (count > 10000) {
+                charCount.classList.add('error');
+                charCount.classList.remove('warning');
+            } else if (count > 8000) {
+                charCount.classList.add('warning');
+                charCount.classList.remove('error');
+            } else {
+                charCount.classList.remove('error', 'warning');
+            }
+            
+            hasUnsavedChanges = true;
+        }
+        
+        textarea.addEventListener('input', updateCharCount);
+        
+        // Load client data
+        async function loadClientData() {
+            currentClientId = getClientId();
+            
+            if (!currentClientId) {
+                alert('No client ID provided');
+                window.location.href = '/portal/admin/motherboard.html';
+                return;
+            }
+            
+            try {
+                const token = localStorage.getItem('lupo_token');
+                const response = await fetch(`${API_URL}/v1/admin/clients/${currentClientId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Failed to load client');
+                
+                const client = await response.json();
+                
+                // Update header
+                document.getElementById('clientName').textContent = client.name || 'Unnamed Client';
+                document.getElementById('clientPhone').textContent = client.phoneNumber || 'No phone configured';
+                
+                // Update billing
+                document.getElementById('clientMrr').textContent = `$${client.billing?.mrr || 0}`;
+                document.getElementById('nextPayment').textContent = client.billing?.nextPayment 
+                    ? new Date(client.billing.nextPayment).toLocaleDateString() + ' ✅'
+                    : 'Not scheduled';
+                document.getElementById('totalRevenue').textContent = `$${client.billing?.totalRevenue?.toLocaleString() || 0}`;
+                document.getElementById('subStart').textContent = client.billing?.subscriptionStart
+                    ? new Date(client.billing.subscriptionStart).toLocaleDateString()
+                    : 'N/A';
+                
+                // Update usage
+                document.getElementById('totalCalls').textContent = client.usage?.totalCalls || 0;
+                const dispatches = client.usage?.totalDispatches || 0;
+                const totalCalls = client.usage?.totalCalls || 0;
+                const dispatchRate = totalCalls > 0 ? Math.round((dispatches / totalCalls) * 100) : 0;
+                document.getElementById('dispatches').textContent = `${dispatches} (${dispatchRate}%)`;
+                
+                const avgSec = client.usage?.avgCallDuration || 0;
+                const minutes = Math.floor(avgSec / 60);
+                const seconds = avgSec % 60;
+                document.getElementById('avgDuration').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                document.getElementById('lastCall').textContent = client.usage?.lastCall
+                    ? formatTimeAgo(new Date(client.usage.lastCall))
+                    : 'Never';
+                
+                // Update settings
+                document.getElementById('businessName').textContent = client.config?.businessName || 'Not set';
+                document.getElementById('greetingMsg').textContent = client.config?.greetingMessage 
+                    ? (client.config.greetingMessage.substring(0, 50) + (client.config.greetingMessage.length > 50 ? '...' : ''))
+                    : 'Default greeting';
+                document.getElementById('warmTransfer').textContent = client.config?.warmTransferNumber || 'Not configured';
+                document.getElementById('voiceProvider').textContent = client.config?.voiceProvider || 'default';
+                
+                // Load system prompt
+                if (client.config?.systemPrompt) {
+                    textarea.value = client.config.systemPrompt;
+                    updateCharCount();
+                }
+                
+                hasUnsavedChanges = false;
+                
+            } catch (error) {
+                console.error('Failed to load client data:', error);
+                alert('Failed to load client data. Showing sample data.');
+                
+                // Show sample data
+                document.getElementById('clientName').textContent = 'Xantium Restoration';
+                document.getElementById('clientPhone').textContent = '+1 (833) 354-1310';
+            }
+        }
+        
+        // Format time ago
+        function formatTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            
+            if (seconds < 60) return 'Just now';
+            if (seconds < 3600) return `${Math.floor(seconds / 60)} minutes ago`;
+            if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
+            return `${Math.floor(seconds / 86400)} days ago`;
+        }
+        
+        // Save changes
+        async function saveChanges() {
+            if (!currentClientId) return;
+            
+            const promptText = textarea.value;
+            
+            if (promptText.length > 10000) {
+                alert('System prompt is too long (max 10,000 characters)');
+                return;
+            }
+            
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving...';
+            
+            try {
+                const token = localStorage.getItem('lupo_token');
+                const response = await fetch(`${API_URL}/v1/admin/clients/${currentClientId}/prompt`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        systemPrompt: promptText
+                    })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Failed to save');
+                }
+                
+                showSuccess();
+                hasUnsavedChanges = false;
+                saveBtn.textContent = 'Save Changes';
+                
+            } catch (error) {
+                console.error('Error saving changes:', error);
+                alert(`Error saving changes: ${error.message}`);
+                saveBtn.textContent = 'Save Changes';
+            } finally {
+                saveBtn.disabled = false;
+            }
+        }
+        
+        // Show success message
+        function showSuccess() {
+            const message = document.getElementById('successMessage');
+            message.classList.add('show');
+            setTimeout(() => {
+                message.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Delete client
+        function deleteClient() {
+            if (confirm('Are you sure you want to delete this client? This action cannot be undone.')) {
+                alert('Delete functionality coming soon');
+            }
+        }
+        
+        // Test call
+        function testCall() {
+            if (!currentClientId) return;
+            
+            const phoneNumber = document.getElementById('clientPhone').textContent;
+            alert(`Test call functionality coming soon.\n\nWould call: ${phoneNumber}`);
+        }
+        
+        // Warn about unsaved changes
+        window.addEventListener('beforeunload', (e) => {
+            if (hasUnsavedChanges) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+        
+        // Initialize
+        (async function init() {
+            if (await checkAuth()) {
+                await loadClientData();
+            }
+        })();
+    </script>
+</body>
+</html>

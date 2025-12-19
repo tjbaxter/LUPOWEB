@@ -569,9 +569,16 @@
                             window.location.href = '/portal/change-password.html';
                         }, 500);
                     } else {
-                        setTimeout(() => {
-                            window.location.href = '/portal/dashboard.html';
-                        }, 500);
+                        // Route based on user role
+                        if (data.user.role === 'ADMIN') {
+                            setTimeout(() => {
+                                window.location.href = '/portal/admin/motherboard.html';
+                            }, 500);
+                        } else {
+                            setTimeout(() => {
+                                window.location.href = '/portal/dashboard.html';
+                            }, 500);
+                        }
                     }
                 } else {
                     const error = await response.json().catch(() => ({ error: 'Unknown error' }));
