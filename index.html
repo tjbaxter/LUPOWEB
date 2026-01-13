@@ -499,8 +499,8 @@
             padding: 30px 40px;
             border-top: 1px solid var(--border);
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
+            flex-direction: row;
+            justify-content: space-between;
             align-items: flex-start;
             background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
         }
@@ -513,7 +513,8 @@
             }
         
         .footer-right-section {
-            display: none;
+            display: flex;
+            align-items: flex-end;
         }
         
         .footer-logo {
@@ -621,6 +622,16 @@
             
             footer {
                 padding: 20px;
+                flex-direction: column;
+            }
+            
+            .footer-right-section {
+                margin-top: 20px;
+                align-self: flex-start;
+            }
+            
+            .footer-right-section img {
+                width: 150px !important;
             }
             
             .footer-logo {
@@ -662,7 +673,7 @@
     <nav>
         <div class="nav-content">
             <a href="/" class="logo">
-                <img src="LUPO_LOGO copy 1.png" alt="LUPO" style="height: 40px; width: auto;">
+                <img src="LUPO_LOGO copy 1.png" alt="LUPO" width="40" height="40" style="height: 40px; width: auto; display: block;">
                 <span style="font-size: 24px; font-weight: 600;">LUPO</span>
             </a>
             <div class="nav-links">
@@ -683,11 +694,11 @@
         <div class="content-wrapper">
             <!-- Hero -->
             <h1>
-                Never Lose Another <span class="gradient-text">$10k</span> Emergency Call
+                Never Miss Another<br><span class="gradient-text">Client</span> Call
             </h1>
             
             <p class="subtitle">
-                AI Voice Agent for restoration companies. Answers every water damage, fire, and mold emergency 24/7 even at 2 AM when you're on a job site.
+                AI Voice Agent for Professional Services. Handle client inquiries 24/7 with natural conversations and seamless handoffs to your team.
             </p>
             
             <!-- CTA Buttons -->
@@ -760,7 +771,7 @@
     <footer>
         <div class="footer-left-section">
             <div class="footer-logo">LUPO</div>
-            <p class="footer-text">© 2025 LUPO, a product of Flair Technologies Ltd. All rights reserved.</p>
+            <p class="footer-text">© 2026 LUPO, a product of Flair Technologies Ltd. All rights reserved.</p>
             <div class="footer-links-container">
                 <a href="/privacy.html">Privacy Policy</a>
                 <a href="/terms.html">Terms of Service</a>
@@ -768,12 +779,12 @@
             <p class="footer-address">
                 Registered Office · 45 Fitzroy St, Fitzrovia · London, W1T 6EB, United Kingdom
             </p>
-            <!-- ElevenLabs Grant Badge -->
-            <div style="margin-top: 24px;">
-                <a href="https://elevenlabs.io/startup-grants" target="_blank" rel="noopener noreferrer">
-                    <img src="https://eleven-public-cdn.elevenlabs.io/payloadcms/cy7rxce8uki-IIElevenLabsGrants%201.webp" alt="ElevenLabs Grant Recipient" style="width:200px; opacity: 0.9; transition: opacity 0.2s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
-                </a>
-            </div>
+        </div>
+        <!-- ElevenLabs Grant Badge -->
+        <div class="footer-right-section">
+            <a href="https://elevenlabs.io/startup-grants" target="_blank" rel="noopener noreferrer">
+                <img src="https://eleven-public-cdn.elevenlabs.io/payloadcms/cy7rxce8uki-IIElevenLabsGrants%201.webp" alt="ElevenLabs Grant Recipient" style="width:200px; opacity: 0.9; transition: opacity 0.2s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+            </a>
         </div>
     </footer>
     
