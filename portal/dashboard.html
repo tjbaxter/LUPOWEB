@@ -570,8 +570,18 @@
                     return callDate.getTime() === today.getTime();
                 });
                 
+                // Filter calls from this month
+                const thisMonth = new Date();
+                thisMonth.setDate(1);
+                thisMonth.setHours(0, 0, 0, 0);
+                
+                const callsThisMonth = calls.filter(c => {
+                    const callDate = new Date(c.startedAt);
+                    return callDate >= thisMonth;
+                });
+                
                 const qualified = calls.filter(c => c.qualified || (c.finalBantScore && c.finalBantScore >= 7));
-                const demosBooked = calls.filter(c => c.outcome === 'QUALIFIED_MEETING_BOOKED');
+                const demosBooked = callsThisMonth.filter(c => c.outcome === 'QUALIFIED_MEETING_BOOKED');
                 
                 const conversion = calls.length > 0 
                     ? Math.round((qualified.length / calls.length) * 100) 
