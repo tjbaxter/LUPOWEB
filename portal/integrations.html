@@ -865,27 +865,51 @@ LUPO call recording will be attached."></textarea>
         // Load integrations on page load
         async function loadIntegrations() {
             try {
-                // TODO: Replace with actual API endpoint when backend is ready
-                // const response = await fetch(`${API_URL}/v1/integrations`, {
-                //     headers: {
-                //         'Authorization': `Bearer ${token}`
-                //     }
-                // });
-                // const data = await response.json();
-                // currentIntegrations = data;
+                // Check if we just returned from OAuth
+                const oauthInProgress = localStorage.getItem('lupo_oauth_in_progress');
+                if (oauthInProgress) {
+                    localStorage.removeItem('lupo_oauth_in_progress');
+                    // Show success message
+                    const successBanner = document.createElement('div');
+                    successBanner.style.cssText = 'position: fixed; top: 20px; right: 20px; background: var(--success); color: white; padding: 16px 24px; border-radius: 8px; z-index: 10000; box-shadow: 0 4px 20px rgba(0,0,0,0.3);';
+                    successBanner.textContent = '✅ Calendar connected successfully!';
+                    document.body.appendChild(successBanner);
+                    setTimeout(() => successBanner.remove(), 3000);
+                }
                 
-                // For now, check localStorage for demo purposes
+                // Load real calendar integrations from API
+                const response = await fetch(`${API_URL}/v1/integrations/calendar`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const integrations = await response.json();
+                    console.log('Loaded integrations:', integrations);
+                    
+                    // Check for Google Calendar
+                    const googleCal = integrations.find(i => i.integrationType === 'GOOGLE_CALENDAR' && i.isActive);
+                    if (googleCal) {
+                        currentIntegrations.booking = {
+                            provider: 'google-calendar',
+                            account: googleCal.googleAccountEmail || user.email,
+                            connectedAt: googleCal.createdAt,
+                            settings: {
+                                duration: googleCal.appointmentDurationMinutes || 30,
+                                buffer: googleCal.bufferMinutes || 0,
+                                timezone: googleCal.timezone || 'UTC'
+                            }
+                        };
+                        renderBookingConnected(currentIntegrations.booking);
+                    }
+                }
+                
+                // Load CRM from localStorage (placeholder)
                 const savedCRM = localStorage.getItem('lupo_crm_integration');
-                const savedBooking = localStorage.getItem('lupo_booking_integration');
-                
                 if (savedCRM) {
                     currentIntegrations.crm = JSON.parse(savedCRM);
                     renderCRMConnected(currentIntegrations.crm);
-                }
-                
-                if (savedBooking) {
-                    currentIntegrations.booking = JSON.parse(savedBooking);
-                    renderBookingConnected(currentIntegrations.booking);
                 }
             } catch (error) {
                 console.error('Failed to load integrations:', error);
@@ -993,6 +1017,7 @@ LUPO call recording will be attached."></textarea>
             if (currentIntegrations.booking) {
                 const providerNames = {
                     'google': 'Google Calendar',
+                    'google-calendar': 'Google Calendar',
                     'outlook': 'Outlook',
                     'chilipiper': 'Chili Piper',
                     'calcom': 'Cal.com',
@@ -1003,25 +1028,23 @@ LUPO call recording will be attached."></textarea>
                 return;
             }
             
-            // TODO: Replace with actual OAuth flow when backend is ready
-            alert(`Redirecting to ${provider} OAuth...\n\nIn production, this will:\n1. Redirect to ${provider} authorization\n2. Get OAuth tokens\n3. Save to database\n4. Return here with connected status`);
+            console.log('Connecting to', provider);
             
-            // For demo purposes, simulate connection
-            const integration = {
-                provider: provider,
-                account: user.email,
-                connectedAt: new Date().toISOString(),
-                meetingsBooked: 0,
-                settings: {
-                    duration: 30,
-                    titleTemplate: 'Demo with {company}',
-                    addMeet: true
-                }
-            };
+            // Only Google Calendar is implemented for now
+            if (provider !== 'google-calendar' && provider !== 'google') {
+                alert(`${provider} integration coming soon!`);
+                return;
+            }
             
-            localStorage.setItem('lupo_booking_integration', JSON.stringify(integration));
-            currentIntegrations.booking = integration;
-            renderBookingConnected(integration);
+            // Redirect to backend OAuth flow
+            const returnUrl = encodeURIComponent(window.location.href);
+            const oauthUrl = `${API_URL}/v1/integrations/calendar/google/auth?token=${token}&return_to=${returnUrl}`;
+            
+            // Store state to reload after OAuth
+            localStorage.setItem('lupo_oauth_in_progress', 'google-calendar');
+            
+            // Redirect to Google OAuth
+            window.location.href = oauthUrl;
         }
         
         let disconnectType = null;
