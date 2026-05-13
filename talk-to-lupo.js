@@ -90,11 +90,6 @@
   btn.disabled = true;
   btn.innerHTML = PHONE_ICON + '<span class="lupo-call-btn-label">Loading…</span>';
 
-  var consent = document.createElement("div");
-  consent.className = "lupo-call-consent";
-  consent.textContent =
-    "By starting a call, you agree that LUPO may record, transcribe, and analyse the conversation to respond to your enquiry and improve the demo.";
-
   function setState(state) {
     btn.setAttribute("data-state", state);
     if (state === "idle") {
@@ -120,7 +115,6 @@
 
   function attach() {
     function inject() {
-      document.body.appendChild(consent);
       document.body.appendChild(btn);
     }
     if (document.body) inject();
