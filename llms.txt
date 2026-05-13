@@ -1,0 +1,59 @@
+# LUPO
+
+> LUPO is the AI sales agent that protects inbound sales teams from the noise. Every inbound call, web form, and chat handoff is answered, qualified, and either booked into a rep's calendar or filtered out. Vendors, tire-kickers, support requests in the wrong queue, and wrong-fit prospects never reach a closer. Built by Flair Technologies Ltd, London, UK.
+
+## Who LUPO is for
+
+Inbound sales teams that bleed time on demand they should never have qualified themselves. The pain LUPO solves: reps spend up to 40% of their day triaging vendors pitching to them, low-intent browsers, support requests in the wrong queue, and wrong-fit prospects. LUPO is the first-pass qualification layer so reps only see leads worth closing.
+
+Primary buyers: VPs of Sales, Heads of Revenue Operations, founders of B2B SaaS companies, and operators at service businesses with high inbound volume.
+
+## What LUPO does
+
+- [Home](https://lupolabs.ai/): hero, the inbound triage tax, channel-aware response, capability ladder, trust signals
+- [About](https://lupolabs.ai/about): speed-to-lead narrative, qualification taxonomy, capabilities, founding-customer programme
+
+## Core capabilities
+
+- **Inbound call answering.** LUPO picks up on the second ring, qualifies the caller, checks live calendar availability, and books the appointment. 24/7. Average pickup under two seconds.
+- **Web form responses, channel-aware.** Consumer forms get an instant outbound callback inside sixty seconds. Senior B2B buyers get a personal email reply with a one-click booking link. LUPO does not surprise-call a VP who submitted a demo form.
+- **Chat handoffs.** When your existing chat widget captures intent and consent, LUPO takes the conversation forward, qualifies in-chat, and books in-chat. No channel switch.
+- **Calendar booking.** Live availability and real appointment creation. Google Calendar today, Outlook coming in onboarding.
+- **CRM sync.** Every contact, call summary, and booking written into HubSpot automatically. Salesforce next.
+- **Slack alerts.** Your team sees qualified leads and bookings the second they happen, with a one-click link to context.
+- **Lead routing.** Round-robin or rules-based handoff to the right rep based on territory, product line, or seniority.
+- **Full call logging.** Transcripts, recordings, outcomes, and a clean audit trail for every interaction.
+
+## What LUPO filters out before reps see anything
+
+- **Vendors.** Other companies pitching software, services, or partnerships to your team. Politely declined and logged.
+- **Tire-kickers.** Browsers, researchers, students. Logged for marketing, never surfaced to sales.
+- **Support requests.** Existing customers landing in the wrong queue. Routed to support automatically.
+- **Wrong-fit prospects.** Real interest, wrong size, wrong industry, wrong budget. Disqualified without wasting a rep's time.
+
+## Positioning
+
+LUPO is not a generic AI receptionist. LUPO is an AI sales agent that makes its own decisions in real time about which question to ask, when to check the calendar, when to book, when to escalate to a human, and when to close the call. It is the inbound salesperson that never goes home.
+
+Most businesses don't lose customers because they lack demand. They lose them because response is too slow. A missed call, an ignored web form, a delayed chatbot follow-up, and the customer books with the next business instead. LUPO is built to stop that happening.
+
+## Trust and compliance
+
+- ElevenLabs Grant recipient for voice infrastructure
+- UK GDPR compliant
+- A2P 10DLC registered for SMS messaging
+- Currently onboarding the first ten founding customers, configured hand-in-hand with each team
+
+## Try LUPO
+
+- **Talk to LUPO live, right now**: tap the "Talk to LUPO live" button on https://lupolabs.ai and speak to the agent directly in your browser. By starting a call, you agree that LUPO may record, transcribe, and analyse the conversation.
+- **Book a 20-minute demo with the founder**: https://cal.com/tombaxter/lupo
+
+## Legal and contact
+
+- [Privacy Policy](https://lupolabs.ai/privacy)
+- [Terms of Service](https://lupolabs.ai/terms)
+- [Data Processing Addendum](https://lupolabs.ai/dpa)
+- [Company](https://lupolabs.ai/company): Flair Technologies Ltd
+- Email: support@lupolabs.ai
+- Address: Flair Technologies Ltd, 45 Fitzroy St, Fitzrovia, London W1T 6EB, United Kingdom
