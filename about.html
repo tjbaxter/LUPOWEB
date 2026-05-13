@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About LUPO | Instant Lead Callback & Booking</title>
-    <meta name="description" content="LUPO helps service businesses respond to leads before they go cold. Instant lead response and booking for missed calls, web forms, and chat enquiries.">
+    <meta name="description" content="LUPO helps businesses respond to leads before they go cold. Instant lead response and booking for missed calls, web forms, and chat enquiries.">
     <link rel="icon" type="image/png" href="/lupo-head-logo copy.png">
     <link rel="apple-touch-icon" href="/lupo-head-logo copy.png">
     <meta name="company-name" content="Flair Technologies Ltd">
@@ -255,6 +255,31 @@
             line-height: 1.6;
         }
         
+        .speed-story {
+            border-left: 2px solid var(--accent);
+            padding: 8px 0 8px 24px;
+            margin: 32px 0 56px;
+            font-size: 22px;
+            line-height: 1.55;
+            color: var(--text-primary);
+            font-weight: 400;
+            letter-spacing: -0.015em;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.1s forwards;
+        }
+
+        .speed-story p {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .speed-story {
+                font-size: 18px;
+                padding-left: 18px;
+                margin: 24px 0 40px;
+            }
+        }
+
         .highlight-box {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
@@ -480,6 +505,8 @@
             }
         }
     </style>
+    <script src="/analytics.js" defer></script>
+    <script src="/talk-to-lupo.js" defer></script>
 </head>
 <body>
     <!-- Background Animation -->
@@ -509,66 +536,66 @@
     <div class="main-content">
         <h1 class="page-title">About <span class="gradient-text">LUPO</span></h1>
 
+        <div class="speed-story">
+            <p>A customer fills out your web form at 9:47 PM. By 9:48 PM, they are on a call with LUPO. By 9:50 PM, they are booked into your calendar. Your team sees the deal in the morning. Qualified, scheduled, ready to go.</p>
+        </div>
+
         <div class="content-section">
-            <p>LUPO helps service businesses respond to leads before they go cold.</p>
+            <p>LUPO is the AI sales agent that answers every inbound lead the second it lands.</p>
 
-            <p>When a customer calls, submits a website form, or asks for a callback through chat, LUPO responds instantly, qualifies the enquiry, answers using approved business information, checks calendar availability, and books the appointment.</p>
+            <p>When a customer calls you, fills out your web form, or asks for a callback through your chatbot, LUPO picks up instantly. It qualifies the enquiry, answers from your approved business information, checks your calendar in real time, and books the appointment.</p>
 
-            <p>Most businesses do not lose customers because they lack demand. They lose customers because response is too slow.</p>
+            <p>Most businesses don't lose customers because they lack demand. They lose them because response is too slow. A missed call, an ignored web form, a delayed chatbot follow-up, and the customer books with the next business instead. LUPO is built to stop that happening.</p>
 
-            <p>A missed call, an ignored web form, or a delayed chatbot follow-up can mean the customer books with the next business instead. LUPO is built to prevent that.</p>
-
-            <p>It is not a generic AI receptionist. It is an AI inbound qualification layer that responds instantly, then filters, routes, and books qualified leads.</p>
+            <p>It is not a generic AI receptionist. LUPO is an agent. It makes its own decisions in real time about which question to ask, when to check your calendar, when to book, when to escalate to a human, and when to close the call. It's the inbound salesperson that never goes home.</p>
         </div>
 
         <div class="content-section">
             <h2>Not every enquiry deserves a sales call</h2>
 
-            <p>LUPO qualifies inbound leads before they reach your team.</p>
+            <p>LUPO qualifies inbound leads before they reach your team. It tells the difference between real buyers asking about your services, low-intent enquiries, vendors trying to sell to you, support requests, wrong-fit customers, and urgent opportunities that need immediate follow-up.</p>
 
-            <p>It identifies:</p>
+            <p>Qualified leads get booked or routed to the right person on your team. Everything else is logged so your reps don't waste their time.</p>
 
-            <ul class="list">
-                <li>Real buyers asking about your services</li>
-                <li>Low-intent enquiries</li>
-                <li>Vendors trying to sell to you</li>
-                <li>Support requests</li>
-                <li>Wrong-fit customers</li>
-                <li>Urgent opportunities that need immediate follow-up</li>
-            </ul>
-
-            <p>Qualified leads get booked, routed, or escalated instantly. Everything else is logged without wasting your team's time.</p>
-
-            <p>For larger teams, the problem is not only missed response. It is wasted sales capacity. Web forms, customer portals, and chat widgets often attract fake leads, vendors, support requests, and poorly qualified enquiries. LUPO acts as a first-pass qualification layer, filtering and routing inbound demand before it reaches sales.</p>
+            <p>For larger teams the problem isn't only missed response. It is wasted sales capacity. Web forms, customer portals, and chat widgets attract fake leads, vendors, support requests, and poorly qualified enquiries. LUPO is the first-pass qualification layer that filters and routes inbound demand before it ever reaches sales.</p>
         </div>
 
         <div class="content-section">
-            <h2>LUPO currently supports</h2>
+            <h2>What LUPO does</h2>
 
             <h3>Inbound calls</h3>
-            <p>24/7 call answering, qualification, pricing guidance, availability checks, and booking.</p>
+            <p>24/7 answering, qualification, pricing guidance, availability checks, and booking.</p>
 
-            <h3>Web form callbacks</h3>
-            <p>Instant outbound calls after a customer submits a website enquiry.</p>
+            <h3>Web form responses</h3>
+            <p>Instant reply on the right channel. For consumer enquiries, LUPO calls back inside sixty seconds. For senior B2B buyers, LUPO sends a personal email with a one-click booking link. No surprise robot calls to VPs.</p>
 
             <h3>Chat handoffs</h3>
-            <p>Callbacks triggered when an existing website chatbot captures a phone number and consent.</p>
+            <p>Callbacks triggered when your existing chatbot captures a phone number and consent.</p>
 
             <h3>Calendar booking</h3>
-            <p>Live availability checks and appointment creation in the business's calendar.</p>
+            <p>Live availability and real appointment creation. Google Calendar today, Outlook coming in your onboarding window.</p>
 
-            <h3>Call logging</h3>
-            <p>Transcripts, recordings, outcomes, and booking status for every interaction.</p>
+            <h3>CRM sync</h3>
+            <p>Every contact, call summary, and booking written into HubSpot automatically. Salesforce next.</p>
+
+            <h3>Slack alerts</h3>
+            <p>Your team sees qualified leads and bookings the second they happen.</p>
+
+            <h3>Lead routing</h3>
+            <p>Round-robin or rules-based handoff to the right rep on your team.</p>
+
+            <h3>Full call logging</h3>
+            <p>Transcripts, recordings, outcomes, and a clean audit trail for every interaction.</p>
         </div>
 
         <div class="content-section">
             <h2>Availability</h2>
 
-            <p>LUPO is currently onboarding a limited number of founding customers.</p>
+            <p>LUPO is currently onboarding its first 10 founding customers.</p>
 
-            <p>During onboarding, we configure the business's services, pricing rules, calendar, call handling preferences, and fallback process manually to make sure the system works reliably before broader rollout.</p>
+            <p>During onboarding we configure your services, pricing rules, calendar, call handling preferences, qualification criteria, and fallback process so the system works reliably for your specific business before broader rollout.</p>
 
-            <p>If your business loses opportunities because calls, forms, or chat enquiries are not followed up quickly enough, LUPO is built for that exact problem.</p>
+            <p>If inbound leads slip through the cracks or waste your team's time before they've been qualified, LUPO is built for that exact problem.</p>
         </div>
 
         <div class="cta-section">
@@ -577,7 +604,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
                     <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
                 </svg>
-                Get LUPO Installed
+                Request a Demo
             </a>
         </div>
 

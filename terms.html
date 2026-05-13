@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUPO - Terms of Service</title>
+    <title>Terms of Service | Lupo</title>
+    <meta name="description" content="Terms of Service for Lupo, an AI inbound sales intake and booking service from Flair Technologies Ltd. Includes SMS programme terms, opt-out, and acceptable use.">
     <link rel="icon" type="image/png" href="/lupo-head-logo copy.png">
     <link rel="apple-touch-icon" href="/lupo-head-logo copy.png">
     <style>
@@ -12,7 +13,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         :root {
             --text-primary: #1d1d1f;
             --text-secondary: #86868b;
@@ -21,7 +22,7 @@
             --accent: #0071e3;
             --border: rgba(0, 0, 0, 0.08);
         }
-        
+
         @media (prefers-color-scheme: dark) {
             :root {
                 --text-primary: #f5f5f7;
@@ -32,7 +33,7 @@
                 --border: rgba(255, 255, 255, 0.08);
             }
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
             background: var(--bg-primary);
@@ -44,7 +45,7 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        
+
         /* Navigation */
         nav {
             position: fixed;
@@ -58,13 +59,13 @@
             border-bottom: 1px solid var(--border);
             transition: all 0.3s ease;
         }
-        
+
         @media (prefers-color-scheme: dark) {
             nav {
                 background: rgba(0, 0, 0, 0.72);
             }
         }
-        
+
         .nav-content {
             max-width: 1024px;
             margin: 0 auto;
@@ -74,20 +75,20 @@
             align-items: center;
             justify-content: space-between;
         }
-        
+
         .logo {
             font-size: 21px;
             font-weight: 600;
             letter-spacing: 0.2px;
             cursor: pointer;
         }
-        
+
         .nav-links {
             display: flex;
             gap: 40px;
             list-style: none;
         }
-        
+
         .nav-links a {
             color: var(--text-primary);
             text-decoration: none;
@@ -95,11 +96,11 @@
             opacity: 0.8;
             transition: opacity 0.3s ease;
         }
-        
+
         .nav-links a:hover {
             opacity: 1;
         }
-        
+
         .download-btn {
             background: var(--accent);
             color: white;
@@ -111,18 +112,18 @@
             transition: all 0.3s ease;
             font-weight: 500;
         }
-        
+
         .download-btn:hover {
             opacity: 0.9;
             transform: scale(1.02);
         }
-        
+
         /* Legal Content */
         .legal-hero {
             padding: 120px 20px 40px;
             text-align: center;
         }
-        
+
         .legal-hero h1 {
             font-size: 48px;
             font-weight: 700;
@@ -133,14 +134,14 @@
             transform: translateY(30px);
             animation: fadeInUp 0.8s ease forwards;
         }
-        
+
         @keyframes fadeInUp {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         .last-updated {
             font-size: 17px;
             color: var(--text-secondary);
@@ -148,53 +149,53 @@
             transform: translateY(20px);
             animation: fadeInUp 0.8s ease 0.1s forwards;
         }
-        
+
         .legal-content {
             max-width: 720px;
             margin: 0 auto;
             padding: 60px 20px 120px;
         }
-        
+
         .legal-section {
             margin-bottom: 48px;
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s ease 0.2s forwards;
         }
-        
+
         .legal-section h2 {
             font-size: 28px;
             font-weight: 600;
             margin-bottom: 20px;
             letter-spacing: -0.003em;
         }
-        
+
         .legal-section h3 {
             font-size: 21px;
             font-weight: 600;
             margin-top: 32px;
             margin-bottom: 16px;
         }
-        
+
         .legal-section p {
             font-size: 17px;
             line-height: 1.65;
             color: var(--text-secondary);
             margin-bottom: 20px;
         }
-        
+
         .legal-section ul {
             margin: 20px 0;
             padding-left: 24px;
         }
-        
+
         .legal-section li {
             font-size: 17px;
             line-height: 1.65;
             color: var(--text-secondary);
             margin-bottom: 12px;
         }
-        
+
         .highlight-box {
             background: var(--bg-secondary);
             border-radius: 16px;
@@ -202,25 +203,46 @@
             margin: 32px 0;
             border: 1px solid var(--border);
         }
-        
+
         .highlight-box p {
             margin-bottom: 0;
             color: var(--text-primary);
             font-weight: 500;
         }
-        
+
+        .sms-block {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 28px;
+            margin: 24px 0;
+            border: 1px solid var(--border);
+        }
+
+        .sms-block p {
+            margin-bottom: 14px;
+            color: var(--text-secondary);
+        }
+
+        .sms-block p:last-child {
+            margin-bottom: 0;
+        }
+
+        .sms-block strong {
+            color: var(--text-primary);
+        }
+
         /* Footer */
         footer {
             padding: 60px 20px;
             text-align: center;
             border-top: 1px solid var(--border);
         }
-        
+
         .footer-content {
             max-width: 1024px;
             margin: 0 auto;
         }
-        
+
         .footer-links {
             display: flex;
             justify-content: center;
@@ -228,23 +250,25 @@
             margin-bottom: 24px;
             list-style: none;
         }
-        
+
         .footer-links a {
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 14px;
             transition: color 0.3s ease;
         }
-        
+
         .footer-links a:hover {
             color: var(--text-primary);
         }
-        
+
         .copyright {
             color: var(--text-secondary);
             font-size: 14px;
         }
     </style>
+    <script src="/analytics.js" defer></script>
+    <script src="/talk-to-lupo.js" defer></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -253,121 +277,178 @@
             <div class="logo" onclick="window.location.href='/index.html'">LUPO</div>
         </div>
     </nav>
-    
+
     <!-- Legal Hero -->
     <section class="legal-hero">
         <h1>Terms of Service</h1>
-        <p class="last-updated">Effective Date: 4 November 2025</p>
+        <p class="last-updated">Effective Date: 2 May 2026</p>
     </section>
-    
+
     <!-- Legal Content -->
     <div class="legal-content">
         <div class="highlight-box">
             <p><strong>Company:</strong> Flair Technologies Ltd<br>
             <strong>Registered Office:</strong> 45 Fitzroy St, Fitzrovia, London W1T 6EB, United Kingdom</p>
         </div>
-        
+
         <section class="legal-section">
             <h2>1. Agreement to Terms</h2>
-            <p>By downloading, installing, or using LUPO (the "Service"), you agree to be bound by these Terms of Service and all applicable laws. If you do not agree, do not use the Service.</p>
+            <p>These Terms of Service ("Terms") govern access to and use of Lupo ("Lupo" or the "Service"), provided by Flair Technologies Ltd ("Flair Technologies", "we", "us", or "our").</p>
+            <p>By accessing or using Lupo, you agree to these Terms. If you do not agree, do not use the Service.</p>
         </section>
-        
+
         <section class="legal-section">
             <h2>2. The Service</h2>
-            <p>LUPO is professional software developed and maintained by Flair Technologies Ltd ("Flair Technologies", "we", "us", or "our").</p>
-            <p>The Service provides real-time AI assistance and related productivity tools for professional use.</p>
+            <p>Lupo is an AI inbound sales intake and booking service for service businesses.</p>
+            <p>The Service may help participating businesses:</p>
+            <ul>
+                <li>answer inbound phone calls;</li>
+                <li>respond to website enquiry forms;</li>
+                <li>trigger requested callbacks from website chat handoffs;</li>
+                <li>qualify customer enquiries;</li>
+                <li>provide basic service and pricing information;</li>
+                <li>check availability;</li>
+                <li>create, update, or cancel bookings;</li>
+                <li>send transactional booking-related communications;</li>
+                <li>store lead, interaction, transcript, summary, and booking information.</li>
+            </ul>
+            <p>Lupo is not a replacement for professional judgment. Participating businesses are responsible for their own services, pricing, availability, customer relationships, legal obligations, and operational decisions.</p>
         </section>
-        
+
         <section class="legal-section">
-            <h2>3. Licence of Use</h2>
-            <p>We grant you a limited, non-exclusive, non-transferable, revocable licence to install and use the Service for your personal or internal business purposes.</p>
-            <p>You may not copy, modify, reverse-engineer, distribute, or resell any part of the Service without our written permission.</p>
+            <h2>3. Eligibility and Accounts</h2>
+            <p>You must be at least 18 years old and capable of entering into a binding contract to use Lupo.</p>
+            <p>You are responsible for all activity under your account and for keeping login credentials secure.</p>
+            <p>If you use Lupo on behalf of a business or organisation, you represent that you have authority to bind that business or organisation to these Terms.</p>
         </section>
-        
+
         <section class="legal-section">
-            <h2>4. Accounts and Eligibility</h2>
-            <p>You must be at least 18 years old and capable of entering into a binding contract.</p>
-            <p>You are responsible for all activity under your account and for keeping your login credentials secure.</p>
+            <h2>4. Customer Communications</h2>
+            <p>Lupo may facilitate communications between participating businesses and their customers, including calls, emails, SMS messages, web form responses, chat handoffs, and calendar-related communications.</p>
+            <p>Participating businesses are responsible for ensuring they have appropriate consent and legal basis for communications sent through or in connection with Lupo.</p>
+            <p>Lupo may record, transcribe, summarise, or analyse calls or messages where configured by the participating business and where legally permitted.</p>
         </section>
-        
+
         <section class="legal-section">
-            <h2>5. Acceptable Use</h2>
+            <h2>5. SMS Terms</h2>
+            <div class="sms-block">
+                <p><strong>Programme name:</strong> Lupo Transactional Booking Updates</p>
+                <p><strong>Programme description:</strong> Lupo may send transactional customer-care SMS messages related to booking assistance, appointment confirmations, booking updates, cancellations, requested callback status, and support-related communications for appointments arranged through Lupo.</p>
+                <p><strong>Message frequency:</strong> Message frequency varies based on enquiry and booking activity.</p>
+                <p><strong>Costs:</strong> Message and data rates may apply.</p>
+                <p><strong>Opt-out:</strong> You may opt out of SMS messages at any time by replying STOP.</p>
+                <p><strong>Help:</strong> You may request help by replying HELP or by contacting <a href="mailto:support@lupolabs.ai" style="color: var(--accent);">support@lupolabs.ai</a>.</p>
+                <p><strong>Marketing:</strong> Messages under this programme are transactional customer-care messages. They are not marketing or promotional SMS messages.</p>
+                <p><strong>Consent:</strong> Where legally required, consent to receive SMS messages is not a condition of purchase.</p>
+                <p><strong>Supported carriers:</strong> Wireless carriers are not liable for delayed or undelivered messages.</p>
+            </div>
+        </section>
+
+        <section class="legal-section">
+            <h2>6. Acceptable Use</h2>
             <p>You agree not to:</p>
             <ul>
-                <li>use LUPO in violation of any applicable law;</li>
-                <li>attempt to gain unauthorised access to any systems or data;</li>
-                <li>interfere with or disrupt the integrity or performance of the Service;</li>
-                <li>use LUPO to build a competing product or service.</li>
+                <li>use Lupo in violation of applicable law;</li>
+                <li>use Lupo to send unlawful, deceptive, abusive, harassing, discriminatory, or unsolicited communications;</li>
+                <li>interfere with or disrupt the Service;</li>
+                <li>attempt to gain unauthorised access to systems, accounts, data, or networks;</li>
+                <li>reverse-engineer, copy, modify, or resell the Service except as expressly permitted;</li>
+                <li>use Lupo to build a competing product or service;</li>
+                <li>upload or transmit malware or harmful code;</li>
+                <li>misuse AI outputs or present them as guaranteed facts where review is required.</li>
             </ul>
-            <p>We reserve the right to suspend or terminate access if these Terms are breached.</p>
+            <p>We may suspend or terminate access if these Terms are breached or if continued access creates legal, security, operational, or reputational risk.</p>
         </section>
-        
+
         <section class="legal-section">
-            <h2>6. Subscriptions and Payments</h2>
+            <h2>7. Subscriptions and Payments</h2>
             <p>Certain features may require payment through our authorised billing provider.</p>
             <p>Unless otherwise stated, subscriptions renew automatically until cancelled.</p>
-            <p>You can cancel at any time via your account or by contacting support before the renewal date.</p>
-            <p>Refunds are handled at our discretion in line with UK consumer law.</p>
+            <p>You can cancel according to the billing terms presented at purchase or by contacting <a href="mailto:support@lupolabs.ai" style="color: var(--accent);">support@lupolabs.ai</a>.</p>
+            <p>Refunds are handled at our discretion and in accordance with applicable law.</p>
         </section>
-        
-        <section class="legal-section">
-            <h2>7. Intellectual Property</h2>
-            <p>All rights, title, and interest in LUPO—including its software, design, text, graphics, and trademarks—belong to Flair Technologies Ltd.</p>
-            <p>You receive no ownership rights by using the Service.</p>
-        </section>
-        
+
         <section class="legal-section">
             <h2>8. Third-Party Services</h2>
-            <p>LUPO may integrate with third-party services to provide core functionality.</p>
-            <p>We are not responsible for the content, reliability, or practices of any third-party services you access through LUPO.</p>
+            <p>Lupo may integrate with third-party services, including voice, telephony, SMS, email, calendar, hosting, database, authentication, analytics, logging, CRM, and payment providers.</p>
+            <p>We are not responsible for third-party services, their availability, or their practices. Use of third-party services may be subject to their own terms and policies.</p>
         </section>
-        
+
         <section class="legal-section">
-            <h2>9. Privacy and Data Protection</h2>
+            <h2>9. Data Protection and Privacy</h2>
             <p>Our collection and use of personal data are described in our <a href="/privacy.html" style="color: var(--accent);">Privacy Policy</a>.</p>
-            <p>By using LUPO, you consent to such processing.</p>
+            <p>Participating businesses are responsible for providing any customer notices and obtaining any consents required for their use of Lupo, including notices related to call recording, SMS communications, and customer data processing.</p>
         </section>
-        
+
         <section class="legal-section">
-            <h2>10. Termination</h2>
-            <p>You may stop using LUPO at any time.</p>
-            <p>We may suspend or terminate your access without notice if you breach these Terms or if continued service becomes commercially or legally impractical.</p>
-            <p>Upon termination, all rights granted to you end immediately.</p>
+            <h2>10. AI Outputs</h2>
+            <p>Lupo may use AI systems to interpret requests, summarise calls, suggest responses, classify leads, or assist with booking workflows.</p>
+            <p>AI outputs may be inaccurate, incomplete, or unsuitable for a particular situation. Users and participating businesses are responsible for reviewing outputs and using the Service appropriately.</p>
         </section>
-        
+
         <section class="legal-section">
-            <h2>11. Limitation of Liability</h2>
-            <p>To the maximum extent permitted by law, Flair Technologies Ltd shall not be liable for any indirect, incidental, or consequential damages, loss of profits, or loss of data arising from your use of LUPO.</p>
-            <p>Our total aggregate liability shall not exceed the amount paid by you for the Service in the three months preceding the claim.</p>
+            <h2>11. Intellectual Property</h2>
+            <p>All rights, title, and interest in Lupo, including software, design, text, graphics, workflows, models, prompts, documentation, trademarks, and related materials, belong to Flair Technologies Ltd or its licensors.</p>
+            <p>You receive no ownership rights by using the Service.</p>
         </section>
-        
+
         <section class="legal-section">
-            <h2>12. No Warranties</h2>
-            <p>The Service is provided "as is" and "as available" without warranties of any kind.</p>
-            <p>We make no guarantee that LUPO will be uninterrupted, error-free, or meet your expectations.</p>
+            <h2>12. Confidentiality</h2>
+            <p>Users may receive access to non-public information about Lupo, including technical, business, pricing, customer, or operational information.</p>
+            <p>You agree not to disclose confidential information except as authorised or required by law.</p>
         </section>
-        
+
         <section class="legal-section">
-            <h2>13. Governing Law and Jurisdiction</h2>
+            <h2>13. Service Availability</h2>
+            <p>We aim to provide a reliable Service, but we do not guarantee uninterrupted, error-free, or always-available operation.</p>
+            <p>The Service may depend on third-party providers and customer-provided integrations.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>14. Limitation of Liability</h2>
+            <p>To the maximum extent permitted by law, Flair Technologies Ltd shall not be liable for any indirect, incidental, special, consequential, exemplary, or punitive damages, or for loss of profits, revenue, goodwill, data, or business opportunity arising from or related to use of the Service.</p>
+            <p>Our total aggregate liability for claims relating to the Service shall not exceed the amount paid to us for the Service in the three months preceding the claim.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>15. No Warranties</h2>
+            <p>The Service is provided "as is" and "as available".</p>
+            <p>We make no guarantee that Lupo will be uninterrupted, error-free, secure, accurate, or meet your expectations.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>16. Termination</h2>
+            <p>You may stop using Lupo at any time.</p>
+            <p>We may suspend or terminate access if you breach these Terms, fail to pay applicable fees, create risk for the Service or other users, or if continued service becomes commercially, legally, or operationally impractical.</p>
+            <p>Upon termination, your right to use the Service ends immediately.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>17. Governing Law and Jurisdiction</h2>
             <p>These Terms are governed by the laws of England and Wales.</p>
             <p>Any dispute shall be subject to the exclusive jurisdiction of the courts of England and Wales.</p>
         </section>
-        
+
         <section class="legal-section">
-            <h2>14. Changes to These Terms</h2>
-            <p>We may update these Terms when necessary.</p>
-            <p>Material changes will be announced within the Service or by email at least 7 days before taking effect.</p>
-            <p>Continued use after the effective date constitutes acceptance.</p>
+            <h2>18. Changes to These Terms</h2>
+            <p>We may update these Terms from time to time.</p>
+            <p>Material changes may be announced within the Service, by email, or by other reasonable means.</p>
+            <p>Continued use of the Service after the updated Terms take effect constitutes acceptance.</p>
         </section>
-        
+
         <section class="legal-section">
-            <h2>15. Contact</h2>
-            <p>For any legal or account questions:</p>
-            <p><strong>Email:</strong> <a href="mailto:support@lupolabs.ai" style="color: var(--accent);">support@lupolabs.ai</a><br>
-            <strong>Address:</strong> Flair Technologies Ltd, 45 Fitzroy St, Fitzrovia, London W1T 6EB, UK</p>
+            <h2>19. Contact</h2>
+            <p>For legal, support, or account questions:</p>
+            <p><strong>Email:</strong> <a href="mailto:support@lupolabs.ai" style="color: var(--accent);">support@lupolabs.ai</a></p>
+            <p><strong>Address:</strong><br>
+            Flair Technologies Ltd<br>
+            45 Fitzroy St<br>
+            Fitzrovia<br>
+            London W1T 6EB<br>
+            United Kingdom</p>
         </section>
     </div>
-    
+
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -376,7 +457,7 @@
                 <li><a href="/terms.html">Terms</a></li>
                 <li><a href="/dpa.html">DPA</a></li>
             </ul>
-            <p class="copyright">© 2025 LUPO. All rights reserved.</p>
+            <p class="copyright">© 2026 LUPO, a product of Flair Technologies Ltd. All rights reserved.</p>
         </div>
     </footer>
 </body>
