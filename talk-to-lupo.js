@@ -176,8 +176,29 @@
     setState("idle");
   }
 
-  log("loading Vapi Web SDK from esm.sh");
-  import("https://esm.sh/@vapi-ai/web")
+  // CDN fallback list. Some users (uBlock Origin, Brave Shields, NoScript,
+  // corporate firewalls) block esm.sh by default. jsdelivr's +esm endpoint
+  // is rarely blocked because it's the same CDN that serves jQuery to half
+  // the internet. We try in order until one resolves.
+  var SDK_SOURCES = [
+    "https://esm.sh/@vapi-ai/web@2.5.2",
+    "https://cdn.jsdelivr.net/npm/@vapi-ai/web@2.5.2/+esm"
+  ];
+
+  function loadVapiSDK(index) {
+    var i = index || 0;
+    if (i >= SDK_SOURCES.length) {
+      return Promise.reject(new Error("All Vapi SDK sources failed"));
+    }
+    var src = SDK_SOURCES[i];
+    log("loading Vapi Web SDK", src);
+    return import(/* @vite-ignore */ src).catch(function (err) {
+      log("source failed, trying next", { src: src, err: err && err.message });
+      return loadVapiSDK(i + 1);
+    });
+  }
+
+  loadVapiSDK()
     .then(function (mod) {
       var VapiCtor = mod && (mod.default || mod.Vapi);
       if (typeof VapiCtor !== "function") {
