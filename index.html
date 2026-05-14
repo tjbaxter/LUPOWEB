@@ -834,6 +834,149 @@
             margin-right: auto;
         }
 
+        /* Qualified Buyer Packet */
+        .packet-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 72px;
+            align-items: center;
+        }
+
+        .packet-copy .section-heading {
+            margin-bottom: 24px;
+        }
+
+        .packet-copy .section-lede {
+            margin-bottom: 0;
+        }
+
+        .packet-mock {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+        }
+
+        .packet-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 22px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .packet-title {
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .packet-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            background: rgba(52, 199, 89, 0.12);
+            border: 1px solid rgba(52, 199, 89, 0.28);
+            color: #34c759;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .packet-status-pill::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #34c759;
+            box-shadow: 0 0 6px rgba(52, 199, 89, 0.55);
+        }
+
+        .packet-body {
+            padding: 4px 22px;
+        }
+
+        .packet-row {
+            display: grid;
+            grid-template-columns: 96px 1fr;
+            gap: 14px;
+            padding: 13px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .packet-row:last-child {
+            border-bottom: none;
+        }
+
+        .packet-label {
+            color: var(--text-secondary);
+            font-size: 10.5px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            padding-top: 3px;
+        }
+
+        .packet-value {
+            color: var(--text-primary);
+        }
+
+        .packet-actions {
+            padding: 16px 22px 22px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.012);
+            display: grid;
+            gap: 10px;
+        }
+
+        .packet-action {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13.5px;
+            color: var(--text-primary);
+            line-height: 1.45;
+        }
+
+        .packet-action-check {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(52, 199, 89, 0.18);
+            color: #34c759;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .packet-action code {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 1px 7px;
+            border-radius: 5px;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+            font-size: 12.5px;
+            color: var(--text-primary);
+        }
+
+        .packet-action-muted {
+            color: var(--text-secondary);
+            font-size: 12.5px;
+            padding-left: 30px;
+            line-height: 1.5;
+        }
+
         /* Bottom CTA Block */
         .cta-block {
             text-align: center;
@@ -888,6 +1031,7 @@
             .card-grid-3 { grid-template-columns: 1fr; }
             .card-grid-2 { grid-template-columns: 1fr; }
             .feature-list { grid-template-columns: 1fr; gap: 0; }
+            .packet-grid { grid-template-columns: 1fr; gap: 48px; }
         }
 
         /* Responsive */
@@ -1055,6 +1199,26 @@
                 flex-direction: column;
                 width: 100%;
                 gap: 12px;
+            }
+            .packet-row {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+            .packet-label {
+                padding-top: 0;
+            }
+            .packet-body {
+                padding: 4px 18px;
+            }
+            .packet-header {
+                padding: 14px 18px;
+            }
+            .packet-actions {
+                padding: 14px 18px 18px;
+            }
+            .packet-action,
+            .packet-action-muted {
+                font-size: 12.5px;
             }
             .integrations-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1246,6 +1410,57 @@
                     <div class="card-label">Inbound email</div>
                     <h3 class="card-heading">Keeps the thread warm.</h3>
                     <p class="card-body">Handles replies and inbound enquiries, asks the missing qualification questions, keeps the thread warm without spamming, and routes only qualified buyers to a rep.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What sales actually sees -->
+    <section class="page-section">
+        <div class="section-inner">
+            <div class="packet-grid">
+                <div class="packet-copy">
+                    <div class="section-eyebrow">What sales actually sees</div>
+                    <h2 class="section-heading">Your reps only see the meetings worth taking.</h2>
+                    <p class="section-lede">Every inbound interaction becomes a structured packet of buyer context. Reps do not join blind. RevOps does not chase missing fields. Managers get an audit trail for every routing decision LUPO made.</p>
+                </div>
+                <div class="packet-mock" role="img" aria-label="Sample qualified buyer packet">
+                    <div class="packet-header">
+                        <span class="packet-title">Qualified buyer packet</span>
+                        <span class="packet-status-pill">Booked</span>
+                    </div>
+                    <div class="packet-body">
+                        <div class="packet-row">
+                            <span class="packet-label">Lead</span>
+                            <span class="packet-value">Jane Roe &middot; VP RevOps</span>
+                        </div>
+                        <div class="packet-row">
+                            <span class="packet-label">Company</span>
+                            <span class="packet-value">Acme Corp &middot; 850 employees &middot; B2B SaaS</span>
+                        </div>
+                        <div class="packet-row">
+                            <span class="packet-label">Source</span>
+                            <span class="packet-value">Inbound chat &mdash; Intercom Fin handoff</span>
+                        </div>
+                        <div class="packet-row">
+                            <span class="packet-label">Intent</span>
+                            <span class="packet-value">Replacing existing inbound triage vendor; needs multi-channel coverage.</span>
+                        </div>
+                        <div class="packet-row">
+                            <span class="packet-label">Use case</span>
+                            <span class="packet-value">60 SDRs &middot; ~1,400 forms / week &middot; US + UK pipeline</span>
+                        </div>
+                        <div class="packet-row">
+                            <span class="packet-label">Timing</span>
+                            <span class="packet-value">Eval in Q3, deploy Q4. Security review required.</span>
+                        </div>
+                    </div>
+                    <div class="packet-actions">
+                        <div class="packet-action"><span class="packet-action-check">&#10003;</span> Meeting booked &mdash; Karen Lee &middot; 21 May 2026 &middot; 14:00 BST</div>
+                        <div class="packet-action"><span class="packet-action-check">&#10003;</span> HubSpot contact + deal created &middot; <code>acme-corp</code></div>
+                        <div class="packet-action"><span class="packet-action-check">&#10003;</span> Posted to <code>#inbound-qualified</code> in Slack</div>
+                        <p class="packet-action-muted">Transcript, message log, and the policy decision behind every step are attached for audit.</p>
+                    </div>
                 </div>
             </div>
         </div>
