@@ -1532,7 +1532,7 @@
             </h1>
 
             <p class="subtitle">
-                LUPO qualifies every inbound call, web form, chat handoff, and email reply against your sales policy, then books real buyers, routes support, filters vendor noise, and logs every decision in your CRM.
+                LUPO qualifies every inbound call, web form, chat handoff, and email reply against your sales policy, then books real buyers, routes support, filters non-sales noise, and logs every decision to your CRM and audit trail.
             </p>
 
             <!-- CTA Buttons -->
@@ -1563,32 +1563,32 @@
     <section class="page-section">
         <div class="section-inner">
             <div class="section-eyebrow">Works with your inbound stack</div>
-            <h2 class="section-heading">The inbound layer for the tools you already run.</h2>
-            <p class="section-lede">Inbound calls, web forms, chat handoffs, and email come in. Qualified buyers land in your CRM, Slack, and calendar. LUPO is the qualification and routing layer between your inbound channels and the tools your team already works in.</p>
+            <h2 class="section-heading">The qualification layer between every inbound channel and your sales tools.</h2>
+            <p class="section-lede">Inbound calls, web forms, chat handoffs, and email replies come in. Qualified buyers land in your CRM, Slack, and calendar. Support, vendor, and wrong-fit enquiries are handled before they waste rep time.</p>
             <div class="integrations-grid">
                 <div class="integration-tile">
-                    <img src="/logos/integrations/slack.svg" alt="Slack" width="120" height="30" loading="lazy" decoding="async">
-                    <span class="integration-status live">Live &middot; Alerts</span>
+                    <span class="integration-text">Voice qualification</span>
+                    <span class="integration-status live">Live</span>
+                </div>
+                <div class="integration-tile">
+                    <span class="integration-text">Email replies</span>
+                    <span class="integration-status live">Live</span>
                 </div>
                 <div class="integration-tile">
                     <img src="/logos/integrations/hubspot.svg" alt="HubSpot" width="120" height="30" loading="lazy" decoding="async">
                     <span class="integration-status live">Live &middot; CRM sync</span>
                 </div>
                 <div class="integration-tile">
+                    <img src="/logos/integrations/slack.svg" alt="Slack" width="120" height="30" loading="lazy" decoding="async">
+                    <span class="integration-status live">Live &middot; Alerts</span>
+                </div>
+                <div class="integration-tile">
                     <img src="/logos/integrations/googlecalendar.svg" alt="Google Calendar" width="120" height="30" loading="lazy" decoding="async">
                     <span class="integration-status live">Live &middot; Booking</span>
                 </div>
                 <div class="integration-tile">
-                    <img src="/logos/integrations/resend.svg" alt="Resend" width="120" height="30" loading="lazy" decoding="async">
-                    <span class="integration-status live">Live &middot; Email</span>
-                </div>
-                <div class="integration-tile">
-                    <span class="integration-text">Vapi</span>
-                    <span class="integration-status live">Live &middot; Voice</span>
-                </div>
-                <div class="integration-tile">
-                    <img src="/logos/integrations/intercom.svg" alt="Intercom" width="120" height="30" loading="lazy" decoding="async">
-                    <span class="integration-status webhook">Webhook handoff</span>
+                    <span class="integration-text">Chat handoff</span>
+                    <span class="integration-status webhook">Webhook-ready</span>
                 </div>
                 <div class="integration-tile">
                     <img src="/logos/integrations/microsoftoutlook.svg" alt="Microsoft 365 / Outlook" width="120" height="30" loading="lazy" decoding="async">
@@ -1596,10 +1596,10 @@
                 </div>
                 <div class="integration-tile">
                     <img src="/logos/integrations/salesforce.svg" alt="Salesforce" width="120" height="30" loading="lazy" decoding="async">
-                    <span class="integration-status roadmap">Roadmap</span>
+                    <span class="integration-status onboarding">In onboarding</span>
                 </div>
             </div>
-            <p class="integrations-caption">Any chat platform that can post a webhook (Intercom Fin, Drift, Qualified, HubSpot Chat, or a custom widget) can hand off qualified conversations to LUPO. Salesforce CRM sync and Microsoft 365 / Outlook calendar are next in the onboarding queue.</p>
+            <p class="integrations-caption">LUPO works with any chat, form, or website workflow that can send a webhook. Intercom, Drift, Qualified, HubSpot Chat, custom forms, and internal routing tools can all hand qualified conversations into LUPO.</p>
         </div>
     </section>
 
@@ -1659,7 +1659,7 @@
                 <div class="section-card">
                     <div class="card-label">Inbound email</div>
                     <h3 class="card-heading">Keeps the thread warm.</h3>
-                    <p class="card-body">Handles replies and inbound enquiries, asks the missing qualification questions, keeps the thread warm without spamming, and routes only qualified buyers to a rep.</p>
+                    <p class="card-body">Handles replies and inbound enquiries, asks the missing qualification questions, follows up without flooding the buyer, and routes only qualified buyers to a rep.</p>
                 </div>
             </div>
         </div>
@@ -1676,7 +1676,7 @@
                 </div>
                 <div class="packet-mock" role="img" aria-label="Sample qualified buyer packet">
                     <div class="packet-header">
-                        <span class="packet-title">Qualified buyer packet</span>
+                        <span class="packet-title">Example qualified buyer packet</span>
                         <span class="packet-status-pill">Booked</span>
                     </div>
                     <div class="packet-body">
@@ -1698,7 +1698,7 @@
                         </div>
                         <div class="packet-row">
                             <span class="packet-label">Use case</span>
-                            <span class="packet-value">60 SDRs &middot; ~1,400 forms / week &middot; US + UK pipeline</span>
+                            <span class="packet-value">Multi-region sales team &middot; high inbound volume &middot; replacing manual qualification</span>
                         </div>
                         <div class="packet-row">
                             <span class="packet-label">Timing</span>
@@ -1716,36 +1716,36 @@
         </div>
     </section>
 
-    <!-- What ships Section -->
+    <!-- Sales operations layer -->
     <section class="page-section">
         <div class="section-inner">
-            <div class="section-eyebrow">Built for real sales operations</div>
-            <h2 class="section-heading">Every qualified lead ends up in the tools your team already uses.</h2>
-            <p class="section-lede">No new dashboard for your reps to learn. LUPO writes to your CRM, pings the right channel in Slack, books the right rep's calendar, and routes the lead by territory or product line automatically.</p>
+            <div class="section-eyebrow">Sales operations layer</div>
+            <h2 class="section-heading">Built for sales operations, not chatbot demos.</h2>
+            <p class="section-lede">LUPO is the layer your team configures: who counts as qualified, who needs human review, how leads get routed, what gets logged. The controls your reps, managers, and RevOps actually use.</p>
             <div class="feature-list">
                 <div class="feature-row-item">
-                    <h3>Calendar booking</h3>
-                    <p>Live availability and real appointment creation. Google Calendar today. Outlook in onboarding.</p>
+                    <h3>Qualification policy</h3>
+                    <p>Define what counts as qualified, wrong-fit, support, vendor, or needs human review for your business.</p>
                 </div>
                 <div class="feature-row-item">
-                    <h3>CRM sync</h3>
-                    <p>Every contact, call summary, and booking written into HubSpot automatically. Salesforce next.</p>
+                    <h3>Routing rules</h3>
+                    <p>Round-robin or rules-based handoff by territory, product line, seniority, or source channel.</p>
                 </div>
                 <div class="feature-row-item">
-                    <h3>Slack alerts</h3>
-                    <p>Your team sees qualified leads and bookings the second they happen, with a one-click link to context.</p>
+                    <h3>Human approval</h3>
+                    <p>Hold uncertain or high-value leads for manual review instead of letting LUPO commit to risky decisions.</p>
                 </div>
                 <div class="feature-row-item">
-                    <h3>Lead routing</h3>
-                    <p>Round-robin or rules-based handoff to the right rep based on territory, product line, or seniority.</p>
+                    <h3>Audit trail</h3>
+                    <p>Every call, form, chat, and email gets a summary, message log, decision, and the next action LUPO took.</p>
                 </div>
                 <div class="feature-row-item">
-                    <h3>Full call logging</h3>
-                    <p>Transcripts, recordings, outcomes, and a clean audit trail for every interaction.</p>
+                    <h3>Escalation</h3>
+                    <p>When LUPO is unsure, it asks a clarifying question, escalates to a named rep, or holds for approval. It never forces a booking.</p>
                 </div>
                 <div class="feature-row-item">
-                    <h3>Qualification tuned to your business</h3>
-                    <p>Real buyers versus vendors, support, low-intent, wrong-fit. Configured during onboarding.</p>
+                    <h3>Configured during onboarding</h3>
+                    <p>Sales policy, routing rules, CRM fields, and qualification criteria are tuned for your business in week one.</p>
                 </div>
             </div>
         </div>
@@ -1768,7 +1768,7 @@
                         Start the call
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
                     </button>
-                    <div class="demo-tile-meta">Vapi voice &middot; spend-capped &middot; sandbox assistant</div>
+                    <div class="demo-tile-meta">Live demo environment &middot; no CRM changes</div>
                 </div>
                 <div class="demo-tile">
                     <div class="demo-tile-icon">
@@ -1810,7 +1810,7 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
                             </div>
                         </div>
                     </details>
-                    <div class="demo-tile-meta">Front-end example &middot; no live submission</div>
+                    <div class="demo-tile-meta">Safe simulation &middot; no lead created</div>
                 </div>
                 <div class="demo-tile">
                     <div class="demo-tile-icon">
@@ -1846,7 +1846,7 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
                             </div>
                         </div>
                     </details>
-                    <div class="demo-tile-meta">Mirrors the live <code>/api/chat/handoff</code> contract</div>
+                    <div class="demo-tile-meta">Example handoff from Intercom, Drift, Qualified, or a custom chatbot</div>
                 </div>
             </div>
         </div>
@@ -1856,7 +1856,7 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
     <section class="page-section">
         <div class="section-inner">
             <div class="section-eyebrow">Built to be trusted with real revenue</div>
-            <h2 class="section-heading">Privacy-first. Compliant. Configured to your sales motion.</h2>
+            <h2 class="section-heading">Privacy-aware. Audit-ready. Configured to your sales motion.</h2>
             <div class="card-grid-3">
                 <div class="section-card">
                     <div class="card-label">Voice infrastructure</div>
@@ -1864,9 +1864,9 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
                     <p class="card-body">Selected by ElevenLabs as a voice AI grant company. Production-grade voice that your senior buyers will not flinch at.</p>
                 </div>
                 <div class="section-card">
-                    <div class="card-label">Compliance</div>
-                    <h3 class="card-heading">UK GDPR. A2P 10DLC registered.</h3>
-                    <p class="card-body">Full audit trail. Consent captured at every step. SMS messaging registered with carriers, not flying under the radar.</p>
+                    <div class="card-label">Privacy &amp; consent</div>
+                    <h3 class="card-heading">GDPR-aware workflows</h3>
+                    <p class="card-body">Consent captured at each step. Audit trail for every decision LUPO makes. Consent-aware messaging: SMS is available where enabled, with carrier registration and opt-out handling configured during onboarding.</p>
                 </div>
                 <div class="section-card">
                     <div class="card-label">Design partners</div>
@@ -1906,7 +1906,7 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
                 </details>
                 <details class="faq-item">
                     <summary class="faq-question">Can it work with our CRM and calendar?</summary>
-                    <p class="faq-answer">Today: HubSpot, Slack, Google Calendar, and Resend are live; Vapi powers the voice path. Any chatbot that can post a webhook can hand off to LUPO. Microsoft 365 / Outlook calendar is in onboarding. Salesforce CRM sync is on the roadmap. We do not publish integrations we have not shipped.</p>
+                    <p class="faq-answer">Today: HubSpot CRM sync, Slack alerts, Google Calendar booking, voice qualification, and email replies are live. Any chat, form, or workflow that can post a webhook can hand off to LUPO. Microsoft 365 / Outlook calendar and Salesforce CRM sync are in onboarding. Additional CRM and calendar connectors are added during onboarding.</p>
                 </details>
             </div>
         </div>
