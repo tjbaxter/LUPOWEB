@@ -977,6 +977,231 @@
             line-height: 1.5;
         }
 
+        /* Test the inbound SDR */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .demo-tile {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+        }
+
+        .demo-tile:hover {
+            border-color: rgba(167, 139, 250, 0.25);
+            background: rgba(118, 75, 162, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .demo-tile-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(167, 139, 250, 0.12);
+            color: #a78bfa;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-tile-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .demo-tile h3 {
+            font-size: 19px;
+            font-weight: 600;
+            letter-spacing: -0.012em;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .demo-tile p {
+            font-size: 14.5px;
+            line-height: 1.55;
+            color: var(--text-secondary);
+        }
+
+        .demo-tile-button,
+        .demo-tile-summary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 11px;
+            background: rgba(167, 139, 250, 0.12);
+            border: 1px solid rgba(167, 139, 250, 0.25);
+            color: #a78bfa;
+            font-size: 13.5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.25s ease, border-color 0.25s ease;
+            text-decoration: none;
+            align-self: flex-start;
+            font-family: inherit;
+            list-style: none;
+        }
+
+        .demo-tile-button:hover,
+        .demo-tile-summary:hover {
+            background: rgba(167, 139, 250, 0.2);
+            border-color: rgba(167, 139, 250, 0.4);
+        }
+
+        .demo-tile-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .demo-tile-summary svg {
+            transition: transform 0.25s ease;
+        }
+
+        .demo-tile-details[open] .demo-tile-summary svg {
+            transform: rotate(180deg);
+        }
+
+        .demo-tile-example {
+            margin-top: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 16px 18px;
+            background: rgba(0, 0, 0, 0.28);
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .demo-section + .demo-section {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .demo-section-label {
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+        }
+
+        .demo-section-label.input {
+            color: rgba(167, 139, 250, 0.9);
+        }
+
+        .demo-section-label.output {
+            color: #34c759;
+            margin-top: 8px;
+        }
+
+        .demo-tile-example pre {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+            font-size: 11.5px;
+            color: var(--text-primary);
+            line-height: 1.55;
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .demo-tile-meta {
+            margin-top: auto;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 11.5px;
+            color: var(--text-secondary);
+            letter-spacing: 0.04em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .demo-tile-meta::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(167, 139, 250, 0.5);
+            flex-shrink: 0;
+        }
+
+        .demo-tile-meta code {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 0 5px;
+            border-radius: 4px;
+            font-family: ui-monospace, monospace;
+            font-size: 11px;
+            color: var(--text-primary);
+        }
+
+        /* VP Sales / CRO FAQ */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.018);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 22px 26px;
+            transition: border-color 0.25s ease, background 0.25s ease;
+        }
+
+        .faq-item[open] {
+            border-color: rgba(167, 139, 250, 0.22);
+            background: rgba(118, 75, 162, 0.04);
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            list-style: none;
+            letter-spacing: -0.005em;
+        }
+
+        .faq-question::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-question::after {
+            content: "+";
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            transition: transform 0.25s ease, color 0.25s ease;
+            line-height: 1;
+        }
+
+        .faq-item[open] .faq-question::after {
+            content: "−";
+            color: #a78bfa;
+        }
+
+        .faq-answer {
+            margin-top: 14px;
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
         /* Bottom CTA Block */
         .cta-block {
             text-align: center;
@@ -1032,6 +1257,8 @@
             .card-grid-2 { grid-template-columns: 1fr; }
             .feature-list { grid-template-columns: 1fr; gap: 0; }
             .packet-grid { grid-template-columns: 1fr; gap: 48px; }
+            .demo-grid { grid-template-columns: 1fr; gap: 16px; }
+            .faq-grid { grid-template-columns: 1fr; gap: 12px; }
         }
 
         /* Responsive */
@@ -1219,6 +1446,29 @@
             .packet-action,
             .packet-action-muted {
                 font-size: 12.5px;
+            }
+            .demo-tile {
+                padding: 24px;
+            }
+            .demo-tile h3 {
+                font-size: 17px;
+            }
+            .demo-tile p {
+                font-size: 14px;
+            }
+            .demo-tile-button,
+            .demo-tile-summary {
+                font-size: 13px;
+                padding: 9px 14px;
+            }
+            .faq-item {
+                padding: 18px 20px;
+            }
+            .faq-question {
+                font-size: 15px;
+            }
+            .faq-answer {
+                font-size: 14px;
             }
             .integrations-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1501,6 +1751,107 @@
         </div>
     </section>
 
+    <!-- Test the inbound SDR -->
+    <section id="try-lupo" class="page-section">
+        <div class="section-inner">
+            <div class="section-eyebrow">Test the inbound SDR</div>
+            <h2 class="section-heading">See how LUPO handles the same buyer across voice, form, and chat.</h2>
+            <p class="section-lede">One sales policy, every inbound channel. Pick a channel below to see what LUPO does with it &mdash; without booking anything or hitting your CRM.</p>
+            <div class="demo-grid">
+                <div class="demo-tile">
+                    <div class="demo-tile-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <h3>Talk to LUPO live</h3>
+                    <p>Have a real 60-second voice conversation with LUPO right from this page. Ask it to qualify a fake lead and book a meeting.</p>
+                    <button type="button" class="demo-tile-button" onclick="document.querySelector('.lupo-call-btn')?.click()">
+                        Start the call
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                    </button>
+                    <div class="demo-tile-meta">Vapi voice &middot; spend-capped &middot; sandbox assistant</div>
+                </div>
+                <div class="demo-tile">
+                    <div class="demo-tile-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6M7 17h4"/></svg>
+                    </div>
+                    <h3>Try form qualification</h3>
+                    <p>See what LUPO does with a real demo-form submission &mdash; a vendor pitch, a support request, and a qualified buyer.</p>
+                    <details class="demo-tile-details">
+                        <summary class="demo-tile-summary">
+                            Show three examples
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;"><path d="M6 9l6 6 6-6"/></svg>
+                        </summary>
+                        <div class="demo-tile-example">
+                            <div class="demo-section">
+                                <div class="demo-section-label input">Form input &middot; vendor</div>
+                                <pre>name:    Pat Vendor
+company: VendorTools
+message: "We have an AI tool to help your SDRs&hellip;"</pre>
+                                <div class="demo-section-label output">LUPO action</div>
+                                <pre>&rarr; Vendor pitch. Auto-declined. Logged. Never routed to sales.</pre>
+                            </div>
+                            <div class="demo-section">
+                                <div class="demo-section-label input">Form input &middot; support</div>
+                                <pre>name:    Alex Existing
+message: "My calls are dropping at 4pm GMT&hellip;"</pre>
+                                <div class="demo-section-label output">LUPO action</div>
+                                <pre>&rarr; Support leakage. Routed to #cs-tier-1.
+   Sales not notified.</pre>
+                            </div>
+                            <div class="demo-section">
+                                <div class="demo-section-label input">Form input &middot; qualified buyer</div>
+                                <pre>name:    Jane Roe &middot; VP RevOps
+company: Acme Corp (850)
+message: "Replacing our existing triage vendor&hellip;"</pre>
+                                <div class="demo-section-label output">LUPO action</div>
+                                <pre>&rarr; Qualified. Email sent (no surprise call).
+   Meeting offered &middot; HubSpot deal created.
+   Slack alert posted to #inbound-qualified.</pre>
+                            </div>
+                        </div>
+                    </details>
+                    <div class="demo-tile-meta">Front-end example &middot; no live submission</div>
+                </div>
+                <div class="demo-tile">
+                    <div class="demo-tile-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <h3>Simulate chat handoff</h3>
+                    <p>See what an Intercom Fin or custom chatbot posts to LUPO when it hands a qualified visitor across &mdash; and what LUPO does with it.</p>
+                    <details class="demo-tile-details">
+                        <summary class="demo-tile-summary">
+                            Show example payload
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;"><path d="M6 9l6 6 6-6"/></svg>
+                        </summary>
+                        <div class="demo-tile-example">
+                            <div class="demo-section">
+                                <div class="demo-section-label input">POST /api/chat/handoff</div>
+                                <pre>{
+  "external_session_id": "intercom-conv-789",
+  "source":              "intercom-fin",
+  "consent_to_call":     true,
+  "message_log": [
+    "Visitor: looking for an inbound SDR tool",
+    "Fin:     60 SDRs, US + UK, eval Q3",
+    "Visitor: yes, happy for a call"
+  ]
+}</pre>
+                                <div class="demo-section-label output">LUPO response</div>
+                                <pre>{
+  "status":          "qualified",
+  "chat_session_id": "4df9&hellip;",
+  "callback_status": "queued",
+  "policy_applied":  "consumer_callback_with_consent"
+}</pre>
+                            </div>
+                        </div>
+                    </details>
+                    <div class="demo-tile-meta">Mirrors the live <code>/api/chat/handoff</code> contract</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Trust Section -->
     <section class="page-section">
         <div class="section-inner">
@@ -1522,6 +1873,41 @@
                     <h3 class="card-heading">Founder-led implementation</h3>
                     <p class="card-body">LUPO is configured around your sales policy, routing rules, CRM fields, and qualification criteria during onboarding. Selected design partners get direct implementation support and a fast feedback loop into the product.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VP Sales / CRO FAQ -->
+    <section class="page-section">
+        <div class="section-inner">
+            <div class="section-eyebrow">For sales leaders</div>
+            <h2 class="section-heading">The questions VP Sales and RevOps actually ask.</h2>
+            <p class="section-lede">Plain answers. No magic. LUPO is an inbound qualification and routing layer, not a chatbot and not a replacement for your reps.</p>
+            <div class="faq-grid">
+                <details class="faq-item">
+                    <summary class="faq-question">Will LUPO annoy senior buyers?</summary>
+                    <p class="faq-answer">No. LUPO is channel-aware. A senior enterprise buyer who submits a form receives a thoughtful email with a booking link &mdash; not an unexpected robot call. Phone callbacks fire when the channel and policy make sense (consumer forms, inbound calls, or chats where the visitor has explicitly asked to be called).</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Is this just a chatbot?</summary>
+                    <p class="faq-answer">No. LUPO is an inbound qualification layer across calls, web forms, chat handoffs, and email. Chat is one intake channel of four. LUPO does not replace your chat widget &mdash; your existing chatbot (Intercom Fin, Drift, Qualified, custom) hands off to LUPO when a visitor is ready.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Does LUPO replace SDRs?</summary>
+                    <p class="faq-answer">No. LUPO handles the inbound triage and qualification work that punishes responsive sales teams. Human SDRs and AEs still own complex discovery, negotiation, and relationship-building. LUPO buys them time by filtering noise and routing only qualified buyers.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">What happens when LUPO is unsure?</summary>
+                    <p class="faq-answer">It escalates instead of guessing. Depending on your policy, an uncertain or high-value lead is held for human approval, routed to a named rep, or asked a clarifying question before LUPO commits to an action. LUPO never forces a booking it is not confident about.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">What happens to vendors and support requests?</summary>
+                    <p class="faq-answer">Vendor pitches are politely declined and logged &mdash; never routed to sales. Existing-customer support requests are routed to the right team with the original conversation attached. AEs see only the buyers worth their time.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Can it work with our CRM and calendar?</summary>
+                    <p class="faq-answer">Today: HubSpot, Slack, Google Calendar, and Resend are live; Vapi powers the voice path. Any chatbot that can post a webhook can hand off to LUPO. Microsoft 365 / Outlook calendar is in onboarding. Salesforce CRM sync is on the roadmap. We do not publish integrations we have not shipped.</p>
+                </details>
             </div>
         </div>
     </section>
