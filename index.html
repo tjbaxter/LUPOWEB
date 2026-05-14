@@ -710,6 +710,69 @@
             color: var(--text-secondary);
         }
 
+        /* Integrations Strip */
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .integration-tile {
+            height: 88px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0 20px;
+            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .integration-tile:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(167, 139, 250, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .integration-tile img {
+            max-height: 30px;
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.72;
+            transition: opacity 0.25s ease;
+        }
+
+        .integration-tile:hover img {
+            opacity: 1;
+        }
+
+        .integration-text {
+            font-size: 19px;
+            font-weight: 600;
+            letter-spacing: 0.005em;
+            color: rgba(255, 255, 255, 0.72);
+            transition: color 0.25s ease;
+        }
+
+        .integration-tile:hover .integration-text {
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .integrations-caption {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+            letter-spacing: 0.005em;
+            line-height: 1.6;
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         /* Bottom CTA Block */
         .cta-block {
             text-align: center;
@@ -910,6 +973,24 @@
             .cta-block p {
                 font-size: 17px;
             }
+            .integrations-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .integration-tile {
+                height: 72px;
+                padding: 0 14px;
+            }
+            .integration-tile img {
+                max-height: 26px;
+            }
+            .integration-text {
+                font-size: 16px;
+            }
+            .integrations-caption {
+                font-size: 12px;
+                margin-top: 24px;
+            }
         }
     </style>
     <script src="/analytics.js" defer></script>
@@ -967,6 +1048,42 @@
                         </div>
                     </div>
                 </div>
+
+    <!-- Integrations Strip -->
+    <section class="page-section">
+        <div class="section-inner">
+            <div class="section-eyebrow">Native integrations</div>
+            <h2 class="section-heading">The inbound layer for your existing stack.</h2>
+            <p class="section-lede">Calls, web forms, chat handoffs, and email come in. Qualified buyers land in your CRM, Slack, and calendar. LUPO sits between your inbound channels and the tools your team already runs &mdash; no new dashboard for your reps to learn.</p>
+            <div class="integrations-grid">
+                <div class="integration-tile" title="Slack — real-time alerts and rep handoff">
+                    <img src="/logos/integrations/slack.svg" alt="Slack" width="120" height="30" loading="lazy" decoding="async">
+                </div>
+                <div class="integration-tile" title="HubSpot — CRM sync for contacts, calls, and bookings">
+                    <img src="/logos/integrations/hubspot.svg" alt="HubSpot" width="120" height="30" loading="lazy" decoding="async">
+                </div>
+                <div class="integration-tile" title="Salesforce — CRM sync (next)">
+                    <img src="/logos/integrations/salesforce.svg" alt="Salesforce" width="120" height="30" loading="lazy" decoding="async">
+                </div>
+                <div class="integration-tile" title="Google Calendar — live availability and booking">
+                    <img src="/logos/integrations/googlecalendar.svg" alt="Google Calendar" width="120" height="30" loading="lazy" decoding="async">
+                </div>
+                <div class="integration-tile" title="Microsoft 365 / Outlook calendar (in onboarding)">
+                    <img src="/logos/integrations/microsoftoutlook.svg" alt="Microsoft 365 / Outlook" width="120" height="30" loading="lazy" decoding="async">
+                </div>
+                <div class="integration-tile" title="Intercom — Fin Data Connector chat handoff">
+                    <img src="/logos/integrations/intercom.svg" alt="Intercom" width="120" height="30" loading="lazy" decoding="async">
+                </div>
+                <div class="integration-tile" title="Vapi — production voice infrastructure">
+                    <span class="integration-text">Vapi</span>
+                </div>
+                <div class="integration-tile" title="Resend — transactional email">
+                    <img src="/logos/integrations/resend.svg" alt="Resend" width="120" height="30" loading="lazy" decoding="async">
+                </div>
+            </div>
+            <p class="integrations-caption">Slack, HubSpot, Google Calendar, Resend, Vapi voice, and Intercom Fin chat handoff are live today. Salesforce CRM sync and Microsoft 365 / Outlook calendar are in onboarding.</p>
+        </div>
+    </section>
 
     <!-- Problem Section -->
     <section class="page-section">
