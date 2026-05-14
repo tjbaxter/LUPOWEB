@@ -31,10 +31,40 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://lupolabs.ai/blog.html</loc>
-    <lastmod>2025-11-05</lastmod>
+    <loc>https://lupolabs.ai/blog/</loc>
+    <lastmod>2026-05-15</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://lupolabs.ai/blog/the-ai-sdr-has-moved-inbound</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lupolabs.ai/blog/rep-free-buyer-still-needs-sales</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lupolabs.ai/blog/round-robin-not-a-routing-strategy</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lupolabs.ai/blog/the-inbound-triage-tax</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lupolabs.ai/blog/ai-agent-readiness-checklist</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://lupolabs.ai/careers.html</loc>

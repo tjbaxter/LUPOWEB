@@ -1,0 +1,39 @@
+# LUPO blog research agent — runtime dependencies.
+#
+# The agent is designed to run weekly (Hermes cron, or AWS EventBridge
+# Scheduler firing an ECS/Fargate task). It generates a draft Markdown
+# post under content/blog/drafts/ and opens a PR — it never publishes
+# directly. See README.md for deployment paths.
+
+# Hermes Agent (preferred path). Pin to a specific release once the
+# agent is in production. Until then, install the latest from PyPI.
+# nous-hermes-agent is the package name documented in the Hermes
+# Agent repo (github.com/nousresearch/hermes-agent).
+nous-hermes-agent>=0.4.0
+
+# JSON schema validation for the agent's structured output.
+jsonschema>=4.21.0
+
+# Markdown validation (rejects em dashes, runs basic structural
+# checks before the agent writes a draft file).
+markdown-it-py>=3.0.0
+
+# HTTP client for the GitHub PR-creation step. Anything modern works;
+# requests is the lowest-risk default.
+requests>=2.32.0
+
+# Frontmatter handling for the draft Markdown file.
+python-frontmatter>=1.1.0
+
+# Optional: explicit fallback LLM clients. The agent prefers Hermes
+# AIAgent (see README) but will fall back to a direct provider call if
+# Hermes is unavailable in the runtime. Either of these can be omitted
+# if the matching env var is unset.
+anthropic>=0.40.0
+openai>=1.50.0
+
+# Optional: web search providers. Set FIRECRAWL_API_KEY or
+# TAVILY_API_KEY in the environment to enable, otherwise the agent
+# falls back to a no-search dry mode that uses only its own context.
+firecrawl-py>=2.0.0
+tavily-python>=0.5.0

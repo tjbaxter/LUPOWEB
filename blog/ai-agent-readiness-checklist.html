@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Before You Let an AI Agent Touch Revenue, Check These 7 Things | LUPO</title>
+    <meta name="description" content="Sales leaders are interested in AI, but they are afraid of hallucinations, bad CRM writes, compliance issues, and brand damage. A practical readiness checklist for AI in the inbound funnel: permission boundaries, audit trails, escalation, and what to keep human.">
+    <link rel="icon" type="image/png" href="/lupo-icon-180.png">
+    <link rel="apple-touch-icon" href="/lupo-icon-180.png">
+
+    <meta property="og:title" content="Before You Let an AI Agent Touch Revenue, Check These 7 Things">
+    <meta property="og:description" content="A readiness checklist for AI in the inbound funnel: permission boundaries, audit trails, escalation, controlled CRM writes, and what to keep human.">
+    <meta property="og:url" content="https://lupolabs.ai/blog/ai-agent-readiness-checklist">
+    <meta property="og:image" content="https://lupolabs.ai/lupo-head-logo copy.png">
+    <meta property="og:type" content="article">
+    <meta name="company-name" content="Flair Technologies Ltd">
+    <meta name="application-name" content="LUPO">
+    <link rel="canonical" href="https://lupolabs.ai/blog/ai-agent-readiness-checklist">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Before You Let an AI Agent Touch Revenue, Check These 7 Things",
+        "description": "A readiness checklist for AI in the inbound funnel: permission boundaries, audit trails, escalation, controlled CRM writes, and what to keep human.",
+        "author": { "@type": "Organization", "name": "LUPO Research" },
+        "publisher": { "@type": "Organization", "name": "Flair Technologies Ltd", "url": "https://lupolabs.ai/" },
+        "url": "https://lupolabs.ai/blog/ai-agent-readiness-checklist",
+        "articleSection": "AI safety & ops"
+    }
+    </script>
+
+    <link rel="stylesheet" href="/blog.css">
+    <script src="/analytics.js" defer></script>
+    <script src="/talk-to-lupo.js?v=multicdn" defer></script>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <nav>
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <img src="/lupo-logo-nav-96.webp" alt="LUPO" width="40" height="40" decoding="async" style="height: 40px; width: auto; display: block;">
+                <span style="font-size: 24px; font-weight: 600;">LUPO</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/blog/" class="nav-link is-active">Blog</a>
+                <a href="/about.html" class="nav-link">About</a>
+            </div>
+            <a href="https://app.lupolabs.ai/login" class="nav-login-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+                </svg>
+                Login
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <header class="article-header">
+                <div class="article-eyebrow">
+                    <span>AI safety &amp; ops</span>
+                    <span class="dot"></span>
+                    <span>Field note</span>
+                </div>
+                <h1 class="article-title">Before You Let an AI Agent Touch Revenue, Check These 7 Things</h1>
+                <p class="article-summary">The question is not whether to use AI in sales. The question is where it can act without creating revenue risk. A practical readiness checklist for sales leaders evaluating AI inside the inbound funnel.</p>
+                <div class="article-meta">
+                    <span>LUPO Research</span>
+                    <span class="dot"></span>
+                    <span>8 min read</span>
+                </div>
+            </header>
+
+            <div class="article-body">
+                <p>Most sales leaders are now under pressure to "have an AI strategy." The result is a lot of pilots, a lot of demos, and a quiet underlying fear: what happens when the agent gets it wrong?</p>
+
+                <p>The fear is rational. An AI agent that books a meeting with a competitor, fires a callback to the CEO of an enterprise account, writes a contaminated record to the CRM, or sends an off-brand reply to a buyer is doing real damage. Sales leaders have seen what happens when a junior rep does any of those things. They are right to be careful about handing the same access to software that does not get tired.</p>
+
+                <p>This is not a reason to skip AI in sales. It is a reason to scope it carefully. The checklist below is what to verify before letting an AI agent take any action that affects pipeline.</p>
+
+                <h2>1. Permission boundaries are explicit</h2>
+
+                <p>The agent should not have "general permission to act on inbound leads." It should have a specific, written list of actions it is allowed to take, by channel and by lead type.</p>
+
+                <p>For example: "On a B2C web form, send an automated email and offer a calendar link. Do not call. On a qualified inbound phone call from a B2B account, book a meeting if requested. Do not send marketing emails. On a chat handoff with consent, queue a callback. Do not write to the CRM until the call completes."</p>
+
+                <p>If the vendor cannot show you the list of allowed actions, the agent has too much access. Ask for the smallest possible list to start with. Add capabilities one at a time as confidence grows.</p>
+
+                <h2>2. Every decision has an audit trail</h2>
+
+                <p>Each action the agent takes should be logged, with the inputs that triggered it, the rule that fired, and the time stamp. The log should be queryable: "show me every action this agent has taken on lead 12345 in the last seven days."</p>
+
+                <p>Without this, two things happen. First, when a rep or manager asks "why did this happen?", the answer is "we don't know." That breaks trust in the system. Second, when something goes wrong, you cannot diagnose it. The agent will keep making the same mistake.</p>
+
+                <p>The audit trail is not an enterprise-only feature. It is the basic requirement for letting software make decisions about real money.</p>
+
+                <h2>3. CRM writes are controlled, not blanket</h2>
+
+                <p>The dangerous part of AI in sales is not the conversation. It is what the agent writes to the system of record. A contaminated CRM is hard to clean up, and contaminated CRM data corrupts downstream reporting, attribution, and pipeline forecasting.</p>
+
+                <p>Verify: which objects can the agent create? Which fields can it write? Can it modify existing records, or only create new ones? Can it merge contacts? Can it write to opportunity stages? Can it set probability or amount?</p>
+
+                <p>The safest default is "create new contacts and notes, do not modify existing records, do not touch opportunity stages, do not write deal amount." Each of those permissions should be granted explicitly, with a clear use case.</p>
+
+                <h2>4. Human approval exists for high-value and uncertain leads</h2>
+
+                <p>Not every lead should be auto-handled. Some categories warrant human review before the agent acts:</p>
+
+                <ul>
+                    <li>Leads above a revenue threshold (enterprise accounts, named target accounts)</li>
+                    <li>Leads from accounts in active legal or security review</li>
+                    <li>Leads that match conflicting signals (e.g. partner contact submitting through a competitor form)</li>
+                    <li>Leads the agent's policy is unsure about</li>
+                    <li>Leads from regulated industries with specific compliance rules</li>
+                </ul>
+
+                <p>The agent should be able to hold these in a queue for human review, with a clear "approve and act" button for the manager or sales ops lead. The principle is simple: when the stakes are high or the policy is uncertain, a human signs off before the agent moves.</p>
+
+                <h2>5. Escalation, not guessing, when the agent is unsure</h2>
+
+                <p>The single most useful behavior an AI agent can have is the willingness to say "I don't know."</p>
+
+                <p>Agents that escalate when they are unsure are more trustworthy than agents that always fire. Verify the escalation path: where does the lead go when the agent cannot decide? Is it a named human, a queue, a Slack channel? Is the escalation surfaced quickly enough that the lead is not stale by the time someone sees it?</p>
+
+                <p>Watch out for vendors that emphasize "the agent will always take an action" as a feature. That is a bug. A confident agent is dangerous. A calibrated agent is useful.</p>
+
+                <h2>6. Data quality determines agent quality</h2>
+
+                <p>Agents are only as good as the data they are given. If your CRM is missing account ownership, your routing agent will route incorrectly. If your forms do not capture industry or company size, your qualification agent will be guessing. If your chat tool does not pass consent flags, your callback agent will call buyers who did not opt in.</p>
+
+                <p>Before piloting an AI agent, audit the inputs:</p>
+
+                <ul>
+                    <li>Are account ownership records up to date?</li>
+                    <li>Are forms capturing the qualification fields you actually use?</li>
+                    <li>Are consent flags consistent across channels?</li>
+                    <li>Are duplicate contacts merged, or do they sprawl?</li>
+                    <li>Is the territory map current?</li>
+                </ul>
+
+                <p>An AI agent built on top of clean inputs will outperform an AI agent built on top of messy ones by a wide margin, regardless of which model is under the hood. Cleaning the inputs is unglamorous but cheap. It is the single highest-return investment before deploying agents.</p>
+
+                <h2>7. The buyer-facing experience is channel-aware</h2>
+
+                <p>An agent that responds to every inbound enquiry the same way will damage your brand. A senior B2B buyer who submits a long-form demo request does not want a robot calling them in ninety seconds. A homeowner submitting a service form expects exactly that.</p>
+
+                <p>Verify the agent's channel awareness. Can it distinguish between channels, between buyer types, between consumer and B2B context? Does it pick the right response, or does it always default to the same one?</p>
+
+                <p>An agent that calls every form fill is faster than no automation, but it is worse than well-designed automation. The right benchmark is not "what is the agent's response time?" It is "what does the buyer experience look like at every channel, by every persona?"</p>
+
+                <h2>What good looks like, end to end</h2>
+
+                <p>A serious AI deployment in the inbound funnel looks like this:</p>
+
+                <ul>
+                    <li>An explicit list of allowed actions per channel and per lead type</li>
+                    <li>A queryable audit log that explains every decision</li>
+                    <li>Controlled, minimal CRM writes</li>
+                    <li>A human-approval queue for high-value or uncertain leads</li>
+                    <li>An escalation path when the agent is unsure</li>
+                    <li>Clean inputs (CRM, forms, consent, ownership records)</li>
+                    <li>A channel-aware response policy</li>
+                </ul>
+
+                <p>This is not a futuristic stack. It is the minimum for letting software make decisions that affect pipeline. Vendors that can show you all seven are worth piloting. Vendors that can show you four or five are early. Vendors that cannot show you any of them are selling a chatbot dressed up as an agent.</p>
+
+                <h2>What this means for your team</h2>
+
+                <p>The question to ask a vendor is not "will your AI replace my SDRs?" The right question is "where does your AI have permission to act, and where does it stop?" If the vendor cannot answer the second question in concrete terms, the first one is irrelevant.</p>
+
+                <p>The teams that ship AI safely in sales are not the teams that automate the most. They are the teams that automate one channel, in one well-understood policy, with a complete audit trail, and then expand only when the data shows it is working. The risk is not in AI. The risk is in AI without boundaries.</p>
+            </div>
+
+            <aside class="article-sources">
+                <h3>Sources</h3>
+                <ol>
+                    <li><a href="https://www.salesforce.com/uk/news/stories/state-of-sales-report-announcement-2026/" target="_blank" rel="noopener noreferrer">Salesforce, State of Sales Report 2026</a>. Reference for sales-team adoption of AI agents and the data-security concerns that delay AI initiatives.</li>
+                    <li><a href="https://www.qualified.com/salesforce" target="_blank" rel="noopener noreferrer">Qualified, Piper AI SDR for Salesforce product page</a>. Reference for how the AI SDR category positions controlled action across website, email, and routing.</li>
+                    <li><a href="https://www.gartner.com/en/newsroom/press-releases/2026-03-09-gartner-sales-survey-finds-67-percent-of-b2b-buyers-prefer-a-rep-free-experience" target="_blank" rel="noopener noreferrer">Gartner, "67% of B2B Buyers Prefer a Rep-Free Experience"</a>. Reference for the buyer-side cost of a poor automated experience.</li>
+                </ol>
+            </aside>
+
+            <section class="article-cta">
+                <div class="article-cta-eyebrow">See it in action</div>
+                <h2>See the policy, audit trail, and escalation logic behind a LUPO qualification.</h2>
+                <p>Book a short product walkthrough. We will show how LUPO operates inside explicit permission boundaries, with a full audit trail per lead and a human-approval queue for the edge cases.</p>
+                <a href="https://cal.com/tombaxter/lupo" class="btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
+                    Book a walkthrough
+                </a>
+            </section>
+
+            <aside class="article-related">
+                <h3>Related notes</h3>
+                <div class="article-related-list">
+                    <a href="/blog/the-ai-sdr-has-moved-inbound" class="article-related-item">
+                        <div class="article-related-item-eyebrow">AI in sales</div>
+                        <h4>The AI SDR Has Moved Inbound: What Sales Leaders Should Automate First</h4>
+                    </a>
+                    <a href="/blog/the-inbound-triage-tax" class="article-related-item">
+                        <div class="article-related-item-eyebrow">Inbound quality</div>
+                        <h4>The Inbound Triage Tax: Why Fast Sales Teams Waste the Most Time</h4>
+                    </a>
+                </div>
+            </aside>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-left-section">
+            <div class="footer-logo">LUPO</div>
+            <p class="footer-text">© 2026 LUPO, a product of Flair Technologies Ltd. All rights reserved.</p>
+            <div class="footer-links-container">
+                <a href="/">Home</a>
+                <a href="/blog/">Blog</a>
+                <a href="/about.html">About</a>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/terms.html">Terms of Service</a>
+            </div>
+            <p class="footer-address">
+                Registered Office · 45 Fitzroy St, Fitzrovia · London, W1T 6EB, United Kingdom
+            </p>
+        </div>
+        <div class="footer-right-section">
+            <a href="https://elevenlabs.io/startup-grants" target="_blank" rel="noopener noreferrer">
+                <img src="https://eleven-public-cdn.elevenlabs.io/payloadcms/cy7rxce8uki-IIElevenLabsGrants%201.webp" alt="ElevenLabs Grant Recipient" style="width:200px; opacity: 0.9; transition: opacity 0.2s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+            </a>
+        </div>
+    </footer>
+</body>
+</html>

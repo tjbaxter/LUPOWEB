@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Round Robin Is Not a Routing Strategy | LUPO</title>
+    <meta name="description" content="Round robin distributes work. It does not decide whether the work should reach sales in the first place. Serious inbound routing needs qualification, ownership, territory, availability, escalation, and an audit trail.">
+    <link rel="icon" type="image/png" href="/lupo-icon-180.png">
+    <link rel="apple-touch-icon" href="/lupo-icon-180.png">
+
+    <meta property="og:title" content="Round Robin Is Not a Routing Strategy">
+    <meta property="og:description" content="Round robin distributes work. It does not decide whether the work should reach sales in the first place. What a real router does.">
+    <meta property="og:url" content="https://lupolabs.ai/blog/round-robin-not-a-routing-strategy">
+    <meta property="og:image" content="https://lupolabs.ai/lupo-head-logo copy.png">
+    <meta property="og:type" content="article">
+    <meta name="company-name" content="Flair Technologies Ltd">
+    <meta name="application-name" content="LUPO">
+    <link rel="canonical" href="https://lupolabs.ai/blog/round-robin-not-a-routing-strategy">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Round Robin Is Not a Routing Strategy",
+        "description": "Round robin distributes work. It does not decide whether the work should reach sales in the first place. What a real router does.",
+        "author": { "@type": "Organization", "name": "LUPO Research" },
+        "publisher": { "@type": "Organization", "name": "Flair Technologies Ltd", "url": "https://lupolabs.ai/" },
+        "url": "https://lupolabs.ai/blog/round-robin-not-a-routing-strategy",
+        "articleSection": "Routing & ops"
+    }
+    </script>
+
+    <link rel="stylesheet" href="/blog.css">
+    <script src="/analytics.js" defer></script>
+    <script src="/talk-to-lupo.js?v=multicdn" defer></script>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <nav>
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <img src="/lupo-logo-nav-96.webp" alt="LUPO" width="40" height="40" decoding="async" style="height: 40px; width: auto; display: block;">
+                <span style="font-size: 24px; font-weight: 600;">LUPO</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/blog/" class="nav-link is-active">Blog</a>
+                <a href="/about.html" class="nav-link">About</a>
+            </div>
+            <a href="https://app.lupolabs.ai/login" class="nav-login-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+                </svg>
+                Login
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <header class="article-header">
+                <div class="article-eyebrow">
+                    <span>Routing &amp; ops</span>
+                    <span class="dot"></span>
+                    <span>Field note</span>
+                </div>
+                <h1 class="article-title">Round Robin Is Not a Routing Strategy</h1>
+                <p class="article-summary">"We use round robin" is the most common answer when sales leaders are asked how inbound is routed. It is also one of the least useful. Round robin distributes work. It does not decide whether the work should reach sales in the first place.</p>
+                <div class="article-meta">
+                    <span>LUPO Research</span>
+                    <span class="dot"></span>
+                    <span>7 min read</span>
+                </div>
+            </header>
+
+            <div class="article-body">
+                <p>If you ask twenty inbound sales leaders how they route leads, most of them will say "round robin." It is a fair answer for fast-moving consumer pipelines and small SMB inbound. It is the wrong answer the moment your inbound contains real signal.</p>
+
+                <p>Round robin is a distribution method, not a routing strategy. The two get confused because most lead-routing tools surface round robin as their headline feature, and because the alternative, serious routing, is harder to set up and harder to explain.</p>
+
+                <p>The cost of confusing them shows up later, in the form of reps complaining about lead quality, account owners losing leads to whoever happened to be next in the rotation, and managers trying to reconstruct why a lead went where it did.</p>
+
+                <h2>What round robin actually is</h2>
+
+                <p>Round robin assigns incoming work to reps in turn. Lead one goes to Rep A, lead two to Rep B, lead three to Rep C, lead four back to Rep A, and so on. There are variations: weighted round robin where some reps take more, availability-aware round robin where reps on lunch get skipped, capacity-capped round robin where reps get paused after hitting a daily limit.</p>
+
+                <p>It is genuinely useful. It is fair. It is auditable. It avoids the problem of one rep cherry-picking the easy leads while others wait.</p>
+
+                <p>But it does only one thing. It distributes leads that have already been accepted as worth routing. It does not decide whether to route the lead at all. It does not know which rep owns the account. It does not know the lead's product fit or seniority. It does not know if the lead is actually a vendor pitching back. It just hands the next lead to the next rep.</p>
+
+                <h2>Where round robin breaks</h2>
+
+                <p>The first place round robin breaks is account ownership. In any sales org with named accounts, leads from existing accounts should go to the account owner, not into the rotation. A round-robin-only router routes a Procter and Gamble inbound enquiry to whichever rep is next, even if Sarah has owned the P&amp;G account for two years.</p>
+
+                <p>The second place it breaks is qualification. Round robin assumes the lead is worth a rep's time. If your inbound includes vendor pitches, support requests in the wrong queue, students researching for a thesis, and contractors looking for jobs, the round-robin rotation will faithfully route all of them to your AEs. The router cannot tell a $50,000 buyer from a competitor's sales rep "doing research."</p>
+
+                <p>The third place it breaks is product line and territory. A rep covering manufacturing in the Northeast should not be receiving SaaS leads from Australia. Round robin will route them anyway unless paired with explicit territory rules. Most teams only discover this is broken when a rep gets a lead they obviously cannot work and pushes back.</p>
+
+                <p>The fourth place it breaks is seniority and seller skill. A $2M ARR enterprise opportunity should not land with a junior SDR on their second week. Round robin is blind to this without an explicit override.</p>
+
+                <p>The fifth place it breaks is the audit trail. When a rep asks "why did this lead go to me?", round robin's answer is "because you were next." That is not a satisfying answer to a senior AE who feels their pipeline is being filled with leads that should have gone elsewhere.</p>
+
+                <h2>What a real router does</h2>
+
+                <p>A serious inbound router runs three checks before round robin ever fires.</p>
+
+                <p><strong>One: is this worth sending to sales at all?</strong> Vendor pitches, existing-customer support requests, low-fit prospects, and accidental form fills should not enter the rep rotation. They should be politely declined or routed to support with the original conversation attached.</p>
+
+                <p><strong>Two: does this lead have an existing owner?</strong> If the company is a named account, the account owner gets it. If it is an open territory, the territory owner gets it. Only when there is no specific owner does the lead enter a rotation.</p>
+
+                <p><strong>Three: does the lead need human approval?</strong> High-value leads, sensitive industries, accounts in active legal review, and edge cases the policy is unsure about should be held in a queue for a sales ops or manager review, not assigned by rotation.</p>
+
+                <p>Once those three checks have run, round robin is fine. It is just running on a much smaller, cleaner stream of leads that all genuinely need a fair distribution to multiple eligible reps.</p>
+
+                <h2>The audit trail that reps actually want</h2>
+
+                <p>The most underrated routing feature is the explanation. Reps do not just want leads to land in their queue. They want to know why those leads landed there, and why other leads did not.</p>
+
+                <p>A good audit trail per lead looks like:</p>
+
+                <ul>
+                    <li>Lead source: web form, inbound call, chat handoff, email reply</li>
+                    <li>Qualification decision: qualified, support, vendor, low-fit, needs review</li>
+                    <li>Routing rule fired: account ownership, territory, product line, round robin, manual override</li>
+                    <li>Alternatives considered: who else could have received this lead, and why this rep won</li>
+                    <li>Time stamps: when the lead arrived, when it was qualified, when it was assigned</li>
+                </ul>
+
+                <p>Reps stop pushing back on routing decisions when they can see the answer. Managers stop being asked to adjudicate "why did this go to him not me" disputes when the system can explain itself.</p>
+
+                <h2>The order matters: qualify, own, route</h2>
+
+                <p>The most common failure mode is teams that try to bolt qualification onto round robin instead of running it before. The result is a router that assigns leads quickly to reps, who then spend their time rejecting leads back to ops with notes like "vendor, support, wrong fit, not in territory."</p>
+
+                <p>The rep is doing the qualification work the router should have done. It feels productive because the rotation is firing, but the actual outcome is the same: trained sellers are spending their time triaging leads instead of selling.</p>
+
+                <p>The right order is:</p>
+
+                <ol>
+                    <li><strong>Qualify.</strong> Decide whether the lead should reach sales at all. Apply the sales policy to the inbound enquiry across whatever channel it arrived on.</li>
+                    <li><strong>Own.</strong> If the lead belongs to a named account or territory owner, route it directly. Skip the rotation.</li>
+                    <li><strong>Route.</strong> For everything left, use round robin or a more sophisticated rule (capacity, seniority, product line) to distribute fairly.</li>
+                </ol>
+
+                <p>This sequence is what serious inbound routers do. Round robin is the last step, not the strategy.</p>
+
+                <h2>Where human approval still belongs</h2>
+
+                <p>Even with a clean qualification and ownership layer, some leads should not be routed automatically. High-value enterprise opportunities, leads from accounts in active legal or security review, leads that match a known competitor's domain, leads with conflicting signals: all of these are better handled by a human reviewer first.</p>
+
+                <p>A routing system that escalates these cases instead of guessing is more trustworthy than one that always fires. Reps and managers learn to trust the router when they see it make sensible decisions, including the decision to wait for a human.</p>
+
+                <p>"Always assign" is not the goal. "Assign correctly, and otherwise wait" is.</p>
+
+                <h2>What this means for your team</h2>
+
+                <p>Round robin is fine. It is also not enough. If your inbound routing is just round robin plus a couple of territory rules, the cleanest improvement is to add a qualification layer in front of it. The router becomes more accurate because the input is cleaner. The reps see fewer leads, but a higher proportion of those leads convert. The complaints about "why did this go to me?" go down because the audit trail can answer the question.</p>
+
+                <p>The benchmark is straightforward. Look at the last hundred leads round robin distributed. Of those, how many were vendors, support requests, low-fit, or owned by someone else? If the number is more than ten, your router is fine but your pre-router is missing.</p>
+            </div>
+
+            <aside class="article-sources">
+                <h3>Sources</h3>
+                <ol>
+                    <li><a href="https://www.chilipiper.com/post/round-robin-scheduling" target="_blank" rel="noopener noreferrer">Chili Piper, "Round Robin Scheduling and How It Works"</a>. Reference for how the lead-routing category defines round robin.</li>
+                    <li><a href="https://www.revenuetools.io/blog/lead-routing-tools-guide" target="_blank" rel="noopener noreferrer">RevenueTools, "Lead Routing Tools: 2026 Buyer's Guide"</a>. Reference for serious lead-routing features beyond round robin.</li>
+                    <li><a href="https://calendly.com/scheduling/routing" target="_blank" rel="noopener noreferrer">Calendly, Routing product page</a>. Reference for how the inbound routing category positions form-to-meeting workflows.</li>
+                </ol>
+            </aside>
+
+            <section class="article-cta">
+                <div class="article-cta-eyebrow">See it in action</div>
+                <h2>See how LUPO classifies a lead before it hits round robin.</h2>
+                <p>Book a short product walkthrough. We will show how LUPO qualifies inbound enquiries against a sales policy first, then hands the remaining qualified buyers to your existing router (or to a built-in one), with a full audit trail per lead.</p>
+                <a href="https://cal.com/tombaxter/lupo" class="btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
+                    Book a walkthrough
+                </a>
+            </section>
+
+            <aside class="article-related">
+                <h3>Related notes</h3>
+                <div class="article-related-list">
+                    <a href="/blog/the-inbound-triage-tax" class="article-related-item">
+                        <div class="article-related-item-eyebrow">Inbound quality</div>
+                        <h4>The Inbound Triage Tax: Why Fast Sales Teams Waste the Most Time</h4>
+                    </a>
+                    <a href="/blog/the-ai-sdr-has-moved-inbound" class="article-related-item">
+                        <div class="article-related-item-eyebrow">AI in sales</div>
+                        <h4>The AI SDR Has Moved Inbound: What Sales Leaders Should Automate First</h4>
+                    </a>
+                </div>
+            </aside>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-left-section">
+            <div class="footer-logo">LUPO</div>
+            <p class="footer-text">© 2026 LUPO, a product of Flair Technologies Ltd. All rights reserved.</p>
+            <div class="footer-links-container">
+                <a href="/">Home</a>
+                <a href="/blog/">Blog</a>
+                <a href="/about.html">About</a>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/terms.html">Terms of Service</a>
+            </div>
+            <p class="footer-address">
+                Registered Office · 45 Fitzroy St, Fitzrovia · London, W1T 6EB, United Kingdom
+            </p>
+        </div>
+        <div class="footer-right-section">
+            <a href="https://elevenlabs.io/startup-grants" target="_blank" rel="noopener noreferrer">
+                <img src="https://eleven-public-cdn.elevenlabs.io/payloadcms/cy7rxce8uki-IIElevenLabsGrants%201.webp" alt="ElevenLabs Grant Recipient" style="width:200px; opacity: 0.9; transition: opacity 0.2s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+            </a>
+        </div>
+    </footer>
+</body>
+</html>

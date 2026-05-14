@@ -1,0 +1,47 @@
+{
+  "title": "What a 'Qualified Buyer' Actually Means in Inbound (And Why Most Definitions Are Wrong)",
+  "slug": "what-qualified-buyer-actually-means",
+  "description": "Most sales teams treat 'qualified' as a yes/no signal. The teams that actually convert inbound treat it as a structured packet: source, intent, fit, channel, and recommended next step. Here is what a real qualified buyer record looks like.",
+  "category": "Inbound quality",
+  "readingTime": "7 min read",
+  "recommendedPublish": true,
+  "riskFlags": [],
+  "sources": [
+    {
+      "title": "State of Sales Report 2026",
+      "publisher": "Salesforce",
+      "url": "https://www.salesforce.com/uk/news/stories/state-of-sales-report-announcement-2026/",
+      "dateAccessed": "2026-05-13",
+      "whyRelevant": "Quantifies the share of rep time spent on non-selling work and the share of sales orgs that have deployed AI agents. Supports the 'qualified means structured context' framing in the article."
+    },
+    {
+      "title": "Sales Survey Finds 67% of B2B Buyers Prefer a Rep-Free Experience",
+      "publisher": "Gartner",
+      "url": "https://www.gartner.com/en/newsroom/press-releases/2026-03-09-gartner-sales-survey-finds-67-percent-of-b2b-buyers-prefer-a-rep-free-experience",
+      "dateAccessed": "2026-05-13",
+      "whyRelevant": "Establishes that buyers expect the rep to enter the conversation with context already in hand. Supports the 'rep should not be doing discovery from zero' claim."
+    },
+    {
+      "title": "Inbound Lead Conversion",
+      "publisher": "Chili Piper",
+      "url": "https://www.chilipiper.com/inbound-lead-conversion",
+      "dateAccessed": "2026-05-13",
+      "whyRelevant": "Industry reference for how the inbound conversion category defines a qualified lead in the form-to-meeting workflow."
+    },
+    {
+      "title": "Lead Routing Tools: The 2026 Buyer's Guide",
+      "publisher": "RevenueTools",
+      "url": "https://www.revenuetools.io/blog/lead-routing-tools-guide",
+      "dateAccessed": "2026-05-13",
+      "whyRelevant": "Background on how mature lead-routing systems decompose qualification into ownership, territory, capacity, and source-channel rules. Supports the 'structured packet' framing."
+    },
+    {
+      "title": "Piper for Salesforce",
+      "publisher": "Qualified",
+      "url": "https://www.qualified.com/salesforce",
+      "dateAccessed": "2026-05-13",
+      "whyRelevant": "Reference for how the AI SDR category positions qualified-buyer handoffs from website conversation to routed meeting."
+    }
+  ],
+  "bodyMarkdown": "Most sales teams treat 'qualified' as a yes/no signal. A lead is qualified or it is not. The form fields get scored, the threshold is met or missed, and the lead is either routed or recycled.\n\nThis is the wrong abstraction. The teams that actually convert inbound do not treat qualification as a binary classifier. They treat it as a structured packet that follows the lead through routing, response, booking, and the AE's prep before the first meeting.\n\n## A qualified lead is a packet, not a label\n\nWhen a rep walks into a discovery call with a 'qualified' lead, they need to know more than the fact that someone said yes. They need to know:\n\n- What channel did the lead arrive on?\n- What did they actually ask for?\n- What signals about company size, role, and intent did they give?\n- What has been asked and answered already?\n- What did the policy engine decide, and why?\n- What is the recommended next step?\n\nNone of that fits in a true/false field. It is structured context, captured at qualification time and carried through to the rep.\n\n## The five fields that matter\n\nA useful qualified-buyer packet has five fields at minimum. These are the fields a senior AE would extract on a discovery call. The point of qualification is to capture them before the call happens.\n\n**Source channel.** Phone, web form, chat handoff, email reply, or referral. The channel tells you a lot about what the buyer is expecting next.\n\n**Buying intent.** Why are they here? Are they comparing vendors? Replacing an existing tool? Solving a new problem? 'Demo request' is not an intent.\n\n**Fit signal.** Company size, industry, geography, role. Not 'is this account big enough for us' alone, but 'is this the right shape of account for our motion.'\n\n**Timing.** When are they trying to act? Eval this quarter, deploy next quarter, exploring for a future budget cycle. Timing changes how the rep prioritizes.\n\n**Constraints.** Security review, procurement process, existing-vendor contracts, geographic restrictions. Things that will come up in the conversation regardless and are worth knowing in advance.\n\nA qualified packet without these five fields is just a routed lead. The rep is going to have to do the discovery anyway, often less well than the qualifying layer could have.\n\n## Why this matters now\n\nThe Salesforce 2026 State of Sales report repeats a familiar number: reps spend more than half their working time on non-selling work. A lot of that is admin and CRM hygiene. A meaningful share is discovery work that a competent inbound layer could have done at qualification time.\n\nThe gap is not whether the rep is willing to do discovery. It is that the discovery is being done after the meeting starts instead of before, which means the meeting has to be longer or has to be followed up with another meeting just to get to the actual conversation. That delay is the cost of treating 'qualified' as a label instead of a packet.\n\n## What a real packet looks like\n\nA realistic example, for a B2B SaaS lead arriving through an Intercom chat handoff:\n\n- **Source:** Inbound chat, Intercom Fin handoff, consent to call captured\n- **Intent:** Replacing existing inbound triage tool. Specifically frustrated with vendor pitches reaching their AEs.\n- **Fit:** 60 SDRs, 1,400+ inbound forms per week, US and UK pipeline.\n- **Timing:** Evaluating Q3, deploy target Q4. Security review required.\n- **Constraints:** Existing HubSpot CRM. Outlook calendar. SOC 2 evidence needed before procurement.\n\nThat is what the rep sees before the meeting. Compare it to a generic 'qualified, routed to Karen' notification with a transcript attached. Same lead. Different first conversation.\n\n## The bar for an inbound layer\n\nThe right question to ask of any AI SDR, qualification engine, or routing tool is not 'do you classify leads as qualified or not.' Most tools do that. The right question is: 'what is the structured packet you hand to the rep, what fields does it include, and where can a rep go to see exactly how the policy decided?'\n\nIf the answer is a transcript dump or a generic 'qualified' tag, the tool is doing classification but not qualification. It is sorting, not preparing.\n\n## What to do this quarter\n\nAudit five recent qualified leads. For each one, write down what the rep saw before the meeting. If you can list the five fields above for each lead, your inbound layer is doing real work. If you cannot, the rep is doing the work after the meeting starts, and the meeting is paying the cost.\n\nThe fix is not faster routing. It is a richer qualified-buyer packet, captured at the point of qualification, carried through to the rep without translation."
+}
