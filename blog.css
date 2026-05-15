@@ -637,12 +637,10 @@ main {
 /* ── Footer (matches index.html) ──────────────────────────────────── */
 footer {
     border-top: 1px solid var(--border);
-    padding: 36px 24px;
-    background: var(--bg-primary);
+    padding: 30px 40px;
+    background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
     position: relative;
     z-index: 1;
-    max-width: 1100px;
-    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
