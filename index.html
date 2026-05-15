@@ -1545,13 +1545,13 @@
     <div class="main-container">
         <div class="content-wrapper">
             <!-- Hero -->
-            <div class="hero-eyebrow">AI inbound SDR across calls, forms, email, and chat</div>
+            <div class="hero-eyebrow">AI inbound SDR for calls, forms, and chat handoffs</div>
             <h1>
                 Your inbound SDR<br><span class="gradient-text">for every channel.</span>
             </h1>
 
             <p class="subtitle">
-                LUPO qualifies every inbound call, web form, chat handoff, and email reply against your sales policy, then books real buyers, routes support, filters non-sales noise, and logs every decision to your CRM and audit trail.
+                LUPO qualifies inbound calls, web forms, and chatbot handoffs against your sales policy, then books qualified buyers, routes support, filters non-sales noise, alerts Slack, writes to HubSpot, and logs every decision. Email follow-up is configured during onboarding.
             </p>
 
             <!-- CTA Buttons -->
@@ -1573,7 +1573,7 @@
 
             <!-- Tech Stack -->
             <div class="tech-stack">
-                Inbound Calls &middot; Web Forms &middot; Chat Handoffs &middot; Email Replies &middot; CRM Sync &middot; Slack Alerts &middot; Calendar Booking
+                Inbound Calls &middot; Web Forms &middot; Chat Handoffs &middot; HubSpot CRM &middot; Slack Alerts &middot; Google Calendar
                         </div>
                     </div>
                 </div>
@@ -1583,7 +1583,7 @@
         <div class="section-inner">
             <div class="section-eyebrow">Works with your inbound stack</div>
             <h2 class="section-heading">The qualification layer between every inbound channel and your sales tools.</h2>
-            <p class="section-lede">Inbound calls, web forms, chat handoffs, and email replies come in. Qualified buyers land in your CRM, Slack, and calendar. Support, vendor, and wrong-fit enquiries are handled before they waste rep time.</p>
+            <p class="section-lede">Inbound calls, web forms, and chatbot handoffs come in. Qualified buyers land in HubSpot, Slack, and Google Calendar. Support, vendor, and wrong-fit enquiries are handled before they waste rep time. Email follow-up, Microsoft 365, and Salesforce are configured during onboarding.</p>
             <div class="integrations-grid">
                 <div class="integration-tile">
                     <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -1592,8 +1592,8 @@
                 </div>
                 <div class="integration-tile">
                     <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
-                    <span class="integration-text">Email replies</span>
-                    <span class="integration-status live">Live</span>
+                    <span class="integration-text">Email follow-up</span>
+                    <span class="integration-status onboarding">In onboarding</span>
                 </div>
                 <div class="integration-tile">
                     <img src="/logos/integrations/hubspot.svg" alt="HubSpot" width="120" height="30" loading="lazy" decoding="async">
@@ -1679,9 +1679,9 @@
                     <p class="card-body">Takes intent and consent from your existing chatbot (Intercom Fin, Drift, Qualified, HubSpot Chat, or a custom widget), continues qualification, and books inside the same conversation when the buyer is ready.</p>
                 </div>
                 <div class="section-card">
-                    <div class="card-label">Inbound email</div>
-                    <h3 class="card-heading">Keeps the thread warm.</h3>
-                    <p class="card-body">Handles replies and inbound enquiries, asks the missing qualification questions, follows up without flooding the buyer, and routes only qualified buyers to a rep.</p>
+                    <div class="card-label">Email follow-up</div>
+                    <h3 class="card-heading">Configured during onboarding.</h3>
+                    <p class="card-body">Cadenced follow-up for leads that need email rather than an immediate call. Per-org sender domains, audience filters, and reply handling are scoped during pilot setup.</p>
                 </div>
             </div>
         </div>
@@ -1750,8 +1750,8 @@
                     <p>Define what counts as qualified, wrong-fit, support, vendor, or needs human review for your business.</p>
                 </div>
                 <div class="feature-row-item">
-                    <h3>Routing rules</h3>
-                    <p>Round-robin or rules-based handoff by territory, product line, seniority, or source channel.</p>
+                    <h3>Routing policy</h3>
+                    <p>Applies your routing policy and alerts the right Slack channel for each lead. Per-rep round-robin, territory ownership, and account-owner routing are configured during onboarding.</p>
                 </div>
                 <div class="feature-row-item">
                     <h3>Human approval</h3>
@@ -1759,7 +1759,7 @@
                 </div>
                 <div class="feature-row-item">
                     <h3>Audit trail</h3>
-                    <p>Every call, form, chat, and email gets a summary, message log, decision, and the next action LUPO took.</p>
+                    <p>Every call, form, and chat gets a summary, message log, decision, and the next action LUPO took.</p>
                 </div>
                 <div class="feature-row-item">
                     <h3>Escalation</h3>
@@ -1826,7 +1826,7 @@ message: "My calls are dropping at 4pm GMT&hellip;"</pre>
 company: Acme Corp (850)
 message: "Replacing our existing triage vendor&hellip;"</pre>
                                 <div class="demo-section-label output">LUPO action</div>
-                                <pre>&rarr; Qualified. Email sent (no surprise call).
+                                <pre>&rarr; Qualified. No surprise call.
    Meeting offered &middot; HubSpot deal created.
    Slack alert posted to #inbound-qualified.</pre>
                             </div>
@@ -1928,7 +1928,7 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
                 </details>
                 <details class="faq-item">
                     <summary class="faq-question">Can it work with our CRM and calendar?</summary>
-                    <p class="faq-answer">Today: HubSpot CRM sync, Slack alerts, Google Calendar booking, voice qualification, and email replies are live. Any chat, form, or workflow that can post a webhook can hand off to LUPO. Microsoft 365 / Outlook calendar and Salesforce CRM sync are in onboarding. Additional CRM and calendar connectors are added during onboarding.</p>
+                    <p class="faq-answer">Today, the live integrations are HubSpot CRM sync, Slack alerts, Google Calendar booking, and voice qualification. Any chat, form, or workflow that can post a webhook can hand off to LUPO; HubSpot Chat is supported with HMAC signing. Email follow-up, Microsoft 365 / Outlook calendar, and Salesforce CRM sync are configured during onboarding for selected pilots. Additional CRM and calendar connectors are added during onboarding.</p>
                 </details>
             </div>
         </div>
