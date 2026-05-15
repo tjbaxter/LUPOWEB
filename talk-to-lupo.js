@@ -85,10 +85,9 @@
 
   var btn = document.createElement("button");
   btn.className = "lupo-call-btn";
-  btn.setAttribute("data-state", "loading");
+  btn.setAttribute("data-state", "idle");
   btn.setAttribute("aria-label", "Talk to LUPO live");
-  btn.disabled = true;
-  btn.innerHTML = PHONE_ICON + '<span class="lupo-call-btn-label">Loading…</span>';
+  btn.innerHTML = PHONE_ICON + '<span class="lupo-call-btn-label">Talk to LUPO live</span>';
 
   function setState(state) {
     btn.setAttribute("data-state", state);
@@ -177,12 +176,14 @@
   }
 
   // CDN fallback list. Some users (uBlock Origin, Brave Shields, NoScript,
-  // corporate firewalls) block esm.sh by default. jsdelivr's +esm endpoint
-  // is rarely blocked because it's the same CDN that serves jQuery to half
-  // the internet. We try in order until one resolves.
+  // corporate firewalls, mobile carrier proxies) block esm.sh by default.
+  // jsdelivr's +esm endpoint is rarely blocked because it serves jQuery to
+  // half the internet. unpkg is the npm registry's own CDN.
+  // We try in order until one resolves.
   var SDK_SOURCES = [
     "https://esm.sh/@vapi-ai/web@2.5.2",
-    "https://cdn.jsdelivr.net/npm/@vapi-ai/web@2.5.2/+esm"
+    "https://cdn.jsdelivr.net/npm/@vapi-ai/web@2.5.2/+esm",
+    "https://unpkg.com/@vapi-ai/web@2.5.2?module"
   ];
 
   function loadVapiSDK(index) {
@@ -198,48 +199,81 @@
     });
   }
 
-  loadVapiSDK()
-    .then(function (mod) {
-      var VapiCtor = mod && (mod.default || mod.Vapi);
-      if (typeof VapiCtor !== "function") {
-        log("SDK loaded but no constructor found", mod);
-        setState("unavailable");
-        return;
-      }
-      log("SDK loaded, ready");
+  // Lazy SDK loader with retry-on-click. If the page-load preload failed
+  // (mobile carrier flake, cellular handoff, content-blocker, transient
+  // CDN blip), the next click triggers a fresh load attempt rather than
+  // showing a permanent "Unavailable" state.
+  var VapiCtor = null;
+  var sdkPromise = null;
 
-      var vapi = null;
-      var isInCall = false;
-
-      function bindVapiEvents(instance) {
-        instance.on("call-start", function () {
-          log("event: call-start");
-          isInCall = true;
-          setState("in-call");
-          showToast("Connected. Say hi to LUPO.", "info");
-        });
-        instance.on("call-end", function () {
-          log("event: call-end");
-          isInCall = false;
-          setState("idle");
-        });
-        instance.on("error", function (e) {
-          log("event: error", e);
-          isInCall = false;
-          setState("idle");
-          showToast(extractErrorMessage(e), "error");
-        });
-      }
-
-      btn.addEventListener("click", function () {
-        log("click", { state: btn.getAttribute("data-state"), isInCall: isInCall });
-        if (isInCall || btn.getAttribute("data-state") === "in-call") {
-          if (vapi) { try { vapi.stop(); } catch (e) { log("stop error", e); } }
-          return;
+  function ensureSDK() {
+    if (VapiCtor) return Promise.resolve(VapiCtor);
+    if (sdkPromise) return sdkPromise;
+    sdkPromise = loadVapiSDK()
+      .then(function (mod) {
+        var Ctor = mod && (mod.default || mod.Vapi);
+        if (typeof Ctor !== "function") {
+          sdkPromise = null; // allow retry
+          throw new Error("vapi_constructor_missing");
         }
-        if (btn.getAttribute("data-state") === "connecting") return;
-        setState("connecting");
-        fetchToken().then(function (resp) {
+        VapiCtor = Ctor;
+        log("SDK loaded, ready");
+        return Ctor;
+      })
+      .catch(function (err) {
+        sdkPromise = null; // clear so next click can retry
+        throw err;
+      });
+    return sdkPromise;
+  }
+
+  // Opportunistic preload — kicks off as soon as the script runs so most
+  // users get an instant call. Failure here does NOT lock the button into
+  // "Unavailable"; the click handler will retry.
+  ensureSDK().then(
+    function () { log("SDK preloaded"); },
+    function (e) { log("SDK preload failed (will retry on click)", e && e.message); }
+  );
+
+  var vapi = null;
+  var isInCall = false;
+
+  function bindVapiEvents(instance) {
+    instance.on("call-start", function () {
+      log("event: call-start");
+      isInCall = true;
+      setState("in-call");
+      showToast("Connected. Say hi to LUPO.", "info");
+    });
+    instance.on("call-end", function () {
+      log("event: call-end");
+      isInCall = false;
+      setState("idle");
+    });
+    instance.on("error", function (e) {
+      log("event: error", e);
+      isInCall = false;
+      setState("idle");
+      showToast(extractErrorMessage(e), "error");
+    });
+  }
+
+  btn.addEventListener("click", function () {
+    log("click", { state: btn.getAttribute("data-state"), isInCall: isInCall });
+    if (isInCall || btn.getAttribute("data-state") === "in-call") {
+      if (vapi) { try { vapi.stop(); } catch (e) { log("stop error", e); } }
+      return;
+    }
+    if (btn.getAttribute("data-state") === "connecting") return;
+    setState("connecting");
+
+    // ensureSDK() lazy-loads the SDK if the preload failed; if it
+    // succeeded, this is a no-op resolving immediately with the cached
+    // constructor. Either way, the click triggers a fresh attempt — no
+    // page-session-permanent failure modes.
+    ensureSDK()
+      .then(function (Ctor) {
+        return fetchToken().then(function (resp) {
           log("token response", resp.status, resp.body && resp.body.reason);
           if (resp.status !== 200 || !resp.body || !resp.body.token) {
             handleTokenRejection(resp.status, resp.body);
@@ -249,12 +283,12 @@
           var sessionId = resp.body.sessionId;
           var assistantId = resp.body.assistantId;
           if (!vapi) {
-            vapi = new VapiCtor(token);
+            vapi = new Ctor(token);
             bindVapiEvents(vapi);
           } else {
             // Re-construct so the new JWT is used; events re-bind via closure.
             try { vapi.stop(); } catch (e) {}
-            vapi = new VapiCtor(token);
+            vapi = new Ctor(token);
             bindVapiEvents(vapi);
           }
           try {
@@ -276,19 +310,22 @@
             setState("idle");
             showToast(extractErrorMessage(e), "error");
           }
-        }).catch(function (e) {
-          log("token fetch failed", e);
-          setState("idle");
-          showToast("Could not reach the demo service. Check your network and try again.", "error");
         });
+      })
+      .catch(function (err) {
+        log("SDK or token failed", err && err.message);
+        var msg = (err && err.message) || "";
+        // Distinguish SDK-load failure from network/token failure so the
+        // toast tells the user what to do. Either way, state goes to idle
+        // (NOT unavailable) so the next tap is a fresh attempt.
+        if (/All Vapi SDK|vapi_constructor_missing|module|import/i.test(msg)) {
+          showToast("Voice SDK couldn't load. Tap again to retry, or check your connection.", "error");
+        } else {
+          showToast("Could not reach the demo service. Check your network and try again.", "error");
+        }
+        setState("idle");
       });
+  });
 
-      setState("idle");
-      log("ready");
-    })
-    .catch(function (e) {
-      log("SDK load failed", e);
-      setState("unavailable");
-      showToast("Voice SDK failed to load. Check network or disable ad-block.", "error");
-    });
+  log("ready");
 })();
