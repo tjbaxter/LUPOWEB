@@ -363,6 +363,75 @@
             background: rgba(255, 255, 255, 0.05);
             transform: translateY(-1px);
         }
+
+        /* LUPO call-trigger button state machine
+           (mirrors floating .lupo-call-btn data-state via MutationObserver) */
+        [data-lupo-call-trigger] {
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+        }
+        [data-lupo-call-trigger][data-call-state="connecting"] {
+            background: linear-gradient(110deg,
+                rgba(167, 139, 250, 0.10) 0%,
+                rgba(167, 139, 250, 0.30) 50%,
+                rgba(167, 139, 250, 0.10) 100%);
+            background-size: 200% 100%;
+            animation: lupoBtnShimmer 1.6s linear infinite;
+            border-color: rgba(167, 139, 250, 0.38);
+            color: var(--text-primary);
+            cursor: wait;
+        }
+        [data-lupo-call-trigger][data-call-state="connecting"]:hover {
+            transform: none;
+        }
+        [data-lupo-call-trigger][data-call-state="in-call"] {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.55);
+            animation: lupoBtnPulse 1.8s ease-in-out infinite;
+        }
+        [data-lupo-call-trigger][data-call-state="in-call"]:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+        }
+        [data-lupo-call-trigger][data-call-state="rate_limited"],
+        [data-lupo-call-trigger][data-call-state="unavailable"] {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+        [data-lupo-call-trigger][data-call-state="rate_limited"]:hover,
+        [data-lupo-call-trigger][data-call-state="unavailable"]:hover {
+            transform: none;
+            background: transparent;
+        }
+        .lupo-trigger-spinner {
+            animation: lupoSpin 0.9s linear infinite;
+        }
+        @keyframes lupoBtnShimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        @keyframes lupoBtnPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.45); }
+            50% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+        }
+        @keyframes lupoSpin {
+            to { transform: rotate(360deg); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            [data-lupo-call-trigger][data-call-state="connecting"] {
+                animation: none;
+                background: rgba(167, 139, 250, 0.18);
+            }
+            [data-lupo-call-trigger][data-call-state="in-call"] {
+                animation: none;
+            }
+            .lupo-trigger-spinner {
+                animation: none;
+            }
+        }
         
         .trust-marker {
             font-size: 13px;
@@ -1563,7 +1632,7 @@
                     </svg>
                     See LUPO qualify a lead
                 </a>
-                <button type="button" class="btn-secondary" id="heroTalkBtn" onclick="document.querySelector('.lupo-call-btn')?.click()">
+                <button type="button" class="btn-secondary" id="heroTalkBtn" data-lupo-call-trigger>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                     </svg>
@@ -1786,7 +1855,7 @@
                     </div>
                     <h3>Talk to LUPO live</h3>
                     <p>Have a real 60-second voice conversation with LUPO right from this page. Ask it to qualify a fake lead and book a meeting.</p>
-                    <button type="button" class="demo-tile-button" onclick="document.querySelector('.lupo-call-btn')?.click()">
+                    <button type="button" class="demo-tile-button" data-lupo-call-trigger>
                         Start the call
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
                     </button>
@@ -1945,7 +2014,7 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
                 </svg>
                 Book a walkthrough
             </a>
-            <button type="button" class="btn-secondary" onclick="document.querySelector('.lupo-call-btn')?.click()">
+            <button type="button" class="btn-secondary" data-lupo-call-trigger>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                 </svg>
@@ -2207,6 +2276,84 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
                 closeAlreadyBookedModal();
             }
         });
+
+        // LUPO call-trigger state mirror — wires hero, demo tile, and CTA
+        // buttons to reflect the floating .lupo-call-btn state machine
+        // created by talk-to-lupo.js. Gives instant click feedback so
+        // visitors see "Connecting…" the moment they click, instead of
+        // wondering whether the click registered.
+        (function () {
+            var triggers = document.querySelectorAll('[data-lupo-call-trigger]');
+            if (!triggers.length) return;
+
+            // Cache idle markup so we can restore it on idle/unavailable.
+            triggers.forEach(function (btn) {
+                btn.setAttribute('data-lupo-original-html', btn.innerHTML);
+            });
+
+            var ICON_PHONE_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3-2.42M5.66 5.66a16 16 0 0 0 .82 1.93 2 2 0 0 1-.45 2.11L4.78 11M2 2l20 20"/></svg>';
+            var ICON_SPINNER = '<svg class="lupo-trigger-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>';
+
+            function applyState(state) {
+                triggers.forEach(function (btn) {
+                    if (state === 'connecting' || state === 'loading') {
+                        btn.setAttribute('data-call-state', 'connecting');
+                        btn.innerHTML = ICON_SPINNER + '<span>Connecting…</span>';
+                    } else if (state === 'in-call') {
+                        btn.setAttribute('data-call-state', 'in-call');
+                        btn.innerHTML = ICON_PHONE_OFF + '<span>End call</span>';
+                    } else if (state === 'rate_limited') {
+                        btn.setAttribute('data-call-state', 'rate_limited');
+                        btn.innerHTML = btn.getAttribute('data-lupo-original-html');
+                    } else if (state === 'unavailable') {
+                        btn.setAttribute('data-call-state', 'unavailable');
+                        btn.innerHTML = btn.getAttribute('data-lupo-original-html');
+                    } else {
+                        btn.removeAttribute('data-call-state');
+                        btn.innerHTML = btn.getAttribute('data-lupo-original-html');
+                    }
+                });
+            }
+
+            function bind() {
+                var fab = document.querySelector('.lupo-call-btn');
+                if (!fab) return false;
+
+                applyState(fab.getAttribute('data-state') || 'idle');
+
+                var obs = new MutationObserver(function () {
+                    applyState(fab.getAttribute('data-state') || 'idle');
+                });
+                obs.observe(fab, { attributes: true, attributeFilter: ['data-state'] });
+
+                triggers.forEach(function (btn) {
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        var current = btn.getAttribute('data-call-state') || 'idle';
+                        if (current === 'connecting' || current === 'rate_limited' || current === 'unavailable') {
+                            return;
+                        }
+                        if (current === 'idle') {
+                            // Optimistic feedback while the FAB processes the click
+                            // and the JWT mint happens (~200-800ms).
+                            applyState('connecting');
+                        }
+                        fab.click();
+                    });
+                });
+
+                return true;
+            }
+
+            // talk-to-lupo.js creates the floating button on DOMContentLoaded;
+            // try immediately, then poll briefly for slow page loads.
+            if (!bind()) {
+                var attempts = 0;
+                var iv = setInterval(function () {
+                    if (bind() || ++attempts > 30) clearInterval(iv);
+                }, 100);
+            }
+        })();
     </script>
 </body>
 </html>
