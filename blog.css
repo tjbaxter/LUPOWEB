@@ -691,7 +691,7 @@ footer {
 
 .footer-right-section {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
 }
 
 /* ── Mobile responsive ────────────────────────────────────────────── */
