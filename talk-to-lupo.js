@@ -14,6 +14,36 @@
 (function () {
   var TOKEN_ENDPOINT = "https://app.lupolabs.ai/api/vapi/web-token";
 
+  // Demo-pack selector. LUPO ships two voice demos publicly:
+  //   - "b2b" (default): LUPO talking about LUPO — for SDR/VP Sales
+  //     visitors landing on lupolabs.ai/
+  //   - "smb": Emma the receptionist at "Park Lane Detailing" — for
+  //     SMB owners landing on lupolabs.ai/smb (typically from cold
+  //     outbound).
+  // The choice is page-driven: any page under /smb gets the SMB demo;
+  // everything else gets the B2B demo. Buttons can also override by
+  // setting `data-lupo-demo="smb"` (or "b2b") on the trigger element
+  // — useful if a page needs to host both buttons.
+  function detectDemoKey() {
+    try {
+      var path = (window.location && window.location.pathname) || "";
+      if (path.indexOf("/smb") === 0) return "smb";
+    } catch (e) {}
+    return "b2b";
+  }
+
+  function demoKeyForEvent(ev) {
+    // Explicit per-button override beats path detection.
+    try {
+      var t = ev && (ev.currentTarget || ev.target);
+      while (t && t !== document) {
+        if (t.dataset && t.dataset.lupoDemo) return t.dataset.lupoDemo;
+        t = t.parentNode;
+      }
+    } catch (e) {}
+    return detectDemoKey();
+  }
+
   function log() {
     var args = ["[LUPO]"].concat(Array.prototype.slice.call(arguments));
     try { console.log.apply(console, args); } catch (e) {}
@@ -136,8 +166,11 @@
     return msg;
   }
 
-  function fetchToken() {
-    return fetch(TOKEN_ENDPOINT, {
+  function fetchToken(demoKey) {
+    // Default to b2b when called without context (legacy code paths).
+    var key = demoKey === "smb" ? "smb" : "b2b";
+    var url = TOKEN_ENDPOINT + "?demo=" + encodeURIComponent(key);
+    return fetch(url, {
       method: "POST",
       credentials: "omit",
       headers: { "content-type": "application/json" },
@@ -258,7 +291,7 @@
     });
   }
 
-  btn.addEventListener("click", function () {
+  btn.addEventListener("click", function (ev) {
     log("click", { state: btn.getAttribute("data-state"), isInCall: isInCall });
     if (isInCall || btn.getAttribute("data-state") === "in-call") {
       if (vapi) { try { vapi.stop(); } catch (e) { log("stop error", e); } }
@@ -267,13 +300,18 @@
     if (btn.getAttribute("data-state") === "connecting") return;
     setState("connecting");
 
+    // Resolve which demo this click invokes — page-based (b2b on /,
+    // smb on /smb) with optional per-button override via data-lupo-demo.
+    var demoKey = demoKeyForEvent(ev);
+    log("demo key", demoKey);
+
     // ensureSDK() lazy-loads the SDK if the preload failed; if it
     // succeeded, this is a no-op resolving immediately with the cached
     // constructor. Either way, the click triggers a fresh attempt, no
     // page-session-permanent failure modes.
     ensureSDK()
       .then(function (Ctor) {
-        return fetchToken().then(function (resp) {
+        return fetchToken(demoKey).then(function (resp) {
           log("token response", resp.status, resp.body && resp.body.reason);
           if (resp.status !== 200 || !resp.body || !resp.body.token) {
             handleTokenRejection(resp.status, resp.body);
