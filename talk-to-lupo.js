@@ -70,7 +70,7 @@
   document.head.appendChild(style);
 
   var PHONE_ICON = '<span class="lupo-call-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>';
-  var PHONE_OFF_ICON = '<span class="lupo-call-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3-2.42M5.66 5.66a16 16 0 0 0 .82 1.93 2 2 0 0 1-.45 2.11L4.78 11M2 2l20 20"/></svg></span>';
+  var PHONE_OFF_ICON = '<span class="lupo-call-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(135deg);"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>';
 
   function showToast(msg, tone) {
     var existing = document.querySelector(".lupo-toast");
@@ -227,7 +227,7 @@
     return sdkPromise;
   }
 
-  // Opportunistic preload — kicks off as soon as the script runs so most
+  // Opportunistic preload: kicks off as soon as the script runs so most
   // users get an instant call. Failure here does NOT lock the button into
   // "Unavailable"; the click handler will retry.
   ensureSDK().then(
@@ -269,7 +269,7 @@
 
     // ensureSDK() lazy-loads the SDK if the preload failed; if it
     // succeeded, this is a no-op resolving immediately with the cached
-    // constructor. Either way, the click triggers a fresh attempt — no
+    // constructor. Either way, the click triggers a fresh attempt, no
     // page-session-permanent failure modes.
     ensureSDK()
       .then(function (Ctor) {

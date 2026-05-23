@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="PjJUFi6jAW-FcFmqrSdGYdSLj3ty8nhs-aAbsWnjA6Y" />
     <title>LUPO | The AI Intake Layer for Inbound Sales</title>
-    <meta name="description" content="LUPO is the AI sales agent that answers every inbound call, replies to every form, and books real buyers into your team's calendar. Your reps only see leads worth closing.">
+    <meta name="description" content="LUPO is the AI inbound SDR that answers every inbound call, replies to every form, and books real buyers into your team's calendar. Your reps only see leads worth closing.">
     <link rel="icon" type="image/png" href="/lupo-icon-180.png">
     <link rel="apple-touch-icon" href="/lupo-icon-180.png">
     
     <!-- Open Graph -->
     <meta property="og:title" content="LUPO | The AI Intake Layer for Inbound Sales">
-    <meta property="og:description" content="LUPO is the AI sales agent that answers every inbound call, replies to every form, and books real buyers into your team's calendar. Your reps only see leads worth closing.">
+    <meta property="og:description" content="LUPO is the AI inbound SDR that answers every inbound call, replies to every form, and books real buyers into your team's calendar. Your reps only see leads worth closing.">
     <meta property="og:url" content="https://lupolabs.ai">
     <meta property="og:image" content="https://lupolabs.ai/lupo-head-logo copy.png">
     <meta property="og:type" content="website">
@@ -1773,7 +1773,7 @@
                         </div>
 
             <div class="trust-strip">
-                <span>Backed by <strong>Deepgram</strong></span>
+                <span>Voice on <strong>Deepgram</strong> &middot; <strong>ElevenLabs</strong> &middot; <strong>Vapi</strong></span>
             </div>
                     </div>
                 </div>
@@ -1814,11 +1814,11 @@
                 </div>
                 <div class="integration-tile">
                     <img src="/logos/integrations/microsoftoutlook.svg" alt="Microsoft 365 / Outlook" width="120" height="30" loading="lazy" decoding="async">
-                    <span class="integration-status live">Live</span>
+                    <span class="integration-status webhook">Planned</span>
                 </div>
                 <div class="integration-tile">
                     <img src="/logos/integrations/salesforce.svg" alt="Salesforce" width="120" height="30" loading="lazy" decoding="async">
-                    <span class="integration-status live">Live</span>
+                    <span class="integration-status webhook">Planned</span>
                 </div>
             </div>
             <p class="integrations-caption">LUPO works with any chat, form, or website workflow that can send a webhook. Intercom, Drift, Qualified, HubSpot Chat, custom forms, and internal routing tools can all hand qualified conversations into LUPO.</p>
@@ -2078,17 +2078,17 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
     <section class="page-section">
         <div class="section-inner">
             <div class="section-eyebrow">Trust signals</div>
-            <h2 class="section-heading">Production voice. SOC 2 and HIPAA compliant. Founder-led pilots.</h2>
+            <h2 class="section-heading">Production voice. Security-conscious architecture. Founder-led pilots.</h2>
             <div class="card-grid-4">
                 <div class="section-card">
-                    <div class="card-label">Voice &amp; backers</div>
-                    <h3 class="card-heading">Backed by Deepgram &amp; ElevenLabs.</h3>
-                    <p class="card-body">Production-grade voice infrastructure trusted by enterprise.</p>
+                    <div class="card-label">Voice infrastructure</div>
+                    <h3 class="card-heading">Built on specialist speech providers.</h3>
+                    <p class="card-body">Voice runs on production speech infrastructure (Deepgram transcription, ElevenLabs voices) and Vapi as the runtime.</p>
                 </div>
                 <div class="section-card">
-                    <div class="card-label">Security &amp; compliance</div>
-                    <h3 class="card-heading">SOC 2, HIPAA, and GDPR.</h3>
-                    <p class="card-body">SOC 2 + HIPAA. Encrypted in transit and at rest. No training on your data. Full GDPR audit trail.</p>
+                    <div class="card-label">Security posture</div>
+                    <h3 class="card-heading">Encrypted transport, controlled access, GDPR DPA.</h3>
+                    <p class="card-body">Encryption in transit, controlled access to customer data, no training on your data. A signed GDPR Data Processing Agreement is available on request. Formal SOC 2 / HIPAA attestations will be sought as the product matures.</p>
                 </div>
                 <div class="section-card">
                     <div class="card-label">Responsible AI</div>
@@ -2133,8 +2133,32 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
                 </details>
                 <details class="faq-item">
                     <summary class="faq-question">Can it work with our CRM and calendar?</summary>
-                    <p class="faq-answer">Live integrations: HubSpot CRM sync, Slack alerts, Google Calendar booking, voice qualification, email follow-up, Microsoft 365 / Outlook calendar, and Salesforce CRM sync. Any chat, form, or workflow that can post a webhook can hand off to LUPO; HubSpot Chat is supported with HMAC signing. Additional CRM and calendar connectors light up on request.</p>
+                    <p class="faq-answer">Live integrations today: HubSpot CRM sync, Slack alerts, Google Calendar booking, voice qualification, and email follow-up. Microsoft 365 / Outlook calendar and Salesforce CRM sync are on the roadmap. Any chat, form, or workflow that can post a webhook can hand off to LUPO; HubSpot Chat is supported with HMAC signing. Additional CRM and calendar connectors light up on request.</p>
                 </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- LUPO-on-LUPO inbound form. The iframe is served by the LUPO
+         product app (mk4) on app.lupolabs.ai; the form submission is
+         processed by the same intake pipeline LUPO uses for paying
+         customers, on the dogfood org `lupo-marketing-demo`. The
+         dogfood-org source is hard-suppressed from outbound calls and
+         customer CRM writes by the policy engine — see the form-submit
+         route and DEMO_INTERNAL_SOURCES in the mk4 repo. -->
+    <section class="page-section" id="try-lupo">
+        <div class="section-inner">
+            <div class="section-eyebrow">LUPO on LUPO</div>
+            <h2 class="section-heading">Show LUPO your inbound flow.</h2>
+            <p class="section-lede">Tell us what happens when a buyer reaches out to your team today. The form below is the same LUPO intake layer that paying customers use — your submission goes straight to LUPO's qualification pipeline. Prefer to talk it through? Use "Talk to LUPO live" above.</p>
+            <div style="margin-top: 32px; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.15); background: #fff;">
+                <iframe
+                    src="https://app.lupolabs.ai/forms/lupo-marketing-demo"
+                    title="LUPO inbound flow form"
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    style="width:100%; min-height:780px; border:0; display:block;"
+                ></iframe>
             </div>
         </div>
     </section>
@@ -2159,6 +2183,13 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
         </div>
     </section>
 
+    <!-- DEPRECATED: Waitlist Modal. The orphan Netlify-Forms waitlist
+         path is no longer the primary intake; the LUPO-on-LUPO iframe
+         above (Show LUPO your inbound flow) routes through the real
+         product intake. Keep the modal harmless for now (no live
+         trigger calls showWaitlist on the public site) — it can be
+         deleted in a follow-up sweep along with the dead
+         /portal/* surface area. -->
     <!-- Waitlist Modal -->
     <div class="modal-overlay" id="waitlistModal">
         <div class="modal-content">
