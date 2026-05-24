@@ -861,9 +861,14 @@
 
         /* Integrations Strip */
         .integrations-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 16px;
+        }
+        .integration-tile {
+            flex: 1 1 calc((100% - 48px) / 4);
+            max-width: calc((100% - 48px) / 4);
         }
 
         .integration-tile {
@@ -1829,16 +1834,9 @@
                     <span class="integration-status live">Live</span>
                 </div>
                 <div class="integration-tile">
-                    <img src="/logos/integrations/hubspot.svg" alt="HubSpot" width="120" height="30" loading="lazy" decoding="async">
-                    <span class="integration-status live">Live &middot; CRM sync</span>
-                </div>
-                <div class="integration-tile">
-                    <img src="/logos/integrations/slack.svg" alt="Slack" width="120" height="30" loading="lazy" decoding="async">
-                    <span class="integration-status live">Live &middot; Alerts</span>
-                </div>
-                <div class="integration-tile">
-                    <img src="/logos/integrations/googlecalendar.svg" alt="Google Calendar" width="120" height="30" loading="lazy" decoding="async">
-                    <span class="integration-status live">Live &middot; Booking</span>
+                    <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+                    <span class="integration-text">Web form capture</span>
+                    <span class="integration-status live">Live</span>
                 </div>
                 <div class="integration-tile">
                     <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -1846,12 +1844,19 @@
                     <span class="integration-status live">Live &middot; Works with any chatbot</span>
                 </div>
                 <div class="integration-tile">
-                    <img src="/logos/integrations/microsoftoutlook.svg" alt="Microsoft 365 / Outlook" width="120" height="30" loading="lazy" decoding="async">
-                    <span class="integration-status live">Live &middot; Calendar booking</span>
+                    <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span class="integration-text">Calendar booking</span>
+                    <span class="integration-status live">Live &middot; Google &middot; Outlook Q3 2026</span>
                 </div>
                 <div class="integration-tile">
-                    <img src="/logos/integrations/salesforce.svg" alt="Salesforce" width="120" height="30" loading="lazy" decoding="async">
-                    <span class="integration-status webhook">Q3 2026</span>
+                    <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+                    <span class="integration-text">CRM sync</span>
+                    <span class="integration-status live">Live &middot; HubSpot &middot; Salesforce Q3 2026</span>
+                </div>
+                <div class="integration-tile">
+                    <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <span class="integration-text">Slack alerts</span>
+                    <span class="integration-status live">Live</span>
                 </div>
             </div>
             <p class="integrations-caption">LUPO works with any chat, form, or website workflow that can send a webhook. Intercom, Drift, Qualified, HubSpot Chat, custom forms, and internal routing tools can all hand qualified conversations into LUPO.</p>
@@ -2136,7 +2141,7 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
                 </details>
                 <details class="faq-item">
                     <summary class="faq-question">Can it work with our CRM and calendar?</summary>
-                    <p class="faq-answer">Live integrations today: HubSpot CRM sync, Slack alerts, Google Calendar and Microsoft 365 / Outlook calendar booking, voice qualification, and email follow-up. Salesforce CRM sync ships Q3 2026. Any chat, form, or workflow that can post a webhook can hand off to LUPO; HubSpot Chat is supported with HMAC signing. Additional CRM and calendar connectors light up on request.</p>
+                    <p class="faq-answer">Live integrations today: HubSpot CRM sync, Slack alerts, Google Calendar booking, voice qualification, web form capture, and email follow-up. Microsoft 365 / Outlook calendar and Salesforce CRM sync both ship Q3 2026. Any chat, form, or workflow that can post a webhook can hand off to LUPO; HubSpot Chat is supported with HMAC signing. Additional CRM and calendar connectors light up on request.</p>
                 </details>
             </div>
         </div>
