@@ -58,17 +58,19 @@
             display: flex; align-items: center; gap: 12px;
         }
         .nav-login-btn {
-            display: inline-flex; align-items: center; gap: 6px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
             padding: 8px 18px;
             background: rgba(255, 255, 255, 0.08);
             color: var(--text-primary);
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 20px;
             font-size: 14px; font-weight: 500;
+            letter-spacing: -0.01em;
             text-decoration: none;
             transition: all 0.25s ease;
         }
         .nav-login-btn:hover { background: rgba(255, 255, 255, 0.12); }
+        .nav-login-btn svg { width: 16px; height: 16px; opacity: 0.9; }
 
         main { padding-top: 100px; padding-bottom: 80px; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 22px; }
@@ -205,7 +207,12 @@
                 <img src="/lupo-logo-nav-96.webp" alt="LUPO" width="40" height="40" decoding="async" style="height: 40px; width: auto; display: block;">
                 <span style="font-size: 24px; font-weight: 600;">LUPO</span>
             </a>
-            <a href="https://app.lupolabs.ai/login" class="nav-login-btn">Sign in</a>
+            <a href="https://app.lupolabs.ai/login" class="nav-login-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+                </svg>
+                Sign in
+            </a>
         </div>
     </nav>
 

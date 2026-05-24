@@ -76,17 +76,19 @@
         }
         .nav-link:hover, .nav-link.is-active { color: var(--text-primary); }
         .nav-login-btn {
-            display: inline-flex; align-items: center; gap: 6px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
             padding: 8px 18px;
             background: rgba(255, 255, 255, 0.08);
             color: var(--text-primary);
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 20px;
             font-size: 14px; font-weight: 500;
+            letter-spacing: -0.01em;
             text-decoration: none;
             transition: all 0.25s ease;
         }
-        .nav-login-btn:hover { background: rgba(255, 255, 255, 0.14); }
+        .nav-login-btn:hover { background: rgba(255, 255, 255, 0.12); }
+        .nav-login-btn svg { width: 16px; height: 16px; opacity: 0.9; }
 
         main { padding-top: 88px; padding-bottom: 60px; }
         .container { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
@@ -420,7 +422,7 @@
                 <a href="/blog/" class="nav-link">Blog</a>
             </div>
             <a href="https://app.lupolabs.ai/login" class="nav-login-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
                 </svg>
                 Sign in
