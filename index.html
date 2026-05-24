@@ -916,6 +916,10 @@
             max-height: 28px;
             width: auto;
             display: block;
+            /* Vendor SVGs ship with brand inks that vanish on dark bg.
+               Flatten to pure white + use parent .integration-logo opacity
+               for the muted "trust strip" treatment. */
+            filter: brightness(0) invert(1);
         }
         .integration-logo-tag {
             font-size: 9.5px;
