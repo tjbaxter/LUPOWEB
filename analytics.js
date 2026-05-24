@@ -33,6 +33,6 @@
   };
 
   // Expose the queue for debugging or future flushing. Not part of the
-  // public API — do not rely on it from external pages.
+  // public API, do not rely on it from external pages.
   window.__lupoAnalyticsQueue = queue;
 })();

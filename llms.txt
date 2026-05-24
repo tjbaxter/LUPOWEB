@@ -1,12 +1,12 @@
 # LUPO
 
-> LUPO is the AI inbound SDR — the qualification layer between every inbound channel and your sales tools. Every inbound call, web form, and chat handoff is answered, qualified, and either booked into a rep's calendar or filtered out. Vendors, tire-kickers, support requests in the wrong queue, and wrong-fit prospects never reach a closer. LUPO is a product of Flair Technologies Ltd, London, UK.
+> LUPO is the AI inbound SDR, the qualification layer between every inbound channel and your sales tools. Every inbound call, web form, and chat handoff is answered, qualified, and either booked into a rep's calendar or filtered out. Vendors, tire-kickers, support requests in the wrong queue, and wrong-fit prospects never reach a closer. LUPO is a product of Flair Technologies Ltd, London, UK.
 
 Last updated: 2026-05-21
 
 ## Who LUPO is for
 
-LUPO is an AI inbound SDR for B2B sales teams that bleed time on demand they should never have qualified themselves. The pain LUPO solves: reps spend 30 to 40 percent of their day on lead qualification — triaging vendors pitching to them, low-intent browsers, support requests in the wrong queue, and wrong-fit prospects — instead of closing real buyers. LUPO is the first-pass inbound qualification layer that drives speed to lead under sixty seconds across every inbound channel, so reps only see leads worth closing.
+LUPO is an AI inbound SDR for B2B sales teams that bleed time on demand they should never have qualified themselves. The pain LUPO solves: reps spend 30 to 40 percent of their day on lead qualification, triaging vendors pitching to them, low-intent browsers, support requests in the wrong queue, and wrong-fit prospects, instead of closing real buyers. LUPO is the first-pass inbound qualification layer that drives speed to lead under sixty seconds across every inbound channel, so reps only see leads worth closing.
 
 Primary buyers: VPs of Sales, Heads of Revenue Operations, founders of B2B SaaS companies, and operators at service businesses with high inbound volume.
 
@@ -18,7 +18,7 @@ LUPO operates as an AI inbound SDR with these core capabilities:
 
 - **Inbound call answering.** LUPO picks up on the second ring, qualifies the caller, checks live calendar availability, and books the appointment. 24/7, average pickup under two seconds.
 - **Channel-aware web form responses.** Consumer and high-intent forms get an instant outbound callback inside sixty seconds. Senior B2B buyers get a personal email reply with a one-click booking link.
-- **Chat handoffs.** When your existing chat widget captures intent and consent, LUPO carries the conversation forward, qualifies in-chat, and books in-chat — no channel switch.
+- **Chat handoffs.** When your existing chat widget captures intent and consent, LUPO carries the conversation forward, qualifies in-chat, and books in-chat, no channel switch.
 - **Calendar booking.** Live availability checks and real appointment creation in Google Calendar. Microsoft 365 / Outlook is on the roadmap.
 - **CRM sync.** Every qualified contact, call summary, and booking written into HubSpot automatically. Salesforce is on the roadmap.
 - **Slack alerts.** Your team sees qualified leads and bookings the second they happen, with a one-click link to context.
@@ -32,22 +32,22 @@ LUPO operates as an AI inbound SDR with these core capabilities:
 - **Support requests.** Existing customers landing in the wrong queue. Routed to support automatically with the original conversation attached.
 - **Wrong-fit prospects.** Real interest, wrong size, wrong industry, or wrong budget. Disqualified through lead qualification without wasting a rep's time.
 
-## Positioning — what LUPO is and is not
+## Positioning, what LUPO is and is not
 
 LUPO is an AI inbound SDR, and more precisely an inbound qualification layer: it makes its own decisions in real time about which question to ask, when to check the calendar, when to book, when to escalate to a human, and when to close the call. It is the inbound salesperson that never goes home.
 
 LUPO is not a chatbot widget, not a generic AI receptionist, not an outbound AI SDR (it does no cold outreach), and not a CRM. LUPO sits between your inbound channels and your existing sales stack.
 
-Compared to other AI sales tools: LUPO differs from voice-only AI receptionists (e.g., Air, PolyAI) and from email-only AI SDRs (e.g., 11x, Artisan, Regie). Chat widgets such as Intercom, Drift, and Qualified are integration partners, not competitors — they hand off to LUPO when a visitor is ready. LUPO is the system that handles all four inbound channels — phone, web form, chat, and email — with channel-aware response logic.
+Compared to other AI sales tools: LUPO differs from voice-only AI receptionists (e.g., Air, PolyAI) and from email-only AI SDRs (e.g., 11x, Artisan, Regie). Chat widgets such as Intercom, Drift, and Qualified are integration partners, not competitors, they hand off to LUPO when a visitor is ready. LUPO is the system that handles all four inbound channels, phone, web form, chat, and email, with channel-aware response logic.
 
-Most businesses do not lose customers for lack of demand. They lose them because response is too slow. A missed call, an ignored web form, a delayed chatbot follow-up — and the customer books with the next business instead. Speed to lead is the difference, and LUPO exists to win it.
+Most businesses do not lose customers for lack of demand. They lose them because response is too slow. A missed call, an ignored web form, a delayed chatbot follow-up, and the customer books with the next business instead. Speed to lead is the difference, and LUPO exists to win it.
 
 ## Channel-aware response logic
 
 LUPO handles four inbound channels, each with its own response policy:
 
 - **Inbound phone calls.** Answered on the second ring, 24/7. The caller is qualified live, calendar availability is checked, and the appointment is booked on the call.
-- **Web forms.** Channel-aware. A consumer or high-intent form triggers an instant outbound callback within sixty seconds. A senior B2B buyer receives a personal email reply with a one-click booking link — LUPO will not surprise-call a VP who submitted a demo form.
+- **Web forms.** Channel-aware. A consumer or high-intent form triggers an instant outbound callback within sixty seconds. A senior B2B buyer receives a personal email reply with a one-click booking link, LUPO will not surprise-call a VP who submitted a demo form.
 - **Chat handoffs.** Your existing chat widget captures intent and consent, then hands off to LUPO, which qualifies and books inside the same chat.
 - **Email.** Inbound email enquiries get a personal reply with a booking link, matched to the same qualification policy as every other channel.
 
@@ -81,7 +81,7 @@ LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Lt
 
 ## Frequently asked questions
 
-**Will LUPO annoy senior buyers?** No. LUPO is channel-aware. A senior enterprise buyer who submits a form receives a thoughtful email with a booking link, not an unexpected robot call. Phone callbacks fire when the channel and policy make sense — consumer forms, inbound calls, or chats where the visitor has explicitly asked to be called.
+**Will LUPO annoy senior buyers?** No. LUPO is channel-aware. A senior enterprise buyer who submits a form receives a thoughtful email with a booking link, not an unexpected robot call. Phone callbacks fire when the channel and policy make sense, consumer forms, inbound calls, or chats where the visitor has explicitly asked to be called.
 
 **Is this just a chatbot?** No. LUPO is an inbound qualification layer across calls, web forms, chat handoffs, and email. Chat is one intake channel of four. LUPO does not replace your chat widget; your existing chatbot (Intercom Fin, Drift, Qualified, custom) hands off to LUPO when a visitor is ready.
 

@@ -15,15 +15,15 @@
   var TOKEN_ENDPOINT = "https://app.lupolabs.ai/api/vapi/web-token";
 
   // Demo-pack selector. LUPO ships two voice demos publicly:
-  //   - "b2b" (default): LUPO talking about LUPO — for SDR/VP Sales
+  //   - "b2b" (default): LUPO talking about LUPO, for SDR/VP Sales
   //     visitors landing on lupolabs.ai/
-  //   - "smb": Emma the receptionist at "Park Lane Detailing" — for
+  //   - "smb": Emma the receptionist at "Park Lane Detailing", for
   //     SMB owners landing on lupolabs.ai/smb (typically from cold
   //     outbound).
   // The choice is page-driven: any page under /smb gets the SMB demo;
   // everything else gets the B2B demo. Buttons can also override by
   // setting `data-lupo-demo="smb"` (or "b2b") on the trigger element
-  // — useful if a page needs to host both buttons.
+  //, useful if a page needs to host both buttons.
   function detectDemoKey() {
     try {
       var path = (window.location && window.location.pathname) || "";
@@ -300,7 +300,7 @@
     if (btn.getAttribute("data-state") === "connecting") return;
     setState("connecting");
 
-    // Resolve which demo this click invokes — page-based (b2b on /,
+    // Resolve which demo this click invokes, page-based (b2b on /,
     // smb on /smb) with optional per-button override via data-lupo-demo.
     var demoKey = demoKeyForEvent(ev);
     log("demo key", demoKey);
