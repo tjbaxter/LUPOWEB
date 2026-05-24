@@ -199,6 +199,16 @@
 
   function attach() {
     function inject() {
+      // Pre-compute initial visibility BEFORE inserting the widget so its
+      // first paint is in the final state. If we appended visible and
+      // then added .lupo-hidden, the CSS transition would animate a
+      // visible->hidden fade on every page load — that's the flash.
+      var heroTrigger = document.querySelector('[data-lupo-call-trigger]');
+      if (heroTrigger) {
+        var r = heroTrigger.getBoundingClientRect();
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        if (r.bottom > 0 && r.top < vh) btn.classList.add('lupo-hidden');
+      }
       document.body.appendChild(btn);
       setupScrollVisibility();
     }
