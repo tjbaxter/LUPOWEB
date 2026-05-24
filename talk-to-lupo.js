@@ -60,10 +60,11 @@
     "  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;",
     "  font-size: 15px; font-weight: 600; letter-spacing: -0.01em;",
     "  box-shadow: 0 8px 32px rgba(118, 75, 162, 0.45);",
-    "  transition: transform 0.2s ease, box-shadow 0.2s ease;",
+    "  transition: transform 0.25s ease, box-shadow 0.2s ease, opacity 0.3s ease;",
     "}",
     ".lupo-call-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(118, 75, 162, 0.55); }",
     ".lupo-call-btn:disabled { opacity: 0.6; cursor: not-allowed; }",
+    ".lupo-call-btn.lupo-hidden { opacity: 0; pointer-events: none; transform: translateY(20px); }",
     ".lupo-call-btn[data-state='connecting'] { background: linear-gradient(135deg, #a78bfa 0%, #c4b5fd 100%); cursor: wait; }",
     ".lupo-call-btn[data-state='in-call'] { background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); box-shadow: 0 8px 32px rgba(220, 38, 38, 0.45); }",
     ".lupo-call-btn[data-state='rate_limited'], .lupo-call-btn[data-state='unavailable'] { background: rgba(80, 80, 80, 0.85); }",
@@ -142,9 +143,63 @@
     }
   }
 
+  // Show/hide the floating widget based on whether any inline
+  // [data-lupo-call-trigger] CTA is currently in the viewport. Avoids the
+  // visual redundancy of two "Talk to LUPO live" buttons on hero landing
+  // (homepage, /smb), surfaces the floating widget once those CTAs scroll
+  // off-screen, and keeps it visible permanently during an active call —
+  // it doubles as the End-call control. Pages with no inline triggers
+  // (pricing, /about, blog) skip this entirely and the widget stays
+  // always-on.
+  function setupScrollVisibility() {
+    var triggers = document.querySelectorAll('[data-lupo-call-trigger]');
+    if (!triggers.length) return;
+
+    function inViewport(el) {
+      var r = el.getBoundingClientRect();
+      var h = window.innerHeight || document.documentElement.clientHeight;
+      return r.bottom > 0 && r.top < h;
+    }
+
+    var inView = new Set();
+    triggers.forEach(function (t) { if (inViewport(t)) inView.add(t); });
+
+    var hidden;
+    function setHidden(h) {
+      if (h === hidden) return;
+      hidden = h;
+      if (h) btn.classList.add('lupo-hidden');
+      else btn.classList.remove('lupo-hidden');
+    }
+
+    function applyVisibility() {
+      var s = btn.getAttribute('data-state') || 'idle';
+      if (s === 'connecting' || s === 'in-call' || s === 'loading') {
+        setHidden(false); // never hide during/around a call
+      } else {
+        setHidden(inView.size > 0); // hide while an inline CTA is on screen
+      }
+    }
+
+    applyVisibility(); // sync initial state (avoids a flash)
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) inView.add(e.target);
+        else inView.delete(e.target);
+      });
+      applyVisibility();
+    }, { threshold: 0 });
+    triggers.forEach(function (t) { io.observe(t); });
+
+    var mo = new MutationObserver(applyVisibility);
+    mo.observe(btn, { attributes: true, attributeFilter: ['data-state'] });
+  }
+
   function attach() {
     function inject() {
       document.body.appendChild(btn);
+      setupScrollVisibility();
     }
     if (document.body) inject();
     else document.addEventListener("DOMContentLoaded", inject);
