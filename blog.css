@@ -90,6 +90,7 @@ nav {
     text-decoration: none;
     transition: color 0.2s ease;
     font-weight: 500;
+    letter-spacing: -0.022em; /* freeze nav width — matches every other page */
 }
 
 .nav-link:hover { color: var(--text-primary); }
