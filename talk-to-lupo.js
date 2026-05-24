@@ -143,17 +143,20 @@
     }
   }
 
-  // Show/hide the floating widget based on whether any inline
-  // [data-lupo-call-trigger] CTA is currently in the viewport. Avoids the
-  // visual redundancy of two "Talk to LUPO live" buttons on hero landing
-  // (homepage, /smb), surfaces the floating widget once those CTAs scroll
-  // off-screen, and keeps it visible permanently during an active call —
-  // it doubles as the End-call control. Pages with no inline triggers
-  // (pricing, /about, blog) skip this entirely and the widget stays
-  // always-on.
+  // Show/hide the floating widget based on whether the page's primary
+  // inline CTA (the first [data-lupo-call-trigger] in document order,
+  // which is the hero button on /, /smb, etc.) is currently in the
+  // viewport. Avoids the visual redundancy of two "Talk to LUPO live"
+  // buttons at hero landing, but once the user scrolls past the hero
+  // the floating widget stays visible for the rest of the page (we
+  // intentionally do NOT toggle on mid-page or bottom CTAs — that
+  // caused a pop-in/out flicker on long pages). During an active call
+  // the widget is always visible since it's the End-call control.
+  // Pages with no inline triggers (pricing, /about, blog) skip this
+  // entirely and the widget stays always-on.
   function setupScrollVisibility() {
-    var triggers = document.querySelectorAll('[data-lupo-call-trigger]');
-    if (!triggers.length) return;
+    var heroTrigger = document.querySelector('[data-lupo-call-trigger]');
+    if (!heroTrigger) return;
 
     function inViewport(el) {
       var r = el.getBoundingClientRect();
@@ -161,8 +164,7 @@
       return r.bottom > 0 && r.top < h;
     }
 
-    var inView = new Set();
-    triggers.forEach(function (t) { if (inViewport(t)) inView.add(t); });
+    var heroVisible = inViewport(heroTrigger);
 
     var hidden;
     function setHidden(h) {
@@ -177,7 +179,7 @@
       if (s === 'connecting' || s === 'in-call' || s === 'loading') {
         setHidden(false); // never hide during/around a call
       } else {
-        setHidden(inView.size > 0); // hide while an inline CTA is on screen
+        setHidden(heroVisible); // hide only while the hero CTA is on screen
       }
     }
 
@@ -185,12 +187,11 @@
 
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (e.isIntersecting) inView.add(e.target);
-        else inView.delete(e.target);
+        if (e.target === heroTrigger) heroVisible = e.isIntersecting;
       });
       applyVisibility();
     }, { threshold: 0 });
-    triggers.forEach(function (t) { io.observe(t); });
+    io.observe(heroTrigger);
 
     var mo = new MutationObserver(applyVisibility);
     mo.observe(btn, { attributes: true, attributeFilter: ['data-state'] });
