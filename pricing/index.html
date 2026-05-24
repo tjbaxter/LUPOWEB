@@ -10,20 +10,20 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --text-primary: #f5f5f7;
-            --text-secondary: #a1a1a6;
-            --text-tertiary: #6e6e73;
-            --text-dim: #4a4a52;
-            --bg-primary: #000000;
-            --bg-card: #131316;
+            /* Higher-contrast text scale — premium dark-mode reads almost-white */
+            --text-primary: rgba(255, 255, 255, 0.96);
+            --text-secondary: rgba(255, 255, 255, 0.78);
+            --text-tertiary: rgba(255, 255, 255, 0.55);
+            --text-dim: rgba(255, 255, 255, 0.32);
+            --bg-primary: #0a0a0d;
+            --bg-card: #131318;
             --bg-card-elevated: #1a1a1f;
             --accent: #2997ff;
-            --accent-purple: #a78bfa;
-            --accent-purple-soft: rgba(167, 139, 250, 0.12);
-            --border: rgba(255, 255, 255, 0.06);
-            --border-strong: rgba(255, 255, 255, 0.12);
-            --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-accent: linear-gradient(135deg, #2997ff 0%, #a78bfa 100%);
+            --accent-purple: #c4b5fd;
+            --accent-purple-soft: rgba(196, 181, 253, 0.10);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-strong: rgba(255, 255, 255, 0.16);
+            --gradient-purple: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%);
         }
         html { scroll-behavior: smooth; }
         body {
@@ -87,25 +87,25 @@
         }
         .nav-login-btn:hover { background: rgba(255, 255, 255, 0.14); }
 
-        main { padding-top: 100px; padding-bottom: 80px; }
-        .container { max-width: 1140px; margin: 0 auto; padding: 0 22px; }
+        main { padding-top: 88px; padding-bottom: 60px; }
+        .container { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
 
         /* Hero */
-        .hero { text-align: center; padding: 24px 0 56px; }
+        .hero { text-align: center; padding: 32px 0 40px; }
         .hero-eyebrow {
-            display: inline-block; padding: 6px 16px;
-            border: 1px solid rgba(167, 139, 250, 0.32);
+            display: inline-block; padding: 5px 14px;
+            border: 1px solid var(--border-strong);
             border-radius: 999px;
-            background: var(--accent-purple-soft);
-            font-size: 11px; font-weight: 600; color: var(--accent-purple);
-            letter-spacing: 0.12em; text-transform: uppercase;
-            margin-bottom: 26px;
+            font-size: 11px; font-weight: 700; color: var(--text-tertiary);
+            letter-spacing: 0.18em; text-transform: uppercase;
+            margin-bottom: 28px;
         }
         h1 {
-            font-size: clamp(40px, 6.4vw, 68px);
-            line-height: 1.04; letter-spacing: -0.04em; font-weight: 700;
+            font-size: clamp(42px, 6.4vw, 72px);
+            line-height: 1.04; letter-spacing: -0.03em; font-weight: 600;
             margin-bottom: 22px;
             max-width: 880px; margin-left: auto; margin-right: auto;
+            color: #fff;
         }
         h1 .gradient-text {
             background: var(--gradient-purple);
@@ -113,174 +113,167 @@
             -webkit-text-fill-color: transparent;
         }
         .subtitle {
-            font-size: clamp(16px, 1.6vw, 19px);
+            font-size: clamp(16px, 1.6vw, 18px);
             color: var(--text-secondary);
-            max-width: 680px; margin: 0 auto;
+            max-width: 660px; margin: 0 auto;
             line-height: 1.55;
         }
 
-        /* 21x stat */
+        /* 21x stat — horizontal, big number, no fake citation */
         .stat-callout {
-            display: flex; align-items: center; gap: 22px;
-            max-width: 760px; margin: 48px auto 80px;
-            padding: 22px 28px;
-            background: linear-gradient(135deg, rgba(41, 151, 255, 0.06) 0%, rgba(167, 139, 250, 0.06) 100%);
-            border: 1px solid rgba(167, 139, 250, 0.22);
+            display: flex; align-items: center; gap: 28px;
+            max-width: 700px; margin: 40px auto 56px;
+            padding: 24px 32px;
+            background: rgba(196, 181, 253, 0.04);
+            border: 1px solid rgba(196, 181, 253, 0.16);
             border-radius: 16px;
+            text-align: left;
         }
         .stat-number {
-            font-size: 42px; font-weight: 700; letter-spacing: -0.04em;
-            background: var(--gradient-accent);
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 56px; font-weight: 700; letter-spacing: -0.03em;
+            color: var(--accent-purple);
             line-height: 1; flex-shrink: 0;
+        }
+        .stat-number .times {
+            font-size: 36px; font-weight: 500; margin-left: 2px;
         }
         .stat-text {
             font-size: 15px; color: var(--text-secondary);
-            line-height: 1.55;
+            line-height: 1.5;
+            flex: 1;
         }
         .stat-text strong { color: var(--text-primary); font-weight: 600; }
-        .stat-text .stat-source {
+        .stat-text .stat-detail {
             display: block;
-            font-size: 11px; color: var(--text-dim);
-            margin-top: 6px; letter-spacing: 0.02em;
+            margin-top: 6px;
+            color: var(--text-tertiary); font-size: 13px;
         }
         @media (max-width: 600px) {
-            .stat-callout { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px; }
-            .stat-number { font-size: 36px; }
+            .stat-callout { flex-direction: column; align-items: center; gap: 14px; padding: 22px; text-align: center; }
+            .stat-number { font-size: 48px; }
         }
 
         /* Two slim tier cards */
         .tier-cards {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-            margin-bottom: 56px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+            margin-bottom: 36px;
         }
         @media (max-width: 760px) {
-            .tier-cards { grid-template-columns: 1fr; gap: 16px; }
+            .tier-cards { grid-template-columns: 1fr; gap: 14px; }
         }
         .tier-card {
             position: relative;
-            padding: 32px;
+            padding: 28px;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 18px;
-            transition: border-color 0.2s ease, transform 0.2s ease;
+            border-radius: 16px;
+            transition: border-color 0.2s ease;
         }
         .tier-card:hover { border-color: var(--border-strong); }
         .tier-card.featured {
-            background: linear-gradient(180deg, rgba(167, 139, 250, 0.06) 0%, var(--bg-card) 60%);
-            border-color: rgba(167, 139, 250, 0.30);
-        }
-        .tier-card.featured::before {
-            content: "Most popular for inbound sales";
-            position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-            font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-            color: white;
-            padding: 4px 12px;
-            background: var(--gradient-purple);
-            border-radius: 999px;
-            white-space: nowrap;
+            border-color: rgba(196, 181, 253, 0.30);
         }
         .tier-label {
             display: inline-block;
-            font-size: 11px; font-weight: 600;
+            font-size: 10px; font-weight: 700;
             color: var(--accent-purple);
-            letter-spacing: 0.14em; text-transform: uppercase;
-            padding: 4px 12px;
-            border: 1px solid rgba(167, 139, 250, 0.32);
+            letter-spacing: 0.18em; text-transform: uppercase;
+            padding: 4px 10px;
+            border: 1px solid rgba(196, 181, 253, 0.30);
             border-radius: 999px;
             background: var(--accent-purple-soft);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
         .tier-name {
-            font-size: 30px; font-weight: 700; letter-spacing: -0.03em;
+            font-size: 28px; font-weight: 600; letter-spacing: -0.025em;
             margin-bottom: 8px;
+            color: #fff;
         }
         .tier-for {
             font-size: 14px; color: var(--text-secondary);
-            margin-bottom: 24px;
-            line-height: 1.5;
+            margin-bottom: 22px;
+            line-height: 1.55;
         }
         .tier-price {
-            font-size: 22px; font-weight: 500;
-            margin-bottom: 6px;
+            font-size: 18px; font-weight: 500; color: var(--text-primary);
+            margin-bottom: 4px;
         }
         .tier-terms {
             font-size: 12px; color: var(--text-tertiary);
-            line-height: 1.5;
-            margin-bottom: 22px;
+            line-height: 1.55;
+            margin-bottom: 20px;
         }
         .tier-cta {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
             width: 100%;
-            padding: 13px 22px;
-            border-radius: 999px;
+            padding: 12px 20px;
+            border-radius: 12px;
             font-size: 14px; font-weight: 600;
             text-decoration: none;
             transition: all 0.2s ease;
         }
         .tier-card.smb .tier-cta {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.06);
             color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            border: 1px solid var(--border-strong);
         }
         .tier-card.smb .tier-cta:hover {
-            background: rgba(255, 255, 255, 0.13);
-            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.10);
+            border-color: rgba(255, 255, 255, 0.24);
         }
         .tier-card.featured .tier-cta {
-            background: var(--gradient-purple);
-            color: white; border: none;
-            box-shadow: 0 4px 18px rgba(118, 75, 162, 0.32);
+            background: #fff;
+            color: #0a0a0d; border: none;
         }
         .tier-card.featured .tier-cta:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 28px rgba(118, 75, 162, 0.42);
+            background: rgba(255, 255, 255, 0.9);
         }
 
         /* Matrix */
         .matrix {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 18px;
+            border-radius: 16px;
             overflow: hidden;
-            margin-bottom: 64px;
+            margin-bottom: 48px;
         }
         .matrix-head {
             display: grid; grid-template-columns: 2.2fr 1fr 1fr;
-            padding: 18px 32px;
-            background: rgba(255, 255, 255, 0.015);
-            border-bottom: 1px solid var(--border);
+            padding: 16px 28px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border-strong);
             position: sticky; top: 52px; z-index: 10;
             backdrop-filter: blur(20px) saturate(180%);
-            background-color: rgba(19, 19, 22, 0.92);
+            background-color: rgba(19, 19, 24, 0.94);
         }
         .matrix-head .col-label {
-            font-size: 11px; font-weight: 600;
-            letter-spacing: 0.12em; text-transform: uppercase;
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 0.16em; text-transform: uppercase;
             color: var(--text-tertiary);
         }
         .matrix-head .col-tier {
             text-align: center;
-            font-size: 12px; font-weight: 600;
-            letter-spacing: 0.14em; text-transform: uppercase;
-            color: var(--accent-purple);
+            font-size: 12px; font-weight: 700;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: var(--text-primary);
         }
         .matrix-group { border-bottom: 1px solid var(--border); }
         .matrix-group:last-child { border-bottom: none; }
         .matrix-group-title {
-            padding: 22px 32px 10px;
+            padding: 24px 28px 10px;
             font-size: 11px; font-weight: 700;
-            letter-spacing: 0.16em; text-transform: uppercase;
-            color: var(--text-dim);
+            letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--text-tertiary);
         }
         .matrix-row {
             display: grid; grid-template-columns: 2.2fr 1fr 1fr;
-            padding: 14px 32px;
+            padding: 12px 28px;
             align-items: center;
             transition: background 0.12s ease;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
         }
-        .matrix-row:hover { background: rgba(167, 139, 250, 0.025); }
+        .matrix-row:first-of-type { border-top: none; }
+        .matrix-row:hover { background: rgba(255, 255, 255, 0.018); }
         .matrix-row .feature {
             font-size: 14px; color: var(--text-primary);
             line-height: 1.4;
@@ -288,32 +281,31 @@
         .matrix-row .cell {
             text-align: center;
         }
+        /* Neutral white check — saves purple for the ONE accent moment (tier badge) */
         .check {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 22px; height: 22px;
-            border-radius: 50%;
-            background: var(--accent-purple-soft);
-            color: var(--accent-purple);
+            width: 20px; height: 20px;
+            color: var(--text-primary);
         }
-        .check svg { width: 12px; height: 12px; }
+        .check svg { width: 16px; height: 16px; }
         .dash {
             color: var(--text-dim);
             font-size: 16px; font-weight: 500;
         }
         .roadmap {
             display: inline-block;
-            font-size: 10px; font-weight: 600;
-            color: var(--text-secondary);
+            font-size: 10px; font-weight: 700;
+            color: var(--text-tertiary);
             padding: 3px 9px;
             background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.10);
             border-radius: 999px;
-            letter-spacing: 0.04em; text-transform: uppercase;
+            letter-spacing: 0.08em; text-transform: uppercase;
         }
 
         @media (max-width: 760px) {
-            .matrix-head, .matrix-row { padding: 14px 18px; grid-template-columns: 1.6fr 0.8fr 0.8fr; }
-            .matrix-group-title { padding: 18px 18px 8px; }
+            .matrix-head, .matrix-row { padding: 12px 16px; grid-template-columns: 1.6fr 0.8fr 0.8fr; }
+            .matrix-group-title { padding: 18px 16px 8px; }
             .matrix-row .feature { font-size: 13px; }
         }
 
@@ -431,17 +423,16 @@
     <main>
         <section class="hero container">
             <span class="hero-eyebrow">Pricing</span>
-            <h1>One inbound brain. <span class="gradient-text">Two tiers.</span></h1>
+            <h1>Captured. Qualified. Routed.<br><span class="gradient-text">In seconds.</span></h1>
             <p class="subtitle">
-                LUPO captures every inbound — phone, email, web form, chat — qualifies it in real time, filters time-wasters, and routes the real buyers to the right human. Founder-led pilots, money-back on a pre-agreed metric.
+                LUPO is one agentic brain across phone, email, web form, and chat. Every inbound qualified in real time, every time-waster filtered, every real buyer routed to the right human in your team.
             </p>
 
             <div class="stat-callout">
-                <div class="stat-number">21×</div>
+                <div class="stat-number">21<span class="times">×</span></div>
                 <div class="stat-text">
-                    <strong>Respond to a lead in five minutes and you are 21× more likely to convert.</strong>
-                    After 30 minutes the lead is cold. LUPO responds in 2 seconds across every channel — 24 hours a day.
-                    <span class="stat-source">Lead Response Management Study — InsideSales / Harvard Business Review.</span>
+                    <strong>Respond to a lead in five minutes and you are 21× more likely to convert it.</strong>
+                    <span class="stat-detail">After 30 minutes the lead is cold. LUPO responds in 2 seconds, 24 hours a day, across every channel.</span>
                 </div>
             </div>
         </section>
@@ -452,7 +443,7 @@
                 <div class="tier-card smb">
                     <span class="tier-label">SMB</span>
                     <h2 class="tier-name">Owner-operator</h2>
-                    <p class="tier-for">For service businesses where the owner is the inbound team.</p>
+                    <p class="tier-for">The phone, email, chat, and web form all land with one person — and that person is also running the business.</p>
                     <div class="tier-price">Contact sales</div>
                     <p class="tier-terms">30-day founder-led pilot. Money-back on a pre-agreed metric.</p>
                     <a href="/smb/#enquire" class="tier-cta">
@@ -464,7 +455,7 @@
                 <div class="tier-card featured">
                     <span class="tier-label">Enterprise</span>
                     <h2 class="tier-name">Sales team</h2>
-                    <p class="tier-for">For inbound sales teams of 5 to 50+ reps.</p>
+                    <p class="tier-for">SDRs spend their day filtering vendor pitches and wrong-fit inbound instead of closing the real buyers in the queue.</p>
                     <div class="tier-price">Contact sales</div>
                     <p class="tier-terms">30-day founder-led pilot. Money-back on a pre-agreed metric.</p>
                     <a href="https://cal.com/tombaxter/lupo" class="tier-cta">
