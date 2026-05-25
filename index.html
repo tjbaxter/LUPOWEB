@@ -2299,30 +2299,6 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
         </div>
     </section>
 
-    <!-- LUPO-on-LUPO inbound form. The iframe is served by the LUPO
-         product app (mk4) on app.lupolabs.ai; the form submission is
-         processed by the same intake pipeline LUPO uses for paying
-         customers, on the dogfood org `lupo-marketing-demo`. The
-         dogfood-org source is hard-suppressed from outbound calls and
-         customer CRM writes by the policy engine, see the form-submit
-         route and DEMO_INTERNAL_SOURCES in the mk4 repo. -->
-    <section class="page-section" id="try-lupo">
-        <div class="section-inner">
-            <div class="section-eyebrow">LUPO on LUPO</div>
-            <h2 class="section-heading">Show LUPO your inbound flow.</h2>
-            <p class="section-lede">Tell us what happens when a buyer reaches out to your team today. The form below runs against LUPO's intake layer in a demo sandbox, your submission lands in our internal demo org, never a customer's production pipeline. No outbound call to you, no CRM writes. Prefer to talk it through? Use "Talk to LUPO live" above.</p>
-            <div style="margin-top: 32px; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.15); background: #fff;">
-                <iframe
-                    src="https://app.lupolabs.ai/forms/lupo-marketing-demo"
-                    title="LUPO inbound flow form"
-                    loading="lazy"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    style="width:100%; min-height:780px; border:0; display:block;"
-                ></iframe>
-            </div>
-        </div>
-    </section>
-
     <!-- Bottom CTA Section -->
     <section class="cta-block">
         <h2>See the inbound SDR layer in action.</h2>
@@ -2343,13 +2319,10 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
         </div>
     </section>
 
-    <!-- DEPRECATED: Waitlist Modal. The orphan Netlify-Forms waitlist
-         path is no longer the primary intake; the LUPO-on-LUPO iframe
-         above (Show LUPO your inbound flow) routes through the real
-         product intake. Keep the modal harmless for now (no live
-         trigger calls showWaitlist on the public site), it can be
-         deleted in a follow-up sweep along with the dead
-         /portal/* surface area. -->
+    <!-- DEPRECATED: Waitlist Modal. Orphan Netlify-Forms waitlist
+         path, no live trigger calls showWaitlist on the public site.
+         Keep harmless for now; can be deleted in a follow-up sweep
+         along with the dead /portal/* surface area. -->
     <!-- Waitlist Modal -->
     <div class="modal-overlay" id="waitlistModal">
         <div class="modal-content">
