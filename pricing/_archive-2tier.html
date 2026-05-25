@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pricing, LUPO</title>
-    <meta name="description" content="LUPO is the agentic inbound brain for B2B sales teams. One platform across phone, email, web form, and chat. Founder-led pilots, success-criteria-based renewal.">
+    <meta name="description" content="LUPO is the agentic inbound brain. One platform, two tiers, local businesses without a sales team, and inbound sales teams of 5 to 50+ reps. Founder-led pilots, success-criteria-based renewal.">
     <link rel="icon" type="image/png" href="/lupo-head-logo copy.png">
     <link rel="canonical" href="https://lupolabs.ai/pricing/">
     <style>
@@ -156,10 +156,13 @@
             .stat-number { font-size: 48px; }
         }
 
-        /* Single enterprise tier card, centered */
+        /* Two slim tier cards */
         .tier-cards {
-            max-width: 480px;
-            margin: 0 auto 36px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+            margin-bottom: 36px;
+        }
+        @media (max-width: 760px) {
+            .tier-cards { grid-template-columns: 1fr; gap: 14px; }
         }
         .tier-card {
             position: relative;
@@ -212,6 +215,15 @@
             text-decoration: none;
             transition: all 0.2s ease;
         }
+        .tier-card.smb .tier-cta {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            border: 1px solid var(--border-strong);
+        }
+        .tier-card.smb .tier-cta:hover {
+            background: rgba(255, 255, 255, 0.10);
+            border-color: rgba(255, 255, 255, 0.24);
+        }
         .tier-card.featured .tier-cta {
             background: #fff;
             color: #0a0a0d; border: none;
@@ -229,7 +241,7 @@
             margin-bottom: 48px;
         }
         .matrix-head {
-            display: grid; grid-template-columns: 2.8fr 1fr;
+            display: grid; grid-template-columns: 2.2fr 1fr 1fr;
             padding: 16px 28px;
             background: rgba(255, 255, 255, 0.03);
             border-bottom: 1px solid var(--border-strong);
@@ -257,7 +269,7 @@
             color: var(--text-tertiary);
         }
         .matrix-row {
-            display: grid; grid-template-columns: 2.8fr 1fr;
+            display: grid; grid-template-columns: 2.2fr 1fr 1fr;
             padding: 12px 28px;
             align-items: center;
             transition: background 0.12s ease;
@@ -311,7 +323,7 @@
         .stat-source a:hover { color: var(--text-secondary); }
 
         @media (max-width: 760px) {
-            .matrix-head, .matrix-row { padding: 12px 16px; grid-template-columns: 2fr 0.9fr; }
+            .matrix-head, .matrix-row { padding: 12px 16px; grid-template-columns: 1.6fr 0.8fr 0.8fr; }
             .matrix-group-title { padding: 18px 16px 8px; }
             .matrix-row .feature { font-size: 13px; }
         }
@@ -455,6 +467,18 @@
         <section class="container">
             <!-- Two slim tier cards -->
             <div class="tier-cards">
+                <div class="tier-card smb">
+                    <span class="tier-label">SMB</span>
+                    <h2 class="tier-name">Local business</h2>
+                    <p class="tier-for">For businesses without a dedicated sales team, auto-detailers, plumbers, salons, clinics. Whoever picks up first wins the job.</p>
+                    <div class="tier-price">Contact sales</div>
+                    <p class="tier-terms">30-day founder-led pilot. Success metric defined upfront. We earn the contract.</p>
+                    <a href="https://cal.com/tombaxter/lupo" class="tier-cta">
+                        Book a pilot
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+
                 <div class="tier-card featured">
                     <span class="tier-label">Enterprise</span>
                     <h2 class="tier-name">Sales team</h2>
@@ -472,73 +496,75 @@
             <div class="matrix">
                 <div class="matrix-head">
                     <div class="col-label">Compare features</div>
+                    <div class="col-tier">SMB</div>
                     <div class="col-tier">Enterprise</div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">Inbound channels</div>
-                    <div class="matrix-row"><div class="feature">Phone</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Email</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Web form</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Chat</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Intercom, Drift, or custom chatbot handoff</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Embeddable voice widget on your site</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Phone</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Email</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Web form</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Chat</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Intercom, Drift, or custom chatbot handoff</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Embeddable voice widget on your site</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">Qualification</div>
-                    <div class="matrix-row"><div class="feature">Real-time intent detection</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Vendor and time-waster filtering</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Custom qualification rules</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Full transcripts and recordings</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Multi-language support</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Real-time intent detection</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Vendor and time-waster filtering</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Custom qualification rules</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Full transcripts and recordings</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Multi-language support</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">Booking &amp; scheduling</div>
-                    <div class="matrix-row"><div class="feature">Google Calendar</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Microsoft 365 / Outlook</div><div class="cell"><span class="roadmap">Q3 2026</span></div></div>
-                    <div class="matrix-row"><div class="feature">SMS confirmations</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Email confirmations</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Google Calendar</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Microsoft 365 / Outlook</div><div class="cell"><span class="roadmap">Q3 2026</span></div><div class="cell"><span class="roadmap">Q3 2026</span></div></div>
+                    <div class="matrix-row"><div class="feature">SMS confirmations</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Email confirmations</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">Routing &amp; follow-up</div>
-                    <div class="matrix-row"><div class="feature">Round-robin across reps</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Rules-based routing</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Territory and seniority routing</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Automated email follow-up on dark leads</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Single inbox</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="dash">-</span></div></div>
+                    <div class="matrix-row"><div class="feature">Round-robin across reps</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Rules-based routing</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Territory and seniority routing</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Automated email follow-up on dark leads</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">CRM &amp; workflow</div>
-                    <div class="matrix-row"><div class="feature">Slack notifications</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">HubSpot sync</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Salesforce sync</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Custom webhook integrations</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">API access</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Firmographic enrichment (Clearbit, RB2B, 6sense)</div><div class="cell"><span class="value">Bring your own</span></div></div>
+                    <div class="matrix-row"><div class="feature">Slack notifications</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">HubSpot sync</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Salesforce sync</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Custom webhook integrations</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">API access</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Firmographic enrichment (Clearbit, RB2B, 6sense)</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="value">Bring your own</span></div></div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">Analytics &amp; reporting</div>
-                    <div class="matrix-row"><div class="feature">Lead dashboard</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Conversation analytics</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Funnel and conversion reporting</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Source attribution and channel reporting</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Lead dashboard</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Conversation analytics</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Funnel and conversion reporting</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Source attribution and channel reporting</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">Implementation &amp; support</div>
-                    <div class="matrix-row"><div class="feature">Time to go live</div><div class="cell"><span class="value">2 weeks</span></div></div>
-                    <div class="matrix-row"><div class="feature">Phased rollout (start with one channel or team)</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">24/7 coverage</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature"><strong>Founder-led onboarding</strong></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Success-criteria-based renewal</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Pre-agreed success metric</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Uptime SLA</div><div class="cell"><span class="value">99.9%</span></div></div>
-                    <div class="matrix-row"><div class="feature">GDPR Data Processing Agreement</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Security review on request</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Time to go live</div><div class="cell"><span class="value">1 week</span></div><div class="cell"><span class="value">2 weeks</span></div></div>
+                    <div class="matrix-row"><div class="feature">Phased rollout (start with one channel or team)</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">24/7 coverage</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature"><strong>Founder-led onboarding</strong></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Success-criteria-based renewal</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Pre-agreed success metric</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Uptime SLA</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="value">99.9%</span></div></div>
+                    <div class="matrix-row"><div class="feature">GDPR Data Processing Agreement</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Security review on request</div><div class="cell"><span class="dash">-</span></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                 </div>
             </div>
 
@@ -555,6 +581,10 @@
                     <p class="faq-a">The right number depends on inbound volume, channels covered, and which integrations matter to you. Pricing per pilot is honest about that, it's how every early-stage SaaS in this space starts. Once we have density in each segment we'll publish self-serve pricing.</p>
                 </details>
                 <details class="faq-item">
+                    <summary class="faq-q">Same agentic brain on both tiers?</summary>
+                    <p class="faq-a">Same brain. The Enterprise tier surfaces capabilities that only matter when there's a sales team to route to, round-robin assignment, CRM sync, custom integrations, conversation analytics. The SMB tier strips those out and focuses on the local-business problem: never miss a call, book the appointment, send the confirmation, whether it's the owner, a receptionist, or whoever happens to be in the shop that picks up.</p>
+                </details>
+                <details class="faq-item">
                     <summary class="faq-q">Will LUPO annoy senior buyers with a robot call?</summary>
                     <p class="faq-a">No. LUPO is channel-aware. A senior B2B buyer who fills out a demo form receives a personal email with a booking link, not an unexpected outbound call. Phone callbacks fire only on consumer forms, inbound calls, or chats where the visitor has explicitly asked to be called.</p>
                 </details>
@@ -564,7 +594,7 @@
                 </details>
                 <details class="faq-item">
                     <summary class="faq-q">How long until it's set up?</summary>
-                    <p class="faq-a">Pilots go live within two weeks of the first call. Routing rules across reps, CRM integration, calendar handoffs, escalation thresholds, and qualification criteria are all configured against your real inbound before anything goes live.</p>
+                    <p class="faq-a">SMB pilots go live inside a week of the first call. Enterprise pilots take around two weeks, there's more to wire up: routing rules across reps, CRM integration, calendar handoffs, escalation thresholds, and qualification criteria are configured against your real inbound before anything goes live.</p>
                 </details>
                 <details class="faq-item">
                     <summary class="faq-q">What happens if LUPO doesn't hit the success metric?</summary>
