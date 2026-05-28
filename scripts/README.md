@@ -21,8 +21,8 @@ node scripts/create-client.js --company "Company Name" --email "user@example.com
 **Example:**
 ```bash
 node scripts/create-client.js \
-  --company "PakEnergy" \
-  --email "michelle@pakenergy.com" \
+  --company "AcmeCo" \
+  --email "customer@example.com" \
   --plan "GROWTH"
 ```
 
@@ -36,14 +36,14 @@ node scripts/create-client.js \
 
 Subject: Your LUPO Agent is Live! 🎉
 
-Hi PakEnergy!
+Hi AcmeCo!
 
 Your AI sales agent is ready to take calls.
 
 Login Details:
   Portal: https://lupolabs.ai/login
-  Email: michelle@pakenergy.com
-  Temporary Password: Temp-Xk9L-pY3w
+  Email: customer@example.com
+  Temporary Password: TempPasswordHere
 
 (You'll be prompted to change your password on first login)
 
@@ -56,8 +56,8 @@ Login Details:
 **For Production:**
 ```bash
 API_URL=https://api.lupo.ai node scripts/create-client.js \
-  --company "PakEnergy" \
-  --email "michelle@pakenergy.com" \
+  --company "AcmeCo" \
+  --email "customer@example.com" \
   --plan "GROWTH"
 ```
 

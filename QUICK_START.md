@@ -29,7 +29,7 @@ node scripts/create-client.js \
   --plan "GROWTH"
 ```
 
-**Copy the temporary password from the output!** (e.g., `Temp-Xk9L-pY3w`)
+**Copy the temporary password from the output!** (e.g., `TempPasswordHere`)
 
 ### 3. Open Your Website
 ```bash
@@ -104,8 +104,8 @@ open index.html
 ```bash
 # 1. Create her account (30 seconds)
 node scripts/create-client.js \
-  --company "PakEnergy" \
-  --email "michelle@pakenergy.com" \
+  --company "AcmeCo" \
+  --email "customer@example.com" \
   --plan "GROWTH"
 
 # 2. Copy the output and send her an email:
@@ -118,7 +118,7 @@ Your AI sales agent is ready to take calls.
 
 Login to your dashboard:
   Portal: https://lupolabs.ai/login
-  Email: michelle@pakenergy.com
+  Email: customer@example.com
   Temporary Password: [from script output]
 
 (You'll be prompted to change your password on first login)
@@ -187,7 +187,7 @@ Content-Type: application/json
   "tenantName": "Company Name",
   "tenantSlug": "company-name",
   "email": "user@example.com",
-  "password": "Temp-Xk9L-pY3w",
+  "password": "TempPasswordHere",
   "companyName": "Company Name",
   "plan": "GROWTH"
 }

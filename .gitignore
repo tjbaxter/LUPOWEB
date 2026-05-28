@@ -22,3 +22,4 @@ netlify deploy --prod --dir .
 
 
 
+.claude/

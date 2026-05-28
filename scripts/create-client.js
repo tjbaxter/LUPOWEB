@@ -4,7 +4,7 @@
  * LUPO Admin Script - Create Client Account
  * 
  * Usage:
- *   node scripts/create-client.js --company "PakEnergy" --email "michelle@pakenergy.com" --plan "GROWTH"
+ *   node scripts/create-client.js --company "AcmeCo" --email "customer@example.com" --plan "GROWTH"
  * 
  * Plans: GROWTH, SCALE, ENTERPRISE
  */
@@ -188,7 +188,7 @@ async function main() {
     console.log('  --email     Client email (required)');
     console.log('  --plan      Plan tier: GROWTH, SCALE, or ENTERPRISE (required)\n');
     console.log('Example:');
-    console.log('  node scripts/create-client.js --company "PakEnergy" --email "michelle@pakenergy.com" --plan "GROWTH"\n');
+    console.log('  node scripts/create-client.js --company "AcmeCo" --email "customer@example.com" --plan "GROWTH"\n');
     process.exit(1);
   }
   

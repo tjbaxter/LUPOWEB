@@ -104,7 +104,7 @@ Content-Type: application/json
   "tenantName": "Company Name",
   "tenantSlug": "company-slug",
   "email": "user@example.com",
-  "password": "Temp-Xk9L-pY3w",  // Generated temp password
+  "password": "TempPasswordHere",  // Generated temp password
   "companyName": "Company Name",
   "plan": "GROWTH" | "SCALE" | "ENTERPRISE"
 }
@@ -133,7 +133,7 @@ Content-Type: application/json
    - Phone number
    - Portal login URL: `https://portal.lupo.ai` (or `https://lupolabs.ai/login`)
    - Email
-   - Temporary password (e.g., `Temp-Xk9L-pY3w`)
+   - Temporary password (e.g., `TempPasswordHere`)
 4. **Customer logs in** → Detects temp password → Redirected to change password page
 5. **Sets new password** → Redirected to dashboard
 
@@ -152,12 +152,12 @@ Content-Type: application/json
 #### 1. **Create Client Account**
 ```bash
 # scripts/create-client.ts
-node scripts/create-client.ts --company "PakEnergy" --email "michelle@pakenergy.com" --plan "GROWTH"
+node scripts/create-client.ts --company "AcmeCo" --email "customer@example.com" --plan "GROWTH"
 
 # Output:
-# ✅ Client created: PakEnergy
-# 📧 Email: michelle@pakenergy.com
-# 🔑 Temp Password: Temp-Xk9L-pY3w
+# ✅ Client created: AcmeCo
+# 📧 Email: customer@example.com
+# 🔑 Temp Password: TempPasswordHere
 # 🔗 Login URL: https://lupolabs.ai/login
 ```
 
