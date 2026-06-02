@@ -62,6 +62,10 @@
     "  box-shadow: 0 6px 24px rgba(118, 75, 162, 0.45), 0 1px 3px rgba(118, 75, 162, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.12);",
     "  transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.25s ease, opacity 0.3s ease;",
     "}",
+    // FAB retired: the bottom-center chat widget owns the floating slot.
+    // Kept in the DOM but hidden so inline [data-lupo-call-trigger] CTAs
+    // can still drive voice via .lupo-call-btn.click() + data-state mirror.
+    ".lupo-call-btn { display: none !important; }",
     ".lupo-call-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(118, 75, 162, 0.58), 0 2px 6px rgba(118, 75, 162, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.16); }",
     ".lupo-call-btn:disabled { opacity: 0.55; cursor: not-allowed; }",
     ".lupo-call-btn.lupo-hidden { opacity: 0; pointer-events: none; transform: translateY(20px); }",
@@ -359,27 +363,24 @@
     });
   }
 
-  btn.addEventListener("click", function (ev) {
-    log("click", { state: btn.getAttribute("data-state"), isInCall: isInCall });
+  // Core call-start path. Extracted from the click handler so the
+  // public LupoVoice API (used by the native chat widget) can invoke
+  // exactly the same flow without synthesising a click event.
+  function startCall(demoKey) {
     if (isInCall || btn.getAttribute("data-state") === "in-call") {
+      // Already in a call — treat as a "hang up" toggle, matching click behaviour.
       if (vapi) { try { vapi.stop(); } catch (e) { log("stop error", e); } }
       return;
     }
     if (btn.getAttribute("data-state") === "connecting") return;
     setState("connecting");
 
-    // Resolve which demo this click invokes, page-based (b2b on /,
-    // smb on /smb) with optional per-button override via data-lupo-demo.
-    var demoKey = demoKeyForEvent(ev);
-    log("demo key", demoKey);
+    var key = demoKey === "smb" ? "smb" : "b2b";
+    log("demo key", key);
 
-    // ensureSDK() lazy-loads the SDK if the preload failed; if it
-    // succeeded, this is a no-op resolving immediately with the cached
-    // constructor. Either way, the click triggers a fresh attempt, no
-    // page-session-permanent failure modes.
     ensureSDK()
       .then(function (Ctor) {
-        return fetchToken(demoKey).then(function (resp) {
+        return fetchToken(key).then(function (resp) {
           log("token response", resp.status, resp.body && resp.body.reason);
           if (resp.status !== 200 || !resp.body || !resp.body.token) {
             handleTokenRejection(resp.status, resp.body);
@@ -392,7 +393,6 @@
             vapi = new Ctor(token);
             bindVapiEvents(vapi);
           } else {
-            // Re-construct so the new JWT is used; events re-bind via closure.
             try { vapi.stop(); } catch (e) {}
             vapi = new Ctor(token);
             bindVapiEvents(vapi);
@@ -421,9 +421,6 @@
       .catch(function (err) {
         log("SDK or token failed", err && err.message);
         var msg = (err && err.message) || "";
-        // Distinguish SDK-load failure from network/token failure so the
-        // toast tells the user what to do. Either way, state goes to idle
-        // (NOT unavailable) so the next tap is a fresh attempt.
         if (/All Vapi SDK|vapi_constructor_missing|module|import/i.test(msg)) {
           showToast("Voice SDK couldn't load. Tap again to retry, or check your connection.", "error");
         } else {
@@ -431,7 +428,40 @@
         }
         setState("idle");
       });
+  }
+
+  btn.addEventListener("click", function (ev) {
+    log("click", { state: btn.getAttribute("data-state"), isInCall: isInCall });
+    var demoKey = demoKeyForEvent(ev);
+    startCall(demoKey);
   });
+
+  // Public API consumed by the native LUPO chat widget (and any future
+  // host-page integrations that want to start a Vapi call without
+  // simulating a click). The chat widget's iframe sends a postMessage
+  // back to the parent page with type:"open_voice"; the chat bootstrap
+  // script (public/widget/lupo-chat.js in mk4) prefers
+  // window.LupoVoice.open over poking at the .lupo-call-btn directly.
+  //
+  // Stable surface (do not break):
+  //   - open(demoKey?)     — start a call. demoKey "b2b" | "smb"; defaults
+  //                          to whatever the current page implies.
+  //   - isAvailable()      — returns true once the SDK has resolved and
+  //                          the widget is not in an unavailable state.
+  //   - getState()         — current data-state attribute value.
+  window.LupoVoice = {
+    open: function (demoKey) {
+      var key = (demoKey === "smb" || demoKey === "b2b") ? demoKey : detectDemoKey();
+      startCall(key);
+    },
+    isAvailable: function () {
+      var state = btn.getAttribute("data-state");
+      return Boolean(VapiCtor) && state !== "unavailable";
+    },
+    getState: function () {
+      return btn.getAttribute("data-state") || "idle";
+    }
+  };
 
   log("ready");
 })();
