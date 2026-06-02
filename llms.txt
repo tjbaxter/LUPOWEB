@@ -58,7 +58,7 @@ Live in production today:
 - **CRM:** HubSpot and Salesforce. Any CRM reachable by webhook can be connected on request.
 - **Calendar:** Google Calendar.
 - **Chat handoff:** Intercom Fin, Drift, Qualified, HubSpot Chat (HMAC-signed), and any custom chat or form that can post a webhook.
-- **Alerts and comms:** Slack, email follow-up, and SMS (A2P 10DLC registered).
+- **Alerts and comms:** Slack, Agentic Email Qualification, and SMS (A2P 10DLC registered).
 - **Voice infrastructure:** Vapi runtime with Deepgram transcription and ElevenLabs voices.
 
 On the roadmap:
@@ -86,7 +86,7 @@ LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Lt
 
 **What happens to vendors and support requests?** Vendor pitches are politely declined and logged, never routed to sales. Existing-customer support requests are routed to the right team with the original conversation attached. AEs see only the buyers worth their time.
 
-**Can it work with our CRM and calendar?** Yes. Live integrations today include HubSpot and Salesforce CRM sync, Slack alerts, Google Calendar booking, voice qualification, web form capture, and email follow-up. Microsoft 365 / Outlook calendar ships Q3 2026. Any chat, form, or workflow that can post a webhook can hand off to LUPO. Additional CRM and calendar connectors light up on request.
+**Can it work with our CRM and calendar?** Yes. Live integrations today include HubSpot and Salesforce CRM sync, Slack alerts, Google Calendar booking, voice qualification, web form capture, and Agentic Email Qualification. Microsoft 365 / Outlook calendar ships Q3 2026. Any chat, form, or workflow that can post a webhook can hand off to LUPO. Additional CRM and calendar connectors light up on request.
 
 ## Try LUPO
 
