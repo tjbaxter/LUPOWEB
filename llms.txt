@@ -18,7 +18,7 @@ LUPO operates as an AI inbound SDR with these core capabilities:
 
 - **Inbound call answering.** LUPO picks up on the second ring, qualifies the caller, checks live calendar availability, and books the appointment. 24/7, average pickup under two seconds.
 - **Channel-aware web form responses.** Consumer and high-intent forms get an instant outbound callback inside sixty seconds. Senior B2B buyers get a personal email reply with a one-click booking link.
-- **Chat handoffs.** When your existing chat widget captures intent and consent, LUPO carries the conversation forward, qualifies in-chat, and books in-chat, no channel switch.
+- **Chat Qualification.** When your existing chat widget captures intent and consent, LUPO carries the conversation forward, qualifies in-chat, and books in-chat, no channel switch.
 - **Calendar booking.** Live availability checks and real appointment creation in Google Calendar. Microsoft 365 / Outlook ships Q3 2026.
 - **CRM sync.** Every qualified contact, call summary, and booking written into HubSpot or Salesforce automatically.
 - **Slack alerts.** Your team sees qualified leads and bookings the second they happen, with a one-click link to context.
@@ -48,7 +48,7 @@ LUPO handles four inbound channels, each with its own response policy:
 
 - **Inbound phone calls.** Answered on the second ring, 24/7. The caller is qualified live, calendar availability is checked, and the appointment is booked on the call.
 - **Web forms.** Channel-aware. A consumer or high-intent form triggers an instant outbound callback within sixty seconds. A senior B2B buyer receives a personal email reply with a one-click booking link, LUPO will not surprise-call a VP who submitted a demo form.
-- **Chat handoffs.** Your existing chat widget captures intent and consent, then hands off to LUPO, which qualifies and books inside the same chat.
+- **Chat Qualification.** Your existing chat widget captures intent and consent, then hands off to LUPO, which qualifies and books inside the same chat.
 - **Email.** Inbound email enquiries get a personal reply with a booking link, matched to the same qualification policy as every other channel.
 
 ## Integrations
@@ -57,7 +57,7 @@ Live in production today:
 
 - **CRM:** HubSpot and Salesforce. Any CRM reachable by webhook can be connected on request.
 - **Calendar:** Google Calendar.
-- **Chat handoff:** Intercom Fin, Drift, Qualified, HubSpot Chat (HMAC-signed), and any custom chat or form that can post a webhook.
+- **Chat Qualification:** Intercom Fin, Drift, Qualified, HubSpot Chat (HMAC-signed), and any custom chat or form that can post a webhook.
 - **Alerts and comms:** Slack, Agentic Email Qualification, and SMS (A2P 10DLC registered).
 - **Voice infrastructure:** Vapi runtime with Deepgram transcription and ElevenLabs voices.
 
@@ -86,7 +86,7 @@ LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Lt
 
 **What happens to vendors and support requests?** Vendor pitches are politely declined and logged, never routed to sales. Existing-customer support requests are routed to the right team with the original conversation attached. AEs see only the buyers worth their time.
 
-**Can it work with our CRM and calendar?** Yes. Live integrations today include HubSpot and Salesforce CRM sync, Slack alerts, Google Calendar booking, voice qualification, web form capture, and Agentic Email Qualification. Microsoft 365 / Outlook calendar ships Q3 2026. Any chat, form, or workflow that can post a webhook can hand off to LUPO. Additional CRM and calendar connectors light up on request.
+**Can it work with our CRM and calendar?** Yes. Live integrations today include HubSpot and Salesforce CRM sync, Slack alerts, Google Calendar booking, voice qualification, Web Form Qualification, and Agentic Email Qualification. Microsoft 365 / Outlook calendar ships Q3 2026. Any chat, form, or workflow that can post a webhook can hand off to LUPO. Additional CRM and calendar connectors light up on request.
 
 ## Try LUPO
 
