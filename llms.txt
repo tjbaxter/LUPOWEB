@@ -38,7 +38,7 @@ LUPO is an AI inbound SDR, and more precisely an inbound qualification layer: it
 
 LUPO is not a chatbot widget, not a generic AI receptionist, not an outbound AI SDR (it does no cold outreach), and not a CRM. LUPO sits between your inbound channels and your existing sales stack.
 
-Compared to other AI sales tools: LUPO differs from voice-only AI receptionists (e.g., Air, PolyAI) and from email-only AI SDRs (e.g., 11x, Artisan, Regie). Chat widgets such as Intercom, Drift, and Qualified are integration partners, not competitors, they hand off to LUPO when a visitor is ready. LUPO is the system that handles all four inbound channels, phone, web form, chat, and email, with channel-aware response logic.
+Compared to other AI sales tools: LUPO differs from voice-only AI receptionists (e.g., Air, PolyAI) and from email-only AI SDRs (e.g., 11x, Artisan, Regie). Chat widgets such as Intercom and Drift are integration partners, not competitors, they hand off to LUPO when a visitor is ready. LUPO is the system that handles all four inbound channels, phone, web form, chat, and email, with channel-aware response logic.
 
 Most businesses do not lose customers for lack of demand. They lose them because response is too slow. A missed call, an ignored web form, a delayed chatbot follow-up, and the customer books with the next business instead. Speed to lead is the difference, and LUPO exists to win it.
 
@@ -57,7 +57,7 @@ Live in production today:
 
 - **CRM:** HubSpot and Salesforce. Any CRM reachable by webhook can be connected on request.
 - **Calendar:** Google Calendar.
-- **Chat Qualification:** Intercom Fin, Drift, Qualified, HubSpot Chat (HMAC-signed), and any custom chat or form that can post a webhook.
+- **Chat Qualification:** Intercom Fin, Drift, HubSpot Chat (HMAC-signed), and any custom chat or form that can post a webhook.
 - **Alerts and comms:** Slack, Agentic Email Qualification, and SMS (A2P 10DLC registered).
 - **Voice infrastructure:** Vapi runtime with Deepgram transcription and ElevenLabs voices.
 
@@ -80,7 +80,7 @@ LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Lt
 
 ## Frequently asked questions
 
-**Is this just a chatbot?** No. LUPO is an inbound qualification layer across calls, web forms, chat handoffs, and email. Chat is one intake channel of four. LUPO does not replace your chat widget; your existing chatbot (Intercom Fin, Drift, Qualified, custom) hands off to LUPO when a visitor is ready.
+**Is this just a chatbot?** No. LUPO is an inbound qualification layer across calls, web forms, chat handoffs, and email. Chat is one intake channel of four. LUPO does not replace your chat widget; your existing chatbot (Intercom Fin, Drift, custom) hands off to LUPO when a visitor is ready.
 
 **How fast do meetings actually get booked?** Sub-2 minutes median time-to-first-action on qualified inbound, measured. Your own number is visible in the dashboard from week one. The research benchmark is 5 minutes (Oldroyd et al, Harvard Business Review 2011: response in 5 min = 21x more likely to convert). LUPO clears it on every qualified lead.
 
