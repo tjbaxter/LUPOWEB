@@ -122,7 +122,7 @@
             line-height: 1.55;
         }
 
-        /* 21x stat, horizontal, big number, no fake citation */
+        /* Lead-response stat, horizontal, big number, no fake citation */
         .stat-callout {
             display: flex; align-items: center; gap: 28px;
             max-width: 700px; margin: 40px auto 56px;
@@ -385,7 +385,9 @@
             padding: 12px 22px;
             border-radius: 999px;
             font-size: 14px; font-weight: 600;
+            font-family: inherit;
             text-decoration: none;
+            cursor: pointer;
             transition: all 0.22s ease;
         }
         .btn-primary {
@@ -445,8 +447,8 @@
             <div class="stat-callout">
                 <div class="stat-number">21<span class="times">×</span></div>
                 <div class="stat-text">
-                    <strong>Respond to a lead in five minutes and you are 21× more likely to convert it.</strong>
-                    <span class="stat-detail">After 30 minutes the lead is cold. LUPO responds in 2 seconds, 24 hours a day, across every channel.</span>
+                    <strong>Respond to a lead in five minutes and you are 21× more likely to qualify it than waiting 30 minutes.</strong>
+                    <span class="stat-detail">LUPO is built for fast triage: acknowledge inbound, classify intent, filter noise, and route qualified buyers through your policy.</span>
                     <span class="stat-source">Source: Oldroyd, McElheran &amp; Elkington, <a href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" target="_blank" rel="noopener">Harvard Business Review, 2011</a> (Lead Response Management Study, 1.25M leads across 29 B2B companies).</span>
                 </div>
             </div>
@@ -458,7 +460,7 @@
                 <div class="tier-card featured">
                     <span class="tier-label">Enterprise</span>
                     <h2 class="tier-name">Sales team</h2>
-                    <p class="tier-for">For inbound sales teams. SDRs stop burning the day on vendor pitches; real buyers reach a closer in seconds.</p>
+                    <p class="tier-for">For inbound sales teams. SDRs stop burning the day on vendor pitches; real buyers reach the right closer with context.</p>
                     <a href="https://cal.com/tombaxter/lupo" class="tier-cta">
                         Talk to Tom
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
@@ -488,8 +490,8 @@
                     <div class="matrix-row"><div class="feature">Real-time intent detection</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                     <div class="matrix-row"><div class="feature">Vendor and time-waster filtering</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                     <div class="matrix-row"><div class="feature">Custom qualification rules</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Full transcripts and recordings</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Multi-language support</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Conversation transcripts and decision logs</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Additional language support</div><div class="cell"><span class="value">Scoped per pilot</span></div></div>
                 </div>
 
                 <div class="matrix-group">
@@ -504,7 +506,7 @@
                     <div class="matrix-group-title">Routing &amp; follow-up</div>
                     <div class="matrix-row"><div class="feature">Round-robin across reps</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                     <div class="matrix-row"><div class="feature">Rules-based routing</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Territory and seniority routing</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Account-owner and territory rules</div><div class="cell"><span class="value">Configured per pilot</span></div></div>
                     <div class="matrix-row"><div class="feature">Agentic Email Qualification on dark leads</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                 </div>
 
@@ -512,10 +514,10 @@
                     <div class="matrix-group-title">CRM &amp; workflow</div>
                     <div class="matrix-row"><div class="feature">Slack notifications</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                     <div class="matrix-row"><div class="feature">HubSpot sync</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Salesforce sync</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Salesforce workflow</div><div class="cell"><span class="value">Scoped per pilot</span></div></div>
                     <div class="matrix-row"><div class="feature">Custom webhook integrations</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                     <div class="matrix-row"><div class="feature">API access</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Firmographic enrichment (Clearbit, RB2B, 6sense)</div><div class="cell"><span class="value">Bring your own</span></div></div>
+                    <div class="matrix-row"><div class="feature">Firmographic enrichment</div><div class="cell"><span class="value">Bring your own provider</span></div></div>
                 </div>
 
                 <div class="matrix-group">
@@ -528,13 +530,14 @@
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">Implementation &amp; support</div>
-                    <div class="matrix-row"><div class="feature">Time to go live</div><div class="cell"><span class="value">2 weeks</span></div></div>
+                    <div class="matrix-row"><div class="feature">Pilot launch</div><div class="cell"><span class="value">~2 weeks</span></div></div>
+                    <div class="matrix-row"><div class="feature">Full multi-channel rollout</div><div class="cell"><span class="value">~8 weeks</span></div></div>
                     <div class="matrix-row"><div class="feature">Phased rollout (start with one channel or team)</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">24/7 coverage</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="feature">Always-on agent coverage</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                     <div class="matrix-row"><div class="feature"><strong>Founder-led onboarding</strong></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                     <div class="matrix-row"><div class="feature">Success-criteria-based renewal</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                     <div class="matrix-row"><div class="feature">Pre-agreed success metric</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Uptime SLA</div><div class="cell"><span class="value">99.9%</span></div></div>
+                    <div class="matrix-row"><div class="feature">Availability design</div><div class="cell"><span class="value">High availability</span></div></div>
                     <div class="matrix-row"><div class="feature">GDPR Data Processing Agreement</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                     <div class="matrix-row"><div class="feature">Security review on request</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
                 </div>
@@ -562,7 +565,7 @@
                 </details>
                 <details class="faq-item">
                     <summary class="faq-q">How long until it's set up?</summary>
-                    <p class="faq-a">Pilots go live within two weeks of the first call. Routing rules across reps, CRM integration, calendar handoffs, escalation thresholds, and qualification criteria are all configured against your real inbound before anything goes live.</p>
+                    <p class="faq-a">A focused single-channel pilot can usually go live in about two weeks once access is in place. A full multi-channel rollout is planned around eight weeks, because routing rules, CRM integration, calendar handoffs, escalation thresholds, and qualification criteria are configured against your real inbound before launch.</p>
                 </details>
                 <details class="faq-item">
                     <summary class="faq-q">What happens if LUPO doesn't hit the success metric?</summary>
@@ -570,7 +573,7 @@
                 </details>
                 <details class="faq-item">
                     <summary class="faq-q">What about security and compliance?</summary>
-                    <p class="faq-a">Encryption in transit and controlled access to customer data. Conversations are never used to train external AI models. A signed Data Processing Agreement is available on request. Formal SOC 2 / HIPAA attestations will be sought as the product matures and design partners require them.</p>
+                    <p class="faq-a">Encryption in transit and controlled access to customer data. Conversations are never used to train external AI models. A signed Data Processing Agreement is available on request. Formal SOC 2 readiness will be pursued as the product matures and design partners require it.</p>
                 </details>
             </div>
         </section>
@@ -584,10 +587,10 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
                         Book a demo
                     </a>
-                    <a href="#" class="btn-secondary" onclick="event.preventDefault(); document.querySelector('.lupo-call-btn')?.click();">
+                    <button type="button" class="btn-secondary" onclick="if (window.LupoVoice?.open) window.LupoVoice.open('b2b'); else document.querySelector('.lupo-call-btn')?.click();">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                         Talk to LUPO live
-                    </a>
+                    </button>
                 </div>
             </div>
         </section>

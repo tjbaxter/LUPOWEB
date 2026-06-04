@@ -708,7 +708,7 @@
                             <div class="billing-plan-card">
                                 <div class="plan-header">
                                     <span class="plan-badge enterprise-badge">Enterprise</span>
-                                    <div class="plan-price">£3,000<span class="plan-period">/month</span></div>
+                                    <div class="plan-price">$3,000<span class="plan-period">/month</span></div>
                                 </div>
                                 
                                 <div class="billing-details">
@@ -721,7 +721,7 @@
                                     
                                     <div class="billing-row">
                                         <span class="billing-label">Monthly Retainer</span>
-                                        <span class="billing-value">£3,000</span>
+                                        <span class="billing-value">$3,000</span>
                                     </div>
                                     
                                     <div class="billing-row">
@@ -742,7 +742,7 @@
                                             </div>
                                             <div class="billing-row">
                                                 <span class="billing-label">Overage Cost</span>
-                                                <span class="billing-value">£${(usage.pricing.overageCost / 100).toFixed(2)}</span>
+                                                <span class="billing-value">$${(usage.pricing.overageCost / 100).toFixed(2)}</span>
                                             </div>
                                         ` : ''}
                                         
@@ -750,7 +750,7 @@
                                         
                                         <div class="billing-row total-row">
                                             <span class="billing-label">Estimated Total</span>
-                                            <span class="billing-value total-value">£${(usage.pricing.estimatedTotal / 100).toFixed(2)}</span>
+                                            <span class="billing-value total-value">$${(usage.pricing.estimatedTotal / 100).toFixed(2)}</span>
                                         </div>
                                     ` : ''}
                                 </div>
@@ -760,7 +760,7 @@
                             <div class="billing-plan-card">
                                 <div class="plan-header">
                                         <span class="plan-badge">${usage.customer.plan}</span>
-                                    <div class="plan-price">${usage.pricing ? `£${(usage.pricing.monthlyFee / 100).toFixed(2)}` : 'N/A'}<span class="plan-period">/month</span></div>
+                                    <div class="plan-price">${usage.pricing ? `$${(usage.pricing.monthlyFee / 100).toFixed(2)}` : 'N/A'}<span class="plan-period">/month</span></div>
                                     </div>
                                 
                                 <div class="billing-details">
@@ -787,7 +787,7 @@
                                         <div class="billing-divider"></div>
                                         <div class="billing-row total-row">
                                             <span class="billing-label">Estimated Total</span>
-                                            <span class="billing-value total-value">£${(usage.pricing.estimatedTotal / 100).toFixed(2)}</span>
+                                            <span class="billing-value total-value">$${(usage.pricing.estimatedTotal / 100).toFixed(2)}</span>
                             </div>
                                     ` : ''}
                                 </div>
@@ -826,7 +826,7 @@
                         <div class="billing-plan-card">
                             <div class="plan-header">
                                 <span class="plan-badge enterprise-badge">Enterprise</span>
-                                <div class="plan-price">£3,000<span class="plan-period">/month</span></div>
+                                <div class="plan-price">$3,000<span class="plan-period">/month</span></div>
                             </div>
                             
                             <div class="billing-details">
@@ -837,7 +837,7 @@
                                 
                                 <div class="billing-row">
                                     <span class="billing-label">Monthly Retainer</span>
-                                    <span class="billing-value">£3,000</span>
+                                    <span class="billing-value">$3,000</span>
                                 </div>
                                 
                                 <div class="billing-row">
@@ -857,14 +857,14 @@
                                 
                                 <div class="billing-row">
                                     <span class="billing-label">Overage Cost</span>
-                                    <span class="billing-value">£427.05</span>
+                                    <span class="billing-value">$427.05</span>
                                 </div>
                                 
                                 <div class="billing-divider"></div>
                                 
                                 <div class="billing-row total-row">
                                     <span class="billing-label">Estimated Total</span>
-                                    <span class="billing-value total-value">£3,427.05</span>
+                                    <span class="billing-value total-value">$3,427.05</span>
                                 </div>
                             </div>
                         </div>
@@ -1023,7 +1023,7 @@
                             </div>
                             <div style="text-align: right;">
                                 <div style="font-size: 18px; font-weight: 600; margin-bottom: 4px;">
-                                    £${(amount / 100).toFixed(2)}
+                                    $${(amount / 100).toFixed(2)}
                                 </div>
                                 <div style="font-size: 12px; color: ${statusColor}; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500;">
                                     ${status}
