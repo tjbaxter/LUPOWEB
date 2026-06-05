@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How LUPO works | LUPO</title>
+    <meta name="description" content="How LUPO captures, filters, enriches, and scores every inbound across phone, email, web form, and chat, with a different response per channel.">
+    <link rel="icon" type="image/png" href="/lupo-icon-180.png">
+    <link rel="canonical" href="https://lupolabs.ai/how-it-works/">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --text-primary: rgba(255,255,255,0.96);
+            --text-secondary: rgba(255,255,255,0.78);
+            --text-tertiary: rgba(255,255,255,0.55);
+            --bg-primary: #0a0a0d;
+            --bg-card: #131318;
+            --accent: #2997ff;
+            --border: rgba(255,255,255,0.08);
+            --border-strong: rgba(255,255,255,0.16);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            letter-spacing: -0.022em;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(0,0,0,0.72);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-content {
+            max-width: 1200px; margin: 0 auto; padding: 0 22px;
+            height: 52px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-primary); }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-link {
+            font-size: 14px; color: var(--text-secondary);
+            text-decoration: none; font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.is-active { color: var(--text-primary); }
+        .nav-login-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 18px;
+            background: rgba(255,255,255,0.08);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            font-size: 14px; font-weight: 500;
+            text-decoration: none;
+        }
+        .nav-login-btn:hover { background: rgba(255,255,255,0.12); }
+        .nav-login-btn svg { width: 16px; height: 16px; }
+        main { padding-top: 80px; }
+        .hero-section {
+            padding: 60px 24px 40px;
+            text-align: center;
+        }
+        .hero-section-inner { max-width: 880px; margin: 0 auto; }
+        .hero-eyebrow {
+            display: inline-block; padding: 5px 14px;
+            border: 1px solid var(--border-strong);
+            border-radius: 999px;
+            font-size: 11px; font-weight: 700; color: var(--text-tertiary);
+            letter-spacing: 0.18em; text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+        h1 {
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 600; letter-spacing: -0.025em; line-height: 1.08;
+            margin-bottom: 18px;
+        }
+        .hero-lede {
+            font-size: clamp(17px, 1.6vw, 19px);
+            color: var(--text-secondary);
+            line-height: 1.55;
+            max-width: 680px; margin: 0 auto;
+        }
+        .page-section {
+            padding: 80px 24px;
+            border-top: 1px solid var(--border);
+        }
+        .section-inner { max-width: 1080px; margin: 0 auto; }
+        .section-eyebrow {
+            font-size: 12px; font-weight: 600; color: #a78bfa;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .section-heading {
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 600; letter-spacing: -0.025em; line-height: 1.12;
+            margin-bottom: 18px;
+            max-width: 800px;
+        }
+        .section-lede {
+            font-size: 18px; line-height: 1.55;
+            color: var(--text-secondary);
+            margin-bottom: 42px;
+            max-width: 760px;
+        }
+        .card-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .card-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 26px;
+            transition: border-color 0.25s ease, transform 0.25s ease;
+        }
+        .section-card:hover { border-color: rgba(167,139,250,0.25); transform: translateY(-2px); }
+        .card-label {
+            font-size: 11px; font-weight: 700;
+            color: #a78bfa;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .card-heading {
+            font-size: 19px; font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.25;
+            letter-spacing: -0.015em;
+        }
+        .card-body {
+            font-size: 14.5px; line-height: 1.55;
+            color: var(--text-secondary);
+        }
+        .integrations-grid {
+            display: flex; flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+        }
+        .integration-tile {
+            flex: 1 1 calc((100% - 48px) / 4);
+            max-width: calc((100% - 48px) / 4);
+            min-height: 124px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 11px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.02);
+            padding: 20px 16px;
+        }
+        .integration-icon { width: 28px; height: 28px; color: rgba(255,255,255,0.72); flex-shrink: 0; }
+        .integration-text { font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.92); text-align: center; }
+        .integration-status {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 10.5px; font-weight: 600;
+            letter-spacing: 0.06em; text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+        .integration-status::before {
+            content: ''; width: 6px; height: 6px;
+            border-radius: 50%; background: #34c759;
+            box-shadow: 0 0 6px rgba(52,199,89,0.4);
+        }
+        .integrations-logos { margin-top: 36px; text-align: center; }
+        .integrations-logos-label {
+            font-size: 11px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.14em;
+            color: var(--text-tertiary);
+            margin-bottom: 18px;
+        }
+        .integrations-logos-row {
+            display: flex; flex-wrap: wrap;
+            justify-content: center; align-items: center;
+            gap: 38px; row-gap: 22px;
+        }
+        .integration-logo { opacity: 0.78; }
+        .integration-logo img {
+            max-height: 24px; width: auto; display: block;
+            filter: brightness(0) invert(1);
+        }
+        .integrations-caption {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 13px; color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 760px; margin-left: auto; margin-right: auto;
+        }
+        .cta-block {
+            text-align: center;
+            padding: 100px 24px;
+            border-top: 1px solid var(--border);
+            background: radial-gradient(ellipse at 50% 0%, rgba(118,75,162,0.18) 0%, transparent 60%);
+        }
+        .cta-block h2 {
+            font-size: clamp(26px, 4vw, 40px);
+            font-weight: 600; letter-spacing: -0.025em;
+            margin-bottom: 16px;
+        }
+        .cta-block p {
+            color: var(--text-secondary);
+            font-size: 16px; max-width: 520px;
+            margin: 0 auto 28px;
+            line-height: 1.55;
+        }
+        .cta-actions { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+        .btn-primary, .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 24px;
+            border-radius: 999px;
+            font-size: 14px; font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.22s ease;
+            font-family: inherit;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%);
+            color: #000; border: none;
+            box-shadow: 0 4px 18px rgba(118,75,162,0.32);
+        }
+        .btn-primary:hover { transform: translateY(-1px); }
+        .btn-secondary {
+            background: rgba(255,255,255,0.06);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.14);
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.10); }
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 22px; text-align: center;
+            color: var(--text-secondary); font-size: 12px;
+        }
+        footer a { color: var(--text-secondary); text-decoration: none; margin: 0 8px; }
+        footer a:hover { color: var(--text-primary); }
+        @media (max-width: 980px) {
+            .card-grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .card-grid-3 { grid-template-columns: 1fr; }
+            .card-grid-2 { grid-template-columns: 1fr; }
+            .integration-tile { flex: 1 1 100%; max-width: 100%; min-height: 0; padding: 14px 16px; flex-direction: row; }
+        }
+        @media (max-width: 600px) {
+            .card-grid-4 { grid-template-columns: 1fr; }
+            .page-section { padding: 60px 20px; }
+            .integrations-logos-row { gap: 24px; row-gap: 16px; }
+            .integration-logo img { max-height: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <img src="/lupo-logo-nav-96.webp" alt="LUPO" width="40" height="40" decoding="async" style="height: 40px; width: auto; display: block;">
+                <span style="font-size: 24px; font-weight: 600;">LUPO</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about.html" class="nav-link">About</a>
+                <a href="/pricing/" class="nav-link">Pricing</a>
+                <a href="/blog/" class="nav-link">Blog</a>
+            </div>
+            <a href="https://app.lupolabs.ai/login" class="nav-login-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/></svg>
+                Sign in
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-section-inner">
+                <span class="hero-eyebrow">How LUPO works</span>
+                <h1>Capture, filter, enrich, score, route.</h1>
+                <p class="hero-lede">One agentic brain across phone, email, web form, and chat. Every inbound gets the same treatment, in the same context, before it ever reaches a rep.</p>
+            </div>
+        </section>
+
+        <section id="filtering" class="page-section">
+            <div class="section-inner">
+                <div class="section-eyebrow">Filtering</div>
+                <h2 class="section-heading">Stop the noise from reaching sales.</h2>
+                <p class="section-lede">Vendor pitches, support requests, half-engaged visitors, wrong-fit prospects. All handled before sales sees them.</p>
+                <div class="card-grid-4">
+                    <div class="section-card">
+                        <div class="card-label">Filtered</div>
+                        <h3 class="card-heading">Vendor pitches</h3>
+                        <p class="card-body">Other companies selling into your demo forms, phone lines, and chatbot. Politely declined, logged, and never routed to sales.</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-label">Routed</div>
+                        <h3 class="card-heading">Support leakage</h3>
+                        <p class="card-body">Existing customers and account issues arriving through sales channels. Routed to the right team with the original conversation attached.</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-label">Followed up</div>
+                        <h3 class="card-heading">Half-engaged buyers</h3>
+                        <p class="card-body">Visitors who start a chat, submit a form, or reply once and disappear. Followed up through the channel they used until qualified or closed out.</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-label">Disqualified</div>
+                        <h3 class="card-heading">Wrong-fit prospects</h3>
+                        <p class="card-body">Real interest, wrong company size, use case, geography, or timing. Handled appropriately without taking AE time.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="enrichment" class="page-section">
+            <div class="section-inner">
+                <div class="section-eyebrow">Enrichment &amp; scoring</div>
+                <h2 class="section-heading">Tell reps who's actually ready.</h2>
+                <p class="section-lede">Qualified is not the same as ready to buy. LUPO enriches every inbound and surfaces the buying-intent signals reps would otherwise miss.</p>
+                <div class="card-grid-4">
+                    <div class="section-card">
+                        <div class="card-label">Enriched</div>
+                        <h3 class="card-heading">Company context, automatic</h3>
+                        <p class="card-body">Headcount, industry, revenue band, tech stack, and decision-maker title, appended to every inbound, before a rep opens the record.</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-label">Scored</div>
+                        <h3 class="card-heading">Buying-intent signals</h3>
+                        <p class="card-body">Recent funding, M&amp;A, leadership hires, headcount growth, and category-specific triggers surfaced per lead. Reps know who's actually in-market.</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-label">Ranked</div>
+                        <h3 class="card-heading">Today's hottest, on top</h3>
+                        <p class="card-body">Inbound ranked by buying-intent score, not arrival time. The leads worth a same-day call rise to the top of the queue.</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-label">Surfaced</div>
+                        <h3 class="card-heading">Triggers your reps would miss</h3>
+                        <p class="card-body">A lead's company announced a Series B yesterday. The VP Sales joined three weeks ago. Reps see the signal in Slack before they pick up the phone.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section">
+            <div class="section-inner">
+                <div class="section-eyebrow">One sales policy. Every inbound channel.</div>
+                <h2 class="section-heading">A different response for each channel.</h2>
+                <p class="section-lede">Not every form is a demo request. LUPO matches the response to the channel based on your policy.</p>
+                <div class="card-grid-2">
+                    <div class="section-card">
+                        <div class="card-label">Inbound phone</div>
+                        <h3 class="card-heading">Answers live, qualifies, books, escalates.</h3>
+                        <p class="card-body">Picks up on the second ring, qualifies the caller against your policy, captures buying intent, checks live availability, books real appointments, and escalates to a human when the policy says so.</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-label">Web forms</div>
+                        <h3 class="card-heading">Classifies before it reacts.</h3>
+                        <p class="card-body">Classifies the submission, enriches context where it can, and decides whether to email, call back, post to Slack, book a meeting, or hold the lead for human approval. No blanket callbacks to senior buyers.</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-label">Chat Qualification</div>
+                        <h3 class="card-heading">Your chatbot opens the door. LUPO closes the lead.</h3>
+                        <p class="card-body">Takes intent and consent from your existing chatbot (Intercom Fin, Drift, HubSpot Chat, or a custom widget), continues qualification, and books inside the same conversation when the buyer is ready.</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-label">Agentic Email Qualification</div>
+                        <h3 class="card-heading">Cadenced follow-up until a meeting or a clean no.</h3>
+                        <p class="card-body">For leads that need email rather than an immediate call. Per-org sender domains, audience filters, and reply handling are tuned to your stack.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section">
+            <div class="section-inner">
+                <div class="section-eyebrow">When you're ready: the full inbound SDR</div>
+                <h2 class="section-heading">Most teams start with qualify, enrich, score, route. Some go further.</h2>
+                <p class="section-lede">Layer 1 keeps your reps in control. Layer 2 hands the engagement to LUPO too: callbacks, email cadence, and booking the meeting. You stop building the inbound SDR team. LUPO becomes it.</p>
+                <div class="card-grid-3">
+                    <div class="section-card">
+                        <div class="card-label">Autonomous callback</div>
+                        <h3 class="card-heading">Calls the qualified buyer back without a rep in the loop.</h3>
+                        <p class="card-body">For inbound channels where the buyer consented to a callback, LUPO picks up where the form or chat left off, qualifies further, and books.</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-label">Email cadence</div>
+                        <h3 class="card-heading">Multi-step follow-up until a meeting or a clean no.</h3>
+                        <p class="card-body">For leads that prefer email, LUPO handles the cadence end-to-end with per-org sender domains and audience-aware reply handling.</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-label">Books the meeting</div>
+                        <h3 class="card-heading">Calendar checked, slot offered, confirmation sent.</h3>
+                        <p class="card-body">Live calendar availability, instant booking, SMS + email confirmation, and a structured packet for the rep before the call starts.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section">
+            <div class="section-inner">
+                <div class="section-eyebrow">Works with your inbound stack</div>
+                <h2 class="section-heading">The qualification layer between every inbound channel and your sales tools.</h2>
+                <p class="section-lede">Inbound comes in via call, form, or chat. Qualified buyers land in your CRM, your team's Slack, and on a rep's calendar.</p>
+                <div class="integrations-grid">
+                    <div class="integration-tile">
+                        <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <span class="integration-text">Voice qualification</span>
+                        <span class="integration-status">Live</span>
+                    </div>
+                    <div class="integration-tile">
+                        <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+                        <span class="integration-text">Agentic Email Qualification</span>
+                        <span class="integration-status">Live</span>
+                    </div>
+                    <div class="integration-tile">
+                        <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+                        <span class="integration-text">Web Form Qualification</span>
+                        <span class="integration-status">Live</span>
+                    </div>
+                    <div class="integration-tile">
+                        <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <span class="integration-text">Chat Qualification</span>
+                        <span class="integration-status">Live</span>
+                    </div>
+                </div>
+                <div class="integrations-logos">
+                    <p class="integrations-logos-label">Connects to your stack</p>
+                    <div class="integrations-logos-row">
+                        <div class="integration-logo"><img src="/logos/integrations/hubspot.svg" alt="HubSpot" width="100" height="24" loading="lazy" decoding="async"></div>
+                        <div class="integration-logo"><img src="/logos/integrations/salesforce.svg" alt="Salesforce" width="100" height="24" loading="lazy" decoding="async"></div>
+                        <div class="integration-logo"><img src="/logos/integrations/googlecalendar.svg" alt="Google Calendar" width="100" height="24" loading="lazy" decoding="async"></div>
+                        <div class="integration-logo"><img src="/logos/integrations/microsoftoutlook.svg" alt="Microsoft 365 / Outlook" width="100" height="24" loading="lazy" decoding="async"></div>
+                        <div class="integration-logo"><img src="/logos/integrations/slack.svg" alt="Slack" width="100" height="24" loading="lazy" decoding="async"></div>
+                    </div>
+                </div>
+                <p class="integrations-caption">LUPO works with any chat, form, or website workflow that can send a webhook. Intercom, Drift, HubSpot Chat, custom forms, and internal routing tools can all hand qualified conversations into LUPO.</p>
+            </div>
+        </section>
+
+        <section class="cta-block">
+            <h2>See it on your inbound.</h2>
+            <p>Book a 30-minute walkthrough. We'll show LUPO on a real example from your team.</p>
+            <div class="cta-actions">
+                <a href="https://cal.com/tombaxter/lupo" class="btn-primary">Book a demo</a>
+                <a href="/demo/" class="btn-secondary">Try LUPO</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 LUPO, a product of Flair Technologies Ltd, London.</p>
+        <p style="margin-top:8px;">
+            <a href="/">Home</a>&middot;
+            <a href="/how-it-works/">How it works</a>&middot;
+            <a href="/sales-operations/">Sales ops</a>&middot;
+            <a href="/demo/">Try LUPO</a>&middot;
+            <a href="/faq/">FAQ</a>&middot;
+            <a href="/pricing/">Pricing</a>&middot;
+            <a href="/privacy.html">Privacy</a>&middot;
+            <a href="/terms.html">Terms</a>
+        </p>
+    </footer>
+
+    <script src="/analytics.js" defer></script>
+    <script src="/talk-to-lupo.js?v=lazy-retry" defer></script>
+    <script async src="https://app.lupolabs.ai/widget/lupo-chat.js" data-lupo-mode="marketing"></script>
+</body>
+</html>

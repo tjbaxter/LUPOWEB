@@ -1881,30 +1881,50 @@
             }
         }
 
-        /* Two-halves subhead (triage section) */
-        .subhead-half {
-            font-size: 22px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            color: var(--text-primary);
-            margin-top: 56px;
+        /* "Learn more" links on compressed cards */
+        .section-card-link {
+            display: inline-block;
+            margin-top: 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #a78bfa;
+            text-decoration: none;
+            letter-spacing: -0.005em;
+            transition: color 0.2s ease;
+        }
+        .section-card-link:hover { color: #c4b5fd; }
+
+        /* Hero integrations row */
+        .hero-integrations {
+            margin-top: 28px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUpSubtle 1s ease 0.7s forwards;
+        }
+        .hero-integrations-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: rgba(255, 255, 255, 0.45);
             margin-bottom: 14px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid var(--border);
         }
-        .subhead-half:first-of-type { margin-top: 0; }
-        .subhead-half-lede {
-            font-size: 16px;
-            color: var(--text-secondary);
-            margin-top: -4px;
-            margin-bottom: 28px;
-            max-width: 720px;
-            line-height: 1.55;
+        .hero-integrations-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+            row-gap: 18px;
         }
-        @media (max-width: 768px) {
-            .subhead-half { font-size: 18px; margin-top: 40px; }
-            .subhead-half-lede { font-size: 14px; }
+        .hero-integrations-row img {
+            max-height: 22px;
+            width: auto;
+            opacity: 0.7;
+            filter: brightness(0) invert(1);
+            transition: opacity 0.2s ease;
         }
+        .hero-integrations-row img:hover { opacity: 1; }
     </style>
     <script src="/analytics.js" defer></script>
     <script src="/talk-to-lupo.js?v=lazy-retry" defer></script>
@@ -1956,7 +1976,7 @@
                     </svg>
                     Talk to LUPO live
                 </button>
-                <a href="#try-lupo" class="btn-secondary" id="bookCallBtn">
+                <a href="https://cal.com/tombaxter/lupo" class="btn-secondary" id="bookCallBtn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                         <rect x="3" y="4" width="18" height="18" rx="2"/>
                         <path d="M16 2v4M8 2v4M3 10h18"/>
@@ -1965,192 +1985,62 @@
                 </a>
             </div>
 
-            <!-- Tech Stack -->
-            <div class="tech-stack">
-                Salesforce &middot; HubSpot &middot; Microsoft 365 &middot; Slack &middot; or any tool with webhooks
-                        </div>
+            <!-- Hero integration logos -->
+            <div class="hero-integrations">
+                <p class="hero-integrations-label">Connects to your stack</p>
+                <div class="hero-integrations-row">
+                    <img src="/logos/integrations/hubspot.svg" alt="HubSpot" width="100" height="22" loading="lazy" decoding="async">
+                    <img src="/logos/integrations/salesforce.svg" alt="Salesforce" width="100" height="22" loading="lazy" decoding="async">
+                    <img src="/logos/integrations/googlecalendar.svg" alt="Google Calendar" width="100" height="22" loading="lazy" decoding="async">
+                    <img src="/logos/integrations/microsoftoutlook.svg" alt="Microsoft 365 / Outlook" width="100" height="22" loading="lazy" decoding="async">
+                    <img src="/logos/integrations/slack.svg" alt="Slack" width="100" height="22" loading="lazy" decoding="async">
+                </div>
+            </div>
 
             <div class="trust-strip">
-                <span>Backed by <strong>Deepgram</strong><!-- &middot; GDPR DPA on request --></span>
+                <span>Backed by <strong>Deepgram</strong></span>
             </div>
                     </div>
                 </div>
 
-    <!-- Problem Section: TWO co-equal halves, filtering (Buyer A) + enrichment & scoring (Buyer B) -->
+    <!-- Problem: two co-equal halves, compressed to one card each -->
     <section class="page-section">
         <div class="section-inner">
             <div class="section-eyebrow">The two ways inbound costs you deals</div>
             <h2 class="section-heading">Junk wastes responsive reps. Qualified-but-cold leads waste pipeline.</h2>
-            <p class="section-lede">Two different problems, both bleed revenue. LUPO solves both before a rep opens their CRM.</p>
-
-            <h3 class="subhead-half">Half one, filtering: stop the noise from reaching sales.</h3>
-            <div class="card-grid-4">
+            <div class="card-grid-2">
                 <div class="section-card">
-                    <div class="card-label">Filtered</div>
-                    <h3 class="card-heading">Vendor pitches</h3>
-                    <p class="card-body">Other companies selling into your demo forms, phone lines, and chatbot. Politely declined, logged, and never routed to sales.</p>
+                    <div class="card-label">Filtering</div>
+                    <h3 class="card-heading">Stop the noise from reaching sales.</h3>
+                    <p class="card-body">Vendor pitches, support leakage, half-engaged buyers, and wrong-fit prospects, all handled before sales sees them.</p>
+                    <a class="section-card-link" href="/how-it-works/#filtering">See how filtering works &rarr;</a>
                 </div>
                 <div class="section-card">
-                    <div class="card-label">Routed</div>
-                    <h3 class="card-heading">Support leakage</h3>
-                    <p class="card-body">Existing customers and account issues arriving through sales channels. Routed to the right team with the original conversation attached.</p>
-                </div>
-                <div class="section-card">
-                    <div class="card-label">Followed up</div>
-                    <h3 class="card-heading">Half-engaged buyers</h3>
-                    <p class="card-body">Visitors who start a chat, submit a form, or reply once and disappear. Followed up through the channel they used until qualified or closed out.</p>
-                </div>
-                <div class="section-card">
-                    <div class="card-label">Disqualified</div>
-                    <h3 class="card-heading">Wrong-fit prospects</h3>
-                    <p class="card-body">Real interest, wrong company size, use case, geography, or timing. Handled appropriately without taking AE time.</p>
-                </div>
-            </div>
-
-            <h3 class="subhead-half">Half two, enrichment and scoring: tell reps who's actually ready.</h3>
-            <p class="subhead-half-lede">Qualified is not the same as ready to buy. LUPO enriches every inbound and surfaces the buying-intent signals reps would otherwise miss.</p>
-            <div class="card-grid-4">
-                <div class="section-card">
-                    <div class="card-label">Enriched</div>
-                    <h3 class="card-heading">Company context, automatic</h3>
-                    <p class="card-body">Headcount, industry, revenue band, tech stack, and decision-maker title, appended to every inbound, before a rep opens the record.</p>
-                </div>
-                <div class="section-card">
-                    <div class="card-label">Scored</div>
-                    <h3 class="card-heading">Buying-intent signals</h3>
-                    <p class="card-body">Recent funding, M&amp;A, leadership hires, headcount growth, and category-specific triggers surfaced per lead. Reps know who's actually in-market.</p>
-                </div>
-                <div class="section-card">
-                    <div class="card-label">Ranked</div>
-                    <h3 class="card-heading">Today's hottest, on top</h3>
-                    <p class="card-body">Inbound ranked by buying-intent score, not arrival time. The leads worth a same-day call rise to the top of the queue.</p>
-                </div>
-                <div class="section-card">
-                    <div class="card-label">Surfaced</div>
-                    <h3 class="card-heading">Triggers your reps would miss</h3>
-                    <p class="card-body">A lead's company announced a Series B yesterday. The VP Sales joined three weeks ago. Reps see the signal in Slack before they pick up the phone.</p>
+                    <div class="card-label">Enrichment &amp; scoring</div>
+                    <h3 class="card-heading">Tell reps who's actually ready.</h3>
+                    <p class="card-body">Every inbound is enriched and scored against buying-intent signals like funding, M&amp;A, and hiring, so the queue is ranked by who's ready, not who arrived first.</p>
+                    <a class="section-card-link" href="/how-it-works/#enrichment">See how scoring works &rarr;</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why LUPO vs alternatives (moved up, expanded with vs-SDR comparison) -->
+    <!-- Why LUPO -->
     <section class="page-section">
         <div class="section-inner">
             <div class="section-eyebrow">Why LUPO</div>
             <h2 class="section-heading">Most inbound tools cover one channel. LUPO is one brain across all four.</h2>
-            <p class="section-lede">Conversica covers email. Intercom Fin covers chat. Chili Piper routes forms. HubSpot Breeze lives inside HubSpot. Each one solves a slice. Your buyer doesn't, they start in chat, drop a form, then email a week later. LUPO is the one agentic brain across every inbound channel, phone, email, web form, and chat, with shared context, so the buyer doesn't have to repeat themselves and your reps don't get a fragmented record.</p>
+            <p class="section-lede">Your buyer doesn't pick a channel. They start in chat, drop a form, then email a week later. LUPO is one brain across every channel with shared context.</p>
             <div class="card-grid-2">
                 <div class="section-card">
                     <div class="card-label">vs single-channel tools</div>
                     <h3 class="card-heading">One brain, four channels.</h3>
-                    <p class="card-body">Conversica covers email. Intercom Fin covers chat. Chili Piper routes forms. Each one solves a slice of inbound. LUPO covers all four with shared context, so a buyer who starts in chat and finishes in email doesn't have to start over, and your reps don't see fragmented records.</p>
+                    <p class="card-body">Conversica covers email. Intercom Fin covers chat. Chili Piper routes forms. LUPO covers all four with shared context, so a buyer who starts in chat and finishes in email doesn't have to start over.</p>
                 </div>
                 <div class="section-card">
                     <div class="card-label">vs hiring an inbound SDR</div>
                     <h3 class="card-heading">A junior SDR costs $60&ndash;90k fully loaded.</h3>
-                    <p class="card-body">A US inbound SDR runs $60&ndash;90k a year once you count base, commission, benefits, ramp, and management overhead. They sleep, take vacation, leave after eight months, and need to be retrained from scratch. LUPO covers every channel, every hour, and tunes to your policy in week one. Same job, no turnover.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Integrations Strip -->
-    <section class="page-section">
-        <div class="section-inner">
-            <div class="section-eyebrow">Works with your inbound stack</div>
-            <h2 class="section-heading">The qualification layer between every inbound channel and your sales tools.</h2>
-            <p class="section-lede">Inbound comes in via call, form, or chat. Qualified buyers land in your CRM, your team's Slack, and on a rep's calendar. Noise gets filtered before sales sees it.</p>
-            <div class="integrations-grid">
-                <div class="integration-tile">
-                    <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    <span class="integration-text">Voice qualification</span>
-                    <span class="integration-status live">Live</span>
-                </div>
-                <div class="integration-tile">
-                    <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
-                    <span class="integration-text">Agentic Email Qualification</span>
-                    <span class="integration-status live">Live</span>
-                </div>
-                <div class="integration-tile">
-                    <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
-                    <span class="integration-text">Web Form Qualification</span>
-                    <span class="integration-status live">Live</span>
-                </div>
-                <div class="integration-tile">
-                    <svg class="integration-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    <span class="integration-text">Chat Qualification</span>
-                    <span class="integration-status live">Live &middot; Works with any chatbot</span>
-                </div>
-            </div>
-
-            <div class="integrations-logos">
-                <p class="integrations-logos-label">Connects to your stack</p>
-                <div class="integrations-logos-row">
-                    <div class="integration-logo"><img src="/logos/integrations/hubspot.svg" alt="HubSpot" width="120" height="30" loading="lazy" decoding="async"></div>
-                    <div class="integration-logo"><img src="/logos/integrations/salesforce.svg" alt="Salesforce" width="120" height="30" loading="lazy" decoding="async"></div>
-                    <div class="integration-logo"><img src="/logos/integrations/googlecalendar.svg" alt="Google Calendar" width="120" height="30" loading="lazy" decoding="async"></div>
-                    <div class="integration-logo"><img src="/logos/integrations/microsoftoutlook.svg" alt="Microsoft 365 / Outlook" width="120" height="30" loading="lazy" decoding="async"></div>
-                    <div class="integration-logo"><img src="/logos/integrations/slack.svg" alt="Slack" width="120" height="30" loading="lazy" decoding="async"></div>
-                </div>
-            </div>
-
-            <p class="integrations-caption">LUPO works with any chat, form, or website workflow that can send a webhook. Intercom, Drift, HubSpot Chat, custom forms, and internal routing tools can all hand qualified conversations into LUPO.</p>
-        </div>
-    </section>
-
-    <!-- Channel-Aware Section -->
-    <section class="page-section">
-        <div class="section-inner">
-            <div class="section-eyebrow">One sales policy. Every inbound channel.</div>
-            <h2 class="section-heading">A different response for each channel. Driven by your policy.</h2>
-            <p class="section-lede">Not every form is a demo request. LUPO matches the response to the channel based on your policy: instant callback, thoughtful email, or live chat.</p>
-            <div class="card-grid-2">
-                <div class="section-card">
-                    <div class="card-label">Inbound phone</div>
-                    <h3 class="card-heading">Answers live, qualifies, books, escalates.</h3>
-                    <p class="card-body">Picks up on the second ring, qualifies the caller against your policy, captures buying intent, checks live availability, books real appointments, and escalates to a human when the policy says so.</p>
-                </div>
-                <div class="section-card">
-                    <div class="card-label">Web forms</div>
-                    <h3 class="card-heading">Classifies before it reacts.</h3>
-                    <p class="card-body">Classifies the submission, enriches context where it can, and decides whether to email, call back, post to Slack, book a meeting, or hold the lead for human approval. No blanket callbacks to senior buyers.</p>
-                </div>
-                <div class="section-card">
-                    <div class="card-label">Chat Qualification</div>
-                    <h3 class="card-heading">Your chatbot opens the door. LUPO closes the lead.</h3>
-                    <p class="card-body">Takes intent and consent from your existing chatbot (Intercom Fin, Drift, HubSpot Chat, or a custom widget), continues qualification, and books inside the same conversation when the buyer is ready.</p>
-                </div>
-                <div class="section-card">
-                    <div class="card-label">Agentic Email Qualification</div>
-                    <h3 class="card-heading">Cadenced follow-up until a meeting or a clean no.</h3>
-                    <p class="card-body">For leads that need email rather than an immediate call. Per-org sender domains, audience filters, and reply handling are tuned to your stack.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Layer 2: autonomous engagement (the expansion path) -->
-    <section class="page-section">
-        <div class="section-inner">
-            <div class="section-eyebrow">When you're ready: the full inbound SDR</div>
-            <h2 class="section-heading">Most teams start with qualify, enrich, score, route. Some go further.</h2>
-            <p class="section-lede">Layer 1 keeps your reps in control: LUPO filters, enriches, scores, and hands qualified leads to the rep. Layer 2 hands the engagement to LUPO too, callbacks, email cadence, and booking the meeting. You stop building the inbound SDR team. LUPO becomes it.</p>
-            <div class="card-grid-3">
-                <div class="section-card">
-                    <div class="card-label">Autonomous callback</div>
-                    <h3 class="card-heading">Calls the qualified buyer back without a rep in the loop.</h3>
-                    <p class="card-body">For inbound channels where the buyer consented to a callback, LUPO picks up where the form or chat left off, qualifies further, and books.</p>
-                </div>
-                <div class="section-card">
-                    <div class="card-label">Email cadence</div>
-                    <h3 class="card-heading">Multi-step follow-up until a meeting or a clean no.</h3>
-                    <p class="card-body">For leads that prefer email, LUPO handles the cadence end-to-end with per-org sender domains and audience-aware reply handling.</p>
-                </div>
-                <div class="section-card">
-                    <div class="card-label">Books the meeting</div>
-                    <h3 class="card-heading">Calendar checked, slot offered, confirmation sent.</h3>
-                    <p class="card-body">Live calendar availability, instant booking, SMS + email confirmation, and a structured packet for the rep before the call starts.</p>
+                    <p class="card-body">Base, commission, benefits, ramp, management overhead. They sleep, take vacation, leave after eight months. LUPO covers every channel, every hour, tuned in week one.</p>
                 </div>
             </div>
         </div>
@@ -2215,207 +2105,27 @@
         </div>
     </section>
 
-    <!-- Sales operations layer -->
-    <section class="page-section">
-        <div class="section-inner">
-            <div class="section-eyebrow">Sales operations layer</div>
-            <h2 class="section-heading">The controls a RevOps team owns: qualification, routing, approval thresholds.</h2>
-            <p class="section-lede">What counts as qualified. When LUPO must escalate. Who signs off before a booking. Co-authored with you in week one; yours to own from there.</p>
-            <div class="feature-list">
-                <div class="feature-row-item">
-                    <h3>Qualification policy</h3>
-                    <p>Co-authored with you in week one: what counts as qualified, wrong-fit, support, vendor, or human review. Yours to own, tuned from real inbound.</p>
-                </div>
-                <div class="feature-row-item">
-                    <h3>Routing policy</h3>
-                    <p>Applies your routing policy and alerts the right Slack channel for each lead. Per-rep round-robin, territory ownership, and account-owner routing are tuned to your sales motion.</p>
-                </div>
-                <div class="feature-row-item">
-                    <h3>Human approval</h3>
-                    <p>Hold uncertain or high-value leads for manual review instead of letting LUPO commit to risky decisions.</p>
-                </div>
-                <div class="feature-row-item">
-                    <h3>Audit trail</h3>
-                    <p>Every call, form, and chat gets a summary, message log, decision, and the next action LUPO took.</p>
-                </div>
-                <div class="feature-row-item">
-                    <h3>Escalation</h3>
-                    <p>When LUPO is unsure, it asks a clarifying question, escalates to a named rep, or holds for approval. It never forces a booking.</p>
-                </div>
-                <div class="feature-row-item">
-                    <h3>Enrichment policy</h3>
-                    <p>What's enriched on every inbound (firmographics, technographics, decision-maker title) and which buying-intent signals carry weight (funding, M&amp;A, hiring). Tuned to your category in week one.</p>
-                </div>
-                <div class="feature-row-item">
-                    <h3>Tuned in week one</h3>
-                    <p>Sales policy, routing rules, CRM fields, and qualification criteria are tuned for your business in week one.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Test the inbound SDR -->
-    <section id="try-lupo" class="page-section">
-        <div class="section-inner">
-            <div class="section-eyebrow">Test the inbound SDR</div>
-            <h2 class="section-heading">See how LUPO handles the same buyer across voice, form, and chat.</h2>
-            <p class="section-lede">Pick a channel. See what LUPO does with it. Nothing booked, nothing in your CRM.</p>
-            <div class="demo-grid">
-                <div class="demo-tile">
-                    <div class="demo-tile-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    </div>
-                    <h3>Talk to LUPO live</h3>
-                    <p>Have a real 60-second voice conversation with LUPO right from this page. Ask it to qualify a fake lead and book a meeting.</p>
-                    <button type="button" class="demo-tile-button" data-lupo-call-trigger>
-                        Start the call
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-                    </button>
-                    <div class="demo-tile-meta">Live demo environment &middot; no CRM changes</div>
-                </div>
-                <div class="demo-tile">
-                    <div class="demo-tile-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6M7 17h4"/></svg>
-                    </div>
-                    <h3>How LUPO classifies forms</h3>
-                    <p>Three example form submissions and the action LUPO would take with each: a vendor pitch, a support request, and a qualified buyer.</p>
-                    <details class="demo-tile-details">
-                        <summary class="demo-tile-summary">
-                            Show three examples
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;"><path d="M6 9l6 6 6-6"/></svg>
-                        </summary>
-                        <div class="demo-tile-example">
-                            <div class="demo-section">
-                                <div class="demo-section-label input">Form input &middot; vendor</div>
-                                <pre>name:    Pat Vendor
-company: VendorTools
-message: "We have an AI tool to help your SDRs&hellip;"</pre>
-                                <div class="demo-section-label output">LUPO action</div>
-                                <pre>&rarr; Vendor pitch. Auto-declined. Logged. Never routed to sales.</pre>
-                            </div>
-                            <div class="demo-section">
-                                <div class="demo-section-label input">Form input &middot; support</div>
-                                <pre>name:    Alex Existing
-message: "My calls are dropping at 4pm GMT&hellip;"</pre>
-                                <div class="demo-section-label output">LUPO action</div>
-                                <pre>&rarr; Support leakage. Routed to #cs-tier-1.
-   Sales not notified.</pre>
-                            </div>
-                            <div class="demo-section">
-                                <div class="demo-section-label input">Form input &middot; qualified buyer</div>
-                                <pre>name:    Jane Roe &middot; VP RevOps
-company: Acme Corp (850)
-message: "Replacing our existing triage vendor&hellip;"</pre>
-                                <div class="demo-section-label output">LUPO action</div>
-                                <pre>&rarr; Qualified. No surprise call.
-   Meeting offered &middot; HubSpot deal created.
-   Slack alert posted to #inbound-qualified.</pre>
-                            </div>
-                        </div>
-                    </details>
-                    <div class="demo-tile-meta">Safe simulation &middot; no lead created</div>
-                </div>
-                <div class="demo-tile">
-                    <div class="demo-tile-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    </div>
-                    <h3>Simulate chat handoff</h3>
-                    <p>See what an Intercom Fin or custom chatbot posts to LUPO when it hands a qualified visitor across, and what LUPO does with it.</p>
-                    <details class="demo-tile-details">
-                        <summary class="demo-tile-summary">
-                            Show example payload
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;"><path d="M6 9l6 6 6-6"/></svg>
-                        </summary>
-                        <div class="demo-tile-example">
-                            <div class="demo-section">
-                                <div class="demo-section-label input">POST /api/chat/handoff</div>
-                                <pre>{
-  "external_session_id": "intercom-conv-789",
-  "source":              "intercom-fin",
-  "consent_to_call":     true,
-  "message_log": [
-    "Visitor: looking for an inbound SDR tool",
-    "Fin:     60 SDRs, US + UK, eval Q3",
-    "Visitor: yes, happy for a call"
-  ]
-}</pre>
-                                <div class="demo-section-label output">LUPO response</div>
-                                <pre>{
-  "status":          "qualified",
-  "chat_session_id": "4df9&hellip;",
-  "callback_status": "queued",
-  "policy_applied":  "consumer_callback_with_consent"
-}</pre>
-                            </div>
-                        </div>
-                    </details>
-                    <div class="demo-tile-meta">Example handoff from Intercom, Drift, or a custom chatbot</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Trust Section -->
+    <!-- Trust: 3 tiles, one row -->
     <section class="page-section">
         <div class="section-inner">
             <div class="section-eyebrow">Trust signals</div>
-            <h2 class="section-heading">Production voice. Security-conscious architecture. Founder-led pilots.</h2>
-            <div class="card-grid-4">
+            <h2 class="section-heading">Built to ship to enterprise.</h2>
+            <div class="card-grid-3">
                 <div class="section-card">
-                    <div class="card-label">Voice infrastructure</div>
-                    <h3 class="card-heading">Built on specialist speech providers.</h3>
-                    <p class="card-body">Voice runs on production speech infrastructure (Deepgram transcription, ElevenLabs voices) and Vapi as the runtime.</p>
+                    <div class="card-label">Security</div>
+                    <h3 class="card-heading">Encrypted transport, no model training.</h3>
+                    <p class="card-body">Encryption in transit, controlled access to customer data. GDPR DPA available on request.</p>
                 </div>
                 <div class="section-card">
-                    <div class="card-label">Security posture</div>
-                    <h3 class="card-heading">Encrypted transport, controlled access, GDPR DPA.</h3>
-                    <p class="card-body">Encryption in transit, controlled access to customer data, no training on your data. A signed GDPR Data Processing Agreement is available on request. Formal SOC 2 / HIPAA attestations will be sought as the product matures.</p>
-                </div>
-                <div class="section-card">
-                    <div class="card-label">Responsible AI</div>
-                    <h3 class="card-heading">AI disclosure, decision log, human handoff.</h3>
-                    <p class="card-body">AI disclosure on every call. Every decision logged with reasoning. Uncertain calls escalate to a human. Built around the EU AI Act.</p>
+                    <div class="card-label">Audit trail</div>
+                    <h3 class="card-heading">Every decision logged with reasoning.</h3>
+                    <p class="card-body">AI disclosure on every call. Every call, form, and chat gets a summary, decision, and the next action LUPO took.</p>
                 </div>
                 <div class="section-card">
                     <div class="card-label">Design partners</div>
                     <h3 class="card-heading">30-day pilot. Success metric upfront. No lock-in.</h3>
-                    <p class="card-body">Pre-agreed success metric written into the contract. Runs alongside your existing flow, not as a replacement. Short term, easy exit, only continues if we earn it.</p>
+                    <p class="card-body">Pre-agreed success metric in the contract. Runs alongside your existing flow. Easy exit, only continues if we earn it.</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- VP Sales / CRO FAQ -->
-    <section class="page-section">
-        <div class="section-inner">
-            <div class="section-eyebrow">For sales leaders</div>
-            <h2 class="section-heading">The questions VP Sales and RevOps actually ask.</h2>
-            <p class="section-lede">Plain answers. LUPO is the inbound qualification layer, not a chatbot, not a rep replacement.</p>
-            <div class="faq-grid">
-                <details class="faq-item">
-                    <summary class="faq-question">Is this just a chatbot?</summary>
-                    <p class="faq-answer">No. LUPO is an inbound qualification layer across calls, web forms, chat handoffs, and email. Chat is one intake channel of four. LUPO does not replace your chat widget. Your existing chatbot (Intercom Fin, Drift, custom) hands off to LUPO when a visitor is ready.</p>
-                </details>
-                <details class="faq-item">
-                    <summary class="faq-question">Does this just shave seconds off response time?</summary>
-                    <p class="faq-answer">Response speed is one outcome, not the point. If your reps already get back to inbound fast, LUPO's job is to make sure they're only getting back to leads worth their time: noise filtered, every inbound enriched, buying intent scored. Speed-to-lead is a side effect of qualifying the right leads first.</p>
-                </details>
-                <details class="faq-item">
-                    <summary class="faq-question">How do you know which qualified leads are actually ready to buy?</summary>
-                    <p class="faq-answer">Every inbound is enriched (headcount, revenue band, tech stack, decision-maker title) and scored against buying-intent triggers your team cares about, recent funding, M&amp;A, leadership hires, headcount growth, category-specific signals. Reps see the score and the triggers before the call, so the queue is ranked by who's most likely to close, not by who arrived first.</p>
-                </details>
-                <details class="faq-item">
-                    <summary class="faq-question">What happens to vendors and support requests?</summary>
-                    <p class="faq-answer">Vendor pitches are politely declined and logged, never routed to sales. Existing-customer support requests are routed to the right team with the original conversation attached. AEs see only the buyers worth their time.</p>
-                </details>
-                <details class="faq-item">
-                    <summary class="faq-question">Do you work with US companies?</summary>
-                    <p class="faq-answer">Yes. We're London-based and set up to run pilots on your timezone, with contracts in USD or GBP. The GDPR posture is a feature, not a bug, if you have European customers or employees.</p>
-                </details>
-                <details class="faq-item">
-                    <summary class="faq-question">Can it work with our CRM and calendar?</summary>
-                    <p class="faq-answer">Live integrations today: HubSpot and Salesforce CRM sync, Slack alerts, Google Calendar booking, voice qualification, Web Form Qualification, and Agentic Email Qualification. Microsoft 365 / Outlook calendar ships Q3 2026. Any chat, form, or workflow that can post a webhook can hand off to LUPO; HubSpot Chat is supported with HMAC signing. Additional CRM and calendar connectors light up on request.</p>
-                </details>
             </div>
         </div>
     </section>
@@ -2499,6 +2209,10 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
             <div class="footer-logo">LUPO</div>
             <p class="footer-text">© 2026 LUPO, a product of Flair Technologies Ltd. All rights reserved.</p>
             <div class="footer-links-container">
+                <a href="/how-it-works/">How it works</a>
+                <a href="/sales-operations/">Sales ops</a>
+                <a href="/demo/">Try LUPO</a>
+                <a href="/faq/">FAQ</a>
                 <a href="/blog/">Blog</a>
                 <a href="/privacy.html">Privacy Policy</a>
                 <a href="/terms.html">Terms of Service</a>

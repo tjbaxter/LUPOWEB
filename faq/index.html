@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | LUPO</title>
+    <meta name="description" content="Plain answers from LUPO. Is this a chatbot? Does it just shave seconds off response time? How do you know which qualified leads are ready to buy? Answers for VP Sales and RevOps.">
+    <link rel="icon" type="image/png" href="/lupo-icon-180.png">
+    <link rel="canonical" href="https://lupolabs.ai/faq/">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --text-primary: rgba(255,255,255,0.96);
+            --text-secondary: rgba(255,255,255,0.78);
+            --text-tertiary: rgba(255,255,255,0.55);
+            --bg-primary: #0a0a0d;
+            --accent: #2997ff;
+            --border: rgba(255,255,255,0.08);
+            --border-strong: rgba(255,255,255,0.16);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            letter-spacing: -0.022em;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(0,0,0,0.72);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-content {
+            max-width: 1200px; margin: 0 auto; padding: 0 22px;
+            height: 52px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-primary); }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-link { font-size: 14px; color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s ease; }
+        .nav-link:hover { color: var(--text-primary); }
+        .nav-login-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 18px;
+            background: rgba(255,255,255,0.08);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            font-size: 14px; font-weight: 500;
+            text-decoration: none;
+        }
+        .nav-login-btn svg { width: 16px; height: 16px; }
+        main { padding-top: 80px; }
+        .hero-section { padding: 60px 24px 40px; text-align: center; }
+        .hero-section-inner { max-width: 880px; margin: 0 auto; }
+        .hero-eyebrow {
+            display: inline-block; padding: 5px 14px;
+            border: 1px solid var(--border-strong);
+            border-radius: 999px;
+            font-size: 11px; font-weight: 700; color: var(--text-tertiary);
+            letter-spacing: 0.18em; text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+        h1 {
+            font-size: clamp(40px, 6vw, 60px);
+            font-weight: 600; letter-spacing: -0.025em; line-height: 1.08;
+            margin-bottom: 18px;
+        }
+        .hero-lede { font-size: clamp(17px, 1.6vw, 19px); color: var(--text-secondary); line-height: 1.55; max-width: 680px; margin: 0 auto; }
+        .page-section { padding: 40px 24px 80px; border-top: 1px solid var(--border); }
+        .section-inner { max-width: 820px; margin: 0 auto; }
+        .faq-item {
+            background: rgba(255,255,255,0.018);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 22px 26px;
+            margin-bottom: 12px;
+            transition: border-color 0.25s ease, background 0.25s ease;
+        }
+        .faq-item[open] {
+            border-color: rgba(167,139,250,0.22);
+            background: rgba(118,75,162,0.04);
+        }
+        .faq-question {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px;
+            font-size: 16px; font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            list-style: none;
+        }
+        .faq-question::-webkit-details-marker { display: none; }
+        .faq-question::after {
+            content: "+";
+            font-size: 22px; font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1;
+        }
+        .faq-item[open] .faq-question::after { content: "−"; color: #a78bfa; }
+        .faq-answer {
+            margin-top: 14px;
+            font-size: 14.5px; line-height: 1.6;
+            color: var(--text-secondary);
+        }
+        .cta-block { text-align: center; padding: 100px 24px; border-top: 1px solid var(--border); background: radial-gradient(ellipse at 50% 0%, rgba(118,75,162,0.18) 0%, transparent 60%); }
+        .cta-block h2 { font-size: clamp(26px, 4vw, 40px); font-weight: 600; letter-spacing: -0.025em; margin-bottom: 16px; }
+        .cta-block p { color: var(--text-secondary); font-size: 16px; max-width: 520px; margin: 0 auto 28px; line-height: 1.55; }
+        .cta-actions { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 999px; font-size: 14px; font-weight: 600; text-decoration: none; background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%); color: #000; transition: all 0.22s ease; }
+        .btn-primary:hover { transform: translateY(-1px); }
+        footer { border-top: 1px solid var(--border); padding: 32px 22px; text-align: center; color: var(--text-secondary); font-size: 12px; }
+        footer a { color: var(--text-secondary); text-decoration: none; margin: 0 8px; }
+        footer a:hover { color: var(--text-primary); }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <img src="/lupo-logo-nav-96.webp" alt="LUPO" width="40" height="40" decoding="async" style="height: 40px; width: auto; display: block;">
+                <span style="font-size: 24px; font-weight: 600;">LUPO</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about.html" class="nav-link">About</a>
+                <a href="/pricing/" class="nav-link">Pricing</a>
+                <a href="/blog/" class="nav-link">Blog</a>
+            </div>
+            <a href="https://app.lupolabs.ai/login" class="nav-login-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/></svg>
+                Sign in
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-section-inner">
+                <span class="hero-eyebrow">For sales leaders</span>
+                <h1>The questions VP Sales and RevOps actually ask.</h1>
+                <p class="hero-lede">Plain answers. LUPO is the inbound qualification layer, not a chatbot, not a rep replacement.</p>
+            </div>
+        </section>
+
+        <section class="page-section">
+            <div class="section-inner">
+                <details class="faq-item">
+                    <summary class="faq-question">Is this just a chatbot?</summary>
+                    <p class="faq-answer">No. LUPO is an inbound qualification layer across calls, web forms, chat handoffs, and email. Chat is one intake channel of four. LUPO does not replace your chat widget. Your existing chatbot (Intercom Fin, Drift, custom) hands off to LUPO when a visitor is ready.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Does this just shave seconds off response time?</summary>
+                    <p class="faq-answer">Response speed is one outcome, not the point. If your reps already get back to inbound fast, LUPO's job is to make sure they're only getting back to leads worth their time: noise filtered, every inbound enriched, buying intent scored. Speed-to-lead is a side effect of qualifying the right leads first.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">How do you know which qualified leads are actually ready to buy?</summary>
+                    <p class="faq-answer">Every inbound is enriched (headcount, revenue band, tech stack, decision-maker title) and scored against buying-intent triggers your team cares about, recent funding, M&amp;A, leadership hires, headcount growth, category-specific signals. Reps see the score and the triggers before the call, so the queue is ranked by who's most likely to close, not by who arrived first.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">What happens to vendors and support requests?</summary>
+                    <p class="faq-answer">Vendor pitches are politely declined and logged, never routed to sales. Existing-customer support requests are routed to the right team with the original conversation attached. AEs see only the buyers worth their time.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Do you work with US companies?</summary>
+                    <p class="faq-answer">Yes. We're London-based and set up to run pilots on your timezone, with contracts in USD or GBP. The GDPR posture is a feature, not a bug, if you have European customers or employees.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Can it work with our CRM and calendar?</summary>
+                    <p class="faq-answer">Live integrations today: HubSpot and Salesforce CRM sync, Slack alerts, Google Calendar booking, voice qualification, Web Form Qualification, and Agentic Email Qualification. Microsoft 365 / Outlook calendar ships Q3 2026. Any chat, form, or workflow that can post a webhook can hand off to LUPO; HubSpot Chat is supported with HMAC signing. Additional CRM and calendar connectors light up on request.</p>
+                </details>
+            </div>
+        </section>
+
+        <section class="cta-block">
+            <h2>Still have questions?</h2>
+            <p>30-minute call. We'll answer them on your specific inbound.</p>
+            <div class="cta-actions">
+                <a href="https://cal.com/tombaxter/lupo" class="btn-primary">Book a demo</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 LUPO, a product of Flair Technologies Ltd, London.</p>
+        <p style="margin-top:8px;">
+            <a href="/">Home</a>&middot;
+            <a href="/how-it-works/">How it works</a>&middot;
+            <a href="/sales-operations/">Sales ops</a>&middot;
+            <a href="/demo/">Try LUPO</a>&middot;
+            <a href="/faq/">FAQ</a>&middot;
+            <a href="/pricing/">Pricing</a>&middot;
+            <a href="/privacy.html">Privacy</a>&middot;
+            <a href="/terms.html">Terms</a>
+        </p>
+    </footer>
+
+    <script src="/analytics.js" defer></script>
+    <script src="/talk-to-lupo.js?v=lazy-retry" defer></script>
+    <script async src="https://app.lupolabs.ai/widget/lupo-chat.js" data-lupo-mode="marketing"></script>
+</body>
+</html>
