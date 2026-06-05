@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="PjJUFi6jAW-FcFmqrSdGYdSLj3ty8nhs-aAbsWnjA6Y" />
     <title>LUPO | The AI Intake Layer for Inbound Sales</title>
-    <meta name="description" content="LUPO is the AI inbound SDR that answers every inbound call, replies to every form, and books real buyers into your team's calendar. Your reps only see leads worth closing.">
+    <meta name="description" content="LUPO is the AI inbound qualification layer across phone, email, web form, and chat. Filters the noise, enriches every inbound, and scores buying intent so your reps only see leads that are ready to buy.">
     <link rel="icon" type="image/png" href="/lupo-icon-180.png">
     <link rel="apple-touch-icon" href="/lupo-icon-180.png">
     
@@ -77,6 +77,8 @@
                 "Agentic Email Qualification with channel-aware response policy",
                 "Web Form Qualification and instant callback for high-intent",
                 "Chat Qualification from Intercom, Drift, HubSpot Chat, or custom widgets",
+                "Automatic enrichment of every inbound (firmographics, technographics, decision-maker title)",
+                "Buying-intent scoring with funding, M&A, hiring, and category-specific triggers",
                 "HubSpot CRM sync (live)",
                 "Salesforce CRM sync (live)",
                 "Google Calendar booking",
@@ -110,10 +112,18 @@
                 },
                 {
                     "@type": "Question",
-                    "name": "How fast do meetings actually get booked?",
+                    "name": "Does this just shave seconds off response time?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Sub-2 minutes median time-to-first-action on qualified inbound, measured. Your own number is visible in the dashboard from week one, so you don't have to take our word for it. The research benchmark is 5 minutes (Oldroyd et al, Harvard Business Review 2011: response in 5 min = 21x more likely to convert). LUPO clears it on every qualified lead."
+                        "text": "Response speed is one outcome, not the point. If your reps already get back to inbound fast, LUPO's job is to make sure they're only getting back to leads worth their time: noise filtered, every inbound enriched, buying intent scored. Speed-to-lead is a side effect of qualifying the right leads first."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How do you know which qualified leads are actually ready to buy?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Every inbound is enriched (headcount, revenue band, tech stack, decision-maker title) and scored against buying-intent triggers your team cares about: recent funding, M&A, leadership hires, headcount growth, category-specific signals. Reps see the score and the triggers before the call, so the queue is ranked by who's most likely to close, not by who arrived first."
                     }
                 },
                 {
@@ -1870,6 +1880,31 @@
                 transition: none !important;
             }
         }
+
+        /* Two-halves subhead (triage section) */
+        .subhead-half {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            color: var(--text-primary);
+            margin-top: 56px;
+            margin-bottom: 14px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        .subhead-half:first-of-type { margin-top: 0; }
+        .subhead-half-lede {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: -4px;
+            margin-bottom: 28px;
+            max-width: 720px;
+            line-height: 1.55;
+        }
+        @media (max-width: 768px) {
+            .subhead-half { font-size: 18px; margin-top: 40px; }
+            .subhead-half-lede { font-size: 14px; }
+        }
     </style>
     <script src="/analytics.js" defer></script>
     <script src="/talk-to-lupo.js?v=lazy-retry" defer></script>
@@ -1906,11 +1941,11 @@
         <div class="content-wrapper">
             <!-- Hero -->
             <h1>
-                Your <span class="gradient-text">inbound SDR</span>.
+                Every inbound, <span class="gradient-text">qualified before it reaches a rep.</span>
             </h1>
 
             <p class="subtitle">
-                Phone, email, web form, chat. Qualifies real buyers, books meetings, filters the noise.
+                Phone, email, web form, chat &mdash; one brain across every channel. LUPO filters the noise, enriches every inbound, and scores buying intent so your reps only see leads that are ready to buy.
             </p>
 
             <!-- CTA Buttons. Talk to LUPO live is the primary action -->
@@ -1941,12 +1976,14 @@
                     </div>
                 </div>
 
-    <!-- Problem Section (moved up — strongest section, anchors the pain before features) -->
+    <!-- Problem Section: TWO co-equal halves — filtering (Buyer A) + enrichment & scoring (Buyer B) -->
     <section class="page-section">
         <div class="section-inner">
-            <div class="section-eyebrow">The inbound triage tax</div>
-            <h2 class="section-heading">Responsive sales teams get punished by bad inbound.</h2>
-            <p class="section-lede">Fast inbound teams get punished by bad leads. LUPO triages the noise before it hits sales.</p>
+            <div class="section-eyebrow">The two ways inbound costs you deals</div>
+            <h2 class="section-heading">Junk wastes responsive reps. Qualified-but-cold leads waste pipeline.</h2>
+            <p class="section-lede">Two different problems, both bleed revenue. LUPO solves both before a rep opens their CRM.</p>
+
+            <h3 class="subhead-half">Half one &mdash; filtering: stop the noise from reaching sales.</h3>
             <div class="card-grid-4">
                 <div class="section-card">
                     <div class="card-label">Filtered</div>
@@ -1967,6 +2004,52 @@
                     <div class="card-label">Disqualified</div>
                     <h3 class="card-heading">Wrong-fit prospects</h3>
                     <p class="card-body">Real interest, wrong company size, use case, geography, or timing. Handled appropriately without taking AE time.</p>
+                </div>
+            </div>
+
+            <h3 class="subhead-half">Half two &mdash; enrichment and scoring: tell reps who's actually ready.</h3>
+            <p class="subhead-half-lede">Qualified is not the same as ready to buy. LUPO enriches every inbound and surfaces the buying-intent signals reps would otherwise miss.</p>
+            <div class="card-grid-4">
+                <div class="section-card">
+                    <div class="card-label">Enriched</div>
+                    <h3 class="card-heading">Company context, automatic</h3>
+                    <p class="card-body">Headcount, industry, revenue band, tech stack, and decision-maker title &mdash; appended to every inbound, before a rep opens the record.</p>
+                </div>
+                <div class="section-card">
+                    <div class="card-label">Scored</div>
+                    <h3 class="card-heading">Buying-intent signals</h3>
+                    <p class="card-body">Recent funding, M&amp;A, leadership hires, headcount growth, and category-specific triggers surfaced per lead. Reps know who's actually in-market.</p>
+                </div>
+                <div class="section-card">
+                    <div class="card-label">Ranked</div>
+                    <h3 class="card-heading">Today's hottest, on top</h3>
+                    <p class="card-body">Inbound ranked by buying-intent score, not arrival time. The leads worth a same-day call rise to the top of the queue.</p>
+                </div>
+                <div class="section-card">
+                    <div class="card-label">Surfaced</div>
+                    <h3 class="card-heading">Triggers your reps would miss</h3>
+                    <p class="card-body">A lead's company announced a Series B yesterday. The VP Sales joined three weeks ago. Reps see the signal in Slack before they pick up the phone.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why LUPO vs alternatives (moved up, expanded with vs-SDR comparison) -->
+    <section class="page-section">
+        <div class="section-inner">
+            <div class="section-eyebrow">Why LUPO</div>
+            <h2 class="section-heading">Most inbound tools cover one channel. LUPO is one brain across all four.</h2>
+            <p class="section-lede">Conversica covers email. Intercom Fin covers chat. Chili Piper routes forms. HubSpot Breeze lives inside HubSpot. Each one solves a slice. Your buyer doesn't &mdash; they start in chat, drop a form, then email a week later. LUPO is the one agentic brain across every inbound channel &mdash; phone, email, web form, and chat &mdash; with shared context, so the buyer doesn't have to repeat themselves and your reps don't get a fragmented record.</p>
+            <div class="card-grid-2">
+                <div class="section-card">
+                    <div class="card-label">vs single-channel tools</div>
+                    <h3 class="card-heading">One brain, four channels.</h3>
+                    <p class="card-body">Conversica covers email. Intercom Fin covers chat. Chili Piper routes forms. Each one solves a slice of inbound. LUPO covers all four with shared context, so a buyer who starts in chat and finishes in email doesn't have to start over, and your reps don't see fragmented records.</p>
+                </div>
+                <div class="section-card">
+                    <div class="card-label">vs hiring an inbound SDR</div>
+                    <h3 class="card-heading">A junior SDR costs $60&ndash;90k fully loaded.</h3>
+                    <p class="card-body">A US inbound SDR runs $60&ndash;90k a year once you count base, commission, benefits, ramp, and management overhead. They sleep, take vacation, leave after eight months, and need to be retrained from scratch. LUPO covers every channel, every hour, and tunes to your policy in week one. Same job, no turnover.</p>
                 </div>
             </div>
         </div>
@@ -2047,6 +2130,32 @@
         </div>
     </section>
 
+    <!-- Layer 2: autonomous engagement (the expansion path) -->
+    <section class="page-section">
+        <div class="section-inner">
+            <div class="section-eyebrow">When you're ready: the full inbound SDR</div>
+            <h2 class="section-heading">Most teams start with qualify, enrich, score, route. Some go further.</h2>
+            <p class="section-lede">Layer 1 keeps your reps in control: LUPO filters, enriches, scores, and hands qualified leads to the rep. Layer 2 hands the engagement to LUPO too &mdash; callbacks, email cadence, and booking the meeting. You stop building the inbound SDR team. LUPO becomes it.</p>
+            <div class="card-grid-3">
+                <div class="section-card">
+                    <div class="card-label">Autonomous callback</div>
+                    <h3 class="card-heading">Calls the qualified buyer back without a rep in the loop.</h3>
+                    <p class="card-body">For inbound channels where the buyer consented to a callback, LUPO picks up where the form or chat left off, qualifies further, and books.</p>
+                </div>
+                <div class="section-card">
+                    <div class="card-label">Email cadence</div>
+                    <h3 class="card-heading">Multi-step follow-up until a meeting or a clean no.</h3>
+                    <p class="card-body">For leads that prefer email, LUPO handles the cadence end-to-end with per-org sender domains and audience-aware reply handling.</p>
+                </div>
+                <div class="section-card">
+                    <div class="card-label">Books the meeting</div>
+                    <h3 class="card-heading">Calendar checked, slot offered, confirmation sent.</h3>
+                    <p class="card-body">Live calendar availability, instant booking, SMS + email confirmation, and a structured packet for the rep before the call starts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- What sales actually sees -->
     <section class="page-section">
         <div class="section-inner">
@@ -2079,6 +2188,14 @@
                             <span class="packet-value">Replacing existing inbound triage vendor; needs multi-channel coverage.</span>
                         </div>
                         <div class="packet-row">
+                            <span class="packet-label">Buying signals</span>
+                            <span class="packet-value">Series B announced 14 days ago &middot; 4 SDR hires in past 30 days</span>
+                        </div>
+                        <div class="packet-row">
+                            <span class="packet-label">Intent score</span>
+                            <span class="packet-value">High &middot; 87 / 100</span>
+                        </div>
+                        <div class="packet-row">
                             <span class="packet-label">Use case</span>
                             <span class="packet-value">Multi-region sales team &middot; high inbound volume &middot; replacing manual qualification</span>
                         </div>
@@ -2095,15 +2212,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Why LUPO vs alternatives -->
-    <section class="page-section">
-        <div class="section-inner">
-            <div class="section-eyebrow">Why LUPO</div>
-            <h2 class="section-heading">Most inbound tools cover one channel. LUPO covers all four.</h2>
-            <p class="section-lede">Conversica nurtures by email. Intercom is a chatbot. LUPO is the one agentic brain that handles every inbound channel, phone, email, web form, and chat, with consistent context across them. Most teams run LUPO alongside their existing chat tool, not instead of it.</p>
         </div>
     </section>
 
@@ -2133,6 +2241,10 @@
                 <div class="feature-row-item">
                     <h3>Escalation</h3>
                     <p>When LUPO is unsure, it asks a clarifying question, escalates to a named rep, or holds for approval. It never forces a booking.</p>
+                </div>
+                <div class="feature-row-item">
+                    <h3>Enrichment policy</h3>
+                    <p>What's enriched on every inbound (firmographics, technographics, decision-maker title) and which buying-intent signals carry weight (funding, M&amp;A, hiring). Tuned to your category in week one.</p>
                 </div>
                 <div class="feature-row-item">
                     <h3>Tuned in week one</h3>
@@ -2285,8 +2397,12 @@ message: "Replacing our existing triage vendor&hellip;"</pre>
                     <p class="faq-answer">No. LUPO is an inbound qualification layer across calls, web forms, chat handoffs, and email. Chat is one intake channel of four. LUPO does not replace your chat widget. Your existing chatbot (Intercom Fin, Drift, custom) hands off to LUPO when a visitor is ready.</p>
                 </details>
                 <details class="faq-item">
-                    <summary class="faq-question">How fast do meetings actually get booked?</summary>
-                    <p class="faq-answer">Sub-2 minutes median time-to-first-action on qualified inbound, measured. Your own number is visible in the dashboard from week one, so you don't have to take our word for it. The research benchmark is 5 minutes (Oldroyd et al, Harvard Business Review 2011: response in 5 min = 21x more likely to convert). LUPO clears it on every qualified lead.</p>
+                    <summary class="faq-question">Does this just shave seconds off response time?</summary>
+                    <p class="faq-answer">Response speed is one outcome, not the point. If your reps already get back to inbound fast, LUPO's job is to make sure they're only getting back to leads worth their time: noise filtered, every inbound enriched, buying intent scored. Speed-to-lead is a side effect of qualifying the right leads first.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">How do you know which qualified leads are actually ready to buy?</summary>
+                    <p class="faq-answer">Every inbound is enriched (headcount, revenue band, tech stack, decision-maker title) and scored against buying-intent triggers your team cares about &mdash; recent funding, M&amp;A, leadership hires, headcount growth, category-specific signals. Reps see the score and the triggers before the call, so the queue is ranked by who's most likely to close, not by who arrived first.</p>
                 </details>
                 <details class="faq-item">
                     <summary class="faq-question">What happens to vendors and support requests?</summary>
