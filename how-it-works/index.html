@@ -248,6 +248,62 @@
             .integrations-logos-row { gap: 24px; row-gap: 16px; }
             .integration-logo img { max-height: 20px; }
         }
+
+        /* 5-step onboarding roadmap */
+        .roadmap {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-top: 8px;
+        }
+        .roadmap-step {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: border-color 0.25s ease, transform 0.25s ease;
+        }
+        .roadmap-step:hover { border-color: rgba(167,139,250,0.28); transform: translateY(-2px); }
+        .roadmap-num {
+            display: inline-flex;
+            align-items: center; justify-content: center;
+            width: 34px; height: 34px;
+            border-radius: 999px;
+            background: rgba(167,139,250,0.12);
+            color: #a78bfa;
+            font-size: 14.5px; font-weight: 700;
+            border: 1px solid rgba(167,139,250,0.3);
+            margin-bottom: 4px;
+        }
+        .roadmap-step h3 {
+            font-size: 16px; font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.3; letter-spacing: -0.012em;
+        }
+        .roadmap-step p {
+            font-size: 13.5px; line-height: 1.5;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .roadmap-dogfood {
+            margin-top: 32px;
+            padding: 22px 26px;
+            background: rgba(167,139,250,0.06);
+            border: 1px solid rgba(167,139,250,0.22);
+            border-radius: 16px;
+            font-size: 15px; line-height: 1.6;
+            color: var(--text-primary);
+            text-align: center;
+            max-width: 760px;
+            margin-left: auto; margin-right: auto;
+        }
+        .roadmap-dogfood strong { color: #c4b5fd; }
+        @media (max-width: 980px) {
+            .roadmap { grid-template-columns: 1fr; gap: 14px; }
+        }
     </style>
 </head>
 <body>
@@ -276,6 +332,44 @@
                 <span class="hero-eyebrow">How LUPO works</span>
                 <h1>Capture, filter, enrich, score, route.</h1>
                 <p class="hero-lede">One agentic brain across phone, email, web form, and chat. Every inbound gets the same treatment, in the same context, before it ever reaches a rep.</p>
+            </div>
+        </section>
+
+        <section id="onboarding" class="page-section">
+            <div class="section-inner">
+                <div class="section-eyebrow">Onboarding</div>
+                <h2 class="section-heading">From first call to fully live, step by step.</h2>
+                <p class="section-lede">Every LUPO pilot follows the same five-step rollout. Bespoke to your channels and stack, but the path is the same.</p>
+                <div class="roadmap">
+                    <div class="roadmap-step">
+                        <span class="roadmap-num">1</span>
+                        <h3>Map your channels</h3>
+                        <p>We identify which inbound channels you want covered: phone, email, web form, chat. Not every team needs all four.</p>
+                    </div>
+                    <div class="roadmap-step">
+                        <span class="roadmap-num">2</span>
+                        <h3>Connect your stack</h3>
+                        <p>We map where leads go today: your CRM (HubSpot, Salesforce), Slack, and calendar. LUPO plugs into what you already run.</p>
+                    </div>
+                    <div class="roadmap-step">
+                        <span class="roadmap-num">3</span>
+                        <h3>Keep or replace</h3>
+                        <p>Integrate with your existing web form via webhook, and either keep your current chatbot or replace it with LUPO's. Your call, per channel.</p>
+                    </div>
+                    <div class="roadmap-step">
+                        <span class="roadmap-num">4</span>
+                        <h3>Go live on one channel</h3>
+                        <p>We work with your IT team, set up the integration, and run real test inbound until it lands correctly in your CRM and Slack.</p>
+                    </div>
+                    <div class="roadmap-step">
+                        <span class="roadmap-num">5</span>
+                        <h3>Scale across the rest</h3>
+                        <p>Once the first channel is proven, we add the others. Most teams are fully live by week 8.</p>
+                    </div>
+                </div>
+                <p class="roadmap-dogfood">
+                    <strong>Everything on this site runs on LUPO.</strong> The chatbot in the bottom-right and the voice widget on the homepage are ours, set up exactly how we'd set up yours.
+                </p>
             </div>
         </section>
 
