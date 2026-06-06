@@ -1940,6 +1940,20 @@
             transform: translateY(-4px);
             box-shadow: 0 18px 50px -24px rgba(167, 139, 250, 0.4);
         }
+
+        /* Apple-style statement: one idea, giant gradient headline, lots of air */
+        .statement { text-align: center; max-width: 900px; margin: 0 auto; padding: 56px 0; }
+        .statement h2 {
+            font-size: clamp(44px, 7.5vw, 84px); font-weight: 600;
+            letter-spacing: -0.035em; line-height: 1.04; margin: 0;
+            background: linear-gradient(118deg, #e2d8ff 0%, #a78bfa 46%, #6aa6ff 100%);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .statement p {
+            font-size: clamp(18px, 2vw, 24px); color: var(--text-secondary);
+            max-width: 640px; margin: 30px auto 0; line-height: 1.45;
+        }
     </style>
     <script src="/analytics.js" defer></script>
     <script src="/talk-to-lupo.js?v=lazy-retry" defer></script>
@@ -2042,24 +2056,11 @@
         </div>
     </section>
 
-    <!-- Why LUPO -->
+    <!-- Why LUPO — Apple-style statement -->
     <section class="page-section">
-        <div class="section-inner">
-            <div class="section-eyebrow">Why LUPO</div>
-            <h2 class="section-heading">Most inbound tools cover one channel. LUPO is one brain across all four.</h2>
-            <p class="section-lede">Your buyer doesn't pick a channel. They start in chat, drop a form, then email a week later. LUPO is one brain across every channel with shared context.</p>
-            <div class="card-grid-2">
-                <div class="section-card">
-                    <div class="card-label">vs single-channel tools</div>
-                    <h3 class="card-heading">One brain, four channels.</h3>
-                    <p class="card-body">Conversica covers email. Intercom Fin covers chat. Chili Piper routes forms. LUPO covers all four with shared context, so a buyer who starts in chat and finishes in email doesn't have to start over.</p>
-                </div>
-                <div class="section-card">
-                    <div class="card-label">vs hiring an inbound SDR</div>
-                    <h3 class="card-heading">A junior SDR costs $60&ndash;90k fully loaded.</h3>
-                    <p class="card-body">Base, commission, benefits, ramp, management overhead. They sleep, take vacation, leave after eight months. LUPO covers every channel, every hour, tuned in week one.</p>
-                </div>
-            </div>
+        <div class="statement">
+            <h2>One brain.<br>Four channels.</h2>
+            <p>Conversica covers email. Intercom covers chat. Chili Piper routes forms. LUPO covers all four, with shared context, so a buyer never starts over.</p>
         </div>
     </section>
 
