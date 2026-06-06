@@ -1,0 +1,47 @@
+/* ============================================================
+   LUPO premium layer, shared atmosphere + motion.
+   Loaded on the lighter subpages (pricing, demo, sales-ops, faq)
+   to match the cinematic treatment on / and /how-it-works.
+   Pure CSS depth: no images. Reveal classes are applied by
+   premium.js, which is safe-by-construction (no JS => nothing
+   hidden; reduced-motion => nothing hidden).
+   ============================================================ */
+
+/* Drifting gradient-mesh backdrop */
+.fx-bg {
+    position: fixed; inset: 0; z-index: -2; pointer-events: none;
+    background:
+        radial-gradient(55% 45% at 16% 8%, rgba(167,139,250,0.18) 0%, transparent 60%),
+        radial-gradient(50% 40% at 88% 16%, rgba(41,151,255,0.13) 0%, transparent 60%),
+        radial-gradient(60% 55% at 72% 92%, rgba(118,75,162,0.16) 0%, transparent 65%);
+    animation: fxDrift 34s ease-in-out infinite alternate;
+}
+@keyframes fxDrift {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    100% { transform: translate3d(0, -2.5%, 0) scale(1.1); }
+}
+
+/* Film grain */
+.fx-grain {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    opacity: 0.04; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+}
+
+/* Scroll reveal */
+.reveal {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    transition:
+        opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--d, 0ms);
+    will-change: opacity, transform;
+}
+.reveal.in-view { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .fx-bg { animation: none; }
+    .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
