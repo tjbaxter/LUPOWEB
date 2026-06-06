@@ -1940,26 +1940,6 @@
             transform: translateY(-4px);
             box-shadow: 0 18px 50px -24px rgba(167, 139, 250, 0.4);
         }
-
-        /* Apple-style statement: one idea, giant gradient headline, lots of air */
-        .statement { text-align: center; max-width: 900px; margin: 0 auto; padding: 56px 0; }
-        .statement h2 {
-            font-size: clamp(44px, 7.5vw, 84px); font-weight: 600;
-            letter-spacing: -0.035em; line-height: 1.04; margin: 0;
-            background: linear-gradient(118deg, #e2d8ff 0%, #a78bfa 46%, #6aa6ff 100%);
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .statement p {
-            font-size: clamp(18px, 2vw, 24px); color: var(--text-secondary);
-            max-width: 640px; margin: 30px auto 0; line-height: 1.45;
-        }
-        .statement-link {
-            display: inline-block; margin-top: 28px;
-            font-size: 15px; font-weight: 500; color: #a78bfa;
-            text-decoration: none; transition: color 0.2s ease;
-        }
-        .statement-link:hover { color: #c4b5fd; }
     </style>
     <script src="/analytics.js" defer></script>
     <script src="/talk-to-lupo.js?v=lazy-retry" defer></script>
@@ -2040,20 +2020,46 @@
                     </div>
                 </div>
 
-    <!-- Problem, Apple-style statement -->
+    <!-- Problem: two co-equal halves, compressed to one card each -->
     <section class="page-section">
-        <div class="statement">
-            <h2>Two ways inbound<br>bleeds revenue.</h2>
-            <p>Junk wastes your fast reps. Qualified-but-cold leads waste pipeline. LUPO filters the noise and scores the rest, before sales ever sees it.</p>
-            <a class="statement-link" href="/how-it-works/">See how it works &rarr;</a>
+        <div class="section-inner">
+            <div class="section-eyebrow">The two ways inbound costs you deals</div>
+            <h2 class="section-heading">Junk wastes responsive reps. Qualified-but-cold leads waste pipeline.</h2>
+            <div class="card-grid-2">
+                <div class="section-card">
+                    <div class="card-label">Filtering</div>
+                    <h3 class="card-heading">Stop the noise from reaching sales.</h3>
+                    <p class="card-body">Vendor pitches, support leakage, half-engaged buyers, and wrong-fit prospects, all handled before sales sees them.</p>
+                    <a class="section-card-link" href="/how-it-works/#filtering">See how filtering works &rarr;</a>
+                </div>
+                <div class="section-card">
+                    <div class="card-label">Enrichment &amp; scoring</div>
+                    <h3 class="card-heading">Tell reps who's actually ready.</h3>
+                    <p class="card-body">Every inbound is enriched and scored against buying-intent signals like funding, M&amp;A, and hiring, so the queue is ranked by who's ready, not who arrived first.</p>
+                    <a class="section-card-link" href="/how-it-works/#enrichment">See how scoring works &rarr;</a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Why LUPO, Apple-style statement -->
+    <!-- Why LUPO -->
     <section class="page-section">
-        <div class="statement">
-            <h2>One brain.<br>Four channels.</h2>
-            <p>Conversica covers email. Intercom covers chat. Chili Piper routes forms. LUPO covers all four, with shared context, so a buyer never starts over.</p>
+        <div class="section-inner">
+            <div class="section-eyebrow">Why LUPO</div>
+            <h2 class="section-heading">Most inbound tools cover one channel. LUPO is one brain across all four.</h2>
+            <p class="section-lede">Your buyer doesn't pick a channel. They start in chat, drop a form, then email a week later. LUPO is one brain across every channel with shared context.</p>
+            <div class="card-grid-2">
+                <div class="section-card">
+                    <div class="card-label">vs single-channel tools</div>
+                    <h3 class="card-heading">One brain, four channels.</h3>
+                    <p class="card-body">Conversica covers email. Intercom Fin covers chat. Chili Piper routes forms. LUPO covers all four with shared context, so a buyer who starts in chat and finishes in email doesn't have to start over.</p>
+                </div>
+                <div class="section-card">
+                    <div class="card-label">vs hiring an inbound SDR</div>
+                    <h3 class="card-heading">A junior SDR costs $60&ndash;90k fully loaded.</h3>
+                    <p class="card-body">Base, commission, benefits, ramp, management overhead. They sleep, take vacation, leave after eight months. LUPO covers every channel, every hour, tuned in week one.</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -2116,11 +2122,28 @@
         </div>
     </section>
 
-    <!-- Trust, Apple-style statement -->
+    <!-- Trust: 3 tiles, one row -->
     <section class="page-section">
-        <div class="statement">
-            <h2>Built to ship<br>to enterprise.</h2>
-            <p>Encrypted in transit, never trained on your data, GDPR DPA on request. Every decision logged. A 30-day pilot with the success metric agreed up front, and no lock-in.</p>
+        <div class="section-inner">
+            <div class="section-eyebrow">Trust signals</div>
+            <h2 class="section-heading">Built to ship to enterprise.</h2>
+            <div class="card-grid-3">
+                <div class="section-card">
+                    <div class="card-label">Security</div>
+                    <h3 class="card-heading">Encrypted transport, no model training.</h3>
+                    <p class="card-body">Encryption in transit, controlled access to customer data. GDPR DPA available on request.</p>
+                </div>
+                <div class="section-card">
+                    <div class="card-label">Audit trail</div>
+                    <h3 class="card-heading">Every decision logged with reasoning.</h3>
+                    <p class="card-body">AI disclosure on every call. Every call, form, and chat gets a summary, decision, and the next action LUPO took.</p>
+                </div>
+                <div class="section-card">
+                    <div class="card-label">Design partners</div>
+                    <h3 class="card-heading">30-day pilot. Success metric upfront. No lock-in.</h3>
+                    <p class="card-body">Pre-agreed success metric in the contract. Runs alongside your existing flow. Easy exit, only continues if we earn it.</p>
+                </div>
+            </div>
         </div>
     </section>
 
