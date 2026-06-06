@@ -304,9 +304,84 @@
         @media (max-width: 980px) {
             .roadmap { grid-template-columns: 1fr; gap: 14px; }
         }
+
+        /* ============================================================
+           Cinematic layer: atmosphere, motion, depth.
+           ============================================================ */
+
+        /* Drifting gradient-mesh backdrop (no images, pure CSS depth) */
+        .fx-bg {
+            position: fixed; inset: 0; z-index: -2; pointer-events: none;
+            background:
+                radial-gradient(55% 45% at 16% 8%, rgba(167,139,250,0.18) 0%, transparent 60%),
+                radial-gradient(50% 40% at 88% 16%, rgba(41,151,255,0.13) 0%, transparent 60%),
+                radial-gradient(60% 55% at 72% 92%, rgba(118,75,162,0.16) 0%, transparent 65%);
+            animation: fxDrift 34s ease-in-out infinite alternate;
+        }
+        @keyframes fxDrift {
+            0%   { transform: translate3d(0, 0, 0) scale(1); }
+            100% { transform: translate3d(0, -2.5%, 0) scale(1.1); }
+        }
+        /* Film grain, the texture that reads as "premium" */
+        .fx-grain {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            opacity: 0.04; mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 160px 160px;
+        }
+
+        /* More breathing room, the single biggest "premium" lever */
+        .page-section { padding: 120px 24px; }
+        .hero-section { padding: 96px 24px 56px; }
+        h1 { font-size: clamp(44px, 7vw, 76px); letter-spacing: -0.03em; }
+        .section-heading { font-size: clamp(30px, 4.4vw, 50px); letter-spacing: -0.03em; }
+        .section-card { padding: 30px 28px; background: rgba(255,255,255,0.025); backdrop-filter: blur(6px); }
+        .section-card:hover {
+            border-color: rgba(167,139,250,0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 18px 50px -24px rgba(167,139,250,0.4);
+        }
+
+        /* Scroll-reveal: fade + rise as each element enters the viewport */
+        .reveal {
+            opacity: 0;
+            transform: translate3d(0, 28px, 0);
+            transition:
+                opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+            transition-delay: var(--d, 0ms);
+            will-change: opacity, transform;
+        }
+        .reveal.in-view { opacity: 1; transform: none; }
+
+        /* Roadmap as connected, glowing nodes */
+        .roadmap { position: relative; }
+        .roadmap::before {
+            content: ''; position: absolute; top: 41px; left: 3%; right: 3%; height: 2px; z-index: 0;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(167,139,250,0.18) 8%,
+                rgba(167,139,250,0.55) 30%,
+                rgba(167,139,250,0.55) 70%,
+                rgba(167,139,250,0.18) 92%,
+                transparent);
+        }
+        .roadmap-step { position: relative; z-index: 1; }
+        .roadmap-num {
+            background: linear-gradient(135deg, rgba(167,139,250,0.28), rgba(167,139,250,0.08));
+            box-shadow: 0 0 24px rgba(167,139,250,0.45);
+        }
+        @media (max-width: 980px) { .roadmap::before { display: none; } }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fx-bg { animation: none; }
+            .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+        }
     </style>
 </head>
 <body>
+    <div class="fx-bg" aria-hidden="true"></div>
+    <div class="fx-grain" aria-hidden="true"></div>
     <nav>
         <div class="nav-content">
             <a href="/" class="logo">
@@ -377,27 +452,27 @@
             <div class="section-inner">
                 <div class="section-eyebrow">Filtering</div>
                 <h2 class="section-heading">Stop the noise from reaching sales.</h2>
-                <p class="section-lede">Vendor pitches, support requests, half-engaged visitors, wrong-fit prospects. All handled before sales sees them.</p>
+                <p class="section-lede">Four kinds of noise. Gone before sales ever sees them.</p>
                 <div class="card-grid-4">
                     <div class="section-card">
                         <div class="card-label">Filtered</div>
                         <h3 class="card-heading">Vendor pitches</h3>
-                        <p class="card-body">Other companies selling into your demo forms, phone lines, and chatbot. Politely declined, logged, and never routed to sales.</p>
+                        <p class="card-body">Other companies selling in. Declined, logged, never shown to sales.</p>
                     </div>
                     <div class="section-card">
                         <div class="card-label">Routed</div>
                         <h3 class="card-heading">Support leakage</h3>
-                        <p class="card-body">Existing customers and account issues arriving through sales channels. Routed to the right team with the original conversation attached.</p>
+                        <p class="card-body">Existing-customer issues in the wrong queue. Routed to the right team, in context.</p>
                     </div>
                     <div class="section-card">
                         <div class="card-label">Followed up</div>
                         <h3 class="card-heading">Half-engaged buyers</h3>
-                        <p class="card-body">Visitors who start a chat, submit a form, or reply once and disappear. Followed up through the channel they used until qualified or closed out.</p>
+                        <p class="card-body">Started a chat or a form, then vanished. Chased through their own channel until they qualify or close out.</p>
                     </div>
                     <div class="section-card">
                         <div class="card-label">Disqualified</div>
                         <h3 class="card-heading">Wrong-fit prospects</h3>
-                        <p class="card-body">Real interest, wrong company size, use case, geography, or timing. Handled appropriately without taking AE time.</p>
+                        <p class="card-body">Real interest, wrong fit. Handled without burning an AE's time.</p>
                     </div>
                 </div>
             </div>
@@ -407,27 +482,27 @@
             <div class="section-inner">
                 <div class="section-eyebrow">Enrichment &amp; scoring</div>
                 <h2 class="section-heading">Tell reps who's actually ready.</h2>
-                <p class="section-lede">Qualified is not the same as ready to buy. LUPO enriches every inbound and surfaces the buying-intent signals reps would otherwise miss.</p>
+                <p class="section-lede">Qualified isn't ready to buy. LUPO surfaces the intent signals reps would otherwise miss.</p>
                 <div class="card-grid-4">
                     <div class="section-card">
                         <div class="card-label">Enriched</div>
                         <h3 class="card-heading">Company context, automatic</h3>
-                        <p class="card-body">Headcount, industry, revenue band, tech stack, and decision-maker title, appended to every inbound, before a rep opens the record.</p>
+                        <p class="card-body">Headcount, revenue, tech stack, decision-maker title. Appended before a rep opens the record.</p>
                     </div>
                     <div class="section-card">
                         <div class="card-label">Scored</div>
                         <h3 class="card-heading">Buying-intent signals</h3>
-                        <p class="card-body">Recent funding, M&amp;A, leadership hires, headcount growth, and category-specific triggers surfaced per lead. Reps know who's actually in-market.</p>
+                        <p class="card-body">Funding, M&amp;A, leadership hires, headcount growth. Surfaced per lead, so reps know who's in-market.</p>
                     </div>
                     <div class="section-card">
                         <div class="card-label">Ranked</div>
                         <h3 class="card-heading">Today's hottest, on top</h3>
-                        <p class="card-body">Inbound ranked by buying-intent score, not arrival time. The leads worth a same-day call rise to the top of the queue.</p>
+                        <p class="card-body">Ranked by intent score, not arrival time. Same-day calls rise to the top.</p>
                     </div>
                     <div class="section-card">
                         <div class="card-label">Surfaced</div>
                         <h3 class="card-heading">Triggers your reps would miss</h3>
-                        <p class="card-body">A lead's company announced a Series B yesterday. The VP Sales joined three weeks ago. Reps see the signal in Slack before they pick up the phone.</p>
+                        <p class="card-body">A Series B yesterday. A new VP Sales last month. Reps see it in Slack first.</p>
                     </div>
                 </div>
             </div>
@@ -437,27 +512,27 @@
             <div class="section-inner">
                 <div class="section-eyebrow">One sales policy. Every inbound channel.</div>
                 <h2 class="section-heading">A different response for each channel.</h2>
-                <p class="section-lede">Not every form is a demo request. LUPO matches the response to the channel based on your policy.</p>
+                <p class="section-lede">Not every form is a demo request. LUPO matches the response to the channel.</p>
                 <div class="card-grid-2">
                     <div class="section-card">
                         <div class="card-label">Inbound phone</div>
                         <h3 class="card-heading">Answers live, qualifies, books, escalates.</h3>
-                        <p class="card-body">Picks up on the second ring, qualifies the caller against your policy, captures buying intent, checks live availability, books real appointments, and escalates to a human when the policy says so.</p>
+                        <p class="card-body">Answers on the second ring, qualifies, books, and escalates to a human when policy says so.</p>
                     </div>
                     <div class="section-card">
                         <div class="card-label">Web forms</div>
                         <h3 class="card-heading">Classifies before it reacts.</h3>
-                        <p class="card-body">Classifies the submission, enriches context where it can, and decides whether to email, call back, post to Slack, book a meeting, or hold the lead for human approval. No blanket callbacks to senior buyers.</p>
+                        <p class="card-body">Classifies every submission, then emails, calls back, books, or holds for approval. No surprise calls to VPs.</p>
                     </div>
                     <div class="section-card">
                         <div class="card-label">Chat Qualification</div>
                         <h3 class="card-heading">Your chatbot opens the door. LUPO closes the lead.</h3>
-                        <p class="card-body">Takes intent and consent from your existing chatbot (Intercom Fin, Drift, HubSpot Chat, or a custom widget like ours here), continues qualification, and books inside the same conversation when the buyer is ready.</p>
+                        <p class="card-body">Picks up where your chatbot (Intercom Fin, Drift, or a custom widget like ours here) leaves off, and books in the same thread.</p>
                     </div>
                     <div class="section-card">
                         <div class="card-label">Agentic Email Qualification</div>
                         <h3 class="card-heading">Cadenced follow-up until a meeting or a clean no.</h3>
-                        <p class="card-body">For leads that need email rather than an immediate call. Per-org sender domains, audience filters, and reply handling are tuned to your stack.</p>
+                        <p class="card-body">Cadenced follow-up until a meeting or a clean no, from your own sender domains.</p>
                     </div>
                 </div>
             </div>
@@ -467,22 +542,22 @@
             <div class="section-inner">
                 <div class="section-eyebrow">When you're ready: the full inbound SDR</div>
                 <h2 class="section-heading">Most teams start with qualify, enrich, score, route. Some go further.</h2>
-                <p class="section-lede">Layer 1 keeps your reps in control. Layer 2 hands the engagement to LUPO too: callbacks, email cadence, and booking the meeting. You stop building the inbound SDR team. LUPO becomes it.</p>
+                <p class="section-lede">Layer 1 keeps reps in control. Layer 2 hands the engagement to LUPO too. You stop building the inbound SDR team; LUPO becomes it.</p>
                 <div class="card-grid-3">
                     <div class="section-card">
                         <div class="card-label">Autonomous callback</div>
                         <h3 class="card-heading">Calls the qualified buyer back without a rep in the loop.</h3>
-                        <p class="card-body">For inbound channels where the buyer consented to a callback, LUPO picks up where the form or chat left off, qualifies further, and books.</p>
+                        <p class="card-body">Calls the consented buyer back, qualifies further, and books. No rep in the loop.</p>
                     </div>
                     <div class="section-card">
                         <div class="card-label">Email cadence</div>
                         <h3 class="card-heading">Multi-step follow-up until a meeting or a clean no.</h3>
-                        <p class="card-body">For leads that prefer email, LUPO handles the cadence end-to-end with per-org sender domains and audience-aware reply handling.</p>
+                        <p class="card-body">Multi-step follow-up, end to end, from per-org sender domains.</p>
                     </div>
                     <div class="section-card">
                         <div class="card-label">Books the meeting</div>
                         <h3 class="card-heading">Calendar checked, slot offered, confirmation sent.</h3>
-                        <p class="card-body">Live calendar availability, instant booking, SMS + email confirmation, and a structured packet for the rep before the call starts.</p>
+                        <p class="card-body">Live calendar, instant booking, SMS + email confirmation, packet ready for the rep.</p>
                     </div>
                 </div>
             </div>
@@ -525,7 +600,7 @@
                         <div class="integration-logo"><img src="/logos/integrations/slack.svg" alt="Slack" width="100" height="24" loading="lazy" decoding="async"></div>
                     </div>
                 </div>
-                <p class="integrations-caption">LUPO works with any chat, form, or website workflow that can send a webhook. Intercom, Drift, HubSpot Chat, custom forms, and internal routing tools can all hand qualified conversations into LUPO.</p>
+                <p class="integrations-caption">Any chat, form, or workflow that can post a webhook can hand a qualified conversation into LUPO.</p>
             </div>
         </section>
 
@@ -552,6 +627,47 @@
             <a href="/terms.html">Terms</a>
         </p>
     </footer>
+
+    <script>
+        // Cinematic scroll reveals. Intro elements (eyebrow, heading, lede)
+        // stagger in; grid/roadmap children cascade. Single-shot per element.
+        // Honours prefers-reduced-motion (everything just appears).
+        (function () {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            var STAGGER = 90;
+
+            document.querySelectorAll('section').forEach(function (section) {
+                // Intro stack: eyebrow -> heading -> lede.
+                section.querySelectorAll(':scope > .section-inner > .section-eyebrow, :scope > .section-inner > .section-heading, :scope > .section-inner > .section-lede, :scope > .hero-section-inner > *, :scope > h2, :scope > p, :scope > .cta-actions')
+                    .forEach(function (el, i) {
+                        el.classList.add('reveal');
+                        el.style.setProperty('--d', (i * STAGGER) + 'ms');
+                    });
+                // Card / step rows cascade left-to-right.
+                section.querySelectorAll('.card-grid-2, .card-grid-3, .card-grid-4, .roadmap, .integrations-grid').forEach(function (grid) {
+                    Array.prototype.forEach.call(grid.children, function (child, i) {
+                        child.classList.add('reveal');
+                        child.style.setProperty('--d', (i * STAGGER) + 'ms');
+                    });
+                });
+                // Standalone blocks (dog-food callout, logo strip, caption).
+                section.querySelectorAll('.roadmap-dogfood, .integrations-logos, .integrations-caption').forEach(function (el) {
+                    el.classList.add('reveal');
+                });
+            });
+
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        io.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+
+            document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+        })();
+    </script>
 
     <script src="/analytics.js" defer></script>
     <script src="/talk-to-lupo.js?v=lazy-retry" defer></script>
