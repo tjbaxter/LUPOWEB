@@ -249,47 +249,53 @@
             .integration-logo img { max-height: 20px; }
         }
 
-        /* 5-step onboarding roadmap */
-        .roadmap {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 16px;
-            margin-top: 8px;
+        /* Onboarding pathway, a vertical journey you travel as you scroll */
+        .path { position: relative; max-width: 720px; margin: 8px auto 0; }
+        /* the glowing spine running down the centre */
+        .path::before {
+            content: ''; position: absolute; top: 12px; bottom: 12px; left: 50%;
+            width: 2px; transform: translateX(-50%);
+            background: linear-gradient(180deg,
+                rgba(167,139,250,0.04),
+                rgba(167,139,250,0.5) 10%,
+                rgba(167,139,250,0.5) 90%,
+                rgba(167,139,250,0.04));
         }
-        .roadmap-step {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            transition: border-color 0.25s ease, transform 0.25s ease;
+        .path-step {
+            position: relative; z-index: 1;
+            width: 50%; box-sizing: border-box;
+            padding: 22px 54px;
         }
-        .roadmap-step:hover { border-color: rgba(167,139,250,0.28); transform: translateY(-2px); }
-        .roadmap-num {
-            display: inline-flex;
-            align-items: center; justify-content: center;
-            width: 34px; height: 34px;
-            border-radius: 999px;
-            background: rgba(167,139,250,0.12);
-            color: #a78bfa;
-            font-size: 14.5px; font-weight: 700;
-            border: 1px solid rgba(167,139,250,0.3);
-            margin-bottom: 4px;
+        .path-step:nth-child(odd)  { margin-left: 0;   text-align: right; }
+        .path-step:nth-child(even) { margin-left: 50%; text-align: left; }
+        /* glowing numbered node sitting on the spine */
+        .path-node {
+            position: absolute; top: 22px;
+            width: 46px; height: 46px; border-radius: 999px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; font-weight: 700; color: #c4b5fd;
+            background: radial-gradient(circle at 50% 38%, rgba(167,139,250,0.42), rgba(18,18,26,0.96));
+            border: 1px solid rgba(167,139,250,0.55);
+            box-shadow: 0 0 30px rgba(167,139,250,0.5);
         }
-        .roadmap-step h3 {
-            font-size: 16px; font-weight: 600;
-            color: var(--text-primary);
-            line-height: 1.3; letter-spacing: -0.012em;
+        .path-step:nth-child(odd)  .path-node { right: -23px; }
+        .path-step:nth-child(even) .path-node { left: -23px; }
+        .path-step h3 {
+            font-size: 20px; font-weight: 600; color: var(--text-primary);
+            line-height: 1.25; letter-spacing: -0.015em; margin-bottom: 6px;
         }
-        .roadmap-step p {
-            font-size: 13.5px; line-height: 1.5;
-            color: var(--text-secondary);
-            margin: 0;
+        .path-step p {
+            font-size: 14.5px; line-height: 1.5; color: var(--text-secondary);
+            margin: 0; display: inline-block; max-width: 260px;
         }
+        /* each step slides in from its own side as you reach it */
+        .path-step.reveal { transform: translate3d(0, 24px, 0); }
+        .path-step.from-left.reveal  { transform: translate3d(-44px, 8px, 0); }
+        .path-step.from-right.reveal { transform: translate3d(44px, 8px, 0); }
+        .path-step.reveal.in-view { transform: none; }
+
         .roadmap-dogfood {
-            margin-top: 32px;
+            margin-top: 44px;
             padding: 22px 26px;
             background: rgba(167,139,250,0.06);
             border: 1px solid rgba(167,139,250,0.22);
@@ -297,12 +303,26 @@
             font-size: 15px; line-height: 1.6;
             color: var(--text-primary);
             text-align: center;
-            max-width: 760px;
+            max-width: 720px;
             margin-left: auto; margin-right: auto;
         }
         .roadmap-dogfood strong { color: #c4b5fd; }
-        @media (max-width: 980px) {
-            .roadmap { grid-template-columns: 1fr; gap: 14px; }
+        /* mobile: spine to the left, every step stacks to its right */
+        @media (max-width: 760px) {
+            .path { max-width: 520px; }
+            .path::before { left: 23px; }
+            .path-step,
+            .path-step:nth-child(odd),
+            .path-step:nth-child(even) {
+                width: 100%; margin-left: 0; text-align: left;
+                padding: 14px 8px 14px 62px;
+            }
+            .path-step .path-node,
+            .path-step:nth-child(odd) .path-node,
+            .path-step:nth-child(even) .path-node { left: 0; right: auto; top: 10px; }
+            .path-step p { max-width: none; }
+            .path-step.from-left.reveal,
+            .path-step.from-right.reveal { transform: translate3d(0, 22px, 0); }
         }
 
         /* ============================================================
@@ -414,32 +434,32 @@
             <div class="section-inner">
                 <div class="section-eyebrow">Onboarding</div>
                 <h2 class="section-heading">From first call to fully live, step by step.</h2>
-                <p class="section-lede">Every LUPO pilot follows the same five-step rollout. Bespoke to your channels and stack, but the path is the same.</p>
-                <div class="roadmap">
-                    <div class="roadmap-step">
-                        <span class="roadmap-num">1</span>
+                <p class="section-lede">The same five steps, every pilot. You watch it come together one channel at a time.</p>
+                <div class="path">
+                    <div class="path-step">
+                        <span class="path-node">1</span>
                         <h3>Map your channels</h3>
-                        <p>We identify which inbound channels you want covered: phone, email, web form, chat. Not every team needs all four.</p>
+                        <p>Phone, email, form, chat. We cover the ones you actually use.</p>
                     </div>
-                    <div class="roadmap-step">
-                        <span class="roadmap-num">2</span>
+                    <div class="path-step">
+                        <span class="path-node">2</span>
                         <h3>Connect your stack</h3>
-                        <p>We map where leads go today: your CRM (HubSpot, Salesforce), Slack, and calendar. LUPO plugs into what you already run.</p>
+                        <p>Plug into your CRM, Slack, and calendar.</p>
                     </div>
-                    <div class="roadmap-step">
-                        <span class="roadmap-num">3</span>
+                    <div class="path-step">
+                        <span class="path-node">3</span>
                         <h3>Keep or replace</h3>
-                        <p>Integrate with your existing web form via webhook, and either keep your current chatbot or replace it with LUPO's. Your call, per channel.</p>
+                        <p>Keep your chatbot, or swap in ours.</p>
                     </div>
-                    <div class="roadmap-step">
-                        <span class="roadmap-num">4</span>
+                    <div class="path-step">
+                        <span class="path-node">4</span>
                         <h3>Go live on one channel</h3>
-                        <p>We work with your IT team, set up the integration, and run real test inbound until it lands correctly in your CRM and Slack.</p>
+                        <p>One channel first, proven on real inbound.</p>
                     </div>
-                    <div class="roadmap-step">
-                        <span class="roadmap-num">5</span>
+                    <div class="path-step">
+                        <span class="path-node">5</span>
                         <h3>Scale across the rest</h3>
-                        <p>Once the first channel is proven, we add the others. Most teams are fully live by week 8.</p>
+                        <p>Then the others. Fully live by week 8.</p>
                     </div>
                 </div>
                 <p class="roadmap-dogfood">
@@ -643,12 +663,17 @@
                         el.classList.add('reveal');
                         el.style.setProperty('--d', (i * STAGGER) + 'ms');
                     });
-                // Card / step rows cascade left-to-right.
-                section.querySelectorAll('.card-grid-2, .card-grid-3, .card-grid-4, .roadmap, .integrations-grid').forEach(function (grid) {
+                // Card rows cascade left-to-right.
+                section.querySelectorAll('.card-grid-2, .card-grid-3, .card-grid-4, .integrations-grid').forEach(function (grid) {
                     Array.prototype.forEach.call(grid.children, function (child, i) {
                         child.classList.add('reveal');
                         child.style.setProperty('--d', (i * STAGGER) + 'ms');
                     });
+                });
+                // Pathway: each step slides in from its own side. The vertical
+                // layout means they unlock one at a time as you scroll down.
+                section.querySelectorAll('.path-step').forEach(function (step, i) {
+                    step.classList.add('reveal', i % 2 === 0 ? 'from-left' : 'from-right');
                 });
                 // Standalone blocks (dog-food callout, logo strip, caption).
                 section.querySelectorAll('.roadmap-dogfood, .integrations-logos, .integrations-caption').forEach(function (el) {
