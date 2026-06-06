@@ -1926,6 +1926,20 @@
             transition: opacity 0.2s ease;
         }
         .hero-integrations-row img:hover { opacity: 1; }
+
+        /* Premium atmosphere: film grain + stronger card glow (matches subpages) */
+        .fx-grain {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            opacity: 0.04; mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 160px 160px;
+        }
+        .section-card:hover {
+            border-color: rgba(167, 139, 250, 0.4);
+            background: rgba(118, 75, 162, 0.06);
+            transform: translateY(-4px);
+            box-shadow: 0 18px 50px -24px rgba(167, 139, 250, 0.4);
+        }
     </style>
     <script src="/analytics.js" defer></script>
     <script src="/talk-to-lupo.js?v=lazy-retry" defer></script>
@@ -1935,6 +1949,7 @@
 <body>
     <!-- Background Animation -->
     <div class="animated-bg"></div>
+    <div class="fx-grain" aria-hidden="true"></div>
     
     <!-- Navigation -->
     <nav>
@@ -1967,7 +1982,7 @@
             </h1>
 
             <p class="subtitle">
-                Phone, email, web form, chat, one brain across every channel. LUPO filters the noise, enriches every inbound, and scores buying intent so your reps only see leads that are ready to buy.
+                One AI brain across phone, email, web form, and chat. It filters the noise and scores every inbound, so your reps only see buyers worth their time.
             </p>
 
             <!-- CTA Buttons. Talk to LUPO live is the primary action -->
