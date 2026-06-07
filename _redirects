@@ -7,4 +7,6 @@
 /join/*              /join.html?token=:splat  200!
 /login               /login.html          200
 /portal/*            /portal/:splat       200
+/demo                /                    301!
+/demo/*              /                    301!
 /                    /index.html          200
