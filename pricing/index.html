@@ -222,7 +222,7 @@
             background: rgba(255, 255, 255, 0.9);
         }
 
-        /* Matrix */
+        /* Capabilities list (single tier, no comparison) */
         .matrix {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -231,7 +231,6 @@
             margin-bottom: 48px;
         }
         .matrix-head {
-            display: grid; grid-template-columns: 2.8fr 1fr;
             padding: 16px 28px;
             background: rgba(255, 255, 255, 0.03);
             border-bottom: 1px solid var(--border-strong);
@@ -244,12 +243,6 @@
             letter-spacing: 0.16em; text-transform: uppercase;
             color: var(--text-tertiary);
         }
-        .matrix-head .col-tier {
-            text-align: center;
-            font-size: 12px; font-weight: 700;
-            letter-spacing: 0.16em; text-transform: uppercase;
-            color: var(--text-primary);
-        }
         .matrix-group { border-bottom: 1px solid var(--border); }
         .matrix-group:last-child { border-bottom: none; }
         .matrix-group-title {
@@ -259,9 +252,8 @@
             color: var(--text-tertiary);
         }
         .matrix-row {
-            display: grid; grid-template-columns: 2.8fr 1fr;
+            display: flex; align-items: center; gap: 14px;
             padding: 12px 28px;
-            align-items: center;
             transition: background 0.12s ease;
             border-top: 1px solid rgba(255, 255, 255, 0.04);
         }
@@ -269,10 +261,10 @@
         .matrix-row:hover { background: rgba(255, 255, 255, 0.018); }
         .matrix-row .feature {
             font-size: 14px; color: var(--text-primary);
-            line-height: 1.4;
+            line-height: 1.4; flex: 1;
         }
         .matrix-row .cell {
-            text-align: center;
+            flex-shrink: 0;
         }
         /* Neutral white check, saves purple for the ONE accent moment (tier badge) */
         .check {
@@ -313,7 +305,7 @@
         .stat-source a:hover { color: var(--text-secondary); }
 
         @media (max-width: 760px) {
-            .matrix-head, .matrix-row { padding: 12px 16px; grid-template-columns: 2fr 0.9fr; }
+            .matrix-head, .matrix-row { padding: 12px 16px; }
             .matrix-group-title { padding: 18px 16px 8px; }
             .matrix-row .feature { font-size: 13px; }
         }
@@ -474,74 +466,73 @@
             <!-- Matrix -->
             <div class="matrix">
                 <div class="matrix-head">
-                    <div class="col-label">Compare features</div>
-                    <div class="col-tier">Enterprise</div>
+                    <div class="col-label">What's included in the pilot</div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">Inbound channels</div>
-                    <div class="matrix-row"><div class="feature">Phone</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Email</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Web form</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Chat</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Intercom, Drift, or custom chatbot handoff</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Embeddable voice widget on your site</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Phone</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Email</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Web form</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Chat</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Intercom, Drift, or custom chatbot handoff</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Embeddable voice widget on your site</div></div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">Qualification</div>
-                    <div class="matrix-row"><div class="feature">Real-time intent detection</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Vendor and time-waster filtering</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Custom qualification rules</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Conversation transcripts and decision logs</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Additional language support</div><div class="cell"><span class="value">Scoped per pilot</span></div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Real-time intent detection</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Vendor and time-waster filtering</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Custom qualification rules</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Conversation transcripts and decision logs</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="value">Scoped per pilot</span></div><div class="feature">Additional language support</div></div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">Booking &amp; scheduling</div>
-                    <div class="matrix-row"><div class="feature">Google Calendar</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Microsoft 365 / Outlook</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">SMS confirmations</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Email confirmations</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Google Calendar</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Microsoft 365 / Outlook</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">SMS confirmations</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Email confirmations</div></div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">Routing &amp; follow-up</div>
-                    <div class="matrix-row"><div class="feature">Round-robin across reps</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Rules-based routing</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Account-owner and territory rules</div><div class="cell"><span class="value">Configured per pilot</span></div></div>
-                    <div class="matrix-row"><div class="feature">Agentic Email Qualification on dark leads</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Round-robin across reps</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Rules-based routing</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="value">Configured per pilot</span></div><div class="feature">Account-owner and territory rules</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Agentic Email Qualification on dark leads</div></div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">CRM &amp; workflow</div>
-                    <div class="matrix-row"><div class="feature">Slack notifications</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">HubSpot sync</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Salesforce workflow</div><div class="cell"><span class="value">Scoped per pilot</span></div></div>
-                    <div class="matrix-row"><div class="feature">Custom webhook integrations</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">API access</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Firmographic enrichment</div><div class="cell"><span class="value">Bring your own provider</span></div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Slack notifications</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">HubSpot sync</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Salesforce sync</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Custom webhook integrations</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">API access</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Firmographic + buying-intent enrichment (proprietary data partnerships)</div></div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">Analytics &amp; reporting</div>
-                    <div class="matrix-row"><div class="feature">Lead dashboard</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Conversation analytics</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Funnel and conversion reporting</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Source attribution and channel reporting</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Lead dashboard</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Conversation analytics</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Funnel and conversion reporting</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Source attribution and channel reporting</div></div>
                 </div>
 
                 <div class="matrix-group">
                     <div class="matrix-group-title">Implementation &amp; support</div>
-                    <div class="matrix-row"><div class="feature">Time to fully live</div><div class="cell"><span class="value">~8 weeks</span></div></div>
-                    <div class="matrix-row"><div class="feature">Phased rollout (start with one channel or team)</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Always-on agent coverage</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature"><strong>Founder-led onboarding</strong></div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Success-criteria-based renewal</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Pre-agreed success metric</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Availability design</div><div class="cell"><span class="value">High availability</span></div></div>
-                    <div class="matrix-row"><div class="feature">GDPR Data Processing Agreement</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
-                    <div class="matrix-row"><div class="feature">Security review on request</div><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+                    <div class="matrix-row"><div class="cell"><span class="value">~8 weeks</span></div><div class="feature">Time to fully live</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Phased rollout (start with one channel or team)</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Always-on agent coverage</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature"><strong>Founder-led onboarding</strong></div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Success-criteria-based renewal</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Pre-agreed success metric</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="value">High availability</span></div><div class="feature">Availability design</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">GDPR Data Processing Agreement</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Security review on request</div></div>
                 </div>
             </div>
 
