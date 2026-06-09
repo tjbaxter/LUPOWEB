@@ -342,6 +342,11 @@
 
   var vapi = null;
   var isInCall = false;
+  // Chat -> voice continuity: when the call was escalated from the native
+  // chat widget, the widget passes the conversation so far. The transcript
+  // is injected as a system message the moment the call connects, so the
+  // voice agent continues the SAME conversation instead of starting cold.
+  var pendingHandoffContext = null;
 
   function bindVapiEvents(instance) {
     instance.on("call-start", function () {
@@ -349,15 +354,29 @@
       isInCall = true;
       setState("in-call");
       showToast("Connected. Say hi to LUPO.", "info");
+      if (pendingHandoffContext) {
+        try {
+          instance.send({
+            type: "add-message",
+            message: { role: "system", content: pendingHandoffContext }
+          });
+          log("chat handoff context injected");
+        } catch (e) {
+          log("handoff inject failed", e && e.message);
+        }
+        pendingHandoffContext = null;
+      }
     });
     instance.on("call-end", function () {
       log("event: call-end");
       isInCall = false;
+      pendingHandoffContext = null;
       setState("idle");
     });
     instance.on("error", function (e) {
       log("event: error", e);
       isInCall = false;
+      pendingHandoffContext = null;
       setState("idle");
       showToast(extractErrorMessage(e), "error");
     });
@@ -366,7 +385,16 @@
   // Core call-start path. Extracted from the click handler so the
   // public LupoVoice API (used by the native chat widget) can invoke
   // exactly the same flow without synthesising a click event.
-  function startCall(demoKey) {
+  //
+  // handoff (optional, from the chat widget via LupoVoice.open):
+  //   { firstMessage: string, systemContext: string }
+  //   - firstMessage overrides the assistant's opening line for THIS call
+  //     (deterministic copy composed by the widget, e.g. quoting the
+  //     visitor's own words back: "You said 'see it live', so here I am").
+  //   - systemContext is the chat transcript, injected on call-start so
+  //     the voice agent continues the same conversation. Both optional;
+  //     absent -> exactly the standalone call behaviour.
+  function startCall(demoKey, handoff) {
     if (isInCall || btn.getAttribute("data-state") === "in-call") {
       // Already in a call — treat as a "hang up" toggle, matching click behaviour.
       if (vapi) { try { vapi.stop(); } catch (e) { log("stop error", e); } }
@@ -377,6 +405,18 @@
 
     var key = demoKey === "smb" ? "smb" : "b2b";
     log("demo key", key);
+
+    // Defensive re-validation (lupo-chat.js sanitizes too, but this API
+    // is public on window so keep the shape strict here as well).
+    var handoffFirstMessage =
+      handoff && typeof handoff.firstMessage === "string" && handoff.firstMessage.trim().length > 0
+        ? handoff.firstMessage.slice(0, 300)
+        : null;
+    pendingHandoffContext =
+      handoff && typeof handoff.systemContext === "string" && handoff.systemContext.trim().length > 0
+        ? handoff.systemContext.slice(0, 2600)
+        : null;
+    if (handoffFirstMessage || pendingHandoffContext) log("chat handoff received");
 
     ensureSDK()
       .then(function (Ctor) {
@@ -398,9 +438,9 @@
             bindVapiEvents(vapi);
           }
           try {
-            var result = vapi.start(assistantId, {
-              variableValues: { sessionId: sessionId }
-            });
+            var overrides = { variableValues: { sessionId: sessionId } };
+            if (handoffFirstMessage) overrides.firstMessage = handoffFirstMessage;
+            var result = vapi.start(assistantId, overrides);
             if (result && typeof result.then === "function") {
               result.then(
                 function () { log("start resolved"); },
@@ -444,15 +484,18 @@
   // window.LupoVoice.open over poking at the .lupo-call-btn directly.
   //
   // Stable surface (do not break):
-  //   - open(demoKey?)     — start a call. demoKey "b2b" | "smb"; defaults
-  //                          to whatever the current page implies.
+  //   - open(demoKey?, handoff?) — start a call. demoKey "b2b" | "smb";
+  //                          defaults to whatever the current page implies.
+  //                          handoff (optional): {firstMessage, systemContext}
+  //                          strings from the chat widget so the voice agent
+  //                          continues the chat conversation (see startCall).
   //   - isAvailable()      — returns true once the SDK has resolved and
   //                          the widget is not in an unavailable state.
   //   - getState()         — current data-state attribute value.
   window.LupoVoice = {
-    open: function (demoKey) {
+    open: function (demoKey, handoff) {
       var key = (demoKey === "smb" || demoKey === "b2b") ? demoKey : detectDemoKey();
-      startCall(key);
+      startCall(key, handoff);
     },
     isAvailable: function () {
       var state = btn.getAttribute("data-state");
