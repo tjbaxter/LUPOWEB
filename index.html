@@ -2134,6 +2134,44 @@
         </div>
     </section>
 
+    <!-- lupo-dash-band: the dashboard (org-level visibility; the packet above is the per-lead view) -->
+    <section class="ldb-band">
+        <style>
+        .ldb-band{position:relative;z-index:1;padding:72px 24px;}
+        .ldb-inner{max-width:1100px;margin:0 auto;text-align:center;}
+        .ldb-frame{margin:44px auto 0;border-radius:16px;border:1px solid rgba(255,255,255,0.12);overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.55),0 0 0 1px rgba(255,255,255,0.03);background:#0b0b0d;}
+        .ldb-frame img{display:block;width:100%;height:auto;}
+        .ldb-caption{margin-top:14px;font-size:12px;color:rgba(255,255,255,0.35);}
+        .ldb-points{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:40px;text-align:left;}
+        .ldb-point-title{font-size:15px;font-weight:600;color:#fff;margin-bottom:6px;}
+        .ldb-point-body{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.55);}
+        @media (max-width:760px){.ldb-points{grid-template-columns:1fr;gap:20px;}.ldb-band{padding:56px 20px;}}
+        </style>
+        <div class="ldb-inner">
+            <div class="section-eyebrow">The dashboard</div>
+            <h2 class="section-heading">Every lead, every decision, on one screen.</h2>
+            <p class="section-lede">Log in and see what came in, how it qualified, and what reached your reps. Full visibility for whoever owns inbound: sales, marketing, or RevOps.</p>
+            <div class="ldb-frame">
+                <img src="/lupo-dashboard.webp" alt="LUPO dashboard overview showing leads captured by channel, qualification outcomes with score bands, noise filtered out, and meetings booked" width="2400" height="1666" loading="lazy" decoding="async">
+            </div>
+            <p class="ldb-caption">Illustrative dashboard with sample data.</p>
+            <div class="ldb-points">
+                <div class="ldb-point">
+                    <div class="ldb-point-title">Channel mix, live</div>
+                    <div class="ldb-point-body">Phone, email, web form, and chat in one view. See where your demand actually comes from, not where you assume it does.</div>
+                </div>
+                <div class="ldb-point">
+                    <div class="ldb-point-title">Every score carries its why</div>
+                    <div class="ldb-point-body">Hot, review, nurture, or filtered. Open any lead and read the reasoning, the company profile, and the buying signals behind the number.</div>
+                </div>
+                <div class="ldb-point">
+                    <div class="ldb-point-title">Noise, quantified</div>
+                    <div class="ldb-point-body">Watch the vendor pitches and wrong-fit leads LUPO kept off your reps' calendars. That number is rep time given back.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- lupo-stat-band: cited industry metrics (the problem, in numbers) -->
     <section class="lst-band">
         <style>
