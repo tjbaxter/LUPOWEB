@@ -2141,9 +2141,18 @@
         <style>
         .ldb-band{position:relative;z-index:1;padding:72px 24px;}
         .ldb-inner{max-width:1100px;margin:0 auto;text-align:center;}
-        .ldb-frame{margin:44px auto 0;border-radius:16px;border:1px solid rgba(255,255,255,0.12);overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.55),0 0 0 1px rgba(255,255,255,0.03);background:#0b0b0d;}
+        .ldb-frame{margin:44px auto 0;border-radius:16px;border:1px solid rgba(255,255,255,0.12);overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.55),0 0 0 1px rgba(255,255,255,0.03);background:#0b0b0d;cursor:zoom-in;transition:transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94),box-shadow 0.35s ease;}
+        .ldb-frame:hover{transform:translateY(-2px);box-shadow:0 48px 110px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.06);}
         .ldb-frame img{display:block;width:100%;height:auto;}
         .ldb-caption{margin-top:14px;font-size:12px;color:rgba(255,255,255,0.35);}
+        /* Click-to-expand lightbox: scrim + the same image at viewport size. */
+        .ldb-lightbox{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:4vmin;background:rgba(5,5,9,0.78);-webkit-backdrop-filter:blur(18px) saturate(110%);backdrop-filter:blur(18px) saturate(110%);opacity:0;pointer-events:none;transition:opacity 0.28s ease;cursor:zoom-out;}
+        .ldb-lightbox.ldb-open{opacity:1;pointer-events:auto;}
+        .ldb-lightbox img{max-width:96vw;max-height:94vh;width:auto;height:auto;border-radius:14px;border:1px solid rgba(255,255,255,0.14);box-shadow:0 60px 140px rgba(0,0,0,0.7);transform:scale(0.965);transition:transform 0.28s cubic-bezier(0.25,0.46,0.45,0.94);}
+        .ldb-lightbox.ldb-open img{transform:scale(1);}
+        .ldb-lightbox-close{position:fixed;top:18px;right:18px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.22);border-radius:999px;background:rgba(12,12,18,0.6);color:rgba(255,255,255,0.85);font-size:17px;line-height:1;cursor:pointer;}
+        .ldb-lightbox-close:hover{background:rgba(30,30,42,0.8);}
+        @media (prefers-reduced-motion: reduce){.ldb-frame,.ldb-frame:hover{transform:none;transition:none;}.ldb-lightbox,.ldb-lightbox img{transition:none;}}
         .ldb-points{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:40px;text-align:left;}
         .ldb-point-title{font-size:15px;font-weight:600;color:#fff;margin-bottom:6px;}
         .ldb-point-body{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.55);}
@@ -2153,10 +2162,10 @@
             <div class="section-eyebrow">The dashboard</div>
             <h2 class="section-heading">Every lead, every decision, on one screen.</h2>
             <p class="section-lede">Log in and see what came in, how it qualified, and what reached your reps. Full visibility for whoever owns inbound: sales, marketing, or RevOps.</p>
-            <div class="ldb-frame">
+            <div class="ldb-frame" id="ldbFrame" role="button" tabindex="0" aria-label="Expand the dashboard screenshot" title="Click to expand">
                 <img src="/lupo-dashboard.webp" alt="LUPO dashboard overview showing leads captured by channel, qualification outcomes with score bands, noise filtered out with rep hours saved, pipeline sourced from qualified leads, and meetings booked" width="2400" height="1860" loading="lazy" decoding="async">
             </div>
-            <p class="ldb-caption">Illustrative dashboard with sample data.</p>
+            <p class="ldb-caption">Illustrative dashboard with sample data. Click to expand.</p>
             <div class="ldb-points">
                 <div class="ldb-point">
                     <div class="ldb-point-title">Channel mix, live</div>
@@ -2172,6 +2181,34 @@
                 </div>
             </div>
         </div>
+        <div class="ldb-lightbox" id="ldbLightbox" aria-hidden="true">
+            <img src="/lupo-dashboard.webp" alt="" loading="lazy" decoding="async">
+            <button type="button" class="ldb-lightbox-close" aria-label="Close">&#10005;</button>
+        </div>
+        <script>
+        (function () {
+            var frame = document.getElementById('ldbFrame');
+            var box = document.getElementById('ldbLightbox');
+            if (!frame || !box) return;
+            function setOpen(open) {
+                box.classList.toggle('ldb-open', open);
+                box.setAttribute('aria-hidden', open ? 'false' : 'true');
+                document.documentElement.style.overflow = open ? 'hidden' : '';
+                // The chat pill floats above everything; tuck it away while
+                // the screenshot owns the screen. No-op if absent/renamed.
+                var pill = document.querySelector('.lupo-chat-launcher');
+                if (pill) pill.style.visibility = open ? 'hidden' : '';
+            }
+            frame.addEventListener('click', function () { setOpen(true); });
+            frame.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(true); }
+            });
+            box.addEventListener('click', function () { setOpen(false); });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && box.classList.contains('ldb-open')) setOpen(false);
+            });
+        })();
+        </script>
     </section>
 
     <!-- lupo-stat-band: cited industry metrics (the problem, in numbers) -->
