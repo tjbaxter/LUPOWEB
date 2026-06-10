@@ -10,6 +10,14 @@
   var KEY = "lupoTheme";
   var root = document.documentElement;
 
+  // The dashboard's exact line-art sun/moon (theme-toggle.tsx), so the
+  // site control matches the product.
+  var SVG_OPEN =
+    '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="';
+  var ICON_SUN = SVG_OPEN + "M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707 M12 8a4 4 0 100 8 4 4 0 000-8z" + '"/></svg>';
+  var ICON_MOON = SVG_OPEN + "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" + '"/></svg>';
+
   function isAurora() {
     try { return localStorage.getItem(KEY) === "aurora"; } catch (_e) { return false; }
   }
@@ -34,7 +42,7 @@
     var btn = document.querySelector(".aurora-toggle");
     if (btn) {
       btn.setAttribute("aria-pressed", on ? "true" : "false");
-      btn.textContent = on ? "\u{1F319}" : "\u2600\uFE0F";
+      btn.innerHTML = on ? ICON_MOON : ICON_SUN;
       btn.title = on ? "Switch to dark mode" : "Switch to light mode";
     }
   }
@@ -64,7 +72,7 @@
     // Keep the headline accent legible against the vivid wash: brighten the
     // clipped gradient and float it off the background with a soft shadow.
     "html.aurora .gradient-text {",
-    "  filter: brightness(1.12) saturate(1.05) drop-shadow(0 3px 18px rgba(5,5,18,0.5));",
+    "  filter: brightness(1.55) saturate(0.92) drop-shadow(0 2px 12px rgba(10,8,30,0.5));",
     "}",
     // Fixed at the viewport's top-right corner, OUTSIDE the nav flow:
     // injected nav children reflow the bar on every page load (the bar
@@ -76,7 +84,7 @@
     "  display: flex; align-items: center; justify-content: center;",
     "  border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05);",
     "  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);",
-    "  font-size: 15px; line-height: 1; padding: 0;",
+    "  color: rgba(255,255,255,0.82); padding: 0;",
     "  transition: border-color .2s ease, background .2s ease;",
     "}",
     ".aurora-toggle:hover { border-color: rgba(255,255,255,0.32); background: rgba(255,255,255,0.1); }",
