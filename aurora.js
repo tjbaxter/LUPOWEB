@@ -80,9 +80,9 @@
     var btn = document.createElement("button");
     btn.type = "button";
     btn.className = "aurora-toggle";
-    btn.title = "Toggle aurora mode";
+    btn.title = "Toggle light mode";
     btn.setAttribute("aria-pressed", isAurora() ? "true" : "false");
-    btn.innerHTML = '<span class="aurora-dot" aria-hidden="true"></span><span class="aurora-label">Aurora</span>';
+    btn.innerHTML = '<span class="aurora-dot" aria-hidden="true"></span><span class="aurora-label">Light</span>';
     btn.addEventListener("click", function () {
       var next = !root.classList.contains("aurora");
       try { localStorage.setItem(KEY, next ? "aurora" : "dark"); } catch (_e) {}
