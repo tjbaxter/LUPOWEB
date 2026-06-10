@@ -32,7 +32,11 @@
       sizeTimer = setTimeout(function () { root.classList.remove("aurora-size"); }, 1300);
     }
     var btn = document.querySelector(".aurora-toggle");
-    if (btn) btn.setAttribute("aria-pressed", on ? "true" : "false");
+    if (btn) {
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      btn.textContent = on ? "\u{1F319}" : "\u2600\uFE0F";
+      btn.title = on ? "Switch to dark mode" : "Switch to light mode";
+    }
   }
 
   // CSS: the mode itself + the toggle pill.
@@ -62,21 +66,20 @@
     "html.aurora .gradient-text {",
     "  filter: brightness(1.12) saturate(1.05) drop-shadow(0 3px 18px rgba(5,5,18,0.5));",
     "}",
+    // Fixed at the viewport's top-right corner, OUTSIDE the nav flow:
+    // injected nav children reflow the bar on every page load (the bar
+    // paints before deferred scripts run), which read as a glitchy
+    // reorder on each tab change. position:fixed never shifts anything.
     ".aurora-toggle {",
-    "  display: inline-flex; align-items: center; gap: 8px; margin-left: 14px;",
-    "  padding: 7px 14px; border-radius: 999px; cursor: pointer;",
-    "  border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.05);",
-    "  color: rgba(255,255,255,0.75); font-size: 13px; font-weight: 600;",
-    "  font-family: inherit; line-height: 1; transition: border-color .2s ease, color .2s ease;",
+    "  position: fixed; top: 9px; right: 18px; z-index: 1001;",
+    "  width: 34px; height: 34px; border-radius: 999px; cursor: pointer;",
+    "  display: flex; align-items: center; justify-content: center;",
+    "  border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05);",
+    "  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);",
+    "  font-size: 15px; line-height: 1; padding: 0;",
+    "  transition: border-color .2s ease, background .2s ease;",
     "}",
-    ".aurora-toggle:hover { color: #fff; border-color: rgba(255,255,255,0.34); }",
-    ".aurora-dot {",
-    "  width: 10px; height: 10px; border-radius: 999px;",
-    "  background: linear-gradient(120deg, #667eea, #764ba2);",
-    "  box-shadow: 0 0 2px rgba(118,75,162,0.4); opacity: 0.55; transition: all .25s ease;",
-    "}",
-    ".aurora-toggle[aria-pressed=\"true\"] .aurora-dot { opacity: 1; box-shadow: 0 0 10px rgba(118,75,162,0.95); }",
-    "@media (max-width: 860px) { .aurora-toggle .aurora-label { display: none; } .aurora-toggle { padding: 7px 9px; margin-left: 8px; } }",
+    ".aurora-toggle:hover { border-color: rgba(255,255,255,0.32); background: rgba(255,255,255,0.1); }",
   ].join("\n");
   document.head.appendChild(style);
 
@@ -95,20 +98,17 @@
   function mount() {
     ensureGrain();
     if (document.querySelector(".aurora-toggle")) return;
-    var host = document.querySelector(".nav-content") || document.querySelector("nav");
-    if (!host) return;
     var btn = document.createElement("button");
     btn.type = "button";
     btn.className = "aurora-toggle";
-    btn.title = "Toggle light mode";
-    btn.setAttribute("aria-pressed", isAurora() ? "true" : "false");
-    btn.innerHTML = '<span class="aurora-dot" aria-hidden="true"></span><span class="aurora-label">Light</span>';
+    btn.setAttribute("aria-label", "Toggle light mode");
     btn.addEventListener("click", function () {
       var next = !root.classList.contains("aurora");
       try { localStorage.setItem(KEY, next ? "aurora" : "dark"); } catch (_e) {}
       apply(next);
     });
-    host.appendChild(btn);
+    document.body.appendChild(btn);
+    apply(root.classList.contains("aurora"));
   }
 
   if (document.readyState === "loading") {
