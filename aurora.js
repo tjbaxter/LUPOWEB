@@ -63,8 +63,8 @@
     // Muted text tiers lift toward white in light mode: the dark-mode
     // greys (#a1a1a6 etc) sink into the bright wash. Every marketing page
     // uses these variable names, so one override covers the site.
-    "html.aurora { --text-secondary: rgba(255,255,255,0.95); --text-tertiary: rgba(255,255,255,0.82); --text-dim: rgba(255,255,255,0.62); }",
-    "html.aurora .ldb-point-body { color: rgba(255,255,255,0.85); }",
+    "html.aurora { --text-secondary: rgba(255,255,255,0.84); --text-tertiary: rgba(255,255,255,0.7); --text-dim: rgba(255,255,255,0.52); }",
+    "html.aurora .ldb-point-body { color: rgba(255,255,255,0.78); }",
     "html.aurora .ldb-caption { color: rgba(255,255,255,0.55); }",
     // Oversize while light mode is active or fading: the bgShift rotation
     // exposes the rectangle's corners once the layer is visible (at 9%
