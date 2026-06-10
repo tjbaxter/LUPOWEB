@@ -330,10 +330,11 @@
         }
         .faq-item {
             border-top: 1px solid var(--border);
-            padding: 20px 4px;
+            padding: 0;
         }
         .faq-item:last-child { border-bottom: 1px solid var(--border); }
         .faq-q {
+            padding: 20px 4px;
             font-size: 15px; font-weight: 600; color: var(--text-primary);
             cursor: pointer;
             display: flex; align-items: center; justify-content: space-between; gap: 16px;
@@ -348,18 +349,19 @@
         details[open] .faq-q::after { content: "−"; color: var(--accent-purple); }
         .faq-a {
             font-size: 14px; color: var(--text-secondary);
-            line-height: 1.65; padding-top: 12px;
+            line-height: 1.65; padding: 0 4px 20px;
             max-width: 720px;
         }
 
         /* Bottom CTA */
         .bottom-cta {
             text-align: center;
-            padding: 56px 24px;
-            background: linear-gradient(180deg, transparent 0%, rgba(118, 75, 162, 0.08) 100%);
-            border-top: 1px solid var(--border);
-            border-radius: 28px 28px 0 0;
-            margin-top: 32px;
+            padding: 56px 32px;
+            /* Framed like the 21x stat tile: full border, contained card. */
+            background: linear-gradient(180deg, rgba(196, 181, 253, 0.03) 0%, rgba(118, 75, 162, 0.09) 100%);
+            border: 1px solid rgba(196, 181, 253, 0.16);
+            border-radius: 28px;
+            margin: 32px 0 64px;
         }
         .bottom-cta h2 {
             font-size: clamp(24px, 3.6vw, 36px);
@@ -405,7 +407,7 @@
         footer a { color: var(--text-secondary); text-decoration: none; margin: 0 8px; }
         footer a:hover { color: var(--text-primary); }
     </style>
-    <script src="/aurora.js?v=17"></script>
+    <script src="/aurora.js?v=18"></script>
 </head>
 <body>
     <div class="aurora-wash" aria-hidden="true"></div>
@@ -630,7 +632,7 @@
     </div>
 </footer>
 
-    <script src="/talk-to-lupo.js?v=cancelable" defer></script>
+    <script src="/talk-to-lupo.js?v=guarded" defer></script>
     <script async src="https://app.lupolabs.ai/widget/lupo-chat.js" data-lupo-mode="marketing"></script>
     <script src="/visit-radar.js" defer></script>
     <script src="/premium.js" defer></script>

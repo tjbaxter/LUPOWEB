@@ -479,7 +479,14 @@
   // token fetch finally resolves.
   var callSeq = 0;
 
+  // Spam friction (server enforces the real per-IP active+hourly caps on
+  // the token route and 429s abusers; this just keeps honest users from
+  // tripping those caps with rapid connect/cancel loops).
+  var lastCancelAt = 0;
+  var attemptLog = [];
+
   function cancelConnecting() {
+    lastCancelAt = Date.now();
     callSeq++;
     if (vapi) { try { vapi.stop(); } catch (e) { log("stop error", e); } }
     setState("idle");
@@ -582,6 +589,21 @@
       return;
     }
     if (state === "loading" || state === "rate_limited" || state === "unavailable") return;
+    var now = Date.now();
+    // Brief cooldown after a cancel: blocks on/off hammering outright.
+    if (now - lastCancelAt < 1200) return;
+    // Rolling cap: more than 5 dial attempts in a minute is not a person
+    // deciding to talk — pause locally before the server has to 429 them.
+    attemptLog = attemptLog.filter(function (t) { return now - t < 60000; });
+    if (attemptLog.length >= 5) {
+      setState("rate_limited");
+      showToast("Too many call attempts. Give it a few seconds.", "error");
+      setTimeout(function () {
+        if (btn.getAttribute("data-state") === "rate_limited") setState("idle");
+      }, 30000);
+      return;
+    }
+    attemptLog.push(now);
     startCall(demoKeyForEvent(ev));
   }
 

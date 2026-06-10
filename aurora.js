@@ -80,8 +80,20 @@
     "html.aurora .matrix, html.aurora .packet-mock {",
     "  box-shadow: 0 34px 90px rgba(14,10,48,0.5), 0 10px 28px rgba(14,10,48,0.32), 0 0 0 1px rgba(255,255,255,0.07);",
     "}",
-    "html.aurora .tier-card, html.aurora .stat-callout, html.aurora .section-card, html.aurora .faq-item {",
+    "html.aurora .tier-card, html.aurora .stat-callout, html.aurora .section-card, html.aurora .faq-item, html.aurora .bottom-cta {",
     "  box-shadow: 0 16px 44px rgba(14,10,48,0.35), 0 4px 14px rgba(14,10,48,0.22);",
+    "}",
+    // FAQ accordion cards (the /faq page): the near-white translucent
+    // surfaces read as flat stacked rectangles on the bright wash. Give
+    // them the same dark-glass-floating-on-wash language as every other
+    // card. Scoped to .section-inner so pricing's borderless FAQ rows
+    // keep their row look.
+    "html.aurora .section-inner .faq-item {",
+    "  background: rgba(14,14,30,0.34); border-color: rgba(255,255,255,0.13);",
+    "  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);",
+    "}",
+    "html.aurora .section-inner .faq-item[open] {",
+    "  background: rgba(22,17,48,0.46); border-color: rgba(196,181,253,0.42);",
     "}",
     "html.aurora .ldb-caption { color: rgba(255,255,255,0.55); }",
     // Oversize while light mode is active or fading: the bgShift rotation

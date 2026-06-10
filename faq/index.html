@@ -79,7 +79,9 @@
             background: rgba(255,255,255,0.018);
             border: 1px solid rgba(255,255,255,0.06);
             border-radius: 14px;
-            padding: 22px 26px;
+            /* Padding lives on the summary, not here: the whole visible
+               card is the click target, not just the question text. */
+            padding: 0;
             margin-bottom: 12px;
             transition: border-color 0.25s ease, background 0.25s ease;
         }
@@ -90,6 +92,7 @@
         .faq-question {
             display: flex; align-items: center; justify-content: space-between;
             gap: 16px;
+            padding: 22px 26px;
             font-size: 16px; font-weight: 600;
             color: var(--text-primary);
             cursor: pointer;
@@ -104,7 +107,8 @@
         }
         .faq-item[open] .faq-question::after { content: "−"; color: #a78bfa; }
         .faq-answer {
-            margin-top: 14px;
+            margin: 0;
+            padding: 0 26px 22px;
             font-size: 14.5px; line-height: 1.6;
             color: var(--text-secondary);
         }
@@ -118,7 +122,7 @@
         footer a { color: var(--text-secondary); text-decoration: none; margin: 0 8px; }
         footer a:hover { color: var(--text-primary); }
     </style>
-    <script src="/aurora.js?v=17"></script>
+    <script src="/aurora.js?v=18"></script>
 </head>
 <body>
     <div class="aurora-wash" aria-hidden="true"></div>
@@ -239,7 +243,7 @@
 </footer>
 
     <script src="/analytics.js" defer></script>
-    <script src="/talk-to-lupo.js?v=cancelable" defer></script>
+    <script src="/talk-to-lupo.js?v=guarded" defer></script>
     <script async src="https://app.lupolabs.ai/widget/lupo-chat.js" data-lupo-mode="marketing"></script>
     <script src="/visit-radar.js" defer></script>
     <script src="/premium.js" defer></script>
