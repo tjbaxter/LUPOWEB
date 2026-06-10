@@ -65,6 +65,15 @@
     // uses these variable names, so one override covers the site.
     "html.aurora { --text-secondary: rgba(255,255,255,0.84); --text-tertiary: rgba(255,255,255,0.7); --text-dim: rgba(255,255,255,0.52); }",
     "html.aurora .ldb-point-body { color: rgba(255,255,255,0.78); }",
+    // Elevation pass: dark surfaces float on the bright wash instead of
+    // looking pasted on. Indigo-tinted, never plain black. Dark mode
+    // keeps its own flat-on-black look.
+    "html.aurora .matrix, html.aurora .packet-mock {",
+    "  box-shadow: 0 34px 90px rgba(14,10,48,0.5), 0 10px 28px rgba(14,10,48,0.32), 0 0 0 1px rgba(255,255,255,0.07);",
+    "}",
+    "html.aurora .tier-card, html.aurora .stat-callout, html.aurora .section-card, html.aurora .faq-item {",
+    "  box-shadow: 0 16px 44px rgba(14,10,48,0.35), 0 4px 14px rgba(14,10,48,0.22);",
+    "}",
     "html.aurora .ldb-caption { color: rgba(255,255,255,0.55); }",
     // Oversize while light mode is active or fading: the bgShift rotation
     // exposes the rectangle's corners once the layer is visible (at 9%
