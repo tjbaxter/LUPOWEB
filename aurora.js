@@ -22,8 +22,11 @@
   function apply(on) {
     if (sizeTimer) { clearTimeout(sizeTimer); sizeTimer = null; }
     if (on) {
+      // Size (not transitioned) and fade can apply in the same frame; a
+      // requestAnimationFrame here would never fire in hidden tabs and
+      // leave the toggle half-applied.
       root.classList.add("aurora-size");
-      requestAnimationFrame(function () { root.classList.add("aurora"); });
+      root.classList.add("aurora");
     } else {
       root.classList.remove("aurora");
       sizeTimer = setTimeout(function () { root.classList.remove("aurora-size"); }, 1300);
@@ -44,7 +47,7 @@
     // screens the rotated rectangle's corner enters the viewport once per
     // pass, flashing a black triangle. A static layer cannot show edges.
     "html.aurora-size .animated-bg { inset: -60% !important; animation: none !important; }",
-    "html.aurora .animated-bg { opacity: 0.85 !important; filter: saturate(1.45) contrast(1.07); }",
+    "html.aurora .animated-bg { opacity: 0.52 !important; filter: saturate(0.75) brightness(0.94) contrast(1.03); }",
     // Film grain over the wash, under the content (Warp-style retro-futurist
     // texture). Fades with the wash instead of popping.
     ".aurora-grain {",
@@ -57,7 +60,7 @@
     // Keep the headline accent legible against the vivid wash: brighten the
     // clipped gradient and float it off the background with a soft shadow.
     "html.aurora .gradient-text {",
-    "  filter: brightness(1.24) saturate(1.18) drop-shadow(0 3px 18px rgba(5,5,18,0.55));",
+    "  filter: brightness(1.12) saturate(1.05) drop-shadow(0 3px 18px rgba(5,5,18,0.5));",
     "}",
     ".aurora-toggle {",
     "  display: inline-flex; align-items: center; gap: 8px; margin-left: 14px;",
