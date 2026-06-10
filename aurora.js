@@ -50,7 +50,16 @@
   // CSS: the mode itself + the toggle pill.
   var style = document.createElement("style");
   style.textContent = [
-    ".animated-bg { transition: opacity 1.2s ease, filter 1.2s ease; }",
+    ".animated-bg, .aurora-wash { transition: opacity 1.2s ease, filter 1.2s ease; }",
+    // Self-provisioned wash for pages that ship without an .animated-bg
+    // layer (how-it-works, sales-operations, faq): same palette, static.
+    ".aurora-wash {",
+    "  position: fixed; inset: -60%; z-index: -1; pointer-events: none; opacity: 0;",
+    "  background: radial-gradient(circle at 20% 50%, #2997ff 0%, transparent 75%),",
+    "    radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 75%),",
+    "    radial-gradient(circle at 40% 20%, #667eea 0%, transparent 75%);",
+    "}",
+    "html.aurora .aurora-wash { opacity: 0.85; filter: saturate(0.82) brightness(1.16) contrast(0.9); }",
     // Muted text tiers lift toward white in light mode: the dark-mode
     // greys (#a1a1a6 etc) sink into the bright wash. Every marketing page
     // uses these variable names, so one override covers the site.
@@ -97,6 +106,15 @@
   ].join("\n");
   document.head.appendChild(style);
 
+  // Wash layer for pages without their own .animated-bg.
+  function ensureWash() {
+    if (document.querySelector(".animated-bg") || document.querySelector(".aurora-wash")) return;
+    var w = document.createElement("div");
+    w.className = "aurora-wash";
+    w.setAttribute("aria-hidden", "true");
+    if (document.body) document.body.appendChild(w);
+  }
+
   // Grain layer (one per page, sits above .animated-bg, below content).
   function ensureGrain() {
     if (document.querySelector(".aurora-grain")) return;
@@ -110,6 +128,7 @@
   apply(isAurora());
 
   function mount() {
+    ensureWash();
     ensureGrain();
     if (document.querySelector(".aurora-toggle")) return;
     var btn = document.createElement("button");
