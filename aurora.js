@@ -7,6 +7,8 @@
 // small pill toggle into the nav. Default stays dark; choice persists
 // per browser via localStorage.
 (function () {
+  if (window.__LUPO_AURORA_BOOTED__) return;
+  window.__LUPO_AURORA_BOOTED__ = true;
   var KEY = "lupoTheme";
   var root = document.documentElement;
 
@@ -108,7 +110,7 @@
     "  display: flex; align-items: center; justify-content: center;",
     "  border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05);",
     "  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);",
-    "  color: rgba(255,255,255,0.82); padding: 0;",
+    "  color: rgba(255,255,255,0.82); padding: 0; user-select: none; -webkit-user-select: none;",
     "  transition: border-color .2s ease, background .2s ease;",
     "}",
     ".aurora-toggle:hover { border-color: rgba(255,255,255,0.32); background: rgba(255,255,255,0.1); }",
@@ -151,7 +153,14 @@
     btn.type = "button";
     btn.className = "aurora-toggle";
     btn.setAttribute("aria-label", "Toggle light mode");
+    // Debounced: a double-click (or mouse chatter) used to fire twice,
+    // toggling light on and instantly back off — read as "light mode is
+    // broken". One theme change per 400ms.
+    var lastToggleAt = 0;
     btn.addEventListener("click", function () {
+      var now = Date.now();
+      if (now - lastToggleAt < 400) return;
+      lastToggleAt = now;
       var next = !root.classList.contains("aurora");
       try { localStorage.setItem(KEY, next ? "aurora" : "dark"); } catch (_e) {}
       apply(next);
