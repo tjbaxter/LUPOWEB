@@ -338,37 +338,13 @@
     </div>
 </footer>
 
-    <script src="/talk-to-lupo.js?v=chat-handoff" defer></script>
+    <script src="/talk-to-lupo.js?v=cancelable" defer></script>
     <script async src="https://app.lupolabs.ai/widget/lupo-chat.js" data-lupo-mode="marketing"></script>
     <script src="/visit-radar.js" defer></script>
     <script>
-        // Wire the in-page "Try the demo" button to the floating FAB
-        // that talk-to-lupo.js creates. Click forwarding only, the
-        // SMB demo key is selected by talk-to-lupo.js itself via
-        // window.location.pathname (any path starting with /smb maps
-        // to the smb demo).
-        (function () {
-            var triggers = document.querySelectorAll('[data-lupo-call-trigger]');
-            if (!triggers.length) return;
+// In-page demo button wiring moved into talk-to-lupo.js (central
+        // trigger controller; data-lupo-call-trigger is all a button needs).
 
-            function bind() {
-                var fab = document.querySelector('.lupo-call-btn');
-                if (!fab) return false;
-                triggers.forEach(function (btn) {
-                    btn.addEventListener('click', function (ev) {
-                        ev.preventDefault();
-                        fab.click();
-                    });
-                });
-                return true;
-            }
-            if (!bind()) {
-                var attempts = 0;
-                var iv = setInterval(function () {
-                    if (bind() || ++attempts > 30) clearInterval(iv);
-                }, 100);
-            }
-        })();
     </script>
 </body>
 </html>

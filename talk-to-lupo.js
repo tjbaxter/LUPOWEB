@@ -69,7 +69,7 @@
     ".lupo-call-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(118, 75, 162, 0.58), 0 2px 6px rgba(118, 75, 162, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.16); }",
     ".lupo-call-btn:disabled { opacity: 0.55; cursor: not-allowed; }",
     ".lupo-call-btn.lupo-hidden { opacity: 0; pointer-events: none; transform: translateY(20px); }",
-    ".lupo-call-btn[data-state='connecting'] { background: linear-gradient(135deg, #7e8ff2 0%, #8964b8 100%); cursor: wait; }",
+    ".lupo-call-btn[data-state='connecting'] { background: linear-gradient(135deg, #7e8ff2 0%, #8964b8 100%); cursor: pointer; }",
     ".lupo-call-btn[data-state='in-call'] { background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); box-shadow: 0 6px 24px rgba(220, 38, 38, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12); }",
     ".lupo-call-btn[data-state='rate_limited'], .lupo-call-btn[data-state='unavailable'] { background: rgba(80, 80, 80, 0.85); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.40); }",
     ".lupo-call-btn-icon {",
@@ -106,6 +106,37 @@
   ].join("\n");
   document.head.appendChild(style);
 
+  // Inline [data-lupo-call-trigger] CTA states — canonical copy. Pages no
+  // longer need their own mirror script or styles: any button with the
+  // attribute gets wiring + these states automatically.
+  var triggerStyle = document.createElement("style");
+  triggerStyle.textContent = [
+    "[data-lupo-call-trigger] { position: relative; overflow: hidden; transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease; }",
+    "[data-lupo-call-trigger][data-call-state='connecting'] {",
+    "  background: linear-gradient(110deg, rgba(167,139,250,0.10) 0%, rgba(167,139,250,0.30) 50%, rgba(167,139,250,0.10) 100%);",
+    "  background-size: 200% 100%; animation: lupoBtnShimmer 1.6s linear infinite;",
+    "  border-color: rgba(167,139,250,0.38); color: var(--text-primary, #f5f5f7); cursor: pointer;",
+    "}",
+    "[data-lupo-call-trigger][data-call-state='connecting']:hover { transform: none; }",
+    "[data-lupo-call-trigger][data-call-state='in-call'] {",
+    "  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); border-color: transparent; color: white;",
+    "  box-shadow: 0 0 0 0 rgba(220,38,38,0.55); animation: lupoBtnPulse 1.8s ease-in-out infinite;",
+    "}",
+    "[data-lupo-call-trigger][data-call-state='in-call']:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(220,38,38,0.4); }",
+    "[data-lupo-call-trigger][data-call-state='rate_limited'], [data-lupo-call-trigger][data-call-state='unavailable'] { opacity: 0.55; cursor: not-allowed; }",
+    "[data-lupo-call-trigger][data-call-state='rate_limited']:hover, [data-lupo-call-trigger][data-call-state='unavailable']:hover { transform: none; background: transparent; }",
+    ".lupo-trigger-spinner { animation: lupoSpin 0.9s linear infinite; }",
+    "@keyframes lupoBtnShimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }",
+    "@keyframes lupoBtnPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.45); } 50% { box-shadow: 0 0 0 10px rgba(220,38,38,0); } }",
+    "@keyframes lupoSpin { to { transform: rotate(360deg); } }",
+    "@media (prefers-reduced-motion: reduce) {",
+    "  [data-lupo-call-trigger][data-call-state='connecting'] { animation: none; background: rgba(167,139,250,0.18); }",
+    "  [data-lupo-call-trigger][data-call-state='in-call'] { animation: none; }",
+    "  .lupo-trigger-spinner { animation: none; }",
+    "}"
+  ].join("\n");
+  document.head.appendChild(triggerStyle);
+
   var PHONE_ICON = '<span class="lupo-call-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>';
   var PHONE_OFF_ICON = '<span class="lupo-call-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(135deg);"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>';
 
@@ -126,8 +157,54 @@
   btn.setAttribute("aria-label", "Talk to LUPO live");
   btn.innerHTML = PHONE_ICON + '<span class="lupo-call-btn-label">Talk to LUPO live</span>';
 
+  var triggerEls = [];
+  var TRIGGER_PHONE_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3-2.42M5.66 5.66a16 16 0 0 0 .82 1.93 2 2 0 0 1-.45 2.11L4.78 11M2 2l20 20"/></svg>';
+  var TRIGGER_SPINNER = '<svg class="lupo-trigger-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>';
+
+  function applyTriggerState(state) {
+    for (var i = 0; i < triggerEls.length; i++) {
+      var t = triggerEls[i];
+      if (state === "connecting" || state === "loading") {
+        t.setAttribute("data-call-state", "connecting");
+        t.innerHTML = TRIGGER_SPINNER + "<span>Connecting\u2026</span>";
+        t.title = "Click again to cancel";
+      } else if (state === "in-call") {
+        t.setAttribute("data-call-state", "in-call");
+        t.innerHTML = TRIGGER_PHONE_OFF + "<span>End call</span>";
+        t.removeAttribute("title");
+      } else if (state === "rate_limited" || state === "unavailable") {
+        t.setAttribute("data-call-state", state);
+        t.innerHTML = t.getAttribute("data-lupo-original-html");
+        t.removeAttribute("title");
+      } else {
+        t.removeAttribute("data-call-state");
+        t.innerHTML = t.getAttribute("data-lupo-original-html");
+        t.removeAttribute("title");
+      }
+    }
+  }
+
+  function wireTriggers() {
+    var found = document.querySelectorAll("[data-lupo-call-trigger]");
+    for (var i = 0; i < found.length; i++) {
+      var t = found[i];
+      if (t.getAttribute("data-lupo-wired")) continue;
+      t.setAttribute("data-lupo-wired", "1");
+      if (!t.getAttribute("data-lupo-original-html")) {
+        t.setAttribute("data-lupo-original-html", t.innerHTML);
+      }
+      t.addEventListener("click", function (e) {
+        e.preventDefault();
+        handleCallButtonClick(e);
+      });
+      triggerEls.push(t);
+    }
+    applyTriggerState(btn.getAttribute("data-state") || "idle");
+  }
+
   function setState(state) {
     btn.setAttribute("data-state", state);
+    applyTriggerState(state);
     if (state === "idle") {
       btn.disabled = false;
       btn.innerHTML = PHONE_ICON + '<span class="lupo-call-btn-label">Talk to LUPO live</span>';
@@ -216,6 +293,7 @@
         if (r.bottom > 0 && r.top < vh) btn.classList.add('lupo-hidden');
       }
       document.body.appendChild(btn);
+      wireTriggers();
       setupScrollVisibility();
     }
     if (document.body) inject();
@@ -394,6 +472,20 @@
   //   - systemContext is the chat transcript, injected on call-start so
   //     the voice agent continues the same conversation. Both optional;
   //     absent -> exactly the standalone call behaviour.
+  // Each call attempt gets a generation number. Cancelling (or starting a
+  // newer attempt) bumps it, and every async stage of the old attempt
+  // checks it before touching state — so a cancelled attempt can never
+  // flip the button back to "connecting"/"in-call" seconds later when its
+  // token fetch finally resolves.
+  var callSeq = 0;
+
+  function cancelConnecting() {
+    callSeq++;
+    if (vapi) { try { vapi.stop(); } catch (e) { log("stop error", e); } }
+    setState("idle");
+    log("call cancelled while connecting");
+  }
+
   function startCall(demoKey, handoff) {
     if (isInCall || btn.getAttribute("data-state") === "in-call") {
       // Already in a call — treat as a "hang up" toggle, matching click behaviour.
@@ -401,6 +493,7 @@
       return;
     }
     if (btn.getAttribute("data-state") === "connecting") return;
+    var seq = ++callSeq;
     setState("connecting");
 
     var key = demoKey === "smb" ? "smb" : "b2b";
@@ -420,7 +513,9 @@
 
     ensureSDK()
       .then(function (Ctor) {
+        if (seq !== callSeq) return; // cancelled while the SDK loaded
         return fetchToken(key).then(function (resp) {
+          if (seq !== callSeq) return; // cancelled while the token minted
           log("token response", resp.status, resp.body && resp.body.reason);
           if (resp.status !== 200 || !resp.body || !resp.body.token) {
             handleTokenRejection(resp.status, resp.body);
@@ -459,6 +554,7 @@
         });
       })
       .catch(function (err) {
+        if (seq !== callSeq) return; // cancelled; do not clobber newer state
         log("SDK or token failed", err && err.message);
         var msg = (err && err.message) || "";
         if (/All Vapi SDK|vapi_constructor_missing|module|import/i.test(msg)) {
@@ -470,11 +566,26 @@
       });
   }
 
-  btn.addEventListener("click", function (ev) {
-    log("click", { state: btn.getAttribute("data-state"), isInCall: isInCall });
-    var demoKey = demoKeyForEvent(ev);
-    startCall(demoKey);
-  });
+  // One click controller for the hidden FAB AND every inline
+  // [data-lupo-call-trigger] button: idle starts, connecting CANCELS
+  // (click again to abort a dial that hasn't picked up), in-call hangs up.
+  function handleCallButtonClick(ev) {
+    var state = btn.getAttribute("data-state");
+    log("click", { state: state, isInCall: isInCall });
+    if (state === "in-call") {
+      if (vapi) { try { vapi.stop(); } catch (e) { log("stop error", e); } }
+      return;
+    }
+    if (state === "connecting") {
+      cancelConnecting();
+      showToast("Call cancelled.");
+      return;
+    }
+    if (state === "loading" || state === "rate_limited" || state === "unavailable") return;
+    startCall(demoKeyForEvent(ev));
+  }
+
+  btn.addEventListener("click", handleCallButtonClick);
 
   // Public API consumed by the native LUPO chat widget (and any future
   // host-page integrations that want to start a Vapi call without
