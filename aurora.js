@@ -4,8 +4,10 @@
 // radial gradients) at opacity 0.09: the site's subtle dark glow. Aurora
 // mode lifts that same layer to 0.8 for the vivid look. One shared
 // script: applies the persisted choice, injects the CSS, and mounts a
-// small pill toggle into the nav. Default stays dark; choice persists
-// per browser via localStorage.
+// corner toggle button. Default stays dark; choice persists per browser
+// via localStorage. Loaded SYNCHRONOUSLY in <head> (it is tiny) so the
+// persisted theme is on the html element before first paint: pages
+// navigate without a dark flash or a replayed fade.
 (function () {
   if (window.__LUPO_AURORA_BOOTED__) return;
   window.__LUPO_AURORA_BOOTED__ = true;
@@ -52,7 +54,12 @@
   // CSS: the mode itself + the toggle pill.
   var style = document.createElement("style");
   style.textContent = [
-    ".animated-bg, .aurora-wash { transition: opacity 1.2s ease, filter 1.2s ease; }",
+    // Fades run ONLY on an actual toggle click (html.aurora-anim). Without
+    // the gate every page navigation replayed the 1.2s dark-to-light glow:
+    // a fresh document starts at the dark values and transitions up. Loaded
+    // synchronously in <head>, the persisted theme now paints in its final
+    // state on frame one; the toggle adds .aurora-anim to animate.
+    "html.aurora-anim .animated-bg, html.aurora-anim .aurora-wash { transition: opacity 1.2s ease, filter 1.2s ease; }",
     // Self-provisioned wash for pages that ship without an .animated-bg
     // layer (how-it-works, sales-operations, faq): same palette, static.
     ".aurora-wash {",
@@ -90,10 +97,10 @@
     // texture). Fades with the wash instead of popping.
     ".aurora-grain {",
     "  position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0;",
-    "  transition: opacity 1.2s ease;",
     "  background-image: url(data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27280%27%20height=%27280%27%3E%3Cfilter%20id=%27g%27%3E%3CfeTurbulence%20type=%27fractalNoise%27%20baseFrequency=%270.62%27%20numOctaves=%273%27%20seed=%277%27/%3E%3C/filter%3E%3Crect%20width=%27100%25%27%20height=%27100%25%27%20filter=%27url%28%23g%29%27/%3E%3C/svg%3E);",
     "  mix-blend-mode: overlay;",
     "}",
+    "html.aurora-anim .aurora-grain { transition: opacity 1.2s ease; }",
     "html.aurora .aurora-grain { opacity: 0.52; }",
     // Keep the headline accent legible against the vivid wash: brighten the
     // clipped gradient and float it off the background with a soft shadow.
@@ -124,7 +131,7 @@
     // z:-1 wash and grain (negative-z layers sit beneath in-flow content's
     // backgrounds). Body must go transparent whenever html owns the canvas,
     // or light mode renders as a black page with only the icon flipped.
-    "body { transition: background-color 1.2s ease; }",
+    "html.aurora-anim body { transition: background-color 1.2s ease; }",
     "html.aurora { background-color: #4c569b; }",
     "html.aurora body { background: transparent !important; }",
     "html.aurora footer, html.aurora .lf-footer { background: rgba(10,12,26,0.35) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }",
@@ -168,6 +175,9 @@
       var now = Date.now();
       if (now - lastToggleAt < 400) return;
       lastToggleAt = now;
+      // Enable the fades only for user-initiated toggles; page loads paint
+      // the persisted theme instantly (no re-glow on every navigation).
+      root.classList.add("aurora-anim");
       var next = !root.classList.contains("aurora");
       try { localStorage.setItem(KEY, next ? "aurora" : "dark"); } catch (_e) {}
       apply(next);
