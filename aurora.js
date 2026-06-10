@@ -14,8 +14,20 @@
     try { return localStorage.getItem(KEY) === "aurora"; } catch (_e) { return false; }
   }
 
+  // Two classes so the toggle never shows the layer's edges mid-spin:
+  // .aurora drives the FADES (opacity, filter, grain); .aurora-size drives
+  // the inset oversize and only ever changes while the layer sits at its
+  // invisible 9%: applied before fading in, removed 1.3s after fading out.
+  var sizeTimer = null;
   function apply(on) {
-    root.classList.toggle("aurora", on);
+    if (sizeTimer) { clearTimeout(sizeTimer); sizeTimer = null; }
+    if (on) {
+      root.classList.add("aurora-size");
+      requestAnimationFrame(function () { root.classList.add("aurora"); });
+    } else {
+      root.classList.remove("aurora");
+      sizeTimer = setTimeout(function () { root.classList.remove("aurora-size"); }, 1300);
+    }
     var btn = document.querySelector(".aurora-toggle");
     if (btn) btn.setAttribute("aria-pressed", on ? "true" : "false");
   }
@@ -23,20 +35,21 @@
   // CSS: the mode itself + the toggle pill.
   var style = document.createElement("style");
   style.textContent = [
-    ".animated-bg { transition: opacity 1.2s ease; }",
-    // Oversize the layer in aurora mode: the bgShift rotation exposes the
-    // rectangle's corners once the layer is actually visible (at 9% nobody
-    // ever saw the edges). inset:-60% keeps rotation full-bleed. Saturate +
-    // contrast push the wash from pastel toward rich.
-    "html.aurora .animated-bg { opacity: 0.85 !important; inset: -60% !important; filter: saturate(1.45) contrast(1.07); }",
+    ".animated-bg { transition: opacity 1.2s ease, filter 1.2s ease; }",
+    // Oversize while light mode is active or fading: the bgShift rotation
+    // exposes the rectangle's corners once the layer is visible (at 9%
+    // nobody ever saw the edges). Size changes only happen at 9% opacity.
+    "html.aurora-size .animated-bg { inset: -60% !important; }",
+    "html.aurora .animated-bg { opacity: 0.85 !important; filter: saturate(1.45) contrast(1.07); }",
     // Film grain over the wash, under the content (Warp-style retro-futurist
-    // texture). Hidden in dark mode.
+    // texture). Fades with the wash instead of popping.
     ".aurora-grain {",
-    "  position: fixed; inset: 0; z-index: -1; pointer-events: none; display: none;",
+    "  position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0;",
+    "  transition: opacity 1.2s ease;",
     "  background-image: url(data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27280%27%20height=%27280%27%3E%3Cfilter%20id=%27g%27%3E%3CfeTurbulence%20type=%27fractalNoise%27%20baseFrequency=%270.62%27%20numOctaves=%273%27%20seed=%277%27/%3E%3C/filter%3E%3Crect%20width=%27100%25%27%20height=%27100%25%27%20filter=%27url%28%23g%29%27/%3E%3C/svg%3E);",
-    "  mix-blend-mode: overlay; opacity: 0.52;",
+    "  mix-blend-mode: overlay;",
     "}",
-    "html.aurora .aurora-grain { display: block; }",
+    "html.aurora .aurora-grain { opacity: 0.52; }",
     // Keep the headline accent legible against the vivid wash: brighten the
     // clipped gradient and float it off the background with a soft shadow.
     "html.aurora .gradient-text {",
