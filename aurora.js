@@ -39,7 +39,11 @@
     // Oversize while light mode is active or fading: the bgShift rotation
     // exposes the rectangle's corners once the layer is visible (at 9%
     // nobody ever saw the edges). Size changes only happen at 9% opacity.
-    "html.aurora-size .animated-bg { inset: -60% !important; }",
+    // While light mode is active or fading: oversize AND freeze the layer.
+    // The bgShift keyframes rotate and shrink it (scale 0.9); on wide
+    // screens the rotated rectangle's corner enters the viewport once per
+    // pass, flashing a black triangle. A static layer cannot show edges.
+    "html.aurora-size .animated-bg { inset: -60% !important; animation: none !important; }",
     "html.aurora .animated-bg { opacity: 0.85 !important; filter: saturate(1.45) contrast(1.07); }",
     // Film grain over the wash, under the content (Warp-style retro-futurist
     // texture). Fades with the wash instead of popping.
