@@ -112,6 +112,13 @@
     "  transition: border-color .2s ease, background .2s ease;",
     "}",
     ".aurora-toggle:hover { border-color: rgba(255,255,255,0.32); background: rgba(255,255,255,0.1); }",
+    // Mobile: the nav's Sign-in button reaches the viewport edge, so the
+    // toggle tucks below the bar instead of colliding with it.
+    "@media (max-width: 860px) { .aurora-toggle { top: 62px; right: 12px; width: 32px; height: 32px; } }",
+    // Overscroll rubber-band canvas matches the wash instead of flashing
+    // black, and opaque dark footers become translucent glass on the wash.
+    "html.aurora { background-color: #4c569b; }",
+    "html.aurora footer, html.aurora .lf-footer { background: rgba(10,12,26,0.35) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }",
   ].join("\n");
   document.head.appendChild(style);
 
