@@ -26,8 +26,22 @@
     ".animated-bg { transition: opacity 1.2s ease; }",
     // Oversize the layer in aurora mode: the bgShift rotation exposes the
     // rectangle's corners once the layer is actually visible (at 9% nobody
-    // ever saw the edges). inset:-60% keeps rotation full-bleed.
-    "html.aurora .animated-bg { opacity: 0.8 !important; inset: -60% !important; }",
+    // ever saw the edges). inset:-60% keeps rotation full-bleed. Saturate +
+    // contrast push the wash from pastel toward rich.
+    "html.aurora .animated-bg { opacity: 0.85 !important; inset: -60% !important; filter: saturate(1.45) contrast(1.07); }",
+    // Film grain over the wash, under the content (Warp-style retro-futurist
+    // texture). Hidden in dark mode.
+    ".aurora-grain {",
+    "  position: fixed; inset: 0; z-index: -1; pointer-events: none; display: none;",
+    "  background-image: url(data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27280%27%20height=%27280%27%3E%3Cfilter%20id=%27g%27%3E%3CfeTurbulence%20type=%27fractalNoise%27%20baseFrequency=%270.62%27%20numOctaves=%273%27%20seed=%277%27/%3E%3C/filter%3E%3Crect%20width=%27100%25%27%20height=%27100%25%27%20filter=%27url%28%23g%29%27/%3E%3C/svg%3E);",
+    "  mix-blend-mode: overlay; opacity: 0.52;",
+    "}",
+    "html.aurora .aurora-grain { display: block; }",
+    // Keep the headline accent legible against the vivid wash: brighten the
+    // clipped gradient and float it off the background with a soft shadow.
+    "html.aurora .gradient-text {",
+    "  filter: brightness(1.24) saturate(1.18) drop-shadow(0 3px 18px rgba(5,5,18,0.55));",
+    "}",
     ".aurora-toggle {",
     "  display: inline-flex; align-items: center; gap: 8px; margin-left: 14px;",
     "  padding: 7px 14px; border-radius: 999px; cursor: pointer;",
@@ -46,10 +60,20 @@
   ].join("\n");
   document.head.appendChild(style);
 
+  // Grain layer (one per page, sits above .animated-bg, below content).
+  function ensureGrain() {
+    if (document.querySelector(".aurora-grain")) return;
+    var g = document.createElement("div");
+    g.className = "aurora-grain";
+    g.setAttribute("aria-hidden", "true");
+    if (document.body) document.body.appendChild(g);
+  }
+
   // Apply persisted state immediately (CSS transition makes it a fade).
   apply(isAurora());
 
   function mount() {
+    ensureGrain();
     if (document.querySelector(".aurora-toggle")) return;
     var host = document.querySelector(".nav-content") || document.querySelector("nav");
     if (!host) return;
