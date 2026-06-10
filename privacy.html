@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy | Lupo</title>
+    <meta name="theme-color" content="#0a0a0d">
     <meta name="description" content="Privacy Policy for Lupo, an AI inbound sales intake and booking service from Flair Technologies Ltd. Includes mobile messaging and SMS data handling terms.">
     <link rel="icon" type="image/png" href="/lupo-head-logo copy.png">
     <link rel="apple-touch-icon" href="/lupo-head-logo copy.png">
@@ -14,24 +15,15 @@
             box-sizing: border-box;
         }
 
+        /* Dark by default, matching the rest of the site — legal pages
+           were light-first and gave light-OS visitors a white page. */
         :root {
-            --text-primary: #1d1d1f;
-            --text-secondary: #86868b;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f5f5f7;
-            --accent: #0071e3;
-            --border: rgba(0, 0, 0, 0.08);
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --text-primary: #f5f5f7;
-                --text-secondary: #a1a1a6;
-                --bg-primary: #000000;
-                --bg-secondary: #161617;
-                --accent: #2997ff;
-                --border: rgba(255, 255, 255, 0.08);
-            }
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --bg-primary: #000000;
+            --bg-secondary: #161617;
+            --accent: #2997ff;
+            --border: rgba(255, 255, 255, 0.08);
         }
 
         body {
@@ -55,15 +47,9 @@
             z-index: 1000;
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
-            background: rgba(255, 255, 255, 0.72);
+            background: rgba(0, 0, 0, 0.72);
             border-bottom: 1px solid var(--border);
             transition: all 0.3s ease;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            nav {
-                background: rgba(0, 0, 0, 0.72);
-            }
         }
 
         .nav-content {
