@@ -47,7 +47,7 @@
     // screens the rotated rectangle's corner enters the viewport once per
     // pass, flashing a black triangle. A static layer cannot show edges.
     "html.aurora-size .animated-bg { inset: -60% !important; animation: none !important; }",
-    "html.aurora .animated-bg { opacity: 0.52 !important; filter: saturate(0.75) brightness(0.94) contrast(1.03); }",
+    "html.aurora .animated-bg { opacity: 0.85 !important; filter: saturate(0.82) brightness(1.16) contrast(0.9); }",
     // Film grain over the wash, under the content (Warp-style retro-futurist
     // texture). Fades with the wash instead of popping.
     ".aurora-grain {",
