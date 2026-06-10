@@ -119,7 +119,14 @@
     "@media (max-width: 860px) { .aurora-toggle { top: 62px; right: 12px; width: 32px; height: 32px; } }",
     // Overscroll rubber-band canvas matches the wash instead of flashing
     // black, and opaque dark footers become translucent glass on the wash.
+    // CRITICAL: giving html a background stops body's black background from
+    // propagating to the canvas, so body would paint opaque black OVER the
+    // z:-1 wash and grain (negative-z layers sit beneath in-flow content's
+    // backgrounds). Body must go transparent whenever html owns the canvas,
+    // or light mode renders as a black page with only the icon flipped.
+    "body { transition: background-color 1.2s ease; }",
     "html.aurora { background-color: #4c569b; }",
+    "html.aurora body { background: transparent !important; }",
     "html.aurora footer, html.aurora .lf-footer { background: rgba(10,12,26,0.35) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }",
   ].join("\n");
   document.head.appendChild(style);
