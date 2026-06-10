@@ -96,6 +96,14 @@
     "  background: rgba(22,17,48,0.46); border-color: rgba(196,181,253,0.42);",
     "}",
     "html.aurora .ldb-caption { color: rgba(255,255,255,0.55); }",
+    // Eyebrow labels: accent purple (#a78bfa / var(--purple)) disappears
+    // into the bright wash. Lift to pale lavender with a whisper of dark
+    // glow so they read while keeping the accent character. The two grey
+    // eyebrows (#a1a1a6 stat/quote bands) lift to translucent white.
+    "html.aurora .section-eyebrow, html.aurora .article-eyebrow, html.aurora .blog-hero-eyebrow, html.aurora .blog-card-eyebrow, html.aurora .blog-index-cta-eyebrow, html.aurora .article-cta-eyebrow, html.aurora .article-related-item-eyebrow {",
+    "  color: #ece4ff; text-shadow: 0 1px 10px rgba(22,12,54,0.45);",
+    "}",
+    "html.aurora .lst-eyebrow, html.aurora .ltq-eyebrow { color: rgba(255,255,255,0.74); }",
     // Oversize while light mode is active or fading: the bgShift rotation
     // exposes the rectangle's corners once the layer is visible (at 9%
     // nobody ever saw the edges). Size changes only happen at 9% opacity.
