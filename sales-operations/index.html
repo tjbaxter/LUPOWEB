@@ -144,6 +144,54 @@
         @media (max-width: 980px) {
             .feature-list { grid-template-columns: 1fr; gap: 0; }
         }
+        /* The artefact: what a policy actually looks like. Dark glass product
+           frame (same family as the how-it-works proof frames), reads as UI
+           in both themes, no aurora overrides needed. */
+        .policy-frame {
+            margin: 64px auto 0;
+            max-width: 680px;
+            background: rgba(10, 10, 16, 0.62);
+            border: 1px solid var(--border-strong);
+            border-radius: 18px;
+            box-shadow: 0 26px 70px -32px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(167, 139, 250, 0.05);
+            overflow: hidden;
+        }
+        .policy-head {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--border);
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+        .policy-head-right { color: rgba(255, 255, 255, 0.32); }
+        .policy-body {
+            padding: 8px 24px 12px;
+            font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, monospace;
+            font-size: 13.5px; line-height: 1.6;
+        }
+        .policy-rule {
+            display: flex; align-items: baseline; justify-content: space-between;
+            gap: 18px;
+            padding: 12px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .policy-rule:first-child { border-top: none; }
+        .policy-cond { color: var(--text-secondary); }
+        .policy-then { color: #a7f3d0; white-space: nowrap; }
+        .policy-then.policy-mute { color: rgba(255, 255, 255, 0.45); }
+        .policy-caption {
+            margin: 14px auto 0;
+            max-width: 680px;
+            text-align: center;
+            font-size: 12.5px;
+            color: var(--text-tertiary);
+        }
+        @media (max-width: 600px) {
+            .policy-rule { flex-direction: column; gap: 3px; }
+            .policy-then { white-space: normal; }
+            .policy-body { font-size: 12.5px; }
+        }
     </style>
     <script src="/aurora.js?v=19"></script>
 </head>
@@ -186,7 +234,7 @@
                 <div class="feature-list">
                     <div class="feature-row-item">
                         <h3>Qualification policy</h3>
-                        <p>Co-authored with you in week one: what counts as qualified, wrong-fit, support, vendor, or human review. Yours to own, tuned from real inbound.</p>
+                        <p>What counts as qualified, wrong-fit, support, vendor, or human review. Yours to own, tuned from real inbound.</p>
                     </div>
                     <div class="feature-row-item">
                         <h3>Routing policy</h3>
@@ -206,13 +254,31 @@
                     </div>
                     <div class="feature-row-item">
                         <h3>Enrichment policy</h3>
-                        <p>What's enriched on every inbound (firmographics, technographics, decision-maker title) and which buying-intent signals carry weight (funding, M&amp;A, hiring). Tuned to your category in week one.</p>
-                    </div>
-                    <div class="feature-row-item">
-                        <h3>Tuned in week one</h3>
-                        <p>Sales policy, routing rules, CRM fields, and qualification criteria are tuned for your business in week one.</p>
+                        <p>What's enriched on every inbound (firmographics, technographics, decision-maker title) and which buying-intent signals carry weight (funding, M&amp;A, hiring). Tuned to your category.</p>
                     </div>
                 </div>
+
+                <div class="policy-frame">
+                    <div class="policy-head">
+                        <span>Qualification policy</span>
+                        <span class="policy-head-right">Sample</span>
+                    </div>
+                    <div class="policy-body">
+                        <div class="policy-rule">
+                            <span class="policy-cond">headcount &lt; 30</span>
+                            <span class="policy-then policy-mute">&rarr; wrong-fit &middot; log only</span>
+                        </div>
+                        <div class="policy-rule">
+                            <span class="policy-cond">email domain = existing customer</span>
+                            <span class="policy-then policy-mute">&rarr; route #support &middot; attach transcript</span>
+                        </div>
+                        <div class="policy-rule">
+                            <span class="policy-cond">score &ge; 80 and funding &lt; 90 days</span>
+                            <span class="policy-then">&rarr; book direct &middot; alert account owner</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="policy-caption">Three lines from a sample qualification policy. Co-authored with your team, then yours to edit. Illustrative.</p>
             </div>
         </section>
 

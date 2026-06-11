@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0a0a0d">
     <link rel="stylesheet" href="/premium.css">
     <title>Pricing, LUPO</title>
-    <meta name="description" content="LUPO is the agentic inbound brain for B2B sales teams. One platform across phone, email, web form, and chat. Founder-led pilots, success-criteria-based renewal.">
+    <meta name="description" content="LUPO is the AI inbound SDR for B2B teams. One platform across phone, email, web form, and chat. Pilots typically $3-15k/month, founder-led, success-criteria-based renewal.">
     <link rel="icon" type="image/png" href="/lupo-head-logo copy.png">
     <link rel="canonical" href="https://lupolabs.ai/pricing/">
     <style>
@@ -294,6 +294,25 @@
             font-variant-numeric: tabular-nums;
         }
         .matrix-row .feature strong { font-weight: 600; color: var(--text-primary); }
+        /* The forty-line list lives behind this; the six rows above carry the page */
+        .matrix-more > summary {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 28px;
+            font-size: 13px; font-weight: 600;
+            letter-spacing: 0.02em;
+            color: var(--text-tertiary);
+            cursor: pointer; list-style: none;
+            transition: color 0.2s ease;
+        }
+        .matrix-more > summary::-webkit-details-marker { display: none; }
+        .matrix-more > summary::after {
+            content: "+";
+            font-size: 19px; font-weight: 300;
+            color: var(--text-tertiary);
+        }
+        .matrix-more[open] > summary::after { content: "−"; color: var(--accent-purple); }
+        .matrix-more > summary:hover { color: var(--text-secondary); }
+        .matrix-more[open] > summary { border-bottom: 1px solid var(--border); }
         .stat-source {
             display: block;
             margin-top: 8px;
@@ -357,7 +376,7 @@
         .bottom-cta {
             text-align: center;
             padding: 56px 32px;
-            /* Framed like the 21x stat tile: full border, contained card. */
+            /* Framed like the qualification stat tile: full border, contained card. */
             background: linear-gradient(180deg, rgba(196, 181, 253, 0.03) 0%, rgba(118, 75, 162, 0.09) 100%);
             border: 1px solid rgba(196, 181, 253, 0.16);
             border-radius: 28px;
@@ -442,15 +461,15 @@
             <span class="hero-eyebrow">Pricing</span>
             <h1>Every time-waster filtered.<br><span class="gradient-text">Every real buyer routed.</span></h1>
             <p class="subtitle">
-                One agentic brain across phone, email, web form, and chat. Capture to booked meeting, fully automated.
+                One brain across phone, email, web form, and chat. Capture to booked meeting, fully automated.
             </p>
 
             <div class="stat-callout">
-                <div class="stat-number">21<span class="times">×</span></div>
+                <div class="stat-number">26<span class="times">/84</span></div>
                 <div class="stat-text">
-                    <strong>Response speed is one outcome, not the point.</strong>
-                    <span class="stat-detail">Respond in 5 minutes and you are 21× more likely to qualify than waiting 30 (HBR). LUPO clears that benchmark on every qualified lead.</span>
-                    <span class="stat-source">Source: Oldroyd, McElheran &amp; Elkington, <a href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" target="_blank" rel="noopener">Harvard Business Review, 2011</a> (Lead Response Management Study, 1.25M leads across 29 B2B companies).</span>
+                    <strong>What reaches your reps in a typical week: 26 real buyers out of 84 inbound.</strong>
+                    <span class="stat-detail">The other 58 are handled, not dropped: vendor pitches filtered, support routed to the right team, wrong-fit closed out politely, low-intent nurtured. And every qualified lead gets a first touch in under a minute.</span>
+                    <span class="stat-source">Speed compounds it: respond within 5 minutes and you are 21× more likely to qualify than at 30. Oldroyd, McElheran &amp; Elkington, <a href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" target="_blank" rel="noopener">Harvard Business Review, 2011</a>. Lead counts are an illustrative sample week.</span>
                 </div>
             </div>
         </section>
@@ -459,9 +478,9 @@
             <!-- Two slim tier cards -->
             <div class="tier-cards">
                 <div class="tier-card featured">
-                    <span class="tier-label">Enterprise</span>
-                    <h2 class="tier-name">Sales team</h2>
-                    <p class="tier-for">For the team that owns inbound, sales or marketing. Priced by volume and scope, agreed before kickoff.</p>
+                    <span class="tier-label">One plan</span>
+                    <h2 class="tier-name">Priced per pilot</h2>
+                    <p class="tier-for">For the team that owns inbound, sales or marketing. Scoped to your volume and integrations, agreed before kickoff.</p>
                     <a href="https://cal.com/tombaxter/lupo" class="tier-cta">
                         Talk to Tom
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
@@ -475,6 +494,17 @@
                     <div class="col-label">What's included in the pilot</div>
                 </div>
 
+                <div class="matrix-group">
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature"><strong>All four channels, one brain:</strong> phone, email, web form, and chat</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Firmographic + buying-intent enrichment on every lead (live company-signal data)</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Custom qualification rules, co-authored with your team</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Decision logs and a full audit trail on every interaction</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">HubSpot and Salesforce native, Slack alerts, Google and Microsoft 365 booking</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature"><strong>Founder-led rollout,</strong> fully live in 4 to 8 weeks depending on scope</div></div>
+                </div>
+
+                <details class="matrix-more">
+                    <summary>Full capability list</summary>
                 <div class="matrix-group">
                     <div class="matrix-group-title">Inbound channels</div>
                     <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Phone</div></div>
@@ -490,7 +520,7 @@
                     <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Vendor and time-waster filtering</div></div>
                     <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Custom qualification rules</div></div>
                     <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Conversation transcripts and decision logs</div></div>
-                    <div class="matrix-row"><div class="cell"><span class="value">Scoped per pilot</span></div><div class="feature">Additional language support</div></div>
+                    <div class="matrix-row"><div class="cell"><span class="value">Per pilot</span></div><div class="feature">Additional languages beyond English</div></div>
                 </div>
 
                 <div class="matrix-group">
@@ -535,6 +565,7 @@
                     <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">GDPR Data Processing Agreement</div></div>
                     <div class="matrix-row"><div class="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div><div class="feature">Security review on request</div></div>
                 </div>
+                </details>
             </div>
 
             <p class="pilot-note">
@@ -574,8 +605,8 @@
 
         <section class="container">
             <div class="bottom-cta">
-                <h2>Talk to LUPO before anyone else does.</h2>
-                <p>Hear the agent live, see how it would handle your inbound, decide if it's worth piloting.</p>
+                <h2>Hear it handle your inbound, live.</h2>
+                <p>Talk to the agent, see what it would do with your leads, decide if it's worth piloting.</p>
                 <div class="bottom-cta-actions">
                     <a href="https://cal.com/tombaxter/lupo" class="btn-primary">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
