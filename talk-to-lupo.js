@@ -474,8 +474,23 @@
   // voice agent continues the SAME conversation instead of starting cold.
   var pendingHandoffContext = null;
 
-  function bindVapiEvents(instance) {
+  // Handlers are stamped with the attempt's seq + sessionId. The seq
+  // checks close the cancel race: vapi.stop() during the dial handshake
+  // (mic granted, room connecting, call object not yet created) is a
+  // no-op inside the SDK, so a "cancelled" dial can still complete and
+  // fire call-start seconds later. Observed in the wild: click, click
+  // again ("Call cancelled." toast), LUPO connects and starts talking
+  // anyway. Now a call-start from a stale attempt is hung up on arrival
+  // instead of believed. Session-scoped end-hints also stop a stale
+  // instance's call-end from releasing the NEWER attempt's session.
+  function bindVapiEvents(instance, seq, sessionId) {
     instance.on("call-start", function () {
+      if (seq !== callSeq) {
+        log("event: call-start from cancelled attempt — hanging up", seq);
+        try { instance.stop(); } catch (e) { log("stale stop error", e); }
+        notifyCallEnded(sessionId);
+        return;
+      }
       log("event: call-start");
       isInCall = true;
       setState("in-call");
@@ -494,17 +509,19 @@
       }
     });
     instance.on("call-end", function () {
-      log("event: call-end");
+      log("event: call-end", seq === callSeq ? "current" : "stale");
+      notifyCallEnded(sessionId);
+      if (seq !== callSeq) return; // a newer attempt owns the UI
       isInCall = false;
       pendingHandoffContext = null;
-      notifyCallEnded();
       setState("idle");
     });
     instance.on("error", function (e) {
-      log("event: error", e);
+      log("event: error", e, seq === callSeq ? "current" : "stale");
+      notifyCallEnded(sessionId);
+      if (seq !== callSeq) return; // a newer attempt owns the UI
       isInCall = false;
       pendingHandoffContext = null;
-      notifyCallEnded();
       setState("idle");
       showToast(extractErrorMessage(e), "error");
     });
@@ -593,13 +610,15 @@
           var sessionId = resp.body.sessionId;
           var assistantId = resp.body.assistantId;
           currentSessionId = sessionId;
-          if (!vapi) {
-            vapi = new Ctor(token);
-            bindVapiEvents(vapi);
-          } else {
+          if (vapi) {
             try { vapi.stop(); } catch (e) {}
-            vapi = new Ctor(token);
-            bindVapiEvents(vapi);
+          }
+          vapi = new Ctor(token);
+          bindVapiEvents(vapi, seq, sessionId);
+          // Last cancel checkpoint before the dial actually goes out.
+          if (seq !== callSeq) {
+            notifyCallEnded(sessionId);
+            return;
           }
           try {
             var overrides = { variableValues: { sessionId: sessionId } };
