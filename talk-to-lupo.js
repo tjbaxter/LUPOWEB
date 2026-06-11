@@ -542,6 +542,22 @@
           try {
             var overrides = { variableValues: { sessionId: sessionId } };
             if (handoffFirstMessage) overrides.firstMessage = handoffFirstMessage;
+            // Voice picker (homepage "Hear it answer" module). Brand-
+            // matching proof: the visitor picks a register, the next call
+            // starts with that voice. B2B demo only; default (no stored
+            // choice) keeps the assistant's configured voice untouched.
+            if (key === "b2b") {
+              try {
+                var vraw = sessionStorage.getItem("lupoVoice");
+                if (vraw) {
+                  var vch = JSON.parse(vraw);
+                  if (vch && typeof vch.provider === "string" && typeof vch.voiceId === "string") {
+                    overrides.voice = { provider: vch.provider, voiceId: vch.voiceId };
+                    log("voice override", vch.provider, vch.voiceId);
+                  }
+                }
+              } catch (e) {}
+            }
             var result = vapi.start(assistantId, overrides);
             if (result && typeof result.then === "function") {
               result.then(
