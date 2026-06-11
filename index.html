@@ -2192,6 +2192,14 @@
         .ldb-band-hot{color:#a7f3d0;background:rgba(167,243,208,0.10);border:1px solid rgba(167,243,208,0.25);}
         .ldb-band-review{color:#fbbf24;background:rgba(251,191,36,0.10);border:1px solid rgba(251,191,36,0.25);}
         .ldb-band-filtered{color:rgba(255,255,255,0.55);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.14);}
+        .ldb-band-nurture{color:#93c5fd;background:rgba(147,197,253,0.10);border:1px solid rgba(147,197,253,0.25);}
+        /* Live-component mode: the rendered product replaces the poster,
+           the frame stops being a zoom target, the hotspots retire. */
+        .ldb-frame iframe{display:block;width:100%;border:0;opacity:0;transition:opacity 0.45s ease,height 0.35s ease;background:#0b0b0d;}
+        .ldb-frame.ldb-live{cursor:default;}
+        .ldb-frame.ldb-live:hover{transform:none;}
+        .ldb-frame.ldb-live iframe{opacity:1;}
+        .ldb-frame.ldb-live img,.ldb-frame.ldb-live .ldb-hotspots{display:none;}
         .ldb-modal-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
         .ldb-chip{display:inline-block;font-size:12px;font-weight:500;color:#c4b5fd;background:rgba(196,181,253,0.08);border:1px solid rgba(196,181,253,0.22);border-radius:999px;padding:4px 12px;}
         .ldb-modal-body{margin-top:16px;display:flex;flex-direction:column;gap:9px;}
@@ -2348,7 +2356,23 @@
                     chips: ['New CRO started in May', 'Came in Sunday evening'],
                     why: ['CRO in seat under 90 days: the classic tooling-review window', 'Arrived out of hours; first reply went back in 38 seconds'],
                     outcome: 'Booked direct &middot; account owner alerted in Slack the same minute.'
+                },
+                tome: {
+                    name: 'Tom Eriksen', sub: 'Sales Operations Manager &middot; Northgate Analytics &middot; Email &middot; Sun 3:02 PM',
+                    score: '58', band: 'Nurture', bandClass: 'ldb-band-nurture',
+                    chips: ['Runs HubSpot'],
+                    why: ['Right persona and stack fit, but no live buying window yet', 'Real interest, early stage: kept warm instead of pushed at a rep'],
+                    outcome: 'Nurture &middot; personal reply sent, follow-up scheduled. Resurfaces the moment a buying signal lands.',
+                    muted: true
                 }
+            };
+            var LEAD_ORDER = ['sarah', 'david', 'laura', 'marcus', 'priya', 'tome'];
+            var LOCK_TITLES = {
+                'lead queue': 'Your lead queue lives here.',
+                'calls': 'Your calls live here.',
+                'meetings': 'Your meetings live here.',
+                'email threads': 'Your email threads live here.',
+                'qualification policy': 'Your qualification policy lives here.'
             };
             var modal = document.getElementById('ldbModal');
             var els = {
@@ -2394,60 +2418,113 @@
                 els.outcome.className = 'ldb-modal-outcome' + (t.muted ? ' ldb-outcome-muted' : '');
                 openModal();
             }
+            function openLead(key) {
+                var L = LEADS[key];
+                if (!L) return;
+                fill({
+                    title: L.name, sub: L.sub, score: L.score, band: L.band, bandClass: L.bandClass, chips: L.chips,
+                    bodyHtml: L.why.map(function (w) { return '<div class="ldb-modal-line">' + w + '</div>'; }).join(''),
+                    outcome: L.outcome, muted: L.muted
+                });
+            }
+            function openFiltered() {
+                fill({
+                    title: '26 filtered this week. Zero reached a rep.',
+                    sub: 'How they qualified &middot; Filtered',
+                    bodyHtml: [
+                        ['SEO agency pitching backlinks', 'Vendor selling in &middot; declined politely, logged'],
+                        ['Existing customer, password reset', 'Support &middot; routed to the success team with the transcript'],
+                        ['Student research request', 'Wrong fit &middot; closed out politely, logged']
+                    ].map(function (r) { return '<div class="ldb-modal-pair"><span class="l">' + r[0] + '</span><span class="r">' + r[1] + '</span></div>'; }).join(''),
+                    outcome: '&asymp; 9 rep-hours handed back this week, at an estimated 20 minutes per junk lead.'
+                });
+            }
+            function openLock(title) {
+                fill({
+                    title: title,
+                    sub: 'This sandbox shows the overview.',
+                    bodyHtml: '<div class="ldb-modal-line">The rest is best seen on your own inbound: real calls transcribed and scored, real meetings on your reps’ calendars, your definition of qualified in Settings.</div><div class="ldb-modal-line">Thirty minutes, founder-led.</div>'
+                });
+            }
             frame.addEventListener('click', function (e) {
                 var spot = e.target.closest ? e.target.closest('.ldb-spot') : null;
                 if (!spot || spot.classList.contains('ldb-spot-tile')) return; // tiles fall through to the lightbox
                 e.stopImmediatePropagation();
                 e.preventDefault();
                 var leadKey = spot.getAttribute('data-ldb-lead');
-                if (leadKey && LEADS[leadKey]) {
-                    var L = LEADS[leadKey];
-                    fill({
-                        title: L.name, sub: L.sub, score: L.score, band: L.band, bandClass: L.bandClass, chips: L.chips,
-                        bodyHtml: L.why.map(function (w) { return '<div class="ldb-modal-line">' + w + '</div>'; }).join(''),
-                        outcome: L.outcome, muted: L.muted
-                    });
-                    return;
-                }
-                if (spot.hasAttribute('data-ldb-filtered')) {
-                    fill({
-                        title: '26 filtered this week. Zero reached a rep.',
-                        sub: 'How they qualified &middot; Filtered',
-                        bodyHtml: [
-                            ['SEO agency pitching backlinks', 'Vendor selling in &middot; declined politely, logged'],
-                            ['Existing customer, password reset', 'Support &middot; routed to the success team with the transcript'],
-                            ['Student research request', 'Wrong fit &middot; closed out politely, logged']
-                        ].map(function (r) { return '<div class="ldb-modal-pair"><span class="l">' + r[0] + '</span><span class="r">' + r[1] + '</span></div>'; }).join(''),
-                        outcome: '&asymp; 9 rep-hours handed back this week, at an estimated 20 minutes per junk lead.'
-                    });
-                    return;
-                }
+                if (leadKey && LEADS[leadKey]) { openLead(leadKey); return; }
+                if (spot.hasAttribute('data-ldb-filtered')) { openFiltered(); return; }
                 var lock = spot.getAttribute('data-ldb-lock');
-                if (lock) {
-                    fill({
-                        title: lock,
-                        sub: 'This sandbox shows the overview.',
-                        bodyHtml: '<div class="ldb-modal-line">The rest is best seen on your own inbound: real calls transcribed and scored, real meetings on your reps’ calendars, your definition of qualified in Settings.</div><div class="ldb-modal-line">Thirty minutes, founder-led.</div>'
-                    });
-                }
+                if (lock) openLock(lock);
             }, true);
             modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
             modal.querySelector('.ldb-modal-close').addEventListener('click', closeModal);
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape' && modal.classList.contains('ldb-open')) closeModal();
             });
-            // One-time teach pulse on the first lead row when the frame scrolls in
+            // ----- Live component upgrade -----
+            // When the frame nears the viewport on desktop, swap the poster
+            // for the REAL rendered OverviewView (app.lupolabs.ai/demo/
+            // overview, static mock data, frame-ancestors locked to this
+            // site). If the app doesn't answer within 6s, nothing changes:
+            // the poster + hotspots above are the complete fallback.
+            var APP_ORIGINS = ['https://app.lupolabs.ai', 'http://localhost:3000'];
+            var APP = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+                ? APP_ORIGINS[1] : APP_ORIGINS[0];
+            var live = false;
+            var attempted = false;
+            function setLive() {
+                if (live) return;
+                live = true;
+                frame.classList.add('ldb-live');
+                frame.removeAttribute('role');
+                frame.removeAttribute('tabindex');
+                frame.removeAttribute('aria-label');
+            }
+            function tryLive() {
+                if (attempted || window.innerWidth < 980) return;
+                attempted = true;
+                var ifr = document.createElement('iframe');
+                ifr.src = APP + '/demo/overview';
+                ifr.title = 'LUPO dashboard, interactive sample data';
+                ifr.setAttribute('scrolling', 'no');
+                ifr.style.height = Math.round(frame.offsetWidth * 1860 / 2400) + 'px';
+                window.addEventListener('message', function (e) {
+                    if (APP_ORIGINS.indexOf(e.origin) === -1) return;
+                    var d = e.data;
+                    if (!d || d.source !== 'lupo-demo') return;
+                    if (d.action === 'size' && d.height) {
+                        ifr.style.height = Math.min(Math.max(d.height, 420), 1600) + 'px';
+                        setLive();
+                        return;
+                    }
+                    if (d.action === 'lead') { openLead(LEAD_ORDER[d.index] || ''); return; }
+                    if (d.action === 'filtered') { openFiltered(); return; }
+                    if (d.action === 'lock') { openLock(LOCK_TITLES[d.label] || 'Your team’s day-to-day lives here.'); }
+                });
+                frame.appendChild(ifr);
+                setTimeout(function () {
+                    if (!live) {
+                        ifr.remove();
+                        frame.classList.add('ldb-teach'); // fallback keeps the hotspot affordance
+                    }
+                }, 6000);
+            }
+            // Lightbox stays for poster mode only.
+            var openLightbox = setOpen;
+            setOpen = function (open) { if (live && open) return; openLightbox(open); };
             if ('IntersectionObserver' in window) {
                 var seen = false;
                 var io = new IntersectionObserver(function (entries) {
                     entries.forEach(function (en) {
                         if (en.isIntersecting && !seen) {
                             seen = true;
-                            frame.classList.add('ldb-teach');
+                            tryLive();
+                            if (!attempted) frame.classList.add('ldb-teach');
                             io.disconnect();
                         }
                     });
-                }, { threshold: 0.5 });
+                }, { threshold: 0.35, rootMargin: '300px 0px' });
                 io.observe(frame);
             }
         })();
