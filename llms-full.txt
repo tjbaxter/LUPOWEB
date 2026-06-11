@@ -21,6 +21,10 @@ The pathway from first touch to booked meeting: a lead arrives on any channel (w
 
 Stated upfront: 3,000 to 15,000 USD per month, depending on inbound volume and integrations. Engagements start with a 30-day founder-led pilot with agreed success criteria (qualification rate, form-to-meeting conversion, rep hours saved, leads recovered), fully live in 4 to 8 weeks. The founder runs every pilot personally.
 
+## ROI (https://lupolabs.ai/roi/)
+
+"The fix, in numbers": an open ROI model for the AI inbound SDR, with the methodology in visible text and an interactive calculator. Three value streams: recovered revenue (leads that currently leak; HBR's 23% never-answered baseline), research hours returned (every meeting arrives pre-briefed: contact verified, company signals, decision-maker context), and hires avoided (capacity without headcount). Net annual impact = incremental closed revenue + hiring cost avoided, minus LUPO's annual cost; rep hours are reported as capacity but not priced into the net figure, to avoid double counting; outputs are labelled revenue impact plus cost avoided, never profit. Defaults are conservative and sourced (Harvard Business Review, Salesforce State of Sales, MarketingSherpa), and every default is adjustable. Views for marketing owners (recovered leads, incremental pipeline, cost per incremental opportunity) and sales owners (rep hours returned, meetings held, hiring cost avoided).
+
 ## Channels
 
 ### Web forms (https://lupolabs.ai/channels/web-forms/)

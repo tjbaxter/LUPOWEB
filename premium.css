@@ -45,3 +45,8 @@
     .fx-bg { animation: none; }
     .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
+
+/* nav: keep links on one line, tighten then hide on small screens (matches homepage behavior) */
+nav .nav-link{white-space:nowrap}
+@media (max-width:899px){nav .nav-links{gap:18px}}
+@media (max-width:719px){nav .nav-links{display:none}}

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0d">
+    <link rel="stylesheet" href="/premium.css">
+    <title>The ROI of an AI Inbound SDR, in Numbers | LUPO</title>
+    <meta name="description" content="What fixing inbound is worth: an open ROI calculator for the AI inbound SDR, with conservative, sourced baselines. Recovered leads, rep hours returned, hires avoided. Run your own numbers.">
+    <link rel="icon" type="image/png" href="/lupo-icon-180.png">
+    <link rel="apple-touch-icon" href="/lupo-icon-180.png">
+    <link rel="canonical" href="https://lupolabs.ai/roi/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lupolabs.ai/roi/">
+    <meta property="og:title" content="The fix, in numbers. The ROI of an AI inbound SDR">
+    <meta property="og:description" content="An open ROI model for the AI inbound SDR: recovered leads, rep hours returned, hires avoided. Conservative, sourced baselines. Run your own numbers.">
+    <meta property="og:image" content="https://lupolabs.ai/og-image.png">
+    <meta property="og:site_name" content="LUPO">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The fix, in numbers. The ROI of an AI inbound SDR">
+    <meta name="twitter:description" content="An open ROI model for the AI inbound SDR: recovered leads, rep hours returned, hires avoided. Run your own numbers.">
+    <meta name="twitter:image" content="https://lupolabs.ai/og-image.png">
+    <meta name="company-name" content="Flair Technologies Ltd">
+    <meta name="application-name" content="LUPO">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lupolabs.ai/" },
+            { "@type": "ListItem", "position": 2, "name": "ROI", "item": "https://lupolabs.ai/roi/" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How is the ROI calculated?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Net annual impact = incremental closed revenue + hiring cost avoided, minus LUPO's annual cost. Incremental closed revenue = recovered leads x the share that become qualified meetings x your close rate x your average deal value. Research hours returned are shown as capacity but deliberately not priced into the net figure, to avoid double counting with avoided hires. Closed revenue contributes at your gross margin, so read the output as revenue impact plus cost avoided, not profit. Every default is adjustable." }
+            },
+            {
+                "@type": "Question",
+                "name": "What does LUPO cost?",
+                "acceptedAnswer": { "@type": "Answer", "text": "3,000 to 15,000 USD per month, stated upfront, depending on inbound volume and integrations. Engagements start with a 30-day founder-led pilot with success criteria agreed in advance, fully live in 4 to 8 weeks. See pricing." }
+            },
+            {
+                "@type": "Question",
+                "name": "Where do the baseline statistics come from?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Independent published research. Harvard Business Review: 23% of inbound web leads never receive a response, and responding within 5 minutes makes contact 21 times more likely than waiting 30. Salesforce, State of Sales: reps spend 28% of their week actually selling. MarketingSherpa: 73% of B2B leads are not sales-ready when they arrive. The defaults err conservative, and every one of them can be changed." }
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --text-primary: rgba(255,255,255,0.96);
+            --text-secondary: rgba(255,255,255,0.78);
+            --text-tertiary: rgba(255,255,255,0.55);
+            --bg-primary: #0a0a0d;
+            --accent: #2997ff;
+            --border: rgba(255,255,255,0.08);
+            --border-strong: rgba(255,255,255,0.16);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            letter-spacing: -0.022em;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(0,0,0,0.72);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-content {
+            max-width: 1200px; margin: 0 auto; padding: 0 22px;
+            height: 52px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-primary); }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-link { font-size: 14px; color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s ease; }
+        .nav-link:hover { color: var(--text-primary); }
+        .nav-login-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 18px;
+            background: rgba(255,255,255,0.08);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            font-size: 14px; font-weight: 500;
+            text-decoration: none;
+        }
+        .nav-login-btn svg { width: 16px; height: 16px; }
+        main { padding-top: 80px; }
+        .hero-section { padding: 60px 24px 40px; text-align: center; }
+        .hero-section-inner { max-width: 880px; margin: 0 auto; }
+        .hero-eyebrow {
+            display: inline-block; padding: 5px 14px;
+            border: 1px solid var(--border-strong);
+            border-radius: 999px;
+            font-size: 11px; font-weight: 700; color: var(--text-tertiary);
+            letter-spacing: 0.18em; text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+        h1 {
+            font-size: clamp(38px, 5.5vw, 56px);
+            font-weight: 600; letter-spacing: -0.025em; line-height: 1.08;
+            margin-bottom: 18px;
+        }
+        .hero-lede { font-size: clamp(17px, 1.6vw, 19px); color: var(--text-secondary); line-height: 1.55; max-width: 720px; margin: 0 auto; }
+        .page-section { padding: 48px 24px; border-top: 1px solid var(--border); }
+        .section-inner { max-width: 860px; margin: 0 auto; }
+        .section-inner h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 600; letter-spacing: -0.022em; margin-bottom: 18px; }
+        .prose p { font-size: 16px; line-height: 1.65; color: var(--text-secondary); margin-bottom: 16px; }
+        .prose a { color: #a78bfa; text-decoration: none; }
+        .prose a:hover { text-decoration: underline; }
+        .prose strong { color: var(--text-primary); font-weight: 600; }
+        .src-note { font-size: 12.5px; color: var(--text-tertiary); margin-top: 14px; line-height: 1.6; }
+        .src-note a { color: var(--text-tertiary); text-decoration: underline; }
+        .updated { font-size: 12.5px; color: var(--text-tertiary); margin-top: 16px; }
+
+        .proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 8px 0 0; }
+        @media (max-width: 760px) { .proof-grid { grid-template-columns: 1fr; } }
+        .proof-card { background: rgba(255,255,255,0.018); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 22px 24px; }
+        .proof-num { font-size: 30px; font-weight: 650; letter-spacing: -0.02em; margin-bottom: 6px; color: var(--text-primary); }
+        .proof-card p { font-size: 13.5px; line-height: 1.55; color: var(--text-secondary); margin: 0; }
+
+        .stream-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 8px; }
+        @media (max-width: 760px) { .stream-grid { grid-template-columns: 1fr; } }
+        .stream-card { background: rgba(255,255,255,0.018); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 24px 26px; }
+        .stream-card.lupo { border-color: rgba(167,139,250,0.25); background: rgba(118,75,162,0.05); }
+        .stream-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+        .stream-card p { font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin: 0; }
+
+        .calc-grid { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: 22px; align-items: start; margin-top: 10px; }
+        @media (max-width: 880px) { .calc-grid { grid-template-columns: 1fr; } }
+        .calc-panel { background: rgba(255,255,255,0.018); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 26px; }
+        .calc-controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 20px; }
+        .seg { display: inline-flex; border: 1px solid var(--border-strong); border-radius: 999px; overflow: hidden; }
+        .seg button { appearance: none; border: 0; background: transparent; color: var(--text-secondary); font: inherit; font-size: 13px; font-weight: 600; padding: 8px 16px; cursor: pointer; transition: all 0.18s ease; }
+        .seg button.on { background: rgba(167,139,250,0.18); color: var(--text-primary); }
+        .cur-select { appearance: none; background: rgba(255,255,255,0.06); border: 1px solid var(--border-strong); color: var(--text-secondary); border-radius: 999px; padding: 8px 14px; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+        .ci { margin-bottom: 18px; }
+        .ci-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+        .ci-top label { font-size: 13.5px; font-weight: 600; color: var(--text-secondary); line-height: 1.35; }
+        .ci-top .ci-hint { font-weight: 400; color: var(--text-tertiary); }
+        .ci-top input[type="number"] { width: 110px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-strong); border-radius: 8px; color: var(--text-primary); font: inherit; font-size: 14px; padding: 6px 10px; text-align: right; }
+        .ci-top input[type="number"]:focus { outline: none; border-color: rgba(167,139,250,0.5); }
+        .ci input[type="range"] { width: 100%; accent-color: #a78bfa; height: 18px; cursor: pointer; }
+        .calc-results { position: sticky; top: 84px; }
+        @media (max-width: 880px) { .calc-results { position: static; } }
+        .net-label { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 8px; }
+        .net-figure { font-size: clamp(36px, 4.5vw, 48px); font-weight: 650; letter-spacing: -0.025em; line-height: 1.05; background: linear-gradient(135deg, #e9d5ff 0%, #a78bfa 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .net-sub { font-size: 12.5px; color: var(--text-tertiary); margin-top: 8px; line-height: 1.55; }
+        .net-breakdown { font-size: 13px; color: var(--text-secondary); margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); line-height: 1.6; }
+        .tile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+        @media (max-width: 480px) { .tile-grid { grid-template-columns: 1fr; } }
+        .tile { background: rgba(255,255,255,0.025); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+        .tile .t-val { font-size: 21px; font-weight: 650; letter-spacing: -0.02em; }
+        .tile .t-key { font-size: 12px; color: var(--text-tertiary); margin-top: 3px; line-height: 1.4; }
+        .persona-note { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-top: 16px; padding: 14px 16px; border: 1px solid rgba(167,139,250,0.22); background: rgba(118,75,162,0.05); border-radius: 12px; }
+        .calc-foot { font-size: 12.5px; color: var(--text-tertiary); margin-top: 16px; line-height: 1.6; }
+        .calc-foot a { color: var(--text-tertiary); text-decoration: underline; }
+
+        .method-list { list-style: none; margin: 0 0 18px; padding: 0; }
+        .method-list li { font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); padding: 12px 0; border-bottom: 1px solid var(--border); }
+        .method-list li:last-child { border-bottom: 0; }
+        .method-list strong { color: var(--text-primary); font-weight: 600; }
+
+        .faq-item { background: rgba(255,255,255,0.018); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 0; margin-bottom: 12px; transition: border-color 0.25s ease, background 0.25s ease; }
+        .faq-item[open] { border-color: rgba(167,139,250,0.22); background: rgba(118,75,162,0.04); }
+        .faq-question { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 26px; font-size: 16px; font-weight: 600; color: var(--text-primary); cursor: pointer; list-style: none; }
+        .faq-question::-webkit-details-marker { display: none; }
+        .faq-question::after { content: "+"; font-size: 22px; font-weight: 400; color: var(--text-secondary); line-height: 1; }
+        .faq-item[open] .faq-question::after { content: "−"; color: #a78bfa; }
+        .faq-answer { margin: 0; padding: 0 26px 22px; font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); }
+        .faq-answer a { color: #a78bfa; text-decoration: none; }
+
+        .cta-block { text-align: center; padding: 100px 24px; border-top: 1px solid var(--border); background: radial-gradient(ellipse at 50% 0%, rgba(118,75,162,0.18) 0%, transparent 60%); }
+        .cta-block h2 { font-size: clamp(26px, 4vw, 40px); font-weight: 600; letter-spacing: -0.025em; margin-bottom: 16px; }
+        .cta-block p { color: var(--text-secondary); font-size: 16px; max-width: 560px; margin: 0 auto 28px; line-height: 1.55; }
+        .cta-actions { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 999px; font-size: 14px; font-weight: 600; text-decoration: none; background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%); color: #000; transition: all 0.22s ease; }
+        .btn-primary:hover { transform: translateY(-1px); }
+    </style>
+    <script src="/aurora.js?v=19"></script>
+</head>
+<body>
+    <div class="aurora-wash" aria-hidden="true"></div>
+    <div class="aurora-grain" aria-hidden="true"></div>
+    <div class="fx-bg" aria-hidden="true"></div>
+    <div class="fx-grain" aria-hidden="true"></div>
+    <nav>
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <img src="/lupo-head-nav.png" alt="LUPO" width="40" height="40" decoding="async" style="height: 40px; width: auto; display: block;">
+                <span style="font-size: 24px; font-weight: 600;">LUPO</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/how-it-works/" class="nav-link">How it works</a>
+                <a href="/about.html" class="nav-link">About</a>
+                <a href="/pricing/" class="nav-link">Pricing</a>
+                <a href="/roi/" class="nav-link">ROI</a>
+                <a href="/blog/" class="nav-link">Blog</a>
+            </div>
+            <a href="https://app.lupolabs.ai/login" class="nav-login-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/></svg>
+                Sign in
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-section-inner">
+                <span class="hero-eyebrow">ROI</span>
+                <h1>The fix, in numbers.</h1>
+                <p class="hero-lede">The homepage shows what unmanaged inbound costs. This page prices what fixing it is worth: recovered leads, rep hours returned, hires avoided. Your numbers, not ours, against conservative, sourced industry baselines. The whole model is in the open.</p>
+            </div>
+        </section>
+
+        <section class="page-section">
+            <div class="section-inner prose">
+                <h2>What the category already proves</h2>
+                <p>The economics of the AI inbound SDR are no longer speculative. The category's own customers have published the numbers.</p>
+                <div class="proof-grid">
+                    <div class="proof-card">
+                        <div class="proof-num">13 SDRs</div>
+                        <p>A Qualified customer, the CMO of Sinch, publicly reports that Piper "does the work of 13 SDRs".</p>
+                    </div>
+                    <div class="proof-card">
+                        <div class="proof-num">3x meetings</div>
+                        <p>Qualified customers publicly report 3x more meetings in six months and 6x SDR efficiency.</p>
+                    </div>
+                    <div class="proof-card">
+                        <div class="proof-num">90 meetings</div>
+                        <p>Spara publicly reports a customer booking over 90 meetings in its first 30 days.</p>
+                    </div>
+                </div>
+                <p class="src-note">Sources: <a href="https://www.qualified.com/customers" target="_blank" rel="noopener noreferrer">Qualified customer results page</a> and <a href="https://www.businesswire.com/news/home/20250910363947/en/Spara-Launches-AI-Platform-with-%2415M-to-Modernize-Sales-Marketing-Pipelines" target="_blank" rel="noopener noreferrer">Spara launch announcement, BusinessWire, September 2025</a>, as publicly reported at the time of writing.</p>
+                <p style="margin-top:18px;">Those are the vendors' best customer stories, selected and published by the vendors themselves. The calculator below goes the other way: conservative industry baselines, every assumption visible, every default adjustable. Run your own inbound through it.</p>
+            </div>
+        </section>
+
+        <section class="page-section">
+            <div class="section-inner">
+                <h2>Three ways it hits the P&amp;L</h2>
+                <div class="stream-grid">
+                    <div class="stream-card lupo">
+                        <h3>Recovered revenue</h3>
+                        <p>23% of inbound web leads never get a response at all. Those are buyers you already paid to acquire, leaking at the moment of maximum intent. LUPO answers every one in seconds, around the clock, so the leak becomes pipeline instead.</p>
+                    </div>
+                    <div class="stream-card lupo">
+                        <h3>Research hours returned</h3>
+                        <p>Every meeting arrives pre-briefed: contact verified, company signals, decision-maker context, buying intent scored. The 30 minutes a lead costs in manual lookup today is pre-done when the booking lands, and rep time goes into the conversation, the one part only reps can do.</p>
+                    </div>
+                    <div class="stream-card lupo">
+                        <h3>Hires avoided</h3>
+                        <p>LUPO qualifies and scores every lead the moment it arrives, 24/7, unfailingly. Inbound volume can double without the next round of triage hires, and your existing team spends its week on real buyers. Capacity stops being a headcount problem.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section" id="calculator">
+            <div class="section-inner">
+                <h2>Run your own numbers</h2>
+                <div class="calc-grid">
+                    <div class="calc-panel">
+                        <div class="calc-controls">
+                            <div class="seg" role="tablist" aria-label="Choose your view">
+                                <button type="button" id="pMkt" class="on">I own marketing</button>
+                                <button type="button" id="pSales">I own sales</button>
+                            </div>
+                            <select class="cur-select" id="cur" aria-label="Currency">
+                                <option value="$" selected>USD $</option>
+                                <option value="£">GBP £</option>
+                            </select>
+                        </div>
+
+                        <div class="ci">
+                            <div class="ci-top"><label for="inbound">Monthly inbound leads</label><input type="number" id="inbound" value="200" min="10" max="5000" step="10"></div>
+                            <input type="range" data-for="inbound" value="200" min="10" max="2000" step="10" aria-label="Monthly inbound leads slider">
+                        </div>
+                        <div class="ci">
+                            <div class="ci-top"><label for="deal">Average deal value <span class="ci-hint">(annual)</span></label><input type="number" id="deal" value="25000" min="1000" max="500000" step="1000"></div>
+                            <input type="range" data-for="deal" value="25000" min="5000" max="200000" step="1000" aria-label="Average deal value slider">
+                        </div>
+                        <div class="ci">
+                            <div class="ci-top"><label for="close">Close rate on qualified meetings <span class="ci-hint">(%)</span></label><input type="number" id="close" value="15" min="1" max="60" step="1"></div>
+                            <input type="range" data-for="close" value="15" min="1" max="60" step="1" aria-label="Close rate slider">
+                        </div>
+                        <div class="ci">
+                            <div class="ci-top"><label for="leak">Inbound never answered today <span class="ci-hint">(%, HBR baseline 23)</span></label><input type="number" id="leak" value="23" min="0" max="60" step="1"></div>
+                            <input type="range" data-for="leak" value="23" min="0" max="60" step="1" aria-label="Leak rate slider">
+                        </div>
+                        <div class="ci">
+                            <div class="ci-top"><label for="recover">Recovered leads that become qualified meetings <span class="ci-hint">(%)</span></label><input type="number" id="recover" value="25" min="5" max="100" step="5"></div>
+                            <input type="range" data-for="recover" value="25" min="5" max="100" step="5" aria-label="Recovery to meeting rate slider">
+                        </div>
+                        <div class="ci">
+                            <div class="ci-top"><label for="reviewed">Leads your team manually researches each month</label><input type="number" id="reviewed" value="100" min="0" max="5000" step="10"></div>
+                            <input type="range" data-for="reviewed" value="100" min="0" max="1000" step="10" aria-label="Manually researched leads slider">
+                        </div>
+                        <div class="ci">
+                            <div class="ci-top"><label for="minutes">Research minutes per lead today</label><input type="number" id="minutes" value="30" min="5" max="90" step="5"></div>
+                            <input type="range" data-for="minutes" value="30" min="5" max="90" step="5" aria-label="Research minutes slider">
+                        </div>
+                        <div class="ci">
+                            <div class="ci-top"><label for="sdr">Loaded annual cost per SDR</label><input type="number" id="sdr" value="60000" min="30000" max="200000" step="5000"></div>
+                            <input type="range" data-for="sdr" value="60000" min="30000" max="200000" step="5000" aria-label="SDR cost slider">
+                        </div>
+                        <div class="ci">
+                            <div class="ci-top"><label for="hires">Triage hires avoided next year</label><input type="number" id="hires" value="2" min="0" max="10" step="1"></div>
+                            <input type="range" data-for="hires" value="2" min="0" max="10" step="1" aria-label="Hires avoided slider">
+                        </div>
+                        <div class="ci" style="margin-bottom:0;">
+                            <div class="ci-top"><label for="lupo">LUPO monthly cost <span class="ci-hint">(stated range)</span></label><input type="number" id="lupo" value="9000" min="3000" max="15000" step="500"></div>
+                            <input type="range" data-for="lupo" value="9000" min="3000" max="15000" step="500" aria-label="LUPO monthly cost slider">
+                        </div>
+                    </div>
+
+                    <div class="calc-results">
+                        <div class="calc-panel">
+                            <div class="net-label">Net annual impact</div>
+                            <div class="net-figure" id="net">$529,500</div>
+                            <p class="net-sub">Revenue impact plus cost avoided, illustrative, using your inputs. Closed revenue contributes at your gross margin; this is not a profit figure.</p>
+                            <p class="net-breakdown" id="breakdown"><strong>$517,500</strong> incremental closed revenue + <strong>$120,000</strong> hiring cost avoided − <strong>$108,000</strong> LUPO annual cost</p>
+                            <div class="tile-grid">
+                                <div class="tile"><div class="t-val" id="t1v">552</div><div class="t-key" id="t1k">Recovered leads per year</div></div>
+                                <div class="tile"><div class="t-val" id="t2v">138</div><div class="t-key" id="t2k">Incremental qualified meetings</div></div>
+                                <div class="tile"><div class="t-val" id="t3v">$3,450,000</div><div class="t-key" id="t3k">Incremental pipeline</div></div>
+                                <div class="tile"><div class="t-val" id="t4v">$783</div><div class="t-key" id="t4k">Cost per incremental opportunity</div></div>
+                            </div>
+                            <p class="persona-note" id="pnote">Every recovered lead is demand you already paid to generate. Today it converts to nothing. With LUPO, marketing gets the audit trail on exactly what happened to every lead it handed over.</p>
+                            <p class="calc-foot">Rep hours returned (<span id="hoursNote">600 hours, about 0.3 FTE</span>, per year) are shown as capacity and deliberately not priced into the net figure, to avoid double counting with avoided hires. Defaults are conservative and sourced: <a href="#methodology">see the methodology</a>.</p>
+                            <noscript><p class="calc-foot">JavaScript is off, so the figures above show the worked default example: 200 inbound leads a month, a 25,000 USD average deal, and conservative sourced baselines. Enable JavaScript to run your own numbers.</p></noscript>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section" id="methodology">
+            <div class="section-inner prose">
+                <h2>The methodology, in the open</h2>
+                <p>No black box. These are the formulas the calculator runs, written out:</p>
+                <ul class="method-list">
+                    <li><strong>Recovered leads per year</strong> = monthly inbound × 12 × share of inbound never answered today</li>
+                    <li><strong>Incremental qualified meetings</strong> = recovered leads × share that become qualified meetings</li>
+                    <li><strong>Incremental closed revenue</strong> = qualified meetings × close rate × average deal value</li>
+                    <li><strong>Rep hours returned</strong> = leads manually researched per year × research minutes ÷ 60</li>
+                    <li><strong>Hiring cost avoided</strong> = triage hires avoided × loaded annual cost per SDR</li>
+                    <li><strong>Net annual impact</strong> = incremental closed revenue + hiring cost avoided − LUPO annual cost</li>
+                </ul>
+                <p>Two deliberate choices keep the model honest. Closed revenue contributes at your gross margin, not one to one, so the output is labelled revenue impact plus cost avoided, never profit. And rep hours returned are reported as capacity but not priced into the net figure, because pricing the hours and counting avoided hires would double count the same saving.</p>
+                <p>The defaults come from independent published research, not our marketing. Harvard Business Review found that <a href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" target="_blank" rel="noopener noreferrer">23% of inbound web leads are never responded to at all</a>, and the same research found that responding within 5 minutes makes contact 21 times more likely than waiting 30. <a href="https://www.salesforce.com/news/stories/sales-research-2023/" target="_blank" rel="noopener noreferrer">Salesforce's State of Sales</a> puts the share of a rep's week actually spent selling at 28%. <a href="https://sherpablog.marketingsherpa.com/email-marketing/b2b-lead-nurturing-importance/" target="_blank" rel="noopener noreferrer">MarketingSherpa</a> found 73% of B2B leads are not sales-ready when they arrive, which is why qualification, not raw speed, is the job. Where a default is our own assumption rather than a published statistic, it errs low: only a quarter of recovered leads becoming meetings, a 15% close rate, two avoided hires. Disagree with any of them? Change them. That is the point of the page.</p>
+                <p class="updated">Last updated: June 2026</p>
+            </div>
+        </section>
+
+        <section class="page-section">
+            <div class="section-inner">
+                <h2>Common questions</h2>
+                <details class="faq-item">
+                    <summary class="faq-question">How is the ROI calculated?</summary>
+                    <p class="faq-answer">Net annual impact = incremental closed revenue + hiring cost avoided, minus LUPO's annual cost. Incremental closed revenue = recovered leads x the share that become qualified meetings x your close rate x your average deal value. Research hours returned are shown as capacity but deliberately not priced into the net figure, to avoid double counting with avoided hires. Closed revenue contributes at your gross margin, so read the output as revenue impact plus cost avoided, not profit. Every default is adjustable.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">What does LUPO cost?</summary>
+                    <p class="faq-answer">3,000 to 15,000 USD per month, stated upfront, depending on inbound volume and integrations. Engagements start with a 30-day founder-led pilot with success criteria agreed in advance, fully live in 4 to 8 weeks. See <a href="/pricing/">pricing</a>.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Where do the baseline statistics come from?</summary>
+                    <p class="faq-answer">Independent published research. Harvard Business Review: 23% of inbound web leads never receive a response, and responding within 5 minutes makes contact 21 times more likely than waiting 30. Salesforce, State of Sales: reps spend 28% of their week actually selling. MarketingSherpa: 73% of B2B leads are not sales-ready when they arrive. The defaults err conservative, and every one of them can be changed.</p>
+                </details>
+            </div>
+        </section>
+
+        <section class="cta-block">
+            <h2>Instrument these numbers on your own inbound.</h2>
+            <p>Every pilot starts with success criteria agreed upfront: qualification rate, form-to-meeting conversion, rep hours saved, leads recovered. The same numbers as this page, measured on your pipeline for 30 days.</p>
+            <div class="cta-actions">
+                <a href="https://cal.com/tombaxter/lupo" class="btn-primary">Book a demo</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- lupo-standard-footer -->
+<style>
+.lf-footer{position:relative;z-index:1;margin:0;max-width:none;width:auto;padding:30px 40px;border-top:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;background:linear-gradient(to bottom,#000000,#161617);text-align:left;}
+.lf-footer,.lf-footer *{box-sizing:border-box;}
+.lf-footer .lf-left{display:flex;flex-direction:column;gap:2px;text-align:left;}
+.lf-footer .lf-right{display:flex;flex-direction:column;align-items:flex-end;gap:14px;}
+.lf-footer .lf-logo{font-size:18px;font-weight:600;margin:0;color:#f5f5f7;}
+.lf-footer .lf-text{font-size:13px;color:#a1a1a6;margin:0;}
+.lf-footer .lf-links{display:flex;gap:20px;margin:0;padding:0;flex-wrap:wrap;justify-content:flex-start;list-style:none;}
+.lf-footer .lf-links a{font-size:13px;color:#a1a1a6;text-decoration:none;transition:color 0.2s ease;white-space:nowrap;}
+.lf-footer .lf-links a:hover{color:#f5f5f7;}
+.lf-footer .lf-address{font-size:11px;color:rgba(255,255,255,0.35);margin:0;line-height:1.5;font-weight:400;}
+@media (max-width:980px){
+.lf-footer{padding:20px;flex-direction:column;}
+.lf-footer .lf-right{margin-top:20px;align-self:flex-start;}
+.lf-footer .lf-right img{width:150px !important;}
+.lf-footer .lf-logo{font-size:16px;}
+.lf-footer .lf-text{font-size:12px;}
+.lf-footer .lf-address{font-size:10px;}
+.lf-footer .lf-links a{font-size:12px;}
+}
+</style>
+<footer class="lf-footer">
+    <div class="lf-left">
+        <div class="lf-logo">LUPO</div>
+        <p class="lf-text">© 2026 LUPO, a product of Flair Technologies Ltd. All rights reserved.</p>
+        <div class="lf-links">
+            <a href="/how-it-works/">How it works</a>
+            <a href="/sales-operations/">Sales ops</a>
+            <a href="/roi/">ROI</a>
+            <a href="/faq/">FAQ</a>
+            <a href="/blog/">Blog</a>
+            <a href="/compare/">Compare</a>
+            <a href="/glossary/">Glossary</a>
+            <a href="/integrations/">Integrations</a>
+            <a href="/press/">Press</a>
+            <a href="/privacy.html">Privacy Policy</a>
+            <a href="/terms.html">Terms of Service</a>
+        </div>
+        <p class="lf-address">Registered Office · 45 Fitzroy St, Fitzrovia · London, W1T 6EB, United Kingdom</p>
+    </div>
+    <div class="lf-right">
+        <a href="https://elevenlabs.io/startup-grants" target="_blank" rel="noopener noreferrer"><img src="https://eleven-public-cdn.elevenlabs.io/payloadcms/cy7rxce8uki-IIElevenLabsGrants%201.webp" alt="ElevenLabs Grant Recipient" loading="lazy" decoding="async" style="width:200px;opacity:0.9;transition:opacity 0.2s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'"></a>
+        <a href="https://www.linkedin.com/company/luposales/" target="_blank" rel="noopener noreferrer" aria-label="LUPO on LinkedIn" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);text-decoration:none;transition:all 0.2s ease;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,0.25)';this.style.background='rgba(255,255,255,0.06)';" onmouseout="this.style.color='rgba(255,255,255,0.7)';this.style.borderColor='rgba(255,255,255,0.12)';this.style.background='transparent';"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="mailto:hello@lupolabs.ai" aria-label="Email LUPO" style="display:inline-block;margin-left:12px;font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none;letter-spacing:0.01em;vertical-align:middle;transition:color 0.2s ease, text-shadow 0.2s ease;" onmouseover="this.style.color='#fff';this.style.textShadow='0 0 12px rgba(255,255,255,0.6)';" onmouseout="this.style.color='rgba(255,255,255,0.55)';this.style.textShadow='none';">hello@lupolabs.ai</a>
+    </div>
+</footer>
+
+    <script>
+    (function () {
+        var ids = ['inbound','deal','close','leak','recover','reviewed','minutes','sdr','hires','lupo'];
+        var els = {};
+        ids.forEach(function (id) { els[id] = document.getElementById(id); });
+        var ranges = document.querySelectorAll('input[type="range"][data-for]');
+        var cur = document.getElementById('cur');
+        var persona = 'mkt';
+        var pMkt = document.getElementById('pMkt'), pSales = document.getElementById('pSales');
+
+        function v(id) { var n = parseFloat(els[id].value); return isNaN(n) ? 0 : n; }
+        function money(n) { return cur.value + Math.round(n).toLocaleString('en-US'); }
+        function num(n) { return Math.round(n).toLocaleString('en-US'); }
+
+        function calc() {
+            var yrInbound = v('inbound') * 12;
+            var recovered = yrInbound * v('leak') / 100;
+            var meetings = recovered * v('recover') / 100;
+            var pipeline = meetings * v('deal');
+            var closedRev = pipeline * v('close') / 100;
+            var lupoYr = v('lupo') * 12;
+            var costPerOpp = meetings > 0 ? lupoYr / meetings : 0;
+            var hoursBack = v('reviewed') * 12 * v('minutes') / 60;
+            var fte = hoursBack / 1800;
+            var hiresVal = v('hires') * v('sdr');
+            var net = closedRev + hiresVal - lupoYr;
+
+            document.getElementById('net').textContent = money(net);
+            document.getElementById('breakdown').innerHTML =
+                '<strong>' + money(closedRev) + '</strong> incremental closed revenue + <strong>' +
+                money(hiresVal) + '</strong> hiring cost avoided − <strong>' +
+                money(lupoYr) + '</strong> LUPO annual cost';
+            document.getElementById('hoursNote').textContent = num(hoursBack) + ' hours, about ' + (Math.round(fte * 10) / 10) + ' FTE';
+
+            var tiles;
+            if (persona === 'mkt') {
+                tiles = [
+                    [num(recovered), 'Recovered leads per year'],
+                    [num(meetings), 'Incremental qualified meetings'],
+                    [money(pipeline), 'Incremental pipeline'],
+                    [money(costPerOpp), 'Cost per incremental opportunity']
+                ];
+                document.getElementById('pnote').textContent = 'Every recovered lead is demand you already paid to generate. Today it converts to nothing. With LUPO, marketing gets the audit trail on exactly what happened to every lead it handed over.';
+            } else {
+                tiles = [
+                    [num(hoursBack), 'Rep hours returned per year'],
+                    [(Math.round(fte * 10) / 10) + ' FTE', 'Triage capacity returned'],
+                    [num(meetings), 'Incremental meetings held'],
+                    [money(hiresVal), 'Hiring cost avoided']
+                ];
+                document.getElementById('pnote').textContent = 'Every meeting arrives pre-briefed: contact verified, company signals, decision-maker context, intent scored. Rep time goes into the conversation, the part only reps can do.';
+            }
+            for (var i = 0; i < 4; i++) {
+                document.getElementById('t' + (i + 1) + 'v').textContent = tiles[i][0];
+                document.getElementById('t' + (i + 1) + 'k').textContent = tiles[i][1];
+            }
+        }
+
+        ids.forEach(function (id) {
+            els[id].addEventListener('input', function () {
+                var r = document.querySelector('input[type="range"][data-for="' + id + '"]');
+                if (r) r.value = els[id].value;
+                calc();
+            });
+        });
+        ranges.forEach(function (r) {
+            r.addEventListener('input', function () {
+                els[r.getAttribute('data-for')].value = r.value;
+                calc();
+            });
+            // Some engines (WebKit, Firefox) adjust a slider on wheel-over while the user
+            // is just scrolling the page. Only allow wheel-adjust when deliberately focused.
+            r.addEventListener('wheel', function (e) {
+                if (document.activeElement !== r) e.preventDefault();
+            }, { passive: false });
+        });
+        cur.addEventListener('change', calc);
+        pMkt.addEventListener('click', function () { persona = 'mkt'; pMkt.classList.add('on'); pSales.classList.remove('on'); calc(); });
+        pSales.addEventListener('click', function () { persona = 'sales'; pSales.classList.add('on'); pMkt.classList.remove('on'); calc(); });
+        calc();
+    })();
+    </script>
+
+    <script src="/analytics.js" defer></script>
+    <script src="/talk-to-lupo.js?v=voices3" defer></script>
+    <script async src="https://app.lupolabs.ai/widget/lupo-chat.js" data-lupo-mode="marketing"></script>
+    <script src="/visit-radar.js" defer></script>
+    <script src="/premium.js" defer></script>
+</body>
+</html>

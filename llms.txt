@@ -37,6 +37,7 @@ LUPO is an AI inbound SDR: it makes real-time decisions about which question to 
 - [Home + live voice demo](https://lupolabs.ai/): talk to LUPO in the browser, choose its voice
 - [How it works](https://lupolabs.ai/how-it-works/): the full pathway from first touch to booked meeting
 - [Pricing](https://lupolabs.ai/pricing/)
+- [ROI](https://lupolabs.ai/roi/): the open ROI model, an interactive calculator with conservative, sourced baselines and the methodology in visible text
 - [FAQ](https://lupolabs.ai/faq/)
 - [Compare](https://lupolabs.ai/compare/): LUPO vs Qualified, Spara, Drift, Intercom Fin, Conversica, 11x; Qualified alternatives for HubSpot teams
 - [Glossary](https://lupolabs.ai/glossary/): AI inbound SDR, inbound lead qualification, speed to lead, lead routing, intent scoring
