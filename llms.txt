@@ -1,6 +1,6 @@
 # LUPO
 
-> LUPO is the AI inbound SDR. One agentic brain across web form, email, chat, and phone: every inbound lead is captured, answered in seconds, filtered for noise, enriched and scored for buying intent, and either booked into a rep's calendar or kept away from sales. Marketing generates the demand. Reps close the deals. LUPO runs everything in between. LUPO is a product of Flair Technologies Ltd, London, UK.
+> LUPO is the AI inbound SDR. One agentic brain across web form, email, chat, and phone: every inbound lead is captured, answered in seconds, filtered for noise, enriched and scored for buying intent, and either booked into a rep's calendar or kept away from sales. Marketing generates the demand. Reps close the deals. LUPO runs everything in between.
 
 Last updated: 2026-06-11
 
@@ -18,7 +18,7 @@ Primary buyers: heads of sales, heads of marketing and demand gen, RevOps leader
 - **Inbound phone.** Answers on the second ring, 24/7. Qualifies the caller live, checks real calendar availability, books the meeting on the call. Buying signals stated on the call feed intent scoring. The inbound channel almost nobody else covers. https://lupolabs.ai/channels/inbound-phone/
 - **Enrichment.** Every lead enriched with live company-signal data: firmographics, technographics, and decision-maker title.
 - **Buying-intent scoring.** Funding, M&A, leadership hires, headcount growth, and category-specific triggers. Fit tells you who; intent tells you when. https://lupolabs.ai/glossary/intent-scoring/
-- **Filtering.** Vendors politely declined and logged. Tyre-kickers logged for marketing, kept away from sales. Support requests routed to the right team with context. Wrong-fit prospects disqualified without burning rep time.
+- **Filtering.** Vendors politely declined and logged. Tire-kickers logged for marketing, kept away from sales. Support requests routed to the right team with context. Wrong-fit prospects disqualified without burning rep time.
 - **Booking and routing.** Real events in Google Calendar and Microsoft 365 / Outlook (both live). Round-robin or rules-based routing by territory, product line, seniority, or intent score. https://lupolabs.ai/glossary/lead-routing/
 - **CRM sync.** Every qualified contact, transcript, summary, intent score, and booking written to HubSpot or Salesforce automatically; any CRM reachable by webhook connects on request. https://lupolabs.ai/integrations/
 - **Slack alerts.** Qualified-lead and booking pings with one-click full context.
@@ -53,11 +53,11 @@ CRM: HubSpot, Salesforce (any CRM by webhook on request). Calendar: Google Calen
 
 ## Trust and compliance
 
-UK GDPR compliant; DPA at https://lupolabs.ai/dpa.html. Encryption in transit; conversations are never used to train external AI models. SOC 2 and HIPAA attestations are on the roadmap as design partners require them. Currently onboarding the first ten founding customers, configured hand-in-hand with each team.
+GDPR compliant; DPA at https://lupolabs.ai/dpa.html. Encryption in transit; conversations are never used to train external AI models. SOC 2 and HIPAA attestations are on the roadmap as design partners require them. Currently onboarding the first ten founding customers, configured hand-in-hand with each team.
 
 ## About the team
 
-LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Ltd, London. Tom holds an MPhil in Physics from the University of Cambridge and runs every pilot personally. LUPO is an ElevenLabs Grant recipient and builds on Deepgram. LinkedIn: https://www.linkedin.com/company/luposales/
+LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Ltd. Tom holds an MPhil in Physics from the University of Cambridge and runs every pilot personally. LUPO is an ElevenLabs Grant recipient and builds on Deepgram. LinkedIn: https://www.linkedin.com/company/luposales/
 
 ## Frequently asked questions
 
@@ -73,7 +73,7 @@ LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Lt
 
 ## Try LUPO
 
-- **Talk to LUPO live, right now**: tap "Talk to LUPO live" on https://lupolabs.ai and speak to the agent in your browser. You can switch its voice on the same panel. By starting a call, you agree LUPO may record, transcribe, and analyse the conversation.
+- **Talk to LUPO live, right now**: tap "Talk to LUPO live" on https://lupolabs.ai and speak to the agent in your browser. You can switch its voice on the same panel. By starting a call, you agree LUPO may record, transcribe, and analyze the conversation.
 - **Book a 20-minute demo with the founder**: https://cal.com/tombaxter/lupo
 
 ## Legal and contact
@@ -81,4 +81,3 @@ LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Lt
 - [Privacy Policy](https://lupolabs.ai/privacy.html) · [Terms of Service](https://lupolabs.ai/terms.html) · [DPA](https://lupolabs.ai/dpa.html)
 - Company: Flair Technologies Ltd · https://lupolabs.ai/company.html
 - Email: hello@lupolabs.ai
-- Address: Flair Technologies Ltd, 45 Fitzroy St, Fitzrovia, London W1T 6EB, United Kingdom
