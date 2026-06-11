@@ -13,6 +13,11 @@
  */
 (function () {
   var TOKEN_ENDPOINT = "https://app.lupolabs.ai/api/vapi/web-token";
+  // Hang-up hint. The voice picker means visitors redial seconds after
+  // ending a call; without this the server still counts the previous
+  // session as active and 429s the next dial. Fired on call-end, error,
+  // cancel, orphaned tokens, and pagehide. Fire-and-forget.
+  var END_ENDPOINT = "https://app.lupolabs.ai/api/vapi/demo-call-ended";
 
   // Demo-pack selector. LUPO ships two voice demos publicly:
   //   - "b2b" (default): LUPO talking about LUPO, for SDR/VP Sales
@@ -343,15 +348,29 @@
       return;
     }
     if (status === 429) {
+      // ip_concurrency is transient — the previous call's slot is still
+      // clearing (end-hint or webhook in flight). Say so honestly and
+      // recover fast; the old "try again in about an hour" copy on this
+      // path was wrong and killed voice shopping.
+      if (reason === "ip_concurrency") {
+        showToast("Still wrapping up your last call. Give it a few seconds and try again.", "error");
+        setState("rate_limited");
+        setTimeout(function () {
+          if (btn.getAttribute("data-state") === "rate_limited") setState("idle");
+        }, 4000);
+        return;
+      }
       if (reason === "daily_cap" || reason === "global_concurrency") {
         showToast("Demo is busy right now. Try again in a few minutes.", "error");
-      } else if (reason === "ip_rate_limit" || reason === "ip_concurrency") {
+      } else if (reason === "ip_rate_limit") {
         showToast("You've hit the demo limit for now. Try again in about an hour.", "error");
       } else {
         showToast("Demo is rate-limited. Try again later.", "error");
       }
       setState("rate_limited");
-      setTimeout(function () { setState("idle"); }, 8000);
+      setTimeout(function () {
+        if (btn.getAttribute("data-state") === "rate_limited") setState("idle");
+      }, 8000);
       return;
     }
     showToast("Could not start the demo right now. Try again in a moment.", "error");
@@ -420,6 +439,35 @@
 
   var vapi = null;
   var isInCall = false;
+  // Session id of the most recent minted token (set on token success,
+  // cleared once its end-hint fires). Lets every teardown path free the
+  // server-side concurrency slot immediately instead of waiting on
+  // Vapi's end-of-call report.
+  var currentSessionId = null;
+
+  function notifyCallEnded(sessionId) {
+    var sid = sessionId || currentSessionId;
+    if (!sid) return;
+    if (sid === currentSessionId) currentSessionId = null;
+    try {
+      // text/plain keeps this a CORS simple request (no preflight) and
+      // keepalive lets it survive pagehide. Server parses JSON anyway.
+      fetch(END_ENDPOINT, {
+        method: "POST",
+        credentials: "omit",
+        keepalive: true,
+        headers: { "content-type": "text/plain" },
+        body: JSON.stringify({ sessionId: sid })
+      }).catch(function () {});
+      log("end hint sent", sid);
+    } catch (e) {}
+  }
+
+  // Tab closed or navigated away mid-call/mid-dial: the Vapi call dies
+  // with the page, so free the slot on the way out.
+  window.addEventListener("pagehide", function () {
+    if (currentSessionId) notifyCallEnded();
+  });
   // Chat -> voice continuity: when the call was escalated from the native
   // chat widget, the widget passes the conversation so far. The transcript
   // is injected as a system message the moment the call connects, so the
@@ -449,12 +497,14 @@
       log("event: call-end");
       isInCall = false;
       pendingHandoffContext = null;
+      notifyCallEnded();
       setState("idle");
     });
     instance.on("error", function (e) {
       log("event: error", e);
       isInCall = false;
       pendingHandoffContext = null;
+      notifyCallEnded();
       setState("idle");
       showToast(extractErrorMessage(e), "error");
     });
@@ -489,6 +539,9 @@
     lastCancelAt = Date.now();
     callSeq++;
     if (vapi) { try { vapi.stop(); } catch (e) { log("stop error", e); } }
+    // If the token had already minted, free its slot; if the fetch is
+    // still in flight, the seq-mismatch path below hints the orphan.
+    notifyCallEnded();
     setState("idle");
     log("call cancelled while connecting");
   }
@@ -522,7 +575,15 @@
       .then(function (Ctor) {
         if (seq !== callSeq) return; // cancelled while the SDK loaded
         return fetchToken(key).then(function (resp) {
-          if (seq !== callSeq) return; // cancelled while the token minted
+          if (seq !== callSeq) {
+            // Cancelled while the token minted. The server already
+            // recorded an active session for it — release the orphan so
+            // it doesn't block the visitor's next dial.
+            if (resp && resp.status === 200 && resp.body && resp.body.sessionId) {
+              notifyCallEnded(resp.body.sessionId);
+            }
+            return;
+          }
           log("token response", resp.status, resp.body && resp.body.reason);
           if (resp.status !== 200 || !resp.body || !resp.body.token) {
             handleTokenRejection(resp.status, resp.body);
@@ -531,6 +592,7 @@
           var token = resp.body.token;
           var sessionId = resp.body.sessionId;
           var assistantId = resp.body.assistantId;
+          currentSessionId = sessionId;
           if (!vapi) {
             vapi = new Ctor(token);
             bindVapiEvents(vapi);
@@ -553,7 +615,13 @@
                   var vch = JSON.parse(vraw);
                   if (vch && typeof vch.provider === "string" && typeof vch.voiceId === "string") {
                     overrides.voice = { provider: vch.provider, voiceId: vch.voiceId };
-                    log("voice override", vch.provider, vch.voiceId);
+                    // 11labs voices need the model pinned: Vapi defaults
+                    // to the old eleven_turbo_v2, which is audibly worse.
+                    // The pills pin eleven_turbo_v2_5.
+                    if (typeof vch.model === "string" && vch.model) {
+                      overrides.voice.model = vch.model;
+                    }
+                    log("voice override", vch.provider, vch.voiceId, vch.model || "");
                   }
                 }
               } catch (e) {}
@@ -564,6 +632,7 @@
                 function () { log("start resolved"); },
                 function (e) {
                   log("start rejected", e);
+                  notifyCallEnded();
                   setState("idle");
                   showToast(extractErrorMessage(e), "error");
                 }
@@ -571,6 +640,7 @@
             }
           } catch (e) {
             log("start threw", e);
+            notifyCallEnded();
             setState("idle");
             showToast(extractErrorMessage(e), "error");
           }
@@ -608,15 +678,17 @@
     var now = Date.now();
     // Brief cooldown after a cancel: blocks on/off hammering outright.
     if (now - lastCancelAt < 1200) return;
-    // Rolling cap: more than 5 dial attempts in a minute is not a person
-    // deciding to talk — pause locally before the server has to 429 them.
+    // Rolling cap: 8 dial attempts a minute. Voice shopping is the
+    // normal case now — six voices tried back to back is legitimate —
+    // so the local cap only catches genuine hammering, and the lockout
+    // is short. The server's hourly cap is the real ceiling.
     attemptLog = attemptLog.filter(function (t) { return now - t < 60000; });
-    if (attemptLog.length >= 5) {
+    if (attemptLog.length >= 8) {
       setState("rate_limited");
       showToast("Too many call attempts. Give it a few seconds.", "error");
       setTimeout(function () {
         if (btn.getAttribute("data-state") === "rate_limited") setState("idle");
-      }, 30000);
+      }, 12000);
       return;
     }
     attemptLog.push(now);
