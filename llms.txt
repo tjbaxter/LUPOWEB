@@ -61,7 +61,7 @@ LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Lt
 
 ## Frequently asked questions
 
-**Is this just a chatbot?** LUPO is a qualification layer across calls, web forms, chat, and email; chat is one intake channel of four, served by LUPO's own proactive chat agent (live on lupolabs.ai) or by your existing widget handing off when a visitor is ready.
+**Is this just a chatbot?** LUPO is a qualification layer across web forms, email, chat, and phone; chat is one intake channel of four, served by LUPO's own proactive chat agent (live on lupolabs.ai) or by your existing widget handing off when a visitor is ready.
 
 **Is LUPO for sales or marketing?** Whoever owns inbound. Marketing gets control and visibility over the leads it worked hard to generate; sales only sees real buyers.
 

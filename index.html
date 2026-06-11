@@ -92,7 +92,7 @@
             "applicationSubCategory": "Sales Automation / Inbound Qualification",
             "operatingSystem": "Web",
             "url": "https://lupolabs.ai/",
-            "description": "LUPO is the AI inbound SDR between every inbound channel and your sales tools. Captures, qualifies, and books every call, email, web form, and chat handoff, and syncs to HubSpot, Salesforce, or any CRM.",
+            "description": "LUPO is the AI inbound SDR between every inbound channel and your sales tools. Captures, qualifies, and books every web form, email, chat handoff, and call, and syncs to HubSpot, Salesforce, or any CRM.",
             "publisher": {
                 "@type": "Organization",
                 "name": "Flair Technologies Ltd"
@@ -132,7 +132,7 @@
                     "name": "Is this just a chatbot?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "No. LUPO is an inbound qualification layer across calls, web forms, chat, and email. Chat is one intake channel of four, and it can be LUPO's own proactive chat agent, the one running on this site, or your existing chatbot (Intercom Fin, Drift, custom) handing off to LUPO when a visitor is ready."
+                        "text": "No. LUPO is an inbound qualification layer across web forms, email, chat, and phone. Chat is one intake channel of four, and it can be LUPO's own proactive chat agent, the one running on this site, or your existing chatbot (Intercom Fin, Drift, custom) handing off to LUPO when a visitor is ready."
                     }
                 },
                 {
@@ -1990,7 +1990,7 @@
         }
     </style>
     <script src="/analytics.js" defer></script>
-    <script src="/talk-to-lupo.js?v=voices3" defer></script>
+    <script src="/talk-to-lupo.js?v=voices4" defer></script>
     <script async src="https://app.lupolabs.ai/widget/lupo-chat.js" data-lupo-mode="marketing"></script>
     <script src="/visit-radar.js" defer></script>
     <script src="/aurora.js?v=19"></script>
@@ -2638,20 +2638,23 @@
             <div class="section-eyebrow">The phone channel</div>
             <h2 class="section-heading">Hear it answer.</h2>
             <p class="section-lede">The same brain that runs everything above, answering the phone. Pick the voice that fits your brand. The qualification never changes.</p>
-            <!-- Voice lineup. Vapi natives (Elliot, Sid, Clara) sound best
-                 through the live pipeline; the British/Australian registers
-                 only exist as 11labs premades, so those pin
-                 model=eleven_turbo_v2_5 — Vapi otherwise defaults to the
-                 older eleven_turbo_v2, which is audibly flatter (the
-                 original Daniel pill shipped without the pin and sounded
-                 robotic). voiceId enums verified against api.vapi.ai. -->
+            <!-- Voice lineup, voices4: ALL Vapi natives, ALL North American.
+                 Vapi natives sound best through the live pipeline (the old
+                 11labs premades, George/Lily/Charlie, sounded flat even with
+                 the model pinned, and non-US accents don't fit the ICP).
+                 voiceId enums verified against api.vapi.ai 2026-06-11:
+                 Kai (friendly, relaxed), Layla (warm, bright), Savannah
+                 (Southern, straightforward) all accepted as bare names.
+                 "name" in data-voice feeds the personalized opener in
+                 talk-to-lupo.js ("Hey, this is Sid at LUPO..."); the default
+                 pill stores nothing and the script assumes Elliot. -->
             <div class="voice-pills" role="radiogroup" aria-label="Choose a demo voice">
-                <button type="button" class="voice-pill is-active" data-voice="" aria-pressed="true">North American male &middot; professional<span>Elliot &middot; default</span></button>
-                <button type="button" class="voice-pill" data-voice='{"provider":"vapi","voiceId":"Sid"}' aria-pressed="false">American male &middot; laid-back<span>Sid</span></button>
-                <button type="button" class="voice-pill" data-voice='{"provider":"vapi","voiceId":"Clara"}' aria-pressed="false">American female &middot; warm<span>Clara</span></button>
-                <button type="button" class="voice-pill" data-voice='{"provider":"11labs","voiceId":"JBFqnCBsd6RMkjVDRZzb","model":"eleven_turbo_v2_5"}' aria-pressed="false">British male &middot; reassuring<span>George</span></button>
-                <button type="button" class="voice-pill" data-voice='{"provider":"11labs","voiceId":"pFZP5JQG7iQjIQuC4Bku","model":"eleven_turbo_v2_5"}' aria-pressed="false">British female &middot; polished<span>Lily</span></button>
-                <button type="button" class="voice-pill" data-voice='{"provider":"11labs","voiceId":"IKne3meq5aSn9XLyUdCD","model":"eleven_turbo_v2_5"}' aria-pressed="false">Australian male &middot; friendly<span>Charlie</span></button>
+                <button type="button" class="voice-pill is-active" data-voice="" aria-pressed="true">American male &middot; professional<span>Elliot &middot; default</span></button>
+                <button type="button" class="voice-pill" data-voice='{"provider":"vapi","voiceId":"Sid","name":"Sid"}' aria-pressed="false">American male &middot; laid-back<span>Sid</span></button>
+                <button type="button" class="voice-pill" data-voice='{"provider":"vapi","voiceId":"Kai","name":"Kai"}' aria-pressed="false">American male &middot; friendly<span>Kai</span></button>
+                <button type="button" class="voice-pill" data-voice='{"provider":"vapi","voiceId":"Clara","name":"Clara"}' aria-pressed="false">American female &middot; warm<span>Clara</span></button>
+                <button type="button" class="voice-pill" data-voice='{"provider":"vapi","voiceId":"Layla","name":"Layla"}' aria-pressed="false">American female &middot; bright<span>Layla</span></button>
+                <button type="button" class="voice-pill" data-voice='{"provider":"vapi","voiceId":"Savannah","name":"Savannah"}' aria-pressed="false">American female &middot; Southern<span>Savannah</span></button>
             </div>
             <button type="button" class="btn-primary" data-lupo-call-trigger data-lupo-demo="b2b">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">

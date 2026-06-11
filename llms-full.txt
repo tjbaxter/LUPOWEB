@@ -69,7 +69,7 @@ Contact: hello@lupolabs.ai · https://www.linkedin.com/company/luposales/
 
 ## FAQ highlights (https://lupolabs.ai/faq/)
 
-Sales or marketing? Whoever owns inbound: sales, marketing, or RevOps. Marketing gets control and visibility over the leads it worked hard to generate; sales only sees real buyers. / Is this just a chatbot? LUPO is a qualification layer across calls, web forms, chat, and email; chat is one intake of four, via LUPO's own proactive chat agent (live on lupolabs.ai) or your existing widget handing off. / Speed? Sub-2-minute median time-to-first-action on qualified inbound, measured. / Stack? HubSpot, Salesforce, Slack, Google Calendar, Microsoft 365 / Outlook live today; webhooks for everything else.
+Sales or marketing? Whoever owns inbound: sales, marketing, or RevOps. Marketing gets control and visibility over the leads it worked hard to generate; sales only sees real buyers. / Is this just a chatbot? LUPO is a qualification layer across web forms, email, chat, and phone; chat is one intake of four, via LUPO's own proactive chat agent (live on lupolabs.ai) or your existing widget handing off. / Speed? Sub-2-minute median time-to-first-action on qualified inbound, measured. / Stack? HubSpot, Salesforce, Slack, Google Calendar, Microsoft 365 / Outlook live today; webhooks for everything else.
 
 ## Blog (https://lupolabs.ai/blog/, RSS https://lupolabs.ai/blog/feed.xml)
 

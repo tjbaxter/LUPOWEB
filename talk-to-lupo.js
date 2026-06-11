@@ -628,22 +628,39 @@
             // starts with that voice. B2B demo only; default (no stored
             // choice) keeps the assistant's configured voice untouched.
             if (key === "b2b") {
+              // No stored choice = the default pill (Elliot).
+              var voiceName = "Elliot";
               try {
                 var vraw = sessionStorage.getItem("lupoVoice");
                 if (vraw) {
                   var vch = JSON.parse(vraw);
                   if (vch && typeof vch.provider === "string" && typeof vch.voiceId === "string") {
                     overrides.voice = { provider: vch.provider, voiceId: vch.voiceId };
-                    // 11labs voices need the model pinned: Vapi defaults
-                    // to the old eleven_turbo_v2, which is audibly worse.
-                    // The pills pin eleven_turbo_v2_5.
+                    // Non-vapi providers need the model pinned (Vapi
+                    // defaults to older, audibly worse models). Current
+                    // lineup is all Vapi-native so this is dormant, kept
+                    // for future pills that carry a model field.
                     if (typeof vch.model === "string" && vch.model) {
                       overrides.voice.model = vch.model;
                     }
                     log("voice override", vch.provider, vch.voiceId, vch.model || "");
                   }
+                  // Stored pill without a name (pre-voices4 session):
+                  // skip the personalized opener rather than misname it.
+                  voiceName =
+                    vch && typeof vch.name === "string" && /^[A-Za-z]{2,24}$/.test(vch.name)
+                      ? vch.name
+                      : null;
                 }
               } catch (e) {}
+              // Humanized opener: the agent introduces itself by the
+              // picked voice's name ("this is Sid at LUPO"), never as
+              // the bare brand. A chat handoff opener still wins, it
+              // quotes the visitor's conversation back instead.
+              if (!handoffFirstMessage && voiceName) {
+                overrides.firstMessage =
+                  "Hey, this is " + voiceName + " at LUPO. Thanks for taking a look. What's your name?";
+              }
             }
             var result = vapi.start(assistantId, overrides);
             if (result && typeof result.then === "function") {
