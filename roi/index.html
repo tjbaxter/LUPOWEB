@@ -133,11 +133,7 @@
         .src-note a { color: var(--text-tertiary); text-decoration: underline; }
         .updated { font-size: 12.5px; color: var(--text-tertiary); margin-top: 16px; }
 
-        .proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 8px 0 0; }
-        @media (max-width: 760px) { .proof-grid { grid-template-columns: 1fr; } }
-        .proof-card { background: rgba(255,255,255,0.018); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 22px 24px; }
-        .proof-num { font-size: 30px; font-weight: 650; letter-spacing: -0.02em; margin-bottom: 6px; color: var(--text-primary); }
-        .proof-card p { font-size: 13.5px; line-height: 1.55; color: var(--text-secondary); margin: 0; }
+        .calc-lede { font-size: 15px; color: var(--text-secondary); line-height: 1.6; margin: -6px 0 20px; max-width: 720px; }
 
         .stream-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 8px; }
         @media (max-width: 760px) { .stream-grid { grid-template-columns: 1fr; } }
@@ -235,43 +231,20 @@
         </section>
 
         <section class="page-section">
-            <div class="section-inner prose">
-                <h2>What the category already proves</h2>
-                <p>The economics of the AI inbound SDR are no longer speculative. The category's own customers have published the numbers.</p>
-                <div class="proof-grid">
-                    <div class="proof-card">
-                        <div class="proof-num">13 SDRs</div>
-                        <p>A Qualified customer, the CMO of Sinch, publicly reports that Piper "does the work of 13 SDRs".</p>
-                    </div>
-                    <div class="proof-card">
-                        <div class="proof-num">3x meetings</div>
-                        <p>Qualified customers publicly report 3x more meetings in six months and 6x SDR efficiency.</p>
-                    </div>
-                    <div class="proof-card">
-                        <div class="proof-num">90 meetings</div>
-                        <p>Spara publicly reports a customer booking over 90 meetings in its first 30 days.</p>
-                    </div>
-                </div>
-                <p class="src-note">Sources: <a href="https://www.qualified.com/customers" target="_blank" rel="noopener noreferrer">Qualified customer results page</a> and <a href="https://www.businesswire.com/news/home/20250910363947/en/Spara-Launches-AI-Platform-with-%2415M-to-Modernize-Sales-Marketing-Pipelines" target="_blank" rel="noopener noreferrer">Spara launch announcement, BusinessWire, September 2025</a>, as publicly reported at the time of writing.</p>
-                <p style="margin-top:18px;">Those are the vendors' best customer stories, selected and published by the vendors themselves. The calculator below goes the other way: conservative industry baselines, every assumption visible, every default adjustable. Run your own inbound through it.</p>
-            </div>
-        </section>
-
-        <section class="page-section">
             <div class="section-inner">
                 <h2>Three ways it hits the P&amp;L</h2>
                 <div class="stream-grid">
                     <div class="stream-card lupo">
                         <h3>Recovered revenue</h3>
-                        <p>23% of inbound web leads never get a response at all. Those are buyers you already paid to acquire, leaking at the moment of maximum intent. LUPO answers every one in seconds, around the clock, so the leak becomes pipeline instead.</p>
+                        <p>23% of inbound web leads never get a response. Buyers you already paid to acquire, leaking at peak intent. LUPO answers every one in seconds, around the clock.</p>
                     </div>
                     <div class="stream-card lupo">
                         <h3>Research hours returned</h3>
-                        <p>Every meeting arrives pre-briefed: contact verified, company signals, decision-maker context, buying intent scored. The 30 minutes a lead costs in manual lookup today is pre-done when the booking lands, and rep time goes into the conversation, the one part only reps can do.</p>
+                        <p>Every meeting arrives pre-briefed: contact verified, company signals, buying intent scored. The 30 minutes of manual lookup per lead is already done when the booking lands.</p>
                     </div>
                     <div class="stream-card lupo">
                         <h3>Hires avoided</h3>
-                        <p>LUPO qualifies and scores every lead the moment it arrives, 24/7, unfailingly. Inbound volume can double without the next round of triage hires, and your existing team spends its week on real buyers. Capacity stops being a headcount problem.</p>
+                        <p>Every lead qualified and scored the moment it arrives, 24/7. Inbound volume can double without the next round of triage hires. Capacity stops being a headcount problem.</p>
                     </div>
                 </div>
             </div>
@@ -280,6 +253,7 @@
         <section class="page-section" id="calculator">
             <div class="section-inner">
                 <h2>Run your own numbers</h2>
+                <p class="calc-lede">AI inbound SDRs are publicly reported to replace double-digit SDR headcount. We'd rather you didn't take anyone's marketing for it, including ours: conservative baselines, every assumption visible, every default adjustable.</p>
                 <div class="calc-grid">
                     <div class="calc-panel">
                         <div class="calc-controls">
@@ -359,7 +333,7 @@
         <section class="page-section" id="methodology">
             <div class="section-inner prose">
                 <h2>The methodology, in the open</h2>
-                <p>No black box. These are the formulas the calculator runs, written out:</p>
+                <p><strong>No black box. Two rules keep it honest.</strong></p>
                 <ul class="method-list">
                     <li><strong>Recovered leads per year</strong> = monthly inbound × 12 × share of inbound never answered today</li>
                     <li><strong>Incremental qualified meetings</strong> = recovered leads × share that become qualified meetings</li>
@@ -368,8 +342,12 @@
                     <li><strong>Hiring cost avoided</strong> = triage hires avoided × loaded annual cost per SDR</li>
                     <li><strong>Net annual impact</strong> = incremental closed revenue + hiring cost avoided − LUPO annual cost</li>
                 </ul>
-                <p>Two deliberate choices keep the model honest. Closed revenue contributes at your gross margin, not one to one, so the output is labelled revenue impact plus cost avoided, never profit. And rep hours returned are reported as capacity but not priced into the net figure, because pricing the hours and counting avoided hires would double count the same saving.</p>
-                <p>The defaults come from independent published research, not our marketing. Harvard Business Review found that <a href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" target="_blank" rel="noopener noreferrer">23% of inbound web leads are never responded to at all</a>, and the same research found that responding within 5 minutes makes contact 21 times more likely than waiting 30. <a href="https://www.salesforce.com/news/stories/sales-research-2023/" target="_blank" rel="noopener noreferrer">Salesforce's State of Sales</a> puts the share of a rep's week actually spent selling at 28%. <a href="https://sherpablog.marketingsherpa.com/email-marketing/b2b-lead-nurturing-importance/" target="_blank" rel="noopener noreferrer">MarketingSherpa</a> found 73% of B2B leads are not sales-ready when they arrive, which is why qualification, not raw speed, is the job. Where a default is our own assumption rather than a published statistic, it errs low: only a quarter of recovered leads becoming meetings, a 15% close rate, two avoided hires. Disagree with any of them? Change them. That is the point of the page.</p>
+                <ul class="method-list">
+                    <li><strong>Margin, not profit.</strong> Closed revenue contributes at your gross margin, so the output is labelled revenue impact plus cost avoided, never profit.</li>
+                    <li><strong>No double counting.</strong> Rep hours returned are shown as capacity, not priced into the net figure; pricing the hours and counting avoided hires would count the same saving twice.</li>
+                </ul>
+                <p class="src-note">Defaults from independent research: <a href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" target="_blank" rel="noopener noreferrer">23% of inbound web leads never get a response</a> (Harvard Business Review) · <a href="https://www.salesforce.com/news/stories/sales-research-2023/" target="_blank" rel="noopener noreferrer">reps spend 28% of the week selling</a> (Salesforce, State of Sales) · <a href="https://sherpablog.marketingsherpa.com/email-marketing/b2b-lead-nurturing-importance/" target="_blank" rel="noopener noreferrer">73% of B2B leads arrive before they are sales-ready</a> (MarketingSherpa).</p>
+                <p>Where a default is our assumption, it errs low. Disagree? Change it.</p>
                 <p class="updated">Last updated: June 2026</p>
             </div>
         </section>
