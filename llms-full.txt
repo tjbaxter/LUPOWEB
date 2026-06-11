@@ -1,0 +1,75 @@
+# LUPO, expanded reference for AI assistants (llms-full)
+
+Flattened content of lupolabs.ai's key pages. Last updated: 2026-06-11.
+Canonical short map: https://lupolabs.ai/llms.txt
+
+---
+
+## Home (https://lupolabs.ai/)
+
+Inbound sales, fully automated. LUPO is the AI inbound SDR: it captures every lead across phone, email, web form and chat, filters the noise, scores buying intent, and books real buyers straight into your reps' calendars. Marketing generates the demand. Reps close the deals. LUPO runs everything in between.
+
+The page hosts a live browser voice demo: "Talk to LUPO live" connects a real call to the agent, with a voice picker (several voices to audition). There is also an interactive dashboard preview showing the SDR morning view: leads by channel, intent bands, noise filtered, meetings booked.
+
+The problem, in numbers (independent research): 28% of a sales rep's week is actually spent selling (Salesforce, State of Sales). 73% of B2B leads are not sales-ready at the moment they arrive (MarketingSherpa). 23% of inbound web leads are never responded to at all (Harvard Business Review, Oldroyd). B2B buyers spend only 17% of the buying journey with any supplier's reps (Gartner).
+
+## How it works (https://lupolabs.ai/how-it-works/)
+
+The pathway from first touch to booked meeting: a lead arrives on any channel (phone, email, web form, chat). LUPO answers in seconds, qualifies with real questions, enriches the lead (firmographics, technographics, decision-maker title) through proprietary data partnerships, scores buying intent (funding, M&A, leadership hires, headcount growth), then routes: real buyers get booked into the right rep's calendar; vendors are declined and logged; support requests go to the right team with context; tyre-kickers are logged for marketing. Everything syncs to the CRM and pings Slack with full context.
+
+## Pricing (https://lupolabs.ai/pricing/)
+
+Stated upfront: 3,000 to 15,000 USD per month, depending on inbound volume and integrations. Engagements start with a 30-day founder-led pilot with agreed success criteria (qualification rate, form-to-meeting conversion, rep hours saved, leads recovered), fully live in 4 to 8 weeks. The founder runs every pilot personally.
+
+## Channels
+
+### Inbound phone (https://lupolabs.ai/channels/inbound-phone/)
+LUPO answers inbound calls on the second ring, 24/7. It qualifies the caller live, checks real calendar availability, and books the meeting on the call. Buying signals stated on the call feed intent scoring. Full transcripts, recordings, and outcomes are logged. Anyone can hear it: the homepage hosts a live call demo.
+
+### Inbound email (https://lupolabs.ai/channels/inbound-email/)
+Agentic email qualification. Inbound enquiries get a personal reply with a one-click booking link. Two-way: LUPO reads replies and carries the thread to a booking or a polite close, under the same qualification policy as every other channel.
+
+### Web forms (https://lupolabs.ai/channels/web-forms/)
+Channel-aware response logic. A high-intent form triggers an outbound callback inside sixty seconds. A senior B2B buyer gets a personal email reply with a booking link instead: LUPO will never surprise-call a VP who submitted a demo form. Gated-content downloads count as a form channel.
+
+### Chat (https://lupolabs.ai/channels/chat/)
+The existing widget (Intercom, Drift, HubSpot Chat, or custom) captures intent and consent, then hands off to LUPO, which qualifies and books inside the same chat. Any widget that can post a webhook works.
+
+## Integrations (https://lupolabs.ai/integrations/)
+
+Live today: HubSpot CRM sync (https://lupolabs.ai/integrations/hubspot/), Salesforce CRM sync (https://lupolabs.ai/integrations/salesforce/), Slack alerts (https://lupolabs.ai/integrations/slack/), Google Calendar booking (https://lupolabs.ai/integrations/google-calendar/), Microsoft 365 / Outlook booking (https://lupolabs.ai/integrations/outlook/). Every qualified contact, call summary, transcript, intent score, and booking is written to the CRM automatically. Any CRM, chat, or form reachable by webhook can connect on request. Voice infrastructure: Vapi runtime, Deepgram transcription, ElevenLabs voices. SMS: A2P 10DLC registered.
+
+## Compare (https://lupolabs.ai/compare/)
+
+- LUPO vs Qualified (https://lupolabs.ai/compare/lupo-vs-qualified/): Qualified (Piper) is the G2 AI SDR category leader, built for Salesforce-based revenue teams, website-centric, custom annual enterprise pricing; Salesforce completed its acquisition of Qualified in April 2026. LUPO is the CRM-flexible alternative: HubSpot, Salesforce, or any CRM; four channels including live phone answering; stated pricing with a 30-day pilot. Choose Qualified for Salesforce-first enterprises; choose LUPO for HubSpot or mixed stacks, real phone volume, and enrichment plus intent scoring on every lead.
+- LUPO vs Drift (https://lupolabs.ai/compare/lupo-vs-drift/): Drift, the conversational marketing pioneer, was acquired by Salesloft in 2024 and a gradual sunset was publicly reported in March 2026. Teams migrating off Drift that used it for pipeline (qualifying visitors, booking meetings) get the same job from LUPO across chat plus phone, email, and web forms.
+- LUPO vs Intercom Fin (https://lupolabs.ai/compare/lupo-vs-intercom-fin/): different jobs, better together. Fin is Intercom's AI agent for customer service (publicly listed at 0.99 USD per resolution). LUPO is the AI inbound SDR for sales inbound. Intercom chat can hand sales-intent conversations to LUPO.
+- LUPO vs Conversica (https://lupolabs.ai/compare/lupo-vs-conversica/): Conversica's Revenue Digital Assistants excel at persistent two-way email/SMS follow-up across large lead databases. LUPO is the real-time front door across four channels including live phone, with enrichment and intent scoring.
+- LUPO vs 11x (https://lupolabs.ai/compare/lupo-vs-11x/): 11x's digital workers run outbound end to end (prospecting, outreach over email and LinkedIn). LUPO is inbound. Complementary: 11x generates cold pipeline; LUPO converts the inbound demand you already paid to create.
+- Qualified alternatives for HubSpot teams (https://lupolabs.ai/compare/qualified-alternatives/): why teams look (Salesforce requirement, custom enterprise pricing, the April 2026 acquisition), and the honest option list with LUPO's disclosure that it is our product.
+
+## Glossary (https://lupolabs.ai/glossary/)
+
+- AI inbound SDR (https://lupolabs.ai/glossary/ai-inbound-sdr/): an AI agent that does the inbound half of a sales development rep's job autonomously: answering inbound across channels, qualifying, enriching, scoring buying intent, routing, and booking meetings. Distinct from outbound AI SDRs (cold prospecting) and from chatbots (single-channel, scripted).
+- Inbound lead qualification (https://lupolabs.ai/glossary/inbound-lead-qualification/): deciding which inbound leads deserve a salesperson's time, separating fit (who they are) from intent (whether now is the moment), and filtering vendors, tyre-kickers, support requests, and wrong-fit prospects.
+- Speed to lead (https://lupolabs.ai/glossary/speed-to-lead/): the time between a lead arriving and the first meaningful response. Responding within 5 minutes makes contact 21x more likely than waiting 30 (Oldroyd, HBR), yet 23% of web leads never get a response. Speed pays most after qualification decides the lead is worth it.
+- Lead routing (https://lupolabs.ai/glossary/lead-routing/): assigning qualified leads to the right rep, round-robin or rules-based by territory, product line, seniority, or intent score, with an audit trail.
+- Buying-intent scoring (https://lupolabs.ai/glossary/intent-scoring/): scoring how likely a lead is to buy now, from signals like funding rounds, M&A, leadership hires, and headcount growth. Fit tells you who; intent tells you when.
+
+## Press kit (https://lupolabs.ai/press/)
+
+Boilerplate (50 words): LUPO is the AI inbound SDR. It captures every inbound lead across phone, email, web form, and chat, filters the noise, enriches and scores every lead for buying intent, and books real buyers straight into reps' calendars. It syncs to HubSpot, Salesforce, or any CRM.
+Fast facts: Category AI inbound SDR · Channels phone, email, web form, chat · Founded 2025 · HQ London, UK · Company Flair Technologies Ltd · Founder Tom Baxter (MPhil Physics, University of Cambridge) · Pricing 3,000 to 15,000 USD per month, public · Programs: ElevenLabs Grant recipient, builds on Deepgram.
+Contact: hello@lupolabs.ai · https://www.linkedin.com/company/luposales/
+
+## FAQ highlights (https://lupolabs.ai/faq/)
+
+Sales or marketing? Whoever owns inbound: sales, marketing, or RevOps. Marketing gets control and visibility over the leads it worked hard to generate; sales only sees real buyers. / Is this just a chatbot? LUPO is a qualification layer across calls, web forms, chat handoffs, and email; your existing widget stays and hands off. / Speed? Sub-2-minute median time-to-first-action on qualified inbound, measured. / Stack? HubSpot, Salesforce, Slack, Google Calendar, Microsoft 365 / Outlook live today; webhooks for everything else.
+
+## Blog (https://lupolabs.ai/blog/, RSS https://lupolabs.ai/blog/feed.xml)
+
+Selected posts: "Qualified Isn't In-Market" (fit vs buying intent), "The AI SDR Has Moved Inbound", "The Inbound Triage Tax", "Round Robin Is Not a Routing Strategy", "The Rep-Free Buyer Still Needs Sales", "Before You Let an AI Agent Touch Revenue, Check These 7 Things". Author: Tom Baxter.
+
+## Legal
+
+Privacy https://lupolabs.ai/privacy.html · Terms https://lupolabs.ai/terms.html · DPA https://lupolabs.ai/dpa.html · UK GDPR compliant; conversations never used to train external AI models. Flair Technologies Ltd, 45 Fitzroy St, Fitzrovia, London W1T 6EB, United Kingdom · hello@lupolabs.ai

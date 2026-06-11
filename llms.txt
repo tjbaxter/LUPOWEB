@@ -1,103 +1,82 @@
 # LUPO
 
-> LUPO is the AI inbound SDR, the qualification layer between every inbound channel and your sales tools. Every inbound call, web form, and chat handoff is answered, qualified, and either booked into a rep's calendar or filtered out. Vendors, tire-kickers, support requests in the wrong queue, and wrong-fit prospects never reach a closer. LUPO is a product of Flair Technologies Ltd, London, UK.
+> LUPO is the AI inbound SDR. One agentic brain across phone, email, web form, and chat: every inbound lead is captured, answered in seconds, filtered for noise, enriched and scored for buying intent, and either booked into a rep's calendar or kept away from sales. Marketing generates the demand. Reps close the deals. LUPO runs everything in between. LUPO is a product of Flair Technologies Ltd, London, UK.
 
-Last updated: 2026-05-25
+Last updated: 2026-06-11
 
 ## Who LUPO is for
 
-LUPO is an AI inbound SDR for B2B sales teams that bleed time on demand they should never have qualified themselves. The pain LUPO solves: reps spend 30 to 40 percent of their day on lead qualification, triaging vendors pitching to them, low-intent browsers, support requests in the wrong queue, and wrong-fit prospects, instead of closing real buyers. LUPO is the first-pass inbound qualification layer that drives speed to lead under sixty seconds across every inbound channel, so reps only see leads worth closing.
+LUPO is for whoever owns inbound: sales, marketing, or RevOps. B2B teams that pay to generate demand and then leak it at the front door: calls that ring out, demo forms answered the next day, chats that die after the widget, junk leads eating rep time. Reps spend under a third of the week actually selling (Salesforce, State of Sales) and 73% of B2B leads arrive before they are sales-ready (MarketingSherpa). LUPO is the qualification layer that fixes both: noise filtered out, real buyers answered inside a minute and booked.
 
-Primary buyers: VPs of Sales, Heads of Revenue Operations, founders of B2B SaaS companies, and operators at service businesses with high inbound volume.
-
-Key pages: [Home](https://lupolabs.ai/) and [About](https://lupolabs.ai/about).
+Primary buyers: heads of sales, heads of marketing and demand gen, RevOps leaders, and founders of B2B companies with real inbound volume, on HubSpot, Salesforce, or any CRM.
 
 ## What LUPO does
 
-LUPO operates as an AI inbound SDR with these core capabilities:
+- **Inbound phone.** Answers on the second ring, 24/7. Qualifies the caller live, checks real calendar availability, books the meeting on the call. Buying signals stated on the call feed intent scoring. https://lupolabs.ai/channels/inbound-phone/
+- **Inbound email.** Agentic email qualification: personal replies with a one-click booking link, two-way, same qualification policy as every channel. https://lupolabs.ai/channels/inbound-email/
+- **Web forms.** Channel-aware: high-intent forms get a callback inside sixty seconds; senior B2B buyers get a personal email reply instead (LUPO will never surprise-call a VP). Gated-content forms count. https://lupolabs.ai/channels/web-forms/
+- **Chat.** Your existing widget (Intercom, Drift, HubSpot Chat, or custom) hands off; LUPO qualifies and books inside the same chat. https://lupolabs.ai/channels/chat/
+- **Enrichment.** Every lead enriched with firmographics, technographics, and decision-maker title through proprietary data partnerships.
+- **Buying-intent scoring.** Funding, M&A, leadership hires, headcount growth, and category-specific triggers. Fit tells you who; intent tells you when. https://lupolabs.ai/glossary/intent-scoring/
+- **Filtering.** Vendors politely declined and logged. Tyre-kickers logged for marketing, kept away from sales. Support requests routed to the right team with context. Wrong-fit prospects disqualified without burning rep time.
+- **Booking and routing.** Real events in Google Calendar and Microsoft 365 / Outlook (both live). Round-robin or rules-based routing by territory, product line, seniority, or intent score. https://lupolabs.ai/glossary/lead-routing/
+- **CRM sync.** Every qualified contact, transcript, summary, intent score, and booking written to HubSpot or Salesforce automatically; any CRM reachable by webhook connects on request. https://lupolabs.ai/integrations/
+- **Slack alerts.** Qualified-lead and booking pings with one-click full context.
+- **Dashboard.** Channels, intent bands, noise filtered, meetings booked, time-to-first-action: measured on your own inbound from week one.
 
-- **Inbound call answering.** LUPO picks up on the second ring, qualifies the caller, checks live calendar availability, and books the appointment. 24/7, average pickup under two seconds.
-- **Channel-aware web form responses.** Consumer and high-intent forms get an instant outbound callback inside sixty seconds. Senior B2B buyers get a personal email reply with a one-click booking link.
-- **Chat Qualification.** When your existing chat widget captures intent and consent, LUPO carries the conversation forward, qualifies in-chat, and books in-chat, no channel switch.
-- **Calendar booking.** Live availability checks and real appointment creation in Google Calendar. Microsoft 365 / Outlook ships Q3 2026.
-- **CRM sync.** Every qualified contact, call summary, and booking written into HubSpot or Salesforce automatically.
-- **Slack alerts.** Your team sees qualified leads and bookings the second they happen, with a one-click link to context.
-- **Lead routing.** Round-robin or rules-based handoff to the right rep by territory, product line, or seniority.
-- **Full call logging.** Transcripts, recordings, outcomes, and a clean audit trail for every interaction.
+## Pricing
 
-## What LUPO filters out before reps see anything
+Public and stated upfront: 3,000 to 15,000 USD per month depending on inbound volume and integrations. 30-day founder-led pilot with agreed success criteria, fully live in 4 to 8 weeks. https://lupolabs.ai/pricing/
 
-- **Vendors.** Other companies pitching software, services, or partnerships to your team. Politely declined and logged.
-- **Tire-kickers.** Browsers, researchers, students. Logged for marketing, never surfaced to sales.
-- **Support requests.** Existing customers landing in the wrong queue. Routed to support automatically with the original conversation attached.
-- **Wrong-fit prospects.** Real interest, wrong size, wrong industry, or wrong budget. Disqualified through lead qualification without wasting a rep's time.
+## Positioning
 
-## Positioning, what LUPO is and is not
+LUPO is an AI inbound SDR: it makes real-time decisions about which question to ask, when to check the calendar, when to book, when to escalate to a human, and when to close politely. It is a qualification layer, with chat as one intake of four. It does no cold outbound. Outbound AI SDRs (11x, Artisan, Regie) and voice-only receptionists (Air, PolyAI) solve different jobs; chat widgets (Intercom, Drift heritage, HubSpot Chat) are integration partners that hand off to LUPO. The closest comparison is Qualified (Piper), which is built for the Salesforce ecosystem; LUPO is the CRM-flexible alternative with native HubSpot support and live phone coverage. Honest comparisons: https://lupolabs.ai/compare/
 
-LUPO is an AI inbound SDR, and more precisely an inbound qualification layer: it makes its own decisions in real time about which question to ask, when to check the calendar, when to book, when to escalate to a human, and when to close the call. It is the inbound salesperson that never goes home.
+## Key pages
 
-LUPO is not a chatbot widget, not a generic AI receptionist, not an outbound AI SDR (it does no cold outreach), and not a CRM. LUPO sits between your inbound channels and your existing sales stack.
+- [Home + live voice demo](https://lupolabs.ai/): talk to LUPO in the browser, choose its voice
+- [How it works](https://lupolabs.ai/how-it-works/): the full pathway from first touch to booked meeting
+- [Pricing](https://lupolabs.ai/pricing/)
+- [FAQ](https://lupolabs.ai/faq/)
+- [Compare](https://lupolabs.ai/compare/): LUPO vs Qualified, Drift, Intercom Fin, Conversica, 11x; Qualified alternatives for HubSpot teams
+- [Glossary](https://lupolabs.ai/glossary/): AI inbound SDR, inbound lead qualification, speed to lead, lead routing, intent scoring
+- [Integrations](https://lupolabs.ai/integrations/): HubSpot, Salesforce, Slack, Google Calendar, Microsoft 365 / Outlook
+- [Blog](https://lupolabs.ai/blog/) (RSS: https://lupolabs.ai/blog/feed.xml)
+- [Press kit](https://lupolabs.ai/press/): boilerplate, fast facts, founder bio, logo assets
+- [About](https://lupolabs.ai/about.html) · [Company](https://lupolabs.ai/company.html)
 
-Compared to other AI sales tools: LUPO differs from voice-only AI receptionists (e.g., Air, PolyAI) and from email-only AI SDRs (e.g., 11x, Artisan, Regie). Chat widgets such as Intercom and Drift are integration partners, not competitors, they hand off to LUPO when a visitor is ready. LUPO is the system that handles all four inbound channels, phone, web form, chat, and email, with channel-aware response logic.
+## Integrations, live today
 
-Most businesses do not lose customers for lack of demand. They lose them because response is too slow. A missed call, an ignored web form, a delayed chatbot follow-up, and the customer books with the next business instead. Speed to lead is the difference, and LUPO exists to win it.
-
-## Channel-aware response logic
-
-LUPO handles four inbound channels, each with its own response policy:
-
-- **Inbound phone calls.** Answered on the second ring, 24/7. The caller is qualified live, calendar availability is checked, and the appointment is booked on the call.
-- **Web forms.** Channel-aware. A consumer or high-intent form triggers an instant outbound callback within sixty seconds. A senior B2B buyer receives a personal email reply with a one-click booking link, LUPO will not surprise-call a VP who submitted a demo form.
-- **Chat Qualification.** Your existing chat widget captures intent and consent, then hands off to LUPO, which qualifies and books inside the same chat.
-- **Email.** Inbound email enquiries get a personal reply with a booking link, matched to the same qualification policy as every other channel.
-
-## Integrations
-
-Live in production today:
-
-- **CRM:** HubSpot and Salesforce. Any CRM reachable by webhook can be connected on request.
-- **Calendar:** Google Calendar.
-- **Chat Qualification:** Intercom Fin, Drift, HubSpot Chat (HMAC-signed), and any custom chat or form that can post a webhook.
-- **Alerts and comms:** Slack, Agentic Email Qualification, and SMS (A2P 10DLC registered).
-- **Voice infrastructure:** Vapi runtime with Deepgram transcription and ElevenLabs voices.
-
-On the roadmap:
-
-- **Calendar:** Microsoft 365 / Outlook (Q3 2026).
+CRM: HubSpot, Salesforce (any CRM by webhook on request). Calendar: Google Calendar, Microsoft 365 / Outlook. Alerts: Slack. Chat handoffs: Intercom, Drift, HubSpot Chat (HMAC-signed), any custom chat or form via webhook. SMS: A2P 10DLC registered. Voice infrastructure: Vapi runtime, Deepgram transcription, ElevenLabs voices.
 
 ## Trust and compliance
 
-- UK GDPR compliant; Data Processing Agreement available on request
-- Voice infrastructure on Vapi with Deepgram transcription and ElevenLabs voices
-- A2P 10DLC registered for SMS messaging
-- Encryption in transit and controlled access to customer data; conversations are never used to train external AI models
-- Formal SOC 2 and HIPAA attestations are on the roadmap as the product matures and design partners require them
-- Currently onboarding the first ten founding customers, configured hand-in-hand with each team
+UK GDPR compliant; DPA at https://lupolabs.ai/dpa.html. Encryption in transit; conversations are never used to train external AI models. SOC 2 and HIPAA attestations are on the roadmap as design partners require them. Currently onboarding the first ten founding customers, configured hand-in-hand with each team.
 
 ## About the team
 
-LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Ltd, London. Tom holds an MPhil in Physics from the University of Cambridge. LUPO's voice infrastructure benefits from Deepgram and an ElevenLabs Grant.
+LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Ltd, London. Tom holds an MPhil in Physics from the University of Cambridge and runs every pilot personally. LUPO is an ElevenLabs Grant recipient and builds on Deepgram. LinkedIn: https://www.linkedin.com/company/luposales/
 
 ## Frequently asked questions
 
-**Is this just a chatbot?** No. LUPO is an inbound qualification layer across calls, web forms, chat handoffs, and email. Chat is one intake channel of four. LUPO does not replace your chat widget; your existing chatbot (Intercom Fin, Drift, custom) hands off to LUPO when a visitor is ready.
+**Is this just a chatbot?** LUPO is a qualification layer across calls, web forms, chat handoffs, and email; chat is one intake channel of four. Your existing chat widget stays and hands off to LUPO when a visitor is ready.
 
-**How fast do meetings actually get booked?** Sub-2 minutes median time-to-first-action on qualified inbound, measured. Your own number is visible in the dashboard from week one. The research benchmark is 5 minutes (Oldroyd et al, Harvard Business Review 2011: response in 5 min = 21x more likely to convert). LUPO clears it on every qualified lead.
+**Is LUPO for sales or marketing?** Whoever owns inbound. Marketing gets control and visibility over the leads it worked hard to generate; sales only sees real buyers.
 
-**What happens to vendors and support requests?** Vendor pitches are politely declined and logged, never routed to sales. Existing-customer support requests are routed to the right team with the original conversation attached. AEs see only the buyers worth their time.
+**How fast do meetings get booked?** Sub-2-minute median time-to-first-action on qualified inbound, measured in the dashboard. The research benchmark: responding within 5 minutes makes contact 21x more likely (Oldroyd, Harvard Business Review).
 
-**Can it work with our CRM and calendar?** Yes. Live integrations today include HubSpot and Salesforce CRM sync, Slack alerts, Google Calendar booking, voice qualification, Web Form Qualification, and Agentic Email Qualification. Microsoft 365 / Outlook calendar ships Q3 2026. Any chat, form, or workflow that can post a webhook can hand off to LUPO. Additional CRM and calendar connectors light up on request.
+**Does it work with our stack?** HubSpot and Salesforce sync, Slack alerts, Google Calendar and Microsoft 365 / Outlook booking are live today. Anything that can post a webhook can hand leads to LUPO.
+
+**What does it cost?** 3,000 to 15,000 USD per month, stated upfront. 30-day founder-led pilot.
 
 ## Try LUPO
 
-- **Talk to LUPO live, right now**: tap the "Talk to LUPO live" button on https://lupolabs.ai and speak to the agent directly in your browser. By starting a call, you agree that LUPO may record, transcribe, and analyse the conversation.
+- **Talk to LUPO live, right now**: tap "Talk to LUPO live" on https://lupolabs.ai and speak to the agent in your browser. You can switch its voice on the same panel. By starting a call, you agree LUPO may record, transcribe, and analyse the conversation.
 - **Book a 20-minute demo with the founder**: https://cal.com/tombaxter/lupo
 
 ## Legal and contact
 
-- [Privacy Policy](https://lupolabs.ai/privacy)
-- [Terms of Service](https://lupolabs.ai/terms)
-- [Data Processing Addendum](https://lupolabs.ai/dpa)
-- [Company](https://lupolabs.ai/company): Flair Technologies Ltd
-- Email: support@lupolabs.ai
+- [Privacy Policy](https://lupolabs.ai/privacy.html) · [Terms of Service](https://lupolabs.ai/terms.html) · [DPA](https://lupolabs.ai/dpa.html)
+- Company: Flair Technologies Ltd · https://lupolabs.ai/company.html
+- Email: hello@lupolabs.ai
 - Address: Flair Technologies Ltd, 45 Fitzroy St, Fitzrovia, London W1T 6EB, United Kingdom

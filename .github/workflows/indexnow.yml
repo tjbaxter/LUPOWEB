@@ -1,0 +1,57 @@
+# IndexNow ping on every deploy.
+#
+# Netlify auto-deploys main on push; this workflow waits for the deploy
+# to settle, then submits every URL in sitemap.xml to the IndexNow API
+# (consumed by Bing, Seznam, Naver, Yandex, and the AI search ecosystem
+# that feeds off Bing's index). Google ignores IndexNow; Google freshness
+# comes from Search Console + sitemap lastmod.
+#
+# The key is intentionally public: IndexNow keys prove site ownership by
+# serving <key>.txt at the site root, so committing it here leaks nothing.
+
+name: IndexNow ping
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for Netlify deploy to go live
+        run: sleep 90
+
+      - name: Submit sitemap URLs to IndexNow
+        run: |
+          python3 - <<'EOF'
+          import json, re, urllib.request
+
+          KEY = "26b4887d92f313c86e59fec095ae9821"
+          HOST = "lupolabs.ai"
+
+          with open("sitemap.xml", "r", encoding="utf-8") as f:
+              sitemap = f.read()
+          urls = re.findall(r"<loc>(.*?)</loc>", sitemap)
+          if not urls:
+              raise SystemExit("no URLs found in sitemap.xml")
+
+          payload = json.dumps({
+              "host": HOST,
+              "key": KEY,
+              "keyLocation": f"https://{HOST}/{KEY}.txt",
+              "urlList": urls,
+          }).encode("utf-8")
+
+          req = urllib.request.Request(
+              "https://api.indexnow.org/indexnow",
+              data=payload,
+              headers={"Content-Type": "application/json; charset=utf-8"},
+              method="POST",
+          )
+          with urllib.request.urlopen(req, timeout=30) as res:
+              print(f"IndexNow responded {res.status} for {len(urls)} URLs")
+          EOF
