@@ -332,6 +332,150 @@
         }
 
         /* ============================================================
+           Product proof: real dashboard rows + the Slack brief.
+           Shows the mechanism working instead of describing it.
+           ============================================================ */
+        .proof-frame {
+            margin-top: 44px;
+            border: 1px solid var(--border-strong);
+            border-radius: 18px;
+            background: rgba(10,10,16,0.62);
+            overflow: hidden;
+            box-shadow: 0 26px 70px -32px rgba(0,0,0,0.85), 0 0 0 1px rgba(167,139,250,0.05);
+        }
+        .pf-head {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 13px 22px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255,255,255,0.02);
+        }
+        .pf-title {
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+        .pf-cols {
+            display: flex; gap: 18px;
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            color: rgba(255,255,255,0.32);
+        }
+        .pf-row {
+            display: flex; align-items: center; gap: 18px;
+            padding: 16px 22px;
+            border-bottom: 1px solid var(--border);
+        }
+        .pf-row:last-child { border-bottom: none; }
+        .pf-who { flex: 1 1 auto; min-width: 0; }
+        .pf-name { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+        .pf-meta { font-size: 12.5px; color: var(--text-tertiary); margin-top: 2px; }
+        .pf-signal {
+            flex-shrink: 0;
+            font-size: 12px; font-weight: 500;
+            color: #c4b5fd;
+            border: 1px solid rgba(167,139,250,0.3);
+            background: rgba(167,139,250,0.09);
+            border-radius: 999px;
+            padding: 4px 12px;
+            white-space: nowrap;
+        }
+        .pf-signal.pf-muted {
+            color: var(--text-tertiary);
+            border-color: var(--border);
+            background: rgba(255,255,255,0.03);
+        }
+        .pf-score {
+            flex-shrink: 0; min-width: 56px; text-align: right;
+            font-size: 18px; font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            color: #a7f3d0;
+            line-height: 1.1;
+        }
+        .pf-score .pf-band {
+            display: block;
+            font-size: 9.5px; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            color: rgba(167,243,208,0.6);
+        }
+        .pf-score.pf-low { color: rgba(255,255,255,0.4); }
+        .pf-score.pf-low .pf-band { color: rgba(255,255,255,0.32); }
+        .proof-caption {
+            margin-top: 16px;
+            font-size: 12.5px; line-height: 1.55;
+            color: var(--text-tertiary);
+        }
+
+        /* The Slack brief a rep actually receives */
+        .rep-brief {
+            margin-top: 44px;
+            max-width: 660px;
+            border: 1px solid var(--border-strong);
+            border-radius: 18px;
+            background: rgba(10,10,16,0.62);
+            overflow: hidden;
+            box-shadow: 0 26px 70px -32px rgba(0,0,0,0.85), 0 0 0 1px rgba(167,139,250,0.05);
+        }
+        .rb-head {
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255,255,255,0.02);
+            font-size: 13px; font-weight: 600;
+            color: var(--text-tertiary);
+        }
+        .rb-body { display: flex; gap: 14px; padding: 18px 20px 22px; }
+        .rb-avatar {
+            width: 38px; height: 38px; border-radius: 10px;
+            flex-shrink: 0; display: block;
+        }
+        .rb-content { min-width: 0; }
+        .rb-app {
+            display: flex; align-items: baseline; gap: 8px;
+            font-size: 14.5px; font-weight: 700; color: var(--text-primary);
+        }
+        .rb-tag {
+            font-size: 9px; font-weight: 700;
+            letter-spacing: 0.06em;
+            padding: 2px 5px; border-radius: 4px;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-tertiary);
+        }
+        .rb-time { font-size: 11.5px; font-weight: 400; color: var(--text-tertiary); }
+        .rb-line {
+            font-size: 14px; line-height: 1.55;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+        .rb-line strong { color: var(--text-primary); font-weight: 600; }
+        .rb-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
+        .rb-chip {
+            font-size: 12px; font-weight: 500;
+            padding: 5px 12px; border-radius: 8px;
+            border: 1px solid var(--border-strong);
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+        .rb-chip.rb-hot {
+            color: #a7f3d0;
+            border-color: rgba(110,231,183,0.32);
+            background: rgba(110,231,183,0.07);
+        }
+        .rb-chip.rb-signal {
+            color: #c4b5fd;
+            border-color: rgba(167,139,250,0.3);
+            background: rgba(167,139,250,0.09);
+        }
+        .rb-foot {
+            margin-top: 13px;
+            font-size: 12px; color: var(--text-tertiary);
+        }
+        @media (max-width: 700px) {
+            .pf-cols { display: none; }
+            .pf-row { flex-wrap: wrap; gap: 10px 14px; padding: 14px 18px; }
+            .pf-who { flex: 1 1 60%; }
+            .pf-signal { order: 3; white-space: normal; }
+        }
+
+        /* ============================================================
            Cinematic layer: atmosphere, motion, depth.
            ============================================================ */
 
@@ -436,7 +580,7 @@
             <div class="hero-section-inner">
                 <span class="hero-eyebrow">How LUPO works</span>
                 <h1>Capture, filter, enrich, score, <span class="gradient-text">route.</span></h1>
-                <p class="hero-lede">One agentic brain across phone, email, web form, and chat. Every inbound gets the same treatment, in the same context, before it ever reaches a rep.</p>
+                <p class="hero-lede">One brain across phone, email, web form, and chat. Every inbound gets the same treatment, in the same context, before it ever reaches a rep.</p>
             </div>
         </section>
 
@@ -458,8 +602,8 @@
                     </div>
                     <div class="path-step">
                         <span class="path-node">3</span>
-                        <h3>Keep or replace</h3>
-                        <p>Keep your chatbot, or upgrade to ours.</p>
+                        <h3>Define qualified</h3>
+                        <p>Your criteria, workshopped with us. Applied identically on every channel.</p>
                     </div>
                     <div class="path-step">
                         <span class="path-node">4</span>
@@ -535,6 +679,63 @@
                         <p class="card-body">A Series B yesterday. A new VP Sales last month. Reps see it in Slack first.</p>
                     </div>
                 </div>
+                <div class="proof-frame" aria-label="Example lead rows from the LUPO dashboard">
+                    <div class="pf-head">
+                        <span class="pf-title">Recent leads</span>
+                        <span class="pf-cols"><span>Why they're hot</span><span>Score</span></span>
+                    </div>
+                    <div class="pf-row">
+                        <div class="pf-who">
+                            <div class="pf-name">Sarah Mitchell</div>
+                            <div class="pf-meta">VP Revenue Operations · Vantage Logistics · web form</div>
+                        </div>
+                        <span class="pf-signal">Series B raised · hiring 6 SDRs</span>
+                        <span class="pf-score">91<span class="pf-band">Hot</span></span>
+                    </div>
+                    <div class="pf-row">
+                        <div class="pf-who">
+                            <div class="pf-name">David Okafor</div>
+                            <div class="pf-meta">Director of Sales · Crestpoint Industrial · phone</div>
+                        </div>
+                        <span class="pf-signal">Asked for pricing on the call</span>
+                        <span class="pf-score">87<span class="pf-band">Hot</span></span>
+                    </div>
+                    <div class="pf-row">
+                        <div class="pf-who">
+                            <div class="pf-name">Marcus Webb</div>
+                            <div class="pf-meta">Account Executive · BrightLeads Media · email</div>
+                        </div>
+                        <span class="pf-signal pf-muted">Vendor pitch, filtered</span>
+                        <span class="pf-score pf-low">12<span class="pf-band">Filtered</span></span>
+                    </div>
+                </div>
+                <p class="proof-caption">Lead rows from the LUPO dashboard. Every lead arrives scored, with the signal that explains why. Illustrative sample data.</p>
+            </div>
+        </section>
+
+        <section id="routing" class="page-section">
+            <div class="section-inner">
+                <div class="section-eyebrow">Routing</div>
+                <h2 class="section-heading">What your rep sees.</h2>
+                <p class="section-lede">Qualified buyers don't land as raw form fills. Your rep gets a brief: who it is, why they're worth a call, and the meeting already on the calendar.</p>
+                <div class="rep-brief" aria-label="Example Slack notification from LUPO">
+                    <div class="rb-head"># inbound-leads</div>
+                    <div class="rb-body">
+                        <img class="rb-avatar" src="/lupo-icon-180.png" alt="" width="38" height="38" loading="lazy" decoding="async">
+                        <div class="rb-content">
+                            <div class="rb-app">LUPO <span class="rb-tag">APP</span> <span class="rb-time">9:42 AM</span></div>
+                            <p class="rb-line"><strong>Hot lead: Sarah Mitchell</strong>, VP Revenue Operations at Vantage Logistics. Came in through the demo form, asked about phone coverage for a 12-rep team.</p>
+                            <div class="rb-chips">
+                                <span class="rb-chip rb-hot">Score 91 · Hot</span>
+                                <span class="rb-chip rb-signal">Series B raised</span>
+                                <span class="rb-chip rb-signal">Hiring 6 SDRs</span>
+                                <span class="rb-chip">Meeting booked · Thu 11:30</span>
+                            </div>
+                            <p class="rb-foot">CRM record updated · full conversation attached</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="proof-caption">The brief that lands in your team's Slack the moment a lead qualifies. Illustrative sample data.</p>
             </div>
         </section>
 
@@ -658,8 +859,8 @@
                 section.querySelectorAll('.path-step').forEach(function (step, i) {
                     step.classList.add('reveal', i % 2 === 0 ? 'from-left' : 'from-right');
                 });
-                // Standalone blocks (dog-food callout, logo strip, caption).
-                section.querySelectorAll('.roadmap-dogfood, .integrations-logos, .integrations-caption').forEach(function (el) {
+                // Standalone blocks (dog-food callout, proof artifacts, logo strip).
+                section.querySelectorAll('.roadmap-dogfood, .proof-frame, .rep-brief, .proof-caption, .integrations-logos, .integrations-caption').forEach(function (el) {
                     el.classList.add('reveal');
                 });
             });
