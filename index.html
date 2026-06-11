@@ -2157,15 +2157,86 @@
         .ldb-point-title{font-size:15px;font-weight:600;color:#fff;margin-bottom:6px;}
         .ldb-point-body{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.55);}
         @media (max-width:760px){.ldb-points{grid-template-columns:1fr;gap:20px;}.ldb-band{padding:56px 20px;}}
+        /* Interactive layer: hotspots positioned over the real screenshot.
+           The image stays the truth source (rendered from the live product
+           component); the interactions are an overlay, so the website can
+           never drift from the product UI. Three moves deep by design:
+           tiles glow, lead rows open packets, Filtered opens the junk
+           drawer, locked sidebar dead-ends into the walkthrough CTA. */
+        .ldb-frame{position:relative;}
+        .ldb-spot{position:absolute;display:block;border:0;margin:0;padding:0;background:transparent;border-radius:12px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:box-shadow 0.22s ease,background 0.22s ease;}
+        .ldb-spot:focus{outline:none;}
+        .ldb-spot:hover,.ldb-spot:focus-visible{box-shadow:inset 0 0 0 1.5px rgba(196,181,253,0.55),0 0 30px rgba(167,139,250,0.20);background:rgba(167,139,250,0.05);}
+        .ldb-spot-tile{cursor:zoom-in;}
+        .ldb-spot-tile:hover{box-shadow:inset 0 0 0 1.5px rgba(196,181,253,0.45),0 0 38px rgba(167,139,250,0.25);background:rgba(167,139,250,0.04);}
+        .ldb-spot-lock:hover,.ldb-spot-lock:focus-visible{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.30),0 0 22px rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);}
+        .ldb-teach .ldb-spot[data-ldb-lead="sarah"]{animation:ldbTeach 2.4s ease 0.8s 1;}
+        @keyframes ldbTeach{0%,100%{box-shadow:none;}30%,70%{box-shadow:inset 0 0 0 1.5px rgba(196,181,253,0.5),0 0 28px rgba(167,139,250,0.22);}}
+        @media (max-width:760px){.ldb-hotspots{display:none;}}
+        .ldb-cap-desktop{display:inline;}
+        .ldb-cap-mobile{display:none;}
+        @media (max-width:760px){.ldb-cap-desktop{display:none;}.ldb-cap-mobile{display:inline;}}
+        /* Packet / filtered / locked-door modal: dark glass, proof-frame family */
+        .ldb-modal{position:fixed;inset:0;z-index:10002;display:flex;align-items:center;justify-content:center;padding:5vmin 18px;background:rgba(5,5,9,0.72);-webkit-backdrop-filter:blur(16px) saturate(110%);backdrop-filter:blur(16px) saturate(110%);opacity:0;pointer-events:none;transition:opacity 0.24s ease;}
+        .ldb-modal.ldb-open{opacity:1;pointer-events:auto;}
+        .ldb-modal-card{position:relative;width:100%;max-width:560px;max-height:88vh;overflow-y:auto;text-align:left;background:rgba(12,12,18,0.97);border:1px solid rgba(255,255,255,0.16);border-radius:18px;padding:26px 28px 22px;box-shadow:0 30px 80px -28px rgba(0,0,0,0.9),0 0 0 1px rgba(167,139,250,0.05);transform:translateY(8px) scale(0.985);transition:transform 0.24s cubic-bezier(0.25,0.46,0.45,0.94);}
+        .ldb-modal.ldb-open .ldb-modal-card{transform:translateY(0) scale(1);}
+        .ldb-modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.18);border-radius:999px;background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.8);font-size:14px;line-height:1;cursor:pointer;}
+        .ldb-modal-close:hover{background:rgba(255,255,255,0.10);}
+        .ldb-modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding-right:36px;}
+        .ldb-modal-title{font-size:19px;font-weight:600;color:#fff;letter-spacing:-0.01em;line-height:1.25;}
+        .ldb-modal-sub{margin-top:5px;font-size:12.5px;color:rgba(255,255,255,0.5);line-height:1.5;}
+        .ldb-modal-score{flex-shrink:0;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+        .ldb-modal-score .ldb-score-num{font-size:26px;font-weight:700;letter-spacing:-0.02em;color:#fff;line-height:1;}
+        .ldb-band-pill{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 10px;border-radius:999px;}
+        .ldb-band-hot{color:#a7f3d0;background:rgba(167,243,208,0.10);border:1px solid rgba(167,243,208,0.25);}
+        .ldb-band-review{color:#fbbf24;background:rgba(251,191,36,0.10);border:1px solid rgba(251,191,36,0.25);}
+        .ldb-band-filtered{color:rgba(255,255,255,0.55);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.14);}
+        .ldb-modal-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+        .ldb-chip{display:inline-block;font-size:12px;font-weight:500;color:#c4b5fd;background:rgba(196,181,253,0.08);border:1px solid rgba(196,181,253,0.22);border-radius:999px;padding:4px 12px;}
+        .ldb-modal-body{margin-top:16px;display:flex;flex-direction:column;gap:9px;}
+        .ldb-modal-line{display:flex;gap:10px;font-size:13.5px;line-height:1.55;color:rgba(255,255,255,0.72);}
+        .ldb-modal-line::before{content:"";flex-shrink:0;width:5px;height:5px;border-radius:999px;background:rgba(196,181,253,0.6);margin-top:7px;}
+        .ldb-modal-pair{display:flex;justify-content:space-between;gap:16px;font-size:13.5px;line-height:1.5;padding:9px 0;border-top:1px solid rgba(255,255,255,0.06);}
+        .ldb-modal-pair:first-child{border-top:none;}
+        .ldb-modal-pair .l{color:rgba(255,255,255,0.85);}
+        .ldb-modal-pair .r{color:rgba(255,255,255,0.45);text-align:right;flex-shrink:0;max-width:55%;}
+        .ldb-modal-outcome{margin-top:16px;font-size:13.5px;line-height:1.55;color:#a7f3d0;background:rgba(167,243,208,0.06);border:1px solid rgba(167,243,208,0.16);border-radius:12px;padding:12px 16px;}
+        .ldb-modal-outcome.ldb-outcome-muted{color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.10);}
+        /* The hidden attribute must beat the display:flex rules above */
+        .ldb-modal-score[hidden],.ldb-modal-chips[hidden],.ldb-modal-outcome[hidden]{display:none!important;}
+        .ldb-modal-foot{margin-top:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+        .ldb-modal-note{font-size:11.5px;color:rgba(255,255,255,0.35);}
+        .ldb-modal-ctas{display:flex;gap:10px;flex-wrap:wrap;}
+        .ldb-modal .btn-primary,.ldb-modal .btn-secondary{padding:10px 18px;font-size:13.5px;}
+        @media (max-width:520px){.ldb-modal-card{padding:22px 20px 18px;}.ldb-modal-head{flex-direction:column;gap:10px;}.ldb-modal-score{flex-direction:row;align-items:center;gap:10px;}}
+        @media (prefers-reduced-motion: reduce){.ldb-teach .ldb-spot[data-ldb-lead="sarah"]{animation:none;}.ldb-modal,.ldb-modal-card{transition:none;}}
         </style>
         <div class="ldb-inner">
             <div class="section-eyebrow">The dashboard</div>
             <h2 class="section-heading">Every lead, every decision, on one screen.</h2>
             <p class="section-lede">Log in and see what came in, how it qualified, and what reached your reps. Full visibility for whoever owns inbound: sales, marketing, or RevOps.</p>
-            <div class="ldb-frame" id="ldbFrame" role="button" tabindex="0" aria-label="Expand the dashboard screenshot" title="Click to expand">
+            <div class="ldb-frame" id="ldbFrame" role="button" tabindex="0" aria-label="Expand the dashboard screenshot">
                 <img src="/lupo-dashboard.webp" alt="LUPO dashboard overview showing leads captured by channel, qualification outcomes with score bands, noise filtered out with rep hours saved, pipeline sourced from qualified leads, and meetings booked" width="2400" height="1860" loading="lazy" decoding="async">
+                <div class="ldb-hotspots">
+                    <div class="ldb-spot ldb-spot-tile" style="left:23.4%;top:12.9%;width:17.3%;height:14.9%;"></div>
+                    <div class="ldb-spot ldb-spot-tile" style="left:42.05%;top:12.9%;width:17.3%;height:14.9%;"></div>
+                    <div class="ldb-spot ldb-spot-tile" style="left:60.7%;top:12.9%;width:17.3%;height:14.9%;"></div>
+                    <div class="ldb-spot ldb-spot-tile" style="left:79.35%;top:12.9%;width:17.3%;height:14.9%;"></div>
+                    <button type="button" class="ldb-spot ldb-spot-lock" data-ldb-lock="Your lead queue lives here." style="left:0.9%;top:14.3%;width:18.2%;height:3.5%;" aria-label="Leads section, shown in the walkthrough"></button>
+                    <button type="button" class="ldb-spot ldb-spot-lock" data-ldb-lock="Your calls live here." style="left:0.9%;top:18.4%;width:18.2%;height:3.5%;" aria-label="Calls section, shown in the walkthrough"></button>
+                    <button type="button" class="ldb-spot ldb-spot-lock" data-ldb-lock="Your meetings live here." style="left:0.9%;top:22.5%;width:18.2%;height:3.5%;" aria-label="Meetings section, shown in the walkthrough"></button>
+                    <button type="button" class="ldb-spot ldb-spot-lock" data-ldb-lock="Your email threads live here." style="left:0.9%;top:26.6%;width:18.2%;height:3.5%;" aria-label="Email section, shown in the walkthrough"></button>
+                    <button type="button" class="ldb-spot ldb-spot-lock" data-ldb-lock="Your qualification policy lives here." style="left:0.9%;top:30.7%;width:18.2%;height:3.5%;" aria-label="Settings section, shown in the walkthrough"></button>
+                    <button type="button" class="ldb-spot" data-ldb-filtered style="left:61.2%;top:52.6%;width:35.2%;height:9.4%;" aria-label="See what got filtered this week"></button>
+                    <button type="button" class="ldb-spot" data-ldb-lead="sarah" style="left:23.6%;top:69.3%;width:72.8%;height:5.7%;" aria-label="Open Sarah Mitchell's lead packet"></button>
+                    <button type="button" class="ldb-spot" data-ldb-lead="david" style="left:23.6%;top:75.4%;width:72.8%;height:5.7%;" aria-label="Open David Okafor's lead packet"></button>
+                    <button type="button" class="ldb-spot" data-ldb-lead="laura" style="left:23.6%;top:81.5%;width:72.8%;height:5.7%;" aria-label="Open Laura Jensen's lead packet"></button>
+                    <button type="button" class="ldb-spot" data-ldb-lead="marcus" style="left:23.6%;top:87.6%;width:72.8%;height:5.7%;" aria-label="Open Marcus Webb's lead packet"></button>
+                    <button type="button" class="ldb-spot" data-ldb-lead="priya" style="left:23.6%;top:93.6%;width:72.8%;height:5.7%;" aria-label="Open Priya Raman's lead packet"></button>
+                </div>
             </div>
-            <p class="ldb-caption">Illustrative dashboard with sample data. Click to expand.</p>
+            <p class="ldb-caption"><span class="ldb-cap-desktop">Open a lead. Check what got filtered. Try the sidebar. Illustrative sample data.</span><span class="ldb-cap-mobile">Illustrative dashboard with sample data. Tap to expand.</span></p>
             <div class="ldb-points">
                 <div class="ldb-point">
                     <div class="ldb-point-title">Channel mix, live</div>
@@ -2185,28 +2256,200 @@
             <img src="/lupo-dashboard.webp" alt="" loading="lazy" decoding="async">
             <button type="button" class="ldb-lightbox-close" aria-label="Close">&#10005;</button>
         </div>
+        <div class="ldb-modal" id="ldbModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="ldbModalTitle">
+            <div class="ldb-modal-card">
+                <button type="button" class="ldb-modal-close" aria-label="Close">&#10005;</button>
+                <div class="ldb-modal-head">
+                    <div>
+                        <div class="ldb-modal-title" id="ldbModalTitle"></div>
+                        <div class="ldb-modal-sub" id="ldbModalSub"></div>
+                    </div>
+                    <div class="ldb-modal-score" id="ldbModalScore" hidden>
+                        <span class="ldb-score-num" id="ldbScoreNum"></span>
+                        <span class="ldb-band-pill" id="ldbBandPill"></span>
+                    </div>
+                </div>
+                <div class="ldb-modal-chips" id="ldbModalChips" hidden></div>
+                <div class="ldb-modal-body" id="ldbModalBody"></div>
+                <div class="ldb-modal-outcome" id="ldbModalOutcome" hidden></div>
+                <div class="ldb-modal-foot">
+                    <span class="ldb-modal-note">Illustrative sample data.</span>
+                    <div class="ldb-modal-ctas">
+                        <a href="https://cal.com/tombaxter/lupo" class="btn-primary">Book a demo</a>
+                        <button type="button" class="btn-secondary" data-lupo-call-trigger>Talk to LUPO live</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script>
         (function () {
             var frame = document.getElementById('ldbFrame');
             var box = document.getElementById('ldbLightbox');
             if (!frame || !box) return;
+            function pill(hide) {
+                var p = document.querySelector('.lupo-chat-launcher');
+                if (p) p.style.visibility = hide ? 'hidden' : '';
+            }
             function setOpen(open) {
                 box.classList.toggle('ldb-open', open);
                 box.setAttribute('aria-hidden', open ? 'false' : 'true');
                 document.documentElement.style.overflow = open ? 'hidden' : '';
-                // The chat pill floats above everything; tuck it away while
-                // the screenshot owns the screen. No-op if absent/renamed.
-                var pill = document.querySelector('.lupo-chat-launcher');
-                if (pill) pill.style.visibility = open ? 'hidden' : '';
+                pill(open);
             }
             frame.addEventListener('click', function () { setOpen(true); });
             frame.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(true); }
+                if (e.key !== 'Enter' && e.key !== ' ') return;
+                if (e.target !== frame) return; // hotspot buttons handle their own keys
+                e.preventDefault(); setOpen(true);
             });
             box.addEventListener('click', function () { setOpen(false); });
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape' && box.classList.contains('ldb-open')) setOpen(false);
             });
+
+            // ----- The interactive layer -----
+            // Every fact below matches the screenshot and the rest of the
+            // site (84 captured, 26 qualified, 26 filtered, 9 rep-hours).
+            // Clickable numbers get checked harder than printed ones.
+            var LEADS = {
+                sarah: {
+                    name: 'Sarah Mitchell', sub: 'VP Revenue Operations &middot; Vantage Logistics &middot; Web form &middot; Mon 10:42 AM',
+                    score: '91', band: 'Hot', bandClass: 'ldb-band-hot',
+                    chips: ['Series B raised', 'Hiring 6 SDRs', 'Asked about phone coverage for a 12-rep team'],
+                    why: ['Decision-maker title at a company in a live buying window', 'Budget signal: fresh funding, growing the exact team this serves', 'Asked a scoping question, not a brochure request'],
+                    outcome: 'Booked &middot; Thursday 11:30 with the AE who owns logistics accounts. CRM updated, full conversation attached.'
+                },
+                david: {
+                    name: 'David Okafor', sub: 'Director of Sales &middot; Crestpoint Industrial &middot; Phone &middot; Mon 9:55 AM',
+                    score: '87', band: 'Hot', bandClass: 'ldb-band-hot',
+                    chips: ['Asked for pricing on the call', 'Rolling out to a 9-rep team'],
+                    why: ['Stated buying intent on the call: pricing and rollout questions', 'Sales leadership title, mid-market industrial fit'],
+                    outcome: 'Booked &middot; Friday 9:00. Call transcript and summary already on the lead record.'
+                },
+                laura: {
+                    name: 'Laura Jensen', sub: 'Head of Demand Generation &middot; Fieldstone Build Group &middot; Chat &middot; Mon 9:13 AM',
+                    score: '74', band: 'Review', bandClass: 'ldb-band-review',
+                    chips: ['Comparing chat-to-CRM tools'],
+                    why: ['Right title and an active evaluation, but scope is unclear', 'Held for human review instead of guessing'],
+                    outcome: 'Held for review &middot; flagged to your team with the full chat attached. Nothing booked without a human OK.',
+                    muted: true
+                },
+                marcus: {
+                    name: 'Marcus Webb', sub: 'Account Executive &middot; BrightLeads Media &middot; Email &middot; Mon 8:48 AM',
+                    score: '12', band: 'Filtered', bandClass: 'ldb-band-filtered',
+                    chips: ['Vendor pitch'],
+                    why: ['Selling lead lists, not buying: pitch language, zero product questions', 'No fit signals: AE title at an agency, cold template email'],
+                    outcome: 'Filtered &middot; politely declined and logged. Never reached a rep. This is the decision log your team can audit.',
+                    muted: true
+                },
+                priya: {
+                    name: 'Priya Raman', sub: 'Chief Revenue Officer &middot; Atlas Freight Systems &middot; Web form &middot; Sun 6:21 PM',
+                    score: '95', band: 'Hot', bandClass: 'ldb-band-hot',
+                    chips: ['New CRO started in May', 'Came in Sunday evening'],
+                    why: ['CRO in seat under 90 days: the classic tooling-review window', 'Arrived out of hours; first reply went back in 38 seconds'],
+                    outcome: 'Booked direct &middot; account owner alerted in Slack the same minute.'
+                }
+            };
+            var modal = document.getElementById('ldbModal');
+            var els = {
+                title: document.getElementById('ldbModalTitle'),
+                sub: document.getElementById('ldbModalSub'),
+                score: document.getElementById('ldbModalScore'),
+                num: document.getElementById('ldbScoreNum'),
+                pill: document.getElementById('ldbBandPill'),
+                chips: document.getElementById('ldbModalChips'),
+                body: document.getElementById('ldbModalBody'),
+                outcome: document.getElementById('ldbModalOutcome')
+            };
+            var lastFocus = null;
+            function openModal() {
+                lastFocus = document.activeElement;
+                modal.classList.add('ldb-open');
+                modal.setAttribute('aria-hidden', 'false');
+                document.documentElement.style.overflow = 'hidden';
+                pill(true);
+                modal.querySelector('.ldb-modal-close').focus();
+            }
+            function closeModal() {
+                modal.classList.remove('ldb-open');
+                modal.setAttribute('aria-hidden', 'true');
+                document.documentElement.style.overflow = '';
+                pill(false);
+                if (lastFocus && lastFocus.focus) lastFocus.focus();
+            }
+            function fill(t) {
+                els.title.innerHTML = t.title;
+                els.sub.innerHTML = t.sub || '';
+                els.score.hidden = !t.score;
+                if (t.score) {
+                    els.num.textContent = t.score;
+                    els.pill.textContent = t.band;
+                    els.pill.className = 'ldb-band-pill ' + t.bandClass;
+                }
+                els.chips.hidden = !(t.chips && t.chips.length);
+                els.chips.innerHTML = (t.chips || []).map(function (c) { return '<span class="ldb-chip">' + c + '</span>'; }).join('');
+                els.body.innerHTML = t.bodyHtml;
+                els.outcome.hidden = !t.outcome;
+                els.outcome.innerHTML = t.outcome || '';
+                els.outcome.className = 'ldb-modal-outcome' + (t.muted ? ' ldb-outcome-muted' : '');
+                openModal();
+            }
+            frame.addEventListener('click', function (e) {
+                var spot = e.target.closest ? e.target.closest('.ldb-spot') : null;
+                if (!spot || spot.classList.contains('ldb-spot-tile')) return; // tiles fall through to the lightbox
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                var leadKey = spot.getAttribute('data-ldb-lead');
+                if (leadKey && LEADS[leadKey]) {
+                    var L = LEADS[leadKey];
+                    fill({
+                        title: L.name, sub: L.sub, score: L.score, band: L.band, bandClass: L.bandClass, chips: L.chips,
+                        bodyHtml: L.why.map(function (w) { return '<div class="ldb-modal-line">' + w + '</div>'; }).join(''),
+                        outcome: L.outcome, muted: L.muted
+                    });
+                    return;
+                }
+                if (spot.hasAttribute('data-ldb-filtered')) {
+                    fill({
+                        title: '26 filtered this week. Zero reached a rep.',
+                        sub: 'How they qualified &middot; Filtered',
+                        bodyHtml: [
+                            ['SEO agency pitching backlinks', 'Vendor selling in &middot; declined politely, logged'],
+                            ['Existing customer, password reset', 'Support &middot; routed to the success team with the transcript'],
+                            ['Student research request', 'Wrong fit &middot; closed out politely, logged']
+                        ].map(function (r) { return '<div class="ldb-modal-pair"><span class="l">' + r[0] + '</span><span class="r">' + r[1] + '</span></div>'; }).join(''),
+                        outcome: '&asymp; 9 rep-hours handed back this week, at an estimated 20 minutes per junk lead.'
+                    });
+                    return;
+                }
+                var lock = spot.getAttribute('data-ldb-lock');
+                if (lock) {
+                    fill({
+                        title: lock,
+                        sub: 'This sandbox shows the overview.',
+                        bodyHtml: '<div class="ldb-modal-line">The rest is best seen on your own inbound: real calls transcribed and scored, real meetings on your reps’ calendars, your definition of qualified in Settings.</div><div class="ldb-modal-line">Thirty minutes, founder-led.</div>'
+                    });
+                }
+            }, true);
+            modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+            modal.querySelector('.ldb-modal-close').addEventListener('click', closeModal);
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && modal.classList.contains('ldb-open')) closeModal();
+            });
+            // One-time teach pulse on the first lead row when the frame scrolls in
+            if ('IntersectionObserver' in window) {
+                var seen = false;
+                var io = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (en) {
+                        if (en.isIntersecting && !seen) {
+                            seen = true;
+                            frame.classList.add('ldb-teach');
+                            io.disconnect();
+                        }
+                    });
+                }, { threshold: 0.5 });
+                io.observe(frame);
+            }
         })();
         </script>
     </section>
