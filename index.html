@@ -2262,7 +2262,7 @@
             <h2 class="section-heading">Every lead, every decision, on one screen.</h2>
             <p class="section-lede">Log in and see what came in, how it qualified, and what reached your reps. Full visibility for whoever owns inbound: sales, marketing, or RevOps.</p>
             <div class="ldb-frame" id="ldbFrame" role="button" tabindex="0" aria-label="Expand the dashboard screenshot">
-                <img src="/lupo-dashboard.webp" alt="LUPO dashboard overview showing leads captured by channel, qualification outcomes with score bands, noise filtered out with rep hours saved, pipeline sourced from qualified leads, and meetings booked" width="2400" height="1860" loading="lazy" decoding="async">
+                <img src="/lupo-dashboard.webp" data-ldb-dark="/lupo-dashboard.webp" data-ldb-light="/lupo-dashboard-light.webp" alt="LUPO dashboard overview showing leads captured by channel, qualification outcomes with score bands, noise filtered out with rep hours saved, pipeline sourced from qualified leads, and meetings booked" width="2400" height="1860" loading="lazy" decoding="async">
                 <div class="ldb-hotspots">
                     <div class="ldb-spot ldb-spot-tile" style="left:23.4%;top:12.9%;width:17.3%;height:14.9%;"></div>
                     <div class="ldb-spot ldb-spot-tile" style="left:42.05%;top:12.9%;width:17.3%;height:14.9%;"></div>
@@ -2298,7 +2298,7 @@
             </div>
         </div>
         <div class="ldb-lightbox" id="ldbLightbox" aria-hidden="true">
-            <img src="/lupo-dashboard.webp" alt="" loading="lazy" decoding="async">
+            <img src="/lupo-dashboard.webp" data-ldb-dark="/lupo-dashboard.webp" data-ldb-light="/lupo-dashboard-light.webp" alt="" loading="lazy" decoding="async">
             <button type="button" class="ldb-lightbox-close" aria-label="Close">&#10005;</button>
         </div>
         <div class="ldb-modal" id="ldbModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="ldbModalTitle">
@@ -2519,6 +2519,33 @@
             var swapping = false;
             var pendingH = 0;
             var ifr = null;
+            // ----- Inverted dashboard theme -----
+            // The dashboard always contrasts with the site: the LIGHT
+            // dashboard on the default dark site, the black dashboard
+            // when the visitor flips to light mode. (Tom: the black
+            // dashboard "sinks into the background" on the dark page;
+            // the contrast is the point.) Poster + lightbox swap src,
+            // the live iframe gets ?theme=light at injection and a
+            // postMessage on later toggles.
+            var themedImgs = [frame.querySelector('img'), box.querySelector('img')];
+            function dashTheme() {
+                return document.documentElement.classList.contains('aurora') ? 'dark' : 'light';
+            }
+            function applyDashTheme() {
+                var t = dashTheme();
+                themedImgs.forEach(function (im) {
+                    if (!im) return;
+                    var want = im.getAttribute(t === 'light' ? 'data-ldb-light' : 'data-ldb-dark');
+                    if (want && im.getAttribute('src') !== want) im.setAttribute('src', want);
+                });
+                if (ifr && ifr.contentWindow) {
+                    try { ifr.contentWindow.postMessage({ source: 'lupo-site', action: 'theme', theme: t }, APP); } catch (err) {}
+                }
+            }
+            applyDashTheme();
+            if ('MutationObserver' in window) {
+                new MutationObserver(applyDashTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+            }
             function clampH(h) { return Math.min(Math.max(h, 420), 1600); }
             function frameInView() {
                 var r = frame.getBoundingClientRect();
@@ -2561,7 +2588,7 @@
                 if (attempted || window.innerWidth < 980) return;
                 attempted = true;
                 ifr = document.createElement('iframe');
-                ifr.src = APP + '/demo/overview';
+                ifr.src = APP + '/demo/overview' + (dashTheme() === 'light' ? '?theme=light' : '');
                 ifr.title = 'LUPO dashboard, interactive sample data';
                 ifr.setAttribute('scrolling', 'no');
                 ifr.setAttribute('aria-hidden', 'true');
