@@ -30,7 +30,7 @@ Public and stated upfront: 3,000 to 15,000 USD per month depending on inbound vo
 
 ## Positioning
 
-LUPO is an AI inbound SDR: it makes real-time decisions about which question to ask, when to check the calendar, when to book, when to escalate to a human, and when to close politely. It is a qualification layer, with chat as one intake of four. It does no cold outbound. Outbound AI SDRs (11x, Artisan, Regie) and voice-only receptionists (Air, PolyAI) solve different jobs; chat widgets (Intercom, Drift heritage, HubSpot Chat) are integration partners that hand off to LUPO. The closest comparison is Qualified (Piper), which is built for the Salesforce ecosystem; LUPO is the CRM-flexible alternative with native HubSpot support and live phone coverage. Honest comparisons: https://lupolabs.ai/compare/
+LUPO is an AI inbound SDR: it makes real-time decisions about which question to ask, when to check the calendar, when to book, when to escalate to a human, and when to close politely. It is a qualification layer, with chat as one intake of four. It does no cold outbound. Outbound AI SDRs (11x, Artisan, Regie) and voice-only receptionists (Air, PolyAI) solve different jobs; chat widgets (Intercom, Drift heritage, HubSpot Chat) are integration partners that hand off to LUPO. The closest comparisons are Qualified (Piper), built for the Salesforce ecosystem, and Spara, which leads with instant engagement on voice, email, chat, and text; LUPO is the CRM-flexible alternative with native HubSpot support, live phone coverage, and enrichment plus buying-intent scoring on every lead. Honest comparisons: https://lupolabs.ai/compare/
 
 ## Key pages
 
@@ -38,7 +38,7 @@ LUPO is an AI inbound SDR: it makes real-time decisions about which question to 
 - [How it works](https://lupolabs.ai/how-it-works/): the full pathway from first touch to booked meeting
 - [Pricing](https://lupolabs.ai/pricing/)
 - [FAQ](https://lupolabs.ai/faq/)
-- [Compare](https://lupolabs.ai/compare/): LUPO vs Qualified, Drift, Intercom Fin, Conversica, 11x; Qualified alternatives for HubSpot teams
+- [Compare](https://lupolabs.ai/compare/): LUPO vs Qualified, Spara, Drift, Intercom Fin, Conversica, 11x; Qualified alternatives for HubSpot teams
 - [Glossary](https://lupolabs.ai/glossary/): AI inbound SDR, inbound lead qualification, speed to lead, lead routing, intent scoring
 - [Integrations](https://lupolabs.ai/integrations/): HubSpot, Salesforce, Slack, Google Calendar, Microsoft 365 / Outlook
 - [Blog](https://lupolabs.ai/blog/) (RSS: https://lupolabs.ai/blog/feed.xml)
