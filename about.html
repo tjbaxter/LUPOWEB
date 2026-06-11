@@ -242,8 +242,32 @@
             padding-top: 28px;
             border-top: 1px solid var(--border);
             display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 22px;
+        }
+
+        .founder-photo {
+            width: 92px;
+            height: 92px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+            flex-shrink: 0;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .founder-card-text {
+            display: flex;
             flex-direction: column;
             gap: 4px;
+            min-width: 0;
+        }
+
+        @media (max-width: 480px) {
+            .founder-photo { width: 76px; height: 76px; }
+            .founder-card { gap: 16px; }
         }
 
         .founder-card .founder-name {
@@ -767,13 +791,16 @@
             <p>LUPO is the qualification layer in front of the routing layer. It answers the inbound, qualifies the conversation, scores buying intent from live company signals, and either books the real buyer or drops the noise before it ever reaches a rep.</p>
 
             <div class="founder-card">
-                <div class="founder-name">Tom Baxter</div>
-                <div class="founder-title">Founder</div>
-                <div class="founder-credentials">
-                    <span>Cambridge MPhil. Contracted with Google DeepMind on AI model evaluation before building LUPO.</span>
+                <img class="founder-photo" src="/founder-tom-baxter.webp" alt="Tom Baxter, founder of LUPO" width="92" height="92" loading="lazy" decoding="async">
+                <div class="founder-card-text">
+                    <div class="founder-name">Tom Baxter</div>
+                    <div class="founder-title">Founder</div>
+                    <div class="founder-credentials">
+                        <span>Cambridge MPhil. Contracted with Google DeepMind on AI model evaluation before building LUPO.</span>
+                    </div>
+                    <div class="founder-credit">Spent the last year embedded with B2B sales teams, building the inbound product they kept describing. The chat and voice on this site are LUPO, live, configured exactly as we'd set up yours.</div>
+                    <div class="founder-location">London</div>
                 </div>
-                <div class="founder-credit">Spent the last year embedded with B2B sales teams, building the inbound product they kept describing. The chat and voice on this site are LUPO, live, configured exactly as we'd set up yours.</div>
-                <div class="founder-location">London</div>
             </div>
         </div>
 
