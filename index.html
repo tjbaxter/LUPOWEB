@@ -2223,12 +2223,20 @@
         .ldb-band-filtered{color:rgba(255,255,255,0.55);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.14);}
         .ldb-band-nurture{color:#93c5fd;background:rgba(147,197,253,0.10);border:1px solid rgba(147,197,253,0.25);}
         /* Live-component mode: the rendered product replaces the poster,
-           the frame stops being a zoom target, the hotspots retire. */
-        .ldb-frame iframe{display:block;width:100%;border:0;opacity:0;transition:opacity 0.45s ease,height 0.35s ease;background:#0b0b0d;}
+           the frame stops being a zoom target, the hotspots retire.
+           While loading, the iframe is an invisible overlay so the frame
+           never changes height; going live while on screen is a
+           crossfade over the poster plus one eased height settle, never
+           a pop. */
+        .ldb-frame iframe{position:absolute;left:0;top:0;display:block;width:100%;height:100%;border:0;opacity:0;pointer-events:none;transition:opacity 0.45s ease;background:#0b0b0d;}
+        .ldb-frame.ldb-swap{transition:height 0.45s cubic-bezier(0.25,0.46,0.45,0.94);}
+        .ldb-frame.ldb-swap:hover{transform:none;}
+        .ldb-frame.ldb-swap iframe{opacity:1;pointer-events:auto;}
         .ldb-frame.ldb-live{cursor:default;}
         .ldb-frame.ldb-live:hover{transform:none;}
-        .ldb-frame.ldb-live iframe{opacity:1;}
+        .ldb-frame.ldb-live iframe{position:static;opacity:1;pointer-events:auto;}
         .ldb-frame.ldb-live img,.ldb-frame.ldb-live .ldb-hotspots{display:none;}
+        @media (prefers-reduced-motion: reduce){.ldb-frame.ldb-swap,.ldb-frame.ldb-swap iframe{transition:none;}}
         .ldb-modal-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
         .ldb-chip{display:inline-block;font-size:12px;font-weight:500;color:#c4b5fd;background:rgba(196,181,253,0.08);border:1px solid rgba(196,181,253,0.22);border-radius:999px;padding:4px 12px;}
         .ldb-modal-body{margin-top:16px;display:flex;flex-direction:column;gap:9px;}
@@ -2492,48 +2500,83 @@
                 if (e.key === 'Escape' && modal.classList.contains('ldb-open')) closeModal();
             });
             // ----- Live component upgrade -----
-            // When the frame nears the viewport on desktop, swap the poster
-            // for the REAL rendered OverviewView (app.lupolabs.ai/demo/
-            // overview, static mock data, frame-ancestors locked to this
-            // site). If the app doesn't answer within 6s, nothing changes:
-            // the poster + hotspots above are the complete fallback.
+            // The poster upgrades to the REAL rendered OverviewView
+            // (app.lupolabs.ai/demo/overview, static mock data,
+            // frame-ancestors locked to this site). Loading starts at
+            // page-load idle, so the swap normally happens before the
+            // section is ever seen; the loading iframe is an invisible
+            // overlay, so the frame never changes height mid-load. If
+            // the swap would land while the frame is on screen, it
+            // crossfades over the poster with one eased height settle
+            // instead of popping. If the app doesn't answer within 6s,
+            // nothing changes: the poster + hotspots above are the
+            // complete fallback.
             var APP_ORIGINS = ['https://app.lupolabs.ai', 'http://localhost:3000'];
             var APP = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
                 ? APP_ORIGINS[1] : APP_ORIGINS[0];
             var live = false;
             var attempted = false;
-            function setLive() {
-                if (live) return;
+            var swapping = false;
+            var pendingH = 0;
+            var ifr = null;
+            function clampH(h) { return Math.min(Math.max(h, 420), 1600); }
+            function frameInView() {
+                var r = frame.getBoundingClientRect();
+                return r.bottom > 0 && r.top < (window.innerHeight || document.documentElement.clientHeight);
+            }
+            function finishLive(h) {
                 live = true;
+                swapping = false;
+                ifr.style.height = h + 'px';
+                ifr.removeAttribute('aria-hidden');
                 frame.classList.add('ldb-live');
+                frame.classList.remove('ldb-swap');
+                frame.style.height = '';
                 frame.removeAttribute('role');
                 frame.removeAttribute('tabindex');
                 frame.removeAttribute('aria-label');
             }
+            function goLive(h) {
+                if (live) { ifr.style.height = clampH(h) + 'px'; return; }
+                if (swapping) { pendingH = h; return; }
+                var target = clampH(h);
+                var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (!frameInView() || reduce) { finishLive(target); return; }
+                // The user is looking at it: crossfade over the poster,
+                // ease the frame to the live height, then settle. The
+                // start height is committed with a forced reflow, never
+                // rAF: a throttled tab can starve rAF past the settle
+                // timer and stomp a stale height back on afterwards.
+                swapping = true;
+                frame.style.height = frame.offsetHeight + 'px';
+                frame.classList.add('ldb-swap');
+                void frame.offsetHeight; // commit the start height
+                frame.style.height = target + 'px';
+                setTimeout(function () {
+                    finishLive(pendingH ? clampH(pendingH) : target);
+                    pendingH = 0;
+                }, 520);
+            }
             function tryLive() {
                 if (attempted || window.innerWidth < 980) return;
                 attempted = true;
-                var ifr = document.createElement('iframe');
+                ifr = document.createElement('iframe');
                 ifr.src = APP + '/demo/overview';
                 ifr.title = 'LUPO dashboard, interactive sample data';
                 ifr.setAttribute('scrolling', 'no');
-                ifr.style.height = Math.round(frame.offsetWidth * 1860 / 2400) + 'px';
+                ifr.setAttribute('aria-hidden', 'true');
                 window.addEventListener('message', function (e) {
                     if (APP_ORIGINS.indexOf(e.origin) === -1) return;
                     var d = e.data;
                     if (!d || d.source !== 'lupo-demo') return;
-                    if (d.action === 'size' && d.height) {
-                        ifr.style.height = Math.min(Math.max(d.height, 420), 1600) + 'px';
-                        setLive();
-                        return;
-                    }
+                    if (d.action === 'size' && d.height) { goLive(d.height); return; }
                     if (d.action === 'lead') { openLead(LEAD_ORDER[d.index] || ''); return; }
                     if (d.action === 'filtered') { openFiltered(); return; }
                     if (d.action === 'lock') { openLock(LOCK_TITLES[d.label] || 'Your team’s day-to-day lives here.'); }
                 });
                 frame.appendChild(ifr);
                 setTimeout(function () {
-                    if (!live) {
+                    if (!live && !swapping) {
                         ifr.remove();
                         frame.classList.add('ldb-teach'); // fallback keeps the hotspot affordance
                     }
@@ -2541,7 +2584,21 @@
             }
             // Lightbox stays for poster mode only.
             var openLightbox = setOpen;
-            setOpen = function (open) { if (live && open) return; openLightbox(open); };
+            setOpen = function (open) { if ((live || swapping) && open) return; openLightbox(open); };
+            // Start loading at page-load idle, so the upgrade is done
+            // before anyone scrolls down to it.
+            function armLive() {
+                if ('requestIdleCallback' in window) { requestIdleCallback(tryLive, { timeout: 2500 }); }
+                else { setTimeout(tryLive, 1200); }
+            }
+            if (document.readyState === 'complete') { armLive(); }
+            else { window.addEventListener('load', armLive); }
+            // Kick it immediately if a hero CTA is heading here.
+            document.querySelectorAll('a[href="#dashboard"]').forEach(function (a) {
+                a.addEventListener('click', tryLive);
+            });
+            // On-approach trigger stays as backup; it also arms the
+            // teach pulse below 980px, where the poster is the mode.
             if ('IntersectionObserver' in window) {
                 var seen = false;
                 var io = new IntersectionObserver(function (entries) {
