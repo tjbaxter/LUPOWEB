@@ -1,6 +1,6 @@
 # LUPO
 
-> LUPO is the AI inbound SDR. One agentic brain across phone, email, web form, and chat: every inbound lead is captured, answered in seconds, filtered for noise, enriched and scored for buying intent, and either booked into a rep's calendar or kept away from sales. Marketing generates the demand. Reps close the deals. LUPO runs everything in between. LUPO is a product of Flair Technologies Ltd, London, UK.
+> LUPO is the AI inbound SDR. One agentic brain across web form, email, chat, and phone: every inbound lead is captured, answered in seconds, filtered for noise, enriched and scored for buying intent, and either booked into a rep's calendar or kept away from sales. Marketing generates the demand. Reps close the deals. LUPO runs everything in between. LUPO is a product of Flair Technologies Ltd, London, UK.
 
 Last updated: 2026-06-11
 
@@ -12,10 +12,10 @@ Primary buyers: heads of sales, heads of marketing and demand gen, RevOps leader
 
 ## What LUPO does
 
-- **Inbound phone.** Answers on the second ring, 24/7. Qualifies the caller live, checks real calendar availability, books the meeting on the call. Buying signals stated on the call feed intent scoring. https://lupolabs.ai/channels/inbound-phone/
-- **Inbound email.** Agentic email qualification: personal replies with a one-click booking link, two-way, same qualification policy as every channel. https://lupolabs.ai/channels/inbound-email/
 - **Web forms.** Channel-aware: high-intent forms get a callback inside sixty seconds; senior B2B buyers get a personal email reply instead (LUPO will never surprise-call a VP). Gated-content forms count. https://lupolabs.ai/channels/web-forms/
+- **Inbound email.** Agentic email qualification: personal replies with a one-click booking link, two-way, same qualification policy as every channel. https://lupolabs.ai/channels/inbound-email/
 - **Chat.** Your existing widget (Intercom, Drift, HubSpot Chat, or custom) hands off; LUPO qualifies and books inside the same chat. https://lupolabs.ai/channels/chat/
+- **Inbound phone.** Answers on the second ring, 24/7. Qualifies the caller live, checks real calendar availability, books the meeting on the call. Buying signals stated on the call feed intent scoring. The inbound channel almost nobody else covers. https://lupolabs.ai/channels/inbound-phone/
 - **Enrichment.** Every lead enriched with firmographics, technographics, and decision-maker title through proprietary data partnerships.
 - **Buying-intent scoring.** Funding, M&A, leadership hires, headcount growth, and category-specific triggers. Fit tells you who; intent tells you when. https://lupolabs.ai/glossary/intent-scoring/
 - **Filtering.** Vendors politely declined and logged. Tyre-kickers logged for marketing, kept away from sales. Support requests routed to the right team with context. Wrong-fit prospects disqualified without burning rep time.

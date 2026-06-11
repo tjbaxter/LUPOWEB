@@ -7,7 +7,7 @@ Canonical short map: https://lupolabs.ai/llms.txt
 
 ## Home (https://lupolabs.ai/)
 
-Inbound sales, fully automated. LUPO is the AI inbound SDR: it captures every lead across phone, email, web form and chat, filters the noise, scores buying intent, and books real buyers straight into your reps' calendars. Marketing generates the demand. Reps close the deals. LUPO runs everything in between.
+Inbound sales, fully automated. LUPO is the AI inbound SDR: it captures every lead across web form, email, chat and phone, filters the noise, scores buying intent, and books real buyers straight into your reps' calendars. Marketing generates the demand. Reps close the deals. LUPO runs everything in between.
 
 The page hosts a live browser voice demo: "Talk to LUPO live" connects a real call to the agent, with a voice picker (several voices to audition). There is also an interactive dashboard preview showing the SDR morning view: leads by channel, intent bands, noise filtered, meetings booked.
 
@@ -15,7 +15,7 @@ The problem, in numbers (independent research): 28% of a sales rep's week is act
 
 ## How it works (https://lupolabs.ai/how-it-works/)
 
-The pathway from first touch to booked meeting: a lead arrives on any channel (phone, email, web form, chat). LUPO answers in seconds, qualifies with real questions, enriches the lead (firmographics, technographics, decision-maker title) through proprietary data partnerships, scores buying intent (funding, M&A, leadership hires, headcount growth), then routes: real buyers get booked into the right rep's calendar; vendors are declined and logged; support requests go to the right team with context; tyre-kickers are logged for marketing. Everything syncs to the CRM and pings Slack with full context.
+The pathway from first touch to booked meeting: a lead arrives on any channel (web form, email, chat, phone). LUPO answers in seconds, qualifies with real questions, enriches the lead (firmographics, technographics, decision-maker title) through proprietary data partnerships, scores buying intent (funding, M&A, leadership hires, headcount growth), then routes: real buyers get booked into the right rep's calendar; vendors are declined and logged; support requests go to the right team with context; tyre-kickers are logged for marketing. Everything syncs to the CRM and pings Slack with full context.
 
 ## Pricing (https://lupolabs.ai/pricing/)
 
@@ -23,17 +23,17 @@ Stated upfront: 3,000 to 15,000 USD per month, depending on inbound volume and i
 
 ## Channels
 
-### Inbound phone (https://lupolabs.ai/channels/inbound-phone/)
-LUPO answers inbound calls on the second ring, 24/7. It qualifies the caller live, checks real calendar availability, and books the meeting on the call. Buying signals stated on the call feed intent scoring. Full transcripts, recordings, and outcomes are logged. Anyone can hear it: the homepage hosts a live call demo.
+### Web forms (https://lupolabs.ai/channels/web-forms/)
+Channel-aware response logic. A high-intent form triggers an outbound callback inside sixty seconds. A senior B2B buyer gets a personal email reply with a booking link instead: LUPO will never surprise-call a VP who submitted a demo form. Gated-content downloads count as a form channel.
 
 ### Inbound email (https://lupolabs.ai/channels/inbound-email/)
 Agentic email qualification. Inbound enquiries get a personal reply with a one-click booking link. Two-way: LUPO reads replies and carries the thread to a booking or a polite close, under the same qualification policy as every other channel.
 
-### Web forms (https://lupolabs.ai/channels/web-forms/)
-Channel-aware response logic. A high-intent form triggers an outbound callback inside sixty seconds. A senior B2B buyer gets a personal email reply with a booking link instead: LUPO will never surprise-call a VP who submitted a demo form. Gated-content downloads count as a form channel.
-
 ### Chat (https://lupolabs.ai/channels/chat/)
 The existing widget (Intercom, Drift, HubSpot Chat, or custom) captures intent and consent, then hands off to LUPO, which qualifies and books inside the same chat. Any widget that can post a webhook works.
+
+### Inbound phone (https://lupolabs.ai/channels/inbound-phone/)
+LUPO answers inbound calls on the second ring, 24/7. It qualifies the caller live, checks real calendar availability, and books the meeting on the call. Buying signals stated on the call feed intent scoring. Full transcripts, recordings, and outcomes are logged. The inbound channel almost nobody else covers. Anyone can hear it: the homepage hosts a live call demo.
 
 ## Integrations (https://lupolabs.ai/integrations/)
 
@@ -58,8 +58,8 @@ Live today: HubSpot CRM sync (https://lupolabs.ai/integrations/hubspot/), Salesf
 
 ## Press kit (https://lupolabs.ai/press/)
 
-Boilerplate (50 words): LUPO is the AI inbound SDR. It captures every inbound lead across phone, email, web form, and chat, filters the noise, enriches and scores every lead for buying intent, and books real buyers straight into reps' calendars. It syncs to HubSpot, Salesforce, or any CRM.
-Fast facts: Category AI inbound SDR · Channels phone, email, web form, chat · Founded 2025 · HQ London, UK · Company Flair Technologies Ltd · Founder Tom Baxter (MPhil Physics, University of Cambridge) · Pricing 3,000 to 15,000 USD per month, public · Programs: ElevenLabs Grant recipient, builds on Deepgram.
+Boilerplate (50 words): LUPO is the AI inbound SDR. It captures every inbound lead across web form, email, chat, and phone, filters the noise, enriches and scores every lead for buying intent, and books real buyers straight into reps' calendars. It syncs to HubSpot, Salesforce, or any CRM.
+Fast facts: Category AI inbound SDR · Channels web form, email, chat, phone · Founded 2025 · HQ London, UK · Company Flair Technologies Ltd · Founder Tom Baxter (MPhil Physics, University of Cambridge) · Pricing 3,000 to 15,000 USD per month, public · Programs: ElevenLabs Grant recipient, builds on Deepgram.
 Contact: hello@lupolabs.ai · https://www.linkedin.com/company/luposales/
 
 ## FAQ highlights (https://lupolabs.ai/faq/)
