@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0a0a0d">
     <link rel="stylesheet" href="/premium.css">
     <title>Careers at LUPO | AI Inbound SDR Jobs in London</title>
-    <meta name="description" content="Join LUPO in London. Open roles: Forward Deployed Engineer, Founding Engineer (Full-Stack, AI Systems), and Founding Account Executive. Small team, real customers in production, meaningful equity.">
+    <meta name="description" content="Join LUPO in London. Open roles: Forward Deployed Engineer, Founding Engineer (Full-Stack, AI Systems), and Founding Account Executive. Customer obsessed, world-class service around the clock, cutting-edge AI for enterprise.">
     <link rel="icon" type="image/png" href="/lupo-icon-180.png">
     <link rel="canonical" href="https://lupolabs.ai/careers/">
     <link rel="preconnect" href="https://app.lupolabs.ai">
@@ -99,6 +99,13 @@
 
         .page-section { padding: 40px 24px 70px; border-top: 1px solid var(--border); }
         .section-inner { max-width: 860px; margin: 0 auto; }
+        .band-eyebrow { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-tertiary); margin: 16px 0 14px; }
+        .band-h2 { font-size: clamp(26px, 3.6vw, 38px); font-weight: 600; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 26px; }
+        .creed-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .creed-card { border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.018); border-radius: 16px; padding: 24px 26px; }
+        .creed-card h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 8px; }
+        .creed-card p { font-size: 14.5px; line-height: 1.65; color: var(--text-secondary); }
+        .roles-lede { font-size: 15px; color: var(--text-secondary); line-height: 1.6; margin: -12px 0 28px; }
         .role-card {
             background: rgba(255,255,255,0.018);
             border: 1px solid rgba(255,255,255,0.06);
@@ -195,6 +202,7 @@
 
         @media (max-width: 760px) {
             .nav-links { display: none; }
+            .creed-grid { grid-template-columns: 1fr; }
             .apply-grid { grid-template-columns: 1fr; }
             .role-summary { padding: 20px 20px; }
             .role-body { padding: 0 20px 22px; }
@@ -245,8 +253,8 @@
         <section class="hero-section">
             <div class="hero-section-inner">
                 <span class="hero-eyebrow">Careers</span>
-                <h1>Join LUPO</h1>
-                <p class="hero-lede">We're building the AI inbound SDR: every lead captured, qualified, and booked across web form, email, chat, and phone. London-based, small team, shipping fast for real customers in production.</p>
+                <h1>We work for our customers.</h1>
+                <p class="hero-lede">LUPO is the AI inbound SDR. Our customers trust it with the pipeline their revenue depends on, and we repay that trust with world-class service around the clock. Building that is the job.</p>
                 <div class="perks-strip" aria-label="What we offer">
                     <span class="perk">Equity</span>
                     <span class="perk">Hybrid · West Kensington, London</span>
@@ -260,6 +268,34 @@
 
         <section class="page-section">
             <div class="section-inner">
+                <span class="band-eyebrow">How we work</span>
+                <h2 class="band-h2">Customer obsession is the baseline.</h2>
+                <div class="creed-grid">
+                    <div class="creed-card">
+                        <h3>Customers are everything</h3>
+                        <p>Not a poster on a wall. The reason the company exists. We treat customers like family and build until the experience feels magical.</p>
+                    </div>
+                    <div class="creed-card">
+                        <h3>Around the clock</h3>
+                        <p>Inbound doesn't keep office hours, and neither do we. World-class service for every customer, 24/7. That's the difference.</p>
+                    </div>
+                    <div class="creed-card">
+                        <h3>Cutting edge, enterprise grade</h3>
+                        <p>We build with the newest AI there is, then hold it to the standard enterprises demand: audited, observable, trusted with real pipeline.</p>
+                    </div>
+                    <div class="creed-card">
+                        <h3>One scoreboard</h3>
+                        <p>The revenue our customers convert from inbound, and what it cost them. We win when they get the best outcome at the best value.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section">
+            <div class="section-inner">
+                <span class="band-eyebrow">Open roles</span>
+                <h2 class="band-h2">The smartest people in the world, on the inbound problem.</h2>
+                <p class="roles-lede">Three seats in London. Direct work with the founder, real customers in production from week one.</p>
 
                 <details class="role-card" id="forward-deployed-engineer">
                     <summary class="role-summary">
@@ -442,7 +478,7 @@
 
         <section class="cta-block">
             <h2>Don't see your role?</h2>
-            <p>We hire ahead of openings for exceptional people.</p>
+            <p>We hire ahead of openings for exceptional, customer-obsessed people.</p>
             <a href="mailto:careers@lupolabs.ai" class="btn-primary">careers@lupolabs.ai</a>
         </section>
     </main>
