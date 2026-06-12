@@ -156,6 +156,7 @@
         .apply-field input:focus, .apply-field textarea:focus { border-color: rgba(167,139,250,0.45); }
         .apply-field textarea { resize: vertical; min-height: 84px; }
         .apply-hint { font-size: 11.5px; color: var(--text-tertiary); }
+        .req { color: #f87171; font-weight: 700; }
         .cv-input {
             font-size: 13px; color: var(--text-secondary);
             padding: 10px 0;
@@ -301,7 +302,7 @@
                                         <textarea id="fde-pitch" name="pitch" required maxlength="700"></textarea>
                                     </div>
                                     <div class="apply-field full">
-                                        <label for="fde-cv">CV</label>
+                                        <label for="fde-cv">CV <span class="req" aria-hidden="true">*</span></label>
                                         <input id="fde-cv" name="cv" type="file" class="cv-input" accept=".pdf,application/pdf" required>
                                         <span class="apply-hint">PDF, up to 4 MB.</span>
                                     </div>
@@ -359,7 +360,7 @@
                                         <textarea id="fe-pitch" name="pitch" required maxlength="700"></textarea>
                                     </div>
                                     <div class="apply-field full">
-                                        <label for="fe-cv">CV</label>
+                                        <label for="fe-cv">CV <span class="req" aria-hidden="true">*</span></label>
                                         <input id="fe-cv" name="cv" type="file" class="cv-input" accept=".pdf,application/pdf" required>
                                         <span class="apply-hint">PDF, up to 4 MB.</span>
                                     </div>
@@ -418,7 +419,7 @@
                                         <textarea id="ae-pitch" name="pitch" required maxlength="700"></textarea>
                                     </div>
                                     <div class="apply-field full">
-                                        <label for="ae-cv">CV</label>
+                                        <label for="ae-cv">CV <span class="req" aria-hidden="true">*</span></label>
                                         <input id="ae-cv" name="cv" type="file" class="cv-input" accept=".pdf,application/pdf" required>
                                         <span class="apply-hint">PDF, up to 4 MB.</span>
                                     </div>
@@ -442,7 +443,7 @@
         <section class="cta-block">
             <h2>Don't see your role?</h2>
             <p>We hire ahead of openings for exceptional people.</p>
-            <a href="mailto:tom@lupolabs.ai" class="btn-primary">tom@lupolabs.ai</a>
+            <a href="mailto:careers@lupolabs.ai" class="btn-primary">careers@lupolabs.ai</a>
         </section>
     </main>
 
@@ -507,15 +508,15 @@
                         var code = (out.body && out.body.error) || "";
                         button.disabled = false;
                         button.textContent = "Submit application";
-                        if (code === "rate_limited") return fail("Too many submissions from this network right now. Try again in an hour, or email tom@lupolabs.ai.");
+                        if (code === "rate_limited") return fail("Too many submissions from this network right now. Try again in an hour, or email careers@lupolabs.ai.");
                         if (code === "cv_too_large") return fail("CV is over 4 MB. Export a lighter PDF and retry.");
                         if (code === "cv_not_pdf") return fail("That file isn't a PDF. Export your CV as PDF and retry.");
-                        fail("Something went wrong sending your application. Email it to tom@lupolabs.ai and we'll take it from there.");
+                        fail("Something went wrong sending your application. Email it to careers@lupolabs.ai and we'll take it from there.");
                     })
                     .catch(function () {
                         button.disabled = false;
                         button.textContent = "Submit application";
-                        fail("Network error. Email your application to tom@lupolabs.ai and we'll take it from there.");
+                        fail("Network error. Email your application to careers@lupolabs.ai and we'll take it from there.");
                     });
             });
         });
