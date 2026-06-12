@@ -1985,6 +1985,7 @@
     </style>
     <script src="/analytics.js" defer></script>
     <script src="/talk-to-lupo.js?v=voices4" defer></script>
+    <link rel="preconnect" href="https://app.lupolabs.ai">
     <script async src="https://app.lupolabs.ai/widget/lupo-chat.js" data-lupo-mode="marketing"></script>
     <script src="/visit-radar.js" defer></script>
     <script src="/aurora.js?v=19"></script>
@@ -3048,45 +3049,10 @@
             }
         });
         
-        // Floating particles effect
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.style.cssText = `
-                position: fixed;
-                width: ${Math.random() * 4 + 2}px;
-                height: ${Math.random() * 4 + 2}px;
-                background: var(--accent);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 0;
-                opacity: ${Math.random() * 0.4 + 0.1};
-                box-shadow: 0 0 ${Math.random() * 10 + 5}px var(--accent);
-            `;
-            
-            const startX = Math.random() * window.innerWidth;
-            const startY = window.innerHeight + 10;
-            
-            particle.style.left = startX + 'px';
-            particle.style.top = startY + 'px';
-            
-            document.body.appendChild(particle);
-            
-            const duration = Math.random() * 20000 + 10000;
-            const horizontalMovement = (Math.random() - 0.5) * 100;
-            
-            particle.animate([
-                { transform: `translate(0, 0)`, opacity: 0 },
-                { transform: `translate(${horizontalMovement}px, -${window.innerHeight + 20}px)`, opacity: particle.style.opacity },
-                { transform: `translate(${horizontalMovement * 2}px, -${window.innerHeight * 2}px)`, opacity: 0 }
-            ], {
-                duration: duration,
-                easing: 'linear'
-            }).onfinish = () => particle.remove();
-        }
-        
-        // Start particle animation
-        setInterval(createParticle, 1000);
-        
+        // Floating-particle generator removed 2026-06-12 (perf): it appended a
+        // new glow-shadowed animated div every second forever (~20 alive at any
+        // moment) for a sub-perceptual effect. Constant paint + compositor churn.
+
         // Geolocation blocking for Australia and Malaysia
         let userCountry = null;
         let geolocationLoaded = false;
@@ -3098,37 +3064,48 @@
                 const data = await response.json();
                 userCountry = data.country_code; // Returns 'AU' for Australia, 'MY' for Malaysia
                 geolocationLoaded = true;
-                console.log('User country detected:', userCountry);
             } catch (error) {
-                console.error('Error fetching geolocation:', error);
                 // If geolocation fails, allow booking (fail open)
                 userCountry = null;
                 geolocationLoaded = true;
             }
         }
-        
-        // Call on page load
-        getUserCountry();
-        
-        // Handle book call button click
-        document.getElementById('bookCallBtn').addEventListener('click', async function(e) {
-            e.preventDefault(); // Always prevent default first
-            
-            // Wait for geolocation to load if it hasn't yet
-            if (!geolocationLoaded) {
-                // Show a loading state or just wait
-                await getUserCountry();
-            }
-            
-            // Block Australia (AU) and Malaysia (MY)
-            if (userCountry === 'AU' || userCountry === 'MY') {
-                showAlreadyBookedModal();
-                return false;
-            }
-            
-            // For all other countries, open the cal.com link
-            window.open('https://cal.com/tombaxter/lupo', '_blank');
-        });
+
+        // Lazy (perf): resolve geo only when someone shows booking intent
+        // (hover/touch/focus on the button), not on every page load. By the
+        // time the click lands the lookup is done; if not, fail open.
+        let geoWarmed = false;
+        function warmGeo() {
+            if (geoWarmed) return;
+            geoWarmed = true;
+            getUserCountry();
+        }
+        const bookCallBtn = document.getElementById('bookCallBtn');
+        if (bookCallBtn) {
+            ['pointerenter', 'touchstart', 'focus'].forEach(function (ev) {
+                bookCallBtn.addEventListener(ev, warmGeo, { once: true, passive: true });
+            });
+            bookCallBtn.addEventListener('click', function (e) {
+                e.preventDefault(); // Always prevent default first
+
+                // Not resolved yet: fail open synchronously so window.open stays
+                // inside the user gesture (an await here trips popup blockers).
+                if (!geolocationLoaded) {
+                    warmGeo();
+                    window.open('https://cal.com/tombaxter/lupo', '_blank');
+                    return;
+                }
+
+                // Block Australia (AU) and Malaysia (MY)
+                if (userCountry === 'AU' || userCountry === 'MY') {
+                    showAlreadyBookedModal();
+                    return;
+                }
+
+                // For all other countries, open the cal.com link
+                window.open('https://cal.com/tombaxter/lupo', '_blank');
+            });
+        }
         
         // Show "Already Booked" modal
         function showAlreadyBookedModal() {

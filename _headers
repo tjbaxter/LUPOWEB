@@ -1,0 +1,53 @@
+# Cache policy (perf, 2026-06-12). Netlify's default is max-age=0
+# must-revalidate on everything, which makes every repeat visit
+# revalidate every asset. HTML keeps that default (deploys show
+# instantly); static assets cache hard.
+#
+# Convention: JS is referenced with ?v= query versions (aurora.js?v=19),
+# images get NEW FILENAMES when they change (og-card-v2.png). Keep doing
+# that and long caches are always safe.
+
+/logos/*
+  Cache-Control: public, max-age=2592000, immutable
+
+/blog/hero-*
+  Cache-Control: public, max-age=2592000, immutable
+
+/blog/og-*
+  Cache-Control: public, max-age=604800
+
+/lupo-icon-180.png
+  Cache-Control: public, max-age=2592000, immutable
+
+/lupo-head-nav.png
+  Cache-Control: public, max-age=2592000, immutable
+
+/lupo-dashboard.webp
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/lupo-dashboard-light.webp
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/og-card-v2.png
+  Cache-Control: public, max-age=604800
+
+/aurora.js
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/talk-to-lupo.js
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/analytics.js
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/visit-radar.js
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/premium.css
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/premium.js
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/blog.css
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
