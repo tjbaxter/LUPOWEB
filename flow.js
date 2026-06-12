@@ -1,16 +1,16 @@
-/* LUPO flow animation: a lead dot travels the inbound pipeline.
-   Qualified loops end on the rep's calendar; every third loop is junk,
-   gets caught at Qualification, and exits amber to the filtered terminal.
-   No dependencies. Pauses off-screen. Reduced motion = static diagram. */
+/* LUPO flow animation: a lead dot travels the inbound pipeline, lighting the
+   route behind it. Qualified loops climb to the rep's calendar; every third
+   loop is junk, gets caught at Qualification, and exits amber to the filtered
+   terminal. No dependencies. Pauses off-screen. Reduced motion = static diagram. */
 (function () {
     'use strict';
 
     var CHANNELS = ['Web form', 'Email', 'Chat', 'Phone call'];
     var SIGNALS = ['Funding raised', 'Hiring spike', 'M&A news'];
     var JUNK = ['Vendor pitch', 'Job applicant', 'No buying signal'];
+    var POLICY = 'against your policy';
     var STATIC_CHAN = 'Web form · Email · Chat · Phone';
     var STATIC_SIG = 'Funding · Hiring · M&A';
-    var STATIC_JUNK = 'Vendor pitch · No buying signal';
     var STAGE_X = [110, 355, 600, 845, 1090];
 
     function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
@@ -19,6 +19,8 @@
         var main = band.querySelector('.lf-main');
         var junkPath = band.querySelector('.lf-junk');
         var dotg = band.querySelector('.lf-dotg');
+        var rectA = band.querySelector('.lf-reva');
+        var rectB = band.querySelector('.lf-revb');
         var stages = {};
         var nodes = band.querySelectorAll('.lf-stage');
         for (var i = 0; i < nodes.length; i++) stages[nodes[i].getAttribute('data-s')] = nodes[i];
@@ -27,14 +29,18 @@
         var chipJunk = band.querySelector('[data-chip="junk"]');
         if (!main || !junkPath || !dotg || !stages['5']) return;
 
+        function setRect(rect, w) { if (rect) rect.setAttribute('width', w); }
+
         function setStatic() {
             ['0', '1', '2', '3', '4'].forEach(function (k) { stages[k].classList.add('on'); });
             stages['5'].classList.add('bad');
             chipChan.textContent = STATIC_CHAN;
             chipSig.textContent = STATIC_SIG;
-            chipJunk.textContent = STATIC_JUNK;
+            chipJunk.textContent = POLICY;
             chipSig.classList.remove('lf-hide');
             chipJunk.classList.remove('lf-hide');
+            setRect(rectA, 1200);
+            setRect(rectB, 1200);
             dotg.style.display = 'none';
             band.classList.add('lf-static');
         }
@@ -45,7 +51,7 @@
             if (e.matches) { running = false; if (raf) cancelAnimationFrame(raf); setStatic(); }
         });
 
-        /* Geometry: stage marks as path lengths (x is monotonic along the arc) */
+        /* Geometry: stage marks as path lengths (x is monotonic along the trajectory) */
         var mainLen = 0, junkLen = 0, marks = null;
         function lenAtX(path, total, x) {
             var lo = 0, hi = total;
@@ -65,9 +71,11 @@
             for (var i = 0; i < STAGE_X.length; i++) marks.push(lenAtX(main, mainLen, STAGE_X[i]));
         }
 
-        function dotMove(path, len) {
+        /* Move the dot and reveal the lit trail up to it */
+        function dotMove(path, len, rect) {
             var p = path.getPointAtLength(len);
             dotg.setAttribute('transform', 'translate(' + p.x + ' ' + p.y + ')');
+            if (rect) rect.setAttribute('width', Math.max(0, p.x + 6));
         }
 
         function setChip(chip, text) {
@@ -85,8 +93,9 @@
         function flag(k) { stages[k].classList.add('bad'); }
         function fadeAll() {
             for (var k in stages) stages[k].classList.remove('on', 'bad');
-            chipJunk.classList.add('lf-hide');
             dotg.classList.remove('lf-bad');
+            setRect(rectA, 0);
+            setRect(rectB, 0);
         }
 
         /* Timeline */
@@ -100,7 +109,8 @@
                 if (!marks) computeGeom();
                 setChip(chipChan, chan);
                 setChip(chipSig, STATIC_SIG);
-                if (marks) dotMove(main, 0);
+                setChip(chipJunk, POLICY);
+                if (marks) dotMove(main, 0, rectA);
                 dotg.classList.add('lf-show');
                 light('0');
             } });
@@ -135,7 +145,7 @@
         }
 
         /* Engine */
-        var stepList = null, stepIdx = 0, stepStart = 0, raf = 0, running = false, pendingReset = false;
+        var stepList = null, stepIdx = 0, stepStart = 0, raf = 0, running = false, pendingReset = false, entered = false;
         function frame(ts) {
             if (!running) return;
             if (pendingReset) { stepStart = ts; pendingReset = false; }
@@ -149,8 +159,8 @@
                     var d = Math.min(1, el / s.ms);
                     if (marks) {
                         var e = ease(d);
-                        if (s.seg) dotMove(main, marks[s.seg[0]] + (marks[s.seg[1]] - marks[s.seg[0]]) * e);
-                        else dotMove(junkPath, junkLen * e);
+                        if (s.seg) dotMove(main, marks[s.seg[0]] + (marks[s.seg[1]] - marks[s.seg[0]]) * e, rectA);
+                        else dotMove(junkPath, junkLen * e, rectB);
                     }
                     if (d < 1) break;
                     stepIdx++; stepStart = ts; continue;
@@ -167,6 +177,12 @@
             running = true;
             pendingReset = true;
             if (!marks) computeGeom();
+            if (!entered) {
+                entered = true;
+                band.classList.add('lf-in');
+                setTimeout(function () { if (running) raf = requestAnimationFrame(frame); }, 750);
+                return;
+            }
             raf = requestAnimationFrame(frame);
         }
         function stop() {

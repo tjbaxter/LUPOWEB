@@ -1,71 +1,93 @@
 /* LUPO flow: the inbound pipeline, animated. Used on / and /inbound-sdr/.
-   Scoped .lf-*. Qualified path = accent blue, filtered exit = amber.
-   Desktop: pills along a dotted arc, travelling dot. Mobile: vertical flow.
-   Reduced motion: static labelled diagram (JS adds .lf-static + lights all stages). */
+   Scoped .lf-*. Qualified path = accent blue, filtered exit = amber (persistent identity).
+   Desktop: pills along a single rising trajectory, travelling dot + lit trail behind it.
+   Mobile: vertical rail, filtered branch indented off Qualification.
+   Reduced motion: static labelled diagram (JS adds .lf-static, lights all stages, fills trails). */
 
 .lf-band { position: relative; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif; }
 .lf-inner { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
 .lf-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .lf-canvas { position: relative; }
-.lf-svg { display: block; width: 100%; height: 100%; position: absolute; inset: 0; }
-.lf-path { stroke: rgba(255, 255, 255, 0.30); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 0.1 8; fill: none; }
+.lf-svg { display: block; width: 100%; height: 100%; position: absolute; inset: 0; overflow: visible; }
+
+/* Routes: quiet dotted base, the travelled portion lights up behind the dot */
+.lf-path { stroke: rgba(255, 255, 255, 0.26); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 0.1 8; fill: none; }
+.lf-path.lf-junk { stroke: rgba(255, 159, 10, 0.28); }
+.lf-trail { stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 0.1 8; fill: none; }
+.lf-trail-main { stroke: rgba(41, 151, 255, 0.75); }
+.lf-trail-junk { stroke: rgba(255, 159, 10, 0.78); }
 
 /* Travelling lead dot */
 .lf-dotg { opacity: 0; transition: opacity 0.3s ease; }
 .lf-dotg.lf-show { opacity: 1; }
-.lf-halo { fill: rgba(41, 151, 255, 0.26); }
+.lf-halo2 { fill: rgba(41, 151, 255, 0.10); }
+.lf-halo { fill: rgba(41, 151, 255, 0.30); }
 .lf-dot { fill: #eaf4ff; }
-.lf-dotg.lf-bad .lf-halo { fill: rgba(255, 159, 10, 0.28); }
+.lf-dotg.lf-bad .lf-halo2 { fill: rgba(255, 159, 10, 0.10); }
+.lf-dotg.lf-bad .lf-halo { fill: rgba(255, 159, 10, 0.32); }
 .lf-dotg.lf-bad .lf-dot { fill: #ffe1b0; }
 
 /* Stage pills */
 .lf-stage { display: inline-flex; flex-direction: column; align-items: center; gap: 6px; z-index: 2; }
-.lf-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: rgba(18, 18, 21, 0.92); border: 1px solid rgba(255, 255, 255, 0.10); white-space: nowrap; transition: border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease; }
+.lf-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 15px; border-radius: 999px; background: rgba(20, 20, 24, 0.92); border: 1px solid rgba(255, 255, 255, 0.10); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05); white-space: nowrap; transition: border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease, transform 0.35s ease; }
 .lf-pin { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, 0.28); flex: none; transition: background 0.35s ease, box-shadow 0.35s ease; }
 .lf-label { font-size: 13.5px; font-weight: 500; letter-spacing: -0.01em; color: #a1a1a6; transition: color 0.35s ease; }
 .lf-chip { font-size: 11px; font-weight: 500; letter-spacing: 0.01em; color: #8e8e93; opacity: 1; transition: opacity 0.24s ease, color 0.35s ease; white-space: nowrap; }
 .lf-chip.lf-hide { opacity: 0; }
 
+/* Filtered terminal keeps its amber identity even at rest: a feature, not a failure state */
+.lf-stage[data-s="5"] .lf-pill { border-color: rgba(255, 159, 10, 0.30); }
+.lf-stage[data-s="5"] .lf-pin { background: rgba(255, 159, 10, 0.55); }
+
 /* Lit: qualified path */
-.lf-stage.on .lf-pill { border-color: rgba(41, 151, 255, 0.55); background: rgba(41, 151, 255, 0.10); box-shadow: 0 0 18px rgba(41, 151, 255, 0.13); }
+.lf-stage.on .lf-pill { transform: scale(1.04); border-color: rgba(41, 151, 255, 0.65); background: rgba(41, 151, 255, 0.13); box-shadow: 0 0 26px rgba(41, 151, 255, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
 .lf-stage.on .lf-pin { background: #2997ff; box-shadow: 0 0 10px rgba(41, 151, 255, 0.8); }
 .lf-stage.on .lf-label { color: #f5f5f7; }
 .lf-stage.on .lf-chip { color: #b8c4d6; }
 
-/* Lit: filtered path (the feature, not a failure state) */
-.lf-stage.bad .lf-pill { border-color: rgba(255, 159, 10, 0.55); background: rgba(255, 159, 10, 0.09); box-shadow: 0 0 18px rgba(255, 159, 10, 0.12); }
+/* Lit: filtered path, equal prominence to the blue states */
+.lf-stage.bad .lf-pill { transform: scale(1.04); border-color: rgba(255, 159, 10, 0.65); background: rgba(255, 159, 10, 0.12); box-shadow: 0 0 26px rgba(255, 159, 10, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.07); }
 .lf-stage.bad .lf-pin { background: #ff9f0a; box-shadow: 0 0 10px rgba(255, 159, 10, 0.8); }
 .lf-stage.bad .lf-label { color: #ffd9a3; }
 .lf-stage.bad .lf-chip { color: #ffb340; }
 
-.lf-note { text-align: center; margin: 22px 0 0; font-size: 13.5px; }
+/* Entry: pills rise in once when the band scrolls into view (JS adds .lf-in) */
+.lf-band.lf-in .lf-pill, .lf-band.lf-in .lf-chip { animation: lfin 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards; animation-delay: calc(var(--i, 0) * 80ms); }
+@keyframes lfin { from { opacity: 0; transform: translateY(12px); } }
+.lf-band.lf-static .lf-pill, .lf-band.lf-static .lf-chip { animation: none; }
+
+.lf-note { text-align: right; margin: 10px 0 0; font-size: 13px; }
 .lf-note a { color: #8e8e93; text-decoration: none; transition: color 0.2s ease; }
 .lf-note a:hover { color: #f5f5f7; }
 
-/* Desktop: arc layout. Pills positioned in viewBox space (1200 x 280, y offset 180). */
+/* Desktop: rising trajectory. Pills positioned in viewBox space (1200 x 275, y offset 175). */
 @media (min-width: 841px) {
-    .lf-canvas { aspect-ratio: 1200 / 290; }
-    .lf-stage { position: absolute; left: calc(var(--x) / 1200 * 100%); top: calc((var(--y) - 180) / 290 * 100%); transform: translate(-50%, -50%); }
+    .lf-canvas { aspect-ratio: 1200 / 275; }
+    .lf-stage { position: absolute; left: calc(var(--x) / 1200 * 100%); top: calc((var(--y) - 175) / 275 * 100%); transform: translate(-50%, -50%); }
 }
 @media (min-width: 841px) and (max-width: 1080px) {
     .lf-label { font-size: 12.5px; }
     .lf-pill { padding: 7px 12px; }
 }
 
-/* Mobile: vertical flow, filtered branch beside the qualified one */
+/* Mobile: one vertical rail, top to bottom. The filtered branch hangs off
+   Qualification, indented with its own amber stub. */
 @media (max-width: 840px) {
     .lf-svg { display: none; }
-    .lf-canvas { display: grid; grid-template-columns: auto auto; justify-content: start; column-gap: 20px; grid-template-areas: "s0 ." "s1 ." "s2 ." "s3 s5" "s4 s5"; }
-    .lf-stage { align-items: flex-start; }
-    .lf-stage .lf-chip { margin-left: 17px; }
-    .lf-stage[data-s="0"] { grid-area: s0; }
-    .lf-stage[data-s="1"] { grid-area: s1; }
-    .lf-stage[data-s="2"] { grid-area: s2; }
-    .lf-stage[data-s="3"] { grid-area: s3; }
-    .lf-stage[data-s="4"] { grid-area: s4; }
-    .lf-stage[data-s="5"] { grid-area: s5; align-self: start; }
-    .lf-stage::before { content: ''; width: 3px; height: 20px; margin: 3px 0 3px 15px; background-image: radial-gradient(circle, rgba(255, 255, 255, 0.30) 1.3px, transparent 1.4px); background-size: 3px 7px; background-repeat: repeat-y; }
-    .lf-stage[data-s="0"]::before { display: none; }
-    .lf-stage[data-s="5"]::before { background-image: radial-gradient(circle, rgba(255, 159, 10, 0.45) 1.3px, transparent 1.4px); }
-    .lf-note { text-align: left; }
+    .lf-canvas { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; position: relative; padding: 2px 0; }
+    .lf-canvas::before { content: ''; position: absolute; left: 18px; top: 20px; bottom: 20px; width: 2.5px; background-image: radial-gradient(circle, rgba(255, 255, 255, 0.30) 1.25px, transparent 1.35px); background-size: 2.5px 8px; background-repeat: repeat-y; }
+    .lf-stage { position: relative; z-index: 2; align-items: flex-start; gap: 4px; }
+    .lf-stage .lf-chip { margin-left: 31px; }
+    .lf-stage[data-s="0"] { order: 0; }
+    .lf-stage[data-s="1"] { order: 1; }
+    .lf-stage[data-s="2"] { order: 2; }
+    .lf-stage[data-s="5"] { order: 3; margin-left: 46px; }
+    .lf-stage[data-s="3"] { order: 4; }
+    .lf-stage[data-s="4"] { order: 5; }
+    .lf-stage[data-s="5"]::before { content: ''; position: absolute; left: -27px; top: 16px; width: 24px; height: 2.5px; background-image: radial-gradient(circle, rgba(255, 159, 10, 0.55) 1.25px, transparent 1.35px); background-size: 8px 2.5px; background-repeat: repeat-x; }
+    .lf-note { text-align: left; margin-top: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lf-band .lf-pill, .lf-band .lf-chip { animation: none !important; }
 }

@@ -1989,8 +1989,8 @@
     <script async src="https://app.lupolabs.ai/widget/lupo-chat.js" data-lupo-mode="marketing"></script>
     <script src="/visit-radar.js" defer></script>
     <script src="/aurora.js?v=19"></script>
-    <link rel="stylesheet" href="/flow.css?v=1">
-    <script src="/flow.js?v=1" defer></script>
+    <link rel="stylesheet" href="/flow.css?v=2">
+    <script src="/flow.js?v=2" defer></script>
 </head>
 <body>
     <!-- Background Animation -->
@@ -2088,17 +2088,23 @@
             <p class="lf-sr">How LUPO works: a lead lands from web form, email, chat, or phone. LUPO engages in seconds and qualifies it against your sales policy. Real buyers are enriched, scored against live buying signals, and booked straight into a rep's calendar. Noise like vendor pitches is filtered and never reaches a rep.</p>
             <div class="lf-inner" aria-hidden="true">
                 <div class="lf-canvas">
-                    <svg class="lf-svg" viewBox="0 180 1200 290" preserveAspectRatio="xMidYMid meet" focusable="false">
-                        <path class="lf-path lf-main" d="M 110 330 Q 600 116 1090 330"/>
-                        <path class="lf-path lf-junk" d="M 600 223 C 626 290 664 352 734 406"/>
-                        <g class="lf-dotg" transform="translate(110 330)"><circle class="lf-halo" r="12"/><circle class="lf-dot" r="5"/></g>
+                    <svg class="lf-svg" viewBox="0 175 1200 275" preserveAspectRatio="xMidYMid meet" focusable="false">
+                        <defs>
+                            <mask id="lfRevA" maskUnits="userSpaceOnUse" x="0" y="175" width="1200" height="275"><rect class="lf-reva" x="0" y="175" width="0" height="275" fill="#fff"/></mask>
+                            <mask id="lfRevB" maskUnits="userSpaceOnUse" x="0" y="175" width="1200" height="275"><rect class="lf-revb" x="0" y="175" width="0" height="275" fill="#fff"/></mask>
+                        </defs>
+                        <path class="lf-path lf-main" d="M 110 368 C 400 350 790 320 1090 215"/>
+                        <path class="lf-path lf-junk" d="M 600 324 C 622 366 660 396 718 410"/>
+                        <path class="lf-trail lf-trail-main" d="M 110 368 C 400 350 790 320 1090 215" mask="url(#lfRevA)"/>
+                        <path class="lf-trail lf-trail-junk" d="M 600 324 C 622 366 660 396 718 410" mask="url(#lfRevB)"/>
+                        <g class="lf-dotg" transform="translate(110 368)"><circle class="lf-halo2" r="16"/><circle class="lf-halo" r="9"/><circle class="lf-dot" r="4.5"/></g>
                     </svg>
-                    <div class="lf-stage" data-s="0" style="--x:110;--y:330"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Lead lands</span></span><span class="lf-chip" data-chip="chan">Web form &middot; Email &middot; Chat &middot; Phone</span></div>
-                    <div class="lf-stage" data-s="1" style="--x:355;--y:250"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Instant engagement</span></span></div>
-                    <div class="lf-stage" data-s="2" style="--x:600;--y:223"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Qualification</span></span><span class="lf-chip lf-hide" data-chip="junk">Vendor pitch &middot; No buying signal</span></div>
-                    <div class="lf-stage" data-s="3" style="--x:845;--y:250"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Enrichment &amp; scoring</span></span><span class="lf-chip" data-chip="signal">Funding &middot; Hiring &middot; M&amp;A</span></div>
-                    <div class="lf-stage" data-s="4" style="--x:1090;--y:330"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Meeting booked</span></span><span class="lf-chip">on the rep's calendar</span></div>
-                    <div class="lf-stage" data-s="5" style="--x:736;--y:412"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Filtered out</span></span><span class="lf-chip">never reaches a rep</span></div>
+                    <div class="lf-stage" data-s="0" style="--x:110;--y:368;--i:0"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Lead lands</span></span><span class="lf-chip" data-chip="chan">Web form &middot; Email &middot; Chat &middot; Phone</span></div>
+                    <div class="lf-stage" data-s="1" style="--x:355;--y:350;--i:1"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Instant engagement</span></span><span class="lf-chip">in seconds</span></div>
+                    <div class="lf-stage" data-s="2" style="--x:600;--y:324;--i:2"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Qualification</span></span><span class="lf-chip" data-chip="junk">against your policy</span></div>
+                    <div class="lf-stage" data-s="3" style="--x:845;--y:282;--i:3"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Enrichment &amp; scoring</span></span><span class="lf-chip" data-chip="signal">Funding &middot; Hiring &middot; M&amp;A</span></div>
+                    <div class="lf-stage" data-s="4" style="--x:1090;--y:215;--i:4"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Meeting booked</span></span><span class="lf-chip">on the rep's calendar</span></div>
+                    <div class="lf-stage" data-s="5" style="--x:730;--y:412;--i:5"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Filtered out</span></span><span class="lf-chip">never reaches a rep</span></div>
                 </div>
                 <p class="lf-note"><a href="/how-it-works/">See the full pathway &rarr;</a></p>
             </div>
