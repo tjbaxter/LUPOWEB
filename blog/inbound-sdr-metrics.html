@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbound SDR Metrics: The Numbers That Predict Pipeline | LUPO</title>
+    <meta name="description" content="Speed to lead, qualification rate, form-to-meeting conversion, and cost per qualified meeting: the inbound SDR metrics that matter, with fifteen years of response-time audits in one table.">
+    <link rel="icon" type="image/png" href="/lupo-icon-180.png">
+    <link rel="apple-touch-icon" href="/lupo-icon-180.png">
+
+    <meta property="og:title" content="Inbound SDR Metrics: The Numbers That Predict Pipeline">
+    <meta property="og:description" content="Speed to lead, qualification rate, form-to-meeting conversion, and cost per qualified meeting. Fifteen years of response-time audits in one table.">
+    <meta property="og:url" content="https://lupolabs.ai/blog/inbound-sdr-metrics">
+    <meta property="og:image" content="https://lupolabs.ai/blog/og-inbound-sdr-metrics.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://lupolabs.ai/blog/og-inbound-sdr-metrics.jpg">
+    <meta property="og:type" content="article">
+    <meta name="company-name" content="Flair Technologies Ltd">
+    <meta name="application-name" content="LUPO">
+    <link rel="canonical" href="https://lupolabs.ai/blog/inbound-sdr-metrics">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Inbound SDR Metrics: The Numbers That Predict Pipeline",
+        "image": "https://lupolabs.ai/blog/og-inbound-sdr-metrics.jpg",
+        "description": "Speed to lead, qualification rate, form-to-meeting conversion, and cost per qualified meeting: the inbound SDR metrics that matter, with fifteen years of response-time audits in one table.",
+        "author": { "@type": "Person", "name": "Tom Baxter", "jobTitle": "Founder, LUPO", "url": "https://lupolabs.ai/about.html", "image": "https://lupolabs.ai/founder-tom-baxter.webp" },
+        "datePublished": "2026-06-12",
+        "dateModified": "2026-06-12",
+        "publisher": { "@type": "Organization", "name": "Flair Technologies Ltd", "url": "https://lupolabs.ai/" },
+        "url": "https://lupolabs.ai/blog/inbound-sdr-metrics",
+        "articleSection": "Benchmarks"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is a good speed to lead?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Minutes, not hours. The foundational MIT and InsideSales research found a 21x drop in qualification odds between a 5-minute and a 30-minute response. Most companies miss by a mile: the most recent large audit found 63.5% of B2B SaaS companies never responded to a demo request at all." }
+            },
+            {
+                "@type": "Question",
+                "name": "What share of inbound leads should qualify?",
+                "acceptedAnswer": { "@type": "Answer", "text": "It depends on traffic mix and how high you set the bar. Benchmarks across millions of form submissions show 14.1% formally disqualified at the median, with roughly a third failing qualification in many software categories. Track your own junk share before optimizing anything else." }
+            },
+            {
+                "@type": "Question",
+                "name": "What is cost per qualified meeting?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Total inbound handling cost divided by qualified meetings booked. It is the metric that ties speed, quality, and cost together, and the fairest way to compare a human inbound SDR function against an AI inbound SDR, because it punishes both slow response and junk meetings." }
+            }
+        ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="/blog.css">
+    <script src="/analytics.js" defer></script>
+    <script src="/talk-to-lupo.js?v=voices4" defer></script>
+    <link rel="preconnect" href="https://app.lupolabs.ai">
+    <script async src="https://app.lupolabs.ai/widget/lupo-chat.js" data-lupo-mode="marketing"></script>
+    <script src="/visit-radar.js" defer></script>
+    <script src="/aurora.js?v=19"></script>
+    <script type="application/ld+json">
+    {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://lupolabs.ai/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://lupolabs.ai/blog/"}, {"@type": "ListItem", "position": 3, "name": "Inbound SDR Metrics: The Numbers That Predict Pipeline", "item": "https://lupolabs.ai/blog/inbound-sdr-metrics"}]}
+    </script>
+    <style>nav .nav-link{white-space:nowrap}@media (max-width:899px){nav .nav-links{gap:18px}}@media (max-width:719px){nav .nav-links{display:none}}</style>
+    <style>
+        .article-body .cmp-wrap { overflow-x: auto; border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; margin: 28px 0; }
+        .article-body table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 600px; }
+        .article-body table.cmp th, .article-body table.cmp td { padding: 13px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .article-body table.cmp tr:last-child td { border-bottom: 0; }
+        .article-body table.cmp th { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.025); }
+        .article-body table.cmp td:first-child { color: rgba(255,255,255,0.96); font-weight: 600; white-space: nowrap; }
+        .article-body table.cmp td { color: rgba(255,255,255,0.78); line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="aurora-grain" aria-hidden="true"></div>
+
+    <nav>
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <img src="/lupo-head-nav.png" alt="LUPO" width="40" height="40" decoding="async" style="height: 40px; width: auto; display: block;">
+                <span style="font-size: 24px; font-weight: 600;">LUPO</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/how-it-works/" class="nav-link">How it works</a>
+                <a href="/about.html" class="nav-link">About</a>
+                <a href="/pricing/" class="nav-link">Pricing</a>
+                <a href="/roi/" class="nav-link">ROI</a>
+                <a href="/blog/" class="nav-link is-active">Blog</a>
+            </div>
+            <a href="https://app.lupolabs.ai/login" class="nav-login-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+                </svg>
+                Sign in
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <header class="article-header">
+                <div class="article-eyebrow">
+                    <span>Inbound quality</span>
+                    <span class="dot"></span>
+                    <span>Benchmarks</span>
+                </div>
+                <h1 class="article-title">Inbound SDR Metrics: The Numbers That Predict Pipeline</h1>
+                <p class="article-summary">Four metrics decide whether inbound converts: speed to lead, qualification rate, form-to-meeting conversion, and cost per qualified meeting. Here are the honest benchmarks for each, including fifteen years of response-time audits in one table, with sources you can check.</p>
+                <div class="article-meta">
+                    <span>LUPO Research</span>
+                    <span class="dot"></span>
+                    <span>Jun 12, 2026</span>
+                    <span class="dot"></span>
+                    <span>6 min read</span>
+                </div>
+            </header>
+            <figure class="article-hero">
+                <img src="/blog/hero-inbound-sdr-metrics.webp" alt="Oil pastel illustration of a figure studying a wall of pinned charts by lamplight, one stopwatch glowing amber among them" width="1600" height="907" fetchpriority="high" decoding="async">
+            </figure>
+
+            <div class="article-body">
+                <p>Inbound reporting tends to drown in activity counts. Strip it back and four numbers predict whether inbound demand becomes pipeline: how fast leads get a real response, what share of them deserve one, how many hand-raisers end up as meetings, and what each qualified meeting costs to produce. Everything else is commentary.</p>
+
+                <h2>Speed to lead: fifteen years of audits, one conclusion</h2>
+
+                <p>The research behind the famous "5-minute rule" is nearly twenty years old: the MIT and InsideSales.com study found leads contacted within 5 minutes were 21 times more likely to qualify than at 30 minutes. What is remarkable is what every audit since has found about actual behavior:</p>
+
+                <div class="cmp-wrap">
+                    <table class="cmp">
+                        <thead>
+                            <tr><th>Year</th><th>Study</th><th>Sample</th><th>What it found</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>2007</td><td>MIT / InsideSales.com</td><td>15,000+ leads, 100k+ call attempts</td><td>5-minute responses 21x more likely to qualify than 30-minute, 100x more likely to make contact</td></tr>
+                            <tr><td>2011</td><td>Harvard Business Review audit</td><td>2,241 US companies</td><td>Average response ~42 hours; 23% never responded; 1-hour responders ~7x more likely to qualify than slower</td></tr>
+                            <tr><td>2017</td><td>Drift (now Salesloft) audit</td><td>433 B2B SaaS companies</td><td>7% responded within 5 minutes; 55% silent after 5 business days</td></tr>
+                            <tr><td>2020</td><td>Workato study</td><td>114 B2B companies</td><td>Average email response 11h 54m; roughly 1 in 5 never responded by email</td></tr>
+                            <tr><td>2022</td><td>Chili Piper study</td><td>B2B software vendors</td><td>Responders averaged 4h 50m; nearly 30% never responded at all</td></tr>
+                            <tr><td>2024</td><td>RevenueHero audit</td><td>1,000 B2B SaaS websites</td><td>63.5% never responded; responders averaged 1 day 5h 17m</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>Two honest caveats. Most of these are vendor-run audits with an incentive to find slow responses, though each states its methodology and the independent HBR research agrees with them. And the oldest multipliers describe decay curves measured before modern buying behavior. Neither caveat rescues the headline: across fifteen years, the most common response to a B2B demo request has been silence.</p>
+
+                <p>The benchmark to set internally: first meaningful response in under 5 minutes, on every channel, at every hour. If that sounds impossible for a human team, that is the point. It is the core argument in <a href="/inbound-sdr/">our inbound SDR guide</a>.</p>
+
+                <h2>Qualification rate: how much of your inbound is real</h2>
+
+                <p>Chili Piper's benchmark across roughly 4 million B2B form submissions found 14.1% formally disqualified, ranging from 6% to 23% by industry. RevenueHero's inbound benchmarks show qualification rates around 65 to 70% overall, with some software categories qualifying barely half. Translated: somewhere between one in seven and one in two of your form fills should never reach a rep.</p>
+
+                <p>Both numbers come from companies already running routing and scheduling tooling, which likely flatters them. The metric to own is your junk share: what percentage of inbound got disqualified, by whom, and how long it took. If nobody can answer that, reps are paying <a href="/blog/the-inbound-triage-tax">the triage tax</a> silently.</p>
+
+                <h2>Form-to-meeting: where hand-raisers leak</h2>
+
+                <p>The same Chili Piper dataset puts form-to-meeting conversion around 30% as the industry baseline, rising to 66.7% with instant scheduling and 69.2% when a live call option is added. The delta is not persuasion; it is removing the gap between "I want to talk" and "we are talking." Every hour in that gap is where booked pipeline quietly leaks, which is why <a href="/blog/round-robin-not-a-routing-strategy">routing strategy</a> and instant booking matter more than any follow-up cadence.</p>
+
+                <h2>Activity and attainment: the human baseline</h2>
+
+                <p>For calibrating expectations of a human inbound SDR function, the Bridge Group's B2B benchmark remains the reference: 3.6 quality conversations per rep per day, 63% of reps hitting quota, a 2.3:1 SDR-to-AE ratio, and median SDR-sourced pipeline of $2.8M a year. Useful numbers, with one structural caveat: they describe reps working business hours, while inbound arrives 168 hours a week.</p>
+
+                <h2>The metric that ties it together: cost per qualified meeting</h2>
+
+                <p>Speed without quality produces fast junk. Quality without speed produces slow excellence for buyers who already moved on. The metric that punishes both failure modes is cost per qualified meeting: everything you spend handling inbound, divided by the qualified meetings that actually land on reps' calendars.</p>
+
+                <p>It is also the fairest frame for the human-versus-AI comparison, because it counts what each option actually produces rather than what it costs per seat. The full cost side of that equation, salaries, loading, turnover, and the AI alternative, is in <a href="/blog/inbound-sdr-cost">what an inbound SDR costs in 2026</a>, and the working model is on <a href="/roi/">the ROI page</a>.</p>
+
+                <h2>Common questions</h2>
+
+                <h3>What is a good speed to lead?</h3>
+                <p>Minutes. The foundational research found a 21x qualification drop between 5 and 30 minutes, and every audit since shows most companies responding in hours, days, or never.</p>
+
+                <h3>What share of inbound leads should qualify?</h3>
+                <p>Benchmarks put formal disqualification at 14.1% at the median and a third or more in many software categories. Measure your own junk share first; it decides everything downstream.</p>
+
+                <h3>What is cost per qualified meeting?</h3>
+                <p>Total inbound handling cost divided by qualified meetings booked. It is the cleanest single number for comparing a human SDR function against an AI inbound SDR.</p>
+            </div>
+
+            <aside class="article-sources">
+                <h3>Sources</h3>
+                <ol>
+                    <li><a href="https://www.leadresponsemanagement.org/lrm_study/" target="_blank" rel="noopener noreferrer">MIT / InsideSales.com, Lead Response Management Study, 2007</a>. The 5-minute, 21x, and 100x findings.</li>
+                    <li><a href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" target="_blank" rel="noopener noreferrer">Harvard Business Review, "The Short Life of Online Sales Leads", 2011</a>. 2,241-company audit: average response and non-response rates.</li>
+                    <li><a href="https://www.salesloft.com/resources/blog/lead-response-survey" target="_blank" rel="noopener noreferrer">Drift (now Salesloft), Lead Response Survey, 2017</a>. 433-company audit. Vendor-run, methodology stated.</li>
+                    <li><a href="https://www.workato.com/the-connector/lead-response-time-study/" target="_blank" rel="noopener noreferrer">Workato, lead response time study (2020 data)</a>. 114-company audit. Vendor-run, methodology stated.</li>
+                    <li><a href="https://www.chilipiper.com/article/chili-insights-vendor-response-time" target="_blank" rel="noopener noreferrer">Chili Piper, vendor response time study, 2022</a>. Vendor-run, methodology stated.</li>
+                    <li><a href="https://www.revenuehero.io/blog/b2b-lead-response-times" target="_blank" rel="noopener noreferrer">RevenueHero, B2B lead response times, 2024</a>. 1,000-site audit. Vendor-run, methodology stated.</li>
+                    <li><a href="https://www.chilipiper.com/post/form-conversion-rate-benchmark-report" target="_blank" rel="noopener noreferrer">Chili Piper, form conversion benchmark report, 2025 (2024 data)</a>. ~4M submissions: disqualification share and form-to-meeting rates.</li>
+                    <li><a href="https://www.revenuehero.io/inbound-conversion-benchmark" target="_blank" rel="noopener noreferrer">RevenueHero, inbound conversion benchmarks, 2024-2025</a>. Qualification rates by category.</li>
+                    <li><a href="https://blog.bridgegroupinc.com/2023-sdr-metrics-report" target="_blank" rel="noopener noreferrer">The Bridge Group, SDR Metrics &amp; Compensation Report, 2023</a>. Conversations per day, quota attainment, ratios, pipeline.</li>
+                </ol>
+            </aside>
+
+            <section class="article-cta">
+                <div class="article-cta-eyebrow">See it in action</div>
+                <h2>What's your cost per qualified meeting?</h2>
+                <p>Book a short walkthrough and we will work it out together against your current inbound volume, junk share, and response times. No CRM access needed.</p>
+                <a href="https://cal.com/tombaxter/lupo" class="btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
+                    Book a walkthrough
+                </a>
+            </section>
+
+            <aside class="article-related">
+                <h3>Related notes</h3>
+                <div class="article-related-list">
+                    <a href="/blog/inbound-sdr-cost" class="article-related-item">
+                        <div class="article-related-item-eyebrow">Economics</div>
+                        <h4>What an Inbound SDR Costs in 2026</h4>
+                    </a>
+                    <a href="/blog/the-inbound-triage-tax" class="article-related-item">
+                        <div class="article-related-item-eyebrow">Inbound quality</div>
+                        <h4>The Inbound Triage Tax</h4>
+                    </a>
+                </div>
+            </aside>
+        </article>
+    </main>
+
+    <!-- lupo-standard-footer -->
+<style>
+.lf-footer{display:block;position:relative;z-index:1;margin:0;max-width:none;width:auto;padding:44px 40px 100px;border-top:1px solid rgba(255,255,255,0.08);background:linear-gradient(to bottom,#000000,#161617);text-align:left;color:#a1a1a6;font-size:13px;}
+.lf-footer,.lf-footer *{box-sizing:border-box;}
+.lf-footer .lf-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;gap:48px;flex-wrap:wrap;}
+.lf-footer .lf-left{display:flex;flex-direction:column;gap:8px;min-width:200px;}
+.lf-footer .lf-logo{font-size:18px;font-weight:600;margin:0;color:#f5f5f7;}
+.lf-footer .lf-text{font-size:13px;color:#a1a1a6;margin:0;line-height:1.5;}
+.lf-footer .lf-cols{display:flex;gap:56px;flex-wrap:wrap;}
+.lf-footer .lf-col{display:flex;flex-direction:column;gap:10px;min-width:120px;}
+.lf-footer .lf-col-h{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.38);margin:0 0 4px;}
+.lf-footer .lf-col a{font-size:13px;color:#a1a1a6;text-decoration:none;transition:color 0.2s ease;white-space:nowrap;}
+.lf-footer .lf-col a:hover{color:#f5f5f7;}
+.lf-footer .lf-right{display:flex;flex-direction:column;align-items:flex-end;gap:14px;}
+.lf-footer .lf-bottom{max-width:1200px;margin:32px auto 0;padding-top:18px;border-top:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.lf-footer .lf-address{font-size:11px;color:rgba(255,255,255,0.35);margin:0;line-height:1.5;font-weight:400;}
+@media (max-width:980px){
+.lf-footer{padding:28px 20px 118px;}
+.lf-footer .lf-inner{flex-direction:column;gap:28px;}
+.lf-footer .lf-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 24px;width:100%;}
+.lf-footer .lf-col{min-width:0;}
+.lf-footer .lf-right{align-items:flex-start;}
+.lf-footer .lf-right img{width:150px !important;}
+.lf-footer .lf-logo{font-size:16px;}
+.lf-footer .lf-text{font-size:12px;}
+.lf-footer .lf-address{font-size:10px;}
+.lf-footer .lf-col a{font-size:13px;}
+.lf-footer .lf-bottom{margin-top:24px;}
+}
+</style>
+<footer class="lf-footer">
+    <div class="lf-inner">
+        <div class="lf-left">
+            <div class="lf-logo">LUPO</div>
+            <p class="lf-text">© 2026 LUPO, a product of<br>Flair Technologies Ltd.<br>All rights reserved.</p>
+        </div>
+        <div class="lf-cols">
+            <div class="lf-col">
+                <p class="lf-col-h">Product</p>
+                <a href="/how-it-works/">How it works</a>
+                <a href="/pricing/">Pricing</a>
+                <a href="/roi/">ROI</a>
+                <a href="/integrations/">Integrations</a>
+                <a href="/sales-operations/">Sales ops</a>
+            </div>
+            <div class="lf-col">
+                <p class="lf-col-h">Resources</p>
+                <a href="/blog/">Blog</a>
+                <a href="/faq/">FAQ</a>
+                <a href="/inbound-sdr/">Inbound SDR guide</a>
+                <a href="/glossary/">Glossary</a>
+                <a href="/compare/">Compare</a>
+                <a href="/changelog/">Changelog</a>
+                <a href="/press/">Press</a>
+                <a href="/careers/">Careers</a>
+            </div>
+            <div class="lf-col">
+                <p class="lf-col-h">Legal</p>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/terms.html">Terms of Service</a>
+                <a href="/dpa.html">DPA</a>
+            </div>
+        </div>
+        <div class="lf-right">
+            <a href="https://elevenlabs.io/startup-grants" target="_blank" rel="noopener noreferrer"><img src="https://eleven-public-cdn.elevenlabs.io/payloadcms/cy7rxce8uki-IIElevenLabsGrants%201.webp" alt="ElevenLabs Grant Recipient" loading="lazy" decoding="async" style="width:200px;opacity:0.9;transition:opacity 0.2s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'"></a>
+            <div><a href="https://www.linkedin.com/company/luposales/" target="_blank" rel="noopener noreferrer" aria-label="LUPO on LinkedIn" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);text-decoration:none;transition:all 0.2s ease;vertical-align:middle;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,0.25)';this.style.background='rgba(255,255,255,0.06)';" onmouseout="this.style.color='rgba(255,255,255,0.7)';this.style.borderColor='rgba(255,255,255,0.12)';this.style.background='transparent';"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="mailto:hello@lupolabs.ai" aria-label="Email LUPO" style="display:inline-block;margin-left:12px;font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none;letter-spacing:0.01em;vertical-align:middle;transition:color 0.2s ease, text-shadow 0.2s ease;" onmouseover="this.style.color='#fff';this.style.textShadow='0 0 12px rgba(255,255,255,0.6)';" onmouseout="this.style.color='rgba(255,255,255,0.55)';this.style.textShadow='none';">hello@lupolabs.ai</a></div>
+        </div>
+    </div>
+    <div class="lf-bottom">
+        <p class="lf-address">Registered Office · 45 Fitzroy St, Fitzrovia · London, W1T 6EB, United Kingdom</p>
+    </div>
+</footer>
+
+</body>
+</html>

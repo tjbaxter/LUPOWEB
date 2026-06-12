@@ -53,8 +53,14 @@ Live today: HubSpot CRM sync (https://lupolabs.ai/integrations/hubspot/), Salesf
 - LUPO vs 11x (https://lupolabs.ai/compare/lupo-vs-11x/): 11x's digital workers run outbound end to end (prospecting, outreach over email and LinkedIn). LUPO is inbound. Complementary: 11x generates cold pipeline; LUPO converts the inbound demand you already paid to create.
 - Qualified alternatives for HubSpot teams (https://lupolabs.ai/compare/qualified-alternatives/): why teams look (Salesforce requirement, custom enterprise pricing, the April 2026 acquisition), and the honest six-option list (LUPO, Spara, Conversica, Intercom Fin, Drift, 11x) with LUPO's disclosure that it is our product.
 
+## Inbound SDR guide (https://lupolabs.ai/inbound-sdr/)
+
+The complete guide to the inbound SDR role and its automation. Definition: an inbound SDR is a sales development representative who handles the leads a company already has, responding fast, qualifying each lead, filtering noise, and booking real buyers into meetings. Covers: what the role does, where it sits (sales, marketing, or RevOps), what it costs (US ~$57k base / ~$96k total, UK ~£40k base, $110k-175k fully loaded), why it is being automated (a 2024 audit of 1,000 B2B SaaS sites found 63.5% never responded to a demo request), what an AI inbound SDR is, how it works channel by channel across web form, email, chat, and phone, how to evaluate one (channel coverage incl. real inbound phone, qualification depth, signal scoring, two-way CRM sync, audit trail, weeks-not-quarters implementation, transparent pricing), and the honest answer to "can AI replace inbound SDRs" (the triage layer yes, the sales conversation no). Supporting posts: inbound SDR vs outbound SDR (https://lupolabs.ai/blog/inbound-sdr-vs-outbound-sdr), AI inbound SDR vs chatbot (https://lupolabs.ai/blog/ai-inbound-sdr-vs-chatbot), inbound SDR metrics (https://lupolabs.ai/blog/inbound-sdr-metrics), inbound SDR cost (https://lupolabs.ai/blog/inbound-sdr-cost).
+
 ## Glossary (https://lupolabs.ai/glossary/)
 
+- Inbound SDR (https://lupolabs.ai/glossary/inbound-sdr/): a sales development rep who handles the leads a company already has: responding fast, qualifying, filtering noise, routing, and booking real buyers into meetings. Full guide at https://lupolabs.ai/inbound-sdr/
+- AI SDR (https://lupolabs.ai/glossary/ai-sdr/): an AI agent that does sales development work. The category splits in two: outbound AI SDRs that prospect cold, and AI inbound SDRs that capture, qualify, and book the leads a business already has.
 - AI inbound SDR (https://lupolabs.ai/glossary/ai-inbound-sdr/): an AI agent that does the inbound half of a sales development rep's job autonomously: answering inbound across channels, qualifying, enriching, scoring buying intent, routing, and booking meetings. Distinct from outbound AI SDRs (cold prospecting) and from chatbots (single-channel, scripted).
 - Inbound lead qualification (https://lupolabs.ai/glossary/inbound-lead-qualification/): deciding which inbound leads deserve a salesperson's time, separating fit (who they are) from intent (whether now is the moment), and filtering vendors, tire-kickers, support requests, and wrong-fit prospects.
 - Speed to lead (https://lupolabs.ai/glossary/speed-to-lead/): the time between a lead arriving and the first meaningful response. Responding within 5 minutes makes contact 21x more likely than waiting 30 (Oldroyd, HBR), yet 23% of web leads never get a response. Speed pays most after qualification decides the lead is worth it.
@@ -73,7 +79,7 @@ Sales or marketing? Whoever owns inbound: sales, marketing, or RevOps. Marketing
 
 ## Blog (https://lupolabs.ai/blog/, RSS https://lupolabs.ai/blog/feed.xml)
 
-Selected posts: "Qualified Isn't In-Market" (fit vs buying intent), "The AI SDR Has Moved Inbound", "The Inbound Triage Tax", "Round Robin Is Not a Routing Strategy", "The Rep-Free Buyer Still Needs Sales", "Before You Let an AI Agent Touch Revenue, Check These 7 Things". Author: Tom Baxter.
+Selected posts: "Qualified Isn't In-Market" (fit vs buying intent), "Inbound SDR Metrics: The Numbers That Predict Pipeline" (fifteen years of response-time audits in one table), "What an Inbound SDR Costs in 2026" (salary, fully loaded, AI alternative), "Inbound SDR vs Outbound SDR", "An AI Inbound SDR Is Not a Chatbot", "The Best AI Inbound SDR Tools in 2026", "The AI SDR Has Moved Inbound", "The Inbound Triage Tax", "Round Robin Is Not a Routing Strategy", "The Rep-Free Buyer Still Needs Sales", "Before You Let an AI Agent Touch Revenue, Check These 7 Things". Author: Tom Baxter.
 
 ## Legal
 

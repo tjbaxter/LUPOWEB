@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbound SDR vs Outbound SDR: What's Actually Different | LUPO</title>
+    <meta name="description" content="Inbound SDRs convert the leads a company already has. Outbound SDRs create conversations from nothing. Different lead source, tempo, skills, metrics, and AI tooling. The full comparison.">
+    <link rel="icon" type="image/png" href="/lupo-icon-180.png">
+    <link rel="apple-touch-icon" href="/lupo-icon-180.png">
+
+    <meta property="og:title" content="Inbound SDR vs Outbound SDR: What's Actually Different">
+    <meta property="og:description" content="Different lead source, tempo, skills, metrics, and AI tooling. The full comparison, without the title confusion.">
+    <meta property="og:url" content="https://lupolabs.ai/blog/inbound-sdr-vs-outbound-sdr">
+    <meta property="og:image" content="https://lupolabs.ai/blog/og-inbound-sdr-vs-outbound-sdr.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://lupolabs.ai/blog/og-inbound-sdr-vs-outbound-sdr.jpg">
+    <meta property="og:type" content="article">
+    <meta name="company-name" content="Flair Technologies Ltd">
+    <meta name="application-name" content="LUPO">
+    <link rel="canonical" href="https://lupolabs.ai/blog/inbound-sdr-vs-outbound-sdr">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Inbound SDR vs Outbound SDR: What's Actually Different",
+        "image": "https://lupolabs.ai/blog/og-inbound-sdr-vs-outbound-sdr.jpg",
+        "description": "Inbound SDRs convert the leads a company already has. Outbound SDRs create conversations from nothing. Different lead source, tempo, skills, metrics, and AI tooling.",
+        "author": { "@type": "Person", "name": "Tom Baxter", "jobTitle": "Founder, LUPO", "url": "https://lupolabs.ai/about.html", "image": "https://lupolabs.ai/founder-tom-baxter.webp" },
+        "datePublished": "2026-06-12",
+        "dateModified": "2026-06-12",
+        "publisher": { "@type": "Organization", "name": "Flair Technologies Ltd", "url": "https://lupolabs.ai/" },
+        "url": "https://lupolabs.ai/blog/inbound-sdr-vs-outbound-sdr",
+        "articleSection": "Roles and teams"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Should an SDR do both inbound and outbound?",
+                "acceptedAnswer": { "@type": "Answer", "text": "At low volume, hybrid roles are common and workable. As inbound volume grows, the jobs conflict: outbound needs uninterrupted blocks, inbound needs instant response. One of them always loses, and it is usually inbound, because nobody schedules time for leads that have not arrived yet." }
+            },
+            {
+                "@type": "Question",
+                "name": "Are inbound SDRs paid less than outbound SDRs?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Compensation structures differ more than headline pay: outbound comp typically weights variable pay toward sourced pipeline, while inbound comp ties to qualified meetings from a queue the rep does not control. Public benchmarks rarely split the two cleanly, so compare OTE structure, not just totals." }
+            },
+            {
+                "@type": "Question",
+                "name": "Can the same AI tool do inbound and outbound?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Some vendors sell both motions, but the failure modes are opposite. Outbound AI risks spamming strangers at scale. Inbound AI risks fumbling a buyer who already raised their hand. Evaluate the motion you actually need, on the channels your leads actually use, and ignore the umbrella label." }
+            }
+        ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="/blog.css">
+    <script src="/analytics.js" defer></script>
+    <script src="/talk-to-lupo.js?v=voices4" defer></script>
+    <link rel="preconnect" href="https://app.lupolabs.ai">
+    <script async src="https://app.lupolabs.ai/widget/lupo-chat.js" data-lupo-mode="marketing"></script>
+    <script src="/visit-radar.js" defer></script>
+    <script src="/aurora.js?v=19"></script>
+    <script type="application/ld+json">
+    {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://lupolabs.ai/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://lupolabs.ai/blog/"}, {"@type": "ListItem", "position": 3, "name": "Inbound SDR vs Outbound SDR: What's Actually Different", "item": "https://lupolabs.ai/blog/inbound-sdr-vs-outbound-sdr"}]}
+    </script>
+    <style>nav .nav-link{white-space:nowrap}@media (max-width:899px){nav .nav-links{gap:18px}}@media (max-width:719px){nav .nav-links{display:none}}</style>
+    <style>
+        .article-body .cmp-wrap { overflow-x: auto; border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; margin: 28px 0; }
+        .article-body table.cmp { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 560px; }
+        .article-body table.cmp th, .article-body table.cmp td { padding: 13px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .article-body table.cmp tr:last-child td { border-bottom: 0; }
+        .article-body table.cmp th { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.025); }
+        .article-body table.cmp td:first-child { color: rgba(255,255,255,0.96); font-weight: 600; width: 24%; }
+        .article-body table.cmp td { color: rgba(255,255,255,0.78); line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="aurora-grain" aria-hidden="true"></div>
+
+    <nav>
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <img src="/lupo-head-nav.png" alt="LUPO" width="40" height="40" decoding="async" style="height: 40px; width: auto; display: block;">
+                <span style="font-size: 24px; font-weight: 600;">LUPO</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/how-it-works/" class="nav-link">How it works</a>
+                <a href="/about.html" class="nav-link">About</a>
+                <a href="/pricing/" class="nav-link">Pricing</a>
+                <a href="/roi/" class="nav-link">ROI</a>
+                <a href="/blog/" class="nav-link is-active">Blog</a>
+            </div>
+            <a href="https://app.lupolabs.ai/login" class="nav-login-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+                </svg>
+                Sign in
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <article class="article">
+            <header class="article-header">
+                <div class="article-eyebrow">
+                    <span>Roles &amp; teams</span>
+                    <span class="dot"></span>
+                    <span>Field note</span>
+                </div>
+                <h1 class="article-title">Inbound SDR vs Outbound SDR: What's Actually Different</h1>
+                <p class="article-summary">Same title, almost nothing else in common. Inbound SDRs convert the demand a company already paid to generate. Outbound SDRs create conversations from nothing. Different lead source, different tempo, different skills, different metrics, and increasingly, different AI.</p>
+                <div class="article-meta">
+                    <span>LUPO Research</span>
+                    <span class="dot"></span>
+                    <span>Jun 12, 2026</span>
+                    <span class="dot"></span>
+                    <span>5 min read</span>
+                </div>
+            </header>
+            <figure class="article-hero">
+                <img src="/blog/hero-inbound-sdr-vs-outbound-sdr.webp" alt="Oil pastel illustration of two salespeople back to back, one welcoming a line of visitors arriving at a lamplit doorway, the other heading into the dark with a lantern" width="1600" height="907" fetchpriority="high" decoding="async">
+            </figure>
+
+            <div class="article-body">
+                <p>An inbound SDR works the leads that come to the company: web form fills, emails, chats, and calls. An outbound SDR generates new conversations through cold calls, cold email, and social outreach. Inbound is a speed and judgment game played against the clock. Outbound is a volume and persistence game played against indifference.</p>
+
+                <p>The titles get used interchangeably, which causes real hiring and tooling mistakes. Here is the clean separation.</p>
+
+                <h2>What an inbound SDR does</h2>
+
+                <p>The inbound SDR's queue fills itself. Marketing spend, content, referrals, and word of mouth produce a stream of hand-raisers, and the job is to respond within minutes, qualify honestly, filter the noise, and book the real buyers with the right rep. The hard part is not finding people to talk to. It is being fast enough, around the clock, while a third of the queue is junk that taxes every real lead. The full role breakdown is in our <a href="/inbound-sdr/">inbound SDR guide</a>.</p>
+
+                <p>The defining pressure is decay. A 2024 audit of 1,000 B2B SaaS websites found 63.5% of companies never responded to a demo request at all, and the responders averaged over a day. Inbound leads do not wait that long; they sign with whoever answered.</p>
+
+                <h2>What an outbound SDR does</h2>
+
+                <p>The outbound SDR starts with a list and a target. Build the account research, find the trigger, write the sequence, make the calls, survive the no-replies, and turn cold attention into a first meeting. The hard part is the opposite of inbound: nobody asked to hear from you, so relevance and persistence carry everything.</p>
+
+                <p>The defining pressure is volume with quality. Activity is measurable and brutal: dials, sends, connect rates, reply rates. The craft is making touch number seven feel like touch number one.</p>
+
+                <h2>Side by side</h2>
+
+                <div class="cmp-wrap">
+                    <table class="cmp">
+                        <thead>
+                            <tr><th></th><th>Inbound SDR</th><th>Outbound SDR</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Lead source</td><td>Web form, email, chat, and phone: leads arrive on their own</td><td>Lists, triggers, and research: leads are created</td></tr>
+                            <tr><td>First touch</td><td>The buyer's. They raised a hand; the clock is already running</td><td>The rep's. Cold call, cold email, social touch</td></tr>
+                            <tr><td>Core skill</td><td>Qualification judgment: buyer or browser, fast</td><td>Relevance at volume: research, copy, persistence</td></tr>
+                            <tr><td>Tempo</td><td>Interrupt-driven, minutes matter, 24/7 arrival</td><td>Block-scheduled, sequenced over weeks</td></tr>
+                            <tr><td>Key metrics</td><td>Speed to lead, qualification rate, form-to-meeting, show rate</td><td>Activities, connect rate, reply rate, meetings sourced</td></tr>
+                            <tr><td>Failure mode</td><td>Slow response, junk passed to reps, real buyers dropped</td><td>Spray-and-pray, burned domains, burned lists</td></tr>
+                            <tr><td>What AI changes</td><td>Triage automates end to end: answer, qualify, score, route, book</td><td>Research and drafting accelerate; judgment on send stays human</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Why hybrids quietly fail</h2>
+
+                <p>Plenty of teams ask one rep to do both. It works until inbound volume grows, then the jobs start fighting: outbound needs uninterrupted prospecting blocks, inbound needs someone to drop everything when the form fires. One always loses, and it is usually inbound, because no calendar reserves time for leads that have not arrived yet. The cost of that loss is invisible: it shows up as silence in a stranger's inbox, not as a missed activity target. We wrote about the rep-side version of this in <a href="/blog/the-inbound-triage-tax">the inbound triage tax</a>.</p>
+
+                <h2>Different jobs, different AI</h2>
+
+                <p>The AI SDR market splits the same way the human role does, and the labels blur constantly. Outbound AI SDRs research accounts and run sequences at volume; their risk is spam, and their quality bar is relevance. AI inbound SDRs answer, qualify, score, route, and book the leads you already have; their risk is fumbling a real buyer, and their quality bar is judgment. The two failure modes have nothing in common, which is why a tool built for one motion is rarely good at the other.</p>
+
+                <p>If your problem is empty pipeline, look at outbound AI. If your problem is leads arriving faster than your team can honestly qualify them, that is the inbound side, and it is the problem <a href="/">LUPO</a> exists for. The buying criteria for that side are in <a href="/inbound-sdr/">the inbound SDR guide</a>, and the vendor landscape is in <a href="/blog/best-ai-inbound-sdr-tools">our honest shortlist</a>.</p>
+
+                <h2>Common questions</h2>
+
+                <h3>Should an SDR do both inbound and outbound?</h3>
+                <p>At low volume, hybrid roles are common and workable. As inbound grows, the jobs conflict: outbound needs uninterrupted blocks, inbound needs instant response. One of them always loses, and it is usually inbound.</p>
+
+                <h3>Are inbound SDRs paid less than outbound SDRs?</h3>
+                <p>The structures differ more than the headlines: outbound comp weights variable pay toward sourced pipeline, inbound comp ties to qualified meetings from a queue the rep does not control. Public benchmarks rarely split the two cleanly, so compare OTE structure rather than totals. The overall numbers are in <a href="/blog/inbound-sdr-cost">what an inbound SDR costs</a>.</p>
+
+                <h3>Can the same AI tool do inbound and outbound?</h3>
+                <p>Some vendors sell both motions, but the failure modes are opposite, and tools optimize for one. Evaluate the motion you need, on the channels your leads actually use, and ignore the umbrella label.</p>
+            </div>
+
+            <aside class="article-sources">
+                <h3>Sources</h3>
+                <ol>
+                    <li><a href="https://www.revenuehero.io/blog/b2b-lead-response-times" target="_blank" rel="noopener noreferrer">RevenueHero, B2B lead response time audit, 2024</a>. 1,000-site audit; 63.5% non-response figure. Vendor-run, methodology stated.</li>
+                    <li><a href="https://blog.bridgegroupinc.com/2023-sdr-metrics-report" target="_blank" rel="noopener noreferrer">The Bridge Group, SDR Metrics &amp; Compensation Report, 2023</a>. Role structure and compensation benchmarks for B2B sales development.</li>
+                </ol>
+            </aside>
+
+            <section class="article-cta">
+                <div class="article-cta-eyebrow">See it in action</div>
+                <h2>Your inbound side, handled.</h2>
+                <p>LUPO is the AI inbound SDR: every lead captured, qualified, and booked across web form, email, chat, and phone. Book a short walkthrough and bring a real lead from last week.</p>
+                <a href="https://cal.com/tombaxter/lupo" class="btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
+                    Book a walkthrough
+                </a>
+            </section>
+
+            <aside class="article-related">
+                <h3>Related notes</h3>
+                <div class="article-related-list">
+                    <a href="/blog/inbound-sdr-metrics" class="article-related-item">
+                        <div class="article-related-item-eyebrow">Benchmarks</div>
+                        <h4>Inbound SDR Metrics: The Numbers That Predict Pipeline</h4>
+                    </a>
+                    <a href="/blog/the-ai-sdr-has-moved-inbound" class="article-related-item">
+                        <div class="article-related-item-eyebrow">AI in sales</div>
+                        <h4>The AI SDR Has Moved Inbound</h4>
+                    </a>
+                </div>
+            </aside>
+        </article>
+    </main>
+
+    <!-- lupo-standard-footer -->
+<style>
+.lf-footer{display:block;position:relative;z-index:1;margin:0;max-width:none;width:auto;padding:44px 40px 100px;border-top:1px solid rgba(255,255,255,0.08);background:linear-gradient(to bottom,#000000,#161617);text-align:left;color:#a1a1a6;font-size:13px;}
+.lf-footer,.lf-footer *{box-sizing:border-box;}
+.lf-footer .lf-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;gap:48px;flex-wrap:wrap;}
+.lf-footer .lf-left{display:flex;flex-direction:column;gap:8px;min-width:200px;}
+.lf-footer .lf-logo{font-size:18px;font-weight:600;margin:0;color:#f5f5f7;}
+.lf-footer .lf-text{font-size:13px;color:#a1a1a6;margin:0;line-height:1.5;}
+.lf-footer .lf-cols{display:flex;gap:56px;flex-wrap:wrap;}
+.lf-footer .lf-col{display:flex;flex-direction:column;gap:10px;min-width:120px;}
+.lf-footer .lf-col-h{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.38);margin:0 0 4px;}
+.lf-footer .lf-col a{font-size:13px;color:#a1a1a6;text-decoration:none;transition:color 0.2s ease;white-space:nowrap;}
+.lf-footer .lf-col a:hover{color:#f5f5f7;}
+.lf-footer .lf-right{display:flex;flex-direction:column;align-items:flex-end;gap:14px;}
+.lf-footer .lf-bottom{max-width:1200px;margin:32px auto 0;padding-top:18px;border-top:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.lf-footer .lf-address{font-size:11px;color:rgba(255,255,255,0.35);margin:0;line-height:1.5;font-weight:400;}
+@media (max-width:980px){
+.lf-footer{padding:28px 20px 118px;}
+.lf-footer .lf-inner{flex-direction:column;gap:28px;}
+.lf-footer .lf-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 24px;width:100%;}
+.lf-footer .lf-col{min-width:0;}
+.lf-footer .lf-right{align-items:flex-start;}
+.lf-footer .lf-right img{width:150px !important;}
+.lf-footer .lf-logo{font-size:16px;}
+.lf-footer .lf-text{font-size:12px;}
+.lf-footer .lf-address{font-size:10px;}
+.lf-footer .lf-col a{font-size:13px;}
+.lf-footer .lf-bottom{margin-top:24px;}
+}
+</style>
+<footer class="lf-footer">
+    <div class="lf-inner">
+        <div class="lf-left">
+            <div class="lf-logo">LUPO</div>
+            <p class="lf-text">© 2026 LUPO, a product of<br>Flair Technologies Ltd.<br>All rights reserved.</p>
+        </div>
+        <div class="lf-cols">
+            <div class="lf-col">
+                <p class="lf-col-h">Product</p>
+                <a href="/how-it-works/">How it works</a>
+                <a href="/pricing/">Pricing</a>
+                <a href="/roi/">ROI</a>
+                <a href="/integrations/">Integrations</a>
+                <a href="/sales-operations/">Sales ops</a>
+            </div>
+            <div class="lf-col">
+                <p class="lf-col-h">Resources</p>
+                <a href="/blog/">Blog</a>
+                <a href="/faq/">FAQ</a>
+                <a href="/inbound-sdr/">Inbound SDR guide</a>
+                <a href="/glossary/">Glossary</a>
+                <a href="/compare/">Compare</a>
+                <a href="/changelog/">Changelog</a>
+                <a href="/press/">Press</a>
+                <a href="/careers/">Careers</a>
+            </div>
+            <div class="lf-col">
+                <p class="lf-col-h">Legal</p>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/terms.html">Terms of Service</a>
+                <a href="/dpa.html">DPA</a>
+            </div>
+        </div>
+        <div class="lf-right">
+            <a href="https://elevenlabs.io/startup-grants" target="_blank" rel="noopener noreferrer"><img src="https://eleven-public-cdn.elevenlabs.io/payloadcms/cy7rxce8uki-IIElevenLabsGrants%201.webp" alt="ElevenLabs Grant Recipient" loading="lazy" decoding="async" style="width:200px;opacity:0.9;transition:opacity 0.2s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'"></a>
+            <div><a href="https://www.linkedin.com/company/luposales/" target="_blank" rel="noopener noreferrer" aria-label="LUPO on LinkedIn" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);text-decoration:none;transition:all 0.2s ease;vertical-align:middle;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,0.25)';this.style.background='rgba(255,255,255,0.06)';" onmouseout="this.style.color='rgba(255,255,255,0.7)';this.style.borderColor='rgba(255,255,255,0.12)';this.style.background='transparent';"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="mailto:hello@lupolabs.ai" aria-label="Email LUPO" style="display:inline-block;margin-left:12px;font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none;letter-spacing:0.01em;vertical-align:middle;transition:color 0.2s ease, text-shadow 0.2s ease;" onmouseover="this.style.color='#fff';this.style.textShadow='0 0 12px rgba(255,255,255,0.6)';" onmouseout="this.style.color='rgba(255,255,255,0.55)';this.style.textShadow='none';">hello@lupolabs.ai</a></div>
+        </div>
+    </div>
+    <div class="lf-bottom">
+        <p class="lf-address">Registered Office · 45 Fitzroy St, Fitzrovia · London, W1T 6EB, United Kingdom</p>
+    </div>
+</footer>
+
+</body>
+</html>
