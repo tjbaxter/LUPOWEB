@@ -1989,6 +1989,8 @@
     <script async src="https://app.lupolabs.ai/widget/lupo-chat.js" data-lupo-mode="marketing"></script>
     <script src="/visit-radar.js" defer></script>
     <script src="/aurora.js?v=19"></script>
+    <link rel="stylesheet" href="/flow.css?v=1">
+    <script src="/flow.js?v=1" defer></script>
 </head>
 <body>
     <!-- Background Animation -->
@@ -2076,6 +2078,30 @@
         <div class="statement">
             <h2>Marketing generates the demand.<br>Reps close the deals.<br>LUPO runs everything in between.</h2>
             <p>Every call, form fill, email and chat answered in seconds, qualified against your sales policy, enriched, scored, and booked or routed. Nothing leaks and no rep time goes to triage. Run it from sales, marketing or RevOps, wherever inbound lives in your org.</p>
+        </div>
+
+        <!-- lupo-flow: the pipeline, animated. Qualified leads reach the calendar;
+             every third loop is junk and exits at Qualification. The filter is the
+             feature: no competitor shows a lead being turned away.
+             Shared assets /flow.css + /flow.js; same band embeds on /inbound-sdr/. -->
+        <div class="lf-band">
+            <p class="lf-sr">How LUPO works: a lead lands from web form, email, chat, or phone. LUPO engages in seconds and qualifies it against your sales policy. Real buyers are enriched, scored against live buying signals, and booked straight into a rep's calendar. Noise like vendor pitches is filtered and never reaches a rep.</p>
+            <div class="lf-inner" aria-hidden="true">
+                <div class="lf-canvas">
+                    <svg class="lf-svg" viewBox="0 180 1200 290" preserveAspectRatio="xMidYMid meet" focusable="false">
+                        <path class="lf-path lf-main" d="M 110 330 Q 600 116 1090 330"/>
+                        <path class="lf-path lf-junk" d="M 600 223 C 626 290 664 352 734 406"/>
+                        <g class="lf-dotg" transform="translate(110 330)"><circle class="lf-halo" r="12"/><circle class="lf-dot" r="5"/></g>
+                    </svg>
+                    <div class="lf-stage" data-s="0" style="--x:110;--y:330"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Lead lands</span></span><span class="lf-chip" data-chip="chan">Web form &middot; Email &middot; Chat &middot; Phone</span></div>
+                    <div class="lf-stage" data-s="1" style="--x:355;--y:250"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Instant engagement</span></span></div>
+                    <div class="lf-stage" data-s="2" style="--x:600;--y:223"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Qualification</span></span><span class="lf-chip lf-hide" data-chip="junk">Vendor pitch &middot; No buying signal</span></div>
+                    <div class="lf-stage" data-s="3" style="--x:845;--y:250"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Enrichment &amp; scoring</span></span><span class="lf-chip" data-chip="signal">Funding &middot; Hiring &middot; M&amp;A</span></div>
+                    <div class="lf-stage" data-s="4" style="--x:1090;--y:330"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Meeting booked</span></span><span class="lf-chip">on the rep's calendar</span></div>
+                    <div class="lf-stage" data-s="5" style="--x:736;--y:412"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Filtered out</span></span><span class="lf-chip">never reaches a rep</span></div>
+                </div>
+                <p class="lf-note"><a href="/how-it-works/">See the full pathway &rarr;</a></p>
+            </div>
         </div>
     </section>
 

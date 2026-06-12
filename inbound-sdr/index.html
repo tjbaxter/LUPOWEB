@@ -225,6 +225,8 @@
         .btn-secondary:hover { background: rgba(255,255,255,0.12); }
     </style>
     <script src="/aurora.js?v=19"></script>
+    <link rel="stylesheet" href="/flow.css?v=1">
+    <script src="/flow.js?v=1" defer></script>
 </head>
 <body>
     <div class="aurora-wash" aria-hidden="true"></div>
@@ -325,6 +327,29 @@
             <div class="section-inner prose">
                 <h2>How does an AI inbound SDR work?</h2>
                 <p class="capsule">Five steps, in seconds rather than days: capture the lead on whatever channel it arrives, engage instantly, qualify with real questions, enrich and score the record against your criteria, then route the outcome: real buyers get booked, everything else gets filed with a reason attached.</p>
+            </div>
+
+            <!-- lupo-flow: the pipeline, animated. Same band as the homepage; assets /flow.css + /flow.js. -->
+            <div class="lf-band">
+                <p class="lf-sr">How it works: a lead lands from web form, email, chat, or phone. The AI inbound SDR engages in seconds and qualifies it against the sales policy. Real buyers are enriched, scored against live buying signals, and booked straight into a rep's calendar. Noise like vendor pitches is filtered and never reaches a rep.</p>
+                <div class="lf-inner" aria-hidden="true">
+                    <div class="lf-canvas">
+                        <svg class="lf-svg" viewBox="0 180 1200 290" preserveAspectRatio="xMidYMid meet" focusable="false">
+                            <path class="lf-path lf-main" d="M 110 330 Q 600 116 1090 330"/>
+                            <path class="lf-path lf-junk" d="M 600 223 C 626 290 664 352 734 406"/>
+                            <g class="lf-dotg" transform="translate(110 330)"><circle class="lf-halo" r="12"/><circle class="lf-dot" r="5"/></g>
+                        </svg>
+                        <div class="lf-stage" data-s="0" style="--x:110;--y:330"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Lead lands</span></span><span class="lf-chip" data-chip="chan">Web form &middot; Email &middot; Chat &middot; Phone</span></div>
+                        <div class="lf-stage" data-s="1" style="--x:355;--y:250"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Instant engagement</span></span></div>
+                        <div class="lf-stage" data-s="2" style="--x:600;--y:223"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Qualification</span></span><span class="lf-chip lf-hide" data-chip="junk">Vendor pitch &middot; No buying signal</span></div>
+                        <div class="lf-stage" data-s="3" style="--x:845;--y:250"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Enrichment &amp; scoring</span></span><span class="lf-chip" data-chip="signal">Funding &middot; Hiring &middot; M&amp;A</span></div>
+                        <div class="lf-stage" data-s="4" style="--x:1090;--y:330"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Meeting booked</span></span><span class="lf-chip">on the rep's calendar</span></div>
+                        <div class="lf-stage" data-s="5" style="--x:736;--y:412"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Filtered out</span></span><span class="lf-chip">never reaches a rep</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-inner prose">
                 <p>What that looks like per channel:</p>
                 <div class="cmp-wrap">
                     <table class="cmp">
