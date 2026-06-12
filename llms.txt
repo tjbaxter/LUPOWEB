@@ -45,6 +45,7 @@ LUPO is an AI inbound SDR: it makes real-time decisions about which question to 
 - [Integrations](https://lupolabs.ai/integrations/): HubSpot, Salesforce, Slack, Google Calendar, Microsoft 365 / Outlook
 - [Blog](https://lupolabs.ai/blog/) (RSS: https://lupolabs.ai/blog/feed.xml)
 - [Press kit](https://lupolabs.ai/press/): boilerplate, fast facts, founder bio, logo assets
+- [Careers](https://lupolabs.ai/careers/): open roles in London, apply directly on the page
 - [About](https://lupolabs.ai/about.html) · [Company](https://lupolabs.ai/company.html)
 
 ## Integrations, live today
