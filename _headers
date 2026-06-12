@@ -19,6 +19,9 @@
 /lupo-icon-180.png
   Cache-Control: public, max-age=2592000, immutable
 
+/careers/office.webp
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
 /lupo-head-nav.png
   Cache-Control: public, max-age=2592000, immutable
 
