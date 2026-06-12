@@ -179,6 +179,28 @@
   // Apply persisted state immediately (CSS transition makes it a fade).
   apply(isAurora());
 
+  // Keep every open page in step with the persisted choice. Without these,
+  // a long-lived or bfcache-restored tab keeps whatever theme it painted
+  // with, and the next click reads as a random dark/light flip:
+  // - storage: the toggle was clicked in ANOTHER tab (fade to match)
+  // - pageshow persisted: this page came back from the back/forward cache
+  // - visibilitychange: belt-and-braces re-check when the tab is revealed
+  function syncFromStore(animate) {
+    var on = isAurora();
+    if (on === root.classList.contains("aurora")) return;
+    if (animate) root.classList.add("aurora-anim");
+    apply(on);
+  }
+  window.addEventListener("storage", function (e) {
+    if (!e || e.key === null || e.key === KEY) syncFromStore(true);
+  });
+  window.addEventListener("pageshow", function (e) {
+    if (e && e.persisted) syncFromStore(false);
+  });
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden) syncFromStore(false);
+  });
+
   function mount() {
     ensureWash();
     ensureGrain();
