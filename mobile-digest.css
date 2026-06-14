@@ -1,0 +1,40 @@
+/* mobile-digest.css ==========================================================
+   Shared mobile readability layer for the LUPO marketing pages.
+
+   Why this exists: most LinkedIn traffic lands on a phone and scans for <60s.
+   The pages were built desktop-first; each carries its own bespoke inline CSS
+   and class names, so there is no shared layout class to target. This file
+   therefore sticks to UNIVERSALLY-SAFE, tag-level rules inside a <=768px media
+   query — things that are always desirable on a phone and can't regress a
+   specific layout. Page-specific tuning (shortened copy, per-section padding)
+   stays inline on each page next to the markup it affects.
+
+   Linked from the content pages via <link rel="stylesheet" href="/mobile-digest.css">.
+   The homepage (index.html) is intentionally NOT linked here — it has its own
+   self-contained, already-verified #mobile-digest block.
+
+   To revert: delete this file and remove the <link> tags. Nothing else depends
+   on it. Part of the 2026-06-14 mobile digestibility pass (see ~/FABLE5-REVIEW).
+   ========================================================================== */
+
+/* Copy-swap utilities: full copy shows on desktop (.lx-desk), a shorter
+   phone-only version shows on mobile (.lx-mob). Used by per-page hero variants. */
+.lx-mob { display: none; }
+
+@media (max-width: 768px) {
+  .lx-desk { display: none !important; }
+  .lx-mob  { display: block !important; }
+
+  /* Nothing may force the page to scroll sideways on a phone. */
+  img, video, iframe { max-width: 100%; height: auto; }
+
+  /* Wide tables scroll inside their own track instead of breaking the layout. */
+  table { display: block; width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Comfortable reading measure for long-form body copy. */
+  p, li { line-height: 1.55; }
+
+  /* Cap oversized hero titles. h1 is always the large page title, so clamping
+     it down is safe; it only ever shrinks a too-big title, never enlarges. */
+  h1 { font-size: clamp(30px, 8.5vw, 42px) !important; line-height: 1.12 !important; }
+}

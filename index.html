@@ -1991,6 +1991,33 @@
     <script src="/aurora.js?v=20"></script>
     <link rel="stylesheet" href="/flow.css?v=2">
     <script src="/flow.js?v=2" defer></script>
+    <!-- ===== MOBILE DIGESTIBILITY PASS (<=768px) =========================
+         Most LinkedIn traffic lands here on a phone and scans for <60s, so the
+         goal is fewer words per screen and less dead scroll. Desktop is left
+         untouched: every rule is inside a mobile media query, and the shortened
+         hero/section copy is a phone-only paragraph (.lx-mob) shown alongside the
+         full desktop paragraph (.lx-desk). Delete this block to revert. -->
+    <style id="mobile-digest">
+      .lx-mob { display: none; }
+      @media (max-width: 768px) {
+        .lx-desk { display: none !important; }
+        .lx-mob  { display: block !important; }
+
+        /* Hero: headline no longer eats the first screen; subtitle ~3 short lines */
+        h1 { font-size: 40px; line-height: 1.08; }
+        .subtitle { font-size: 17px; line-height: 1.45; margin-bottom: 24px; }
+
+        /* Statement headlines floored at 44px (clamp) — far too big on a phone.
+           Covers both "Marketing generates the demand..." and "One brain...". */
+        .statement h2 { font-size: 28px; line-height: 1.16; letter-spacing: -0.02em; }
+        .statement p { font-size: 16.5px; margin-top: 20px; }
+
+        /* Less dead scroll: generic sections breathed at 80px top+bottom */
+        .page-section { padding: 44px 20px; }
+        .cta-block { padding: 52px 20px; }
+        .statement { padding: 12px 0 0; }
+      }
+    </style>
 </head>
 <body>
     <!-- Background Animation -->
@@ -2030,8 +2057,11 @@
                 Inbound sales, <span class="gradient-text">fully automated.</span>
             </h1>
 
-            <p class="subtitle">
+            <p class="subtitle lx-desk">
                 LUPO is the AI inbound SDR. It captures every lead across web form, email, chat and phone, filters the noise, scores each lead for buying intent, and books the real buyers straight into your reps' calendars.
+            </p>
+            <p class="subtitle lx-mob">
+                The AI inbound SDR. It answers every lead, filters out the noise, and books the real buyers into your reps' calendars.
             </p>
 
             <!-- CTA Buttons. Book a demo is the primary action: the hero
@@ -2077,7 +2107,8 @@
     <section class="page-section">
         <div class="statement">
             <h2>Marketing generates the demand.<br>Reps close the deals.<br>LUPO runs everything in between.</h2>
-            <p>Every call, form fill, email and chat answered in seconds, qualified against your sales policy, enriched, scored, and booked or routed. Nothing leaks and no rep time goes to triage. Run it from sales, marketing or RevOps, wherever inbound lives in your org.</p>
+            <p class="lx-desk">Every call, form fill, email and chat answered in seconds, qualified against your sales policy, enriched, scored, and booked or routed. Nothing leaks and no rep time goes to triage. Run it from sales, marketing or RevOps, wherever inbound lives in your org.</p>
+            <p class="lx-mob">Every lead answered in seconds, qualified, enriched, and booked or routed. Nothing leaks. No rep time lost to triage.</p>
         </div>
 
         <!-- lupo-flow: the pipeline, animated. Qualified leads reach the calendar;
@@ -2785,7 +2816,8 @@
                     <a class="lst-src" href="https://www.gartner.com/en/sales/insights/b2b-buying-journey" target="_blank" rel="noopener noreferrer">Gartner</a>
                 </div>
             </div>
-            <p class="lst-foot">LUPO is the layer that fixes this: every inbound caught, junk filtered, real buyers scored and put in front of your team. In a pilot, the same numbers get measured on your own inbound. <a href="/roi/" style="color:#a78bfa;text-decoration:none;">What fixing it is worth: the fix, in numbers &rarr;</a></p>
+            <p class="lst-foot lx-desk">LUPO is the layer that fixes this: every inbound caught, junk filtered, real buyers scored and put in front of your team. In a pilot, the same numbers get measured on your own inbound. <a href="/roi/" style="color:#a78bfa;text-decoration:none;">What fixing it is worth: the fix, in numbers &rarr;</a></p>
+            <p class="lst-foot lx-mob">LUPO fixes this: every inbound caught, junk filtered, real buyers scored and put in front of your team. <a href="/roi/" style="color:#a78bfa;text-decoration:none;">The fix, in numbers &rarr;</a></p>
         </div>
     </section>
 
@@ -2793,7 +2825,8 @@
     <section class="page-section">
         <div class="statement">
             <h2>One brain.<br>Every channel you run.</h2>
-            <p>Most tools cover one channel, and none of them share a brain. LUPO runs whichever channels your inbound comes through, one brain with shared context, so a buyer never starts over.</p>
+            <p class="lx-desk">Most tools cover one channel, and none of them share a brain. LUPO runs whichever channels your inbound comes through, one brain with shared context, so a buyer never starts over.</p>
+            <p class="lx-mob">Most tools cover one channel and don't share a brain. LUPO runs every channel on one brain, so a buyer never starts over.</p>
         </div>
     </section>
 
@@ -2855,7 +2888,8 @@
     <!-- Bottom CTA Section -->
     <section class="cta-block">
         <h2>See the inbound SDR in action.</h2>
-        <p>A short product walkthrough showing how LUPO captures inbound demand, qualifies it against your sales policy, books the real buyers, and turns more of the inbound you already have into pipeline.</p>
+        <p class="lx-desk">A short product walkthrough showing how LUPO captures inbound demand, qualifies it against your sales policy, books the real buyers, and turns more of the inbound you already have into pipeline.</p>
+        <p class="lx-mob">A short walkthrough: how LUPO captures inbound, qualifies it, and books the real buyers.</p>
         <div class="cta-block-actions">
             <a href="https://cal.com/tombaxter/lupo" class="btn-primary">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
