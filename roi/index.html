@@ -157,6 +157,9 @@
         .ci-top input[type="number"] { width: 110px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-strong); border-radius: 8px; color: var(--text-primary); font: inherit; font-size: 14px; padding: 6px 10px; text-align: right; }
         .ci-top input[type="number"]:focus { outline: none; border-color: rgba(167,139,250,0.5); }
         .ci input[type="range"] { width: 100%; accent-color: #a78bfa; height: 18px; cursor: pointer; }
+        .ci-sub { font-size: 12px; color: var(--text-tertiary); line-height: 1.45; margin: 0 0 9px; }
+        .ci-group { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-secondary); margin: 24px 0 14px; padding-top: 18px; border-top: 1px solid var(--border); }
+        .ci-group.first { margin-top: 4px; padding-top: 0; border-top: 0; }
         .calc-results { position: sticky; top: 84px; }
         @media (max-width: 880px) { .calc-results { position: static; } }
         .net-label { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 8px; }
@@ -268,59 +271,76 @@
                             </select>
                         </div>
 
+                        <div class="ci-group first">Your inbound today</div>
                         <div class="ci">
                             <div class="ci-top"><label for="inbound">Monthly inbound leads</label><input type="number" id="inbound" value="200" min="10" max="5000" step="10"></div>
+                            <div class="ci-sub">Every lead that lands, across all your channels.</div>
                             <input type="range" data-for="inbound" value="200" min="10" max="2000" step="10" aria-label="Monthly inbound leads slider">
                         </div>
                         <div class="ci">
                             <div class="ci-top"><label for="deal">Average deal value <span class="ci-hint">(annual)</span></label><input type="number" id="deal" value="25000" min="1000" max="500000" step="1000"></div>
+                            <div class="ci-sub">What one new customer is worth to you in a year.</div>
                             <input type="range" data-for="deal" value="25000" min="5000" max="200000" step="1000" aria-label="Average deal value slider">
                         </div>
                         <div class="ci">
                             <div class="ci-top"><label for="close">Close rate on qualified meetings <span class="ci-hint">(%)</span></label><input type="number" id="close" value="15" min="1" max="60" step="1"></div>
+                            <div class="ci-sub">Of the qualified meetings your reps take, the share that become customers.</div>
                             <input type="range" data-for="close" value="15" min="1" max="60" step="1" aria-label="Close rate slider">
                         </div>
+
+                        <div class="ci-group">What LUPO wins back for you</div>
                         <div class="ci">
-                            <div class="ci-top"><label for="leak">Inbound never answered today <span class="ci-hint">(%, HBR baseline 23)</span></label><input type="number" id="leak" value="23" min="0" max="60" step="1"></div>
-                            <input type="range" data-for="leak" value="23" min="0" max="60" step="1" aria-label="Leak rate slider">
+                            <div class="ci-top"><label for="leak">Leads you lose today <span class="ci-hint">(%, HBR baseline 23)</span></label><input type="number" id="leak" value="23" min="0" max="60" step="1"></div>
+                            <div class="ci-sub">Inbound that gets no timely response today. LUPO answers all of it, so the higher this is, the more it wins back.</div>
+                            <input type="range" data-for="leak" value="23" min="0" max="60" step="1" aria-label="Leads lost today slider">
                         </div>
                         <div class="ci">
-                            <div class="ci-top"><label for="recover">Recovered leads that become qualified meetings <span class="ci-hint">(%)</span></label><input type="number" id="recover" value="25" min="5" max="100" step="5"></div>
+                            <div class="ci-top"><label for="recover">Won-back leads that become qualified meetings <span class="ci-hint">(%)</span></label><input type="number" id="recover" value="25" min="5" max="100" step="5"></div>
+                            <div class="ci-sub">Of those won-back leads, the share that turn into real meetings.</div>
                             <input type="range" data-for="recover" value="25" min="5" max="100" step="5" aria-label="Recovery to meeting rate slider">
                         </div>
+
+                        <div class="ci-group">Time your team spends today</div>
                         <div class="ci">
                             <div class="ci-top"><label for="reviewed">Leads your team manually researches each month</label><input type="number" id="reviewed" value="100" min="0" max="5000" step="10"></div>
+                            <div class="ci-sub">Leads someone looks up by hand before reaching out. LUPO does this automatically.</div>
                             <input type="range" data-for="reviewed" value="100" min="0" max="1000" step="10" aria-label="Manually researched leads slider">
                         </div>
                         <div class="ci">
                             <div class="ci-top"><label for="minutes">Research minutes per lead today</label><input type="number" id="minutes" value="30" min="5" max="90" step="5"></div>
+                            <div class="ci-sub">Time spent on each one. Returned to your reps as selling time.</div>
                             <input type="range" data-for="minutes" value="30" min="5" max="90" step="5" aria-label="Research minutes slider">
                         </div>
+
+                        <div class="ci-group">Costs &amp; LUPO</div>
                         <div class="ci">
                             <div class="ci-top"><label for="sdr">Loaded annual cost per SDR</label><input type="number" id="sdr" value="60000" min="30000" max="200000" step="5000"></div>
+                            <div class="ci-sub">Fully-loaded yearly cost of one rep (salary plus overhead).</div>
                             <input type="range" data-for="sdr" value="60000" min="30000" max="200000" step="5000" aria-label="SDR cost slider">
                         </div>
                         <div class="ci">
                             <div class="ci-top"><label for="hires">Triage hires avoided next year</label><input type="number" id="hires" value="2" min="0" max="10" step="1"></div>
+                            <div class="ci-sub">Headcount you won't need to add because LUPO absorbs the volume.</div>
                             <input type="range" data-for="hires" value="2" min="0" max="10" step="1" aria-label="Hires avoided slider">
                         </div>
                         <div class="ci" style="margin-bottom:0;">
                             <div class="ci-top"><label for="lupo">LUPO monthly cost <span class="ci-hint">(stated range)</span></label><input type="number" id="lupo" value="9000" min="3000" max="15000" step="500"></div>
+                            <div class="ci-sub">Your LUPO subscription. $3k to $15k a month.</div>
                             <input type="range" data-for="lupo" value="9000" min="3000" max="15000" step="500" aria-label="LUPO monthly cost slider">
                         </div>
                     </div>
 
                     <div class="calc-results">
                         <div class="calc-panel">
-                            <div class="net-label">Net annual impact</div>
+                            <div class="net-label">What you gain per year with LUPO</div>
                             <div class="net-figure" id="net">$529,500</div>
-                            <p class="net-sub">Revenue impact plus cost avoided, illustrative, using your inputs. Closed revenue contributes at your gross margin; this is not a profit figure.</p>
-                            <p class="net-breakdown" id="breakdown"><strong>$517,500</strong> incremental closed revenue + <strong>$120,000</strong> hiring cost avoided − <strong>$108,000</strong> LUPO annual cost</p>
+                            <p class="net-sub">Money the firm gains in a year — an upside, not a loss: extra revenue won, plus the hires you avoid, minus what LUPO costs. (Revenue counts at your gross margin, so read it as value, not pure profit.)</p>
+                            <p class="net-breakdown" id="breakdown"><strong>$517,500</strong> extra revenue won + <strong>$120,000</strong> saved on hires − <strong>$108,000</strong> LUPO's cost</p>
                             <div class="tile-grid">
-                                <div class="tile"><div class="t-val" id="t1v">552</div><div class="t-key" id="t1k">Recovered leads per year</div></div>
-                                <div class="tile"><div class="t-val" id="t2v">138</div><div class="t-key" id="t2k">Incremental qualified meetings</div></div>
-                                <div class="tile"><div class="t-val" id="t3v">$3,450,000</div><div class="t-key" id="t3k">Incremental pipeline</div></div>
-                                <div class="tile"><div class="t-val" id="t4v">$783</div><div class="t-key" id="t4k">Cost per incremental opportunity</div></div>
+                                <div class="tile"><div class="t-val" id="t1v">552</div><div class="t-key" id="t1k">Leads won back per year</div></div>
+                                <div class="tile"><div class="t-val" id="t2v">138</div><div class="t-key" id="t2k">Extra qualified meetings</div></div>
+                                <div class="tile"><div class="t-val" id="t3v">$3,450,000</div><div class="t-key" id="t3k">Extra pipeline created</div></div>
+                                <div class="tile"><div class="t-val" id="t4v">$783</div><div class="t-key" id="t4k">LUPO cost per extra meeting</div></div>
                             </div>
                             <p class="persona-note" id="pnote">Every recovered lead is demand you already paid to generate. Today it converts to nothing. With LUPO, marketing gets the audit trail on exactly what happened to every lead it handed over.</p>
                             <p class="calc-foot">Rep hours returned (<span id="hoursNote">600 hours, about 0.3 FTE</span>, per year) are shown as capacity and deliberately not priced into the net figure, to avoid double counting with avoided hires. Defaults are conservative and sourced: <a href="#methodology">see the methodology</a>.</p>
@@ -482,25 +502,25 @@
 
             document.getElementById('net').textContent = money(net);
             document.getElementById('breakdown').innerHTML =
-                '<strong>' + money(closedRev) + '</strong> incremental closed revenue + <strong>' +
-                money(hiresVal) + '</strong> hiring cost avoided − <strong>' +
-                money(lupoYr) + '</strong> LUPO annual cost';
+                '<strong>' + money(closedRev) + '</strong> extra revenue won + <strong>' +
+                money(hiresVal) + '</strong> saved on hires − <strong>' +
+                money(lupoYr) + '</strong> LUPO\'s cost';
             document.getElementById('hoursNote').textContent = num(hoursBack) + ' hours, about ' + (Math.round(fte * 10) / 10) + ' FTE';
 
             var tiles;
             if (persona === 'mkt') {
                 tiles = [
-                    [num(recovered), 'Recovered leads per year'],
-                    [num(meetings), 'Incremental qualified meetings'],
-                    [money(pipeline), 'Incremental pipeline'],
-                    [money(costPerOpp), 'Cost per incremental opportunity']
+                    [num(recovered), 'Leads won back per year'],
+                    [num(meetings), 'Extra qualified meetings'],
+                    [money(pipeline), 'Extra pipeline created'],
+                    [money(costPerOpp), 'LUPO cost per extra meeting']
                 ];
                 document.getElementById('pnote').textContent = 'Every recovered lead is demand you already paid to generate. Today it converts to nothing. With LUPO, marketing gets the audit trail on exactly what happened to every lead it handed over.';
             } else {
                 tiles = [
                     [num(hoursBack), 'Rep hours returned per year'],
                     [(Math.round(fte * 10) / 10) + ' FTE', 'Triage capacity returned'],
-                    [num(meetings), 'Incremental meetings held'],
+                    [num(meetings), 'Extra meetings held'],
                     [money(hiresVal), 'Hiring cost avoided']
                 ];
                 document.getElementById('pnote').textContent = 'Every meeting arrives pre-briefed: contact verified, company signals, decision-maker context, intent scored. Rep time goes into the conversation, the part only reps can do.';
