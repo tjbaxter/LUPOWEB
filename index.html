@@ -1953,15 +1953,16 @@
         .hi-native:hover .hi-native-word { color: #ffffff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.9), 0 0 24px rgba(255, 255, 255, 0.5); }
         .hi-native:hover .hi-spr { opacity: 1; filter: brightness(1.4) saturate(1.55) drop-shadow(0 0 7px rgba(255, 120, 75, 1)) drop-shadow(0 0 17px rgba(255, 108, 66, 0.75)); }
         .hi-native:focus-visible { outline: 2px solid #8ab4ff; outline-offset: 4px; }
-        .hi-spr { display: block; width: 20px; height: 20px; flex: none; opacity: 0.92; transform-origin: center; transition: opacity 0.2s ease, filter 0.22s ease; }
+        .hi-spr { display: block; width: 20px; height: 20px; flex: none; opacity: 0.65; transform-origin: center; transition: opacity 0.2s ease, filter 0.22s ease; }
         @media (prefers-reduced-motion: reduce) { .hi-native:hover { transform: none; } }
         .hi-native-word {
             font-size: 14.5px;
             font-weight: 600;
             letter-spacing: -0.005em;
-            /* Rest: crisp bright white — as bright as 'Backed by Deepgram'. The strip
-               now sits at full opacity, so this reads as true white, not gray. */
-            color: #ffffff;
+            /* Rest: muted gray, recessive like the rest of the strip. Because the strip
+               now sits at FULL opacity, the hover jump to #fff reads as a true full-white
+               glow — not the half-bright it was when the whole strip was capped at 0.5. */
+            color: rgba(255, 255, 255, 0.55);
             transition: color 0.22s ease, text-shadow 0.22s ease;
         }
         .hi-div { width: 1px; height: 15px; background: rgba(255, 255, 255, 0.12); }
@@ -1991,7 +1992,7 @@
         }
         /* Light (aurora) theme: dark text + dark logos so the strip stays legible
            on the bright wash. Sprocket keeps #FF7A59. */
-        html.aurora .hi-native-word { color: rgba(20, 24, 35, 0.96); }
+        html.aurora .hi-native-word { color: rgba(20, 24, 35, 0.55); }
         html.aurora .hi-native:hover .hi-native-word { color: #0a0f1a; text-shadow: 0 0 8px rgba(255,255,255,0.95), 0 0 20px rgba(255,255,255,0.7); }
         html.aurora .hi-works,
         html.aurora .hi-anycrm { color: rgba(20, 24, 35, 0.42); }
