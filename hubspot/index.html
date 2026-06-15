@@ -153,6 +153,30 @@
         .btn-primary:hover { background: #47a9ff; transform: translateY(-1px); box-shadow: 0 6px 28px rgba(41,151,255,0.45); }
         .btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 999px; font-size: 14px; font-weight: 600; text-decoration: none; background: rgba(255,255,255,0.08); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.14); transition: all 0.22s ease; }
         .btn-secondary:hover { background: rgba(255,255,255,0.12); }
+        /* CTA buttons: size the icons (the missing rule that ballooned them) and
+           match the homepage hero treatment (gradient pill, rounded-rect). */
+        .btn-primary, .btn-secondary { white-space: nowrap; }
+        .btn-primary svg, .btn-secondary svg { width: 18px; height: 18px; flex-shrink: 0; }
+        .hero-cta .btn-primary, .cta-actions .btn-primary {
+            padding: 18px 44px; font-size: 18px; font-weight: 600; border-radius: 30px;
+            background: linear-gradient(135deg, var(--accent) 0%, #5b8aff 100%);
+            box-shadow: 0 8px 30px rgba(41,151,255,0.45), inset 0 0 0 1px rgba(255,255,255,0.08);
+        }
+        .hero-cta .btn-primary:hover, .cta-actions .btn-primary:hover {
+            background: linear-gradient(135deg, #47a9ff 0%, #6ba2ff 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 12px 38px rgba(41,151,255,0.55), inset 0 0 0 1px rgba(255,255,255,0.12);
+        }
+        .hero-cta .btn-secondary, .cta-actions .btn-secondary {
+            padding: 16px 32px; font-size: 16px; border-radius: 28px;
+        }
+        .hero-cta .btn-primary svg, .hero-cta .btn-secondary svg,
+        .cta-actions .btn-primary svg, .cta-actions .btn-secondary svg { width: 20px; height: 20px; }
+        @media (max-width: 560px) {
+            .hero-cta, .cta-actions { display: flex; flex-direction: column; align-items: stretch; width: 100%; max-width: 360px; margin-left: auto; margin-right: auto; }
+            .hero-cta .btn-primary, .hero-cta .btn-secondary,
+            .cta-actions .btn-primary, .cta-actions .btn-secondary { width: 100%; justify-content: center; }
+        }
         /* HubSpot page components */
         .hs-orange { color: #ff7a59; }
         .hs-eyebrow .hs-spr { width: 15px; height: 15px; vertical-align: -2px; margin-right: 7px; }
