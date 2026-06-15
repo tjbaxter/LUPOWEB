@@ -1941,7 +1941,7 @@
         /* The whole lockup is one hover target: it EXPANDS, the word flares bright
            white, and the sprocket flares vivid orange, all together. */
         .hi-native:hover { transform: scale(1.09); }
-        .hi-native:hover .hi-native-word { color: #ffffff; text-shadow: 0 0 6px rgba(255,255,255,0.95), 0 0 16px rgba(255,255,255,0.75), 0 0 32px rgba(255,255,255,0.45); }
+        .hi-native:hover .hi-native-word { color: #ffffff; text-shadow: 0 0 4px rgba(255,255,255,1), 0 0 12px rgba(255,255,255,0.7), 0 0 24px rgba(255,255,255,0.4); }
         .hi-native:hover .hi-spr { opacity: 1; filter: brightness(1.32) saturate(1.4) drop-shadow(0 0 5px rgba(255,140,92,1)) drop-shadow(0 0 14px rgba(255,108,66,0.85)) drop-shadow(0 0 28px rgba(255,108,66,0.55)); }
         .hi-native:focus-visible { outline: 2px solid #8ab4ff; outline-offset: 4px; }
         .hi-spr { display: block; width: 20px; height: 20px; flex: none; opacity: 0.82; transition: opacity 0.2s ease, filter 0.2s ease; }
@@ -1950,7 +1950,7 @@
             font-size: 14.5px;
             font-weight: 600;
             letter-spacing: -0.005em;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-primary);
             transition: color 0.22s ease, text-shadow 0.22s ease;
         }
         .hi-div { width: 1px; height: 15px; background: rgba(255, 255, 255, 0.2); }
@@ -1978,7 +1978,7 @@
         }
         /* Light (aurora) theme: dark text + dark logos so the strip stays legible
            on the bright wash. Sprocket keeps #FF7A59. */
-        html.aurora .hi-native-word { color: rgba(20, 24, 35, 0.7); }
+        html.aurora .hi-native-word { color: rgba(20, 24, 35, 0.92); }
         html.aurora .hi-native:hover .hi-native-word { color: #0a0f1a; text-shadow: 0 0 8px rgba(255,255,255,0.95), 0 0 20px rgba(255,255,255,0.7); }
         html.aurora .hi-works,
         html.aurora .hi-anycrm { color: rgba(20, 24, 35, 0.72); }
