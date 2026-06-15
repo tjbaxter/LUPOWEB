@@ -1923,37 +1923,69 @@
         }
         .section-card-link:hover { color: #c4b5fd; }
 
-        /* Hero integrations row */
+        /* ── Hero integration strip: centered, single line, mirrors the
+           LinkedIn banner. HubSpot self-ID (orange sprocket + "native") and the
+           "works with" reassurance land in one quiet line below the headline.
+           The ONLY integration UI on the page. Curated, never a logo wall. */
         .hero-integrations {
-            margin-top: 28px;
-            text-align: center;
-            opacity: 0;
-            animation: fadeInUpSubtle 1s ease 0.7s forwards;
-        }
-        .hero-integrations-label {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            color: rgba(255, 255, 255, 0.45);
-            margin-bottom: 14px;
-        }
-        .hero-integrations-row {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
             align-items: center;
-            gap: 32px;
-            row-gap: 18px;
+            justify-content: center;
+            gap: 11px 18px;
+            margin-top: 40px;
+            opacity: 0;
+            animation: fadeInUpSubtle 1s ease 0.6s forwards;
         }
-        .hero-integrations-row img {
-            max-height: 22px;
+        .hi-native { display: inline-flex; align-items: center; gap: 8px; }
+        .hi-spr { display: block; width: 20px; height: 20px; flex: none; }
+        .hi-native-word {
+            font-size: 14.5px;
+            font-weight: 600;
+            letter-spacing: -0.005em;
+            color: var(--text-primary);
+        }
+        .hi-div { width: 1px; height: 15px; background: rgba(255, 255, 255, 0.2); }
+        .hi-works,
+        .hi-anycrm {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.005em;
+            color: rgba(255, 255, 255, 0.62);
+        }
+        .hi-logos { display: inline-flex; align-items: center; gap: 18px; }
+        .hi-logos img {
+            height: 18px;
             width: auto;
-            opacity: 0.7;
+            opacity: 0.85;
             filter: brightness(0) invert(1);
             transition: opacity 0.2s ease;
         }
-        .hero-integrations-row img:hover { opacity: 1; }
+        .hi-logos img[alt="Salesforce"] { height: 20px; }
+        .hi-logos img:hover { opacity: 0.95; }
+        .btn-primary:focus-visible,
+        .btn-secondary:focus-visible {
+            outline: 2px solid #8ab4ff;
+            outline-offset: 3px;
+        }
+        /* Light (aurora) theme: dark text + dark logos so the strip stays legible
+           on the bright wash. Sprocket keeps #FF7A59. */
+        html.aurora .hi-native-word { color: #1d2733; }
+        html.aurora .hi-works,
+        html.aurora .hi-anycrm { color: rgba(20, 24, 35, 0.72); }
+        html.aurora .hi-div { background: rgba(20, 24, 35, 0.22); }
+        html.aurora .hi-logos img { filter: brightness(0); opacity: 0.72; }
+        /* Mobile: wrap gracefully, stay centered, drop the divider */
+        @media (max-width: 560px) {
+            .hero-integrations { gap: 9px 14px; }
+            .hi-div { display: none; }
+            .hi-logos { gap: 16px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .hero-integrations { opacity: 1 !important; animation: none !important; transform: none !important; }
+        }
+
+        /* (Hero is centered single-column; the integration-strip styles live above.) */
 
         /* Premium atmosphere: film grain + stronger card glow (matches subpages) */
         .fx-grain {
@@ -2052,22 +2084,30 @@
     <!-- Main Content -->
     <div class="main-container">
         <div class="content-wrapper">
-            <!-- Hero -->
+            <!-- Hero: two-column. Left = the message. Right = the signature
+                 visual, a "Native to HubSpot" lockup. HubSpot is the home, shown
+                 prominently in its orange in a native / works-with integration
+                 context (no implied official endorsement). Every other major CRM
+                 appears as a real, legible mark, present but visually secondary.
+                 Google Calendar / Outlook / Slack are complementary tools, kept
+                 in their own "connects to your stack" group below, never mixed
+                 into the CRM row. -->
+            <!-- Hero: centered single column. HubSpot-first, never HubSpot-only:
+                 the headline is the single focal point, and a quiet integration
+                 strip below (mirrors the LinkedIn banner) lands the HubSpot
+                 self-ID and reassures every other CRM in the same glance. -->
             <h1>
                 Inbound sales, <span class="gradient-text">fully automated.</span>
             </h1>
 
             <p class="subtitle lx-desk">
-                LUPO is the AI inbound SDR. It captures every lead across web form, email, chat and phone, filters the noise, scores each lead for buying intent, and books the real buyers straight into your reps' calendars.
+                LUPO is the AI inbound SDR, native to HubSpot and ready for every major CRM. It captures every lead across web form, email, chat, and phone, filters the noise, scores buying intent, and books real buyers into your reps' calendars.
             </p>
             <p class="subtitle lx-mob">
-                The AI inbound SDR. It answers every lead, filters out the noise, and books the real buyers into your reps' calendars.
+                The AI inbound SDR, native to HubSpot and ready for every major CRM. It answers every lead, filters the noise, and books real buyers into your reps' calendars.
             </p>
 
-            <!-- CTA Buttons. Book a demo is the primary action: the hero
-                 sells the all-channel story, not the phone channel. The
-                 live voice demo moved to the "Hear it answer" module below
-                 the dashboard, with the voice picker. -->
+            <!-- Book a demo is the single focal CTA of the hero. -->
             <div class="cta-section">
                 <a href="https://cal.com/tombaxter/lupo" class="btn-primary btn-primary-hero" id="bookCallBtn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
@@ -2085,16 +2125,22 @@
                 </a>
             </div>
 
-            <!-- Hero integration logos -->
+            <!-- One integration strip (mirrors the LinkedIn banner): HubSpot
+                 sprocket + "native", a divider, then "works with" the key stack
+                 logos + any CRM. The ONLY integration UI on the page. -->
             <div class="hero-integrations">
-                <p class="hero-integrations-label">Connects to your stack</p>
-                <div class="hero-integrations-row">
-                    <img src="/logos/integrations/hubspot.svg" alt="HubSpot" width="100" height="22" loading="lazy" decoding="async">
-                    <img src="/logos/integrations/salesforce.svg" alt="Salesforce" width="100" height="22" loading="lazy" decoding="async">
-                    <img src="/logos/integrations/googlecalendar.svg" alt="Google Calendar" width="100" height="22" loading="lazy" decoding="async">
-                    <img src="/logos/integrations/microsoftoutlook.svg" alt="Microsoft 365 / Outlook" width="100" height="22" loading="lazy" decoding="async">
-                    <img src="/logos/integrations/slack.svg" alt="Slack" width="100" height="22" loading="lazy" decoding="async">
-                </div>
+                <span class="hi-native" aria-label="Native to HubSpot">
+                    <svg class="hi-spr" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF7A59" d="M18.164 7.93V5.084a2.198 2.198 0 001.267-1.978v-.067A2.2 2.2 0 0017.238.845h-.067a2.2 2.2 0 00-2.193 2.193v.067a2.196 2.196 0 001.252 1.973l.013.006v2.852a6.22 6.22 0 00-2.969 1.31l.012-.01-7.828-6.095A2.497 2.497 0 104.3 4.656l-.012.006 7.697 5.991a6.176 6.176 0 00-1.038 3.446c0 1.343.425 2.588 1.147 3.607l-.013-.02-2.342 2.343a1.968 1.968 0 00-.58-.095h-.002a2.033 2.033 0 102.033 2.033 1.978 1.978 0 00-.1-.595l.005.014 2.317-2.317a6.247 6.247 0 104.782-11.134l-.036-.005zm-.964 9.378a3.206 3.206 0 113.215-3.207v.002a3.206 3.206 0 01-3.207 3.207z"/></svg>
+                    <span class="hi-native-word">native</span>
+                </span>
+                <span class="hi-div" aria-hidden="true"></span>
+                <span class="hi-works">works with</span>
+                <span class="hi-logos">
+                    <img src="/logos/integrations/salesforce.svg" alt="Salesforce" decoding="async">
+                    <img src="/logos/integrations/slack.svg" alt="Slack" decoding="async">
+                    <img src="/logos/integrations/microsoftoutlook.svg" alt="Outlook" decoding="async">
+                </span>
+                <span class="hi-anycrm">+ any CRM</span>
             </div>
 
             <div class="trust-strip">
