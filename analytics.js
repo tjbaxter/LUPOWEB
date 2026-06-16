@@ -55,6 +55,18 @@
     session_recording: { maskAllInputs: true } // mask email/company in the waitlist form
   });
 
+  // Owner self-exclusion. Visit any page with `?lupo_optout=1` to permanently
+  // stop PostHog capturing + session recording on THIS browser — so the
+  // owner's own (often hours-long) sessions don't clutter the replay list or
+  // burn quota. `?lupo_optout=0` re-enables. PostHog persists the choice in
+  // local storage, so on later visits init() respects it from the first byte
+  // (no recording at all). One visit per browser/device you use.
+  try {
+    var optParam = new URLSearchParams(window.location.search).get("lupo_optout");
+    if (optParam === "1") posthog.opt_out_capturing();
+    else if (optParam === "0") posthog.opt_in_capturing();
+  } catch (e) {}
+
   // Replay anything captured before the SDK was ready, then forward live.
   for (var i = 0; i < queue.length; i++) {
     try { posthog.capture(queue[i].name, queue[i].props); } catch (e) {}
