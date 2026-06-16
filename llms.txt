@@ -12,7 +12,7 @@ Primary buyers: heads of sales, heads of marketing and demand gen, RevOps leader
 
 ## What LUPO does
 
-- **Visitor identification.** Sees which companies are showing intent on your site, with evidence attached. Person-level identification on US traffic only, by design. Resolves the leads who engage, including freemail and personal-email hand-raisers, by enriching the signal they give and, when needed, asking in the conversation. No cold identification of strangers: LUPO resolves the people who came to you.
+- **Visitor identification.** Sees which companies are showing intent on your site, with evidence attached. Person-level identification on US traffic only, by design. Resolves the leads who engage, including freemail and personal-email hand-raisers, by enriching the signal they give and, when needed, asking in the conversation. No cold identification of strangers: LUPO resolves the people who came to you. https://lupolabs.ai/visitor-identification/
 - **Web forms.** Channel-aware: high-intent forms get a callback inside sixty seconds; senior B2B buyers get a personal email reply instead (LUPO will never surprise-call a VP). Gated-content forms count. https://lupolabs.ai/channels/web-forms/
 - **Inbound email.** Agentic email qualification: personal replies with a one-click booking link, two-way, same qualification policy as every channel. https://lupolabs.ai/channels/inbound-email/
 - **Chat.** LUPO's own proactive chat agent engages visitors on landing, qualifies, and books in-chat (it runs live on lupolabs.ai). Or your existing widget (Intercom, Drift, HubSpot Chat, or custom) hands off and LUPO books inside the same chat. https://lupolabs.ai/channels/chat/
@@ -37,10 +37,11 @@ LUPO is an AI inbound SDR: it makes real-time decisions about which question to 
 
 - [Home + live voice demo](https://lupolabs.ai/): talk to LUPO in the browser, choose its voice
 - [How it works](https://lupolabs.ai/how-it-works/): the full pathway from first touch to booked meeting
+- [Visitor identification](https://lupolabs.ai/visitor-identification/): the buyer-intelligence layer, company-level across traffic and person-level on US traffic only, and how identity feeds the inbound SDR job
 - [Pricing](https://lupolabs.ai/pricing/)
 - [ROI](https://lupolabs.ai/roi/): the open ROI model, an interactive calculator with conservative, sourced baselines and the methodology in visible text
 - [FAQ](https://lupolabs.ai/faq/)
-- [Compare](https://lupolabs.ai/compare/): LUPO vs Qualified, Spara, Drift, Intercom Fin, Conversica, 11x; Qualified alternatives for HubSpot teams
+- [Compare](https://lupolabs.ai/compare/): LUPO vs Qualified, Warmly, Spara, Drift, Intercom Fin, Conversica, 11x; Qualified alternatives for HubSpot teams
 - [Changelog](https://lupolabs.ai/changelog/): what shipped and when, dated outcome-level entries, updated as it ships
 - [Inbound SDR guide](https://lupolabs.ai/inbound-sdr/): the complete guide to the inbound SDR role, its cost, its metrics, and how AI inbound SDRs work across web form, email, chat, and phone
 - [Glossary](https://lupolabs.ai/glossary/): inbound SDR, AI SDR, AI inbound SDR, inbound lead qualification, speed to lead, lead routing, intent scoring

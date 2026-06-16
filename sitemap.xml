@@ -169,6 +169,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lupolabs.ai/compare/lupo-vs-warmly/</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lupolabs.ai/visitor-identification/</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://lupolabs.ai/compare/lupo-vs-spara/</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>

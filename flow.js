@@ -10,7 +10,13 @@
     var CHANNELS = ['Web form', 'Email', 'Chat', 'Phone'];
     var IDENT = ['Vantage Logistics · 140 staff', 'Northwind SaaS · 320 staff', 'Crestpoint Capital · 90 staff'];
     var SIGNALS = ['Funding raised', 'Hiring spike', 'M&A news'];
-    var JUNK = ['Vendor pitch', 'Job applicant', 'No buying signal'];
+    /* Junk has its OWN identities: the agencies and recruiters that actually clog inbound,
+       paired so the reveal and the filter reason stay coherent (a real buyer is never the vendor). */
+    var JUNK = [
+        { who: 'Apex SEO Agency · 15 staff', why: 'Vendor pitch' },
+        { who: 'TalentBridge Staffing · 60 staff', why: 'Recruiter, not a buyer' },
+        { who: 'GrowthLoop Agency · 18 staff', why: 'Vendor pitch' }
+    ];
     var POLICY = 'against your policy';
     var STATIC_CHAN = 'Any channel · in seconds';
     var STATIC_SIG = 'Funding · Hiring · M&A';
@@ -115,6 +121,7 @@
             var isFree = variant === 3;
             var chan = isFree ? 'Web form' : CHANNELS[loopIdx % 4];
             var company = IDENT[cCount % IDENT.length];
+            var junk = isJunk ? JUNK[jCount % JUNK.length] : null;
             var steps = [];
 
             /* Beat 0 - someone arrives, anonymous */
@@ -136,6 +143,7 @@
             steps.push({ fn: function () {
                 light('1');
                 if (isFree) { chipCompany.classList.add('lf-ghost'); setChip(chipCompany, 'jane@gmail.com'); }
+                else if (isJunk) { setChip(chipCompany, junk.who); }
                 else { setChip(chipCompany, company); }
             } });
             steps.push({ ms: 820 });
@@ -169,18 +177,18 @@
                 steps.push({ ms: 560 });
                 steps.push({ seg: [5, 6], ms: 1000 });
                 /* Beat 6 written to CRM */
-                steps.push({ fn: function () { light('6'); dotg.classList.remove('lf-show'); qCount++; cCount++; } });
+                steps.push({ fn: function () { light('6'); dotg.classList.remove('lf-show'); qCount++; if (!isFree) cCount++; } });
                 steps.push({ ms: 1700 });
             } else {
                 /* Junk: identified, then caught at Qualified and filtered out */
                 steps.push({ fn: function () {
                     flag('3');
-                    setChip(chipJunk, JUNK[jCount % 3]);
+                    setChip(chipJunk, junk.why);
                     dotg.classList.add('lf-bad');
                 } });
                 steps.push({ ms: 920 });
                 steps.push({ junk: true, ms: 950 });
-                steps.push({ fn: function () { flag('7'); dotg.classList.remove('lf-show'); jCount++; cCount++; } });
+                steps.push({ fn: function () { flag('7'); dotg.classList.remove('lf-show'); jCount++; } });
                 steps.push({ ms: 1700 });
             }
             steps.push({ fn: fadeAll });
