@@ -53,7 +53,7 @@ LUPO is an AI inbound SDR: it makes real-time decisions about which question to 
 
 ## Integrations, live today
 
-CRM: HubSpot, Salesforce (any CRM by webhook on request). Calendar: Google Calendar, Microsoft 365 / Outlook. Alerts: Slack. Chat handoffs: Intercom, Drift, HubSpot Chat (HMAC-signed), any custom chat or form via webhook. SMS: A2P 10DLC registered. Voice infrastructure: Vapi runtime, Deepgram transcription, ElevenLabs voices.
+CRM: HubSpot, Salesforce (any CRM by webhook on request). Calendar: Google Calendar, Microsoft 365 / Outlook. Alerts: Slack. Chat: LUPO's own state-of-the-art chatbot on your site (included), or hooks into Intercom, Drift, HubSpot Chat (HMAC-signed), or any custom chat or form via webhook. SMS: A2P 10DLC registered. Voice infrastructure: LUPO's own production-grade voice, built in-house.
 
 ## Trust and compliance
 
@@ -61,7 +61,7 @@ GDPR compliant; DPA at https://lupolabs.ai/dpa.html. Encryption in transit; conv
 
 ## About the team
 
-LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Ltd. Tom holds an MPhil in Physics from the University of Cambridge and runs every pilot personally. LUPO is an ElevenLabs Grant recipient and builds on Deepgram. LinkedIn: https://www.linkedin.com/company/luposales/
+LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Ltd. Tom holds an MPhil in Physics from the University of Cambridge and runs every pilot personally. LUPO is an ElevenLabs Grant recipient. LinkedIn: https://www.linkedin.com/company/luposales/
 
 ## Frequently asked questions
 

@@ -50,7 +50,7 @@ LUPO answers inbound calls on the second ring, 24/7. It qualifies the caller liv
 
 ## Integrations (https://lupolabs.ai/integrations/)
 
-Live today: HubSpot CRM sync (https://lupolabs.ai/integrations/hubspot/), Salesforce CRM sync (https://lupolabs.ai/integrations/salesforce/), Slack alerts (https://lupolabs.ai/integrations/slack/), Google Calendar booking (https://lupolabs.ai/integrations/google-calendar/), Microsoft 365 / Outlook booking (https://lupolabs.ai/integrations/outlook/). Every qualified contact, call summary, transcript, intent score, and booking is written to the CRM automatically. Any CRM, chat, or form reachable by webhook can connect on request. Voice infrastructure: Vapi runtime, Deepgram transcription, ElevenLabs voices. SMS: A2P 10DLC registered.
+Live today: HubSpot CRM sync (https://lupolabs.ai/integrations/hubspot/), Salesforce CRM sync (https://lupolabs.ai/integrations/salesforce/), Slack alerts (https://lupolabs.ai/integrations/slack/), Google Calendar booking (https://lupolabs.ai/integrations/google-calendar/), Microsoft 365 / Outlook booking (https://lupolabs.ai/integrations/outlook/). Every qualified contact, call summary, transcript, intent score, and booking is written to the CRM automatically. Any CRM, chat, or form reachable by webhook can connect on request. Voice infrastructure: LUPO's own production-grade voice, built in-house. SMS: A2P 10DLC registered.
 
 ## Compare (https://lupolabs.ai/compare/)
 
@@ -80,7 +80,7 @@ The complete guide to the inbound SDR role and its automation. Definition: an in
 ## Press kit (https://lupolabs.ai/press/)
 
 Boilerplate (50 words): LUPO is the AI inbound SDR. It captures every inbound lead across web form, email, chat, and phone, filters the noise, enriches and scores every lead for buying intent, and books real buyers straight into reps' calendars. It syncs to HubSpot, Salesforce, or any CRM.
-Fast facts: Category AI inbound SDR · Channels web form, email, chat, phone · Founded 2025 · Company Flair Technologies Ltd · Founder Tom Baxter (MPhil Physics, University of Cambridge) · Pricing 3,000 to 15,000 USD per month, public · Programs: ElevenLabs Grant recipient, builds on Deepgram.
+Fast facts: Category AI inbound SDR · Channels web form, email, chat, phone · Founded 2025 · Company Flair Technologies Ltd · Founder Tom Baxter (MPhil Physics, University of Cambridge) · Pricing 3,000 to 15,000 USD per month, public · Programs: ElevenLabs Grant recipient.
 Contact: hello@lupolabs.ai · https://www.linkedin.com/company/luposales/
 
 ## FAQ highlights (https://lupolabs.ai/faq/)
