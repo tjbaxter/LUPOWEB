@@ -126,16 +126,21 @@
         .nav-link { font-size: 14px; color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s ease; }
         .nav-link:hover { color: var(--text-primary); }
         .nav-login-btn {
-            display: inline-flex; align-items: center; gap: 6px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
             padding: 8px 18px;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255, 255, 255, 0.08);
             color: var(--text-primary);
-            border: 1px solid rgba(255,255,255,0.12);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 20px;
             font-size: 14px; font-weight: 500;
+            letter-spacing: -0.01em;
             text-decoration: none;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .nav-login-btn svg { width: 16px; height: 16px; }
+        .nav-login-btn:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-1px); }
+        .nav-login-btn:active { transform: translateY(0); }
+        .nav-login-btn svg { width: 16px; height: 16px; opacity: 0.9; }
         main { padding-top: 80px; }
         .hero-section { padding: 60px 24px 40px; text-align: center; }
         .hero-section-inner { max-width: 880px; margin: 0 auto; }
