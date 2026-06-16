@@ -70,12 +70,17 @@
 
 /* Desktop: rising trajectory. Pills positioned in viewBox space (1200 x 275, y offset 175). */
 @media (min-width: 841px) {
-    .lf-canvas { aspect-ratio: 1200 / 275; }
+    .lf-canvas { aspect-ratio: 1200 / 275; container-type: inline-size; }
     .lf-stage { position: absolute; left: calc(var(--x) / 1200 * 100%); top: calc((var(--y) - 175) / 275 * 100%); transform: translate(-50%, -50%); }
-}
-@media (min-width: 841px) and (max-width: 1080px) {
-    .lf-label { font-size: 12.5px; }
-    .lf-pill { padding: 7px 12px; }
+    /* Pills are positioned as a % of the canvas, but their box was fixed-px, so on
+       narrower desktops the gaps collapsed and the longest label ("Identified &
+       enriched", which sits closest to its neighbour) overlapped. Sizing the pills
+       in canvas-width units (cqw) makes the whole row scale together, so spacing
+       holds at every width. clamp() floors keep labels legible at the narrow end. */
+    .lf-pill { padding: 0.62cqw 1.18cqw; gap: 0.6cqw; }
+    .lf-label { font-size: clamp(9px, 1.12cqw, 13px); }
+    .lf-chip { font-size: clamp(8px, 0.95cqw, 11px); }
+    .lf-pin { width: 0.6cqw; height: 0.6cqw; }
 }
 
 /* Mobile: one vertical rail, top to bottom. The filtered branch hangs off
