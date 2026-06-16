@@ -92,6 +92,9 @@
                 "name": "Flair Technologies Ltd"
             },
             "featureList": [
+                "Website visitor identification (company-level)",
+                "Person-level visitor identification on US traffic",
+                "Freemail and personal-email resolution",
                 "Inbound voice qualification on second-ring pickup",
                 "Agentic Email Qualification with channel-aware response policy",
                 "Web Form Qualification and instant callback for high-intent",
@@ -106,13 +109,11 @@
                 "Full transcripts, recordings, and policy decision audit"
             ],
             "offers": {
-                "@type": "Offer",
-                "priceSpecification": {
-                    "@type": "PriceSpecification",
-                    "priceCurrency": "USD",
-                    "price": "0",
-                    "description": "Pricing per pilot based on inbound volume and integrations. 30-day founder-led pilot, success-criteria-based renewal."
-                }
+                "@type": "AggregateOffer",
+                "priceCurrency": "USD",
+                "lowPrice": "3000",
+                "highPrice": "15000",
+                "description": "Pricing per pilot based on inbound volume and integrations. 30-day founder-led pilot, success-criteria-based renewal."
             }
         }
     </script>
@@ -2044,8 +2045,8 @@
     <script async src="https://app.lupolabs.ai/widget/lupo-chat.js" data-lupo-mode="marketing"></script>
     <script src="/visit-radar.js?v=2" defer></script>
     <script src="/aurora.js?v=20"></script>
-    <link rel="stylesheet" href="/flow.css?v=2">
-    <script src="/flow.js?v=2" defer></script>
+    <link rel="stylesheet" href="/flow.css?v=3">
+    <script src="/flow.js?v=3" defer></script>
     <!-- ===== MOBILE DIGESTIBILITY PASS (<=768px) =========================
          Most LinkedIn traffic lands here on a phone and scans for <60s, so the
          goal is fewer words per screen and less dead scroll. Desktop is left
@@ -2073,7 +2074,6 @@
         .statement { padding: 12px 0 0; }
       }
     </style>
-    <script id="warmly-script-loader" src="https://opps-widget.getwarmly.com/warmly.js?clientId=8161a164294aa0eecd1432fc3cfcd6c1" defer></script>
 </head>
 <body>
     <!-- Background Animation -->
@@ -2125,10 +2125,10 @@
             </h1>
 
             <p class="subtitle lx-desk">
-                LUPO is the AI inbound SDR, native to HubSpot and ready for every major CRM. It captures every lead across web form, email, chat, and phone, filters the noise, scores buying intent, and books real buyers into your reps' calendars.
+                LUPO is the AI inbound SDR built for HubSpot, and ready for any CRM. It sees the companies showing intent on your site, resolves the leads who reach out, qualifies them across web form, email, chat, and phone, filters the junk, and books only real buyers, with the full reasoning written back to your CRM.
             </p>
             <p class="subtitle lx-mob">
-                The AI inbound SDR, native to HubSpot and ready for every major CRM. It answers every lead, filters the noise, and books real buyers into your reps' calendars.
+                Knows which companies are on your site. The AI inbound SDR built for HubSpot, ready for any CRM. It resolves the leads who reach out, filters the junk, and books real buyers into your reps' calendars.
             </p>
 
             <!-- Book a demo is the single focal CTA of the hero. -->
@@ -2187,7 +2187,7 @@
              feature: no competitor shows a lead being turned away.
              Shared assets /flow.css + /flow.js; same band embeds on /inbound-sdr/. -->
         <div class="lf-band">
-            <p class="lf-sr">How LUPO works: a lead lands from web form, email, chat, or phone. LUPO engages in seconds and qualifies it against your sales policy. Real buyers are enriched, scored against live buying signals, and booked straight into a rep's calendar. Noise like vendor pitches is filtered and never reaches a rep.</p>
+            <p class="lf-sr">How LUPO works: an anonymous visitor arrives, and LUPO identifies the company behind the visit, the person on US traffic, and even resolves personal-email signups by asking in the conversation. It engages in seconds across web form, email, chat, or phone, qualifies against your sales policy, enriches and scores real buyers against live buying signals, books them straight into a rep's calendar, and writes the contact, score, and transcript to your CRM. Noise like vendor pitches is filtered and never reaches a rep.</p>
             <div class="lf-inner" aria-hidden="true">
                 <div class="lf-canvas">
                     <svg class="lf-svg" viewBox="0 175 1200 275" preserveAspectRatio="xMidYMid meet" focusable="false">
@@ -2195,18 +2195,20 @@
                             <mask id="lfRevA" maskUnits="userSpaceOnUse" x="0" y="175" width="1200" height="275"><rect class="lf-reva" x="0" y="175" width="0" height="275" fill="#fff"/></mask>
                             <mask id="lfRevB" maskUnits="userSpaceOnUse" x="0" y="175" width="1200" height="275"><rect class="lf-revb" x="0" y="175" width="0" height="275" fill="#fff"/></mask>
                         </defs>
-                        <path class="lf-path lf-main" d="M 110 368 C 400 350 790 320 1090 215"/>
-                        <path class="lf-path lf-junk" d="M 600 324 C 622 366 660 396 718 410"/>
-                        <path class="lf-trail lf-trail-main" d="M 110 368 C 400 350 790 320 1090 215" mask="url(#lfRevA)"/>
-                        <path class="lf-trail lf-trail-junk" d="M 600 324 C 622 366 660 396 718 410" mask="url(#lfRevB)"/>
-                        <g class="lf-dotg" transform="translate(110 368)"><circle class="lf-halo2" r="16"/><circle class="lf-halo" r="9"/><circle class="lf-dot" r="4.5"/></g>
+                        <path class="lf-path lf-main" d="M 70 397 C 420 384 800 330 1140 208"/>
+                        <path class="lf-path lf-junk" d="M 615 342 C 640 384 690 408 760 416"/>
+                        <path class="lf-trail lf-trail-main" d="M 70 397 C 420 384 800 330 1140 208" mask="url(#lfRevA)"/>
+                        <path class="lf-trail lf-trail-junk" d="M 615 342 C 640 384 690 408 760 416" mask="url(#lfRevB)"/>
+                        <g class="lf-dotg" transform="translate(70 397)"><circle class="lf-halo2" r="16"/><circle class="lf-halo" r="9"/><circle class="lf-dot" r="4.5"/></g>
                     </svg>
-                    <div class="lf-stage" data-s="0" style="--x:110;--y:368;--i:0"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Lead lands</span></span><span class="lf-chip" data-chip="chan">Web form &middot; Email &middot; Chat &middot; Phone</span></div>
-                    <div class="lf-stage" data-s="1" style="--x:355;--y:350;--i:1"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Instant engagement</span></span><span class="lf-chip">in seconds</span></div>
-                    <div class="lf-stage" data-s="2" style="--x:600;--y:324;--i:2"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Qualification</span></span><span class="lf-chip" data-chip="junk">against your policy</span></div>
-                    <div class="lf-stage" data-s="3" style="--x:845;--y:282;--i:3"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Enrichment &amp; scoring</span></span><span class="lf-chip" data-chip="signal">Funding &middot; Hiring &middot; M&amp;A</span></div>
-                    <div class="lf-stage" data-s="4" style="--x:1090;--y:215;--i:4"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Meeting booked</span></span><span class="lf-chip">on the rep's calendar</span></div>
-                    <div class="lf-stage" data-s="5" style="--x:730;--y:412;--i:5"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Filtered out</span></span><span class="lf-chip">never reaches a rep</span></div>
+                    <div class="lf-stage" data-s="0" style="--x:70;--y:397;--i:0"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Someone arrives</span></span><span class="lf-chip">Anonymous visitor</span></div>
+                    <div class="lf-stage" data-s="1" style="--x:250;--y:387;--i:1"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Identified</span></span><span class="lf-chip" data-chip="company">reverse-IP &middot; matching</span></div>
+                    <div class="lf-stage" data-s="2" style="--x:430;--y:369;--i:2"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Engaged</span></span><span class="lf-chip" data-chip="chan">Web form &middot; in seconds</span></div>
+                    <div class="lf-stage" data-s="3" style="--x:615;--y:342;--i:3"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Qualified</span></span><span class="lf-chip" data-chip="junk">against your policy</span></div>
+                    <div class="lf-stage" data-s="4" style="--x:800;--y:306;--i:4"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Enriched &amp; scored</span></span><span class="lf-chip" data-chip="signal">Funding &middot; Hiring &middot; M&amp;A</span></div>
+                    <div class="lf-stage" data-s="5" style="--x:985;--y:258;--i:5"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Booked</span></span><span class="lf-chip">on the rep's calendar</span></div>
+                    <div class="lf-stage" data-s="6" style="--x:1140;--y:208;--i:6"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">CRM updated</span></span><span class="lf-chip">contact &middot; score &middot; transcript</span></div>
+                    <div class="lf-stage" data-s="7" style="--x:773;--y:418;--i:7"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Filtered out</span></span><span class="lf-chip">never reaches a rep</span></div>
                 </div>
                 <p class="lf-note"><a href="/how-it-works/">See the full pathway &rarr;</a></p>
             </div>

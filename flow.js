@@ -1,17 +1,21 @@
-/* LUPO flow animation: a lead dot travels the inbound pipeline, lighting the
-   route behind it. Qualified loops climb to the rep's calendar; every third
-   loop is junk, gets caught at Qualification, and exits amber to the filtered
-   terminal. No dependencies. Pauses off-screen. Reduced motion = static diagram. */
+/* LUPO flow animation: the full inbound path, lit as a lead travels it.
+   Someone arrives anonymous -> LUPO identifies the company (and the person, on
+   US traffic) -> engages -> qualifies -> enriches and scores -> books -> writes
+   to the CRM. Every 4th loop is a freemail signup the agent resolves by asking;
+   every junk loop is caught at Qualified and exits amber to the filtered terminal.
+   No dependencies. Pauses off-screen. Reduced motion = static labelled diagram. */
 (function () {
     'use strict';
 
-    var CHANNELS = ['Web form', 'Email', 'Chat', 'Phone call'];
+    var CHANNELS = ['Web form', 'Email', 'Chat', 'Phone'];
+    var IDENT = ['Vantage Logistics · 140 staff', 'Northwind SaaS · 320 staff', 'Crestpoint Capital · 90 staff'];
     var SIGNALS = ['Funding raised', 'Hiring spike', 'M&A news'];
     var JUNK = ['Vendor pitch', 'Job applicant', 'No buying signal'];
     var POLICY = 'against your policy';
-    var STATIC_CHAN = 'Web form · Email · Chat · Phone';
+    var STATIC_CHAN = 'Any channel · in seconds';
     var STATIC_SIG = 'Funding · Hiring · M&A';
-    var STAGE_X = [110, 355, 600, 845, 1090];
+    var STATIC_ID = 'Company · + person (US)';
+    var STAGE_X = [70, 250, 430, 615, 800, 985, 1140];
 
     function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
 
@@ -24,21 +28,23 @@
         var stages = {};
         var nodes = band.querySelectorAll('.lf-stage');
         for (var i = 0; i < nodes.length; i++) stages[nodes[i].getAttribute('data-s')] = nodes[i];
+        var chipCompany = band.querySelector('[data-chip="company"]');
         var chipChan = band.querySelector('[data-chip="chan"]');
         var chipSig = band.querySelector('[data-chip="signal"]');
         var chipJunk = band.querySelector('[data-chip="junk"]');
-        if (!main || !junkPath || !dotg || !stages['5']) return;
+        if (!main || !junkPath || !dotg || !stages['6'] || !stages['7']) return;
 
         function setRect(rect, w) { if (rect) rect.setAttribute('width', w); }
 
         function setStatic() {
-            ['0', '1', '2', '3', '4'].forEach(function (k) { stages[k].classList.add('on'); });
-            stages['5'].classList.add('bad');
+            ['0', '1', '2', '3', '4', '5', '6'].forEach(function (k) { stages[k].classList.add('on'); });
+            stages['7'].classList.add('bad');
+            chipCompany.classList.remove('lf-ghost');
+            chipCompany.textContent = STATIC_ID;
             chipChan.textContent = STATIC_CHAN;
             chipSig.textContent = STATIC_SIG;
             chipJunk.textContent = POLICY;
-            chipSig.classList.remove('lf-hide');
-            chipJunk.classList.remove('lf-hide');
+            [chipCompany, chipChan, chipSig, chipJunk].forEach(function (c) { c.classList.remove('lf-hide'); });
             setRect(rectA, 1200);
             setRect(rectB, 1200);
             dotg.style.display = 'none';
@@ -94,50 +100,88 @@
         function fadeAll() {
             for (var k in stages) stages[k].classList.remove('on', 'bad');
             dotg.classList.remove('lf-bad');
+            chipCompany.classList.remove('lf-ghost');
             setRect(rectA, 0);
             setRect(rectB, 0);
         }
 
-        /* Timeline */
-        var loopIdx = 0, qCount = 0, jCount = 0;
+        /* Timeline. Each loop is one of four variants, cycled:
+           0 company-level reveal, 1 person-level (US), 2 junk (filtered),
+           3 freemail signup the agent resolves by asking. */
+        var loopIdx = 0, qCount = 0, jCount = 0, cCount = 0;
         function buildSteps() {
-            var isJunk = loopIdx % 3 === 2;
-            var chan = CHANNELS[loopIdx % 4];
+            var variant = loopIdx % 4;
+            var isJunk = variant === 2;
+            var isFree = variant === 3;
+            var chan = isFree ? 'Web form' : CHANNELS[loopIdx % 4];
+            var company = IDENT[cCount % IDENT.length];
             var steps = [];
+
+            /* Beat 0 - someone arrives, anonymous */
             steps.push({ fn: function () {
                 fadeAll();
                 if (!marks) computeGeom();
-                setChip(chipChan, chan);
+                setChip(chipCompany, 'reverse-IP · matching');
+                setChip(chipChan, chan + ' · in seconds');
                 setChip(chipSig, STATIC_SIG);
                 setChip(chipJunk, POLICY);
                 if (marks) dotMove(main, 0, rectA);
                 dotg.classList.add('lf-show');
                 light('0');
             } });
-            steps.push({ ms: 650 });
-            steps.push({ seg: [0, 1], ms: 1050 });
-            steps.push({ fn: function () { light('1'); } });
-            steps.push({ ms: 520 });
-            steps.push({ seg: [1, 2], ms: 1050 });
-            if (!isJunk) {
-                steps.push({ fn: function () { light('2'); } });
-                steps.push({ ms: 680 });
-                steps.push({ seg: [2, 3], ms: 1050 });
-                steps.push({ fn: function () { light('3'); setChip(chipSig, SIGNALS[qCount % 3]); } });
+            steps.push({ ms: 720 });
+            steps.push({ seg: [0, 1], ms: 1000 });
+
+            /* Beat 1 - identify (company always; person only on US; freemail resolved by asking) */
+            steps.push({ fn: function () {
+                light('1');
+                if (isFree) { chipCompany.classList.add('lf-ghost'); setChip(chipCompany, 'jane@gmail.com'); }
+                else { setChip(chipCompany, company); }
+            } });
+            steps.push({ ms: 820 });
+            steps.push({ fn: function () {
+                if (isFree) { chipCompany.classList.remove('lf-ghost'); setChip(chipCompany, 'LUPO asks who they work with'); }
+                else if (variant === 1) { setChip(chipCompany, '+ person-level · US'); }
+            } });
+            steps.push({ ms: isFree ? 880 : 560 });
+            if (isFree) {
+                steps.push({ fn: function () { setChip(chipCompany, 'Resolved · Acme Brands'); } });
                 steps.push({ ms: 760 });
-                steps.push({ seg: [3, 4], ms: 1050 });
-                steps.push({ fn: function () { light('4'); dotg.classList.remove('lf-show'); qCount++; } });
-                steps.push({ ms: 1600 });
+            }
+            steps.push({ seg: [1, 2], ms: 1000 });
+
+            /* Beat 2 - engage, in seconds, on the channel they used */
+            steps.push({ fn: function () { light('2'); } });
+            steps.push({ ms: 560 });
+            steps.push({ seg: [2, 3], ms: 1000 });
+
+            if (!isJunk) {
+                /* Beat 3 qualify */
+                steps.push({ fn: function () { light('3'); } });
+                steps.push({ ms: 600 });
+                steps.push({ seg: [3, 4], ms: 1000 });
+                /* Beat 4 enrich & score */
+                steps.push({ fn: function () { light('4'); setChip(chipSig, SIGNALS[qCount % 3]); } });
+                steps.push({ ms: 680 });
+                steps.push({ seg: [4, 5], ms: 1000 });
+                /* Beat 5 book */
+                steps.push({ fn: function () { light('5'); } });
+                steps.push({ ms: 560 });
+                steps.push({ seg: [5, 6], ms: 1000 });
+                /* Beat 6 written to CRM */
+                steps.push({ fn: function () { light('6'); dotg.classList.remove('lf-show'); qCount++; cCount++; } });
+                steps.push({ ms: 1700 });
             } else {
+                /* Junk: identified, then caught at Qualified and filtered out */
                 steps.push({ fn: function () {
-                    flag('2');
+                    flag('3');
                     setChip(chipJunk, JUNK[jCount % 3]);
                     dotg.classList.add('lf-bad');
                 } });
-                steps.push({ ms: 950 });
+                steps.push({ ms: 920 });
                 steps.push({ junk: true, ms: 950 });
-                steps.push({ fn: function () { flag('5'); dotg.classList.remove('lf-show'); jCount++; } });
-                steps.push({ ms: 1600 });
+                steps.push({ fn: function () { flag('7'); dotg.classList.remove('lf-show'); jCount++; cCount++; } });
+                steps.push({ ms: 1700 });
             }
             steps.push({ fn: fadeAll });
             steps.push({ ms: 700 });

@@ -36,8 +36,11 @@
 .lf-chip.lf-hide { opacity: 0; }
 
 /* Filtered terminal keeps its amber identity even at rest: a feature, not a failure state */
-.lf-stage[data-s="5"] .lf-pill { border-color: rgba(255, 159, 10, 0.30); }
-.lf-stage[data-s="5"] .lf-pin { background: rgba(255, 159, 10, 0.55); }
+.lf-stage[data-s="7"] .lf-pill { border-color: rgba(255, 159, 10, 0.30); }
+.lf-stage[data-s="7"] .lf-pin { background: rgba(255, 159, 10, 0.55); }
+
+/* Freemail signup before the agent resolves it: the email other tools give up on */
+.lf-chip.lf-ghost { color: #6f6f76; text-decoration: line-through; text-decoration-color: rgba(255, 159, 10, 0.55); }
 
 /* Lit: qualified path */
 .lf-stage.on .lf-pill { transform: scale(1.04); border-color: rgba(41, 151, 255, 0.65); background: rgba(41, 151, 255, 0.13); box-shadow: 0 0 26px rgba(41, 151, 255, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
@@ -81,10 +84,12 @@
     .lf-stage[data-s="0"] { order: 0; }
     .lf-stage[data-s="1"] { order: 1; }
     .lf-stage[data-s="2"] { order: 2; }
-    .lf-stage[data-s="5"] { order: 3; margin-left: 46px; }
-    .lf-stage[data-s="3"] { order: 4; }
+    .lf-stage[data-s="3"] { order: 3; }
+    .lf-stage[data-s="7"] { order: 4; margin-left: 46px; }
     .lf-stage[data-s="4"] { order: 5; }
-    .lf-stage[data-s="5"]::before { content: ''; position: absolute; left: -27px; top: 16px; width: 24px; height: 2.5px; background-image: radial-gradient(circle, rgba(255, 159, 10, 0.55) 1.25px, transparent 1.35px); background-size: 8px 2.5px; background-repeat: repeat-x; }
+    .lf-stage[data-s="5"] { order: 6; }
+    .lf-stage[data-s="6"] { order: 7; }
+    .lf-stage[data-s="7"]::before { content: ''; position: absolute; left: -27px; top: 16px; width: 24px; height: 2.5px; background-image: radial-gradient(circle, rgba(255, 159, 10, 0.55) 1.25px, transparent 1.35px); background-size: 8px 2.5px; background-repeat: repeat-x; }
     .lf-note { text-align: left; margin-top: 18px; }
 }
 

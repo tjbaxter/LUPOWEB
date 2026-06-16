@@ -1,17 +1,18 @@
 # LUPO
 
-> LUPO is the AI inbound SDR. One agentic brain across web form, email, chat, and phone: every inbound lead is captured, answered in seconds, filtered for noise, enriched and scored for buying intent, and either booked into a rep's calendar or kept away from sales. Marketing generates the demand. Reps close the deals. LUPO runs everything in between.
+> LUPO is the HubSpot-native AI inbound SDR with buyer intelligence built in. One agentic brain sees which companies are showing intent on a website, resolves the leads who engage (including freemail hand-raisers, by enriching the signal they give and asking in the conversation), then qualifies, scores, routes, books, and writes every inbound lead back to the CRM, across web form, email, chat, and phone. Built for HubSpot, works with any CRM. Company-level identification across traffic; person-level on US traffic only, by design. Marketing generates the demand. Reps close the deals. LUPO runs everything in between.
 
-Last updated: 2026-06-11
+Last updated: 2026-06-16
 
 ## Who LUPO is for
 
-LUPO is for whoever owns inbound: sales, marketing, or RevOps. B2B teams that pay to generate demand and then leak it at the front door: calls that ring out, demo forms answered the next day, chats that die after the widget, junk leads eating rep time. Reps spend under a third of the week actually selling (Salesforce, State of Sales) and 73% of B2B leads arrive before they are sales-ready (MarketingSherpa). LUPO is the qualification layer that fixes both: noise filtered out, real buyers answered inside a minute and booked.
+LUPO is for whoever owns inbound: sales, marketing, or RevOps. B2B teams that pay to generate demand and then leak it at the front door: calls that ring out, demo forms answered the next day, chats that die after the widget, junk leads eating rep time. Reps spend under a third of the week actually selling (Salesforce, State of Sales) and 73% of B2B leads arrive before they are sales-ready (MarketingSherpa). LUPO is the AI inbound SDR that fixes both: it identifies the companies showing intent, resolves the leads who engage, filters the noise, and answers and books real buyers inside a minute.
 
 Primary buyers: heads of sales, heads of marketing and demand gen, RevOps leaders, and founders of B2B companies with real inbound volume, on HubSpot, Salesforce, or any CRM.
 
 ## What LUPO does
 
+- **Visitor identification.** Sees which companies are showing intent on your site, with evidence attached. Person-level identification on US traffic only, by design. Resolves the leads who engage, including freemail and personal-email hand-raisers, by enriching the signal they give and, when needed, asking in the conversation. No cold identification of strangers: LUPO resolves the people who came to you.
 - **Web forms.** Channel-aware: high-intent forms get a callback inside sixty seconds; senior B2B buyers get a personal email reply instead (LUPO will never surprise-call a VP). Gated-content forms count. https://lupolabs.ai/channels/web-forms/
 - **Inbound email.** Agentic email qualification: personal replies with a one-click booking link, two-way, same qualification policy as every channel. https://lupolabs.ai/channels/inbound-email/
 - **Chat.** LUPO's own proactive chat agent engages visitors on landing, qualifies, and books in-chat (it runs live on lupolabs.ai). Or your existing widget (Intercom, Drift, HubSpot Chat, or custom) hands off and LUPO books inside the same chat. https://lupolabs.ai/channels/chat/
@@ -30,7 +31,7 @@ Public and stated upfront: 3,000 to 15,000 USD per month depending on inbound vo
 
 ## Positioning
 
-LUPO is an AI inbound SDR: it makes real-time decisions about which question to ask, when to check the calendar, when to book, when to escalate to a human, and when to close politely. It is a qualification layer, with chat as one intake of four. It does no cold outbound. Outbound AI SDRs (11x, Artisan, Regie) and voice-only receptionists (Air, PolyAI) solve different jobs; chat widgets (Intercom, Drift heritage, HubSpot Chat) can hand off to LUPO, or LUPO's own proactive chat agent runs the conversation end to end. The closest comparisons are Qualified (Piper), built for the Salesforce ecosystem, and Spara, the most direct competitor; the two compete head-on on instant engagement, and LUPO is the CRM-flexible option with native HubSpot support, live phone coverage, and enrichment plus buying-intent scoring on every lead. Honest comparisons: https://lupolabs.ai/compare/
+LUPO is an AI inbound SDR: it makes real-time decisions about which question to ask, when to check the calendar, when to book, when to escalate to a human, and when to close politely. It identifies the companies showing intent on your site, resolves the leads who engage across web form, email, chat, and phone, and runs the whole job end to end: qualify, score, route, book, and write back to the CRM, with buyer intelligence built in. It does no cold outbound. Outbound AI SDRs (11x, Artisan, Regie) and voice-only receptionists (Air, PolyAI) solve different jobs; chat widgets (Intercom, Drift heritage, HubSpot Chat) can hand off to LUPO, or LUPO's own proactive chat agent runs the conversation end to end. Warmly is a horizontal visitor-identification and chat layer; LUPO uses identity as an input and then does the full inbound SDR job, and is HubSpot-native. Qualified (and its agent, Piper) was acquired by Salesforce, completed 1 April 2026, and its future is Agentforce on the Salesforce platform; if you run HubSpot, that is now a Salesforce-platform product, and LUPO is the HubSpot-native option. Spara is the most direct head-on competitor on instant engagement. LUPO is the CRM-flexible option with native HubSpot support, live phone coverage, visitor identification, and enrichment plus buying-intent scoring on every lead. Honest comparisons: https://lupolabs.ai/compare/
 
 ## Key pages
 

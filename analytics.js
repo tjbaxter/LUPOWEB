@@ -50,7 +50,7 @@
   posthog.init(POSTHOG_KEY, {
     api_host: POSTHOG_HOST,
     defaults: '2026-05-30',              // PostHog's current recommended defaults bundle
-    person_profiles: "identified_only",  // cheaper: only create profiles once Warmly/forms identify a visitor
+    person_profiles: "identified_only",  // cheaper: only create profiles once a form/identify call names a visitor
     capture_pageleave: true,             // time-on-page / bounce
     session_recording: { maskAllInputs: true } // mask email/company in the waitlist form
   });
