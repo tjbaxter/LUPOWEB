@@ -82,6 +82,17 @@
     return null;
   }
 
+  // Campaign source from the URL (?utm_source=...). The referrer alone misses
+  // tagged links whose referrer is stripped — e.g. ChatGPT app links arrive
+  // with no referrer but carry utm_source=chatgpt.com. Sent so the Telegram
+  // ping can show the real source.
+  function utmSource() {
+    try {
+      var v = new URLSearchParams(location.search).get("utm_source");
+      return v ? v.slice(0, 100) : null;
+    } catch (e) { return null; }
+  }
+
   var now = Date.now();
   var page = location.pathname;
 
@@ -140,7 +151,7 @@
     if (visitSent) return;
     visitSent = true;
     set("lupo_vr_visit", "1");
-    send("/visit", { sid: sid, page: page, ref: document.referrer || null, replay: posthogReplayUrl() }, false);
+    send("/visit", { sid: sid, page: page, ref: document.referrer || null, utm: utmSource(), replay: posthogReplayUrl() }, false);
   }
   setTimeout(fireVisit, 5000);
   window.addEventListener("scroll", fireVisit, { once: true, passive: true });
