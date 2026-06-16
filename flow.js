@@ -142,7 +142,7 @@
             steps.push({ fn: function () {
                 fadeAll();
                 if (!marks) computeGeom();
-                setChip(chipCompany, 'reverse-IP · matching');
+                setChip(chipCompany, chan === 'Phone' ? 'caller ID · matching' : 'reverse-IP · matching');
                 setChip(chipChan, chan + ' · in seconds');
                 setChip(chipSig, STATIC_SIG);
                 setChip(chipJunk, POLICY);
