@@ -59,9 +59,14 @@
 @keyframes lfin { from { opacity: 0; transform: translateY(12px); } }
 .lf-band.lf-static .lf-pill, .lf-band.lf-static .lf-chip { animation: none; }
 
-.lf-note { text-align: right; margin: 10px 0 0; font-size: 13px; }
+.lf-note { text-align: right; margin: 6px 0 0; font-size: 13px; }
 .lf-note a { color: #8e8e93; text-decoration: none; transition: color 0.2s ease; }
 .lf-note a:hover { color: #f5f5f7; }
+
+/* Running tally: the noise-suppression wedge made literal. Filtered (amber) leads booked (blue). */
+.lf-tally { margin: 16px 0 0; font-size: 13px; letter-spacing: 0.01em; color: #6f6f76; font-variant-numeric: tabular-nums; }
+.lf-tally-bad { color: #ff9f0a; font-weight: 600; }
+.lf-tally-ok { color: #2997ff; font-weight: 600; }
 
 /* Desktop: rising trajectory. Pills positioned in viewBox space (1200 x 275, y offset 175). */
 @media (min-width: 841px) {

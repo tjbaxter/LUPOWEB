@@ -17,11 +17,15 @@
         { who: 'TalentBridge Staffing · 60 staff', why: 'Recruiter, not a buyer' },
         { who: 'GrowthLoop Agency · 18 staff', why: 'Vendor pitch' }
     ];
-    var POLICY = 'against your policy';
+    var POLICY = 'against your ICP';
     var STATIC_CHAN = 'Any channel · in seconds';
     var STATIC_SIG = 'Funding · Hiring · M&A';
     var STATIC_ID = 'Company · + person (US)';
     var STAGE_X = [70, 250, 430, 615, 800, 985, 1140];
+    /* Loop order: junk-dominant on purpose. Most inbound is noise, so the filter is the
+       visible headline, not a footnote. Real buyers (0 company, 1 person-US, 3 freemail)
+       interleave with junk (2). */
+    var SEQ = [0, 2, 1, 2, 3, 2, 2];
 
     function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
 
@@ -38,6 +42,12 @@
         var chipChan = band.querySelector('[data-chip="chan"]');
         var chipSig = band.querySelector('[data-chip="signal"]');
         var chipJunk = band.querySelector('[data-chip="junk"]');
+        var tallyBad = band.querySelector('.lf-tally-bad');
+        var tallyOk = band.querySelector('.lf-tally-ok');
+        function renderTally(f, b) {
+            if (tallyBad) tallyBad.textContent = 'Filtered ' + f;
+            if (tallyOk) tallyOk.textContent = 'Booked ' + b;
+        }
         if (!main || !junkPath || !dotg || !stages['6'] || !stages['7']) return;
 
         function setRect(rect, w) { if (rect) rect.setAttribute('width', w); }
@@ -50,6 +60,7 @@
             chipChan.textContent = STATIC_CHAN;
             chipSig.textContent = STATIC_SIG;
             chipJunk.textContent = POLICY;
+            renderTally(3, 2);
             [chipCompany, chipChan, chipSig, chipJunk].forEach(function (c) { c.classList.remove('lf-hide'); });
             setRect(rectA, 1200);
             setRect(rectB, 1200);
@@ -111,12 +122,12 @@
             setRect(rectB, 0);
         }
 
-        /* Timeline. Each loop is one of four variants, cycled:
-           0 company-level reveal, 1 person-level (US), 2 junk (filtered),
-           3 freemail signup the agent resolves by asking. */
-        var loopIdx = 0, qCount = 0, jCount = 0, cCount = 0;
+        /* Timeline. Loop order is SEQ (junk-dominant: most inbound is noise, so the filter
+           is the visible headline). Variants: 0 company reveal, 1 person (US), 2 junk
+           (filtered), 3 freemail resolved by asking. Tally accumulates filtered vs booked. */
+        var loopIdx = 0, qCount = 0, jCount = 0, cCount = 0, bookedN = 0, filteredN = 0;
         function buildSteps() {
-            var variant = loopIdx % 4;
+            var variant = SEQ[loopIdx % SEQ.length];
             var isJunk = variant === 2;
             var isFree = variant === 3;
             var chan = isFree ? 'Web form' : CHANNELS[loopIdx % 4];
@@ -177,7 +188,7 @@
                 steps.push({ ms: 560 });
                 steps.push({ seg: [5, 6], ms: 1000 });
                 /* Beat 6 written to CRM */
-                steps.push({ fn: function () { light('6'); dotg.classList.remove('lf-show'); qCount++; if (!isFree) cCount++; } });
+                steps.push({ fn: function () { light('6'); dotg.classList.remove('lf-show'); qCount++; if (!isFree) cCount++; bookedN++; renderTally(filteredN, bookedN); } });
                 steps.push({ ms: 1700 });
             } else {
                 /* Junk: identified, then caught at Qualified and filtered out */
@@ -188,7 +199,7 @@
                 } });
                 steps.push({ ms: 920 });
                 steps.push({ junk: true, ms: 950 });
-                steps.push({ fn: function () { flag('7'); dotg.classList.remove('lf-show'); jCount++; } });
+                steps.push({ fn: function () { flag('7'); dotg.classList.remove('lf-show'); jCount++; filteredN++; renderTally(filteredN, bookedN); } });
                 steps.push({ ms: 1700 });
             }
             steps.push({ fn: fadeAll });
