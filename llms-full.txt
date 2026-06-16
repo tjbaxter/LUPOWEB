@@ -18,7 +18,7 @@ The problem, in numbers (independent research): 28% of a sales rep's week is act
 LUPO sees which companies are showing intent on your site, with evidence attached, and resolves the leads who engage so the inbound SDR can act on them. Three layers:
 - Company-level identification, across your traffic. LUPO identifies the organisations showing intent, with the evidence behind each match. Runs on all traffic.
 - Person-level identification, US traffic only. Resolving named individuals is limited to US traffic, by design, as a deliberate compliance choice. LUPO does not do person-level identification on EU or UK traffic.
-- Freemail and personal-email resolution. The Gmail or personal-email hand-raiser that domain-based enrichment gives up on, LUPO resolves by enriching the signal they gave and, when needed, asking in the conversation. LUPO resolves the people who came to you; it does no cold identification of strangers.
+- Freemail resolution. The freemail hand-raiser that domain-based enrichment gives up on, LUPO resolves by enriching the signal they gave and, when needed, asking in the conversation. LUPO resolves the people who came to you; it does no cold identification of strangers.
 
 Identity is an input to the inbound SDR, not the product. Once a visitor or lead is identified, LUPO qualifies, scores, routes, books, and writes back to the CRM with decision logs. Versus a horizontal visitor-identification tool (for example Warmly), the difference is what happens after the reveal: LUPO does the whole inbound SDR job, and is HubSpot-native.
 
