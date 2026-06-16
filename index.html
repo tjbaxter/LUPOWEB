@@ -2046,7 +2046,7 @@
     <script src="/visit-radar.js?v=2" defer></script>
     <script src="/aurora.js?v=20"></script>
     <link rel="stylesheet" href="/flow.css?v=4">
-    <script src="/flow.js?v=5" defer></script>
+    <script src="/flow.js?v=6" defer></script>
     <!-- ===== MOBILE DIGESTIBILITY PASS (<=768px) =========================
          Most LinkedIn traffic lands here on a phone and scans for <60s, so the
          goal is fewer words per screen and less dead scroll. Desktop is left
@@ -2126,10 +2126,10 @@
             </h1>
 
             <p class="subtitle lx-desk">
-                LUPO is the AI inbound SDR built for HubSpot, and ready for any CRM. It sees the companies showing intent on your site, resolves the leads who reach out, qualifies them across web form, email, chat, and phone, filters the junk, and books only real buyers, with the full reasoning written back to your CRM.
+                LUPO is the AI inbound SDR built for HubSpot. It sees the companies showing intent on your site, resolves the leads who reach out, qualifies them across web form, email, chat, and phone, filters the junk, and books only real buyers, with the full reasoning written back to your CRM.
             </p>
             <p class="subtitle lx-mob">
-                Knows which companies are on your site. The AI inbound SDR built for HubSpot, ready for any CRM. It resolves the leads who reach out, filters the junk, and books real buyers into your reps' calendars.
+                The AI inbound SDR built for HubSpot. It sees the companies showing intent, qualifies the leads who reach out across web form, email, chat, and phone, filters the junk, and books only real buyers.
             </p>
 
             <!-- Book a demo is the single focal CTA of the hero. -->
@@ -2179,16 +2179,16 @@
     <section class="page-section">
         <div class="statement">
             <h2>Marketing generates the demand.<br>Reps close the deals.<br>LUPO runs everything in between.</h2>
-            <p class="lx-desk">Every call, form fill, email and chat answered in seconds, qualified against your ICP, enriched, scored, and booked or routed. Nothing leaks and no rep time goes to triage. Run it from sales, marketing or RevOps, wherever inbound lives in your org.</p>
-            <p class="lx-mob">Every lead answered in seconds, qualified, enriched, and booked or routed. Nothing leaks. No rep time lost to triage.</p>
+            <p class="lx-desk">Every call, form fill, email and chat answered in seconds, enriched, qualified against your ICP, scored on fit and intent, and booked or routed. Nothing leaks and no rep time goes to triage. Run it from sales, marketing or RevOps, wherever inbound lives in your org.</p>
+            <p class="lx-mob">Every lead answered in seconds, enriched, qualified, and booked or routed. Nothing leaks. No rep time lost to triage.</p>
         </div>
 
-        <!-- lupo-flow: the pipeline, animated. Qualified leads reach the calendar;
-             every third loop is junk and exits at Qualification. The filter is the
-             feature: no competitor shows a lead being turned away.
+        <!-- lupo-flow: the pipeline, animated. Real buyers reach the calendar; the loop
+             is junk-dominant and opens on junk, which exits at Qualification. The filter
+             is the feature. Enrichment lands at Identify; the late beat is the score.
              Shared assets /flow.css + /flow.js; same band embeds on /inbound-sdr/. -->
         <div class="lf-band">
-            <p class="lf-sr">How LUPO works, and what it filters out: most inbound is noise. An anonymous visitor arrives; LUPO identifies the company behind the visit, the person on US traffic, and resolves personal-email signups by asking in the conversation. It engages in seconds across web form, email, chat, or phone and qualifies against your ICP. Vendor pitches, recruiters, and out-of-fit inbound are filtered out and never reach a rep. Only real buyers are enriched, scored against live buying signals, booked into a rep's calendar, and written to your CRM with contact, score, and transcript.</p>
+            <p class="lf-sr">How LUPO works, and what it filters out: most inbound is noise. An anonymous visitor arrives; LUPO identifies and enriches the company behind the visit, the person on US traffic, and resolves personal-email signups by asking in the conversation. It engages in seconds across web form, email, chat, or phone and qualifies against your ICP. Vendor pitches, recruiters, and out-of-fit inbound are filtered out and never reach a rep. Real buyers are scored on fit and intent, booked into a rep's calendar, and written to your CRM with contact, score, and transcript.</p>
             <div class="lf-inner" aria-hidden="true">
                 <div class="lf-canvas">
                     <svg class="lf-svg" viewBox="0 175 1200 275" preserveAspectRatio="xMidYMid meet" focusable="false">
@@ -2203,10 +2203,10 @@
                         <g class="lf-dotg" transform="translate(70 397)"><circle class="lf-halo2" r="16"/><circle class="lf-halo" r="9"/><circle class="lf-dot" r="4.5"/></g>
                     </svg>
                     <div class="lf-stage" data-s="0" style="--x:70;--y:397;--i:0"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Someone arrives</span></span><span class="lf-chip">Anonymous visitor</span></div>
-                    <div class="lf-stage" data-s="1" style="--x:250;--y:387;--i:1"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Identified</span></span><span class="lf-chip" data-chip="company">reverse-IP &middot; matching</span></div>
+                    <div class="lf-stage" data-s="1" style="--x:250;--y:387;--i:1"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Identified &amp; enriched</span></span><span class="lf-chip" data-chip="company">reverse-IP &middot; matching</span></div>
                     <div class="lf-stage" data-s="2" style="--x:430;--y:369;--i:2"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Engaged</span></span><span class="lf-chip" data-chip="chan">Web form &middot; in seconds</span></div>
                     <div class="lf-stage" data-s="3" style="--x:615;--y:342;--i:3"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Qualified</span></span><span class="lf-chip" data-chip="junk">against your ICP</span></div>
-                    <div class="lf-stage" data-s="4" style="--x:800;--y:306;--i:4"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Enriched &amp; scored</span></span><span class="lf-chip" data-chip="signal">Funding &middot; Hiring &middot; M&amp;A</span></div>
+                    <div class="lf-stage" data-s="4" style="--x:800;--y:306;--i:4"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Scored</span></span><span class="lf-chip" data-chip="signal">Fit + intent</span></div>
                     <div class="lf-stage" data-s="5" style="--x:985;--y:258;--i:5"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Booked</span></span><span class="lf-chip">on the rep's calendar</span></div>
                     <div class="lf-stage" data-s="6" style="--x:1140;--y:208;--i:6"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">CRM updated</span></span><span class="lf-chip">contact &middot; score &middot; transcript</span></div>
                     <div class="lf-stage" data-s="7" style="--x:773;--y:418;--i:7"><span class="lf-pill"><span class="lf-pin"></span><span class="lf-label">Filtered out</span></span><span class="lf-chip">never reaches a rep</span></div>
@@ -2246,7 +2246,7 @@
                 <div class="packet-copy">
                     <div class="section-eyebrow">What sales actually sees</div>
                     <h2 class="section-heading">Your reps only see the meetings worth taking.</h2>
-                    <p class="section-lede">Every interaction becomes a structured packet: buyer context, qualification, routing decision. Reps don't join blind. Managers get the audit trail.</p>
+                    <p class="section-lede">Every interaction becomes a structured packet: who they are, why they fit, their intent, and the objections that came up. Reps don't join blind. Managers get the audit trail.</p>
                 </div>
                 <div class="packet-mock" role="img" aria-label="Sample qualified buyer packet">
                     <div class="packet-header">

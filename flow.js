@@ -1,15 +1,17 @@
 /* LUPO flow animation: the full inbound path, lit as a lead travels it.
-   Someone arrives anonymous -> LUPO identifies the company (and the person, on
-   US traffic) -> engages -> qualifies -> enriches and scores -> books -> writes
-   to the CRM. Every 4th loop is a freemail signup the agent resolves by asking;
-   every junk loop is caught at Qualified and exits amber to the filtered terminal.
+   Someone arrives anonymous -> LUPO identifies AND enriches the company (plus the
+   person, on US traffic) the instant identity resolves -> engages -> qualifies ->
+   scores fit and intent -> books -> writes to the CRM. Enrichment lands up front at
+   identification, not at the end; the late beat is the score. One loop in four is a
+   freemail signup the agent resolves by asking; junk loops are caught at Qualified
+   and exit amber to the filtered terminal. The loop is junk-dominant and opens on
+   junk on purpose: most inbound is noise, so the filter is the visible headline.
    No dependencies. Pauses off-screen. Reduced motion = static labelled diagram. */
 (function () {
     'use strict';
 
     var CHANNELS = ['Web form', 'Email', 'Chat', 'Phone'];
     var IDENT = ['Vantage Logistics · 140 staff', 'Northwind SaaS · 320 staff', 'Crestpoint Capital · 90 staff'];
-    var SIGNALS = ['Funding raised', 'Hiring spike', 'M&A news'];
     /* Junk has its OWN identities: the agencies and recruiters that actually clog inbound,
        paired so the reveal and the filter reason stay coherent (a real buyer is never the vendor). */
     var JUNK = [
@@ -19,13 +21,14 @@
     ];
     var POLICY = 'against your ICP';
     var STATIC_CHAN = 'Any channel · in seconds';
-    var STATIC_SIG = 'Funding · Hiring · M&A';
+    var STATIC_SIG = 'Fit + intent';
     var STATIC_ID = 'Company · + person (US)';
     var STAGE_X = [70, 250, 430, 615, 800, 985, 1140];
-    /* Loop order: junk-dominant on purpose. Most inbound is noise, so the filter is the
-       visible headline, not a footnote. Real buyers (0 company, 1 person-US, 3 freemail)
-       interleave with junk (2). */
-    var SEQ = [0, 2, 1, 2, 3, 2, 2];
+    /* Loop order: junk-dominant AND junk-first on purpose. Most inbound is noise, so the
+       very first thing shown is a lead being filtered out, and the filter stays the visible
+       headline. Real buyers (0 company, 1 person-US, 3 freemail) interleave with junk (2):
+       four filtered to three booked per cycle. */
+    var SEQ = [2, 0, 2, 1, 2, 3, 2];
 
     function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
 
@@ -60,7 +63,7 @@
             chipChan.textContent = STATIC_CHAN;
             chipSig.textContent = STATIC_SIG;
             chipJunk.textContent = POLICY;
-            renderTally(3, 2);
+            renderTally(4, 3);
             [chipCompany, chipChan, chipSig, chipJunk].forEach(function (c) { c.classList.remove('lf-hide'); });
             setRect(rectA, 1200);
             setRect(rectB, 1200);
@@ -179,8 +182,8 @@
                 steps.push({ fn: function () { light('3'); } });
                 steps.push({ ms: 600 });
                 steps.push({ seg: [3, 4], ms: 1000 });
-                /* Beat 4 enrich & score */
-                steps.push({ fn: function () { light('4'); setChip(chipSig, SIGNALS[qCount % 3]); } });
+                /* Beat 4 score: fit + intent, two axes. Enrichment already happened at identify. */
+                steps.push({ fn: function () { light('4'); } });
                 steps.push({ ms: 680 });
                 steps.push({ seg: [4, 5], ms: 1000 });
                 /* Beat 5 book */
