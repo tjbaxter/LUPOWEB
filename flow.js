@@ -11,6 +11,10 @@
     'use strict';
 
     var CHANNELS = ['Web form', 'Email', 'Chat', 'Phone'];
+    /* Beat-2 verb is channel-honest: chat/phone are live exchanges (Engaged/Answered);
+       a web form or email is received and acted on, never "engaged". Neutral "Captured"
+       covers the static "Any channel" state. One canonical path, true word per channel. */
+    var ENGAGE_VERB = { 'Web form': 'Received', 'Email': 'Received', 'Chat': 'Engaged', 'Phone': 'Answered' };
     var IDENT = ['Vantage Logistics · 140 staff', 'Northwind SaaS · 320 staff', 'Crestpoint Capital · 90 staff'];
     /* Junk has its OWN identities: the agencies and recruiters that actually clog inbound,
        paired so the reveal and the filter reason stay coherent (a real buyer is never the vendor). */
@@ -41,6 +45,8 @@
         var stages = {};
         var nodes = band.querySelectorAll('.lf-stage');
         for (var i = 0; i < nodes.length; i++) stages[nodes[i].getAttribute('data-s')] = nodes[i];
+        var engageLabel = stages['2'] ? stages['2'].querySelector('.lf-label') : null;
+        var arriveChip = stages['0'] ? stages['0'].querySelector('.lf-chip') : null;
         var chipCompany = band.querySelector('[data-chip="company"]');
         var chipChan = band.querySelector('[data-chip="chan"]');
         var chipSig = band.querySelector('[data-chip="signal"]');
@@ -63,6 +69,8 @@
             chipChan.textContent = STATIC_CHAN;
             chipSig.textContent = STATIC_SIG;
             chipJunk.textContent = POLICY;
+            if (engageLabel) engageLabel.textContent = 'Captured';
+            if (arriveChip) arriveChip.textContent = 'Anonymous visitor';
             renderTally(4, 3);
             [chipCompany, chipChan, chipSig, chipJunk].forEach(function (c) { c.classList.remove('lf-hide'); });
             setRect(rectA, 1200);
@@ -146,6 +154,8 @@
                 setChip(chipChan, chan + ' · in seconds');
                 setChip(chipSig, STATIC_SIG);
                 setChip(chipJunk, POLICY);
+                if (engageLabel) engageLabel.textContent = ENGAGE_VERB[chan] || 'Captured';
+                if (arriveChip) arriveChip.textContent = chan === 'Phone' ? 'Unknown caller' : 'Anonymous visitor';
                 if (marks) dotMove(main, 0, rectA);
                 dotg.classList.add('lf-show');
                 light('0');
