@@ -398,20 +398,12 @@
             background-clip: text;
         }
         
-        /* Hero eyebrow: small centred pill carrying the HubSpot-native wedge in
-           words, above the H1. Words only (no logo); the sprocket lives in the
-           strip below. Subtle orange tint so it reads HubSpot without a loud badge. */
-        .hero-pill-row { text-align: center; margin-bottom: 26px; opacity: 0; animation: fadeInUp 1s ease 0.05s forwards; }
-        .hero-pill {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 8px 15px; border-radius: 999px;
-            font-size: 14px; font-weight: 600; letter-spacing: 0.01em;
-            background: rgba(255, 122, 89, 0.08);
-            border: 1px solid rgba(255, 122, 89, 0.24);
-            color: rgba(255, 255, 255, 0.84);
-        }
-        .hero-pill-dot { width: 7px; height: 7px; border-radius: 50%; background: #FF7A59; flex: none; box-shadow: 0 0 8px rgba(255, 122, 89, 0.6); }
-        @media (max-width: 700px) { .hero-pill { font-size: 12.5px; padding: 7px 13px; } .hero-pill-row { margin-bottom: 20px; } }
+        /* Hero eyebrow: plain low-contrast text above the H1, in the page's own
+           palette (no pill, no border, no orange) so it reads as designed, not a
+           sticker stuck on top. It names the category before the H1; the HubSpot
+           brand colour lives only on the sprocket in the strip below. */
+        .hero-eyebrow-txt { text-align: center; font-size: 14px; font-weight: 500; letter-spacing: 0.01em; color: rgba(255, 255, 255, 0.58); margin: 0 0 20px; opacity: 0; animation: fadeInUp 1s ease 0.05s forwards; }
+        @media (max-width: 700px) { .hero-eyebrow-txt { font-size: 12.5px; margin-bottom: 16px; } }
 
         .subtitle {
             font-size: 24px;
@@ -1969,7 +1961,7 @@
         .hi-native:hover .hi-native-word { color: #ffffff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.9), 0 0 24px rgba(255, 255, 255, 0.5); }
         .hi-native:hover .hi-spr { opacity: 1; filter: brightness(1.4) saturate(1.55) drop-shadow(0 0 7px rgba(255, 120, 75, 1)) drop-shadow(0 0 17px rgba(255, 108, 66, 0.75)); }
         .hi-native:focus-visible { outline: 2px solid #8ab4ff; outline-offset: 4px; }
-        .hi-spr { display: block; width: 22px; height: 22px; flex: none; opacity: 0.9; transform-origin: center; transition: opacity 0.2s ease, filter 0.22s ease; }
+        .hi-spr { display: block; width: 20px; height: 20px; flex: none; opacity: 0.65; transform-origin: center; transition: opacity 0.2s ease, filter 0.22s ease; }
         @media (prefers-reduced-motion: reduce) { .hi-native:hover { transform: none; } }
         .hi-native-word {
             font-size: 14.5px;
@@ -2137,9 +2129,7 @@
                  the headline is the single focal point, and a quiet integration
                  strip below (mirrors the LinkedIn banner) lands the HubSpot
                  self-ID and reassures every other CRM in the same glance. -->
-            <div class="hero-pill-row">
-                <span class="hero-pill"><span class="hero-pill-dot" aria-hidden="true"></span>HubSpot-native AI inbound SDR</span>
-            </div>
+            <p class="hero-eyebrow-txt">HubSpot-native AI inbound SDR</p>
             <h1>
                 Inbound sales, <span class="gradient-text">fully automated.</span>
             </h1>
@@ -2170,12 +2160,13 @@
             </div>
 
             <!-- One integration strip (mirrors the LinkedIn banner): HubSpot
-                 sprocket (logo only; the "HubSpot-native" word now lives in the
-                 eyebrow above the H1), a divider, then "works with" the key stack
-                 logos + any CRM. The ONLY integration UI on the page. -->
+                 sprocket + "native", a divider, then "works with" the key stack
+                 logos + any CRM. The ONLY integration UI on the page, and the
+                 only place the HubSpot orange appears. -->
             <div class="hero-integrations">
                 <a class="hi-native" href="/hubspot/" aria-label="Native to HubSpot. See how LUPO is built for HubSpot.">
                     <svg class="hi-spr" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF7A59" d="M18.164 7.93V5.084a2.198 2.198 0 001.267-1.978v-.067A2.2 2.2 0 0017.238.845h-.067a2.2 2.2 0 00-2.193 2.193v.067a2.196 2.196 0 001.252 1.973l.013.006v2.852a6.22 6.22 0 00-2.969 1.31l.012-.01-7.828-6.095A2.497 2.497 0 104.3 4.656l-.012.006 7.697 5.991a6.176 6.176 0 00-1.038 3.446c0 1.343.425 2.588 1.147 3.607l-.013-.02-2.342 2.343a1.968 1.968 0 00-.58-.095h-.002a2.033 2.033 0 102.033 2.033 1.978 1.978 0 00-.1-.595l.005.014 2.317-2.317a6.247 6.247 0 104.782-11.134l-.036-.005zm-.964 9.378a3.206 3.206 0 113.215-3.207v.002a3.206 3.206 0 01-3.207 3.207z"/></svg>
+                    <span class="hi-native-word">native</span>
                 </a>
                 <span class="hi-div" aria-hidden="true"></span>
                 <span class="hi-works">works with</span>
