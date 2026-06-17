@@ -1955,7 +1955,7 @@
         .hi-native:hover .hi-spr { opacity: 1; filter: brightness(1.4) saturate(1.55) drop-shadow(0 0 7px rgba(255, 120, 75, 1)) drop-shadow(0 0 17px rgba(255, 108, 66, 0.75)); }
         .hi-native:focus-visible { outline: 2px solid #8ab4ff; outline-offset: 4px; }
         .hi-spr { display: block; width: 20px; height: 20px; flex: none; opacity: 0.65; transform-origin: center; transition: opacity 0.2s ease, filter 0.22s ease; }
-        @media (prefers-reduced-motion: reduce) { .hi-native:hover { transform: none; } }
+        @media (prefers-reduced-motion: reduce) { .hi-native:hover, .hi-logos img:hover { transform: none; } }
         .hi-native-word {
             font-size: 14.5px;
             font-weight: 600;
@@ -1976,16 +1976,28 @@
                HubSpot 'native' lockup is the bright focal point. */
             color: rgba(255, 255, 255, 0.34);
         }
+        /* '+ any CRM' is a link to the integrations index: muted at rest like the
+           rest of the stack, brightens + glows on hover, no underline. */
+        .hi-anycrm { text-decoration: none; cursor: pointer; color: rgba(255, 255, 255, 0.62); transition: color 0.2s ease, text-shadow 0.2s ease; }
+        .hi-anycrm:hover { color: rgba(255, 255, 255, 0.9); text-shadow: 0 0 9px rgba(255, 255, 255, 0.5); }
+        .hi-anycrm:focus-visible { outline: 2px solid #8ab4ff; outline-offset: 3px; border-radius: 5px; }
         .hi-logos { display: inline-flex; align-items: center; gap: 18px; }
         .hi-logos img {
             height: 18px;
             width: auto;
             opacity: 0.45;
             filter: brightness(0) invert(1);
-            transition: opacity 0.2s ease;
+            transform-origin: center;
+            transition: opacity 0.2s ease, transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
         }
         .hi-logos img[alt="Salesforce"] { height: 20px; }
-        .hi-logos img:hover { opacity: 0.65; }
+        /* Hover: each logo lights to full white, expands, and gains a clean white glow
+           — mirroring the HubSpot 'native' lockup's glow-and-expand. */
+        .hi-logos img:hover {
+            opacity: 1;
+            transform: scale(1.18);
+            filter: brightness(0) invert(1) drop-shadow(0 0 6px rgba(255, 255, 255, 0.85)) drop-shadow(0 0 13px rgba(255, 255, 255, 0.4));
+        }
         .btn-primary:focus-visible,
         .btn-secondary:focus-visible {
             outline: 2px solid #8ab4ff;
@@ -1999,6 +2011,9 @@
         html.aurora .hi-anycrm { color: rgba(20, 24, 35, 0.42); }
         html.aurora .hi-div { background: rgba(20, 24, 35, 0.14); }
         html.aurora .hi-logos img { filter: brightness(0); opacity: 0.42; }
+        html.aurora .hi-logos img:hover { opacity: 1; filter: brightness(0) drop-shadow(0 0 6px rgba(20, 24, 35, 0.35)); }
+        html.aurora .hi-anycrm { color: rgba(20, 24, 35, 0.7); }
+        html.aurora .hi-anycrm:hover { color: rgba(20, 24, 35, 0.92); text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
         /* Mobile: wrap gracefully, stay centered, drop the divider */
         @media (max-width: 560px) {
             .hero-integrations { gap: 9px 14px; }
@@ -2168,7 +2183,7 @@
                     <img src="/logos/integrations/microsoftoutlook.svg" alt="Outlook" decoding="async">
                     <img src="/logos/integrations/gmail.svg" alt="Gmail" decoding="async">
                 </span>
-                <span class="hi-anycrm">+ any CRM</span>
+                <a class="hi-anycrm" href="/integrations/" aria-label="See all LUPO integrations">+ any CRM</a>
             </div>
 
             <div class="trust-strip">
