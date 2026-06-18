@@ -2853,7 +2853,9 @@
         .mc-input{display:flex;align-items:center;gap:7px;padding:10px 12px;border-top:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);}
         .mc-ico{width:26px;height:26px;flex:none;border-radius:999px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.8);display:flex;align-items:center;justify-content:center;}
         .mc-ico svg{width:14px;height:14px;}
-        .mc-field{flex:1;padding:7px 12px;border-radius:14px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);font-size:12px;white-space:nowrap;overflow:hidden;}
+        .mc-field{position:relative;flex:1;min-height:30px;border-radius:14px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.05);font-size:12px;overflow:visible;}
+        .mc-field-text{position:absolute;inset:0;display:flex;align-items:center;padding:0 12px;color:rgba(255,255,255,0.5);white-space:nowrap;overflow:hidden;will-change:opacity,transform;}
+        .mc-field-canvas{position:absolute;left:0;top:0;pointer-events:none;opacity:0;}
         .mc-send{width:28px;height:28px;flex:none;border-radius:999px;background:#fff;color:#18181b;display:flex;align-items:center;justify-content:center;}
         .mc-send svg{width:14px;height:14px;}
         .mc-foot{padding:7px;text-align:center;font-size:9.5px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.06);}
@@ -2955,7 +2957,7 @@
                                 <div class="mc-input">
                                     <span class="mc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></span>
                                     <span class="mc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="22"/></svg></span>
-                                    <span class="mc-field">Ask LUPO anything</span>
+                                    <span class="mc-field"><span class="mc-field-text">How does LUPO drive revenue?</span><canvas class="mc-field-canvas" aria-hidden="true"></canvas></span>
                                     <span class="mc-send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg></span>
                                 </div>
                                 <div class="mc-foot">Honest AI &middot; no fake human</div>
@@ -3065,6 +3067,141 @@
                     else if (e.key === 'Home') { setPos(8); e.preventDefault(); }
                     else if (e.key === 'End') { setPos(92); e.preventDefault(); }
                 });
+            }
+
+            /* ---- launcher-style PIXEL DISSOLVE on the LUPO mock input: the signature
+                 effect from the real widget. The current question rasters to a canvas,
+                 samples into ~1.5px dust, and a left->right front clips the crisp text
+                 away as each column's dust is released to drift up + back and fade; the
+                 next question then fades up. Tuned smaller for the mock. ---- */
+            var fieldText = band.querySelector('.mc-field-text');
+            var fieldCanvas = band.querySelector('.mc-field-canvas');
+            if (fieldText && fieldCanvas && !reduce) {
+                var ROTATION = [
+                    'How does LUPO drive revenue?',
+                    'What can LUPO do for my team?',
+                    'How does LUPO qualify leads?',
+                    'Can I see LUPO live?'
+                ];
+                var dissolveBusy = false;
+                var pixelDissolve = function (textEl, canvas, fromText, toText) {
+                    var field = canvas.parentElement;
+                    var fw = Math.round(field ? field.clientWidth : 0);
+                    var fh = Math.round(field ? field.clientHeight : 0);
+                    var ctx = fw > 0 && fh > 0 ? canvas.getContext('2d') : null;
+                    if (!ctx) { textEl.textContent = toText; return; }
+                    dissolveBusy = true;
+                    var PAD_TOP = 42, PAD_X = 16, PAD_BOTTOM = 12;
+                    var w = fw + PAD_X * 2, h = fh + PAD_TOP + PAD_BOTTOM;
+                    var textX = PAD_X, textY = PAD_TOP + fh / 2 + 0.5;
+                    canvas.style.left = -PAD_X + 'px';
+                    canvas.style.top = -PAD_TOP + 'px';
+                    canvas.style.width = w + 'px';
+                    canvas.style.height = h + 'px';
+                    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+                    canvas.width = Math.round(w * dpr);
+                    canvas.height = Math.round(h * dpr);
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                    var cs = window.getComputedStyle(textEl);
+                    ctx.clearRect(0, 0, w, h);
+                    ctx.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+                    ctx.textBaseline = 'middle';
+                    ctx.textAlign = 'left';
+                    ctx.fillStyle = cs.color || 'rgba(255,255,255,0.6)';
+                    ctx.fillText(fromText, textX, textY);
+                    var textW = Math.max(1, ctx.measureText(fromText).width);
+                    textEl.style.transition = 'none';
+                    textEl.style.willChange = 'clip-path';
+                    canvas.style.opacity = '1';
+                    var img;
+                    try { img = ctx.getImageData(0, 0, canvas.width, canvas.height).data; }
+                    catch (_e) {
+                        textEl.textContent = toText; textEl.style.opacity = ''; textEl.style.transition = '';
+                        canvas.style.opacity = '0'; dissolveBusy = false; return;
+                    }
+                    var SAMPLE = 1.5, PSIZE = 1.5, SWEEP_MS = 320;
+                    var cw = canvas.width, chh = canvas.height, parts = [];
+                    for (var sy = 0; sy < chh; sy += SAMPLE) {
+                        var ry = Math.floor(sy);
+                        for (var sx = 0; sx < cw; sx += SAMPLE) {
+                            var rx = Math.floor(sx);
+                            var aa = img[(ry * cw + rx) * 4 + 3];
+                            if (aa < 24) continue;
+                            var cssx = rx / dpr;
+                            parts.push({
+                                dx: rx, dy: ry, a0: aa / 255,
+                                bright: 0.7 + Math.random() * 0.6,
+                                vx: (Math.random() * 1.5 - 1.05) * 30,
+                                vy: -(20 + Math.random() * 46),
+                                rel: Math.max(0, Math.min(1, (cssx - textX) / textW)) * SWEEP_MS,
+                                life: 420 + Math.random() * 240
+                            });
+                            if (parts.length > 6000) break;
+                        }
+                    }
+                    ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    ctx.clearRect(0, 0, cw, chh);
+                    var swapped = false, start = performance.now();
+                    function frame(now) {
+                        var t = now - start, crossed = t >= SWEEP_MS;
+                        if (!swapped) {
+                            textEl.style.clipPath = 'inset(0 0 0 ' + (Math.min(1, t / SWEEP_MS) * textW) + 'px)';
+                        }
+                        ctx.clearRect(0, 0, cw, chh);
+                        ctx.fillStyle = '#ffffff';
+                        var alive = crossed ? 0 : 1;
+                        for (var k = 0; k < parts.length; k++) {
+                            var p = parts[k];
+                            var age = t - p.rel;
+                            if (age < 0) continue;
+                            var prog = age / p.life;
+                            if (prog >= 1) continue;
+                            alive++;
+                            var inv = 1 - prog;
+                            ctx.globalAlpha = Math.min(1, p.a0 * p.bright) * inv * inv;
+                            ctx.fillRect(p.dx + p.vx * prog, p.dy + p.vy * prog, PSIZE, PSIZE);
+                        }
+                        ctx.globalAlpha = 1;
+                        if (!swapped && t > SWEEP_MS + 30) {
+                            swapped = true;
+                            textEl.textContent = toText;
+                            textEl.style.clipPath = 'none';
+                            textEl.style.transition = 'none';
+                            textEl.style.opacity = '0';
+                            textEl.style.transform = 'translateY(5px)';
+                            requestAnimationFrame(function () {
+                                textEl.style.transition = 'opacity 0.42s ease, transform 0.42s cubic-bezier(0.16,1,0.3,1)';
+                                textEl.style.opacity = '1';
+                                textEl.style.transform = 'translateY(0)';
+                            });
+                        }
+                        if (alive > 0) { requestAnimationFrame(frame); }
+                        else {
+                            ctx.clearRect(0, 0, cw, chh);
+                            canvas.style.opacity = '0';
+                            textEl.style.clipPath = '';
+                            textEl.style.willChange = '';
+                            textEl.style.transition = '';
+                            textEl.style.opacity = '';
+                            textEl.style.transform = '';
+                            dissolveBusy = false;
+                        }
+                    }
+                    requestAnimationFrame(frame);
+                };
+                var fieldVisible = false, ridx = 0;
+                var rotateOnce = function () {
+                    if (document.hidden || !fieldVisible || dissolveBusy) return;
+                    var from = fieldText.textContent;
+                    ridx = (ridx + 1) % ROTATION.length;
+                    pixelDissolve(fieldText, fieldCanvas, from, ROTATION[ridx]);
+                };
+                setInterval(rotateOnce, 3400);
+                if ('IntersectionObserver' in window && stage) {
+                    new IntersectionObserver(function (en) {
+                        en.forEach(function (e) { fieldVisible = e.isIntersecting; });
+                    }, { threshold: 0.3 }).observe(stage);
+                } else { fieldVisible = true; }
             }
 
             /* ---- speed race (LUPO 0.9s vs Fin 7.0s; ratio preserved, time-compressed) ---- */
