@@ -1939,7 +1939,7 @@
             animation: fadeInUpStrip 1s ease 0.6s forwards;
         }
         /* The strip fades in to FULL opacity. The shared fadeInUpSubtle caps at
-           0.5, which was halving every element in here — that's why 'native' could
+           0.5, which was halving every element in here, that's why 'native' could
            never read as bright as 'Backed by Deepgram'. Brightness is now controlled
            per-element below (native = full white, the rest stay muted). */
         @keyframes fadeInUpStrip {
@@ -1947,7 +1947,7 @@
             to   { opacity: 1; transform: translateY(0); }
         }
         .hi-native { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; border-radius: 8px; cursor: pointer; transform-origin: center; transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        /* Hover: the whole lockup — word AND sprocket — expands together and lights up
+        /* Hover: the whole lockup (word AND sprocket) expands together and lights up
            (mirrors the hello@lupolabs.ai email link in the footer). The word flares
            crisp white with a clean glow; the sprocket flares bright orange. */
         .hi-native:hover { transform: scale(1.12); }
@@ -1962,7 +1962,7 @@
             letter-spacing: -0.005em;
             /* Rest: muted gray, recessive like the rest of the strip. Because the strip
                now sits at FULL opacity, the hover jump to #fff reads as a true full-white
-               glow — not the half-bright it was when the whole strip was capped at 0.5. */
+               glow, not the half-bright it was when the whole strip was capped at 0.5. */
             color: rgba(255, 255, 255, 0.55);
             transition: color 0.22s ease, text-shadow 0.22s ease;
         }
@@ -1992,7 +1992,7 @@
         }
         .hi-logos img[alt="Salesforce"] { height: 20px; }
         /* Hover: each logo lights to full white, expands, and gains a clean white glow
-           — mirroring the HubSpot 'native' lockup's glow-and-expand. */
+           mirroring the HubSpot 'native' lockup's glow-and-expand. */
         .hi-logos img:hover {
             opacity: 1;
             transform: scale(1.18);
@@ -2078,7 +2078,7 @@
         h1 { font-size: 40px; line-height: 1.08; }
         .subtitle { font-size: 17px; line-height: 1.45; margin-bottom: 24px; }
 
-        /* Statement headlines floored at 44px (clamp) — far too big on a phone.
+        /* Statement headlines floored at 44px (clamp), far too big on a phone.
            Covers both "Marketing generates the demand..." and "One brain...". */
         .statement h2 { font-size: 28px; line-height: 1.16; letter-spacing: -0.02em; }
         .statement p { font-size: 16.5px; margin-top: 20px; }
@@ -2795,6 +2795,340 @@
         </script>
     </section>
 
+    <!-- chat-band: the chat channel showcase. Chat is ONE of four channels
+         (web form, email, chat, phone) - never "LUPO is a chatbot". This
+         section makes the point that our chat is the fastest + most premium
+         on the market: a draggable LUPO-vs-typical-bot wipe, a 7x-faster-than-
+         Fin speed race (Fin's own published ~7s median, cited), and four
+         proof points. No competitor named on the slider; no Groq mentioned. -->
+    <section class="chat-band" id="chat-it">
+        <style>
+        .chat-band{position:relative;z-index:1;padding:96px 24px;border-top:1px solid rgba(255,255,255,0.06);}
+        .chat-band, .chat-band *{box-sizing:border-box;}
+        .chat-inner{max-width:1120px;margin:0 auto;text-align:center;}
+        .chat-inner .section-heading{margin-left:auto;margin-right:auto;}
+        .chat-inner .section-lede{margin-left:auto;margin-right:auto;margin-bottom:48px;}
+
+        .chat-duo{display:grid;grid-template-columns:1fr 1fr;gap:22px;text-align:left;align-items:start;}
+        .chat-panel{position:relative;border:1px solid var(--border);border-radius:22px;background:rgba(255,255,255,0.02);overflow:hidden;display:flex;flex-direction:column;}
+        .chat-panel-head{padding:24px 26px 4px;}
+        .chat-panel-title{font-size:20px;font-weight:600;letter-spacing:-0.02em;color:var(--text-primary);margin-bottom:5px;}
+        .chat-panel-sub{font-size:13.5px;color:rgba(255,255,255,0.5);line-height:1.5;}
+
+        /* ---- compare slider (drag to wipe LUPO <-> typical bot) ---- */
+        .cmp-stage{--pos:47%;position:relative;margin:18px;border-radius:16px;overflow:hidden;aspect-ratio:5/4;
+            background:radial-gradient(70% 60% at 22% 16%,#ffffff 0%,rgba(255,255,255,0) 60%),radial-gradient(62% 58% at 86% 90%,#d7dbe2 0%,rgba(215,219,226,0) 55%),linear-gradient(150deg,#eef0f3 0%,#e3e6ec 100%);
+            user-select:none;-webkit-user-select:none;touch-action:pan-y;cursor:ew-resize;}
+        .cmp-layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+        /* LUPO is the upper layer, clipped to reveal the RIGHT side; the bot sits beneath on the left */
+        .cmp-lupo{clip-path:inset(0 0 0 var(--pos));
+            background:radial-gradient(70% 60% at 22% 16%,#ffffff 0%,rgba(255,255,255,0) 60%),radial-gradient(62% 58% at 86% 90%,#d7dbe2 0%,rgba(215,219,226,0) 55%),linear-gradient(150deg,#eef0f3 0%,#e3e6ec 100%);}
+        .cmp-divider{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:#ffffff;box-shadow:0 0 0 1px rgba(0,0,0,0.10),0 0 16px rgba(0,0,0,0.22);z-index:5;}
+        .cmp-grip{position:absolute;top:50%;left:var(--pos);transform:translate(-50%,-50%);width:42px;height:42px;border-radius:999px;background:#0b0b0e;border:1px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.18);cursor:ew-resize;z-index:6;}
+        .cmp-grip:focus-visible{outline:2px solid #a78bfa;outline-offset:3px;}
+        .cmp-grip svg{width:18px;height:18px;}
+        .cmp-label{position:absolute;top:14px;padding:5px 11px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;z-index:5;}
+        .cmp-label-l{left:14px;background:rgba(255,255,255,0.82);color:#48484e;border:1px solid rgba(0,0,0,0.06);}
+        .cmp-label-r{right:14px;background:rgba(11,11,14,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
+
+        /* shared mock-card frame so the wipe morphs one into the other */
+        .mockcard{width:min(90%,344px);height:86%;display:flex;flex-direction:column;border-radius:18px;overflow:hidden;font-size:13px;line-height:1.45;}
+        /* pin the load-bearing rows to equal heights so the two cards register across the wipe seam */
+        .mc-head,.mcg-head{min-height:54px;}
+        .mc-input,.mcg-input{min-height:48px;}
+        .mc-foot,.mcg-foot{min-height:28px;}
+        /* LUPO glass card (monochrome, frosted, Fin reference) */
+        .mc-lupo{background:rgba(16,16,22,0.84);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.18);box-shadow:0 24px 60px rgba(15,18,30,0.34),inset 0 1px 0 rgba(255,255,255,0.18);}
+        .mc-head{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.03);}
+        .mc-ava{width:28px;height:28px;display:block;flex:none;}
+        .mc-id{flex:1;min-width:0;}
+        .mc-id b{display:block;font-size:13px;font-weight:600;color:rgba(255,255,255,0.92);letter-spacing:-0.01em;}
+        .mc-id span{display:block;font-size:10px;color:rgba(255,255,255,0.5);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+        .mc-x{color:rgba(255,255,255,0.45);flex:none;display:flex;}
+        .mc-x svg{width:15px;height:15px;}
+        .mc-body{flex:1;padding:14px;display:flex;flex-direction:column;gap:9px;overflow:hidden;}
+        .mc-bub{max-width:90%;padding:9px 13px;font-size:12.5px;line-height:1.5;}
+        .mc-asst{align-self:flex-start;border-radius:15px 15px 15px 5px;background:rgba(255,255,255,0.10);color:rgba(255,255,255,0.9);}
+        .mc-user{align-self:flex-end;border-radius:15px 15px 5px 15px;background:rgba(255,255,255,0.16);color:rgba(255,255,255,0.95);}
+        .mc-input{display:flex;align-items:center;gap:7px;padding:10px 12px;border-top:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);}
+        .mc-ico{width:26px;height:26px;flex:none;border-radius:999px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.8);display:flex;align-items:center;justify-content:center;}
+        .mc-ico svg{width:14px;height:14px;}
+        .mc-field{flex:1;padding:7px 12px;border-radius:14px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);font-size:12px;white-space:nowrap;overflow:hidden;}
+        .mc-send{width:28px;height:28px;flex:none;border-radius:999px;background:#fff;color:#18181b;display:flex;align-items:center;justify-content:center;}
+        .mc-send svg{width:14px;height:14px;}
+        .mc-foot{padding:7px;text-align:center;font-size:9.5px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.06);}
+        /* generic pale bot (the thing most sites ship) */
+        .mc-gen{background:#fff;border:1px solid #d2d2d8;box-shadow:0 18px 40px rgba(0,0,0,0.25);}
+        .mcg-head{display:flex;align-items:center;gap:9px;padding:12px 14px;background:#2b2b30;color:#fff;}
+        .mcg-ava{width:28px;height:28px;border-radius:999px;background:#f0f0f3;display:flex;align-items:center;justify-content:center;font-size:15px;flex:none;}
+        .mcg-id b{font-size:13px;font-weight:700;}
+        .mcg-head .mcg-x{margin-left:auto;font-size:17px;opacity:0.7;}
+        .mc-gen .mc-body{background:#fff;}
+        .mcg-bub{align-self:flex-start;max-width:92%;padding:9px 12px;border-radius:13px;background:#f1f1f4;color:#3a3a40;font-size:12.5px;line-height:1.5;}
+        .mcg-opts{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px;}
+        .mcg-opts span{padding:7px 12px;border:1px solid #d2d2d8;border-radius:10px;font-size:12px;color:#444;background:#fff;}
+        .mcg-input{display:flex;align-items:center;gap:8px;padding:10px 12px;border-top:1px solid #e6e6ea;background:#fff;}
+        .mcg-input>span:first-child{flex:1;padding:7px 12px;border:1px solid #d2d2d8;border-radius:16px;color:#9a9aa2;font-size:12px;}
+        .mcg-send{width:26px;height:26px;border-radius:999px;background:#2b2b30;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;flex:none;}
+        .mcg-foot{padding:7px;text-align:center;font-size:9.5px;color:#a3a3ab;background:#fff;}
+
+        /* ---- speed race vs Fin ---- */
+        .race-stage{position:relative;margin:20px 18px 4px;padding:26px 22px;border-radius:16px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);overflow:hidden;}
+        .race-lane{position:relative;z-index:1;}
+        .race-lane+.race-lane{margin-top:22px;}
+        .race-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+        .race-name{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text-primary);letter-spacing:-0.01em;}
+        .race-name i{width:8px;height:8px;border-radius:999px;flex:none;}
+        .race-name i.lupo{background:linear-gradient(90deg,#a78bfa,#2997ff);}
+        .race-name i.fin{background:rgba(255,255,255,0.35);}
+        .race-time{font-size:13px;font-variant-numeric:tabular-nums;color:rgba(255,255,255,0.55);font-weight:500;}
+        .race-track{height:9px;border-radius:999px;background:rgba(255,255,255,0.07);position:relative;overflow:hidden;}
+        .race-fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:999px;}
+        .race-fill.lupo{background:linear-gradient(90deg,#a78bfa,#2997ff);}
+        .race-fill.fin{background:rgba(255,255,255,0.28);}
+        .race-tag{margin-top:8px;font-size:11.5px;font-weight:600;letter-spacing:0.01em;color:rgba(255,255,255,0.3);min-height:14px;}
+        .race-tag.done{color:#a78bfa;}
+        .race-foot{padding:0 26px 22px;font-size:11px;color:rgba(255,255,255,0.55);line-height:1.5;}
+        .race-foot sup{font-size:9px;}
+
+        /* ---- proof points ---- */
+        .cben-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px;text-align:left;}
+        .cben{padding:24px 22px;border:1px solid var(--border);border-radius:16px;background:rgba(255,255,255,0.02);transition:border-color 0.25s ease,transform 0.25s ease;}
+        .cben:hover{border-color:rgba(196,181,253,0.4);transform:translateY(-2px);}
+        .cben-ico{width:34px;height:34px;border-radius:10px;background:rgba(167,139,250,0.12);border:1px solid rgba(196,181,253,0.28);display:flex;align-items:center;justify-content:center;color:#c4b5fd;margin-bottom:14px;}
+        .cben-ico svg{width:18px;height:18px;}
+        .cben-t{font-size:15px;font-weight:600;letter-spacing:-0.01em;color:var(--text-primary);margin-bottom:6px;}
+        .cben-d{font-size:13px;color:var(--text-secondary);line-height:1.5;}
+
+        .chat-foot{margin-top:34px;font-size:11px;color:rgba(255,255,255,0.55);line-height:1.6;max-width:780px;margin-left:auto;margin-right:auto;}
+        .chat-foot a{color:inherit;}
+
+        @media (max-width:860px){
+            .chat-band{padding:72px 22px;}
+            .chat-duo{grid-template-columns:1fr;gap:18px;}
+            .cben-grid{grid-template-columns:1fr 1fr;}
+        }
+        @media (max-width:520px){
+            .chat-band{padding:60px 18px;}
+            .cben-grid{grid-template-columns:1fr;}
+        }
+        </style>
+
+        <div class="chat-inner">
+            <div class="section-eyebrow">The chat channel</div>
+            <h2 class="section-heading">Chat that doesn't feel like a chatbot.</h2>
+            <p class="section-lede lx-desk">Chat is one of the four channels LUPO runs, and the one your visitors meet first. So we made it fast, premium, and honest about being AI: glassy, instant, and never pretending to be human. Drag to feel the difference.</p>
+            <p class="section-lede lx-mob">One of LUPO's four channels, and the first one visitors meet. Faster, cleaner, honest. Drag to compare.</p>
+
+            <div class="chat-duo">
+                <!-- PANEL 1: draggable before/after wipe -->
+                <div class="chat-panel">
+                    <div class="chat-panel-head">
+                        <div class="chat-panel-title">Premium. Or what everyone else ships.</div>
+                        <div class="chat-panel-sub">Drag the divider. Right is LUPO. Left is the chatbot most sites ship.</div>
+                    </div>
+                    <div class="cmp-stage" data-cmp>
+                        <!-- under layer: the generic bot -->
+                        <div class="cmp-layer cmp-generic" aria-hidden="true">
+                            <div class="mockcard mc-gen">
+                                <div class="mcg-head"><span class="mcg-ava">&#129302;</span><div class="mcg-id"><b>Chatbot</b></div><span class="mcg-x">&times;</span></div>
+                                <div class="mc-body">
+                                    <div class="mcg-bub">&#128075; Hi there! How can I help you today?</div>
+                                    <div class="mcg-opts"><span>&#128197; Book a demo</span><span>&#128172; Talk to sales</span></div>
+                                </div>
+                                <div class="mcg-input"><span>Ask me anything&hellip;</span><span class="mcg-send">&#10148;</span></div>
+                                <div class="mcg-foot">AI-generated content may be inaccurate.</div>
+                            </div>
+                        </div>
+                        <!-- over layer: LUPO glass (clipped to --pos) -->
+                        <div class="cmp-layer cmp-lupo" aria-hidden="true">
+                            <div class="mockcard mc-lupo">
+                                <div class="mc-head">
+                                    <img class="mc-ava" src="/lupo-head-nav.png" alt="" width="28" height="28" decoding="async">
+                                    <div class="mc-id"><b>LUPO</b><span>AI inbound SDR &middot; replies in seconds</span></div>
+                                    <span class="mc-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+                                </div>
+                                <div class="mc-body">
+                                    <div class="mc-bub mc-asst">I'm LUPO, the AI inbound SDR. I qualify every lead across web form, email, chat, and phone, so only real buyers reach your reps.</div>
+                                    <div class="mc-bub mc-user">How does LUPO drive pipeline?</div>
+                                </div>
+                                <div class="mc-input">
+                                    <span class="mc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></span>
+                                    <span class="mc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="22"/></svg></span>
+                                    <span class="mc-field">Ask LUPO anything</span>
+                                    <span class="mc-send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg></span>
+                                </div>
+                                <div class="mc-foot">Honest AI &middot; no fake human</div>
+                            </div>
+                        </div>
+                        <span class="cmp-label cmp-label-l">Everyone else</span>
+                        <span class="cmp-label cmp-label-r">LUPO</span>
+                        <div class="cmp-divider"></div>
+                        <div class="cmp-grip" role="slider" tabindex="0" aria-label="Drag to compare LUPO chat with a typical chatbot" aria-valuemin="8" aria-valuemax="92" aria-valuenow="47">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 4 12l5 6"/><path d="m15 6 5 6-5 6"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 2: speed race vs Fin -->
+                <div class="chat-panel">
+                    <div class="chat-panel-head">
+                        <div class="chat-panel-title">7&times; faster than Fin.</div>
+                        <div class="chat-panel-sub">Same question, same instant. LUPO answers before the other agent finishes typing.</div>
+                    </div>
+                    <!-- DROP-IN: to swap in a real side-by-side screen recording later,
+                         hide .race-stage and uncomment this (records are litigation-safe;
+                         AI-generated clips of a competitor are not):
+                         <video class="race-video" autoplay muted loop playsinline preload="metadata" poster="/lupo-vs-fin-poster.webp" style="display:block;width:calc(100% - 36px);margin:20px 18px 4px;border-radius:16px;">
+                             <source src="/lupo-vs-fin.mp4" type="video/mp4">
+                         </video> -->
+                    <div class="race-stage" data-race>
+                        <!-- default render = the result (so it never looks empty if JS is
+                             throttled/off); the script resets to 0 and replays the race for
+                             visible users with motion enabled. -->
+                        <div class="race-lane">
+                            <div class="race-top"><span class="race-name"><i class="lupo"></i>LUPO</span><span class="race-time" data-time-lupo>0.9s</span></div>
+                            <div class="race-track"><div class="race-fill lupo" data-fill-lupo style="width:100%"></div></div>
+                            <div class="race-tag done" data-tag-lupo>Replied in 0.9s</div>
+                        </div>
+                        <div class="race-lane">
+                            <div class="race-top"><span class="race-name"><i class="fin"></i>Fin</span><span class="race-time" data-time-fin>7.0s</span></div>
+                            <div class="race-track"><div class="race-fill fin" data-fill-fin style="width:100%"></div></div>
+                            <div class="race-tag" data-tag-fin>Replied in 7.0s</div>
+                        </div>
+                    </div>
+                    <div class="race-foot">Time to first reply, same inbound question.</div>
+                </div>
+            </div>
+
+            <!-- proof points -->
+            <div class="cben-grid">
+                <div class="cben">
+                    <div class="cben-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                    <div class="cben-t">Fastest inbound chat</div>
+                    <div class="cben-d">Replies land before a buyer can lose interest. 7&times; faster than Fin's published median.<sup>1</sup></div>
+                </div>
+                <div class="cben">
+                    <div class="cben-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 7.5 8 9 4.5-1.5 8-4 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></svg></div>
+                    <div class="cben-t">Honest by design</div>
+                    <div class="cben-d">An AI that says it's an AI. No fake human face, no uncanny-valley creep. Just trust.</div>
+                </div>
+                <div class="cben">
+                    <div class="cben-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 6.6H21l-5.4 4 2 6.4L12 16l-5.6 4 2-6.4-5.4-4h6.8z"/></svg></div>
+                    <div class="cben-t">Premium, not a plugin</div>
+                    <div class="cben-d">Glassy, modern, on-brand. It feels like part of the product, not a bolt-on widget.</div>
+                </div>
+                <div class="cben">
+                    <div class="cben-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg></div>
+                    <div class="cben-t">Self-learning</div>
+                    <div class="cben-d">Sharper over time, tuned on real conversations and backed by a golden accuracy test.</div>
+                </div>
+            </div>
+
+            <p class="chat-foot"><sup>1</sup> Fin's ~7s is its own published median time-to-first-token (Intercom / Fin AI research, 2025). LUPO chat is one of four channels (web form, email, chat, phone) run by a single qualification brain.</p>
+        </div>
+
+        <script>
+        (function () {
+            var band = document.getElementById('chat-it');
+            if (!band) return;
+            var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            /* ---- drag-to-compare slider ---- */
+            var stage = band.querySelector('[data-cmp]');
+            if (stage) {
+                var grip = stage.querySelector('.cmp-grip');
+                var dragging = false, pos = 47;
+                function setPos(pct) {
+                    pos = Math.max(8, Math.min(92, pct));
+                    stage.style.setProperty('--pos', pos + '%');
+                    if (grip) {
+                        grip.setAttribute('aria-valuenow', Math.round(pos));
+                        grip.setAttribute('aria-valuetext', Math.round(pos) + '% LUPO shown');
+                    }
+                }
+                function fromEvent(e) {
+                    var r = stage.getBoundingClientRect();
+                    setPos((e.clientX - r.left) / r.width * 100);
+                }
+                stage.addEventListener('pointerdown', function (e) {
+                    dragging = true;
+                    try { stage.setPointerCapture(e.pointerId); } catch (_) {}
+                    fromEvent(e);
+                });
+                stage.addEventListener('pointermove', function (e) { if (dragging) fromEvent(e); });
+                stage.addEventListener('pointerup', function () { dragging = false; });
+                stage.addEventListener('pointercancel', function () { dragging = false; });
+                if (grip) grip.addEventListener('keydown', function (e) {
+                    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { setPos(pos - 4); e.preventDefault(); }
+                    else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { setPos(pos + 4); e.preventDefault(); }
+                    else if (e.key === 'Home') { setPos(8); e.preventDefault(); }
+                    else if (e.key === 'End') { setPos(92); e.preventDefault(); }
+                });
+            }
+
+            /* ---- speed race (LUPO 0.9s vs Fin 7.0s; ratio preserved, time-compressed) ---- */
+            var race = band.querySelector('[data-race]');
+            if (race) {
+                var L = { s: 0.9, fill: race.querySelector('[data-fill-lupo]'), time: race.querySelector('[data-time-lupo]'), tag: race.querySelector('[data-tag-lupo]') };
+                var F = { s: 7.0, fill: race.querySelector('[data-fill-fin]'),  time: race.querySelector('[data-time-fin]'),  tag: race.querySelector('[data-tag-fin]') };
+                var SCALE = 0.5; /* real seconds = displayed seconds * SCALE -> snappy loop, same ratio */
+                var rafId = null, loopTimer = null, t0 = 0, visible = false;
+
+                function paint(lane, disp) {
+                    lane.fill.style.width = (Math.min(disp / lane.s, 1) * 100) + '%';
+                    lane.time.textContent = disp.toFixed(1) + 's';
+                }
+                function finalState() {
+                    paint(L, L.s); paint(F, F.s);
+                    L.tag.textContent = 'Replied in 0.9s'; L.tag.className = 'race-tag done';
+                    F.tag.textContent = 'Replied in 7.0s'; F.tag.className = 'race-tag';
+                }
+                function frame(now) {
+                    rafId = null;
+                    var el = (now - t0) / 1000 / SCALE;
+                    paint(L, Math.min(el, L.s));
+                    paint(F, Math.min(el, F.s));
+                    L.tag.textContent = el >= L.s ? 'Replied in 0.9s' : ' ';
+                    L.tag.className = el >= L.s ? 'race-tag done' : 'race-tag';
+                    F.tag.textContent = el >= F.s ? 'Replied in 7.0s' : 'typing…';
+                    if (el < F.s) { rafId = requestAnimationFrame(frame); }
+                    else { loopTimer = setTimeout(runCycle, 1600); }
+                }
+                function runCycle() {
+                    loopTimer = null;
+                    if (reduce || document.hidden || !visible) return;
+                    paint(L, 0); paint(F, 0);
+                    L.tag.textContent = ' '; L.tag.className = 'race-tag';
+                    F.tag.textContent = 'typing…'; F.tag.className = 'race-tag';
+                    t0 = performance.now();
+                    rafId = requestAnimationFrame(frame);
+                }
+                function stop() {
+                    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+                    if (loopTimer) { clearTimeout(loopTimer); loopTimer = null; }
+                }
+                function play() {
+                    /* the static markup already shows the finished result, so when motion
+                       is off, the tab is hidden, or we're off-screen, just leave it. */
+                    if (reduce || document.hidden || !visible) { finalState(); return; }
+                    if (rafId || loopTimer) return; /* already running */
+                    runCycle();
+                }
+                if ('IntersectionObserver' in window) {
+                    var io = new IntersectionObserver(function (en) {
+                        en.forEach(function (e) { visible = e.isIntersecting; if (visible) play(); else stop(); });
+                    }, { threshold: 0.4 });
+                    io.observe(race);
+                } else { visible = true; play(); }
+                document.addEventListener('visibilitychange', function () {
+                    if (document.hidden) stop(); else if (visible) play();
+                });
+            }
+        })();
+        </script>
+    </section>
+
     <!-- hear-band: the phone channel, demoted from the hero to here.
          Voice is a channel LUPO covers brilliantly, not the front door.
          The picker answers the objection that kills voice deals ("that's
@@ -2948,7 +3282,7 @@
         </div>
     </section>
 
-    <!-- Early evaluator quotes — proof before action -->
+    <!-- Early evaluator quotes: proof before action -->
     <section class="ltq-band">
         <style>
         .ltq-band{position:relative;z-index:1;padding:64px 24px 56px;}
