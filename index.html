@@ -2832,6 +2832,9 @@
         /* LUPO is the upper layer, clipped to reveal the RIGHT side; the bot sits beneath on the left */
         .cmp-lupo{clip-path:inset(0 0 0 var(--pos));
             background:radial-gradient(75% 65% at 22% 14%,#f4f7ff 0%,rgba(244,247,255,0) 60%),radial-gradient(72% 72% at 88% 92%,#a9b7da 0%,rgba(169,183,218,0) 58%),radial-gradient(55% 55% at 64% 34%,#d2dcf3 0%,rgba(210,220,243,0) 60%),linear-gradient(150deg,#dde4f3 0%,#c4cfe8 100%);}
+        /* Generic layer clips to the LEFT of the divider (complement of LUPO), so each
+           layer owns its side and its label can't bleed across the seam. */
+        .cmp-generic{clip-path:inset(0 calc(100% - var(--pos)) 0 0);}
         .cmp-divider{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:#ffffff;box-shadow:0 0 0 1px rgba(0,0,0,0.10),0 0 16px rgba(0,0,0,0.22);z-index:5;}
         .cmp-grip{position:absolute;top:50%;left:var(--pos);transform:translate(-50%,-50%);width:42px;height:42px;border-radius:999px;background:#0b0b0e;border:1px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.18);cursor:ew-resize;z-index:6;}
         .cmp-grip:focus-visible{outline:2px solid #a78bfa;outline-offset:3px;}
@@ -2968,6 +2971,7 @@
                                 <div class="mcg-input"><span>Ask me anything&hellip;</span><span class="mcg-send">&#10148;</span></div>
                                 <div class="mcg-foot">AI-generated content may be inaccurate.</div>
                             </div>
+                            <span class="cmp-label cmp-label-l">Your competitor</span>
                         </div>
                         <!-- over layer: LUPO glass (clipped to --pos) -->
                         <div class="cmp-layer cmp-lupo" aria-hidden="true">
@@ -2990,9 +2994,8 @@
                                 </div>
                                 <div class="mc-foot">Honest AI &middot; no fake human</div>
                             </div>
+                            <span class="cmp-label cmp-label-r">LUPO</span>
                         </div>
-                        <span class="cmp-label cmp-label-l">Your competitor</span>
-                        <span class="cmp-label cmp-label-r">LUPO</span>
                         <div class="cmp-divider"></div>
                         <div class="cmp-grip" role="slider" tabindex="0" aria-label="Drag to compare LUPO chat with a typical chatbot" aria-valuemin="8" aria-valuemax="92" aria-valuenow="47">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 4 12l5 6"/><path d="m15 6 5 6-5 6"/></svg>
@@ -3234,11 +3237,24 @@
                  reduced-motion keeps the static fallback already in the DOM. ---- */
             var mcBody = band.querySelector('.mc-lupo .mc-body');
             if (mcBody && !reduce) {
-                var CONVO = [
-                    { r: 'asst', t: "I'm LUPO, the AI inbound SDR. I work every lead the moment it lands, across web form, email, chat, and phone." },
-                    { r: 'user', t: "How do you know a lead is actually qualified?" },
-                    { r: 'asst', t: "I read the buying signals, not just the form fields. Fit, timing, and what they actually asked for. Your reps only see the ones that clear the bar, with the why attached." }
+                var CONVOS = [
+                    [
+                        { r: 'asst', t: "I'm LUPO, your AI inbound SDR. I work every lead the moment it lands, across web form, email, chat, and phone." },
+                        { r: 'user', t: "How do you know a lead is actually qualified?" },
+                        { r: 'asst', t: "I read the buying signals, not just the form fields. Fit, timing, and what they actually asked for. Your reps only see the ones that clear the bar, with the why attached." }
+                    ],
+                    [
+                        { r: 'asst', t: "I'm LUPO, your AI inbound SDR. Every lead that lands gets worked in seconds, then routed by how ready it really is." },
+                        { r: 'user', t: "What happens to the leads you reject?" },
+                        { r: 'asst', t: "They're never tossed. Low intent goes to a nurture track, anything borderline gets flagged for a rep. Every lead gets a decision, not a dead end." }
+                    ],
+                    [
+                        { r: 'asst', t: "I'm LUPO, your AI inbound SDR. I qualify across web form, email, chat, and phone before anything reaches your team." },
+                        { r: 'user', t: "What do my reps actually see?" },
+                        { r: 'asst', t: "A qualified lead in your CRM with the full picture. Fit score, the buying signals, and the whole conversation. They call knowing the person is ready, no digging." }
+                    ]
                 ];
+                var convoIdx = 0;
                 var convoVisible = false, convoRunning = false, convoTimers = [];
                 var later = function (fn, ms) { var id = setTimeout(fn, ms); convoTimers.push(id); return id; };
                 var clearConvo = function () { convoTimers.forEach(clearTimeout); convoTimers = []; };
@@ -3265,17 +3281,23 @@
                     convoRunning = true;
                     clearConvo();
                     mcBody.innerHTML = '';
+                    var c = CONVOS[convoIdx];
                     var opener = addBubble('asst', true);
-                    revealWords(opener, CONVO[0].t, function () {
+                    revealWords(opener, c[0].t, function () {
                         later(function () {
                             var q = addBubble('user', true);
-                            q.textContent = CONVO[1].t;
+                            q.textContent = c[1].t;
                             later(function () {
                                 var ans = addBubble('asst', true);
                                 ans.innerHTML = '<span class="mc-typing"><i></i><i></i><i></i></span>';
                                 later(function () {
-                                    revealWords(ans, CONVO[2].t, function () {
-                                        later(function () { convoRunning = false; runConvo(); }, 3400);
+                                    revealWords(ans, c[2].t, function () {
+                                        later(function () {
+                                            // advance to the next conversation each loop, for variety
+                                            convoIdx = (convoIdx + 1) % CONVOS.length;
+                                            convoRunning = false;
+                                            runConvo();
+                                        }, 3400);
                                     });
                                 }, 1150);
                             }, 680);
