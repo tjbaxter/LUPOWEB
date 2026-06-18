@@ -49,6 +49,11 @@
       btn.innerHTML = on ? ICON_MOON : ICON_SUN;
       btn.title = on ? "Switch to dark mode" : "Switch to light mode";
     }
+    // iOS Safari paints the notch/home-indicator chrome with theme-color, NOT
+    // the page background. A static value left a black bar in light mode, so we
+    // track the theme: aurora purple when light, page-black when dark.
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", on ? "#4c569b" : "#000000");
   }
 
   // CSS: the mode itself + the toggle pill.
