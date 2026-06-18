@@ -2873,8 +2873,11 @@
         .mc-foot{padding:7px;text-align:center;font-size:9.5px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.06);}
         /* LIVE conversation: the real widget's word-fade (opacity + blur), a
            bubble-in lift, and the classic 3-dot typing indicator. */
-        @keyframes mcWordIn{from{opacity:0;filter:blur(4px);}to{opacity:1;filter:blur(0.01px);}}
-        .mc-word{display:inline;animation:mcWordIn 0.3s cubic-bezier(0.22,1,0.36,1) both;}
+        /* fill:backwards (NOT both) so a word drops the blur filter entirely once it
+           settles, leaving plain text. A persistent filter (even blur(0.01px)) gets
+           rasterized soft on mobile inside the frosted card. */
+        @keyframes mcWordIn{from{opacity:0;filter:blur(4px);}to{opacity:1;filter:blur(0);}}
+        .mc-word{display:inline;animation:mcWordIn 0.3s cubic-bezier(0.22,1,0.36,1) backwards;}
         @keyframes mcBubIn{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
         .mc-bub-in{animation:mcBubIn 0.34s cubic-bezier(0.16,1,0.3,1) both;}
         .mc-typing{display:inline-flex;gap:4px;align-items:center;height:16px;}
