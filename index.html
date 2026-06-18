@@ -2868,6 +2868,18 @@
         .mc-send{width:28px;height:28px;flex:none;border-radius:999px;background:#fff;color:#18181b;display:flex;align-items:center;justify-content:center;}
         .mc-send svg{width:14px;height:14px;}
         .mc-foot{padding:7px;text-align:center;font-size:9.5px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.06);}
+        /* LIVE conversation: the real widget's word-fade (opacity + blur), a
+           bubble-in lift, and the classic 3-dot typing indicator. */
+        @keyframes mcWordIn{from{opacity:0;filter:blur(4px);}to{opacity:1;filter:blur(0.01px);}}
+        .mc-word{display:inline;animation:mcWordIn 0.3s cubic-bezier(0.22,1,0.36,1) both;}
+        @keyframes mcBubIn{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+        .mc-bub-in{animation:mcBubIn 0.34s cubic-bezier(0.16,1,0.3,1) both;}
+        .mc-typing{display:inline-flex;gap:4px;align-items:center;height:16px;}
+        .mc-typing i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.62);animation:mcTypeDot 1.3s ease-in-out infinite;}
+        .mc-typing i:nth-child(2){animation-delay:0.16s;}
+        .mc-typing i:nth-child(3){animation-delay:0.32s;}
+        @keyframes mcTypeDot{0%,60%,100%{transform:translateY(0);opacity:0.35;}30%{transform:translateY(-3px);opacity:1;}}
+        @media (prefers-reduced-motion: reduce){.mc-word,.mc-bub-in{animation:none;}.mc-typing i{animation:none;}}
         /* generic pale bot (the thing most sites ship) */
         .mc-gen{background:#fff;border:1px solid #d2d2d8;box-shadow:0 18px 40px rgba(0,0,0,0.25);}
         .mcg-head{display:flex;align-items:center;gap:9px;padding:12px 14px;background:#2b2b30;color:#fff;}
@@ -2966,14 +2978,14 @@
                                     <span class="mc-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
                                 </div>
                                 <div class="mc-body">
-                                    <div class="mc-bub mc-asst">I'm LUPO, the AI inbound SDR. I qualify every lead across web form, email, chat, and phone, so only real buyers reach your reps.</div>
-                                    <div class="mc-bub mc-user">We're drowning in junk leads.</div>
-                                    <div class="mc-bub mc-asst">That's exactly what I kill. I score real buying intent the moment a lead lands, so your reps only ever see buyers who are ready, not the noise.</div>
+                                    <div class="mc-bub mc-asst">I'm LUPO, the AI inbound SDR. I work every lead the moment it lands, across web form, email, chat, and phone.</div>
+                                    <div class="mc-bub mc-user">How do you know a lead is actually qualified?</div>
+                                    <div class="mc-bub mc-asst">I read the buying signals, not just the form fields. Fit, timing, and what they actually asked for. Your reps only see the ones that clear the bar, with the why attached.</div>
                                 </div>
                                 <div class="mc-input">
                                     <span class="mc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></span>
                                     <span class="mc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="22"/></svg></span>
-                                    <span class="mc-field"><span class="mc-field-text">How does LUPO drive revenue?</span><canvas class="mc-field-canvas" aria-hidden="true"></canvas></span>
+                                    <span class="mc-field"><span class="mc-field-text">How do you know a lead is qualified?</span><canvas class="mc-field-canvas" aria-hidden="true"></canvas></span>
                                     <span class="mc-send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg></span>
                                 </div>
                                 <div class="mc-foot">Honest AI &middot; no fake human</div>
@@ -3090,10 +3102,10 @@
             var fieldCanvas = band.querySelector('.mc-field-canvas');
             if (fieldText && fieldCanvas && !reduce) {
                 var ROTATION = [
-                    'How does LUPO drive revenue?',
-                    'What can LUPO do for my team?',
-                    'How does LUPO qualify leads?',
-                    'Can I see LUPO live?'
+                    'How do you know a lead is qualified?',
+                    'What happens to the leads you reject?',
+                    'What do my reps actually see?',
+                    'Can I run it on my own leads?'
                 ];
                 var dissolveBusy = false;
                 var pixelDissolve = function (textEl, canvas, fromText, toText) {
@@ -3214,6 +3226,67 @@
                         en.forEach(function (e) { fieldVisible = e.isIntersecting; });
                     }, { threshold: 0.3 }).observe(stage);
                 } else { fieldVisible = true; }
+            }
+
+            /* ---- LIVE conversation on the LUPO mock: a real exchange that plays
+                 itself out with the widget's word-fade (opacity + blur), a typing
+                 indicator, and bubble lifts. Loops while the panel is in view;
+                 reduced-motion keeps the static fallback already in the DOM. ---- */
+            var mcBody = band.querySelector('.mc-lupo .mc-body');
+            if (mcBody && !reduce) {
+                var CONVO = [
+                    { r: 'asst', t: "I'm LUPO, the AI inbound SDR. I work every lead the moment it lands, across web form, email, chat, and phone." },
+                    { r: 'user', t: "How do you know a lead is actually qualified?" },
+                    { r: 'asst', t: "I read the buying signals, not just the form fields. Fit, timing, and what they actually asked for. Your reps only see the ones that clear the bar, with the why attached." }
+                ];
+                var convoVisible = false, convoRunning = false, convoTimers = [];
+                var later = function (fn, ms) { var id = setTimeout(fn, ms); convoTimers.push(id); return id; };
+                var clearConvo = function () { convoTimers.forEach(clearTimeout); convoTimers = []; };
+                var addBubble = function (role, inLift) {
+                    var b = document.createElement('div');
+                    b.className = 'mc-bub ' + (role === 'user' ? 'mc-user' : 'mc-asst') + (inLift ? ' mc-bub-in' : '');
+                    mcBody.appendChild(b);
+                    return b;
+                };
+                var revealWords = function (bubble, text, done) {
+                    bubble.innerHTML = '';
+                    var words = text.match(/\S+\s*/g) || [text];
+                    for (var i = 0; i < words.length; i++) {
+                        var s = document.createElement('span');
+                        s.className = 'mc-word';
+                        s.textContent = words[i];
+                        s.style.animationDelay = (i * 55) + 'ms';
+                        bubble.appendChild(s);
+                    }
+                    later(done, words.length * 55 + 380);
+                };
+                var runConvo = function () {
+                    if (reduce || document.hidden || !convoVisible || convoRunning) return;
+                    convoRunning = true;
+                    clearConvo();
+                    mcBody.innerHTML = '';
+                    var opener = addBubble('asst', true);
+                    revealWords(opener, CONVO[0].t, function () {
+                        later(function () {
+                            var q = addBubble('user', true);
+                            q.textContent = CONVO[1].t;
+                            later(function () {
+                                var ans = addBubble('asst', true);
+                                ans.innerHTML = '<span class="mc-typing"><i></i><i></i><i></i></span>';
+                                later(function () {
+                                    revealWords(ans, CONVO[2].t, function () {
+                                        later(function () { convoRunning = false; runConvo(); }, 3400);
+                                    });
+                                }, 1150);
+                            }, 680);
+                        }, 820);
+                    });
+                };
+                if ('IntersectionObserver' in window && stage) {
+                    new IntersectionObserver(function (en) {
+                        en.forEach(function (e) { convoVisible = e.isIntersecting; if (convoVisible) runConvo(); });
+                    }, { threshold: 0.25 }).observe(stage);
+                } else { convoVisible = true; runConvo(); }
             }
 
             /* ---- speed race (LUPO 0.9s vs Fin 7.0s; ratio preserved, time-compressed) ---- */
