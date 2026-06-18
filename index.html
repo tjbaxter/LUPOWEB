@@ -2816,13 +2816,13 @@
         .chat-panel-sub{font-size:13.5px;color:rgba(255,255,255,0.5);line-height:1.5;}
 
         /* ---- compare slider (drag to wipe LUPO <-> typical bot) ---- */
-        .cmp-stage{--pos:47%;position:relative;margin:18px;border-radius:16px;overflow:hidden;aspect-ratio:5/4;
-            background:radial-gradient(70% 60% at 22% 16%,#ffffff 0%,rgba(255,255,255,0) 60%),radial-gradient(62% 58% at 86% 90%,#d7dbe2 0%,rgba(215,219,226,0) 55%),linear-gradient(150deg,#eef0f3 0%,#e3e6ec 100%);
+        .cmp-stage{--pos:50%;position:relative;margin:18px;border-radius:16px;overflow:hidden;aspect-ratio:1/0.92;
+            background:radial-gradient(75% 65% at 22% 14%,#f4f7ff 0%,rgba(244,247,255,0) 60%),radial-gradient(72% 72% at 88% 92%,#a9b7da 0%,rgba(169,183,218,0) 58%),radial-gradient(55% 55% at 64% 34%,#d2dcf3 0%,rgba(210,220,243,0) 60%),linear-gradient(150deg,#dde4f3 0%,#c4cfe8 100%);
             user-select:none;-webkit-user-select:none;touch-action:pan-y;cursor:ew-resize;}
         .cmp-layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
         /* LUPO is the upper layer, clipped to reveal the RIGHT side; the bot sits beneath on the left */
         .cmp-lupo{clip-path:inset(0 0 0 var(--pos));
-            background:radial-gradient(70% 60% at 22% 16%,#ffffff 0%,rgba(255,255,255,0) 60%),radial-gradient(62% 58% at 86% 90%,#d7dbe2 0%,rgba(215,219,226,0) 55%),linear-gradient(150deg,#eef0f3 0%,#e3e6ec 100%);}
+            background:radial-gradient(75% 65% at 22% 14%,#f4f7ff 0%,rgba(244,247,255,0) 60%),radial-gradient(72% 72% at 88% 92%,#a9b7da 0%,rgba(169,183,218,0) 58%),radial-gradient(55% 55% at 64% 34%,#d2dcf3 0%,rgba(210,220,243,0) 60%),linear-gradient(150deg,#dde4f3 0%,#c4cfe8 100%);}
         .cmp-divider{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:#ffffff;box-shadow:0 0 0 1px rgba(0,0,0,0.10),0 0 16px rgba(0,0,0,0.22);z-index:5;}
         .cmp-grip{position:absolute;top:50%;left:var(--pos);transform:translate(-50%,-50%);width:42px;height:42px;border-radius:999px;background:#0b0b0e;border:1px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.18);cursor:ew-resize;z-index:6;}
         .cmp-grip:focus-visible{outline:2px solid #a78bfa;outline-offset:3px;}
@@ -2832,24 +2832,24 @@
         .cmp-label-r{right:14px;background:rgba(11,11,14,0.85);color:#fff;border:1px solid rgba(255,255,255,0.18);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
 
         /* shared mock-card frame so the wipe morphs one into the other */
-        .mockcard{width:min(90%,344px);height:86%;display:flex;flex-direction:column;border-radius:18px;overflow:hidden;font-size:13px;line-height:1.45;}
+        .mockcard{width:min(92%,360px);height:92%;display:flex;flex-direction:column;border-radius:20px;overflow:hidden;font-size:13px;line-height:1.45;}
         /* pin the load-bearing rows to equal heights so the two cards register across the wipe seam */
         .mc-head,.mcg-head{min-height:54px;}
         .mc-input,.mcg-input{min-height:48px;}
         .mc-foot,.mcg-foot{min-height:28px;}
         /* LUPO glass card (monochrome, frosted, Fin reference) */
-        .mc-lupo{background:rgba(16,16,22,0.84);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.18);box-shadow:0 24px 60px rgba(15,18,30,0.34),inset 0 1px 0 rgba(255,255,255,0.18);}
+        .mc-lupo{background:rgba(20,22,32,0.60);-webkit-backdrop-filter:blur(28px) saturate(185%);backdrop-filter:blur(28px) saturate(185%);border:1px solid rgba(255,255,255,0.24);box-shadow:0 30px 72px rgba(18,26,55,0.30),inset 0 1px 0 rgba(255,255,255,0.24);}
         .mc-head{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.03);}
         .mc-ava{width:28px;height:28px;display:block;flex:none;}
         .mc-id{flex:1;min-width:0;}
-        .mc-id b{display:block;font-size:13px;font-weight:600;color:rgba(255,255,255,0.92);letter-spacing:-0.01em;}
-        .mc-id span{display:block;font-size:10px;color:rgba(255,255,255,0.5);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-        .mc-x{color:rgba(255,255,255,0.45);flex:none;display:flex;}
+        .mc-id b{display:block;font-size:13px;font-weight:600;color:#fff;letter-spacing:-0.01em;}
+        .mc-id span{display:block;font-size:10px;color:rgba(255,255,255,0.66);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+        .mc-x{color:rgba(255,255,255,0.6);flex:none;display:flex;}
         .mc-x svg{width:15px;height:15px;}
-        .mc-body{flex:1;padding:14px;display:flex;flex-direction:column;gap:9px;overflow:hidden;}
-        .mc-bub{max-width:90%;padding:9px 13px;font-size:12.5px;line-height:1.5;}
-        .mc-asst{align-self:flex-start;border-radius:15px 15px 15px 5px;background:rgba(255,255,255,0.10);color:rgba(255,255,255,0.9);}
-        .mc-user{align-self:flex-end;border-radius:15px 15px 5px 15px;background:rgba(255,255,255,0.16);color:rgba(255,255,255,0.95);}
+        .mc-body{flex:1;padding:16px;display:flex;flex-direction:column;gap:11px;overflow:hidden;}
+        .mc-bub{max-width:90%;padding:10px 14px;font-size:12.5px;line-height:1.5;}
+        .mc-asst{align-self:flex-start;border-radius:16px 16px 16px 6px;background:rgba(255,255,255,0.16);color:#fff;}
+        .mc-user{align-self:flex-end;border-radius:16px 16px 6px 16px;background:rgba(255,255,255,0.26);color:#fff;}
         .mc-input{display:flex;align-items:center;gap:7px;padding:10px 12px;border-top:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);}
         .mc-ico{width:26px;height:26px;flex:none;border-radius:999px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.8);display:flex;align-items:center;justify-content:center;}
         .mc-ico svg{width:14px;height:14px;}
@@ -3086,7 +3086,7 @@
                 }
                 function frame(now) {
                     rafId = null;
-                    var el = (now - t0) / 1000 / SCALE;
+                    var el = Math.max(0, (now - t0) / 1000 / SCALE);
                     paint(L, Math.min(el, L.s));
                     paint(F, Math.min(el, F.s));
                     L.tag.textContent = el >= L.s ? 'Replied in 0.9s' : ' ';
