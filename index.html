@@ -191,7 +191,16 @@
             --border: rgba(255, 255, 255, 0.08);
             --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        
+
+        /* The root background fills the iOS safe-area strips (the notch and the
+           home-indicator areas) so they match the page instead of showing cheap
+           white bars top and bottom on mobile. Dark mode = black here; aurora.js
+           sets html.aurora to its purple for light mode, so both modes are
+           edge-to-edge, never white. */
+        html {
+            background: var(--bg-primary);
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
             background: var(--bg-primary);
