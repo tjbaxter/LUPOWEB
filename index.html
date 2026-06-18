@@ -2890,6 +2890,14 @@
         .race-fill.fin{background:rgba(255,255,255,0.28);}
         .race-tag{margin-top:8px;font-size:11.5px;font-weight:600;letter-spacing:0.01em;color:rgba(255,255,255,0.3);min-height:14px;}
         .race-tag.done{color:#a78bfa;}
+        /* Classic pulsing 3-dot typing indicator (the slow agent, still "typing"). */
+        .race-tag-typing{display:flex;align-items:center;}
+        .race-dots{display:inline-flex;gap:4px;align-items:center;height:14px;}
+        .race-dots i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.45);animation:raceDot 1.3s ease-in-out infinite;}
+        .race-dots i:nth-child(2){animation-delay:0.16s;}
+        .race-dots i:nth-child(3){animation-delay:0.32s;}
+        @keyframes raceDot{0%,60%,100%{transform:translateY(0);opacity:0.35;}30%{transform:translateY(-3px);opacity:1;}}
+        @media (prefers-reduced-motion: reduce){.race-dots i{animation:none;}}
         .race-foot{padding:0 26px 22px;font-size:11px;color:rgba(255,255,255,0.55);line-height:1.5;}
         .race-foot sup{font-size:9px;}
 
@@ -2924,7 +2932,7 @@
                 <!-- PANEL 1: draggable before/after wipe -->
                 <div class="chat-panel">
                     <div class="chat-panel-head">
-                        <div class="chat-panel-title">Premium. Or what everyone else ships.</div>
+                        <div class="chat-panel-title">Premium. Proactive. Engaging.</div>
                         <div class="chat-panel-sub">Drag the divider. Right is LUPO. Left is the chatbot most sites ship.</div>
                     </div>
                     <div class="cmp-stage" data-cmp>
@@ -3203,6 +3211,7 @@
             if (race) {
                 var L = { s: 0.9, fill: race.querySelector('[data-fill-lupo]'), time: race.querySelector('[data-time-lupo]'), tag: race.querySelector('[data-tag-lupo]') };
                 var F = { s: 7.0, fill: race.querySelector('[data-fill-fin]'),  time: race.querySelector('[data-time-fin]'),  tag: race.querySelector('[data-tag-fin]') };
+                var DOTS = '<span class="race-dots" aria-label="typing"><i></i><i></i><i></i></span>';
                 var SCALE = 0.5; /* real seconds = displayed seconds * SCALE -> snappy loop, same ratio */
                 var rafId = null, loopTimer = null, t0 = 0, visible = false;
 
@@ -3222,7 +3231,12 @@
                     paint(F, Math.min(el, F.s));
                     L.tag.textContent = el >= L.s ? 'Replied in 0.9s' : ' ';
                     L.tag.className = el >= L.s ? 'race-tag done' : 'race-tag';
-                    F.tag.textContent = el >= F.s ? 'Replied in 7.0s' : 'typing…';
+                    // Fin still "typing": leave the pulsing dots (set once in runCycle)
+                    // alone so the CSS animation isn't restarted every frame; swap to the
+                    // reply line only once, at the moment it finishes.
+                    if (el >= F.s && (!F.tag.firstChild || F.tag.firstChild.nodeType === 1)) {
+                        F.tag.textContent = 'Replied in 7.0s'; F.tag.className = 'race-tag';
+                    }
                     if (el < F.s) { rafId = requestAnimationFrame(frame); }
                     else { loopTimer = setTimeout(runCycle, 1600); }
                 }
@@ -3231,7 +3245,7 @@
                     if (reduce || document.hidden || !visible) return;
                     paint(L, 0); paint(F, 0);
                     L.tag.textContent = ' '; L.tag.className = 'race-tag';
-                    F.tag.textContent = 'typing…'; F.tag.className = 'race-tag';
+                    F.tag.innerHTML = DOTS; F.tag.className = 'race-tag race-tag-typing';
                     t0 = performance.now();
                     rafId = requestAnimationFrame(frame);
                 }
