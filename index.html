@@ -3277,7 +3277,15 @@
                         s.style.animationDelay = (i * 55) + 'ms';
                         bubble.appendChild(s);
                     }
-                    later(done, words.length * 55 + 380);
+                    later(function () {
+                        // Once settled, collapse the animated spans back to a plain text
+                        // node and drop the lift class. iOS keeps each faded word on its
+                        // own GPU layer and caches the mid-fade blur; a fresh un-layered
+                        // text node renders sharp. The fade already finished, so no snap.
+                        bubble.textContent = text;
+                        bubble.classList.remove('mc-bub-in');
+                        if (done) done();
+                    }, words.length * 55 + 380);
                 };
                 var runConvo = function () {
                     if (reduce || document.hidden || !convoVisible || convoRunning) return;
@@ -3290,6 +3298,7 @@
                         later(function () {
                             var q = addBubble('user', true);
                             q.textContent = c[1].t;
+                            later(function () { q.classList.remove('mc-bub-in'); }, 420);
                             later(function () {
                                 var ans = addBubble('asst', true);
                                 ans.innerHTML = '<span class="mc-typing"><i></i><i></i><i></i></span>';
