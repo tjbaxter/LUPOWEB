@@ -2258,6 +2258,14 @@
         #lupo-mobile .m-final { text-align: center; }
         #lupo-mobile .m-final .m-cta { margin-top: 24px; }
 
+        /* Mobile: the comparison's 4 stacked feature cards read as a wall of text on a
+           phone. Hide them on mobile (they only match here while #chat-it is relocated
+           into the mobile track). The drag-compare + speed race carry the section.
+           Keep the footnote: it substantiates the "7x faster than Fin" claim.
+           Desktop keeps the full set. */
+        #lupo-mobile .cben-grid { display: none !important; }
+        #lupo-mobile .chat-foot { font-size: 11px; margin-top: 18px; }
+
         #m-sticky {
             position: fixed; left: 0; right: 0; bottom: 0; z-index: 9000;
             padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
