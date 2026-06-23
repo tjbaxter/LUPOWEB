@@ -2221,17 +2221,11 @@
         #lupo-mobile .m-brief-sync span::before { content: "\2713"; position: absolute; left: 0; top: 0; color: #34d399; font-weight: 700; }
 
 
-        #lupo-mobile .m-steps { list-style: none; counter-reset: step; padding: 0; margin: 20px 0 0; }
-        #lupo-mobile .m-steps li { counter-increment: step; position: relative; padding: 16px 0 16px 48px; border-top: 1px solid var(--m-line); }
+        #lupo-mobile .m-steps { list-style: none; padding: 0; margin: 26px 0 0; }
+        #lupo-mobile .m-steps li { padding: 22px 0; border-top: 1px solid var(--m-line); }
         #lupo-mobile .m-steps li:first-child { border-top: 0; }
-        #lupo-mobile .m-steps li::before {
-            content: counter(step); position: absolute; left: 0; top: 14px;
-            width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--m-accent);
-            color: var(--m-accent); display: flex; align-items: center; justify-content: center;
-            font-size: 13px; font-weight: 700;
-        }
-        #lupo-mobile .m-steps b { display: block; font-size: 17px; font-weight: 600; }
-        #lupo-mobile .m-steps span { display: block; font-size: 14.5px; color: var(--m-mut); margin-top: 3px; }
+        #lupo-mobile .m-steps b { display: block; font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
+        #lupo-mobile .m-steps span { display: block; font-size: 15px; line-height: 1.5; color: var(--m-mut); margin-top: 8px; }
 
         #lupo-mobile .m-cards {
             display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
@@ -2362,13 +2356,16 @@
     <!-- 4. HOW LUPO WORKS -->
     <section class="m-how">
         <span class="m-eyebrow">How LUPO works</span>
-        <h2 class="m-h2">From first touch to booked meeting.</h2>
+        <h2 class="m-h2">Every inbound lead, worked end to end.</h2>
+        <p class="m-sub">LUPO runs each lead the whole way, across web form, email, chat, and phone, so nothing slips and no real buyer waits.</p>
+        <div class="m-shot">
+            <img src="/lupo-dashboard.webp" alt="LUPO dashboard: leads by channel, qualification scores, noise filtered, and meetings booked" width="2400" height="1860" loading="lazy" decoding="async">
+        </div>
         <ol class="m-steps">
-            <li><b>Capture</b><span>Every lead, every channel, answered in seconds.</span></li>
-            <li><b>Identify &amp; enrich</b><span>Know the account behind the lead.</span></li>
-            <li><b>Qualify</b><span>Scored against your ICP, fit and intent.</span></li>
-            <li><b>Book or filter</b><span>Real buyers booked. Noise removed.</span></li>
-            <li><b>Sync</b><span>Written to your CRM and Slack, with the why.</span></li>
+            <li><b>Engages instantly</b><span>Opens the conversation the moment a lead lands, on web form, email, chat, or phone.</span></li>
+            <li><b>Qualifies in real time</b><span>Scores fit and intent against your ICP before anything reaches a rep.</span></li>
+            <li><b>Surfaces the real buyers</b><span>Vendors, spam, and wrong-fit get filtered out. Only genuine buyers move forward.</span></li>
+            <li><b>Books and syncs</b><span>Real buyers booked into the rep's calendar, written back to your CRM with the score and transcript.</span></li>
         </ol>
     </section>
 
