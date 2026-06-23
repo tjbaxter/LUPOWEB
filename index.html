@@ -2322,8 +2322,12 @@
             }
             .lupo-chat-launcher .lupo-chat-launcher-field,
             .lupo-chat-launcher .lupo-chat-launcher-send { display: none !important; }
-            /* When the sticky CTA bar is showing, lift the launcher above it. */
+            /* When the sticky CTA bar is showing, lift the launcher AND the proactive
+               teaser/suggestions popup above it (the popup defaults to ~88-94px and
+               would otherwise cut through the bar). */
             html.m-sticky-on .lupo-chat-launcher { bottom: calc(104px + env(safe-area-inset-bottom)) !important; }
+            html.m-sticky-on .lupo-chat-teaser,
+            html.m-sticky-on .lupo-chat-suggestions { bottom: calc(178px + env(safe-area-inset-bottom)) !important; }
         }
     </style>
 
@@ -4367,6 +4371,20 @@
             document.documentElement.classList.toggle('m-sticky-on', !entries[0].isIntersecting);
         }, { threshold: 0 });
         io.observe(heroCta);
+    })();
+    </script>
+
+    <!-- Tapping the LUPO logo launcher should also dismiss the proactive teaser /
+         suggestion popup (not leave it floating). Delegated so it works no matter
+         when the widget injects the launcher. -->
+    <script>
+    (function () {
+        document.addEventListener('click', function (e) {
+            var t = e.target;
+            if (!t || !t.closest || !t.closest('.lupo-chat-launcher')) return;
+            document.querySelectorAll('.lupo-chat-teaser, .lupo-chat-suggestions, .lupo-chat-scrim')
+                .forEach(function (el) { el.classList.remove('lupo-chat-visible'); el.style.display = 'none'; });
+        }, true);
     })();
     </script>
 </body>
