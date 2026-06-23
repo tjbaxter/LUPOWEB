@@ -2208,6 +2208,18 @@
         #lupo-mobile .m-shot { margin-top: 22px; border-radius: 16px; overflow: hidden; border: 1px solid var(--m-line); box-shadow: 0 30px 70px -30px rgba(0,0,0,0.8); }
         #lupo-mobile .m-shot img { display: block; width: 100%; height: auto; }
 
+        /* rep brief card (mobile product proof) */
+        #lupo-mobile .m-brief { margin-top: 24px; background: var(--bg-secondary); border: 1px solid var(--m-line); border-radius: 18px; overflow: hidden; box-shadow: 0 30px 70px -34px rgba(0,0,0,0.85); }
+        #lupo-mobile .m-brief-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 18px; border-bottom: 1px solid var(--m-line); }
+        #lupo-mobile .m-brief-title { font-size: 11.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--m-mut); }
+        #lupo-mobile .m-brief-pill { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #a7f3d0; background: rgba(167,243,208,0.10); border: 1px solid rgba(167,243,208,0.28); border-radius: 999px; padding: 3px 10px; flex-shrink: 0; }
+        #lupo-mobile .m-brief-row { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 12px 18px; border-bottom: 1px solid var(--m-line); }
+        #lupo-mobile .m-brief-row > span { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--m-mut); flex-shrink: 0; }
+        #lupo-mobile .m-brief-row > b { font-size: 14px; font-weight: 500; color: var(--m-fg); text-align: right; }
+        #lupo-mobile .m-brief-sync { padding: 14px 18px; display: grid; gap: 9px; }
+        #lupo-mobile .m-brief-sync span { position: relative; padding-left: 22px; font-size: 13px; color: var(--m-mut); line-height: 1.3; }
+        #lupo-mobile .m-brief-sync span::before { content: "\2713"; position: absolute; left: 0; top: 0; color: #34d399; font-weight: 700; }
+
         #lupo-mobile .m-steps { list-style: none; counter-reset: step; padding: 0; margin: 20px 0 0; }
         #lupo-mobile .m-steps li { counter-increment: step; position: relative; padding: 16px 0 16px 48px; border-top: 1px solid var(--m-line); }
         #lupo-mobile .m-steps li:first-child { border-top: 0; }
@@ -2238,6 +2250,9 @@
         #lupo-mobile .m-int-note { font-size: 15px; color: var(--m-mut); line-height: 1.5; margin: 0; }
 
         #lupo-mobile .m-diff { background: linear-gradient(180deg, rgba(118,75,162,0.12), transparent 70%); }
+        #lupo-mobile .m-chans { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+        #lupo-mobile .m-chan { display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border-radius: 999px; border: 1px solid rgba(167,139,250,0.30); background: rgba(167,139,250,0.07); font-size: 14px; font-weight: 500; color: var(--m-fg); }
+        #lupo-mobile .m-chan svg { width: 15px; height: 15px; stroke: var(--m-accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
         #lupo-mobile .m-list { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 13px; }
         #lupo-mobile .m-list li { position: relative; padding-left: 28px; font-size: 16px; line-height: 1.45; }
@@ -2260,6 +2275,12 @@
             color: #fff; font-size: 17px; font-weight: 600; text-decoration: none; gap: 8px;
         }
         #m-sticky svg { width: 19px; height: 19px; }
+
+        /* Dock the global chat launcher above the sticky CTA on mobile so the two
+           bottom elements never overlap. Desktop launcher position is untouched. */
+        @media (max-width: 768px) {
+            .lupo-chat-launcher { bottom: calc(108px + env(safe-area-inset-bottom)) !important; }
+        }
     </style>
 
     <!-- 1. HERO -->
@@ -2289,8 +2310,21 @@
         <span class="m-eyebrow">What sales actually sees</span>
         <h2 class="m-h2">Every booked meeting comes with the context behind it.</h2>
         <p class="m-sub">Who the buyer is, why they fit, what they asked for, the signals behind the score, and what happened in the conversation.</p>
-        <div class="m-shot">
-            <img src="/lupo-dashboard.webp" alt="LUPO dashboard: leads by channel, qualification scores, noise filtered, and meetings booked" width="2400" height="1860" loading="lazy" decoding="async">
+        <div class="m-brief" role="img" aria-label="Rep brief for a booked meeting">
+            <div class="m-brief-head">
+                <span class="m-brief-title">Rep brief &middot; booked meeting</span>
+                <span class="m-brief-pill">Booked</span>
+            </div>
+            <div class="m-brief-row"><span>Buyer</span><b>VP Sales &middot; B2B software</b></div>
+            <div class="m-brief-row"><span>Source</span><b>Web form &middot; after hours</b></div>
+            <div class="m-brief-row"><span>Fit</span><b>ICP match &middot; mid-market</b></div>
+            <div class="m-brief-row"><span>Intent</span><b>Qualifying inbound before reps</b></div>
+            <div class="m-brief-row"><span>Score</span><b>87 &middot; Hot</b></div>
+            <div class="m-brief-sync">
+                <span>HubSpot contact + deal created</span>
+                <span>Slack brief posted to #inbound-qualified</span>
+                <span>Meeting booked on the rep's calendar</span>
+            </div>
         </div>
     </section>
 
@@ -2336,7 +2370,13 @@
     <section class="m-diff">
         <span class="m-eyebrow">More than a chat agent</span>
         <h2 class="m-h2">Chat agents answer on one channel. <span class="gradient-text">LUPO runs every inbound channel.</span></h2>
-        <p class="m-sub">Web form, email, chat, and phone, qualified by one brain and synced to your CRM. Not a chatbot bolted onto your site. The whole inbound layer.</p>
+        <p class="m-sub">One brain qualifying across web form, email, chat, and phone, all synced to your CRM. Not a chatbot bolted onto your site. The whole inbound layer.</p>
+        <div class="m-chans">
+            <span class="m-chan"><svg viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h4"/></svg>Web form</span>
+            <span class="m-chan"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</span>
+            <span class="m-chan"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Chat</span>
+            <span class="m-chan"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Phone</span>
+        </div>
     </section>
 
     <!-- 8. PROOF / FOUNDER -->
