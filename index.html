@@ -4309,5 +4309,35 @@
             }
         })();
     </script>
+
+    <!-- Mobile-only: relocate the (shared) chat comparison into the mobile track,
+         right after the hero (page 2), without duplicating it. On desktop it stays
+         exactly where it is in the source, so the web layout is never touched.
+         One copy, one set of listeners, repositioned by breakpoint. -->
+    <script>
+    (function () {
+        var cmp = document.getElementById('chat-it');
+        var mob = document.getElementById('lupo-mobile');
+        if (!cmp || !mob) return;
+        var hero = mob.querySelector('.m-hero');
+        if (!hero) return;
+        // Remember the comparison's desktop home so we can restore it exactly.
+        var home = document.createComment('chat-it-desktop-home');
+        cmp.parentNode.insertBefore(home, cmp);
+        var mq = window.matchMedia('(max-width: 768px)');
+        function place() {
+            if (mq.matches) {
+                if (cmp.parentNode !== mob) hero.insertAdjacentElement('afterend', cmp);
+            } else {
+                if (home.parentNode && cmp.previousSibling !== home) {
+                    home.parentNode.insertBefore(cmp, home.nextSibling);
+                }
+            }
+        }
+        place();
+        if (mq.addEventListener) mq.addEventListener('change', place);
+        else if (mq.addListener) mq.addListener(place);
+    })();
+    </script>
 </body>
 </html>
