@@ -4382,6 +4382,10 @@
         document.addEventListener('click', function (e) {
             var t = e.target;
             if (!t || !t.closest || !t.closest('.lupo-chat-launcher')) return;
+            // Subtle haptic tap on launcher press. Works on Android (and most Android
+            // browsers); iOS Safari does not support the Vibration API, so it is a
+            // harmless no-op there. Feature-detected.
+            if (navigator.vibrate) { try { navigator.vibrate(8); } catch (e2) {} }
             document.querySelectorAll('.lupo-chat-teaser, .lupo-chat-suggestions, .lupo-chat-scrim')
                 .forEach(function (el) { el.classList.remove('lupo-chat-visible'); el.style.display = 'none'; });
         }, true);
