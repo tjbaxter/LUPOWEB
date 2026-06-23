@@ -23,3 +23,8 @@ netlify deploy --prod --dir .
 
 
 .claude/
+
+# Internal rollback artifacts and positioning notes (never deploy)
+rollback/
+ROLLBACK_LUPO_POSITIONING.md
+ROLLBACK_*.md
