@@ -2271,7 +2271,14 @@
             padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
             background: rgba(0,0,0,0.72); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
             border-top: 1px solid var(--m-line);
+            /* Hidden until the hero's own Book-a-demo button scrolls out of view, so the
+               two identical CTAs are never on screen at once. Toggled by JS (html.m-sticky-on). */
+            transform: translateY(130%);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.32s cubic-bezier(0.22,1,0.36,1), opacity 0.32s ease;
         }
+        html.m-sticky-on #m-sticky { transform: translateY(0); opacity: 1; pointer-events: auto; }
         #m-sticky a {
             display: flex; align-items: center; justify-content: center; height: 52px;
             border-radius: 15px; background: linear-gradient(135deg, #2997ff, #1f7ae0);
@@ -2287,7 +2294,8 @@
                 left: 50% !important;
                 right: auto !important;
                 transform: translateX(-50%) !important;
-                bottom: calc(104px + env(safe-area-inset-bottom)) !important;
+                bottom: calc(30px + env(safe-area-inset-bottom)) !important;
+                transition: bottom 0.32s cubic-bezier(0.22,1,0.36,1) !important;
                 width: 60px !important;
                 min-width: 0 !important;
                 max-width: 60px !important;
@@ -2314,6 +2322,8 @@
             }
             .lupo-chat-launcher .lupo-chat-launcher-field,
             .lupo-chat-launcher .lupo-chat-launcher-send { display: none !important; }
+            /* When the sticky CTA bar is showing, lift the launcher above it. */
+            html.m-sticky-on .lupo-chat-launcher { bottom: calc(104px + env(safe-area-inset-bottom)) !important; }
         }
     </style>
 
@@ -4343,6 +4353,20 @@
         place();
         if (mq.addEventListener) mq.addEventListener('change', place);
         else if (mq.addListener) mq.addListener(place);
+    })();
+    </script>
+
+    <!-- Mobile-only: reveal the sticky Book-a-demo bar only once the hero's own
+         Book-a-demo button has scrolled out of view, so the two identical CTAs are
+         never on screen at the same time. -->
+    <script>
+    (function () {
+        var heroCta = document.querySelector('#lupo-mobile .m-hero .m-cta');
+        if (!heroCta || !('IntersectionObserver' in window)) return;
+        var io = new IntersectionObserver(function (entries) {
+            document.documentElement.classList.toggle('m-sticky-on', !entries[0].isIntersecting);
+        }, { threshold: 0 });
+        io.observe(heroCta);
     })();
     </script>
 </body>
