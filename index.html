@@ -234,7 +234,20 @@
             33% { transform: rotate(120deg) scale(1.1); }
             66% { transform: rotate(240deg) scale(0.9); }
         }
-        
+
+        /* iOS safe-area strips (notch + home indicator): the ambient gradient was
+           bleeding indigo into them even in dark mode, where they should be black.
+           On mobile, keep the gradient inside the content viewport so the strips
+           show the root background instead; tint the root indigo only in light
+           (aurora) mode so the strips match each theme. */
+        html.aurora { background: #4c569b; }
+        @media (max-width: 768px) {
+            .animated-bg, .aurora-wash {
+                top: env(safe-area-inset-top) !important;
+                bottom: env(safe-area-inset-bottom) !important;
+            }
+        }
+
         /* Navigation */
         nav {
             position: fixed;
