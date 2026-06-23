@@ -1,0 +1,110 @@
+        <div class="chat-inner">
+            <div class="section-eyebrow">The chat channel</div>
+            <h2 class="section-heading">Chat that opens the conversation.</h2>
+            <p class="section-lede lx-desk">One of LUPO's four channels, and the first one visitors meet. Most chatbots sit and wait. LUPO opens the moment someone lands, tuned to the page they're on and the visitors it already knows. Drag to compare.</p>
+            <p class="section-lede lx-mob">One of LUPO's four channels, and the first visitors meet. It opens first, instead of waiting. Drag to compare.</p>
+
+            <div class="chat-duo">
+                <!-- PANEL 1: draggable before/after wipe -->
+                <div class="chat-panel">
+                    <div class="chat-panel-head">
+                        <div class="chat-panel-title">Premium. Proactive. Engaging.</div>
+                        <div class="chat-panel-sub">Drag the divider. Right is LUPO. Left is the chatbot your competitor still runs.</div>
+                    </div>
+                    <div class="cmp-stage" data-cmp>
+                        <!-- under layer: the generic bot -->
+                        <div class="cmp-layer cmp-generic" aria-hidden="true">
+                            <div class="mockcard mc-gen">
+                                <div class="mcg-head"><span class="mcg-ava">&#129302;</span><div class="mcg-id"><b>Chatbot</b></div><span class="mcg-x">&times;</span></div>
+                                <div class="mc-body">
+                                    <div class="mcg-bub">&#128075; Hi there! How can I help you today?</div>
+                                    <div class="mcg-opts"><span>&#128197; Book a demo</span><span>&#128172; Talk to sales</span></div>
+                                </div>
+                                <div class="mcg-input"><span>Ask me anything&hellip;</span><span class="mcg-send">&#10148;</span></div>
+                                <div class="mcg-foot">AI-generated content may be inaccurate.</div>
+                            </div>
+                            <span class="cmp-label cmp-label-l">Your competitor</span>
+                        </div>
+                        <!-- over layer: LUPO glass (clipped to --pos) -->
+                        <div class="cmp-layer cmp-lupo" aria-hidden="true">
+                            <div class="mockcard mc-lupo">
+                                <div class="mc-head">
+                                    <img class="mc-ava" src="/lupo-head-nav.png" alt="" width="28" height="28" decoding="async">
+                                    <div class="mc-id"><b>LUPO</b><span>AI inbound SDR &middot; replies in seconds</span></div>
+                                    <span class="mc-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+                                </div>
+                                <div class="mc-body">
+                                    <div class="mc-bub mc-asst">I'm LUPO, the AI inbound SDR. I work every lead the moment it lands, across web form, email, chat, and phone.</div>
+                                    <div class="mc-bub mc-user">How do you know a lead is actually qualified?</div>
+                                    <div class="mc-bub mc-asst">I read the buying signals, not just the form fields. Fit, timing, and what they actually asked for. Your reps only see the ones that clear the bar, with the why attached.</div>
+                                </div>
+                                <div class="mc-input">
+                                    <span class="mc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></span>
+                                    <span class="mc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="22"/></svg></span>
+                                    <span class="mc-field"><span class="mc-field-text">How do you know a lead is qualified?</span><canvas class="mc-field-canvas" aria-hidden="true"></canvas></span>
+                                    <span class="mc-send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg></span>
+                                </div>
+                                <div class="mc-foot">Honest AI &middot; no fake human</div>
+                            </div>
+                            <span class="cmp-label cmp-label-r">LUPO</span>
+                        </div>
+                        <div class="cmp-divider"></div>
+                        <div class="cmp-grip" role="slider" tabindex="0" aria-label="Drag to compare LUPO chat with a typical chatbot" aria-valuemin="8" aria-valuemax="92" aria-valuenow="47">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 4 12l5 6"/><path d="m15 6 5 6-5 6"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 2: speed race vs Fin -->
+                <div class="chat-panel">
+                    <div class="chat-panel-head">
+                        <div class="chat-panel-title">7&times; faster than Fin.</div>
+                        <div class="chat-panel-sub">Same question, same instant. LUPO answers before the other agent finishes typing.</div>
+                    </div>
+                    <!-- DROP-IN: to swap in a real side-by-side screen recording later,
+                         hide .race-stage and uncomment this (records are litigation-safe;
+                         AI-generated clips of a competitor are not):
+                         <video class="race-video" autoplay muted loop playsinline preload="metadata" poster="/lupo-vs-fin-poster.webp" style="display:block;width:calc(100% - 36px);margin:20px 18px 4px;border-radius:16px;">
+                             <source src="/lupo-vs-fin.mp4" type="video/mp4">
+                         </video> -->
+                    <div class="race-stage" data-race>
+                        <!-- default render = the result (so it never looks empty if JS is
+                             throttled/off); the script resets to 0 and replays the race for
+                             visible users with motion enabled. -->
+                        <div class="race-lane">
+                            <div class="race-top"><span class="race-name"><i class="lupo"></i>LUPO</span><span class="race-time" data-time-lupo>0.9s</span></div>
+                            <div class="race-track"><div class="race-fill lupo" data-fill-lupo style="width:100%"></div></div>
+                            <div class="race-tag done" data-tag-lupo>Replied in 0.9s</div>
+                        </div>
+                        <div class="race-lane">
+                            <div class="race-top"><span class="race-name"><i class="fin"></i>Fin</span><span class="race-time" data-time-fin>7.0s</span></div>
+                            <div class="race-track"><div class="race-fill fin" data-fill-fin style="width:100%"></div></div>
+                            <div class="race-tag" data-tag-fin>Replied in 7.0s</div>
+                        </div>
+                    </div>
+                    <div class="race-foot">Time to first reply, same inbound question.</div>
+                </div>
+            </div>
+
+            <!-- proof points -->
+            <div class="cben-grid">
+                <div class="cben">
+                    <div class="cben-t">Proactive, not waiting</div>
+                    <div class="cben-d">Opens the moment a visitor lands, with one-tap suggestions tuned to the page and tailored for return visitors it already knows.</div>
+                </div>
+                <div class="cben">
+                    <div class="cben-t">Fastest inbound chat</div>
+                    <div class="cben-d">Replies land before a buyer loses interest. 7&times; faster than Fin's published median.<sup>1</sup></div>
+                </div>
+                <div class="cben">
+                    <div class="cben-t">Self-learning</div>
+                    <div class="cben-d">Sharper on every conversation, backed by a golden accuracy test.</div>
+                </div>
+                <div class="cben">
+                    <div class="cben-t">Honest by design</div>
+                    <div class="cben-d">Openly AI, with no fake human persona or stock-photo rep. Buyers trust it more because it isn't pretending to be one of them.</div>
+                </div>
+            </div>
+
+            <p class="chat-foot"><sup>1</sup> Fin's ~7s is its own published median time-to-first-token (Intercom / Fin AI research, 2025). LUPO chat is one of four channels (web form, email, chat, phone) run by a single qualification brain.</p>
+        </div>

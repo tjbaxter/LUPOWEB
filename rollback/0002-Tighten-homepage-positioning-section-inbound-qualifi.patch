@@ -1,0 +1,31 @@
+From 21d6e5b21ccf1977d7f9ac188b3222fdfe2985b5 Mon Sep 17 00:00:00 2001
+From: Tom Baxter <tjpbaxter@gmail.com>
+Date: Tue, 23 Jun 2026 14:53:46 +0100
+Subject: [PATCH 2/5] Tighten homepage positioning section: 'inbound
+ qualification layer in between' (not 'everything'), name the noise it
+ filters, drop triage line
+
+---
+ index.html | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/index.html b/index.html
+index 4b139b0..8f63216 100644
+--- a/index.html
++++ b/index.html
+@@ -2230,9 +2230,9 @@
+     <!-- Funnel position: where LUPO sits, and who runs it -->
+     <section class="page-section">
+         <div class="statement">
+-            <h2>Marketing generates the demand.<br>Reps close the deals.<br>LUPO runs everything in between.</h2>
+-            <p class="lx-desk">Every call, form, email and chat, answered in seconds, qualified, and booked or routed. Nothing leaks, and no rep time goes to triage. Run it from sales, marketing or RevOps.</p>
+-            <p class="lx-mob">Every lead answered in seconds, qualified, and booked or routed. Nothing leaks. No rep time lost to triage.</p>
++            <h2>Marketing generates the demand.<br>Sales closes the deals.<br>LUPO runs the inbound qualification layer in between.</h2>
++            <p class="lx-desk">Every web form, email, chat, and call is answered in seconds, qualified against your ICP, and either booked, routed, or filtered. Real buyers move forward. Vendors, support requests, spam, tire-kickers, and wrong-fit prospects stay out of your reps' calendars. Run it from sales, marketing, or RevOps.</p>
++            <p class="lx-mob">Every lead answered in seconds, qualified against your ICP, then booked, routed, or filtered. Vendors, spam, and wrong-fit prospects stay out of your reps' calendars.</p>
+         </div>
+ 
+         <!-- lupo-flow: the pipeline, animated. Real buyers reach the calendar; the loop
+-- 
+2.39.2 (Apple Git-143)
+

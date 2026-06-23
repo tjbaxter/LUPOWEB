@@ -1,0 +1,79 @@
+diff --git a/index.html b/index.html
+index e6dd31b..bd02bef 100644
+--- a/index.html
++++ b/index.html
+@@ -2167,10 +2167,10 @@
+             </h1>
+ 
+             <p class="subtitle lx-desk">
+-                LUPO is the AI inbound SDR that identifies, enriches, qualifies, and books real buyers across web form, email, chat, and phone.
++                LUPO is the AI inbound SDR that identifies, qualifies, and books real buyers across web form, email, chat, and phone.
+             </p>
+             <p class="subtitle lx-mob">
+-                LUPO is the AI inbound SDR that identifies, enriches, qualifies, and books real buyers across web form, email, chat, and phone.
++                LUPO is the AI inbound SDR that identifies, qualifies, and books real buyers across web form, email, chat, and phone.
+             </p>
+ 
+             <!-- Book a demo is the single focal CTA of the hero. -->
+@@ -2230,9 +2230,9 @@
+     <!-- Funnel position: where LUPO sits, and who runs it -->
+     <section class="page-section">
+         <div class="statement">
+-            <h2>Marketing generates the demand.<br>Reps close the deals.<br>LUPO runs everything in between.</h2>
+-            <p class="lx-desk">Every call, form, email and chat, answered in seconds, qualified, and booked or routed. Nothing leaks, and no rep time goes to triage. Run it from sales, marketing or RevOps.</p>
+-            <p class="lx-mob">Every lead answered in seconds, qualified, and booked or routed. Nothing leaks. No rep time lost to triage.</p>
++            <h2>Marketing generates the demand.<br>Sales closes the deals.<br>LUPO runs the inbound qualification layer in between.</h2>
++            <p class="lx-desk">Every web form, email, chat, and call is answered in seconds, qualified against your ICP, and either booked, routed, or filtered. Real buyers move forward. Vendors, support requests, spam, tire-kickers, and wrong-fit prospects stay out of your reps' calendars. Run it from sales, marketing, or RevOps.</p>
++            <p class="lx-mob">Every lead answered in seconds, qualified against your ICP, then booked, routed, or filtered. Vendors, spam, and wrong-fit prospects stay out of your reps' calendars.</p>
+         </div>
+ 
+         <!-- lupo-flow: the pipeline, animated. Real buyers reach the calendar; the loop
+@@ -2240,7 +2240,7 @@
+              is the feature. Enrichment lands at Identify; the late beat is the score.
+              Shared assets /flow.css + /flow.js; same band embeds on /inbound-sdr/. -->
+         <div class="lf-band">
+-            <p class="lf-sr">How LUPO works, and what it filters out: most inbound is noise. An anonymous visitor arrives; LUPO identifies and enriches the company behind the visit, the person on US traffic, and resolves personal-email signups by asking in the conversation. It responds in seconds across web form, email, chat, or phone and qualifies against your ICP. Vendor pitches, recruiters, and out-of-fit inbound are filtered out and never reach a rep. Real buyers are scored on fit and intent, booked into a rep's calendar, and written to your CRM with contact, score, and transcript.</p>
++            <p class="lf-sr">How LUPO works: LUPO captures inbound from web form, email, chat, and phone, identifies and enriches the account, and qualifies it against your ICP. Real buyers are scored on fit and intent and booked into a rep's calendar; low-signal inbound like vendor pitches and recruiters is filtered out before it reaches sales. Every decision syncs back to your CRM with the score, transcript, and reasoning.</p>
+             <div class="lf-inner" aria-hidden="true">
+                 <div class="lf-canvas">
+                     <svg class="lf-svg" viewBox="0 175 1200 275" preserveAspectRatio="xMidYMid meet" focusable="false">
+@@ -2977,15 +2977,15 @@
+         <div class="chat-inner">
+             <div class="section-eyebrow">The chat channel</div>
+             <h2 class="section-heading">Chat that opens the conversation.</h2>
+-            <p class="section-lede lx-desk">One of LUPO's four channels, and the first one visitors meet. Most chatbots sit and wait. LUPO opens the moment someone lands, tuned to the page they're on and the visitors it already knows. Drag to compare.</p>
+-            <p class="section-lede lx-mob">One of LUPO's four channels, and the first visitors meet. It opens first, instead of waiting. Drag to compare.</p>
++            <p class="section-lede lx-desk">LUPO's chat is one of four inbound channels. It opens the conversation, qualifies against your ICP, and carries the same context as web form, email, and phone. Drag to compare.</p>
++            <p class="section-lede lx-mob">LUPO's chat is one of four inbound channels, carrying the same context as web form, email, and phone. Drag to compare.</p>
+ 
+             <div class="chat-duo">
+                 <!-- PANEL 1: draggable before/after wipe -->
+                 <div class="chat-panel">
+                     <div class="chat-panel-head">
+-                        <div class="chat-panel-title">Premium. Proactive. Engaging.</div>
+-                        <div class="chat-panel-sub">Drag the divider. Right is LUPO. Left is the chatbot your competitor still runs.</div>
++                        <div class="chat-panel-title">From first reply to qualified lead.</div>
++                        <div class="chat-panel-sub">Generic chat answers questions. LUPO qualifies pipeline. Drag the divider, right is LUPO, left is the chatbot your competitor still runs.</div>
+                     </div>
+                     <div class="cmp-stage" data-cmp>
+                         <!-- under layer: the generic bot -->
+@@ -3035,7 +3035,7 @@
+                 <div class="chat-panel">
+                     <div class="chat-panel-head">
+                         <div class="chat-panel-title">7&times; faster than Fin.</div>
+-                        <div class="chat-panel-sub">Same question, same instant. LUPO answers before the other agent finishes typing.</div>
++                        <div class="chat-panel-sub">Same question, same instant. LUPO replies before the other agent finishes typing.</div>
+                     </div>
+                     <!-- DROP-IN: to swap in a real side-by-side screen recording later,
+                          hide .race-stage and uncomment this (records are litigation-safe;
+@@ -3539,8 +3539,8 @@
+     <section class="page-section">
+         <div class="statement">
+             <h2>One brain.<br>Every channel you run.</h2>
+-            <p class="lx-desk">Most tools cover one channel, and none of them share a brain. LUPO runs whichever channels your inbound comes through, one brain with shared context, so a buyer never starts over.</p>
+-            <p class="lx-mob">Most tools cover one channel and don't share a brain. LUPO runs every channel on one brain, so a buyer never starts over.</p>
++            <p class="lx-desk">Most tools cover one channel, and none of them share a brain. LUPO runs one qualification brain across web form, email, chat, and phone, so buyers never start over and your team sees one consistent qualification record.</p>
++            <p class="lx-mob">Most tools cover one channel and don't share a brain. LUPO runs one brain across web form, email, chat, and phone, so buyers never start over.</p>
+         </div>
+     </section>
+ 

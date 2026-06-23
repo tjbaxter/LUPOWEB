@@ -2043,7 +2043,6 @@
             .hero-integrations { gap: 9px 14px; }
             .hi-div { display: none; }
             .hi-logos { gap: 16px; }
-            .hi-anycrm { display: none; } /* "+ any CRM" hidden on mobile only; visible on desktop */
         }
         @media (prefers-reduced-motion: reduce) {
             .hero-integrations { opacity: 1 !important; animation: none !important; transform: none !important; }
@@ -2148,306 +2147,6 @@
         </div>
     </nav>
     
-    <!-- =====================================================================
-         MOBILE-NATIVE EXPERIENCE  (Option 2: separate mobile markup, same page)
-         Shows at <=768px; the desktop experience is hidden on mobile.
-         This is the first build; copy + layout will iterate.
-         All copy original to LUPO. Canonical channel order: web form, email, chat, phone.
-         ===================================================================== -->
-    <div class="mobile-only" id="lupo-mobile">
-    <style>
-        .mobile-only { display: none; }
-        @media (max-width: 768px) {
-            .desktop-only { display: none !important; }
-            .mobile-only { display: block; }
-        }
-
-        #lupo-mobile {
-            --m-fg: #f5f5f7;
-            --m-mut: rgba(245,245,247,0.58);
-            --m-line: rgba(255,255,255,0.10);
-            --m-accent: #a78bfa;
-            background: #000;
-            color: var(--m-fg);
-            padding-bottom: 104px; /* clear the sticky CTA bar */
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-        #lupo-mobile * { box-sizing: border-box; }
-        #lupo-mobile section { padding: 50px 22px; border-top: 1px solid var(--m-line); }
-        #lupo-mobile .m-hero { border-top: 0; padding-top: 104px; }
-        #lupo-mobile .m-eyebrow {
-            display: inline-block; font-size: 11.5px; font-weight: 700;
-            letter-spacing: 0.14em; text-transform: uppercase;
-            color: var(--m-accent); margin-bottom: 16px;
-        }
-        #lupo-mobile .m-h1 {
-            font-size: 41px; line-height: 1.04; letter-spacing: -0.03em;
-            font-weight: 600; margin: 0 0 18px;
-        }
-        #lupo-mobile .m-h2 {
-            font-size: 28px; line-height: 1.12; letter-spacing: -0.02em;
-            font-weight: 600; margin: 0 0 14px;
-        }
-        #lupo-mobile .m-sub { font-size: 17px; line-height: 1.5; color: var(--m-mut); margin: 0 0 26px; }
-        #lupo-mobile .m-cta { display: flex; flex-direction: column; gap: 12px; }
-        #lupo-mobile .m-cta a {
-            display: flex; align-items: center; justify-content: center;
-            height: 54px; border-radius: 16px; font-size: 17px; font-weight: 600;
-            text-decoration: none; transition: transform 0.2s ease;
-        }
-        #lupo-mobile .m-cta a:active { transform: scale(0.98); }
-        #lupo-mobile .m-primary { background: linear-gradient(135deg, #2997ff, #1f7ae0); color: #fff; box-shadow: 0 12px 30px -10px rgba(41,151,255,0.65); }
-        #lupo-mobile .m-secondary { background: transparent; color: var(--m-fg); border: 1.5px solid var(--m-line); }
-        #lupo-mobile .m-trust { margin-top: 22px; font-size: 13px; color: var(--m-mut); line-height: 1.5; }
-
-        #lupo-mobile .m-bullets { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
-        #lupo-mobile .m-bullets li { position: relative; padding-left: 30px; font-size: 18px; line-height: 1.4; font-weight: 500; }
-        #lupo-mobile .m-bullets li::before { content: ""; position: absolute; left: 0; top: 8px; width: 16px; height: 16px; border-radius: 5px; background: linear-gradient(135deg, #667eea, #764ba2); }
-
-        #lupo-mobile .m-shot { margin-top: 22px; border-radius: 16px; overflow: hidden; border: 1px solid var(--m-line); box-shadow: 0 30px 70px -30px rgba(0,0,0,0.8); }
-        #lupo-mobile .m-shot img { display: block; width: 100%; height: auto; }
-
-        /* rep brief card (mobile product proof) */
-        #lupo-mobile .m-brief { margin-top: 24px; background: var(--bg-secondary); border: 1px solid var(--m-line); border-radius: 18px; overflow: hidden; box-shadow: 0 30px 70px -34px rgba(0,0,0,0.85); }
-        #lupo-mobile .m-brief-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 18px; border-bottom: 1px solid var(--m-line); }
-        #lupo-mobile .m-brief-title { font-size: 11.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--m-mut); }
-        #lupo-mobile .m-brief-pill { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #a7f3d0; background: rgba(167,243,208,0.10); border: 1px solid rgba(167,243,208,0.28); border-radius: 999px; padding: 3px 10px; flex-shrink: 0; }
-        #lupo-mobile .m-brief-row { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 12px 18px; border-bottom: 1px solid var(--m-line); }
-        #lupo-mobile .m-brief-row > span { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--m-mut); flex-shrink: 0; }
-        #lupo-mobile .m-brief-row > b { font-size: 14px; font-weight: 500; color: var(--m-fg); text-align: right; }
-        #lupo-mobile .m-brief-sync { padding: 14px 18px; display: grid; gap: 9px; }
-        #lupo-mobile .m-brief-sync span { position: relative; padding-left: 22px; font-size: 13px; color: var(--m-mut); line-height: 1.3; }
-        #lupo-mobile .m-brief-sync span::before { content: "\2713"; position: absolute; left: 0; top: 0; color: #34d399; font-weight: 700; }
-
-        #lupo-mobile .m-steps { list-style: none; counter-reset: step; padding: 0; margin: 20px 0 0; }
-        #lupo-mobile .m-steps li { counter-increment: step; position: relative; padding: 16px 0 16px 48px; border-top: 1px solid var(--m-line); }
-        #lupo-mobile .m-steps li:first-child { border-top: 0; }
-        #lupo-mobile .m-steps li::before {
-            content: counter(step); position: absolute; left: 0; top: 14px;
-            width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--m-accent);
-            color: var(--m-accent); display: flex; align-items: center; justify-content: center;
-            font-size: 13px; font-weight: 700;
-        }
-        #lupo-mobile .m-steps b { display: block; font-size: 17px; font-weight: 600; }
-        #lupo-mobile .m-steps span { display: block; font-size: 14.5px; color: var(--m-mut); margin-top: 3px; }
-
-        #lupo-mobile .m-cards {
-            display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
-            margin: 22px -22px 0; padding: 4px 22px 10px; -webkit-overflow-scrolling: touch;
-        }
-        #lupo-mobile .m-cards::-webkit-scrollbar { display: none; }
-        #lupo-mobile .m-card {
-            scroll-snap-align: start; flex: 0 0 80%; background: var(--bg-secondary);
-            border: 1px solid var(--m-line); border-radius: 16px; padding: 22px;
-        }
-        #lupo-mobile .m-card b { display: block; font-size: 17px; font-weight: 600; margin-bottom: 8px; }
-        #lupo-mobile .m-card p { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--m-mut); }
-        #lupo-mobile .m-swipe-hint { margin-top: 12px; font-size: 12px; color: var(--m-mut); letter-spacing: 0.04em; }
-
-        #lupo-mobile .m-logos { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin: 20px 0 16px; }
-        #lupo-mobile .m-logos img { height: 22px; width: auto; opacity: 0.92; }
-        #lupo-mobile .m-int-note { font-size: 15px; color: var(--m-mut); line-height: 1.5; margin: 0; }
-
-        #lupo-mobile .m-diff { background: linear-gradient(180deg, rgba(118,75,162,0.12), transparent 70%); }
-        #lupo-mobile .m-chans { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-        #lupo-mobile .m-chan { display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border-radius: 999px; border: 1px solid rgba(167,139,250,0.30); background: rgba(167,139,250,0.07); font-size: 14px; font-weight: 500; color: var(--m-fg); }
-        #lupo-mobile .m-chan svg { width: 15px; height: 15px; stroke: var(--m-accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-        #lupo-mobile .m-list { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 13px; }
-        #lupo-mobile .m-list li { position: relative; padding-left: 28px; font-size: 16px; line-height: 1.45; }
-        #lupo-mobile .m-list li::before { content: "\2713"; position: absolute; left: 0; top: 0; color: #34d399; font-weight: 700; }
-        #lupo-mobile .m-g2 { display: flex; align-items: center; gap: 8px; margin-top: 20px; font-size: 13px; color: var(--m-mut); }
-        #lupo-mobile .m-g2 svg { width: 16px; height: 16px; fill: #f5a623; }
-
-        #lupo-mobile .m-final { text-align: center; }
-        #lupo-mobile .m-final .m-cta { margin-top: 24px; }
-
-        #m-sticky {
-            position: fixed; left: 0; right: 0; bottom: 0; z-index: 9000;
-            padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-            background: rgba(0,0,0,0.72); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
-            border-top: 1px solid var(--m-line);
-        }
-        #m-sticky a {
-            display: flex; align-items: center; justify-content: center; height: 52px;
-            border-radius: 15px; background: linear-gradient(135deg, #2997ff, #1f7ae0);
-            color: #fff; font-size: 17px; font-weight: 600; text-decoration: none; gap: 8px;
-        }
-        #m-sticky svg { width: 19px; height: 19px; }
-
-        /* MOBILE ONLY: replace the chat launcher BAR with a round LUPO-logo button
-           (Fin-style centered launcher). Clicking it still opens the chat as normal.
-           Desktop / web launcher is completely untouched. */
-        @media (max-width: 768px) {
-            .lupo-chat-launcher {
-                left: 50% !important;
-                right: auto !important;
-                transform: translateX(-50%) !important;
-                bottom: calc(104px + env(safe-area-inset-bottom)) !important;
-                width: 60px !important;
-                min-width: 0 !important;
-                max-width: 60px !important;
-                height: 60px !important;
-                padding: 0 !important;
-                border-radius: 50% !important;
-                background: #ffffff !important;
-                -webkit-backdrop-filter: none !important;
-                backdrop-filter: none !important;
-                box-shadow: 0 12px 30px -8px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,0,0,0.06) !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                overflow: hidden !important;
-            }
-            .lupo-chat-launcher::after {
-                content: "" !important;
-                position: absolute !important;
-                inset: 0 !important;
-                background: url('/lupo-head-nav.png') center / 36px 36px no-repeat !important;
-                filter: invert(1) !important;
-                pointer-events: none !important;
-            }
-            .lupo-chat-launcher .lupo-chat-launcher-field,
-            .lupo-chat-launcher .lupo-chat-launcher-send { display: none !important; }
-        }
-    </style>
-
-    <!-- 1. HERO -->
-    <section class="m-hero">
-        <span class="m-eyebrow">AI inbound SDR</span>
-        <h1 class="m-h1">Turn inbound noise into <span class="gradient-text">qualified pipeline.</span></h1>
-        <p class="m-sub">Your best inbound rep, on every channel. LUPO qualifies and books real buyers across web form, email, chat, and phone.</p>
-        <div class="m-cta">
-            <a class="m-primary" href="https://cal.com/tombaxter/lupo">Book a demo</a>
-            <a class="m-secondary" href="#m-dashboard">See it live</a>
-        </div>
-        <p class="m-trust">HubSpot native. Works with Salesforce, Slack, Outlook, Gmail, and any CRM.</p>
-    </section>
-
-    <!-- 2. WHAT LUPO DOES -->
-    <section class="m-does">
-        <span class="m-eyebrow">What LUPO does</span>
-        <ul class="m-bullets">
-            <li>Always on across web form, email, chat, and phone.</li>
-            <li>Qualifies every lead against your ICP.</li>
-            <li>Books real buyers. Filters the noise.</li>
-        </ul>
-    </section>
-
-    <!-- 3. PRODUCT PROOF -->
-    <section class="m-proof" id="m-dashboard">
-        <span class="m-eyebrow">What sales actually sees</span>
-        <h2 class="m-h2">Every booked meeting comes with the context behind it.</h2>
-        <p class="m-sub">Who the buyer is, why they fit, what they asked for, the signals behind the score, and what happened in the conversation.</p>
-        <div class="m-brief" role="img" aria-label="Rep brief for a booked meeting">
-            <div class="m-brief-head">
-                <span class="m-brief-title">Rep brief &middot; booked meeting</span>
-                <span class="m-brief-pill">Booked</span>
-            </div>
-            <div class="m-brief-row"><span>Buyer</span><b>VP Sales &middot; B2B software</b></div>
-            <div class="m-brief-row"><span>Source</span><b>Web form &middot; after hours</b></div>
-            <div class="m-brief-row"><span>Fit</span><b>ICP match &middot; mid-market</b></div>
-            <div class="m-brief-row"><span>Intent</span><b>Qualifying inbound before reps</b></div>
-            <div class="m-brief-row"><span>Score</span><b>87 &middot; Hot</b></div>
-            <div class="m-brief-sync">
-                <span>HubSpot contact + deal created</span>
-                <span>Slack brief posted to #inbound-qualified</span>
-                <span>Meeting booked on the rep's calendar</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. HOW LUPO WORKS -->
-    <section class="m-how">
-        <span class="m-eyebrow">How LUPO works</span>
-        <h2 class="m-h2">From first touch to booked meeting.</h2>
-        <ol class="m-steps">
-            <li><b>Capture</b><span>Every lead, every channel, answered in seconds.</span></li>
-            <li><b>Identify &amp; enrich</b><span>Know the account behind the lead.</span></li>
-            <li><b>Qualify</b><span>Scored against your ICP, fit and intent.</span></li>
-            <li><b>Book or filter</b><span>Real buyers booked. Noise removed.</span></li>
-            <li><b>Sync</b><span>Written to your CRM and Slack, with the why.</span></li>
-        </ol>
-    </section>
-
-    <!-- 5. WHAT LUPO FIXES -->
-    <section class="m-fix">
-        <span class="m-eyebrow">What LUPO fixes</span>
-        <h2 class="m-h2">Inbound is leaking pipeline.</h2>
-        <div class="m-cards">
-            <div class="m-card"><b>Slow response</b><p>Every channel answered in seconds, day or night.</p></div>
-            <div class="m-card"><b>Junk leads</b><p>Vendors, spam, and wrong-fit filtered before sales sees them.</p></div>
-            <div class="m-card"><b>Calendar pollution</b><p>Only real buyers reach a rep's calendar.</p></div>
-            <div class="m-card"><b>CRM mess</b><p>Every lead written back with score, transcript, and reasoning.</p></div>
-        </div>
-        <p class="m-swipe-hint">Swipe to see more &rarr;</p>
-    </section>
-
-    <!-- 6. INTEGRATIONS -->
-    <section class="m-int">
-        <span class="m-eyebrow">Works with your stack</span>
-        <div class="m-logos">
-            <img src="/logos/integrations/salesforce.svg" alt="Salesforce" decoding="async">
-            <img src="/logos/integrations/slack.svg" alt="Slack" decoding="async">
-            <img src="/logos/integrations/microsoftoutlook.svg" alt="Outlook" decoding="async">
-            <img src="/logos/integrations/gmail.svg" alt="Gmail" decoding="async">
-        </div>
-        <p class="m-int-note">HubSpot native. Plus Salesforce, Slack, Outlook, Gmail, and any CRM.</p>
-    </section>
-
-    <!-- 7. DIFFERENTIATION: the all-channels wedge -->
-    <section class="m-diff">
-        <span class="m-eyebrow">More than a chat agent</span>
-        <h2 class="m-h2">Chat agents answer on one channel. <span class="gradient-text">LUPO runs every inbound channel.</span></h2>
-        <p class="m-sub">One brain qualifying across web form, email, chat, and phone, all synced to your CRM. Not a chatbot bolted onto your site. The whole inbound layer.</p>
-        <div class="m-chans">
-            <span class="m-chan"><svg viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h4"/></svg>Web form</span>
-            <span class="m-chan"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</span>
-            <span class="m-chan"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Chat</span>
-            <span class="m-chan"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Phone</span>
-        </div>
-    </section>
-
-    <!-- 8. PROOF / FOUNDER -->
-    <section class="m-why">
-        <span class="m-eyebrow">Why teams trust LUPO</span>
-        <ul class="m-list">
-            <li>30-day pilot with the success metric agreed up front.</li>
-            <li>No lock-in. Cancel anytime.</li>
-            <li>Founder-led, and hands-on with every pilot.</li>
-        </ul>
-        <div class="m-g2">
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <span>Rated 5/5 on G2</span>
-        </div>
-    </section>
-
-    <!-- 9. FINAL CTA -->
-    <section class="m-final">
-        <h2 class="m-h2">See the inbound SDR in action.</h2>
-        <div class="m-cta">
-            <a class="m-primary" href="https://cal.com/tombaxter/lupo">Book a demo</a>
-            <a class="m-secondary" href="#m-dashboard">See the dashboard live</a>
-        </div>
-    </section>
-
-    <!-- 10. STICKY CTA BAR -->
-    <div id="m-sticky">
-        <a href="https://cal.com/tombaxter/lupo">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-            Book a demo
-        </a>
-    </div>
-    </div>
-    <!-- /mobile-only -->
-
-    <!-- Desktop experience (unchanged); hidden on mobile -->
-    <div class="desktop-only">
     <!-- Main Content -->
     <div class="main-container">
         <div class="content-wrapper">
@@ -2468,10 +2167,10 @@
             </h1>
 
             <p class="subtitle lx-desk">
-                LUPO is the AI inbound SDR that identifies, qualifies, and books real buyers across web form, email, chat, and phone.
+                LUPO is the AI inbound SDR that identifies, enriches, qualifies, and books real buyers across web form, email, chat, and phone.
             </p>
             <p class="subtitle lx-mob">
-                LUPO is the AI inbound SDR that identifies, qualifies, and books real buyers across web form, email, chat, and phone.
+                LUPO is the AI inbound SDR that identifies, enriches, qualifies, and books real buyers across web form, email, chat, and phone.
             </p>
 
             <!-- Book a demo is the single focal CTA of the hero. -->
@@ -2512,14 +2211,9 @@
                 <a class="hi-anycrm" href="/integrations/" aria-label="See all LUPO integrations">+ any CRM</a>
             </div>
 
-            <!-- TOGGLE OFF: "Backed by Deepgram" trust strip hidden for now.
-                 To re-enable, delete this comment wrapper (the line above and the line below)
-                 so the .trust-strip div renders again.
             <div class="trust-strip">
                 <span>Backed by <strong>Deepgram</strong></span>
             </div>
-            -->
-
             <div class="trust-g2" role="img" aria-label="Rated 5 out of 5 stars on G2">
                 <svg class="tg2-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm.122 5.143c.45 0 .9.044 1.342.132l-1.342 2.806C9.962 8.08 8.203 9.84 8.203 12s1.76 3.92 3.92 3.92c.937 0 1.844-.338 2.553-.951l1.483 2.572A6.856 6.856 0 0 1 5.266 12a6.856 6.856 0 0 1 6.856-6.856Zm3.498.49a1.262 1.262 0 0 1 .026 0c.427 0 .792.113 1.101.34.31.229.466.546.466.946 0 .639-.36 1.03-1.035 1.376l-.377.191c-.403.204-.602.385-.657.706h2.05v.85h-3.101v-.144c0-.526.103-.96.314-1.306.211-.345.576-.65 1.102-.917l.242-.117c.427-.216.538-.401.538-.625 0-.266-.228-.458-.6-.458-.44 0-.773.228-1.004.694l-.592-.595c.13-.279.338-.502.619-.675a1.7 1.7 0 0 1 .908-.266Zm-2.094 5.388h3.394l1.697 2.937-1.697 2.94-1.697-2.94H11.83l1.696-2.937Z"/></svg>
                 <span class="tg2-stars" aria-hidden="true">
@@ -2536,9 +2230,9 @@
     <!-- Funnel position: where LUPO sits, and who runs it -->
     <section class="page-section">
         <div class="statement">
-            <h2>Marketing generates the demand.<br>Sales closes the deals.<br>LUPO runs the inbound qualification layer in between.</h2>
-            <p class="lx-desk">Every web form, email, chat, and call is answered in seconds, qualified against your ICP, and either booked, routed, or filtered. Real buyers move forward. Vendors, support requests, spam, tire-kickers, and wrong-fit prospects stay out of your reps' calendars. Run it from sales, marketing, or RevOps.</p>
-            <p class="lx-mob">Every lead answered in seconds, qualified against your ICP, then booked, routed, or filtered. Vendors, spam, and wrong-fit prospects stay out of your reps' calendars.</p>
+            <h2>Marketing generates the demand.<br>Reps close the deals.<br>LUPO runs everything in between.</h2>
+            <p class="lx-desk">Every call, form, email and chat, answered in seconds, qualified, and booked or routed. Nothing leaks, and no rep time goes to triage. Run it from sales, marketing or RevOps.</p>
+            <p class="lx-mob">Every lead answered in seconds, qualified, and booked or routed. Nothing leaks. No rep time lost to triage.</p>
         </div>
 
         <!-- lupo-flow: the pipeline, animated. Real buyers reach the calendar; the loop
@@ -2546,7 +2240,7 @@
              is the feature. Enrichment lands at Identify; the late beat is the score.
              Shared assets /flow.css + /flow.js; same band embeds on /inbound-sdr/. -->
         <div class="lf-band">
-            <p class="lf-sr">How LUPO works: LUPO captures inbound from web form, email, chat, and phone, identifies and enriches the account, and qualifies it against your ICP. Real buyers are scored on fit and intent and booked into a rep's calendar; low-signal inbound like vendor pitches and recruiters is filtered out before it reaches sales. Every decision syncs back to your CRM with the score, transcript, and reasoning.</p>
+            <p class="lf-sr">How LUPO works, and what it filters out: most inbound is noise. An anonymous visitor arrives; LUPO identifies and enriches the company behind the visit, the person on US traffic, and resolves personal-email signups by asking in the conversation. It responds in seconds across web form, email, chat, or phone and qualifies against your ICP. Vendor pitches, recruiters, and out-of-fit inbound are filtered out and never reach a rep. Real buyers are scored on fit and intent, booked into a rep's calendar, and written to your CRM with contact, score, and transcript.</p>
             <div class="lf-inner" aria-hidden="true">
                 <div class="lf-canvas">
                     <svg class="lf-svg" viewBox="0 175 1200 275" preserveAspectRatio="xMidYMid meet" focusable="false">
@@ -2603,52 +2297,52 @@
             <div class="packet-grid">
                 <div class="packet-copy">
                     <div class="section-eyebrow">What sales actually sees</div>
-                    <h2 class="section-heading">Every booked meeting comes with the context behind it.</h2>
-                    <p class="section-lede">LUPO sends sales a structured brief before every meeting: who the buyer is, why they fit, what they asked for, the buying signals behind the score, and what happened in the conversation. Reps do not join blind.</p>
+                    <h2 class="section-heading">Your reps only see the meetings worth taking.</h2>
+                    <p class="section-lede">Every interaction becomes a structured packet: who they are, why they fit, their intent, and the objections that came up. Reps don't join blind. Managers get the audit trail.</p>
                 </div>
-                <div class="packet-mock" role="img" aria-label="Rep brief for a booked meeting">
+                <div class="packet-mock" role="img" aria-label="Sample qualified buyer packet">
                     <div class="packet-header">
-                        <span class="packet-title">Rep brief &middot; booked meeting</span>
+                        <span class="packet-title">Sample packet shape &middot; illustrative</span>
                         <span class="packet-status-pill">Booked</span>
                     </div>
                     <div class="packet-body">
                         <div class="packet-row">
-                            <span class="packet-label">Buyer</span>
-                            <span class="packet-value">VP Sales &middot; B2B software</span>
+                            <span class="packet-label">Lead</span>
+                            <span class="packet-value">Jane Roe &middot; VP Operations</span>
+                        </div>
+                        <div class="packet-row">
+                            <span class="packet-label">Company</span>
+                            <span class="packet-value">Acme Brands &middot; 850 employees &middot; D2C retail</span>
                         </div>
                         <div class="packet-row">
                             <span class="packet-label">Source</span>
-                            <span class="packet-value">Web form &middot; after hours</span>
-                        </div>
-                        <div class="packet-row">
-                            <span class="packet-label">Fit</span>
-                            <span class="packet-value">ICP match &middot; mid-market &middot; high inbound volume</span>
+                            <span class="packet-value">Web form &middot; 9:47 PM</span>
                         </div>
                         <div class="packet-row">
                             <span class="packet-label">Intent</span>
-                            <span class="packet-value">Asked about qualifying inbound before it reaches reps</span>
+                            <span class="packet-value">Evaluating logistics platforms ahead of EU expansion.</span>
                         </div>
                         <div class="packet-row">
                             <span class="packet-label">Buying signals</span>
-                            <span class="packet-value">Hiring SDRs &middot; recent funding &middot; active CRM cleanup</span>
+                            <span class="packet-value">Series B announced 14 days ago &middot; 3 distribution hubs opened this quarter</span>
                         </div>
                         <div class="packet-row">
-                            <span class="packet-label">Score</span>
+                            <span class="packet-label">Intent score</span>
                             <span class="packet-value">87 &middot; Hot</span>
                         </div>
                         <div class="packet-row">
-                            <span class="packet-label">What they asked</span>
-                            <span class="packet-value">Can LUPO qualify leads from web form, email, chat, and phone?</span>
+                            <span class="packet-label">Use case</span>
+                            <span class="packet-value">Multi-region operations &middot; 40 sites across the EU &middot; phased rollout planned</span>
                         </div>
                         <div class="packet-row">
-                            <span class="packet-label">Recommended opener</span>
-                            <span class="packet-value">&ldquo;You mentioned your reps are spending time on low-signal inbound. How are leads qualified today before sales touches them?&rdquo;</span>
+                            <span class="packet-label">Timing</span>
+                            <span class="packet-value">Eval in Q3, deploy Q4. Security review required.</span>
                         </div>
                     </div>
                     <div class="packet-actions">
-                        <div class="packet-action"><span class="packet-action-check">&#10003;</span> HubSpot contact + deal created</div>
-                        <div class="packet-action"><span class="packet-action-check">&#10003;</span> Slack brief posted to <code>#inbound-qualified</code></div>
-                        <div class="packet-action"><span class="packet-action-check">&#10003;</span> Meeting booked &middot; on the rep's calendar</div>
+                        <div class="packet-action"><span class="packet-action-check">&#10003;</span> Meeting booked with Karen Lee &middot; May 21, 2026 &middot; 2:00 PM ET</div>
+                        <div class="packet-action"><span class="packet-action-check">&#10003;</span> HubSpot contact + deal created &middot; <code>acme-brands</code></div>
+                        <div class="packet-action"><span class="packet-action-check">&#10003;</span> Posted to <code>#inbound-qualified</code> in Slack</div>
                         <p class="packet-action-muted">Transcript, message log, and the policy decision behind every step are attached for audit.</p>
                     </div>
                 </div>
@@ -3283,15 +2977,15 @@
         <div class="chat-inner">
             <div class="section-eyebrow">The chat channel</div>
             <h2 class="section-heading">Chat that opens the conversation.</h2>
-            <p class="section-lede lx-desk">LUPO's chat is one of four inbound channels. It opens the conversation, qualifies against your ICP, and carries the same context as web form, email, and phone. Drag to compare.</p>
-            <p class="section-lede lx-mob">LUPO's chat is one of four inbound channels, carrying the same context as web form, email, and phone. Drag to compare.</p>
+            <p class="section-lede lx-desk">One of LUPO's four channels, and the first one visitors meet. Most chatbots sit and wait. LUPO opens the moment someone lands, tuned to the page they're on and the visitors it already knows. Drag to compare.</p>
+            <p class="section-lede lx-mob">One of LUPO's four channels, and the first visitors meet. It opens first, instead of waiting. Drag to compare.</p>
 
             <div class="chat-duo">
                 <!-- PANEL 1: draggable before/after wipe -->
                 <div class="chat-panel">
                     <div class="chat-panel-head">
-                        <div class="chat-panel-title">From first reply to qualified lead.</div>
-                        <div class="chat-panel-sub">Generic chat answers questions. LUPO qualifies pipeline. Drag the divider, right is LUPO, left is the chatbot your competitor still runs.</div>
+                        <div class="chat-panel-title">Premium. Proactive. Engaging.</div>
+                        <div class="chat-panel-sub">Drag the divider. Right is LUPO. Left is the chatbot your competitor still runs.</div>
                     </div>
                     <div class="cmp-stage" data-cmp>
                         <!-- under layer: the generic bot -->
@@ -3341,7 +3035,7 @@
                 <div class="chat-panel">
                     <div class="chat-panel-head">
                         <div class="chat-panel-title">7&times; faster than Fin.</div>
-                        <div class="chat-panel-sub">Same question, same instant. LUPO replies before the other agent finishes typing.</div>
+                        <div class="chat-panel-sub">Same question, same instant. LUPO answers before the other agent finishes typing.</div>
                     </div>
                     <!-- DROP-IN: to swap in a real side-by-side screen recording later,
                          hide .race-stage and uncomment this (records are litigation-safe;
@@ -3845,8 +3539,8 @@
     <section class="page-section">
         <div class="statement">
             <h2>One brain.<br>Every channel you run.</h2>
-            <p class="lx-desk">Most tools cover one channel, and none of them share a brain. LUPO runs one qualification brain across web form, email, chat, and phone, so buyers never start over and your team sees one consistent qualification record.</p>
-            <p class="lx-mob">Most tools cover one channel and don't share a brain. LUPO runs one brain across web form, email, chat, and phone, so buyers never start over.</p>
+            <p class="lx-desk">Most tools cover one channel, and none of them share a brain. LUPO runs whichever channels your inbound comes through, one brain with shared context, so a buyer never starts over.</p>
+            <p class="lx-mob">Most tools cover one channel and don't share a brain. LUPO runs every channel on one brain, so a buyer never starts over.</p>
         </div>
     </section>
 
@@ -3925,8 +3619,6 @@
             </button>
         </div>
     </section>
-    </div>
-    <!-- /desktop-only (mobile shows #lupo-mobile above; modals + footer below are shared) -->
 
     <!-- DEPRECATED: Waitlist Modal. Orphan Netlify-Forms waitlist
          path, no live trigger calls showWaitlist on the public site.
