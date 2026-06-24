@@ -2424,15 +2424,36 @@
 
     <!-- 5. WHAT LUPO FIXES -->
     <section class="m-fix">
+        <style>
+        #lupo-mobile .m-spm-rad{position:absolute;width:0;height:0;opacity:0;pointer-events:none;}
+        #lupo-mobile .m-spm-tabs{display:flex;margin:24px 0 0;border-bottom:1px solid var(--m-line);}
+        #lupo-mobile .m-spm-tab{flex:1;padding:0 0 13px;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--m-mut);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;}
+        #lupo-mobile .m-spm-tab:last-child{text-align:right;}
+        #lupo-mobile #m-spm-sol:checked ~ .m-spm-tabs label[for="m-spm-sol"],#lupo-mobile #m-spm-prob:checked ~ .m-spm-tabs label[for="m-spm-prob"]{color:var(--m-fg);border-bottom-color:#a78bfa;}
+        #lupo-mobile .m-spm-row{display:grid;grid-template-columns:92px 1fr;gap:14px;padding:22px 0;border-bottom:1px solid var(--m-line);}
+        #lupo-mobile .m-spm-row:last-child{border-bottom:0;}
+        #lupo-mobile .m-spm-axis{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#a78bfa;padding-top:2px;}
+        #lupo-mobile .m-spm-txt{font-size:15px;line-height:1.5;}
+        #lupo-mobile .m-spm-sol{color:var(--m-fg);}
+        #lupo-mobile .m-spm-prob{display:none;color:var(--m-mut);}
+        #lupo-mobile #m-spm-prob:checked ~ .m-spm-rows .m-spm-sol{display:none;}
+        #lupo-mobile #m-spm-prob:checked ~ .m-spm-rows .m-spm-prob{display:block;}
+        html.aurora #lupo-mobile .m-spm-axis{color:#ece4ff;}
+        </style>
         <span class="m-eyebrow">Why teams bring in LUPO</span>
         <h2 class="m-h2">Stop losing your highest-intent buyers.</h2>
-        <div class="m-cards">
-            <div class="m-card"><b>Speed</b><p>Answers every lead in seconds, so a high-intent buyer never waits.</p></div>
-            <div class="m-card"><b>Quality</b><p>Qualifies and disqualifies every lead, books the real buyers, turns the rest away.</p></div>
-            <div class="m-card"><b>Capacity</b><p>Runs the triage and first conversation, so reps work the deals that close.</p></div>
-            <div class="m-card"><b>Experience</b><p>Every buyer gets an instant, personal conversation, not a form and a wait.</p></div>
+        <input type="radio" name="m-spm" id="m-spm-sol" class="m-spm-rad" checked>
+        <input type="radio" name="m-spm" id="m-spm-prob" class="m-spm-rad">
+        <div class="m-spm-tabs">
+            <label class="m-spm-tab" for="m-spm-sol">What LUPO does</label>
+            <label class="m-spm-tab" for="m-spm-prob">What it fixes</label>
         </div>
-        <p class="m-swipe-hint">Swipe to see more &rarr;</p>
+        <div class="m-spm-rows">
+            <div class="m-spm-row"><div class="m-spm-axis">Speed</div><div><div class="m-spm-txt m-spm-sol">Answers every lead in seconds, so a high-intent buyer never waits.</div><div class="m-spm-txt m-spm-prob">Slow replies lose the buyers most ready to act. Most teams answer inbound hours or days later, long after intent has cooled.</div></div></div>
+            <div class="m-spm-row"><div class="m-spm-axis">Quality</div><div><div class="m-spm-txt m-spm-sol">Qualifies and disqualifies every lead, books the real buyers, turns the rest away.</div><div class="m-spm-txt m-spm-prob">Junk and wrong-fit leads flood the funnel and burn AE time on people who were never going to buy.</div></div></div>
+            <div class="m-spm-row"><div class="m-spm-axis">Capacity</div><div><div class="m-spm-txt m-spm-sol">Runs the triage and first conversation, so reps work the deals that close.</div><div class="m-spm-txt m-spm-prob">Reps lose the day to gathering basics and sorting leads instead of working real pipeline.</div></div></div>
+            <div class="m-spm-row"><div class="m-spm-axis">Experience</div><div><div class="m-spm-txt m-spm-sol">Every buyer gets an instant, personal conversation, not a form and a wait.</div><div class="m-spm-txt m-spm-prob">Static forms and slow replies push buyers away at the moment they raised their hand.</div></div></div>
+        </div>
     </section>
 
     <!-- 6. INTEGRATIONS -->
