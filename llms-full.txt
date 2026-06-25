@@ -28,7 +28,7 @@ The pathway from first touch to booked meeting: a visitor arrives, often before 
 
 ## Pricing (https://lupolabs.ai/pricing/)
 
-Stated upfront: 3,000 to 15,000 USD per month, depending on inbound volume and integrations. Engagements start with a 30-day founder-led pilot with agreed success criteria (qualification rate, form-to-meeting conversion, rep hours saved, leads recovered), fully live in 2 to 4 weeks. The founder runs every pilot personally.
+Priced per pilot, depending on inbound volume and integrations. Engagements start with a 30-day founder-led pilot with agreed success criteria (qualification rate, form-to-meeting conversion, rep hours saved, leads recovered), fully live in 2 to 4 weeks. The founder runs every pilot personally.
 
 ## ROI (https://lupolabs.ai/roi/)
 
@@ -80,7 +80,7 @@ The complete guide to the inbound SDR role and its automation. Definition: an in
 ## Press kit (https://lupolabs.ai/press/)
 
 Boilerplate (50 words): LUPO is the AI inbound SDR. It captures every inbound lead across web form, email, chat, and phone, filters the noise, enriches and scores every lead for buying intent, and books real buyers straight into reps' calendars. It syncs to HubSpot, Salesforce, or any CRM.
-Fast facts: Category AI inbound SDR · Channels web form, email, chat, phone · Founded 2025 · Company Flair Technologies Ltd · Founder Tom Baxter (MPhil Physics, University of Cambridge) · Pricing 3,000 to 15,000 USD per month, public · Programs: ElevenLabs Grant recipient.
+Fast facts: Category AI inbound SDR · Channels web form, email, chat, phone · Founded 2025 · Company Flair Technologies Ltd · Founder Tom Baxter (MPhil Physics, University of Cambridge) · Pricing per pilot · Programs: ElevenLabs Grant recipient.
 Contact: hello@lupolabs.ai · https://www.linkedin.com/company/luposales/
 
 ## FAQ highlights (https://lupolabs.ai/faq/)

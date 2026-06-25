@@ -27,7 +27,7 @@ Primary buyers: heads of sales, heads of marketing and demand gen, RevOps leader
 
 ## Pricing
 
-Public and stated upfront: 3,000 to 15,000 USD per month depending on inbound volume and integrations. 30-day founder-led pilot with agreed success criteria, fully live in 2 to 4 weeks. https://lupolabs.ai/pricing/
+Priced per pilot, depending on inbound volume and integrations. 30-day founder-led pilot with agreed success criteria, fully live in 2 to 4 weeks. https://lupolabs.ai/pricing/
 
 ## Positioning
 
@@ -73,7 +73,7 @@ LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Lt
 
 **Does it work with our stack?** HubSpot and Salesforce sync, Slack alerts, Google Calendar and Microsoft 365 / Outlook booking are live today. Anything that can post a webhook can hand leads to LUPO.
 
-**What does it cost?** 3,000 to 15,000 USD per month, stated upfront. 30-day founder-led pilot.
+**What does it cost?** Priced per pilot, based on inbound volume and integrations. 30-day founder-led pilot.
 
 ## Try LUPO
 
