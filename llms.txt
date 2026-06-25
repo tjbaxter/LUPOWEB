@@ -57,7 +57,7 @@ CRM: HubSpot, Salesforce (any CRM by webhook on request). Calendar: Google Calen
 
 ## Trust and compliance
 
-GDPR compliant; DPA at https://lupolabs.ai/dpa.html. Encryption in transit; conversations are never used to train external AI models. SOC 2 and HIPAA attestations are on the roadmap as design partners require them. Currently onboarding the first ten founding customers, configured hand-in-hand with each team.
+GDPR compliant; DPA at https://lupolabs.ai/dpa.html. Encryption in transit; conversations are never used to train external AI models. Currently onboarding the first ten founding customers, configured hand-in-hand with each team.
 
 ## About the team
 
