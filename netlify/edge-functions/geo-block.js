@@ -1,5 +1,7 @@
 // Geo-block: deny page requests from India (IN), mainland China (CN),
-// Macao (MO) and Bangladesh (BD). Hong Kong (HK) and Taiwan (TW) are NOT blocked.
+// Macao (MO), Bangladesh (BD), Pakistan (PK), Nigeria (NG), and the
+// sanctioned set North Korea (KP), Iran (IR), Syria (SY), Cuba (CU),
+// Russia (RU), Belarus (BY). Hong Kong (HK) and Taiwan (TW) are NOT blocked.
 // Runs at the Netlify edge before the static asset is served.
 // Static assets are excluded (see config below) so this only gates
 // page navigations and adds zero overhead to images/css/js for the
@@ -9,7 +11,10 @@
 // Reverse this block at any time by deleting this file (or emptying
 // BLOCKED) and committing — Netlify redeploys automatically.
 
-const BLOCKED = new Set(["IN", "CN", "MO", "BD"]); // ISO 3166-1 alpha-2 (HK kept)
+const BLOCKED = new Set([
+  "IN", "CN", "MO", "BD", "PK", "NG", // market/traffic blocks (HK kept)
+  "KP", "IR", "SY", "CU", "RU", "BY", // sanctioned
+]); // ISO 3166-1 alpha-2
 
 export default async (request, context) => {
   const code = context.geo?.country?.code;
