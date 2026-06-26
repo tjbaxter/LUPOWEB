@@ -3269,7 +3269,7 @@
         .chat-panel-sub{font-size:13.5px;color:rgba(255,255,255,0.5);line-height:1.5;}
 
         /* ---- compare slider (drag to wipe LUPO <-> typical bot) ---- */
-        .cmp-stage{--pos:50%;position:relative;margin:18px;border-radius:16px;overflow:hidden;aspect-ratio:1/0.92;
+        .cmp-stage{--pos:38%;position:relative;margin:18px;border-radius:16px;overflow:hidden;aspect-ratio:1/0.92;
             background:radial-gradient(75% 65% at 22% 14%,#f4f7ff 0%,rgba(244,247,255,0) 60%),radial-gradient(72% 72% at 88% 92%,#a9b7da 0%,rgba(169,183,218,0) 58%),radial-gradient(55% 55% at 64% 34%,#d2dcf3 0%,rgba(210,220,243,0) 60%),linear-gradient(150deg,#dde4f3 0%,#c4cfe8 100%);
             user-select:none;-webkit-user-select:none;touch-action:pan-y;cursor:ew-resize;}
         .cmp-layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
@@ -3331,18 +3331,19 @@
         @keyframes mcTypeDot{0%,60%,100%{transform:translateY(0);opacity:0.35;}30%{transform:translateY(-3px);opacity:1;}}
         @media (prefers-reduced-motion: reduce){.mc-word,.mc-bub-in{animation:none;}.mc-typing i{animation:none;}}
         /* generic pale bot (the thing most sites ship) */
-        .mc-gen{background:#fff;border:1px solid #d2d2d8;box-shadow:0 18px 40px rgba(0,0,0,0.25);}
+        /* Deliberately dated: harder corners, flat shallow shadow, no depth. The "before" the buyer recognises. */
+        .mc-gen{background:#fff;border:1px solid #cfcfd6;border-radius:9px;box-shadow:0 6px 14px rgba(0,0,0,0.14);}
         .mcg-head{display:flex;align-items:center;gap:9px;padding:12px 14px;background:#2b2b30;color:#fff;}
         .mcg-ava{width:28px;height:28px;border-radius:999px;background:#f0f0f3;display:flex;align-items:center;justify-content:center;font-size:15px;flex:none;}
         .mcg-id b{font-size:13px;font-weight:700;}
         .mcg-head .mcg-x{margin-left:auto;font-size:17px;opacity:0.7;}
         .mc-gen .mc-body{background:#fff;}
-        .mcg-bub{align-self:flex-start;max-width:92%;padding:9px 12px;border-radius:13px;background:#f1f1f4;color:#3a3a40;font-size:12.5px;line-height:1.5;}
+        .mcg-bub{align-self:flex-start;max-width:92%;padding:9px 12px;border-radius:6px;background:#f1f1f4;color:#3a3a40;font-size:12.5px;line-height:1.5;}
         .mcg-opts{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px;}
-        .mcg-opts span{padding:7px 12px;border:1px solid #d2d2d8;border-radius:10px;font-size:12px;color:#444;background:#fff;}
+        .mcg-opts span{padding:7px 12px;border:1px solid #d2d2d8;border-radius:4px;font-size:12px;color:#444;background:#fff;}
         .mcg-input{display:flex;align-items:center;gap:8px;padding:10px 12px;border-top:1px solid #e6e6ea;background:#fff;}
-        .mcg-input>span:first-child{flex:1;padding:7px 12px;border:1px solid #d2d2d8;border-radius:16px;color:#9a9aa2;font-size:12px;}
-        .mcg-send{width:26px;height:26px;border-radius:999px;background:#2b2b30;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;flex:none;}
+        .mcg-input>span:first-child{flex:1;padding:7px 12px;border:1px solid #d2d2d8;border-radius:6px;color:#9a9aa2;font-size:12px;}
+        .mcg-send{width:26px;height:26px;border-radius:6px;background:#2b2b30;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;flex:none;}
         .mcg-foot{padding:7px;text-align:center;font-size:9.5px;color:#a3a3ab;background:#fff;}
 
         /* ---- speed race vs Fin ---- */
@@ -3450,7 +3451,7 @@
                             <span class="cmp-label cmp-label-r">LUPO</span>
                         </div>
                         <div class="cmp-divider"></div>
-                        <div class="cmp-grip" role="slider" tabindex="0" aria-label="Drag to compare LUPO chat with a typical chatbot" aria-valuemin="8" aria-valuemax="92" aria-valuenow="47">
+                        <div class="cmp-grip" role="slider" tabindex="0" aria-label="Drag to compare LUPO chat with a typical chatbot" aria-valuemin="8" aria-valuemax="92" aria-valuenow="38">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 4 12l5 6"/><path d="m15 6 5 6-5 6"/></svg>
                         </div>
                     </div>
@@ -3520,7 +3521,7 @@
             var stage = band.querySelector('[data-cmp]');
             if (stage) {
                 var grip = stage.querySelector('.cmp-grip');
-                var dragging = false, pos = 47;
+                var dragging = false, pos = 38;
                 function setPos(pct) {
                     pos = Math.max(8, Math.min(92, pct));
                     stage.style.setProperty('--pos', pos + '%');
@@ -3759,7 +3760,7 @@
                                             convoIdx = (convoIdx + 1) % CONVOS.length;
                                             convoRunning = false;
                                             runConvo();
-                                        }, 3400);
+                                        }, 1900);
                                     });
                                 }, 1150);
                             }, 680);
