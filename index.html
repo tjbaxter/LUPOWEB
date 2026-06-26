@@ -2084,6 +2084,8 @@
             font-size: clamp(18px, 2vw, 24px); color: var(--text-secondary);
             max-width: 820px; margin: 30px auto 0; line-height: 1.45;
         }
+        /* Aurora (light indigo) readability: statement body text is var(--text-secondary) = grey #a1a1a6, which washes out on the indigo wash. Brighten it for every .statement section. */
+        html.aurora .statement p { color: rgba(255,255,255,0.86); }
     </style>
     <script src="/analytics.js" defer></script>
     <script src="/talk-to-lupo.js?v=voices4" defer></script>
@@ -2442,10 +2444,10 @@
             <label class="m-spm-tab" for="m-spm-prob">What it fixes</label>
         </div>
         <div class="m-spm-rows">
-            <div class="m-spm-row"><div class="m-spm-axis">Speed</div><div><div class="m-spm-txt m-spm-sol">Answers every lead in seconds, so a high-intent buyer never waits.</div><div class="m-spm-txt m-spm-prob">Slow replies lose the buyers most ready to act. Most teams answer inbound hours or days later, long after intent has cooled.</div></div></div>
             <div class="m-spm-row"><div class="m-spm-axis">Quality</div><div><div class="m-spm-txt m-spm-sol">Qualifies and disqualifies every lead, books the real buyers, turns the rest away.</div><div class="m-spm-txt m-spm-prob">Junk and wrong-fit leads flood the funnel and burn AE time on people who were never going to buy.</div></div></div>
             <div class="m-spm-row"><div class="m-spm-axis">Capacity</div><div><div class="m-spm-txt m-spm-sol">Runs the triage and first conversation, so reps work the deals that close.</div><div class="m-spm-txt m-spm-prob">Reps lose the day to gathering basics and sorting leads instead of working real pipeline.</div></div></div>
             <div class="m-spm-row"><div class="m-spm-axis">Experience</div><div><div class="m-spm-txt m-spm-sol">Every buyer gets an instant, personal conversation, not a form and a wait.</div><div class="m-spm-txt m-spm-prob">Static forms and slow replies push buyers away at the moment they raised their hand.</div></div></div>
+            <div class="m-spm-row"><div class="m-spm-axis">Speed</div><div><div class="m-spm-txt m-spm-sol">Answers every lead in seconds, so a high-intent buyer never waits.</div><div class="m-spm-txt m-spm-prob">Slow replies lose the buyers most ready to act. Most teams answer inbound hours or days later, long after intent has cooled.</div></div></div>
         </div>
     </section>
 
@@ -2731,10 +2733,10 @@
                 <p class="slp-sub">Static forms, slow replies, and manual triage send your readiest buyers cold and bury your reps in junk. LUPO answers and qualifies every lead the moment intent is highest.</p>
             </div>
             <div class="slp-colhead"><span></span><span class="s2">What LUPO does</span><span>What it fixes</span></div>
-            <div class="slp-row"><div class="slp-axis">Speed</div><div class="slp-sol">LUPO answers every lead in seconds, so a high-intent buyer never waits to move forward.</div><div class="slp-prob">Slow replies lose the buyers most ready to act. Most teams answer inbound hours or days later, long after intent has cooled.</div></div>
             <div class="slp-row"><div class="slp-axis">Quality</div><div class="slp-sol">LUPO qualifies and disqualifies every lead, books the real buyers, and turns the rest away before a rep sees them.</div><div class="slp-prob">Junk and wrong-fit leads flood the funnel and burn AE time on people who were never going to buy.</div></div>
             <div class="slp-row"><div class="slp-axis">Capacity</div><div class="slp-sol">LUPO runs the triage and the first conversation, so your reps spend their hours on deals that can actually close.</div><div class="slp-prob">Reps lose the day to gathering basics and sorting leads instead of working real pipeline.</div></div>
             <div class="slp-row"><div class="slp-axis">Experience</div><div class="slp-sol">Every buyer gets an instant, personal conversation, not a form and a wait.</div><div class="slp-prob">Static forms and slow replies push buyers away at the moment they raised their hand.</div></div>
+            <div class="slp-row"><div class="slp-axis">Speed</div><div class="slp-sol">LUPO answers every lead in seconds, so a high-intent buyer never waits to move forward.</div><div class="slp-prob">Slow replies lose the buyers most ready to act. Most teams answer inbound hours or days later, long after intent has cooled.</div></div>
         </div>
     </section>
 
@@ -3425,11 +3427,11 @@
                     </div>
                 </div>
 
-                <!-- PANEL 2: speed race vs Fin -->
+                <!-- PANEL 2: conversational-latency beat (category-level, not a Fin vanity benchmark) -->
                 <div class="chat-panel">
                     <div class="chat-panel-head">
-                        <div class="chat-panel-title">7&times; faster than Fin.</div>
-                        <div class="chat-panel-sub">Same question, same instant. LUPO replies before the other agent finishes typing.</div>
+                        <div class="chat-panel-title">Instant. No ten-second wait.</div>
+                        <div class="chat-panel-sub">Most AI chat leaves a high-intent buyer watching a typing indicator. LUPO replies the instant they hit send, and qualifies while it answers.</div>
                     </div>
                     <!-- DROP-IN: to swap in a real side-by-side screen recording later,
                          hide .race-stage and uncomment this (records are litigation-safe;
@@ -3447,12 +3449,12 @@
                             <div class="race-tag done" data-tag-lupo>Replied in 0.9s</div>
                         </div>
                         <div class="race-lane">
-                            <div class="race-top"><span class="race-name"><i class="fin"></i>Fin</span><span class="race-time" data-time-fin>7.0s</span></div>
+                            <div class="race-top"><span class="race-name"><i class="fin"></i>Most AI chat</span><span class="race-time" data-time-fin>7.0s</span></div>
                             <div class="race-track"><div class="race-fill fin" data-fill-fin style="width:100%"></div></div>
                             <div class="race-tag" data-tag-fin>Replied in 7.0s</div>
                         </div>
                     </div>
-                    <div class="race-foot">Time to first reply, same inbound question.</div>
+                    <div class="race-foot">Illustrative time to first reply, same inbound question. LUPO's is live, try it on this page.</div>
                 </div>
             </div>
 
@@ -3463,8 +3465,8 @@
                     <div class="cben-d">Opens the moment a visitor lands, with one-tap suggestions tuned to the page and tailored for return visitors it already knows.</div>
                 </div>
                 <div class="cben">
-                    <div class="cben-t">Fastest inbound chat</div>
-                    <div class="cben-d">Replies land before a buyer loses interest. 7&times; faster than Fin's published median.<sup>1</sup></div>
+                    <div class="cben-t">Instant, every reply</div>
+                    <div class="cben-d">Replies land the moment a buyer asks. Most AI chat leaves them watching a typing indicator for several seconds.</div>
                 </div>
                 <div class="cben">
                     <div class="cben-t">Self-learning</div>
@@ -3476,7 +3478,7 @@
                 </div>
             </div>
 
-            <p class="chat-foot"><sup>1</sup> Fin's ~7s is its own published median time-to-first-token (Intercom / Fin AI research, 2025). LUPO chat is one of four channels (web form, email, chat, phone) run by a single qualification brain.</p>
+            <p class="chat-foot">LUPO replies in under a second: a fast conversational model runs the dialogue while a separate reasoning path qualifies in parallel, so the answer never waits on the work. Most AI chat takes several seconds to first reply. LUPO chat is one of four channels (web form, email, chat, phone) run by a single qualification brain.</p>
         </div>
 
         <script>
@@ -3950,6 +3952,16 @@
             <h2>One brain.<br>Every channel you run.</h2>
             <p class="lx-desk">Most tools cover one channel, and none of them share a brain. LUPO runs one qualification brain across web form, email, chat, and phone, so buyers never start over and your team sees one consistent qualification record.</p>
             <p class="lx-mob">Most tools cover one channel and don't share a brain. LUPO runs one brain across web form, email, chat, and phone, so buyers never start over.</p>
+        </div>
+    </section>
+
+    <!-- The moat: the qualification brain compounds on the customer's own inbound, plus a forward agent-to-agent whisper -->
+    <section class="page-section">
+        <div class="statement">
+            <h2>It gets sharper on your<br>inbound every day.</h2>
+            <p class="lx-desk">LUPO learns your inbound as it runs. Every conversation, every buyer it qualifies, every lead your reps accept or send back tunes qualification to your ICP, in real time. The longer it runs, the better it reads your buyers, with a golden accuracy test catching any regression before it ships. It is the one edge a competitor cannot switch on cold, because it comes from your conversations, not their codebase.</p>
+            <p class="lx-mob">LUPO learns your inbound as it runs. Every conversation tunes qualification to your ICP, sharper the longer it runs, guarded by a golden accuracy test. The one edge a competitor cannot switch on cold.</p>
+            <p class="flywheel-next" style="font-size:15.5px;max-width:660px;margin:28px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,0.12);">Ready for what's coming, too. Buyers are starting to send AI agents to research and evaluate vendors. When they do, LUPO qualifies the agent the same way, machine to machine. Built for the inbound arriving next, not just the inbound you get today.</p>
         </div>
     </section>
 
