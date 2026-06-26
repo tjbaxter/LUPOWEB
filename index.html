@@ -3891,6 +3891,17 @@
         .lst-foot{font-size:15px;color:#a1a1a6;margin:36px auto 0;max-width:700px;line-height:1.6;}
         @media (max-width:900px){.lst-grid{grid-template-columns:repeat(2,1fr);}}
         @media (max-width:520px){.lst-grid{grid-template-columns:1fr;} .lst-band{padding:52px 18px;}}
+        /* Aurora (light indigo) readability: brighten every muted grey, lift cards, brighten the purple link */
+        html.aurora .lst-eyebrow{color:#ece4ff;}
+        html.aurora .lst-heading{color:#fff;}
+        html.aurora .lst-lede{color:rgba(255,255,255,0.86);}
+        html.aurora .lst-cap{color:rgba(255,255,255,0.90);}
+        html.aurora .lst-src{color:rgba(255,255,255,0.66);}
+        html.aurora .lst-src:hover{color:#fff;}
+        html.aurora .lst-foot{color:rgba(255,255,255,0.86);}
+        html.aurora .lst-foot a{color:#cdbcff !important;}
+        html.aurora .lst-num{background:linear-gradient(135deg,#ffffff,#cdd0ff);-webkit-background-clip:text;background-clip:text;}
+        html.aurora .lst-card{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.18);}
         </style>
         <div class="lst-inner">
             <div class="lst-eyebrow">The cost of unmanaged inbound</div>
