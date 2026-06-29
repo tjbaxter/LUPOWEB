@@ -1,8 +1,8 @@
 # LUPO
 
-> LUPO is the HubSpot-native AI inbound SDR with buyer intelligence built in. One agentic brain sees which companies are showing intent on a website, resolves the leads who engage (including freemail hand-raisers, by enriching the signal they give and asking in the conversation), then qualifies, scores, routes, books, and writes every inbound lead back to the CRM, across web form, email, chat, and phone. Built for HubSpot, works with any CRM. Company-level identification across traffic; person-level on US traffic only, by design. Marketing generates the demand. Reps close the deals. LUPO runs everything in between.
+> LUPO is the HubSpot-native AI inbound SDR with buyer intelligence built in. One agentic brain sees which companies are showing intent on a website, resolves the leads who engage (including freemail hand-raisers, by enriching the signal they give and asking in the conversation), then qualifies, scores, routes, books, and writes every inbound lead back to the CRM, across web form, email, chat, and phone. Built for HubSpot, works with any CRM. Company-level and person-level identification across your traffic. Marketing generates the demand. Reps close the deals. LUPO runs everything in between.
 
-Last updated: 2026-06-16
+Last updated: 2026-06-29
 
 ## Who LUPO is for
 
@@ -12,7 +12,7 @@ Primary buyers: heads of sales, heads of marketing and demand gen, RevOps leader
 
 ## What LUPO does
 
-- **Visitor identification.** Sees which companies are showing intent on your site, with evidence attached. Person-level identification on US traffic only, by design. Resolves the leads who engage, including freemail and personal-email hand-raisers, by enriching the signal they give and, when needed, asking in the conversation. No cold identification of strangers: LUPO resolves the people who came to you. https://lupolabs.ai/visitor-identification/
+- **Visitor identification.** Sees which companies are showing intent on your site, with evidence attached. Company-level and person-level identification across your traffic. Resolves the leads who engage, including freemail and personal-email hand-raisers, by enriching the signal they give and, when needed, asking in the conversation. No cold identification of strangers: LUPO resolves the people who came to you. https://lupolabs.ai/visitor-identification/
 - **Web forms.** Channel-aware: high-intent forms get a callback inside sixty seconds; senior B2B buyers get a personal email reply instead (LUPO will never surprise-call a VP). Gated-content forms count. https://lupolabs.ai/channels/web-forms/
 - **Inbound email.** Agentic email qualification: personal replies with a one-click booking link, two-way, same qualification policy as every channel. https://lupolabs.ai/channels/inbound-email/
 - **Chat.** LUPO's own proactive chat agent engages visitors on landing, qualifies, and books in-chat (it runs live on lupolabs.ai). Or your existing widget (Intercom, Drift, HubSpot Chat, or custom) hands off and LUPO books inside the same chat. https://lupolabs.ai/channels/chat/
@@ -37,7 +37,8 @@ LUPO is an AI inbound SDR: it makes real-time decisions about which question to 
 
 - [Home + live voice demo](https://lupolabs.ai/): talk to LUPO in the browser, choose its voice
 - [How it works](https://lupolabs.ai/how-it-works/): the full pathway from first touch to booked meeting
-- [Visitor identification](https://lupolabs.ai/visitor-identification/): the buyer-intelligence layer, company-level across traffic and person-level on US traffic only, and how identity feeds the inbound SDR job
+- [For PLG and usage-based companies](https://lupolabs.ai/for/usage-based/): the inbound SDR for API-first and consumption businesses, surfacing freemail accounts that scale inside the product, gating fraud, qualifying the buyer, and writing the verdict to the CRM
+- [Visitor identification](https://lupolabs.ai/visitor-identification/): the buyer-intelligence layer, company-level and person-level across your traffic, and how identity feeds the inbound SDR job
 - [Pricing](https://lupolabs.ai/pricing/)
 - [ROI](https://lupolabs.ai/roi/): the open ROI model, an interactive calculator with conservative, sourced baselines and the methodology in visible text
 - [FAQ](https://lupolabs.ai/faq/)
