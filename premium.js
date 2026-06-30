@@ -20,7 +20,7 @@
     if (i) el.style.setProperty("--d", i * STAGGER + "ms");
   }
 
-  document.querySelectorAll("section").forEach(function (section) {
+  document.querySelectorAll("section, .content-section").forEach(function (section) {
     // Intro stack (eyebrow -> heading -> lede), staggered.
     var intro = section.querySelectorAll(
       ":scope > .section-inner > .section-eyebrow, :scope > .section-inner > .section-heading, :scope > .section-inner > .section-lede, :scope > .section-inner > h2, :scope > .section-inner > p, :scope > .section-head > *, :scope > .hero-section-inner > *, :scope > h2, :scope > p"
