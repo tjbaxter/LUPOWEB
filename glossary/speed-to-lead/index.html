@@ -305,7 +305,82 @@
 .lf-footer .lf-col a{font-size:13px;}
 .lf-footer .lf-bottom{margin-top:24px;}
 }
+/* product index band */
+.lf-product{display:block;position:relative;z-index:1;background:#000000;border-top:1px solid rgba(255,255,255,0.07);padding:72px 40px 64px;}
+.lf-product,.lf-product *{box-sizing:border-box;}
+.lf-product .lf-pi-inner{max-width:1200px;margin:0 auto;}
+.lf-product .lf-pi-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.34);margin:0 0 36px;}
+.lf-product .lf-pi-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:40px 32px;}
+.lf-product .lf-pi-group{display:flex;flex-direction:column;}
+.lf-product .lf-pi-head{font-size:14px;font-weight:600;color:#f5f5f7;text-decoration:none;letter-spacing:-0.01em;margin:0 0 14px;transition:color 0.2s ease;}
+.lf-product a.lf-pi-head:hover{color:#fff;}
+.lf-product .lf-pi-sub{display:flex;flex-direction:column;gap:10px;border-left:1px solid rgba(255,255,255,0.1);padding-left:15px;}
+.lf-product .lf-pi-sub span,.lf-product .lf-pi-sub a{font-size:13px;line-height:1.25;color:rgba(255,255,255,0.46);text-decoration:none;letter-spacing:-0.005em;}
+.lf-product .lf-pi-sub a{transition:color 0.2s ease;}
+.lf-product .lf-pi-sub a:hover{color:#f5f5f7;}
+@media (max-width:900px){
+.lf-product{padding:48px 20px 40px;}
+.lf-product .lf-pi-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 24px;}
+.lf-product .lf-pi-eyebrow{margin-bottom:28px;}
+}
 </style>
+<section class="lf-product" aria-label="Product capabilities">
+  <div class="lf-pi-inner">
+    <p class="lf-pi-eyebrow">The platform</p>
+    <div class="lf-pi-grid">
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/signals/">Signals</a>
+        <div class="lf-pi-sub">
+          <span>Company signals</span>
+          <span>On-site intent</span>
+          <span>Conversation signals</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/visitor-identification/">Visitor identification</a>
+        <div class="lf-pi-sub">
+          <span>Company-level</span>
+          <span>Person-level</span>
+          <span>Freemail resolution</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/how-it-works/">Qualification</a>
+        <div class="lf-pi-sub">
+          <span>Enrichment</span>
+          <span>Lead scoring</span>
+          <span>ICP matching</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/how-it-works/">Actions</a>
+        <div class="lf-pi-sub">
+          <span>Routing</span>
+          <span>Booking</span>
+          <span>CRM write-back</span>
+          <span>Decision log</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/how-it-works/">Channels</a>
+        <div class="lf-pi-sub">
+          <span>Web form</span>
+          <span>Email</span>
+          <span>Chat</span>
+          <span>Phone</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/integrations/">Integrations</a>
+        <div class="lf-pi-sub">
+          <a href="/integrations/">HubSpot</a>
+          <a href="/integrations/">Salesforce</a>
+          <a href="/integrations/">Any CRM</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <footer class="lf-footer">
     <div class="lf-inner">
         <div class="lf-left">

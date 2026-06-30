@@ -2416,6 +2416,28 @@
         </ol>
     </section>
 
+    <!-- 4b. BUYER INTELLIGENCE (mobile) -->
+    <section class="m-bi">
+        <style>
+        #lupo-mobile .m-bi{padding:48px 20px;}
+        #lupo-mobile .m-bi-cards{display:grid;gap:16px;margin-top:24px;}
+        #lupo-mobile .m-bi-card{border:1px solid var(--m-line);background:rgba(255,255,255,0.03);border-radius:14px;padding:22px 20px;}
+        #lupo-mobile .m-bi-label{font-size:11px;font-weight:600;color:#a78bfa;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+        #lupo-mobile .m-bi-t{font-size:17px;font-weight:600;color:var(--m-fg);margin:0 0 8px;}
+        #lupo-mobile .m-bi-d{font-size:14px;line-height:1.5;color:var(--m-mut);margin:0;}
+        html.aurora #lupo-mobile .m-bi-label{color:#ece4ff;}
+        html.aurora #lupo-mobile .m-bi-card{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.18);}
+        </style>
+        <span class="m-eyebrow">Buyer intelligence</span>
+        <h2 class="m-h2">Complete intelligence on every inbound buyer.</h2>
+        <div class="m-bi-cards">
+            <div class="m-bi-card"><div class="m-bi-label">Identify</div><h3 class="m-bi-t">Know who they are.</h3><p class="m-bi-d">Company and person level. Visitor ID, freemail resolution, conversational self-ID.</p></div>
+            <div class="m-bi-card"><div class="m-bi-label">Enrich</div><h3 class="m-bi-t">Know what they look like.</h3><p class="m-bi-d">Headcount, revenue, tech stack, decision-maker title. Waterfall enrichment, always current.</p></div>
+            <div class="m-bi-card"><div class="m-bi-label">Score</div><h3 class="m-bi-t">Know if they're ready.</h3><p class="m-bi-d">Funding, M&amp;A, leadership hires, headcount growth. Ranked by fit and intent.</p></div>
+            <div class="m-bi-card"><div class="m-bi-label">Qualify</div><h3 class="m-bi-t">Know what they need.</h3><p class="m-bi-d">One brain across web form, email, chat, and phone. One record, not a thread per channel.</p></div>
+        </div>
+    </section>
+
     <!-- 5. WHAT LUPO FIXES -->
     <section class="m-fix">
         <style>
@@ -2650,7 +2672,7 @@
     <section class="page-section">
         <div class="statement">
             <h2>Marketing generates the demand.<br>Sales closes the deals.<br>LUPO runs the inbound qualification layer in between.</h2>
-            <p class="lx-desk">Every web form, email, chat, and call is answered in seconds, qualified against your ICP, then booked, routed, or filtered. Real buyers reach your reps. The noise never does.</p>
+            <p class="lx-desk">Answered in seconds. Qualified against your ICP. Booked, routed, or filtered. Real buyers reach your reps. The noise never does.</p>
             <p class="lx-mob">Every lead answered in seconds and qualified against your ICP. Real buyers reach your reps. The noise never does.</p>
         </div>
 
@@ -2708,14 +2730,67 @@
         <div class="cap-inner">
             <div>
                 <div class="cap-eyebrow">How LUPO works</div>
-                <h2 class="cap-heading">Your always-on inbound SDR, from first message to booked meeting.</h2>
-                <p class="cap-lede">LUPO works every inbound conversation end to end. It reaches buyers the moment their intent is highest, answers their questions, qualifies them against your ICP, and hands your reps the high-intent opportunities with full context.</p>
+                <h2 class="cap-heading">From first message to booked meeting.</h2>
+                <p class="cap-lede">Every inbound conversation, worked end to end.</p>
             </div>
             <div class="cap-list">
-                <div class="cap-item"><div class="cap-num">01</div><div><h3 class="cap-t">Engages buyers</h3><p class="cap-b">LUPO replies the instant a buyer reaches out, on web form, email, chat, or phone, while their intent is highest. Nobody waits for a rep, day or night.</p></div></div>
-                <div class="cap-item"><div class="cap-num">02</div><div><h3 class="cap-t">Answers their questions</h3><p class="cap-b">It explains what you do, handles pricing and objections, and matches buyers to the right fit, the way a strong rep would.</p></div></div>
-                <div class="cap-item"><div class="cap-num">03</div><div><h3 class="cap-t">Surfaces the real opportunities</h3><p class="cap-b">It asks what your SDRs would ask, scores every lead on fit and buying intent, and surfaces the opportunities worth your reps' time.</p></div></div>
-                <div class="cap-item"><div class="cap-num">04</div><div><h3 class="cap-t">Books and hands off</h3><p class="cap-b">It books high-intent buyers straight onto a rep's calendar and passes the rep the full conversation, the score, and the context.</p></div></div>
+                <div class="cap-item"><div class="cap-num">01</div><div><h3 class="cap-t">Engages buyers</h3><p class="cap-b">Replies the instant a buyer reaches out. Web form, email, chat, or phone. Day or night.</p></div></div>
+                <div class="cap-item"><div class="cap-num">02</div><div><h3 class="cap-t">Answers their questions</h3><p class="cap-b">Explains what you do. Handles pricing and objections.</p></div></div>
+                <div class="cap-item"><div class="cap-num">03</div><div><h3 class="cap-t">Surfaces the real opportunities</h3><p class="cap-b">Asks what your SDRs would ask. Scores every lead on fit and intent.</p></div></div>
+                <div class="cap-item"><div class="cap-num">04</div><div><h3 class="cap-t">Books and hands off</h3><p class="cap-b">Books real buyers onto a rep's calendar, with the full conversation and score.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Buyer intelligence: the data layer behind every qualification decision -->
+    <section class="bi-band">
+        <style>
+        .bi-band{position:relative;z-index:1;padding:96px 24px;}
+        .bi-band,.bi-band *{box-sizing:border-box;}
+        .bi-inner{max-width:1080px;margin:0 auto;}
+        .bi-head{max-width:640px;margin-bottom:56px;}
+        .bi-eyebrow{font-size:12px;font-weight:600;color:#a78bfa;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:22px;}
+        .bi-heading{font-size:48px;font-weight:600;letter-spacing:-0.025em;line-height:1.08;margin:0 0 18px;background:linear-gradient(180deg,#fff 0%,rgba(255,255,255,0.7) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+        .bi-lede{font-size:19px;line-height:1.55;color:var(--text-secondary);margin:0;}
+        .bi-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+        .bi-card{border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.03);border-radius:16px;padding:32px 28px;}
+        .bi-label{font-size:12px;font-weight:600;color:#a78bfa;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+        .bi-title{font-size:21px;font-weight:600;color:var(--text-primary);margin:0 0 10px;letter-spacing:-0.015em;}
+        .bi-desc{font-size:15px;line-height:1.55;color:var(--text-secondary);margin:0;}
+        .bi-coda{max-width:780px;margin:48px auto 0;text-align:center;font-size:16px;line-height:1.6;color:var(--text-secondary);border-top:1px solid rgba(255,255,255,0.08);padding-top:32px;}
+        .bi-coda b{color:var(--text-primary);font-weight:600;}
+        @media(max-width:860px){.bi-grid{grid-template-columns:1fr;}.bi-heading{font-size:34px;}.bi-band{padding:64px 22px;}}
+        html.aurora .bi-eyebrow,html.aurora .bi-label{color:#ece4ff;}
+        html.aurora .bi-lede,html.aurora .bi-desc,html.aurora .bi-coda{color:rgba(255,255,255,0.86);}
+        html.aurora .bi-card{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.18);}
+        </style>
+        <div class="bi-inner">
+            <div class="bi-head">
+                <div class="bi-eyebrow">Buyer intelligence</div>
+                <h2 class="bi-heading">Complete intelligence on every buyer.</h2>
+                <p class="bi-lede">Identified. Enriched. Scored. Before a rep sees them.</p>
+            </div>
+            <div class="bi-grid">
+                <div class="bi-card">
+                    <div class="bi-label">Identify</div>
+                    <h3 class="bi-title">Know who they are.</h3>
+                    <p class="bi-desc">Company and person level. Visitor ID, freemail resolution, conversational self-ID.</p>
+                </div>
+                <div class="bi-card">
+                    <div class="bi-label">Enrich</div>
+                    <h3 class="bi-title">Know what they look like.</h3>
+                    <p class="bi-desc">Headcount, revenue, tech stack, decision-maker title. Waterfall enrichment, always current.</p>
+                </div>
+                <div class="bi-card">
+                    <div class="bi-label">Score</div>
+                    <h3 class="bi-title">Know if they're ready.</h3>
+                    <p class="bi-desc">Funding, M&amp;A, leadership hires, headcount growth. Ranked by fit and intent.</p>
+                </div>
+                <div class="bi-card">
+                    <div class="bi-label">Qualify</div>
+                    <h3 class="bi-title">Know what they need.</h3>
+                    <p class="bi-desc">One brain across web form, email, chat, and phone. One record, not a thread per channel.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -2748,13 +2823,13 @@
             <div class="slp-head">
                 <div class="slp-eyebrow">Why teams bring in LUPO</div>
                 <h2 class="slp-heading">Stop losing your highest-intent buyers.</h2>
-                <p class="slp-sub">Static forms, slow replies, and manual triage send your readiest buyers cold and bury your reps in junk. LUPO answers and qualifies every lead the moment intent is highest.</p>
+                <p class="slp-sub">Slow replies and manual triage send your best buyers cold. LUPO answers and qualifies the moment intent is highest.</p>
             </div>
             <div class="slp-colhead"><span></span><span class="s2">What LUPO does</span><span>What it fixes</span></div>
-            <div class="slp-row"><div class="slp-axis">Quality</div><div class="slp-sol">LUPO qualifies and disqualifies every lead, books the real buyers, and turns the rest away before a rep sees them.</div><div class="slp-prob">Junk and wrong-fit leads flood the funnel and burn AE time on people who were never going to buy.</div></div>
-            <div class="slp-row"><div class="slp-axis">Capacity</div><div class="slp-sol">LUPO runs the triage and the first conversation, so your reps spend their hours on deals that can actually close.</div><div class="slp-prob">Reps lose the day to gathering basics and sorting leads instead of working real pipeline.</div></div>
-            <div class="slp-row"><div class="slp-axis">Experience</div><div class="slp-sol">Every buyer gets an instant, personal conversation, not a form and a wait.</div><div class="slp-prob">Static forms and slow replies push buyers away at the moment they raised their hand.</div></div>
-            <div class="slp-row"><div class="slp-axis">Speed</div><div class="slp-sol">LUPO answers every lead in seconds, so a high-intent buyer never waits to move forward.</div><div class="slp-prob">Slow replies lose the buyers most ready to act. Most teams answer inbound hours or days later, long after intent has cooled.</div></div>
+            <div class="slp-row"><div class="slp-axis">Quality</div><div class="slp-sol">Qualifies every lead, books the real buyers, turns the rest away.</div><div class="slp-prob">Junk floods the funnel and burns AE time.</div></div>
+            <div class="slp-row"><div class="slp-axis">Capacity</div><div class="slp-sol">Runs the triage and first conversation, so reps work deals that close.</div><div class="slp-prob">Reps lose the day sorting leads instead of selling.</div></div>
+            <div class="slp-row"><div class="slp-axis">Experience</div><div class="slp-sol">Every buyer gets an instant conversation, not a form and a wait.</div><div class="slp-prob">Forms and slow replies push buyers away.</div></div>
+            <div class="slp-row"><div class="slp-axis">Speed</div><div class="slp-sol">Answers in seconds, so a buyer never waits.</div><div class="slp-prob">Most teams reply hours later, after intent has cooled.</div></div>
         </div>
     </section>
 
@@ -2762,7 +2837,7 @@
     <section class="page-section">
         <div class="statement">
             <h2>It filters the junk,<br>and shows your reps why.</h2>
-            <p class="lx-desk">Every lead scored on fit and intent, every decision logged with its reason. Your reps re-trust inbound, because they see the why behind every yes and no.</p>
+            <p class="lx-desk">Every lead scored on fit and intent. Every decision logged with its reason. Your reps re-trust inbound, because they see the why behind every yes and no.</p>
             <p class="lx-mob">Every lead scored on fit and intent, every decision logged with its reason. Your reps re-trust inbound.</p>
         </div>
     </section>
@@ -3979,7 +4054,7 @@
     <section class="page-section">
         <div class="statement">
             <h2>One brain.<br>Every channel you run.</h2>
-            <p class="lx-desk">Most tools cover one channel, and none of them share a brain. LUPO runs one qualification brain across web form, email, chat, and phone, so buyers never start over and your team sees one consistent qualification record.</p>
+            <p class="lx-desk">Most tools cover one channel. None of them share a brain. LUPO runs one across web form, email, chat, and phone. Buyers never start over. Your team sees one record.</p>
             <p class="lx-mob">Most tools cover one channel and don't share a brain. LUPO runs one brain across web form, email, chat, and phone, so buyers never start over.</p>
         </div>
     </section>
@@ -3988,7 +4063,7 @@
     <section class="page-section">
         <div class="statement">
             <h2>It gets sharper on your<br>inbound every day.</h2>
-            <p class="lx-desk">Every conversation tunes qualification to your ICP, sharper the longer it runs. The one edge a competitor can't switch on cold, because it learns from your inbound, not their codebase.</p>
+            <p class="lx-desk">Every conversation tunes qualification to your ICP, sharper the longer it runs. The one edge a competitor can't switch on cold. It learns from your inbound, not their codebase.</p>
             <p class="lx-mob">Every conversation tunes qualification to your ICP, sharper the longer it runs. The one edge a competitor can't switch on cold.</p>
             <p class="flywheel-next" style="font-size:15.5px;max-width:600px;margin:28px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,0.12);">And when buyers start sending AI agents to evaluate vendors, LUPO qualifies the agent too. Machine to machine.</p>
         </div>
@@ -4003,17 +4078,17 @@
                 <div class="section-card">
                     <div class="card-label">Security</div>
                     <h3 class="card-heading">Encrypted transport, no model training.</h3>
-                    <p class="card-body">Encryption in transit, controlled access to customer data. GDPR DPA available on request.</p>
+                    <p class="card-body">Controlled access to customer data. GDPR DPA on request.</p>
                 </div>
                 <div class="section-card">
                     <div class="card-label">Audit trail</div>
                     <h3 class="card-heading">Every decision logged with reasoning.</h3>
-                    <p class="card-body">AI disclosure on every call. Every call, form, and chat gets a summary, decision, and the next action LUPO took.</p>
+                    <p class="card-body">AI disclosure on every call. Every conversation gets a summary, decision, and next action.</p>
                 </div>
                 <div class="section-card">
                     <div class="card-label">Design partners</div>
                     <h3 class="card-heading">30-day pilot. Success metric upfront. No lock-in.</h3>
-                    <p class="card-body">Pre-agreed success metric in the contract. Runs alongside your existing flow. Easy exit, only continues if we earn it.</p>
+                    <p class="card-body">Success metric in the contract. Runs alongside your existing flow. Only continues if we earn it.</p>
                 </div>
             </div>
         </div>
@@ -4076,7 +4151,7 @@
         <div class="fp-inner">
             <div class="fp-eyebrow">How a pilot works</div>
             <h2 class="fp-heading">We agree the number first. Then the founder runs your pilot.</h2>
-            <p class="fp-body">No lock-in, no leap of faith. We set one success metric up front and write it into the pilot. It only continues if it hits.</p>
+            <p class="fp-body">No lock-in. We agree one success metric up front and write it into the pilot. It only continues if it hits.</p>
             <ul class="fp-points">
                 <li><b>One metric, agreed up front.</b> Qualified meetings booked, response time, or junk filtered before a rep sees it. Your call.</li>
                 <li><b>A direct line to the founder.</b> A rule needs to change, you ask, it changes that day.</li>
@@ -4127,7 +4202,7 @@
     <!-- Bottom CTA Section -->
     <section class="cta-block">
         <h2>Turn every high-intent buyer into a booked meeting.</h2>
-        <p class="lx-desk">LUPO is live now. Book a demo and watch it answer your inbound in seconds, qualify every lead against your ICP, and put the real buyers straight onto your reps' calendars, so no opportunity slips away.</p>
+        <p class="lx-desk">LUPO is live now. Book a demo and watch it answer your inbound, qualify every lead, and book the real buyers straight onto your reps' calendars.</p>
         <p class="lx-mob">LUPO is live now. See it answer, qualify, and book your real buyers in real time.</p>
         <div class="cta-block-actions">
             <a href="https://cal.com/tombaxter/lupo" class="btn-primary">
@@ -4230,7 +4305,82 @@
 .lf-footer .lf-col a{font-size:13px;}
 .lf-footer .lf-bottom{margin-top:24px;}
 }
+/* product index band */
+.lf-product{display:block;position:relative;z-index:1;background:#000000;border-top:1px solid rgba(255,255,255,0.07);padding:72px 40px 64px;}
+.lf-product,.lf-product *{box-sizing:border-box;}
+.lf-product .lf-pi-inner{max-width:1200px;margin:0 auto;}
+.lf-product .lf-pi-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.34);margin:0 0 36px;}
+.lf-product .lf-pi-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:40px 32px;}
+.lf-product .lf-pi-group{display:flex;flex-direction:column;}
+.lf-product .lf-pi-head{font-size:14px;font-weight:600;color:#f5f5f7;text-decoration:none;letter-spacing:-0.01em;margin:0 0 14px;transition:color 0.2s ease;}
+.lf-product a.lf-pi-head:hover{color:#fff;}
+.lf-product .lf-pi-sub{display:flex;flex-direction:column;gap:10px;border-left:1px solid rgba(255,255,255,0.1);padding-left:15px;}
+.lf-product .lf-pi-sub span,.lf-product .lf-pi-sub a{font-size:13px;line-height:1.25;color:rgba(255,255,255,0.46);text-decoration:none;letter-spacing:-0.005em;}
+.lf-product .lf-pi-sub a{transition:color 0.2s ease;}
+.lf-product .lf-pi-sub a:hover{color:#f5f5f7;}
+@media (max-width:900px){
+.lf-product{padding:48px 20px 40px;}
+.lf-product .lf-pi-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 24px;}
+.lf-product .lf-pi-eyebrow{margin-bottom:28px;}
+}
 </style>
+<section class="lf-product" aria-label="Product capabilities">
+  <div class="lf-pi-inner">
+    <p class="lf-pi-eyebrow">The platform</p>
+    <div class="lf-pi-grid">
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/signals/">Signals</a>
+        <div class="lf-pi-sub">
+          <span>Company signals</span>
+          <span>On-site intent</span>
+          <span>Conversation signals</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/visitor-identification/">Visitor identification</a>
+        <div class="lf-pi-sub">
+          <span>Company-level</span>
+          <span>Person-level</span>
+          <span>Freemail resolution</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/how-it-works/">Qualification</a>
+        <div class="lf-pi-sub">
+          <span>Enrichment</span>
+          <span>Lead scoring</span>
+          <span>ICP matching</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/how-it-works/">Actions</a>
+        <div class="lf-pi-sub">
+          <span>Routing</span>
+          <span>Booking</span>
+          <span>CRM write-back</span>
+          <span>Decision log</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/how-it-works/">Channels</a>
+        <div class="lf-pi-sub">
+          <span>Web form</span>
+          <span>Email</span>
+          <span>Chat</span>
+          <span>Phone</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/integrations/">Integrations</a>
+        <div class="lf-pi-sub">
+          <a href="/integrations/">HubSpot</a>
+          <a href="/integrations/">Salesforce</a>
+          <a href="/integrations/">Any CRM</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <footer class="lf-footer">
     <div class="lf-inner">
         <div class="lf-left">
