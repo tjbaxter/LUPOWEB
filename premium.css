@@ -50,3 +50,26 @@
 nav .nav-link{white-space:nowrap}
 @media (max-width:899px){nav .nav-links{gap:18px}}
 @media (max-width:719px){nav .nav-links{display:none}}
+
+/* ============================================================
+   Premium content links. Targets class-less <a> inside main
+   (prose + card body links), so buttons, nav and footer keep
+   their own styling. Specificity (0,2,2) beats inline `.prose a`
+   rules, so this is the single source of truth site-wide.
+   A hairline accent underline grows on hover, no garish default.
+   ============================================================ */
+:is(main, article) a[href]:not([class]) {
+    color: #b9a8ff;
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1.5px;
+    background-position: 0 calc(100% - 0.5px);
+    background-repeat: no-repeat;
+    transition: color .2s ease, background-size .35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+:is(main, article) a[href]:not([class]):hover,
+:is(main, article) a[href]:not([class]):focus-visible {
+    color: #d8ccff;
+    background-size: 100% 1.5px;
+    outline: none;
+}
