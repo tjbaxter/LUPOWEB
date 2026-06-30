@@ -113,6 +113,12 @@
             margin-bottom: 42px;
             max-width: 760px;
         }
+        .hero-lede a, .section-lede a {
+            color: #c4b5fd; text-decoration: none;
+            border-bottom: 1px solid rgba(167,139,250,0.4);
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+        .hero-lede a:hover, .section-lede a:hover { color: #ddd6fe; border-bottom-color: #a78bfa; }
         .card-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         .card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
         .card-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
@@ -592,8 +598,8 @@
         <section class="hero-section">
             <div class="hero-section-inner">
                 <span class="hero-eyebrow">How LUPO works</span>
-                <h1>Identify, capture, qualify, score, <span class="gradient-text">route.</span></h1>
-                <p class="hero-lede">One brain that sees the companies showing intent on your site and resolves the leads who reach out, across web form, email, chat, and phone. Every inbound gets the same treatment, in the same context, before it ever reaches a rep.</p>
+                <h1>Identify, qualify, score, route, <span class="gradient-text">book.</span></h1>
+                <p class="hero-lede">One brain that sees the <a href="/visitor-identification/">companies showing intent on your site</a> and resolves the leads who reach out, across web form, email, chat, and phone. Every inbound gets the same treatment in the same context: qualified, scored, routed, booked, and written back to your CRM.</p>
             </div>
         </section>
 
@@ -669,7 +675,7 @@
             <div class="section-inner">
                 <div class="section-eyebrow">Enrichment &amp; scoring</div>
                 <h2 class="section-heading">Tell reps who's actually ready.</h2>
-                <p class="section-lede">Qualified isn't ready to buy. LUPO surfaces the intent signals reps would otherwise miss.</p>
+                <p class="section-lede">Qualified isn't ready to buy. LUPO reads the <a href="/signals/">buying signals</a> reps would otherwise miss.</p>
                 <div class="card-grid-4">
                     <div class="section-card">
                         <div class="card-label">Enriched</div>
