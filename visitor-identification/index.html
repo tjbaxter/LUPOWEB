@@ -63,7 +63,7 @@
                 "name": "Do you identify every visitor?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "We do not make match-rate claims we have not measured. Company-level and person-level identification run across your traffic, with the evidence behind every match on the record."
+                    "text": "Company-level and person-level identification run across your traffic, each match carrying its source on the record. LUPO reveals the companies behind your anonymous visits and resolves the buyers who engage. Book a demo and watch it work on your live traffic."
                 }
             },
             {
@@ -79,7 +79,7 @@
                 "name": "Is website visitor identification compliant?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "LUPO identifies organisations at the company level and resolves the people who engage, with every identification carrying its source on the record. A DPA is available. See the privacy policy and DPA."
+                    "text": "LUPO identifies organizations at the company level and resolves the people who engage, with every identification carrying its source on the record. A DPA is available. See the privacy policy and DPA."
                 }
             },
             {
@@ -190,6 +190,32 @@
         .cta-actions { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
         .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 999px; font-size: 14px; font-weight: 600; text-decoration: none; background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%); color: #000; transition: all 0.22s ease; }
         .btn-primary:hover { transform: translateY(-1px); }
+        .btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 999px; font-size: 14px; font-weight: 600; text-decoration: none; color: var(--text-primary); border: 1px solid var(--border-strong); transition: all 0.22s ease; }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.32); background: rgba(255,255,255,0.04); }
+
+        /* Common Room-style structured sections */
+        .section-wide { max-width: 1080px; }
+        .section-head { max-width: 760px; margin: 0 auto 34px; text-align: center; }
+        .section-head h2 { font-size: clamp(26px, 3.4vw, 36px); font-weight: 600; letter-spacing: -0.022em; line-height: 1.12; margin-bottom: 12px; }
+        .section-head .step-eyebrow { margin-bottom: 12px; }
+        .section-head p { font-size: 16px; line-height: 1.55; color: var(--text-secondary); }
+        .prob-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 1080px; margin: 0 auto; }
+        .prob-card { background: rgba(255,255,255,0.022); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 24px 22px; }
+        .prob-card h3 { font-size: 16.5px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 9px; }
+        .prob-card p { font-size: 14px; line-height: 1.55; color: var(--text-secondary); }
+        .sol-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 1080px; margin: 0 auto; }
+        .sol-card { background: rgba(255,255,255,0.026); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 26px 26px 24px; transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease; }
+        .sol-card:hover { border-color: rgba(167,139,250,0.28); background: rgba(118,75,162,0.05); transform: translateY(-2px); }
+        .sol-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #a78bfa; margin-bottom: 12px; }
+        .sol-card h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.018em; margin-bottom: 9px; }
+        .sol-card p { font-size: 14.5px; line-height: 1.55; color: var(--text-secondary); }
+        html.aurora .prob-card, html.aurora .sol-card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.16); }
+        html.aurora .prob-card p, html.aurora .sol-card p, html.aurora .section-head p { color: rgba(255,255,255,0.88); }
+        @media (max-width: 860px) {
+            .prob-grid { grid-template-columns: 1fr; }
+            .sol-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
     </style>
     <script src="/aurora.js?v=20"></script>
     <script id="warmly-script-loader" src="https://opps-widget.getwarmly.com/warmly.js?clientId=8161a164294aa0eecd1432fc3cfcd6c1" defer></script>
@@ -225,24 +251,64 @@
         <section class="hero-section">
             <div class="hero-section-inner">
                 <span class="hero-eyebrow">Buyer intelligence</span>
-                <h1>Know which companies are on your site.</h1>
-                <p class="hero-lede">LUPO sees the companies showing intent on your site, resolves the leads who engage, and then does the entire inbound SDR job. Identity is where it starts, not where it stops.</p>
+                <h1>Turn page visits into pipeline.</h1>
+                <p class="hero-lede">Reveal the companies behind your anonymous traffic. Resolve the buyers who engage. Then do what no visitor-ID tool does: qualify them in a real conversation, book the real ones, and write it all back to your CRM. Identity is where LUPO starts, not where it stops.</p>
+                <div class="cta-actions" style="margin-top:26px;">
+                    <a href="https://cal.com/tombaxter/lupo" class="btn-primary">Book a demo</a>
+                    <a href="/signals/" class="btn-secondary">See the signals it reads</a>
+                </div>
             </div>
         </section>
 
         <section class="page-section">
-            <div class="section-inner prose">
-                <div class="step-eyebrow">Company-level, across your traffic</div>
-                <h2>Identify the organisations showing intent.</h2>
-                <p>LUPO identifies the companies visiting your site, with the evidence behind each match attached. This runs across your traffic. No match-rate theatre and no numbers we have not measured ourselves: just the organisations showing real interest, surfaced to whoever owns inbound, so a buyer on your pricing page does not stay anonymous until they happen to fill in a form.</p>
+            <div class="section-head">
+                <div class="step-eyebrow">What's wrong with the status quo</div>
+                <h2>Most visitor tools stop at a name.</h2>
+                <p>They tell you a company looked, and leave the rest to your reps.</p>
+            </div>
+            <div class="prob-grid">
+                <div class="prob-card">
+                    <h3>Account-level only</h3>
+                    <p>Legacy tools tell you a company visited. Not who, not what they need, not what to do next.</p>
+                </div>
+                <div class="prob-card">
+                    <h3>Identity is the finish line</h3>
+                    <p>Visitor-ID tools hand you a logo and stop. Your reps still do the qualifying, the chasing, the booking.</p>
+                </div>
+                <div class="prob-card">
+                    <h3>Anonymous until a form</h3>
+                    <p>Your readiest buyer reads your pricing page and leaves. No form, no trace, no follow-up.</p>
+                </div>
             </div>
         </section>
 
         <section class="page-section">
-            <div class="section-inner prose">
-                <div class="step-eyebrow">Person-level, on the buyers who engage</div>
-                <h2>Resolve the person, not just the logo.</h2>
-                <p>LUPO resolves a business contact at the identifying company, with the evidence behind the match attached. Company-level runs across your traffic, and person-level puts a named buyer on the record. The visitor reading your pricing page becomes a contact your reps can act on, not an anonymous session that disappears.</p>
+            <div class="section-head">
+                <div class="step-eyebrow">How LUPO does it</div>
+                <h2>Identify. Resolve. Enrich. Act.</h2>
+                <p>Everything a visitor-identification tool does, and the part it hands back to your team.</p>
+            </div>
+            <div class="sol-grid">
+                <div class="sol-card">
+                    <div class="sol-label">Identify</div>
+                    <h3>See the companies behind every visit.</h3>
+                    <p>Company-level identification across your traffic, each match carrying its evidence on the record. The buyer reading your pricing page never stays anonymous until they happen to fill in a form.</p>
+                </div>
+                <div class="sol-card">
+                    <div class="sol-label">Resolve</div>
+                    <h3>The person, not just the logo.</h3>
+                    <p>The buyer who engages becomes a named contact your reps can act on, not a logo and a guess. Person-level resolution on the people reaching out to you, with the source attached.</p>
+                </div>
+                <div class="sol-card">
+                    <div class="sol-label">Enrich and score</div>
+                    <h3>Fit and intent, ranked.</h3>
+                    <p>Live company-signal data, funding, M&amp;A, leadership hires, headcount growth, enriched onto every account, then scored for fit and intent. The enrichment layer a chat-only tool does not have. <a href="/signals/">See the full signal library</a>.</p>
+                </div>
+                <div class="sol-card">
+                    <div class="sol-label">Act</div>
+                    <h3>Identity is the first step, not the job.</h3>
+                    <p>LUPO opens the conversation across web form, email, chat, and phone, filters the noise, books the real buyers, and writes every decision back to your CRM. <a href="/how-it-works/">See the full pathway</a>.</p>
+                </div>
             </div>
         </section>
 
@@ -251,27 +317,18 @@
                 <div class="step-eyebrow">Freemail resolution</div>
                 <h2>The Gmail sign-up other tools give up on.</h2>
                 <p>A buyer fills in your demo form with jane@gmail.com at 9pm. Domain-based enrichment returns nothing, because there is no company domain to match. LUPO resolves it the way a sharp SDR would: by enriching the signal they already gave, and, when needed, simply asking in the conversation who they work with.</p>
-                <p>We resolve the people who came to you. No cold identification of strangers, ever.</p>
-            </div>
-        </section>
-
-        <section class="page-section">
-            <div class="section-inner prose">
-                <div class="step-eyebrow">Then LUPO does the whole job</div>
-                <h2>Identity is the first step, not the job.</h2>
-                <p>This is the part a visitor-identification tool leaves to you. The moment a company is identified or a lead engages, LUPO qualifies them in a real conversation across web form, email, chat, and phone, filters out the noise so only real buyers go through, scores fit and intent, routes to the right rep, books the meeting, and writes every decision back to your CRM with a decision log on the record.</p>
-                <p>That is the difference between knowing who is on your site and turning it into a booked meeting. See the full pathway in <a href="/how-it-works/">how it works</a>, or how it compares in <a href="/compare/lupo-vs-warmly/">LUPO vs Warmly</a>.</p>
+                <p>LUPO resolves the buyers other tools write off as unknown. See how it compares in <a href="/compare/lupo-vs-warmly/">LUPO vs Warmly</a>.</p>
             </div>
         </section>
 
         <section class="page-section">
             <div class="section-inner">
                 <div class="boundary">
-                    <h2>Where the line is.</h2>
+                    <h2>Identification done right.</h2>
                     <ul>
-                        <li>Company-level identification runs across your traffic.</li>
-                        <li>Person-level resolution covers the buyers who engage, never cold strangers.</li>
-                        <li>LUPO is transparently AI. It never poses as a human.</li>
+                        <li>Company-level identification across all your traffic. Person-level on the buyers who engage.</li>
+                        <li>LUPO identifies the buyers reaching out to you, not people who never came near your site.</li>
+                        <li>Transparently AI. It never poses as a human.</li>
                         <li>Every identification carries its source, on the record.</li>
                         <li>A DPA is available. See the <a href="/privacy.html">privacy policy</a> and the <a href="/dpa.html">DPA</a>.</li>
                     </ul>
@@ -288,7 +345,7 @@
                 </details>
                 <details class="faq-item">
                     <summary class="faq-question">Do you identify every visitor?</summary>
-                    <p class="faq-answer">We do not make match-rate claims we have not measured. Company-level and person-level identification run across your traffic, with the evidence behind every match on the record.</p>
+                    <p class="faq-answer">Company-level and person-level identification run across your traffic, each match carrying its source on the record. LUPO reveals the companies behind your anonymous visits and resolves the buyers who engage. Book a demo and watch it work on your live traffic.</p>
                 </details>
                 <details class="faq-item">
                     <summary class="faq-question">How do you resolve a freemail sign-up?</summary>
@@ -296,7 +353,7 @@
                 </details>
                 <details class="faq-item">
                     <summary class="faq-question">Is website visitor identification compliant?</summary>
-                    <p class="faq-answer">LUPO identifies organisations at the company level and resolves the people who engage, with every identification carrying its source on the record. A DPA is available. See the <a href="/privacy.html" style="color:#a78bfa;text-decoration:none;">privacy policy</a> and <a href="/dpa.html" style="color:#a78bfa;text-decoration:none;">DPA</a>.</p>
+                    <p class="faq-answer">LUPO identifies organizations at the company level and resolves the people who engage, with every identification carrying its source on the record. A DPA is available. See the <a href="/privacy.html" style="color:#a78bfa;text-decoration:none;">privacy policy</a> and <a href="/dpa.html" style="color:#a78bfa;text-decoration:none;">DPA</a>.</p>
                 </details>
                 <details class="faq-item">
                     <summary class="faq-question">Does it work with HubSpot?</summary>
@@ -343,7 +400,82 @@
 .lf-footer .lf-col a{font-size:13px;}
 .lf-footer .lf-bottom{margin-top:24px;}
 }
+/* product index band */
+.lf-product{display:block;position:relative;z-index:1;background:#000000;border-top:1px solid rgba(255,255,255,0.07);padding:72px 40px 64px;}
+.lf-product,.lf-product *{box-sizing:border-box;}
+.lf-product .lf-pi-inner{max-width:1200px;margin:0 auto;}
+.lf-product .lf-pi-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.34);margin:0 0 36px;}
+.lf-product .lf-pi-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:40px 32px;}
+.lf-product .lf-pi-group{display:flex;flex-direction:column;}
+.lf-product .lf-pi-head{font-size:14px;font-weight:600;color:#f5f5f7;text-decoration:none;letter-spacing:-0.01em;margin:0 0 14px;transition:color 0.2s ease;}
+.lf-product a.lf-pi-head:hover{color:#fff;}
+.lf-product .lf-pi-sub{display:flex;flex-direction:column;gap:10px;border-left:1px solid rgba(255,255,255,0.1);padding-left:15px;}
+.lf-product .lf-pi-sub span,.lf-product .lf-pi-sub a{font-size:13px;line-height:1.25;color:rgba(255,255,255,0.46);text-decoration:none;letter-spacing:-0.005em;}
+.lf-product .lf-pi-sub a{transition:color 0.2s ease;}
+.lf-product .lf-pi-sub a:hover{color:#f5f5f7;}
+@media (max-width:900px){
+.lf-product{padding:48px 20px 40px;}
+.lf-product .lf-pi-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 24px;}
+.lf-product .lf-pi-eyebrow{margin-bottom:28px;}
+}
 </style>
+<section class="lf-product" aria-label="Product capabilities">
+  <div class="lf-pi-inner">
+    <p class="lf-pi-eyebrow">The platform</p>
+    <div class="lf-pi-grid">
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/signals/">Signals</a>
+        <div class="lf-pi-sub">
+          <span>Company signals</span>
+          <span>On-site intent</span>
+          <span>Conversation signals</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/visitor-identification/">Visitor identification</a>
+        <div class="lf-pi-sub">
+          <span>Company-level</span>
+          <span>Person-level</span>
+          <span>Freemail resolution</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/how-it-works/">Qualification</a>
+        <div class="lf-pi-sub">
+          <span>Enrichment</span>
+          <span>Lead scoring</span>
+          <span>ICP matching</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/how-it-works/">Actions</a>
+        <div class="lf-pi-sub">
+          <span>Routing</span>
+          <span>Booking</span>
+          <span>CRM write-back</span>
+          <span>Decision log</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/how-it-works/">Channels</a>
+        <div class="lf-pi-sub">
+          <span>Web form</span>
+          <span>Email</span>
+          <span>Chat</span>
+          <span>Phone</span>
+        </div>
+      </div>
+      <div class="lf-pi-group">
+        <a class="lf-pi-head" href="/integrations/">Integrations</a>
+        <div class="lf-pi-sub">
+          <a href="/integrations/">HubSpot</a>
+          <a href="/integrations/">Salesforce</a>
+          <a href="/integrations/">Any CRM</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <footer class="lf-footer">
     <div class="lf-inner">
         <div class="lf-left">
