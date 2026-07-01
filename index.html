@@ -2495,9 +2495,51 @@
     </section>
 
     <section class="m-fly">
+        <style>
+        #lupo-mobile .m-fly-wheel{display:flex;justify-content:center;margin:32px 0 2px;}
+        #lupo-mobile .m-fly-wheel svg{width:206px;height:206px;}
+        #lupo-mobile .fw-spin{transform-box:view-box;transform-origin:120px 120px;animation:fwSpin 18s linear infinite;}
+        @keyframes fwSpin{to{transform:rotate(360deg);}}
+        #lupo-mobile .fw-core{transform-box:view-box;transform-origin:120px 120px;animation:fwCore 3.6s ease-in-out infinite;}
+        @keyframes fwCore{0%,100%{opacity:.5;transform:scale(.92);}50%{opacity:1;transform:scale(1.06);}}
+        @media (prefers-reduced-motion: reduce){#lupo-mobile .fw-spin,#lupo-mobile .fw-core{animation:none;}}
+        </style>
         <span class="m-eyebrow">The moat</span>
         <h2 class="m-h2">It gets sharper on your <span class="gradient-text">inbound every day.</span></h2>
         <p class="m-sub">Every conversation tunes qualification to your ICP. The one edge a competitor can't switch on cold.</p>
+        <div class="m-fly-wheel">
+            <svg viewBox="0 0 240 240" role="img" aria-label="LUPO's inbound flywheel: every conversation tunes qualification, compounding over time">
+                <defs>
+                    <linearGradient id="fwGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#a78bfa"/>
+                        <stop offset="1" stop-color="#2997ff"/>
+                    </linearGradient>
+                </defs>
+                <circle cx="120" cy="120" r="92" fill="none" stroke="rgba(167,139,250,0.14)" stroke-width="1"/>
+                <circle cx="120" cy="120" r="44" fill="none" stroke="rgba(255,255,255,0.045)" stroke-width="1"/>
+                <g class="fw-spin">
+                    <g stroke="rgba(167,139,250,0.11)" stroke-width="1">
+                        <line x1="120" y1="120" x2="120" y2="28"/>
+                        <line x1="120" y1="120" x2="199.7" y2="74"/>
+                        <line x1="120" y1="120" x2="199.7" y2="166"/>
+                        <line x1="120" y1="120" x2="120" y2="212"/>
+                        <line x1="120" y1="120" x2="40.3" y2="166"/>
+                        <line x1="120" y1="120" x2="40.3" y2="74"/>
+                    </g>
+                    <g fill="rgba(167,139,250,0.5)">
+                        <circle cx="120" cy="28" r="2.6"/>
+                        <circle cx="199.7" cy="74" r="2.6"/>
+                        <circle cx="199.7" cy="166" r="2.6"/>
+                        <circle cx="120" cy="212" r="2.6"/>
+                        <circle cx="40.3" cy="166" r="2.6"/>
+                        <circle cx="40.3" cy="74" r="2.6"/>
+                    </g>
+                    <circle cx="120" cy="120" r="92" fill="none" stroke="url(#fwGrad)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="150 428"/>
+                </g>
+                <circle cx="120" cy="120" r="15" fill="rgba(12,10,26,0.65)" stroke="rgba(167,139,250,0.3)" stroke-width="1"/>
+                <circle class="fw-core" cx="120" cy="120" r="5.5" fill="url(#fwGrad)"/>
+            </svg>
+        </div>
     </section>
 
     <!-- 8. PROOF / FOUNDER -->
