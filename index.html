@@ -2407,17 +2407,49 @@
     <!-- 3. HOW LUPO WORKS -->
     <section class="m-how" id="m-dashboard">
         <span class="m-eyebrow">How LUPO works</span>
-        <h2 class="m-h2">From inbound signal to <span class="gradient-text">sales-ready action.</span></h2>
-        <p class="m-sub">LUPO detects buyer intent, identifies the person and account, qualifies fit, then books, routes, nurtures, or filters, with every decision logged in your CRM.</p>
-        <div class="m-shot">
-            <img src="/lupo-dashboard.webp" alt="LUPO dashboard: leads by channel, qualification scores, noise filtered, and meetings booked" width="2400" height="1860" loading="lazy" decoding="async">
+        <h2 class="m-h2">Know who they are. <span class="gradient-text">Know what to do next.</span></h2>
+        <p class="m-sub">LUPO turns each inbound signal into a buyer record, a fit score, and the right next action.</p>
+        <style>
+        #lupo-mobile .m-record{margin:26px 0 6px;border:1px solid var(--m-line);border-radius:16px;background:rgba(255,255,255,0.03);overflow:hidden;}
+        #lupo-mobile .m-rec-row{padding:16px 18px;border-top:1px solid var(--m-line);}
+        #lupo-mobile .m-rec-row:first-child{border-top:0;}
+        #lupo-mobile .m-rec-resolve{background:rgba(167,139,250,0.06);}
+        #lupo-mobile .m-rec-lbl{font-size:10.5px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:#a78bfa;margin-bottom:7px;}
+        #lupo-mobile .m-rec-email{font-size:16px;font-weight:600;color:var(--m-fg);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+        #lupo-mobile .m-rec-val{font-size:15.5px;color:var(--m-fg);line-height:1.4;}
+        #lupo-mobile .m-rec-val b{font-weight:700;}
+        #lupo-mobile .m-rec-meta{font-size:13px;color:var(--m-mut);line-height:1.5;margin-top:6px;}
+        #lupo-mobile .m-rec-flow{display:flex;align-items:center;gap:8px;padding:8px 18px;font-size:10.5px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--m-mut);background:rgba(255,255,255,0.02);border-top:1px solid var(--m-line);}
+        #lupo-mobile .m-rec-flow svg{width:13px;height:13px;stroke:#a78bfa;}
+        #lupo-mobile .m-rec-pills{display:flex;gap:8px;margin-top:11px;}
+        #lupo-mobile .m-pill{font-size:11px;font-weight:600;padding:3px 11px;border-radius:999px;border:1px solid rgba(52,211,153,0.4);color:#6ee7b7;}
+        html.aurora #lupo-mobile .m-record{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.16);}
+        html.aurora #lupo-mobile .m-rec-lbl{color:#6d4fd0;}
+        </style>
+        <div class="m-record" role="img" aria-label="Example: LUPO resolves a freemail signup into a named buyer, a fit score, and a recommended action.">
+            <div class="m-rec-row">
+                <div class="m-rec-lbl">Inbound signal</div>
+                <div class="m-rec-email">alex.dev@gmail.com</div>
+                <div class="m-rec-meta">Signed up, used 82% of the trial, viewed the API docs.</div>
+            </div>
+            <div class="m-rec-flow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>LUPO resolves</div>
+            <div class="m-rec-row m-rec-resolve">
+                <div class="m-rec-lbl">Resolved</div>
+                <div class="m-rec-val">Likely developer at <b>Northbank Financial</b></div>
+                <div class="m-rec-meta">Matched via public profile, domain traces, CRM account, and product usage.</div>
+                <div class="m-rec-pills"><span class="m-pill">Fit high</span><span class="m-pill">Intent high</span></div>
+            </div>
+            <div class="m-rec-row">
+                <div class="m-rec-lbl">Recommended action</div>
+                <div class="m-rec-val">Route to an enterprise SDR with a developer-first CTA.</div>
+                <div class="m-rec-meta">Why: target account, high API usage, banking use case, support risk.</div>
+            </div>
         </div>
         <ol class="m-steps">
-            <li><b>Detect</b><span>Captures inbound across web forms, email, chat, phone, website visits, and product signups.</span></li>
-            <li><b>Identify</b><span>Resolves the person, company, account, and existing CRM context.</span></li>
-            <li><b>Enrich</b><span>Adds firmographics, role, buying signals, product usage, and intent.</span></li>
-            <li><b>Decide</b><span>Scores fit and urgency against your ICP and routing rules.</span></li>
-            <li><b>Act</b><span>Books, routes, alerts, nurtures, filters, and writes back to your CRM.</span></li>
+            <li><b>Capture</b><span>Web forms, email, chat, phone, website visits, and product signups.</span></li>
+            <li><b>Resolve</b><span>Person, company, freemail, visitor ID, CRM record, and account context.</span></li>
+            <li><b>Decide</b><span>Fit, intent, urgency, routing logic, and the reason for action.</span></li>
+            <li><b>Act</b><span>Book, route, nurture, filter, alert, or write back to your CRM.</span></li>
         </ol>
     </section>
 
