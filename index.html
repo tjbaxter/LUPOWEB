@@ -3403,7 +3403,7 @@
         .chat-panel-sub{font-size:13.5px;color:rgba(255,255,255,0.5);line-height:1.5;}
 
         /* ---- compare slider (drag to wipe LUPO <-> typical bot) ---- */
-        .cmp-stage{--pos:38%;position:relative;margin:18px;border-radius:16px;overflow:hidden;aspect-ratio:1/0.92;
+        .cmp-stage{--pos:38%;position:relative;margin:18px;border-radius:16px;overflow:hidden;aspect-ratio:1/1.66;
             background:radial-gradient(75% 65% at 22% 14%,#f4f7ff 0%,rgba(244,247,255,0) 60%),radial-gradient(72% 72% at 88% 92%,#a9b7da 0%,rgba(169,183,218,0) 58%),radial-gradient(55% 55% at 64% 34%,#d2dcf3 0%,rgba(210,220,243,0) 60%),linear-gradient(150deg,#dde4f3 0%,#c4cfe8 100%);
             user-select:none;-webkit-user-select:none;touch-action:pan-y;cursor:ew-resize;}
         .cmp-layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
@@ -3552,11 +3552,11 @@
                             <div class="mockcard mc-gen">
                                 <div class="mcg-head"><span class="mcg-ava">&#129302;</span><div class="mcg-id"><b>Chatbot</b></div><span class="mcg-x">&times;</span></div>
                                 <div class="mc-body">
-                                    <div class="mcg-bub">&#128075; Hi there! How can I help you today?</div>
-                                    <div class="mcg-opts"><span>&#128197; Book a demo</span><span>&#128172; Talk to sales</span></div>
+                                    <div class="mcg-bub">Hi there! How can I help?</div>
+                                    <div class="mcg-opts"><span>Book a demo</span><span>Talk to sales</span><span>Contact support</span></div>
                                 </div>
                                 <div class="mcg-input"><span>Ask me anything&hellip;</span><span class="mcg-send">&#10148;</span></div>
-                                <div class="mcg-foot">AI-generated content may be inaccurate.</div>
+                                <div class="mcg-foot">Generic chatbot &middot; no buyer context</div>
                             </div>
                             <!-- "Your competitor" label removed: reads like a comparison ad; the visual contrast + the subhead carry it. Kept the clean LUPO mark on the right. -->
                         </div>
@@ -3565,18 +3565,18 @@
                             <div class="mockcard mc-lupo">
                                 <div class="mc-head">
                                     <img class="mc-ava" src="/lupo-head-nav.png" alt="" width="28" height="28" decoding="async">
-                                    <div class="mc-id"><b>LUPO</b><span>AI inbound SDR &middot; replies in seconds</span></div>
+                                    <div class="mc-id"><b>LUPO</b><span>Buyer intelligence + execution &middot; replies in seconds</span></div>
                                     <span class="mc-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
                                 </div>
                                 <div class="mc-body">
-                                    <div class="mc-bub mc-asst">I'm LUPO, the AI inbound SDR. I work every lead the moment it lands, across web form, email, chat, and phone.</div>
-                                    <div class="mc-bub mc-user">How do you know a lead is actually qualified?</div>
-                                    <div class="mc-bub mc-asst">I read the buying signals, not just the form fields. Fit, timing, and what they actually asked for. Your reps only see the ones that clear the bar, with the why attached.</div>
+                                    <div class="mc-bub mc-asst">You're comparing plans and checking setup. I can size up fit and route you to the right next step.</div>
+                                    <div class="mc-bub mc-user">Can it handle Salesforce and filter junk leads?</div>
+                                    <div class="mc-bub mc-asst">Yes. I enrich and score the buyer, filter the junk, route real ones to Salesforce, and log the reason.</div>
                                 </div>
                                 <div class="mc-input">
                                     <span class="mc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></span>
                                     <span class="mc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="22"/></svg></span>
-                                    <span class="mc-field"><span class="mc-field-text">How do you know a lead is qualified?</span><canvas class="mc-field-canvas" aria-hidden="true"></canvas></span>
+                                    <span class="mc-field"><span class="mc-field-text">Can it enrich and route this lead?</span><canvas class="mc-field-canvas" aria-hidden="true"></canvas></span>
                                     <span class="mc-send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg></span>
                                 </div>
                                 <div class="mc-foot">Honest AI &middot; no fake human</div>
@@ -3692,10 +3692,10 @@
             var fieldCanvas = band.querySelector('.mc-field-canvas');
             if (fieldText && fieldCanvas && !reduce) {
                 var ROTATION = [
-                    'How do you know a lead is qualified?',
-                    'What happens to the leads you reject?',
-                    'What do my reps actually see?',
-                    'Can I run it on my own leads?'
+                    'Can it enrich and route this lead?',
+                    'Can it route Salesforce leads by territory?',
+                    'Can it filter junk demo requests?',
+                    'Does it write the reason back to my CRM?'
                 ];
                 var dissolveBusy = false;
                 var pixelDissolve = function (textEl, canvas, fromText, toText) {
@@ -3826,19 +3826,19 @@
             if (mcBody && !reduce) {
                 var CONVOS = [
                     [
-                        { r: 'asst', t: "I'm LUPO, your AI inbound SDR. I work every lead the moment it lands, across web form, email, chat, and phone." },
-                        { r: 'user', t: "How do you know a lead is actually qualified?" },
-                        { r: 'asst', t: "I read the buying signals, not just the form fields. Fit, timing, and what they actually asked for. Your reps only see the ones that clear the bar, with the why attached." }
+                        { r: 'asst', t: "You're comparing plans and checking setup. I can size up fit and route you to the right next step." },
+                        { r: 'user', t: "Can it handle Salesforce and filter junk leads?" },
+                        { r: 'asst', t: "Yes. I enrich and score the buyer, filter the junk, route real ones to Salesforce, and log the reason." }
                     ],
                     [
-                        { r: 'asst', t: "I'm LUPO, your AI inbound SDR. Every lead that lands gets worked in seconds, then routed by how ready it really is." },
-                        { r: 'user', t: "What happens to the leads you reject?" },
-                        { r: 'asst', t: "They're never tossed. Low intent goes to a nurture track, anything borderline gets flagged for a rep. Every lead gets a decision, not a dead end." }
+                        { r: 'asst', t: "Looks like you're mid-evaluation on pricing. Want me to work out fit for a team your size?" },
+                        { r: 'user', t: "How do you know who I am? I used a personal email." },
+                        { r: 'asst', t: "I resolve what your signals and account allow, and ask for the rest. When I can't be sure, I say so." }
                     ],
                     [
-                        { r: 'asst', t: "I'm LUPO, your AI inbound SDR. I qualify across web form, email, chat, and phone before anything reaches your team." },
-                        { r: 'user', t: "What do my reps actually see?" },
-                        { r: 'asst', t: "A qualified lead in your CRM with the full picture. Fit score, the buying signals, and the whole conversation. They call knowing the person is ready, no digging." }
+                        { r: 'asst', t: "You're back on the docs and pricing this week. That's a buying signal, so let me help you move fast." },
+                        { r: 'user', t: "What would my rep actually get?" },
+                        { r: 'asst', t: "A resolved buyer in your CRM: company, a fit and intent score, the signals, and the recommended next step." }
                     ]
                 ];
                 var convoIdx = 0;
