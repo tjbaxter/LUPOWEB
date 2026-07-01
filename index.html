@@ -4255,6 +4255,21 @@
             .dfw-core{transform-box:view-box;transform-origin:120px 120px;animation:dfwCore 3.6s ease-in-out infinite;}
             @keyframes dfwCore{0%,100%{opacity:.5;transform:scale(.92);}50%{opacity:1;transform:scale(1.06);}}
             @media (prefers-reduced-motion: reduce){.dfw-spin,.dfw-core{animation:none;}}
+            /* Light indigo (aurora) mode: the flywheel strokes are near-white on dark,
+               so darken them to stay visible on the light background. Covers the desktop
+               (.dfw-wrap) and mobile (.m-fly-wheel) flywheels via attribute selectors. */
+            html.aurora .dfw-wrap circle[stroke="rgba(167,139,250,0.14)"],
+            html.aurora .m-fly-wheel circle[stroke="rgba(167,139,250,0.14)"]{stroke:rgba(26,20,66,0.40);}
+            html.aurora .dfw-wrap circle[stroke="rgba(255,255,255,0.045)"],
+            html.aurora .m-fly-wheel circle[stroke="rgba(255,255,255,0.045)"]{stroke:rgba(26,20,66,0.18);}
+            html.aurora .dfw-wrap g[stroke="rgba(167,139,250,0.11)"],
+            html.aurora .m-fly-wheel g[stroke="rgba(167,139,250,0.11)"]{stroke:rgba(26,20,66,0.30);}
+            html.aurora .dfw-wrap g[fill="rgba(167,139,250,0.5)"],
+            html.aurora .m-fly-wheel g[fill="rgba(167,139,250,0.5)"]{fill:rgba(46,38,110,0.92);}
+            html.aurora .dfw-wrap circle[stroke^="url("],
+            html.aurora .m-fly-wheel circle[stroke^="url("]{stroke:#3d4590;}
+            html.aurora .dfw-wrap circle[fill="rgba(12,10,26,0.65)"],
+            html.aurora .m-fly-wheel circle[fill="rgba(12,10,26,0.65)"]{fill:rgba(255,255,255,0.55);stroke:rgba(56,48,120,0.4);}
             </style>
             <div class="dfw-wrap">
                 <svg viewBox="0 0 240 240" role="img" aria-label="LUPO's inbound flywheel: every reviewed decision sharpens qualification, compounding over time">
