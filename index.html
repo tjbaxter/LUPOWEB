@@ -2146,12 +2146,17 @@
                 <a href="/roi/" class="nav-link">ROI</a>
                 <a href="/blog/" class="nav-link">Blog</a>
             </div>
+            <!-- Sign in button commented out (per Tom) -->
+            <!--
             <a href="https://app.lupolabs.ai/login" class="nav-login-btn">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
                 </svg>
                 Sign in
             </a>
+            -->
+            <!-- /sign-in -->
+
         </div>
     </nav>
     
@@ -2703,7 +2708,7 @@
                     </svg>
                     Book a demo
                 </a>
-                <a href="#dashboard" class="btn-secondary">
+                <a href="#chat-it" class="btn-secondary">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
                         <rect x="3" y="3" width="18" height="14" rx="2"/>
                         <path d="M8 21h8M12 17v4"/>
@@ -3026,6 +3031,12 @@
     </section>
 
     <!-- lupo-dash-band: the dashboard (org-level visibility) -->
+    <!-- DASHBOARD SECTION DISABLED: built before LUPO also became a data-intelligence
+         company, so the screenshot is outdated and missing capabilities. Wrapped in an
+         inert <template> (the section contains a <script> and CSS custom props, so HTML
+         comments would corrupt it). To restore: delete this <template> open tag and its
+         matching </template> just before the chat-band section. -->
+    <template id="disabled-dashboard">
     <section class="ldb-band" id="dashboard">
         <style>
         .ldb-band{position:relative;z-index:1;padding:72px 24px;}
@@ -3504,6 +3515,8 @@
         })();
         </script>
     </section>
+    </template>
+    <!-- /disabled-dashboard -->
 
     <!-- chat-band: the chat channel showcase. Chat is ONE of four channels
          (web form, email, chat, phone) - never "LUPO is a chatbot". This
