@@ -2124,6 +2124,26 @@
     </style>
     <script id="warmly-script-loader" src="https://opps-widget.getwarmly.com/warmly.js?clientId=8161a164294aa0eecd1432fc3cfcd6c1" defer></script>
     <style>html{scrollbar-gutter:stable}</style>
+    <style>
+    /* nav-center-fix */
+    .nav-link.is-active { color: var(--text-primary); }
+    @media (min-width: 900px) {
+        .nav-content { position: relative; }
+        .nav-links {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            gap: 32px;
+            white-space: nowrap;
+        }
+        .nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: -0.022em;
+        }
+    }
+    </style>
 </head>
 <body>
     <!-- Background Animation -->
@@ -2139,7 +2159,7 @@
                 <span style="font-size: 24px; font-weight: 600;">LUPO</span>
             </a>
             <div class="nav-links">
-                <a href="/" class="nav-link">Home</a>
+                <a href="/" class="nav-link is-active">Home</a>
                 <a href="/how-it-works/" class="nav-link">How it works</a>
                 <a href="/about.html" class="nav-link">About</a>
                 <a href="/pricing/" class="nav-link">Pricing</a>
