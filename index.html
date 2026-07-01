@@ -2167,6 +2167,20 @@
         @media (max-width: 768px) {
             .desktop-only { display: none !important; }
             .mobile-only { display: block; }
+            /* Reordered flow: lead with buyer intelligence + execution, chat demo sits lower */
+            #lupo-mobile { display: flex; flex-direction: column; }
+            #lupo-mobile .m-hero { order: 1; }
+            #lupo-mobile .m-bi { order: 2; }
+            #lupo-mobile .m-diff { order: 3; }
+            #lupo-mobile .m-leaks { order: 4; }
+            #lupo-mobile .m-how { order: 5; }
+            #lupo-mobile .m-fix { order: 6; }
+            #lupo-mobile .chat-band { order: 7; }
+            #lupo-mobile .m-fly { order: 8; }
+            #lupo-mobile .m-why { order: 9; }
+            #lupo-mobile .m-tl { order: 10; }
+            #lupo-mobile .m-int { order: 11; }
+            #lupo-mobile .m-final { order: 12; }
         }
 
         #lupo-mobile {
@@ -2368,15 +2382,15 @@
     <!-- 1. HERO -->
     <section class="m-hero">
         <h1 class="m-h1">Turn inbound noise into <span class="gradient-text">qualified pipeline.</span></h1>
-        <p class="m-sub">LUPO reveals inbound buyers, qualifies intent in real time, and automates the next best action.</p>
+        <p class="m-sub">AI buyer intelligence that identifies your best inbound buyers and moves them to the right next step automatically.</p>
         <div class="m-cta">
             <a class="m-primary" href="https://cal.com/tombaxter/lupo">Book a demo</a>
             <a class="m-secondary" href="#m-dashboard">See it live</a>
         </div>
         <ul class="m-caps">
-            <li>Complete buyer intelligence</li>
-            <li>Qualifies, routes, or filters</li>
-            <li>Books meetings and updates CRM</li>
+            <li>Identify who matters</li>
+            <li>Act while intent is high</li>
+            <li>Give reps full context</li>
         </ul>
         <div class="m-g2-hero" role="img" aria-label="Rated 5 out of 5 stars on G2">
             <svg class="m-g2-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm.122 5.143c.45 0 .9.044 1.342.132l-1.342 2.806C9.962 8.08 8.203 9.84 8.203 12s1.76 3.92 3.92 3.92c.937 0 1.844-.338 2.553-.951l1.483 2.572A6.856 6.856 0 0 1 5.266 12a6.856 6.856 0 0 1 6.856-6.856Zm3.498.49a1.262 1.262 0 0 1 .026 0c.427 0 .792.113 1.101.34.31.229.466.546.466.946 0 .639-.36 1.03-1.035 1.376l-.377.191c-.403.204-.602.385-.657.706h2.05v.85h-3.101v-.144c0-.526.103-.96.314-1.306.211-.345.576-.65 1.102-.917l.242-.117c.427-.216.538-.401.538-.625 0-.266-.228-.458-.6-.458-.44 0-.773.228-1.004.694l-.592-.595c.13-.279.338-.502.619-.675a1.7 1.7 0 0 1 .908-.266Zm-2.094 5.388h3.394l1.697 2.937-1.697 2.94-1.697-2.94H11.83l1.696-2.937Z"/></svg>
@@ -2393,16 +2407,17 @@
     <!-- 3. HOW LUPO WORKS -->
     <section class="m-how" id="m-dashboard">
         <span class="m-eyebrow">How LUPO works</span>
-        <h2 class="m-h2">From first message to booked meeting.</h2>
-        <p class="m-sub">LUPO works every inbound conversation end to end, reaching buyers the moment their intent is highest and handing your reps the real opportunities with full context.</p>
+        <h2 class="m-h2">From inbound signal to <span class="gradient-text">sales-ready action.</span></h2>
+        <p class="m-sub">LUPO detects buyer intent, identifies the person and account, qualifies fit, then books, routes, nurtures, or filters, with every decision logged in your CRM.</p>
         <div class="m-shot">
             <img src="/lupo-dashboard.webp" alt="LUPO dashboard: leads by channel, qualification scores, noise filtered, and meetings booked" width="2400" height="1860" loading="lazy" decoding="async">
         </div>
         <ol class="m-steps">
-            <li><b>Engages buyers</b><span>Replies the instant a buyer reaches out, on web form, email, chat, or phone, while their intent is highest.</span></li>
-            <li><b>Answers their questions</b><span>Explains what you do, handles pricing and objections, and matches buyers to the right fit.</span></li>
-            <li><b>Surfaces the real opportunities</b><span>Asks what your SDRs would ask, and scores every lead on fit and buying intent.</span></li>
-            <li><b>Books and hands off</b><span>Books high-intent buyers onto a rep's calendar and passes the rep the full conversation and context.</span></li>
+            <li><b>Detect</b><span>Captures inbound across web forms, email, chat, phone, website visits, and product signups.</span></li>
+            <li><b>Identify</b><span>Resolves the person, company, account, and existing CRM context.</span></li>
+            <li><b>Enrich</b><span>Adds firmographics, role, buying signals, product usage, and intent.</span></li>
+            <li><b>Decide</b><span>Scores fit and urgency against your ICP and routing rules.</span></li>
+            <li><b>Act</b><span>Books, routes, alerts, nurtures, filters, and writes back to your CRM.</span></li>
         </ol>
     </section>
 
@@ -2419,12 +2434,13 @@
         html.aurora #lupo-mobile .m-bi-card{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.18);}
         </style>
         <span class="m-eyebrow">Buyer intelligence</span>
-        <h2 class="m-h2">Complete intelligence on every inbound buyer.</h2>
+        <h2 class="m-h2">Know who's behind every <span class="gradient-text">inbound signal.</span></h2>
+        <p class="m-sub">LUPO resolves buyers across web forms, email, chat, phone, website visits, and product signups, including freemails and anonymous visitors.</p>
         <div class="m-bi-cards">
-            <div class="m-bi-card"><div class="m-bi-label">Identify</div><p class="m-bi-d">Company and person level. Visitor ID, freemail resolution, self-ID in chat.</p></div>
-            <div class="m-bi-card"><div class="m-bi-label">Enrich</div><p class="m-bi-d">Headcount, revenue, tech stack, decision-maker title. Always current.</p></div>
-            <div class="m-bi-card"><div class="m-bi-label">Score</div><p class="m-bi-d">Funding, M&amp;A, leadership hires, headcount growth. Ranked by fit and intent.</p></div>
-            <div class="m-bi-card"><div class="m-bi-label">Qualify</div><p class="m-bi-d">One brain across web form, email, chat, and phone. One record per lead.</p></div>
+            <div class="m-bi-card"><div class="m-bi-label">Resolve identity</div><p class="m-bi-d">Person, company, visitor, freemail, product signup, and CRM match.</p></div>
+            <div class="m-bi-card"><div class="m-bi-label">Enrich accounts</div><p class="m-bi-d">Firmographics, role, tech stack, ownership, and buying context.</p></div>
+            <div class="m-bi-card"><div class="m-bi-label">Read intent</div><p class="m-bi-d">Website, product, form, chat, email, phone, and support signals.</p></div>
+            <div class="m-bi-card"><div class="m-bi-label">Explain decisions</div><p class="m-bi-d">Every route, booking, nurture, or filter comes with a reason.</p></div>
         </div>
     </section>
 
@@ -2447,18 +2463,12 @@
         html.aurora #lupo-mobile .m-spm-axis{color:#ece4ff;}
         </style>
         <span class="m-eyebrow">Why teams bring in LUPO</span>
-        <h2 class="m-h2">Stop losing your highest-intent buyers.</h2>
-        <input type="radio" name="m-spm" id="m-spm-sol" class="m-spm-rad" checked>
-        <input type="radio" name="m-spm" id="m-spm-prob" class="m-spm-rad">
-        <div class="m-spm-tabs">
-            <label class="m-spm-tab" for="m-spm-sol">What LUPO does</label>
-            <label class="m-spm-tab" for="m-spm-prob">What it fixes</label>
-        </div>
+        <h2 class="m-h2">Stop wasting inbound.</h2>
         <div class="m-spm-rows">
-            <div class="m-spm-row"><div class="m-spm-axis">Quality</div><div><div class="m-spm-txt m-spm-sol">Qualifies and disqualifies every lead, books the real buyers, turns the rest away.</div><div class="m-spm-txt m-spm-prob">Junk and wrong-fit leads flood the funnel and burn AE time on people who were never going to buy.</div></div></div>
-            <div class="m-spm-row"><div class="m-spm-axis">Capacity</div><div><div class="m-spm-txt m-spm-sol">Runs the triage and first conversation, so reps work the deals that close.</div><div class="m-spm-txt m-spm-prob">Reps lose the day to gathering basics and sorting leads instead of working real pipeline.</div></div></div>
-            <div class="m-spm-row"><div class="m-spm-axis">Experience</div><div><div class="m-spm-txt m-spm-sol">Every buyer gets an instant, personal conversation, not a form and a wait.</div><div class="m-spm-txt m-spm-prob">Static forms and slow replies push buyers away at the moment they raised their hand.</div></div></div>
-            <div class="m-spm-row"><div class="m-spm-axis">Speed</div><div><div class="m-spm-txt m-spm-sol">Answers every lead in seconds, so a high-intent buyer never waits.</div><div class="m-spm-txt m-spm-prob">Slow replies lose the buyers most ready to act. Most teams answer inbound hours or days later, long after intent has cooled.</div></div></div>
+            <div class="m-spm-row"><div class="m-spm-axis">Quality</div><div class="m-spm-txt m-spm-sol">Only real opportunities reach reps.</div></div>
+            <div class="m-spm-row"><div class="m-spm-axis">Coverage</div><div class="m-spm-txt m-spm-sol">Every inbound channel is handled instantly.</div></div>
+            <div class="m-spm-row"><div class="m-spm-axis">Context</div><div class="m-spm-txt m-spm-sol">Reps get the buyer, account, intent, and reason for action.</div></div>
+            <div class="m-spm-row"><div class="m-spm-axis">Control</div><div class="m-spm-txt m-spm-sol">Every decision is visible, editable, and written back to CRM.</div></div>
         </div>
     </section>
 
@@ -2476,24 +2486,31 @@
 
     <!-- 7. DIFFERENTIATION: the all-channels wedge -->
     <section class="m-diff">
-        <span class="m-eyebrow">More than a chat agent</span>
-        <h2 class="m-h2">Chat agents answer on one channel. <span class="gradient-text">LUPO runs every inbound channel.</span></h2>
-        <p class="m-sub">One brain qualifying across web form, email, chat, and phone, all synced to your CRM. Not a chatbot bolted onto your site. The whole inbound layer.</p>
+        <span class="m-eyebrow">Autonomous execution</span>
+        <h2 class="m-h2">One brain across every <span class="gradient-text">inbound channel.</span></h2>
+        <p class="m-sub">LUPO uses the same buyer intelligence and ICP logic across web forms, email, chat, phone, and product signups.</p>
         <div class="m-chans">
             <span class="m-chan"><svg viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h4"/></svg>Web form</span>
             <span class="m-chan"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</span>
             <span class="m-chan"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Chat</span>
             <span class="m-chan"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Phone</span>
+            <span class="m-chan"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>Product signup</span>
+        </div>
+    </section>
+
+    <!-- 4c. START WHERE INBOUND LEAKS (mobile) -->
+    <section class="m-leaks">
+        <span class="m-eyebrow">Start anywhere</span>
+        <h2 class="m-h2">Start where your <span class="gradient-text">inbound leaks.</span></h2>
+        <div class="m-bi-cards">
+            <div class="m-bi-card"><div class="m-bi-label">Demo forms</div><p class="m-bi-d">Qualify real buyers, filter vendors and junk, and route instantly.</p></div>
+            <div class="m-bi-card"><div class="m-bi-label">Freemail &amp; product signups</div><p class="m-bi-d">Unmask self-serve users and surface hidden target accounts.</p></div>
+            <div class="m-bi-card"><div class="m-bi-label">Website visitors</div><p class="m-bi-d">Identify high-intent traffic and engage before they leave.</p></div>
+            <div class="m-bi-card"><div class="m-bi-label">Chat, email &amp; phone</div><p class="m-bi-d">Answer, qualify, book, or escalate without waiting on a rep.</p></div>
         </div>
     </section>
 
     <!-- 7b. WEDGE + SPEED + MOAT (ported condensed from desktop; agent-to-agent held desktop-only) -->
-    <section class="m-disc">
-        <span class="m-eyebrow">The wedge</span>
-        <h2 class="m-h2">It filters the junk, and <span class="gradient-text">shows your reps why.</span></h2>
-        <p class="m-sub">Every lead scored on fit and intent, every decision logged with its reason. Your reps re-trust inbound.</p>
-    </section>
-
     <section class="m-fly">
         <style>
         #lupo-mobile .m-fly-wheel{display:flex;justify-content:center;margin:32px 0 2px;}
@@ -2504,9 +2521,9 @@
         @keyframes fwCore{0%,100%{opacity:.5;transform:scale(.92);}50%{opacity:1;transform:scale(1.06);}}
         @media (prefers-reduced-motion: reduce){#lupo-mobile .fw-spin,#lupo-mobile .fw-core{animation:none;}}
         </style>
-        <span class="m-eyebrow">The moat</span>
-        <h2 class="m-h2">It gets sharper on your <span class="gradient-text">inbound every day.</span></h2>
-        <p class="m-sub">Every conversation tunes qualification to your ICP. The one edge a competitor can't switch on cold.</p>
+        <span class="m-eyebrow">The compounding edge</span>
+        <h2 class="m-h2">It learns your <span class="gradient-text">ICP.</span></h2>
+        <p class="m-sub">Every reviewed conversation and decision sharpens LUPO's qualification and routing. The one edge a competitor can't switch on cold.</p>
         <div class="m-fly-wheel">
             <svg viewBox="0 0 240 240" role="img" aria-label="LUPO's inbound flywheel: every conversation tunes qualification, compounding over time">
                 <defs>
@@ -2552,14 +2569,6 @@
             <li>A direct line to the founder. Rules change the same day.</li>
             <li>No lock-in. Your data is yours, exportable any time.</li>
         </ul>
-        <div class="m-g2">
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <span>Rated 5/5 on G2</span>
-        </div>
     </section>
 
     <!-- 8b. 30-DAY TIMELINE -->
@@ -3494,10 +3503,10 @@
         </style>
 
         <div class="chat-inner">
-            <div class="section-eyebrow">The chat channel</div>
-            <h2 class="section-heading">Chat that opens the conversation.</h2>
-            <p class="section-lede lx-desk">LUPO's chat is one of four inbound channels. It opens the conversation, qualifies against your ICP, and carries the same context as web form, email, and phone. Drag to compare.</p>
-            <p class="section-lede lx-mob">LUPO's chat is one of four inbound channels, carrying the same context as web form, email, and phone. Drag to compare.</p>
+            <div class="section-eyebrow">One channel of many</div>
+            <h2 class="section-heading">Chat is just one surface.</h2>
+            <p class="section-lede lx-desk">LUPO's chat uses the same buyer intelligence, ICP rules, and CRM context as every other inbound channel. Drag to compare.</p>
+            <p class="section-lede lx-mob">LUPO's chat uses the same buyer intelligence, ICP rules, and CRM context as every other inbound channel. Drag to compare.</p>
 
             <div class="chat-duo">
                 <!-- PANEL 1: draggable before/after wipe -->
