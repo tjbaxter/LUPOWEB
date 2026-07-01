@@ -3,7 +3,7 @@
 # revalidate every asset. HTML keeps that default (deploys show
 # instantly); static assets cache hard.
 #
-# Convention: JS is referenced with ?v= query versions (aurora.js?v=19),
+# Convention: JS is referenced with ?v= query versions (aurora.js?v=21),
 # images get NEW FILENAMES when they change (og-card-v2.png). Keep doing
 # that and long caches are always safe.
 

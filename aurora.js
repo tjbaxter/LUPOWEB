@@ -108,6 +108,15 @@
     "html.aurora .section-eyebrow, html.aurora .article-eyebrow, html.aurora .blog-hero-eyebrow, html.aurora .blog-card-eyebrow, html.aurora .blog-index-cta-eyebrow, html.aurora .article-cta-eyebrow, html.aurora .article-related-item-eyebrow {",
     "  color: #ece4ff; text-shadow: 0 1px 10px rgba(22,12,54,0.45);",
     "}",
+    // Custom per-section eyebrows and in-card labels carry the SAME accent
+    // purple (#a78bfa) as .section-eyebrow and wash out identically on the
+    // bright indigo (e.g. the "Security" / "Audit trail" kickers on the
+    // "Built to ship to enterprise" trust cards). Same lift, so every
+    // uppercase kicker stays legible in light mode, reading on both the wash
+    // and the dark floating cards.
+    "html.aurora .card-label, html.aurora .mep-eyebrow, html.aurora .mep-label, html.aurora .wts-eyebrow, html.aurora .cap-eyebrow, html.aurora .bi-eyebrow, html.aurora .bi-label, html.aurora .bi-ex-label, html.aurora .slp-eyebrow, html.aurora .fp-eyebrow, html.aurora .tl-eyebrow, html.aurora .sol-label {",
+    "  color: #ece4ff; text-shadow: 0 1px 10px rgba(22,12,54,0.45);",
+    "}",
     "html.aurora .lst-eyebrow, html.aurora .ltq-eyebrow { color: rgba(255,255,255,0.74); }",
     // Oversize while light mode is active or fading: the bgShift rotation
     // exposes the rectangle's corners once the layer is visible (at 9%
