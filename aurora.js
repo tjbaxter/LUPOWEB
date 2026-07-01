@@ -242,9 +242,23 @@
     apply(root.classList.contains("aurora"));
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", mount);
-  } else {
+  // Mount the moment <body> exists, NOT at DOMContentLoaded: on long pages
+  // the DOM parse finishes well after the nav paints, so the fixed toggle
+  // (and the self-provisioned wash on washless pages) popped in late on
+  // every tab change — read as the button flashing/resetting. The script
+  // runs from <head>, so body is usually null here; a childList observer
+  // on <html> fires as soon as the parser opens <body>, frames before
+  // DOMContentLoaded. The button then paints together with the nav.
+  if (document.body) {
     mount();
+  } else {
+    var bodyWatch = new MutationObserver(function () {
+      if (!document.body) return;
+      bodyWatch.disconnect();
+      mount();
+    });
+    bodyWatch.observe(document.documentElement, { childList: true });
+    // Belt-and-braces: mount() is idempotent (bails if the toggle exists).
+    document.addEventListener("DOMContentLoaded", mount);
   }
 })();
