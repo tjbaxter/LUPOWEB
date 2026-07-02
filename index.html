@@ -4940,20 +4940,20 @@
     })();
     </script>
 
-    <!-- Tapping the LUPO logo launcher should also dismiss the proactive teaser /
-         suggestion popup (not leave it floating). Delegated so it works no matter
-         when the widget injects the launcher. -->
+    <!-- Haptic tap on launcher press. Works on Android; iOS Safari has no
+         Vibration API, so it is a harmless no-op there. Feature-detected.
+         NOTE: this listener must NEVER touch the widget's own DOM. It used to
+         force-hide .lupo-chat-suggestions here, which fought the widget: on
+         mobile the launcher tap SUMMONS the suggestion pills, so this killed
+         them on the same tap that created them and desynced the widget's
+         internal state (the flash-and-vanish bug). The widget owns the pill
+         and teaser lifecycle itself. -->
     <script>
     (function () {
         document.addEventListener('click', function (e) {
             var t = e.target;
             if (!t || !t.closest || !t.closest('.lupo-chat-launcher')) return;
-            // Subtle haptic tap on launcher press. Works on Android (and most Android
-            // browsers); iOS Safari does not support the Vibration API, so it is a
-            // harmless no-op there. Feature-detected.
             if (navigator.vibrate) { try { navigator.vibrate(8); } catch (e2) {} }
-            document.querySelectorAll('.lupo-chat-teaser, .lupo-chat-suggestions, .lupo-chat-scrim')
-                .forEach(function (el) { el.classList.remove('lupo-chat-visible'); el.style.display = 'none'; });
         }, true);
     })();
     </script>
