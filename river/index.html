@@ -64,6 +64,25 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        /* Cross-document View Transitions: on same-origin nav to/from the homepage
+           (both opted in), the browser cross-fades a snapshot of the outgoing frame
+           to the incoming one, so the half-composited "dark tiles" frame is never
+           shown, on the forward click OR the Back button. Progressive enhancement:
+           Chrome 126+/Safari 18.2+ smooth; other browsers just navigate normally. */
+        @view-transition { navigation: auto; }
+        ::view-transition-group(root) {
+            animation-duration: 0.32s;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        ::view-transition-old(root) { animation: none; }           /* hold outgoing snapshot steady */
+        ::view-transition-new(root) { animation: 0.36s cubic-bezier(0.4, 0, 0.2, 1) both rv-vt-in; }
+        @keyframes rv-vt-in { from { opacity: 0; } to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+            ::view-transition-group(root),
+            ::view-transition-old(root),
+            ::view-transition-new(root) { animation: none !important; }
+        }
+
         :root {
             --text-primary: rgba(255, 255, 255, 0.97);
             --text-secondary: rgba(255, 255, 255, 0.74);
@@ -153,6 +172,12 @@
         html.rv-leaving .rv-bgvideo,
         html.rv-leaving .rv-fireflies .rv-fly { animation: none !important; transition: none !important; }
         html.rv-leaving .rv-field { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+        /* Drop the live video + firefly GPU textures and de-promote the scaled photo
+           so the frame Chrome holds during teardown is just the static still + scrim. */
+        html.rv-leaving .rv-bgvideo,
+        html.rv-leaving .rv-fireflies { visibility: hidden !important; }
+        html.rv-leaving .rv-bg { transform: none !important; will-change: auto !important; }
+        html.rv-leaving .rv-fly { will-change: auto !important; }
         .rv-scrim {
             z-index: -2;
             background:
@@ -824,6 +849,19 @@
             if (window.lupoTrack) window.lupoTrack('river_sound_toggled', { on: running, skin: skin });
         });
 
+        // Suspend the AudioContext when leaving. A running AudioContext blocks the
+        // browser's back/forward cache, so this is what lets the Back button restore
+        // /river's exact prior pixels instantly (no re-render, no torn frame). Resume
+        // only if actually restored from bfcache and the sound was on.
+        window.addEventListener('pagehide', function () {
+            try { if (ctx && ctx.state === 'running' && ctx.suspend) ctx.suspend(); } catch (e) {}
+        });
+        window.addEventListener('pageshow', function (e) {
+            if (e.persisted) {
+                try { if (ctx && ctx.state === 'suspended' && running && ctx.resume) ctx.resume(); } catch (e2) {}
+            }
+        });
+
         // tiny debug hook (harmless; confirms the clip is producing signal)
         window.RiverSoundDebug = {
             state: function () { return { running: running, ctx: ctx && ctx.state, gain: master ? +master.gain.value.toFixed(3) : null, decoded: !!buffer }; },
@@ -868,8 +906,16 @@
             play();
         }
 
-        // Calm the page the instant we start leaving so the exit is smooth.
-        function calmForExit() { pause(); root.classList.add('rv-leaving'); }
+        // Calm the page the instant we start leaving so the exit is smooth. Idempotent
+        // (click + pagehide both fire); forces one synchronous layout flush so the
+        // clean, animation/blur/video-free frame composites BEFORE the browser starts
+        // committing the destination document.
+        function calmForExit() {
+            if (root.classList.contains('rv-leaving')) return;
+            pause();
+            root.classList.add('rv-leaving');
+            void document.documentElement.offsetHeight;
+        }
         function resume() { root.classList.remove('rv-leaving'); if (document.visibilityState === 'visible') play(); }
 
         document.addEventListener('visibilitychange', function () {
@@ -885,9 +931,10 @@
         // Start the video only once the still background image is decoded/painted,
         // so the image wins the bandwidth and shows first (no black flash).
         var probe = new Image();
-        probe.onload = probe.onerror = function () { setTimeout(begin, 60); };
         probe.src = '/river/river-bg.webp?v=2';
-        if (probe.complete) setTimeout(begin, 60);
+        (probe.decode ? probe.decode() : Promise.reject())
+            .then(function () { setTimeout(begin, 60); })
+            .catch(function () { setTimeout(begin, 60); }); // decode() rejects if unsupported/detached → proceed anyway
         setTimeout(begin, 2500); // safety net
     })();
     </script>

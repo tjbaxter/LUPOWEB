@@ -173,7 +173,22 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        /* Cross-document View Transitions: smooth snapshot cross-fade on same-origin
+           nav to/from pages that also opt in (e.g. /river), so the incoming heavy
+           page's first paint never shows as a half-composited frame. Progressive
+           enhancement; unsupported browsers just navigate normally. */
+        @view-transition { navigation: auto; }
+        ::view-transition-group(root) { animation-duration: 0.32s; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        ::view-transition-old(root) { animation: none; }
+        ::view-transition-new(root) { animation: 0.36s cubic-bezier(0.4, 0, 0.2, 1) both lupo-vt-in; }
+        @keyframes lupo-vt-in { from { opacity: 0; } to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+            ::view-transition-group(root),
+            ::view-transition-old(root),
+            ::view-transition-new(root) { animation: none !important; }
+        }
+
         :root {
             --text-primary: #f5f5f7;
             --text-secondary: #a1a1a6;
