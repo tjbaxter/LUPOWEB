@@ -691,9 +691,9 @@
             master.connect(analyser); master.connect(ctx.destination);
         }
         function playLoop() {
-            if (source) { try { source.stop(); } catch (e) {} }
+            if (source) return;                            // already looping
             source = ctx.createBufferSource();
-            source.buffer = buffer; source.loop = true;   // sample-accurate, gapless
+            source.buffer = buffer; source.loop = true;    // sample-accurate, gapless
             source.connect(master);
             source.start();
         }
@@ -703,23 +703,30 @@
             master.gain.setValueAtTime(master.gain.value, now);
             master.gain.linearRampToValueAtTime(to, now + secs);
         }
-        function detachFirst() {
-            window.removeEventListener('pointerdown', firstGesture);
-            window.removeEventListener('keydown', firstGesture);
+        function armGestures() {
+            window.addEventListener('pointerdown', onGesture, true);
+            window.addEventListener('keydown', onGesture, true);
+            window.addEventListener('touchstart', onGesture, true);
         }
-        function start() {
-            detachFirst();
+        function disarmGestures() {
+            window.removeEventListener('pointerdown', onGesture, true);
+            window.removeEventListener('keydown', onGesture, true);
+            window.removeEventListener('touchstart', onGesture, true);
+        }
+        function maybeDisarm() { if (ctx && ctx.state === 'running') disarmGestures(); }
+        function engage() {                                // get sound going; safe to call repeatedly
             ensureCtx();
-            if (ctx.state === 'suspended') ctx.resume();
-            running = true; render();
+            if (ctx.state === 'suspended' && ctx.resume) { try { ctx.resume().then(maybeDisarm, function () {}); } catch (e) {} }
+            else { maybeDisarm(); }
             if (buffer) { playLoop(); fade(TARGET, 1.4); return; }
             preload()
                 .then(function (ab) { return ctx.decodeAudioData(ab.slice(0)); })
                 .then(function (buf) { buffer = buf; if (running) { playLoop(); fade(TARGET, 1.4); } })
-                .catch(function () { running = false; render(); });
+                .catch(function () {});
         }
+        function start() { running = true; render(); engage(); }
         function stop() {
-            running = false; render();
+            running = false; render(); disarmGestures();
             if (!ctx) return;
             fade(0, 0.5);
             if (source) {
@@ -732,21 +739,23 @@
             btn.setAttribute('aria-pressed', running ? 'true' : 'false');
             btn.setAttribute('aria-label', running ? 'Mute ambient river sound' : 'Play ambient river sound');
         }
-        function firstGesture(e) {
+        function onGesture(e) {
             if (e && e.target && btn.contains(e.target)) return; // the button owns its own click
-            if (pref === 'on') start();
+            if (running) engage();                          // now we have activation → (re)start playback
         }
 
-        // start fetching the clip now so it is ready by the first interaction
+        // fetch the clip up front + reflect intent on the icon
         if (pref === 'on') preload();
-
-        // reflect intent on the icon immediately (audio itself waits for a gesture)
         btn.classList.toggle('is-on', pref === 'on');
         btn.setAttribute('aria-pressed', pref === 'on' ? 'true' : 'false');
 
+        // Try to play on appearance. Browsers block unmuted autoplay until the
+        // page has been interacted with, so if this is blocked the first user
+        // gesture (armed here) starts it. prefers-reduced-motion opts out of auto.
         if (pref === 'on' && !reduce) {
-            window.addEventListener('pointerdown', firstGesture);
-            window.addEventListener('keydown', firstGesture);
+            running = true; render();
+            armGestures();
+            engage();
         }
 
         btn.addEventListener('click', function () {
