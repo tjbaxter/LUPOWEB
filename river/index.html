@@ -143,6 +143,16 @@
         .rv-bgvideo.is-ready { opacity: 1; }
         html[data-skin="b"] .rv-bgvideo { display: none; }
         @media (prefers-reduced-motion: reduce) { .rv-bgvideo { display: none !important; } }
+        /* Once the video is playing it fully covers the still, so stop the still's
+           Ken Burns drift (wasted compositing). */
+        html.rv-video-on .rv-bg { animation: none; }
+        /* While navigating away, calm the compositor so the exit is smooth: no
+           animation churn, no live backdrop blur (the video is paused in JS). This
+           kills the "dark tiles" re-tiling and the low-fps freeze on back/away. */
+        html.rv-leaving .rv-bg,
+        html.rv-leaving .rv-bgvideo,
+        html.rv-leaving .rv-fireflies .rv-fly { animation: none !important; transition: none !important; }
+        html.rv-leaving .rv-field { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
         .rv-scrim {
             z-index: -2;
             background:
@@ -838,11 +848,15 @@
 
     <script>
     // Animated river background (Seedance clip). Held back until the still image
-    // has painted, then faded in OVER the still, so there is never a black frame
-    // on load. Muted autoplay is allowed, so it plays on appearance. Photo skins
-    // (A & C) only; Variant B and reduced-motion keep the still.
+    // has painted, then faded in OVER the still (no black frame on load). Muted
+    // autoplay plays on appearance. Photo skins (A & C) only; Variant B and
+    // reduced-motion keep the still. On exit (link click / back button / tab
+    // hidden) we pause + freeze everything so the compositor stops churning —
+    // that gives a smooth back/away with no dark re-tiling, and keeps the page
+    // eligible for the browser's back/forward cache (instant back button).
     (function () {
-        var skin = document.documentElement.getAttribute('data-skin');
+        var root = document.documentElement;
+        var skin = root.getAttribute('data-skin');
         var v = document.querySelector('.rv-bgvideo');
         if (!v) return;
         var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -851,23 +865,39 @@
         function addSrc(src, type) { if (!src) return; var s = document.createElement('source'); s.src = src; s.type = type; v.appendChild(s); }
 
         var started = false;
+        function play() { if (!started) return; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        function pause() { try { v.pause(); } catch (e) {} }
+
         function begin() {
             if (started) return; started = true;
             addSrc(v.getAttribute('data-webm'), 'video/webm');
             addSrc(v.getAttribute('data-mp4'), 'video/mp4');
-            v.addEventListener('playing', function () { v.classList.add('is-ready'); });
+            v.addEventListener('playing', function () { v.classList.add('is-ready'); root.classList.add('rv-video-on'); });
             v.load();
-            var p = v.play();
-            if (p && p.catch) p.catch(function () { /* blocked → still image stays */ });
+            play();
         }
 
-        // Fetch/start the video only once the still background image is decoded and
-        // painted, so the image wins the bandwidth and shows first (no black flash).
+        // Calm the page the instant we start leaving so the exit is smooth.
+        function calmForExit() { pause(); root.classList.add('rv-leaving'); }
+        function resume() { root.classList.remove('rv-leaving'); if (document.visibilityState === 'visible') play(); }
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === 'visible') resume(); else pause();
+        });
+        window.addEventListener('pagehide', calmForExit);
+        window.addEventListener('pageshow', resume); // restore from back/forward cache
+        document.addEventListener('click', function (e) {
+            var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+            if (a && a.origin === location.origin && a.target !== '_blank') calmForExit();
+        }, true);
+
+        // Start the video only once the still background image is decoded/painted,
+        // so the image wins the bandwidth and shows first (no black flash).
         var probe = new Image();
         probe.onload = probe.onerror = function () { setTimeout(begin, 60); };
         probe.src = '/river/river-bg.webp?v=2';
-        if (probe.complete) setTimeout(begin, 60);   // already cached
-        setTimeout(begin, 2500);                            // safety net
+        if (probe.complete) setTimeout(begin, 60);
+        setTimeout(begin, 2500); // safety net
     })();
     </script>
 
