@@ -9,6 +9,7 @@
     <meta name="description" content="Project River is LUPO's freemail enrichment engine. Resolve the real person and company behind every personal Gmail, Outlook, Yahoo, and iCloud signup. Join the waitlist.">
     <link rel="icon" type="image/png" href="/lupo-icon-180.png">
     <link rel="canonical" href="https://lupolabs.ai/river/">
+    <link rel="preload" as="image" href="/river/river-bg.webp?v=2" fetchpriority="high">
 
     <!-- Open Graph (Facebook, LinkedIn, iMessage) -->
     <meta property="og:type" content="website">
@@ -112,7 +113,15 @@
         }
         .rv-bg {
             z-index: -3;
-            background: var(--bg) url('/river/river-bg.webp?v=2') center / cover no-repeat;
+            /* inline blur placeholder paints instantly (never a black frame); the
+               full webp loads on top of it, then the video fades in over that */
+            background-color: var(--bg);
+            background-image:
+                url('/river/river-bg.webp?v=2'),
+                url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAXACgDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAEDBAIF/8QAHBAAAwEAAgMAAAAAAAAAAAAAAAECEQMxEhNR/8QAGAEBAQADAAAAAAAAAAAAAAAAAAECAwT/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAMAwEAAhEDEQA/APBi0i+OXDCmzpW0bXI3+4qvkTKZp0jnfoFjx9AiKS7BNWSMvkSq0AMrGrgSUOmZ7vaYASRCoAAx/9k=');
+            background-position: center, center;
+            background-size: cover, cover;
+            background-repeat: no-repeat, no-repeat;
             transform: scale(1.04);
             animation: rvDrift 46s ease-in-out infinite alternate;
         }
@@ -497,7 +506,7 @@
 <body>
     <!-- Background stack -->
     <div class="rv-bg" aria-hidden="true"></div>
-    <video class="rv-bgvideo" muted loop playsinline preload="auto" poster="/river/river-bg.webp?v=2"
+    <video class="rv-bgvideo" muted loop playsinline preload="none" poster="/river/river-bg.webp?v=2"
            data-webm="/river/river-flow.webm?v=1" data-mp4="/river/river-flow.mp4?v=1" aria-hidden="true"></video>
     <div class="rv-grid" aria-hidden="true"></div>
     <div class="rv-scrim" aria-hidden="true"></div>
@@ -819,22 +828,37 @@
     </script>
 
     <script>
-    // Animated river background (Seedance clip). Muted autoplay is allowed by
-    // browsers, so this plays on appearance. Only load it for the photo skins
-    // (A & C); Variant B and reduced-motion keep the still image.
+    // Animated river background (Seedance clip). Held back until the still image
+    // has painted, then faded in OVER the still, so there is never a black frame
+    // on load. Muted autoplay is allowed, so it plays on appearance. Photo skins
+    // (A & C) only; Variant B and reduced-motion keep the still.
     (function () {
         var skin = document.documentElement.getAttribute('data-skin');
         var v = document.querySelector('.rv-bgvideo');
         if (!v) return;
         var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (skin === 'b' || reduce) { if (v.parentNode) v.parentNode.removeChild(v); return; }
+
         function addSrc(src, type) { if (!src) return; var s = document.createElement('source'); s.src = src; s.type = type; v.appendChild(s); }
-        addSrc(v.getAttribute('data-webm'), 'video/webm');
-        addSrc(v.getAttribute('data-mp4'), 'video/mp4');
-        v.addEventListener('playing', function () { v.classList.add('is-ready'); });
-        v.load();
-        var p = v.play();
-        if (p && p.catch) p.catch(function () { /* blocked → still image stays */ });
+
+        var started = false;
+        function begin() {
+            if (started) return; started = true;
+            addSrc(v.getAttribute('data-webm'), 'video/webm');
+            addSrc(v.getAttribute('data-mp4'), 'video/mp4');
+            v.addEventListener('playing', function () { v.classList.add('is-ready'); });
+            v.load();
+            var p = v.play();
+            if (p && p.catch) p.catch(function () { /* blocked → still image stays */ });
+        }
+
+        // Fetch/start the video only once the still background image is decoded and
+        // painted, so the image wins the bandwidth and shows first (no black flash).
+        var probe = new Image();
+        probe.onload = probe.onerror = function () { setTimeout(begin, 60); };
+        probe.src = '/river/river-bg.webp?v=2';
+        if (probe.complete) setTimeout(begin, 60);   // already cached
+        setTimeout(begin, 2500);                            // safety net
     })();
     </script>
 
