@@ -515,13 +515,20 @@
             /* coordinate ticks + reticle are a desktop flourish; drop them on
                mobile (they collide with the centre text). Grid stays. */
             html[data-skin="c"] .rv-instruments { display: none; }
-            .rv-field { flex-direction: column; gap: 8px; padding: 8px; border-radius: 18px; }
-            .rv-submit { width: 100%; border-radius: 12px; padding: 14px 22px; }
-            html[data-skin="b"] .rv-field { border-radius: 6px; }
+            .rv-shell { padding-left: 24px; padding-right: 24px; }
+            .rv-block { max-width: 420px; }
+            .rv-eyebrow { margin-bottom: 20px; }
+            .rv-subhead { max-width: 100%; margin-top: 20px; }
+            .rv-who { max-width: 100%; margin-top: 16px; }
+            /* sleeker, touch-friendly stacked form */
+            .rv-form { margin-top: 28px; }
+            .rv-field { flex-direction: column; gap: 8px; padding: 7px; border-radius: 16px; }
+            .rv-input { padding: 15px 16px; }
+            .rv-submit { width: 100%; border-radius: 11px; padding: 15px 22px; font-size: 16px; }
+            html[data-skin="b"] .rv-field { border-radius: 8px; }
+            .rv-micro { margin-top: 14px; }
             .rv-foot-c { display: none; }
             .rv-footer { font-size: 10px; }
-            .rv-subhead { max-width: 100%; }
-            .rv-who { max-width: 100%; }
         }
         @media (max-height: 640px) {
             .rv-eyebrow { margin-bottom: 14px; }
@@ -667,6 +674,16 @@
         var success = document.getElementById('rvSuccess');
         var live = document.getElementById('rvLive');
         var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // River is about freemail, so the waitlist itself only takes work emails.
+        var FREEMAIL = {
+            'gmail.com': 1, 'googlemail.com': 1, 'outlook.com': 1, 'outlook.co.uk': 1, 'hotmail.com': 1,
+            'hotmail.co.uk': 1, 'live.com': 1, 'live.co.uk': 1, 'msn.com': 1, 'yahoo.com': 1, 'yahoo.co.uk': 1,
+            'yahoo.co.in': 1, 'ymail.com': 1, 'rocketmail.com': 1, 'icloud.com': 1, 'me.com': 1, 'mac.com': 1,
+            'aol.com': 1, 'aim.com': 1, 'proton.me': 1, 'protonmail.com': 1, 'pm.me': 1, 'gmx.com': 1, 'gmx.de': 1,
+            'mail.com': 1, 'zoho.com': 1, 'yandex.com': 1, 'yandex.ru': 1, 'fastmail.com': 1, 'hey.com': 1,
+            'tutanota.com': 1, 'tuta.io': 1, 'hushmail.com': 1, 'mail.ru': 1, 'inbox.com': 1, 'qq.com': 1,
+            '163.com': 1, '126.com': 1
+        };
         var submitting = false;
 
         function showError(msg) {
@@ -686,6 +703,14 @@
                 email.setAttribute('aria-invalid', 'true');
                 showError('Enter a valid email address.');
                 email.focus();
+                return;
+            }
+            var domain = value.slice(value.lastIndexOf('@') + 1).toLowerCase();
+            if (FREEMAIL[domain]) {
+                email.setAttribute('aria-invalid', 'true');
+                showError('Please use your work email, not a personal one.');
+                email.focus();
+                if (window.lupoTrack) window.lupoTrack('river_waitlist_freemail_blocked', { domain: domain });
                 return;
             }
 
@@ -709,6 +734,14 @@
                 if (!res.ok) throw new Error('status ' + res.status);
             })
             .then(function () {
+                // Email Tom on every signup (fire-and-forget; never blocks the success UI).
+                try {
+                    fetch('/.netlify/functions/river-notify', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: value })
+                    }).catch(function () {});
+                } catch (e) {}
                 if (window.lupoTrack) window.lupoTrack('river_waitlist_submitted', { source: 'river_landing' });
                 form.hidden = true;
                 if (micro) micro.hidden = true;
