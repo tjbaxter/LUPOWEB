@@ -4,9 +4,9 @@
 // radial gradients) at opacity 0.09: the site's subtle dark glow. Aurora
 // mode lifts that same layer to 0.8 for the vivid look. One shared
 // script: applies the persisted choice, injects the CSS, and mounts a
-// corner toggle button. Default is aurora (indigo); an explicit dark
-// choice persists per browser via localStorage. Loaded SYNCHRONOUSLY in
-// <head> (it is tiny) so the
+// corner toggle button. Default is aurora (indigo) on desktop, dark on
+// mobile; an explicit choice persists per browser via localStorage. Loaded
+// SYNCHRONOUSLY in <head> (it is tiny) so the
 // persisted theme is on the html element before first paint: pages
 // navigate without a dark flash or a replayed fade.
 (function () {
@@ -23,15 +23,24 @@
   var ICON_SUN = SVG_OPEN + "M12 3v1m0 16v1m-8-9H3m18 0h-1m-2.636-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707 M12 8a4 4 0 100 8 4 4 0 000-8z" + '"/></svg>';
   var ICON_MOON = SVG_OPEN + "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" + '"/></svg>';
 
+  // Narrow viewports default to dark; the vivid indigo wash is a desktop
+  // look. Same 860px cutoff the toggle repositions at, so "mobile" is one
+  // consistent definition across the script.
+  function isMobile() {
+    try { return window.matchMedia("(max-width: 860px)").matches; } catch (_e) { return false; }
+  }
+
   function isAurora() {
-    // Default is aurora (light indigo). A visitor with no stored choice — or
-    // a browser that blocks localStorage — gets aurora; only an explicit
-    // "dark" choice opts out. The toggle still writes "aurora"/"dark", so a
-    // returning visitor keeps whatever they last picked.
+    // Default is aurora (light indigo) on desktop, dark on mobile. A visitor
+    // with no stored choice — or a browser that blocks localStorage — gets
+    // that per-device default; an explicit "aurora"/"dark" choice always
+    // wins. The toggle writes the choice, so a returning visitor keeps it.
     try {
       var v = localStorage.getItem(KEY);
-      return v === null ? true : v === "aurora";
-    } catch (_e) { return true; }
+      if (v === "aurora") return true;
+      if (v === "dark") return false;
+      return !isMobile();
+    } catch (_e) { return !isMobile(); }
   }
 
   // Two classes so the toggle never shows the layer's edges mid-spin:
