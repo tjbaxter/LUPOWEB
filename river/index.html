@@ -1006,9 +1006,9 @@
     </script>
 
     <script>
-    // Share-with-a-colleague. Native share sheet first (mobile → Mail,
-    // LinkedIn, Messages… in one tap); clipboard copy as the desktop fallback
-    // so the page URL can be pasted into an email or a LinkedIn message.
+    // Share-with-a-colleague. Touch devices get the native share sheet (tap →
+    // Mail, LinkedIn, Messages…); desktop copies the page URL to the clipboard
+    // so it can be pasted into an email or a LinkedIn message — no OS popup.
     (function () {
         var btn = document.getElementById('rvShare');
         if (!btn) return;
@@ -1061,8 +1061,18 @@
             if (window.lupoTrack) window.lupoTrack('river_shared', { method: 'clipboard' });
         }
 
+        // Touch devices (phones/tablets) get the native share sheet — there it is
+        // the fast path to Mail/LinkedIn/Messages. Desktop has a share sheet too
+        // (Safari on macOS), but it is a clunky OS popup, so on desktop we skip it
+        // and copy the link straight to the clipboard instead.
+        function isTouch() {
+            try {
+                return (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) || ('ontouchstart' in window);
+            } catch (e) { return 'ontouchstart' in window; }
+        }
+
         btn.addEventListener('click', function () {
-            if (navigator.share) {
+            if (navigator.share && isTouch()) {
                 navigator.share({ title: shareTitle, text: shareText, url: shareUrl })
                     .then(function () {
                         if (window.lupoTrack) window.lupoTrack('river_shared', { method: 'web_share' });
