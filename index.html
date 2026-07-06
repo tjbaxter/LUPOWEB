@@ -2487,6 +2487,7 @@
         @keyframes mpb{0%,65%,100%{background:transparent;}80%{background:rgba(251,191,36,0.10);}}
         @media (prefers-reduced-motion: reduce){#lupo-mobile .m-pipe-chan i,#lupo-mobile .m-pipe-stem i,#lupo-mobile .m-pipe-ok,#lupo-mobile .m-pipe-bad{animation:none;}}
         html.aurora #lupo-mobile .m-pipe-chan i,html.aurora #lupo-mobile .m-pipe-core{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.28);}
+        html.aurora #lupo-mobile .m-pipe-core img{filter:brightness(0);opacity:0.72;}
         html.aurora #lupo-mobile .m-pipe-stem,html.aurora #lupo-mobile .m-pipe-stem2{background:rgba(255,255,255,0.32);}
         html.aurora #lupo-mobile .m-pipe-ok{color:#d1fae5;border-color:rgba(209,250,229,0.55);}
         html.aurora #lupo-mobile .m-pipe-bad{color:#fde68a;border-color:rgba(253,230,138,0.5);}
@@ -3054,7 +3055,7 @@
             .unm-chip::before{content:"";position:absolute;top:9px;left:9px;width:6px;height:6px;border-radius:50%;border:1px solid rgba(255,255,255,0.28);}
             .unm-chip::after{content:"";position:absolute;bottom:9px;right:9px;width:6px;height:6px;border-radius:50%;border:1px solid rgba(255,255,255,0.28);}
             .unm-tile{width:52px;height:52px;border-radius:13px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;}
-            .unm-tile img{width:30px;height:30px;display:block;opacity:0.9;}
+            .unm-tile img{width:30px;height:30px;display:block;opacity:1;}
             .unm-after .unm-rev{opacity:0;transform:translateY(6px);transition:opacity 0.5s ease,transform 0.5s ease;transition-delay:calc(var(--i)*0.33s + 0.35s);}
             .unm-wrap.unm-on .unm-after .unm-rev{opacity:1;transform:none;}
             @media(max-width:860px){
@@ -3076,7 +3077,8 @@
             html.aurora .unm-q{border-color:rgba(255,255,255,0.45);color:rgba(255,255,255,0.6);}
             html.aurora .unm-k{color:#ece4ff;border-color:rgba(236,228,255,0.4);background:rgba(236,228,255,0.12);}
             html.aurora .unm-mid{color:rgba(255,255,255,0.35);}
-            html.aurora .unm-chip,html.aurora .unm-tile{border-color:rgba(255,255,255,0.30);background:rgba(255,255,255,0.10);}
+            html.aurora .unm-chip{border-color:rgba(255,255,255,0.30);background:rgba(255,255,255,0.10);}
+            html.aurora .unm-tile{border-color:rgba(255,255,255,0.14);background:rgba(34,29,74,0.74);}
             html.aurora .unm-chip::before,html.aurora .unm-chip::after{border-color:rgba(255,255,255,0.5);}
             html.aurora .unm-pill{color:#d1fae5;border-color:rgba(209,250,229,0.55);}
             </style>
