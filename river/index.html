@@ -402,6 +402,28 @@
             font-size: 12.5px; color: var(--text-dim); letter-spacing: 0;
         }
 
+        /* Share-with-a-colleague: a quiet ghost pill under the CTA. Opens the
+           native share sheet where one exists (mobile → straight to Mail,
+           LinkedIn, Messages…), and copies the page URL to the clipboard
+           everywhere else so it can be pasted into an email or a LinkedIn DM. */
+        .rv-share-wrap { margin-top: 22px; }
+        .rv-share {
+            display: inline-flex; align-items: center; gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-tertiary);
+            border-radius: 999px;
+            font-family: inherit; font-size: 13px; font-weight: 500; letter-spacing: -0.01em;
+            padding: 9px 16px; cursor: pointer;
+            -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+            transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+        .rv-share:hover { border-color: rgba(255, 255, 255, 0.34); background: rgba(255, 255, 255, 0.08); color: var(--text-primary); }
+        .rv-share:active { transform: translateY(1px); }
+        .rv-share-ic { flex: 0 0 auto; opacity: 0.85; }
+        .rv-share.is-copied { border-color: rgba(41, 151, 255, 0.55); background: rgba(41, 151, 255, 0.12); color: #fff; }
+        .rv-share.is-copied .rv-share-ic { opacity: 1; color: var(--accent); }
+
         .rv-formerror {
             margin-top: 14px; font-size: 13.5px; font-weight: 500;
             color: #ff8a8a;
@@ -615,6 +637,17 @@
 
                 <!-- Success state replaces the form after submit -->
                 <div class="rv-success" id="rvSuccess" tabindex="-1" hidden>You're on the list. We'll be in touch.</div>
+
+                <!-- Pass River to a teammate: native share sheet where available, clipboard copy otherwise. Stays visible in both the form and success states. -->
+                <div class="rv-share-wrap">
+                    <button type="button" class="rv-share" id="rvShare" aria-label="Share Project River with a colleague">
+                        <svg class="rv-share-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="9" y="9" width="11" height="11" rx="2.2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <span class="rv-share-label" id="rvShareLabel">Share with a colleague</span>
+                    </button>
+                </div>
 
                 <!-- Polite screen-reader announcements -->
                 <div class="sr-only" id="rvLive" aria-live="polite"></div>
@@ -969,6 +1002,80 @@
             .then(function () { setTimeout(begin, 60); })
             .catch(function () { setTimeout(begin, 60); }); // decode() rejects if unsupported/detached → proceed anyway
         setTimeout(begin, 2500); // safety net
+    })();
+    </script>
+
+    <script>
+    // Share-with-a-colleague. Native share sheet first (mobile → Mail,
+    // LinkedIn, Messages… in one tap); clipboard copy as the desktop fallback
+    // so the page URL can be pasted into an email or a LinkedIn message.
+    (function () {
+        var btn = document.getElementById('rvShare');
+        if (!btn) return;
+        var label = document.getElementById('rvShareLabel');
+        var defaultText = label ? label.textContent : 'Share with a colleague';
+        var canonical = document.querySelector('link[rel="canonical"]');
+        var shareUrl = (canonical && canonical.href) || (location.origin + '/river/');
+        var shareTitle = 'Project River | LUPO';
+        var shareText = "LUPO is building the world's most powerful freemail identity engine — thought you'd want to see this.";
+        var resetTimer = null;
+
+        function flash(msg) {
+            if (!label) return;
+            if (resetTimer) clearTimeout(resetTimer);
+            label.textContent = msg;
+            btn.classList.add('is-copied');
+            resetTimer = setTimeout(function () {
+                label.textContent = defaultText;
+                btn.classList.remove('is-copied');
+            }, 2200);
+        }
+
+        function legacyCopy() {
+            try {
+                var ta = document.createElement('textarea');
+                ta.value = shareUrl;
+                ta.setAttribute('readonly', '');
+                ta.style.position = 'fixed';
+                ta.style.top = '-9999px';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                ta.setSelectionRange(0, ta.value.length);
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                flash('Link copied — paste it anywhere');
+            } catch (e) {
+                flash('Copy this page link to share');
+            }
+        }
+
+        function copyLink() {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(shareUrl).then(function () {
+                    flash('Link copied — paste it anywhere');
+                }, legacyCopy);
+            } else {
+                legacyCopy();
+            }
+            if (window.lupoTrack) window.lupoTrack('river_shared', { method: 'clipboard' });
+        }
+
+        btn.addEventListener('click', function () {
+            if (navigator.share) {
+                navigator.share({ title: shareTitle, text: shareText, url: shareUrl })
+                    .then(function () {
+                        if (window.lupoTrack) window.lupoTrack('river_shared', { method: 'web_share' });
+                    })
+                    .catch(function (err) {
+                        // User dismissed the sheet → do nothing. Any other failure → copy instead.
+                        if (err && err.name === 'AbortError') return;
+                        copyLink();
+                    });
+                return;
+            }
+            copyLink();
+        });
     })();
     </script>
 
