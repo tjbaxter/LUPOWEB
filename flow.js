@@ -1,11 +1,14 @@
 /* LUPO flow animation: the full inbound path, lit as a lead travels it.
-   Someone arrives anonymous -> LUPO identifies AND enriches the company (plus the
-   person, on US traffic) the instant identity resolves -> engages -> qualifies ->
-   scores fit and intent -> books -> writes to the CRM. Enrichment lands up front at
-   identification, not at the end; the late beat is the score. One loop in four is a
-   freemail signup the agent resolves by asking; junk loops are caught at Qualified
-   and exit amber to the filtered terminal. The loop is junk-dominant and opens on
-   junk on purpose: most inbound is noise, so the filter is the visible headline.
+   Someone arrives -> captured on their channel in seconds (Received / Engaged /
+   Answered, the channel-honest verb) -> LUPO identifies AND enriches from what the
+   channel actually yields (form + reverse-IP, sender domain, chat answers, details
+   confirmed live on a call; plus the person, on US traffic) -> qualifies -> scores
+   fit and intent -> books -> writes to the CRM. Capture comes BEFORE identify on
+   purpose: a phone call is answered first and enriched from what the caller
+   confirms, never the other way round. One loop in four is a freemail signup the
+   agent resolves by asking; junk loops are caught at Qualified and exit amber to
+   the filtered terminal. The loop is junk-dominant and opens on junk on purpose:
+   most inbound is noise, so the filter is the visible headline.
    No dependencies. Pauses off-screen. Reduced motion = static labelled diagram. */
 (function () {
     'use strict';
@@ -15,6 +18,9 @@
        a web form or email is received and acted on, never "engaged". Neutral "Captured"
        covers the static "Any channel" state. One canonical path, true word per channel. */
     var ENGAGE_VERB = { 'Web form': 'Received', 'Email': 'Received', 'Chat': 'Engaged', 'Phone': 'Answered' };
+    /* Identify method is channel-honest too: enrichment starts from whatever the
+       channel actually yields, and on the phone that is only what the caller confirms. */
+    var ID_METHOD = { 'Web form': 'form + reverse-IP', 'Email': 'sender domain · matching', 'Chat': 'asked in chat', 'Phone': 'confirmed on the call' };
     var IDENT = ['Vantage Logistics · 140 staff', 'Northwind SaaS · 320 staff', 'Crestpoint Capital · 90 staff'];
     /* Junk has its OWN identities: the agencies and recruiters that actually clog inbound,
        paired so the reveal and the filter reason stay coherent (a real buyer is never the vendor). */
@@ -45,7 +51,7 @@
         var stages = {};
         var nodes = band.querySelectorAll('.lf-stage');
         for (var i = 0; i < nodes.length; i++) stages[nodes[i].getAttribute('data-s')] = nodes[i];
-        var engageLabel = stages['2'] ? stages['2'].querySelector('.lf-label') : null;
+        var engageLabel = stages['1'] ? stages['1'].querySelector('.lf-label') : null;
         var arriveChip = stages['0'] ? stages['0'].querySelector('.lf-chip') : null;
         var chipCompany = band.querySelector('[data-chip="company"]');
         var chipChan = band.querySelector('[data-chip="chan"]');
@@ -150,7 +156,7 @@
             steps.push({ fn: function () {
                 fadeAll();
                 if (!marks) computeGeom();
-                setChip(chipCompany, chan === 'Phone' ? 'caller ID · matching' : 'reverse-IP · matching');
+                setChip(chipCompany, ID_METHOD[chan] || 'matching');
                 setChip(chipChan, chan + ' · in seconds');
                 setChip(chipSig, STATIC_SIG);
                 setChip(chipJunk, POLICY);
@@ -163,9 +169,16 @@
             steps.push({ ms: 720 });
             steps.push({ seg: [0, 1], ms: 1000 });
 
-            /* Beat 1 - identify (company always; person only on US; freemail resolved by asking) */
+            /* Beat 1 - captured, in seconds, on the channel they used. Before any
+               identity work: the call is answered, the form lands, the chat opens. */
+            steps.push({ fn: function () { light('1'); } });
+            steps.push({ ms: 560 });
+            steps.push({ seg: [1, 2], ms: 1000 });
+
+            /* Beat 2 - identify & enrich from what the channel gave us (company
+               always; person only on US; freemail resolved by asking) */
             steps.push({ fn: function () {
-                light('1');
+                light('2');
                 if (isFree) { chipCompany.classList.add('lf-ghost'); setChip(chipCompany, 'jane@gmail.com'); }
                 else if (isJunk) { setChip(chipCompany, junk.who); }
                 else { setChip(chipCompany, company); }
@@ -180,11 +193,6 @@
                 steps.push({ fn: function () { setChip(chipCompany, 'Resolved · Acme Brands'); } });
                 steps.push({ ms: 760 });
             }
-            steps.push({ seg: [1, 2], ms: 1000 });
-
-            /* Beat 2 - engage, in seconds, on the channel they used */
-            steps.push({ fn: function () { light('2'); } });
-            steps.push({ ms: 560 });
             steps.push({ seg: [2, 3], ms: 1000 });
 
             if (!isJunk) {

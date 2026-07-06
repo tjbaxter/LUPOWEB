@@ -169,7 +169,20 @@
         @media (max-width: 880px) { .calc-results { position: static; } }
         .net-label { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 8px; }
         .net-figure { font-size: clamp(36px, 4.5vw, 48px); font-weight: 650; letter-spacing: -0.025em; line-height: 1.05; background: linear-gradient(135deg, #e9d5ff 0%, #a78bfa 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        .net-sub { font-size: 12.5px; color: var(--text-tertiary); margin-top: 8px; line-height: 1.55; }
+        .net-headline { font-size: 16px; line-height: 1.55; color: var(--text-secondary); margin-top: 14px; padding: 14px 16px; border: 1px solid rgba(167,139,250,0.22); background: rgba(118,75,162,0.06); border-radius: 12px; }
+        .net-headline strong { color: var(--text-primary); font-weight: 650; }
+        .net-sub { font-size: 12.5px; color: var(--text-tertiary); margin-top: 12px; line-height: 1.55; }
+
+        /* Advanced assumptions drawer: the model stays fully open, but a VP sees
+           three inputs by default, not nine. */
+        .adv { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border); }
+        .adv > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; color: var(--text-secondary); user-select: none; }
+        .adv > summary::-webkit-details-marker { display: none; }
+        .adv > summary span { font-weight: 400; color: var(--text-tertiary); }
+        .adv > summary::before { content: "+"; font-size: 16px; line-height: 1; color: #a78bfa; width: 14px; text-align: center; }
+        .adv[open] > summary { margin-bottom: 20px; }
+        .adv[open] > summary::before { content: "\2212"; }
+        .adv .ci-group.first, .adv .ci-group:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
         .net-breakdown { font-size: 13px; color: var(--text-secondary); margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); line-height: 1.6; }
         .tile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
         @media (max-width: 480px) { .tile-grid { grid-template-columns: 1fr; } }
@@ -206,6 +219,29 @@
     <script id="warmly-script-loader" src="https://opps-widget.getwarmly.com/warmly.js?clientId=8161a164294aa0eecd1432fc3cfcd6c1" defer></script>
     <style>html{scrollbar-gutter:stable}</style>
     <style>
+    /* Light indigo (aurora) mode: the page is built white-on-dark, so on the
+       mid-indigo aurora wash the near-transparent panels vanish and the light
+       hero figure washes out. Lift every surface and brighten muted text. */
+    html.aurora .calc-panel,
+    html.aurora .stream-card,
+    html.aurora .faq-item { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); }
+    html.aurora .stream-card.lupo,
+    html.aurora .faq-item[open] { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.34); }
+    html.aurora .tile { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.20); }
+    html.aurora .net-figure { background: linear-gradient(135deg, #ffffff 0%, #ece4ff 100%); -webkit-background-clip: text; background-clip: text; }
+    html.aurora .net-headline,
+    html.aurora .persona-note { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.30); }
+    html.aurora .ci-top input[type="number"],
+    html.aurora .cur-select { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.30); }
+    html.aurora .seg { border-color: rgba(255,255,255,0.30); }
+    html.aurora .seg button.on { background: rgba(255,255,255,0.22); }
+    html.aurora .ci input[type="range"] { accent-color: #ede9ff; }
+    html.aurora .adv, html.aurora .ci-group, html.aurora .net-breakdown, html.aurora .method-list li { border-top-color: rgba(255,255,255,0.20); border-bottom-color: rgba(255,255,255,0.20); }
+    html.aurora .ci-sub, html.aurora .ci-hint, html.aurora .net-sub, html.aurora .calc-foot,
+    html.aurora .t-key, html.aurora .net-label, html.aurora .src-note, html.aurora .updated,
+    html.aurora .adv > summary span { color: rgba(255,255,255,0.80); }
+    html.aurora .calc-foot a, html.aurora .src-note a { color: rgba(255,255,255,0.9); }
+
     /* nav-center-fix */
     .nav-link.is-active { color: var(--text-primary); }
     @media (min-width: 900px) {
@@ -238,12 +274,9 @@
                 <span style="font-size: 24px; font-weight: 600;">LUPO</span>
             </a>
             <div class="nav-links">
-                <a href="/" class="nav-link">Home</a>
                 <a href="/how-it-works/" class="nav-link">How it works</a>
-                <a href="/about.html" class="nav-link">About</a>
                 <a href="/pricing/" class="nav-link">Pricing</a>
-                <a href="/roi/" class="nav-link is-active">ROI</a>
-                <a href="/blog/" class="nav-link">Blog</a>
+                <a href="/river/" class="nav-link">Project River&trade;</a>
             </div>
             <!-- Sign in button commented out (per Tom) -->
             <!--
@@ -318,52 +351,57 @@
                             <input type="range" data-for="close" value="15" min="1" max="60" step="1" aria-label="Close rate slider">
                         </div>
 
-                        <div class="ci-group">What LUPO wins back for you</div>
-                        <div class="ci">
-                            <div class="ci-top"><label for="leak">Leads you lose today <span class="ci-hint">(%, HBR baseline 23)</span></label><input type="number" id="leak" value="23" min="0" max="60" step="1"></div>
-                            <div class="ci-sub">Inbound that gets no timely response today. LUPO answers all of it, so the higher this is, the more it wins back.</div>
-                            <input type="range" data-for="leak" value="23" min="0" max="60" step="1" aria-label="Leads lost today slider">
-                        </div>
-                        <div class="ci">
-                            <div class="ci-top"><label for="recover">Won-back leads that become qualified meetings <span class="ci-hint">(%)</span></label><input type="number" id="recover" value="25" min="5" max="100" step="5"></div>
-                            <div class="ci-sub">Of those won-back leads, the share that turn into real meetings.</div>
-                            <input type="range" data-for="recover" value="25" min="5" max="100" step="5" aria-label="Recovery to meeting rate slider">
-                        </div>
+                        <details class="adv">
+                            <summary>Advanced assumptions <span>sourced defaults, adjust to taste</span></summary>
 
-                        <div class="ci-group">Time your team spends today</div>
-                        <div class="ci">
-                            <div class="ci-top"><label for="reviewed">Leads your team manually researches each month</label><input type="number" id="reviewed" value="100" min="0" max="5000" step="10"></div>
-                            <div class="ci-sub">Leads someone looks up by hand before reaching out. LUPO does this automatically.</div>
-                            <input type="range" data-for="reviewed" value="100" min="0" max="1000" step="10" aria-label="Manually researched leads slider">
-                        </div>
-                        <div class="ci">
-                            <div class="ci-top"><label for="minutes">Research minutes per lead today</label><input type="number" id="minutes" value="30" min="5" max="90" step="5"></div>
-                            <div class="ci-sub">Time spent on each one. Returned to your reps as selling time.</div>
-                            <input type="range" data-for="minutes" value="30" min="5" max="90" step="5" aria-label="Research minutes slider">
-                        </div>
+                            <div class="ci-group">What LUPO wins back for you</div>
+                            <div class="ci">
+                                <div class="ci-top"><label for="leak">Leads you lose today <span class="ci-hint">(%, HBR baseline 23)</span></label><input type="number" id="leak" value="23" min="0" max="60" step="1"></div>
+                                <div class="ci-sub">Inbound that gets no timely response today. LUPO answers all of it, so the higher this is, the more it wins back.</div>
+                                <input type="range" data-for="leak" value="23" min="0" max="60" step="1" aria-label="Leads lost today slider">
+                            </div>
+                            <div class="ci">
+                                <div class="ci-top"><label for="recover">Won-back leads that become qualified meetings <span class="ci-hint">(%)</span></label><input type="number" id="recover" value="25" min="5" max="100" step="5"></div>
+                                <div class="ci-sub">Of those won-back leads, the share that turn into real meetings.</div>
+                                <input type="range" data-for="recover" value="25" min="5" max="100" step="5" aria-label="Recovery to meeting rate slider">
+                            </div>
 
-                        <div class="ci-group">Costs &amp; LUPO</div>
-                        <div class="ci">
-                            <div class="ci-top"><label for="sdr">Loaded annual cost per SDR</label><input type="number" id="sdr" value="60000" min="30000" max="200000" step="5000"></div>
-                            <div class="ci-sub">Fully-loaded yearly cost of one rep (salary plus overhead).</div>
-                            <input type="range" data-for="sdr" value="60000" min="30000" max="200000" step="5000" aria-label="SDR cost slider">
-                        </div>
-                        <div class="ci">
-                            <div class="ci-top"><label for="hires">Triage hires avoided next year</label><input type="number" id="hires" value="2" min="0" max="10" step="1"></div>
-                            <div class="ci-sub">Headcount you won't need to add because LUPO absorbs the volume.</div>
-                            <input type="range" data-for="hires" value="2" min="0" max="10" step="1" aria-label="Hires avoided slider">
-                        </div>
-                        <div class="ci" style="margin-bottom:0;">
-                            <div class="ci-top"><label for="lupo">LUPO monthly cost <span class="ci-hint">(your estimate)</span></label><input type="number" id="lupo" value="9000" min="3000" max="15000" step="500"></div>
-                            <div class="ci-sub">Your LUPO subscription. Adjust to your scoped pilot price.</div>
-                            <input type="range" data-for="lupo" value="9000" min="3000" max="15000" step="500" aria-label="LUPO monthly cost slider">
-                        </div>
+                            <div class="ci-group">Time your team spends today</div>
+                            <div class="ci">
+                                <div class="ci-top"><label for="reviewed">Leads your team manually researches each month</label><input type="number" id="reviewed" value="100" min="0" max="5000" step="10"></div>
+                                <div class="ci-sub">Leads someone looks up by hand before reaching out. LUPO does this automatically.</div>
+                                <input type="range" data-for="reviewed" value="100" min="0" max="1000" step="10" aria-label="Manually researched leads slider">
+                            </div>
+                            <div class="ci">
+                                <div class="ci-top"><label for="minutes">Research minutes per lead today</label><input type="number" id="minutes" value="30" min="5" max="90" step="5"></div>
+                                <div class="ci-sub">Time spent on each one. Returned to your reps as selling time.</div>
+                                <input type="range" data-for="minutes" value="30" min="5" max="90" step="5" aria-label="Research minutes slider">
+                            </div>
+
+                            <div class="ci-group">Costs &amp; LUPO</div>
+                            <div class="ci">
+                                <div class="ci-top"><label for="sdr">Loaded annual cost per SDR</label><input type="number" id="sdr" value="60000" min="30000" max="200000" step="5000"></div>
+                                <div class="ci-sub">Fully-loaded yearly cost of one rep (salary plus overhead).</div>
+                                <input type="range" data-for="sdr" value="60000" min="30000" max="200000" step="5000" aria-label="SDR cost slider">
+                            </div>
+                            <div class="ci">
+                                <div class="ci-top"><label for="hires">Triage hires avoided next year</label><input type="number" id="hires" value="2" min="0" max="10" step="1"></div>
+                                <div class="ci-sub">Headcount you won't need to add because LUPO absorbs the volume.</div>
+                                <input type="range" data-for="hires" value="2" min="0" max="10" step="1" aria-label="Hires avoided slider">
+                            </div>
+                            <div class="ci" style="margin-bottom:0;">
+                                <div class="ci-top"><label for="lupo">LUPO monthly cost <span class="ci-hint">(your estimate)</span></label><input type="number" id="lupo" value="9000" min="3000" max="15000" step="500"></div>
+                                <div class="ci-sub">Your LUPO subscription. Adjust to your scoped pilot price.</div>
+                                <input type="range" data-for="lupo" value="9000" min="3000" max="15000" step="500" aria-label="LUPO monthly cost slider">
+                            </div>
+                        </details>
                     </div>
 
                     <div class="calc-results">
                         <div class="calc-panel">
                             <div class="net-label">What you gain per year with LUPO</div>
                             <div class="net-figure" id="net">$529,500</div>
+                            <p class="net-headline" id="winsback">LUPO wins back about <strong>138 qualified meetings</strong> a year, worth <strong>$3,450,000</strong> in new pipeline.</p>
                             <p class="net-sub">Money the firm gains in a year, an upside rather than a loss: extra revenue won, plus the hires you avoid, minus what LUPO costs. (Revenue counts at your gross margin, so read it as value, not pure profit.)</p>
                             <p class="net-breakdown" id="breakdown"><strong>$517,500</strong> extra revenue won + <strong>$120,000</strong> saved on hires − <strong>$108,000</strong> LUPO's cost</p>
                             <div class="tile-grid">
@@ -498,6 +536,7 @@
                 <a href="/glossary/">Glossary</a>
                 <a href="/compare/">Compare</a>
                 <a href="/changelog/">Changelog</a>
+                <a href="/about.html">About</a>
                 <a href="/press/">Press</a>
                 <a href="/careers/">Careers</a>
             </div>
@@ -546,6 +585,9 @@
             var net = closedRev + hiresVal - lupoYr;
 
             document.getElementById('net').textContent = money(net);
+            document.getElementById('winsback').innerHTML =
+                'LUPO wins back about <strong>' + num(meetings) + ' qualified meeting' + (Math.round(meetings) === 1 ? '' : 's') +
+                '</strong> a year, worth <strong>' + money(pipeline) + '</strong> in new pipeline.';
             document.getElementById('breakdown').innerHTML =
                 '<strong>' + money(closedRev) + '</strong> extra revenue won + <strong>' +
                 money(hiresVal) + '</strong> saved on hires − <strong>' +
