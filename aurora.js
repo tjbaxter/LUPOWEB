@@ -4,8 +4,9 @@
 // radial gradients) at opacity 0.09: the site's subtle dark glow. Aurora
 // mode lifts that same layer to 0.8 for the vivid look. One shared
 // script: applies the persisted choice, injects the CSS, and mounts a
-// corner toggle button. Default stays dark; choice persists per browser
-// via localStorage. Loaded SYNCHRONOUSLY in <head> (it is tiny) so the
+// corner toggle button. Default is aurora (indigo); an explicit dark
+// choice persists per browser via localStorage. Loaded SYNCHRONOUSLY in
+// <head> (it is tiny) so the
 // persisted theme is on the html element before first paint: pages
 // navigate without a dark flash or a replayed fade.
 (function () {
@@ -23,7 +24,14 @@
   var ICON_MOON = SVG_OPEN + "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" + '"/></svg>';
 
   function isAurora() {
-    try { return localStorage.getItem(KEY) === "aurora"; } catch (_e) { return false; }
+    // Default is aurora (light indigo). A visitor with no stored choice — or
+    // a browser that blocks localStorage — gets aurora; only an explicit
+    // "dark" choice opts out. The toggle still writes "aurora"/"dark", so a
+    // returning visitor keeps whatever they last picked.
+    try {
+      var v = localStorage.getItem(KEY);
+      return v === null ? true : v === "aurora";
+    } catch (_e) { return true; }
   }
 
   // Two classes so the toggle never shows the layer's edges mid-spin:
