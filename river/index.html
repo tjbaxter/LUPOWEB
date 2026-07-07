@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#05070a">
     <link rel="stylesheet" href="/premium.css?v=3">
     <title>Project River | LUPO</title>
-    <meta name="description" content="Project River is LUPO's freemail identity engine. Unmask the real person and company behind every personal Gmail, Outlook, Yahoo, and iCloud signup. Join the waitlist.">
+    <meta name="description" content="Project River is LUPO's freemail resolution engine. It resolves the company behind personal Gmail and Outlook signups, shows its evidence, and refuses to guess. Join the waitlist.">
     <link rel="icon" type="image/png" href="/lupo-icon-180.png">
     <link rel="canonical" href="https://lupolabs.ai/river/">
     <link rel="preload" as="image" href="/river/river-bg.webp?v=2" fetchpriority="high">
@@ -15,7 +15,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lupolabs.ai/river/">
     <meta property="og:title" content="Project River | LUPO">
-    <meta property="og:description" content="LUPO is building the world's most powerful freemail identity engine. Join the waitlist.">
+    <meta property="og:description" content="Not another enrichment tool. River resolves freemail signups to real companies, with calibrated confidence and a guaranteed false-match rate. Join the waitlist.">
     <meta property="og:image" content="https://lupolabs.ai/river/river-og.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -25,7 +25,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://lupolabs.ai/river/">
     <meta name="twitter:title" content="Project River | LUPO">
-    <meta name="twitter:description" content="LUPO is building the world's most powerful freemail identity engine. Join the waitlist.">
+    <meta name="twitter:description" content="Not another enrichment tool. River resolves freemail signups to real companies, with calibrated confidence and a guaranteed false-match rate. Join the waitlist.">
     <meta name="twitter:image" content="https://lupolabs.ai/river/river-og.jpg">
 
     <!--
@@ -99,7 +99,7 @@
         }
 
         html { background: var(--bg); }
-        html, body { height: 100%; }
+        html { height: 100%; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
@@ -111,8 +111,8 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             /* Single viewport, no page scroll. Content lives inside .rv-shell. */
-            height: 100dvh;
-            overflow: hidden;
+            min-height: 100dvh;
+            overflow-x: hidden;
             position: relative;
         }
 
@@ -360,6 +360,76 @@
         /* ---------- Waitlist form ---------- */
         .rv-form { margin-top: 34px; width: 100%; max-width: 480px; }
         .rv-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+        /* ---- Why River (below-the-fold section) ---- */
+        .rv-more {
+            display: inline-block; margin-top: 22px;
+            font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+            color: rgba(198, 224, 240, 0.62); text-decoration: none;
+            transition: color 160ms ease;
+        }
+        .rv-more:hover, .rv-more:focus-visible { color: rgba(226, 240, 250, 0.95); }
+        .rv-why {
+            position: relative; z-index: 1;
+            background: linear-gradient(to bottom, rgba(5, 9, 13, 0.55), rgba(5, 9, 13, 0.92) 120px, rgba(4, 7, 10, 0.97));
+            padding: 88px 32px 96px;
+        }
+        .rv-why-inner { max-width: 880px; margin: 0 auto; }
+        .rv-why-title {
+            margin: 10px 0 18px; font-size: clamp(28px, 4.4vw, 44px);
+            line-height: 1.06; letter-spacing: -0.015em; color: #eef6fb;
+        }
+        .rv-why-lead {
+            max-width: 62ch; font-size: 16.5px; line-height: 1.65;
+            color: rgba(214, 230, 240, 0.86);
+        }
+        .rv-pillars {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+            margin-top: 44px;
+        }
+        .rv-pillar {
+            border: 1px solid rgba(198, 224, 240, 0.14); border-radius: 12px;
+            padding: 20px 18px; background: rgba(10, 16, 21, 0.55);
+        }
+        .rv-pillar h3 {
+            margin: 0 0 8px; font-size: 15.5px; letter-spacing: -0.005em; color: #e8f2f9;
+        }
+        .rv-pillar p { margin: 0; font-size: 13.5px; line-height: 1.6; color: rgba(205, 222, 233, 0.78); }
+        .rv-bench {
+            margin-top: 52px; border: 1px solid rgba(198, 224, 240, 0.16); border-radius: 14px;
+            padding: 26px 24px; background: rgba(8, 13, 18, 0.66);
+        }
+        .rv-bench-label { font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(198, 224, 240, 0.55); margin: 0 0 18px; }
+        .rv-bench-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+        .rv-stat { display: flex; flex-direction: column; gap: 6px; }
+        .rv-stat-n { font-size: clamp(30px, 4vw, 42px); line-height: 1; color: #eef6fb; letter-spacing: -0.02em; }
+        .rv-stat-l { font-size: 12.5px; line-height: 1.5; color: rgba(205, 222, 233, 0.72); }
+        .rv-bench-note { margin: 20px 0 0; font-size: 12px; line-height: 1.6; color: rgba(198, 224, 240, 0.5); }
+        .rv-compare { margin-top: 52px; overflow-x: auto; }
+        .rv-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+        .rv-table th, .rv-table td {
+            text-align: left; padding: 13px 14px;
+            border-bottom: 1px solid rgba(198, 224, 240, 0.1);
+            vertical-align: top;
+        }
+        .rv-table thead th {
+            font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+            color: rgba(198, 224, 240, 0.55); border-bottom-color: rgba(198, 224, 240, 0.22);
+        }
+        .rv-table tbody th { font-weight: 500; color: rgba(222, 236, 245, 0.9); }
+        .rv-yes { color: #a7e3c1; white-space: nowrap; }
+        .rv-no { color: rgba(205, 222, 233, 0.55); }
+        .rv-why-cta { margin: 56px 0 0; }
+        .rv-why-back {
+            font-size: 13.5px; color: rgba(198, 224, 240, 0.85); text-decoration: none;
+            border-bottom: 1px solid rgba(198, 224, 240, 0.3); padding-bottom: 2px;
+        }
+        .rv-why-back:hover, .rv-why-back:focus-visible { color: #fff; border-bottom-color: rgba(226, 240, 250, 0.8); }
+        @media (max-width: 760px) {
+            .rv-why { padding: 64px 22px 72px; }
+            .rv-pillars, .rv-bench-stats { grid-template-columns: 1fr; }
+        }
+
 
         .rv-field {
             display: flex; gap: 8px; align-items: stretch;
@@ -612,7 +682,7 @@
 
                 <h1 class="rv-title">Project <span class="rv-river">River</span></h1>
 
-                <p class="rv-subhead">LUPO is building the world's most powerful freemail identity engine.</p>
+                <p class="rv-subhead">The first freemail resolution engine that guarantees its own error rate.</p>
 
                 <p class="rv-who">Your highest-value developers sign up on personal Gmail and Outlook, with no company attached. River unmasks the person and account behind every one.</p>
 
@@ -650,6 +720,8 @@
                 </div>
 
                 <!-- Polite screen-reader announcements -->
+                <a class="rv-more rv-mono" href="#why">Why River is different <span aria-hidden="true">&darr;</span></a>
+
                 <div class="sr-only" id="rvLive" aria-live="polite"></div>
             </div>
         </main>
@@ -661,6 +733,56 @@
             <a class="rv-foot-r" href="/">lupolabs.ai</a>
         </footer>
     </div>
+
+    <section class="rv-why" id="why" aria-labelledby="rvWhyTitle">
+        <div class="rv-why-inner">
+            <p class="rv-eyebrow rv-mono">Why River</p>
+            <h2 class="rv-why-title" id="rvWhyTitle">Not enrichment. Resolution.</h2>
+            <p class="rv-why-lead">Enrichment tools look an email up in a rented database and return their best guess. River works like a fraud engine instead: it weighs evidence from the data you choose to send and from public registries, scores every candidate company, and refuses to answer when the evidence is thin.</p>
+
+            <div class="rv-pillars">
+                <div class="rv-pillar">
+                    <h3>It tells you how often it is wrong</h3>
+                    <p>Every verdict carries a calibrated confidence and a guaranteed false-match rate at the tier that writes to your CRM. No other freemail tool will quote you that number.</p>
+                </div>
+                <div class="rv-pillar">
+                    <h3>It shows its working</h3>
+                    <p>Every verdict ships with the evidence chain that produced it, including the signals that voted against. Auditable by your team, defensible to your DPO.</p>
+                </div>
+                <div class="rv-pillar">
+                    <h3>It refuses to guess</h3>
+                    <p>A wrong company in your CRM costs more than a missing one. When evidence is thin, River returns unresolved and names what would settle it.</p>
+                </div>
+            </div>
+
+            <div class="rv-bench">
+                <p class="rv-bench-label rv-mono">Adversarial benchmark &middot; July 2026</p>
+                <div class="rv-bench-stats">
+                    <div class="rv-stat"><span class="rv-stat-n">100%</span><span class="rv-stat-l">precision at the auto tier</span></div>
+                    <div class="rv-stat"><span class="rv-stat-n">0</span><span class="rv-stat-l">false matches</span></div>
+                    <div class="rv-stat"><span class="rv-stat-n">263</span><span class="rv-stat-l">test cases, seeded with brand squatters, lookalike domains and agency signups</span></div>
+                </div>
+                <p class="rv-bench-note">Synthetic adversarial set. A benchmark on real funnel data with design partners is in progress; the methodology and full confusion matrix will be public.</p>
+            </div>
+
+            <div class="rv-compare" role="region" aria-label="River compared with reverse-email enrichment tools">
+                <table class="rv-table">
+                    <thead>
+                        <tr><th scope="col">Capability</th><th scope="col">River</th><th scope="col">Reverse-email lookups</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th scope="row">Calibrated confidence on every verdict</th><td class="rv-yes">Yes</td><td class="rv-no">Unscored guess</td></tr>
+                        <tr><th scope="row">Evidence chain, including counter-evidence</th><td class="rv-yes">Yes</td><td class="rv-no">None</td></tr>
+                        <tr><th scope="row">Refuses when unsure</th><td class="rv-yes">Yes</td><td class="rv-no">Returns a best match, paid per hit</td></tr>
+                        <tr><th scope="row">Guaranteed false-match rate</th><td class="rv-yes">Yes</td><td class="rv-no">Not offered</td></tr>
+                        <tr><th scope="row">Works from data you choose to send</th><td class="rv-yes">Yes</td><td class="rv-no">Rented third-party databases</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="rv-why-cta"><a href="#rvEmail" class="rv-why-back">Join the waitlist <span aria-hidden="true">&uarr;</span></a></p>
+        </div>
+    </section>
 
     <script>
     (function () {
@@ -1017,7 +1139,7 @@
         var canonical = document.querySelector('link[rel="canonical"]');
         var shareUrl = (canonical && canonical.href) || (location.origin + '/river/');
         var shareTitle = 'Project River | LUPO';
-        var shareText = "LUPO is building the world's most powerful freemail identity engine — thought you'd want to see this.";
+        var shareText = "LUPO is building the first freemail resolution engine that guarantees its own error rate. Thought you'd want to see this.";
         var resetTimer = null;
 
         function flash(msg) {
