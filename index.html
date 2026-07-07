@@ -2251,8 +2251,34 @@
            use a light frosted bar in light mode instead. */
         html.aurora #m-sticky { background: rgba(255,255,255,0.14) !important; }
 
-        #lupo-mobile section { padding: 50px 22px; border-top: 1px solid var(--m-line); }
+        #lupo-mobile section { padding: 72px 22px; border-top: 1px solid var(--m-line); }
         #lupo-mobile .m-hero { border-top: 0; padding-top: 104px; }
+        /* Logo strip stays a quiet interlude, not a full section */
+        #lupo-mobile .m-int { padding-top: 56px; padding-bottom: 56px; }
+
+        /* Agent-ready pull-line: the one statement on the page that reads as a
+           claim, not body copy. */
+        #lupo-mobile .m-aib-pull {
+            margin: 26px 0 0; font-size: 21px; line-height: 1.35;
+            font-weight: 600; letter-spacing: -0.015em; color: var(--m-fg);
+        }
+
+        /* Scroll-entrance. .m-reveal is ADDED BY JS, so with JS off nothing is
+           ever hidden. Only opacity/transform, so aurora colors are untouched.
+           Class names differ from premium.css (reveal/in-view/--d) on purpose,
+           so nothing collides if the shared layer is ever linked here later. */
+        #lupo-mobile .m-reveal {
+            opacity: 0;
+            transform: translate3d(0, 24px, 0);
+            transition:
+                opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+            transition-delay: var(--mrd, 0ms);
+        }
+        #lupo-mobile .m-reveal.m-in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) {
+            #lupo-mobile .m-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+        }
         #lupo-mobile .m-eyebrow {
             display: inline-block; font-size: 11.5px; font-weight: 700;
             letter-spacing: 0.14em; text-transform: uppercase;
@@ -2426,9 +2452,9 @@
             <a class="m-secondary" href="#m-dashboard">See it live</a>
         </div>
         <ul class="m-caps">
-            <li>Know who is really arriving</li>
-            <li>Act while intent is high</li>
-            <li>Every decision explained</li>
+            <li>Named buyers, evidence attached</li>
+            <li>Booked while intent is high</li>
+            <li>Filtered with the reason logged</li>
         </ul>
         <div class="m-g2-hero" role="img" aria-label="Rated 5 out of 5 stars on G2">
             <svg class="m-g2-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm.122 5.143c.45 0 .9.044 1.342.132l-1.342 2.806C9.962 8.08 8.203 9.84 8.203 12s1.76 3.92 3.92 3.92c.937 0 1.844-.338 2.553-.951l1.483 2.572A6.856 6.856 0 0 1 5.266 12a6.856 6.856 0 0 1 6.856-6.856Zm3.498.49a1.262 1.262 0 0 1 .026 0c.427 0 .792.113 1.101.34.31.229.466.546.466.946 0 .639-.36 1.03-1.035 1.376l-.377.191c-.403.204-.602.385-.657.706h2.05v.85h-3.101v-.144c0-.526.103-.96.314-1.306.211-.345.576-.65 1.102-.917l.242-.117c.427-.216.538-.401.538-.625 0-.266-.228-.458-.6-.458-.44 0-.773.228-1.004.694l-.592-.595c.13-.279.338-.502.619-.675a1.7 1.7 0 0 1 .908-.266Zm-2.094 5.388h3.394l1.697 2.937-1.697 2.94-1.697-2.94H11.83l1.696-2.937Z"/></svg>
@@ -2566,7 +2592,7 @@
     <section class="m-diff">
         <span class="m-eyebrow">Autonomous execution</span>
         <h2 class="m-h2">One brain across every <span class="gradient-text">inbound channel.</span></h2>
-        <p class="m-sub">LUPO uses the same buyer intelligence and ICP logic across web forms, email, chat, phone, and product signups.</p>
+        <p class="m-sub">Every channel runs on the same buyer intelligence and ICP logic.</p>
         <div class="m-chans">
             <span class="m-chan"><svg viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h4"/></svg>Web form</span>
             <span class="m-chan"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</span>
@@ -2584,11 +2610,11 @@
         </style>
         <span class="m-eyebrow">One engine, modular entry points</span>
         <h2 class="m-h2">Start with one layer. <span class="gradient-text">Expand when it wins.</span></h2>
-        <p class="m-sub">Turn on the layer you need now, one channel or every channel. Prove it on your own inbound, then add the next.</p>
+        <p class="m-sub">Every layer proves itself on your own inbound first.</p>
         <div class="m-bi-cards">
-            <div class="m-bi-card"><div class="m-bi-label">Buyer intelligence</div><p class="m-bi-d">Unmask the freemails, visitors, and signups everyone else writes off. Evidence attached, unresolved stays unresolved.</p><a class="m-bi-link" href="/river/">Meet Project River &rarr;</a></div>
-            <div class="m-bi-card"><div class="m-bi-label">Inbound execution</div><p class="m-bi-d">Qualify, route, book, and filter across every channel. Funding and hiring signals attached, routed to the right rep in seconds.</p><a class="m-bi-link" href="/inbound-sdr/">The inbound SDR &rarr;</a></div>
-            <div class="m-bi-card"><div class="m-bi-label">Full Inbound OS™</div><p class="m-bi-d">Run the whole chain, from first signal to sales-ready handoff. The same engine powers every layer.</p><a class="m-bi-link" href="/how-it-works/">How it works &rarr;</a></div>
+            <div class="m-bi-card"><div class="m-bi-label">Buyer intelligence</div><p class="m-bi-d">Unmask freemails, visitors, and signups others write off. Evidence attached, unresolved stays unresolved.</p><a class="m-bi-link" href="/river/">Meet Project River &rarr;</a></div>
+            <div class="m-bi-card"><div class="m-bi-label">Inbound execution</div><p class="m-bi-d">Qualify, route, and book, with funding and hiring signals attached.</p><a class="m-bi-link" href="/inbound-sdr/">The inbound SDR &rarr;</a></div>
+            <div class="m-bi-card"><div class="m-bi-label">Full Inbound OS™</div><p class="m-bi-d">Run the whole chain, from first signal to sales-ready handoff.</p><a class="m-bi-link" href="/how-it-works/">How it works &rarr;</a></div>
         </div>
     </section>
 
@@ -2646,16 +2672,15 @@
     <section class="m-aib">
         <span class="m-eyebrow">Agent-ready</span>
         <h2 class="m-h2">Built for <span class="gradient-text">agent-assisted inbound.</span></h2>
-        <p class="m-sub">Buyers now send AI agents ahead of them. LUPO answers them like any other channel: captured, understood, routed with full context.</p>
-        <p class="m-sub" style="margin-top:14px;font-size:15px;color:var(--m-mut);">Human buyer or AI-assisted buyer, every inbound interaction becomes a decision your team can trust. The rest of the market is catching up to 2026. LUPO is built for 2027.</p>
+        <p class="m-sub">Buyers now send AI agents ahead of them. LUPO answers them like any other channel.</p>
+        <p class="m-aib-pull">The rest of the market is catching up to 2026. LUPO is built for 2027.</p>
     </section>
 
     <section class="m-why">
         <span class="m-eyebrow">How a pilot works</span>
         <h2 class="m-h2">We agree the number first.</h2>
-        <p class="m-sub">Your pilot is founder-led and metric-led. It only continues if it hits the metric we set up front.</p>
+        <p class="m-sub">If the pilot misses the number we set, it stops.</p>
         <ul class="m-list">
-            <li>One success metric, agreed before we start.</li>
             <li>A direct line to the founder. Rules change the same day.</li>
             <li>No lock-in. Your data is yours, exportable any time.</li>
         </ul>
@@ -2713,6 +2738,71 @@
     </div>
     </div>
     <!-- /mobile-only -->
+
+    <script>
+    /* Mobile homepage scroll-entrance. Scoped to #lupo-mobile only; the desktop
+       half of this page is never touched. Safe-by-construction: this script ADDS
+       the hiding class, so JS off means nothing hidden. Bails on reduced motion,
+       missing IntersectionObserver, or a desktop viewport. The hero h1 is
+       deliberately never tagged so the headline paints instantly (LCP). */
+    (function () {
+      "use strict";
+      if (!window.matchMedia) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (!("IntersectionObserver" in window)) return;
+      if (!window.matchMedia("(max-width: 768px)").matches) return;
+
+      var STAGGER = 80;
+      function tag(el, i) {
+        el.classList.add("m-reveal");
+        if (i) el.style.setProperty("--mrd", (i * STAGGER) + "ms");
+      }
+
+      document.querySelectorAll("#lupo-mobile section").forEach(function (section) {
+        var order = 0;
+
+        // Intro stack: eyebrow -> headline -> sub(s) -> pull-line -> CTA -> captions.
+        section.querySelectorAll(
+          ":scope > .m-eyebrow, :scope > .m-h2, :scope > .m-sub, :scope > .m-aib-pull, :scope > .m-cta, :scope > .m-int-note, :scope > .m-ho-cap, :scope > .m-tl-sec"
+        ).forEach(function (el) { tag(el, order++); });
+
+        // Repeating groups cascade child by child (delay capped at 5 steps).
+        section.querySelectorAll(
+          ":scope > .m-caps, :scope > .m-chans, :scope > .m-bi-cards, :scope > .m-list, :scope > .m-tl-list, :scope > .m-logos"
+        ).forEach(function (group) {
+          Array.prototype.forEach.call(group.children, function (child, i) {
+            tag(child, Math.min(i, 5));
+          });
+        });
+
+        // Bespoke visuals fade in as one block after the intro copy.
+        // .unm-wrap is deliberately NOT tagged: it runs its own unm-on reveal.
+        section.querySelectorAll(
+          ":scope > .m-pipe, :scope > .m-ho, :scope > .m-fly-wheel, :scope > .m-g2, :scope > .m-g2-hero"
+        ).forEach(function (el) { tag(el, 1); });
+      });
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("m-in");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -6% 0px" });
+
+      document.querySelectorAll("#lupo-mobile .m-reveal").forEach(function (el) { io.observe(el); });
+
+      // Insurance: after 2.5s force-show anything at or above the fold that
+      // never got an IO callback. Elements still below the fold stay observed,
+      // so the entrance survives all the way down the page.
+      setTimeout(function () {
+        document.querySelectorAll("#lupo-mobile .m-reveal:not(.m-in)").forEach(function (el) {
+          if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add("m-in");
+        });
+      }, 2500);
+    })();
+    </script>
 
     <!-- Desktop experience (unchanged); hidden on mobile -->
     <div class="desktop-only">
