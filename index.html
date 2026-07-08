@@ -4304,7 +4304,7 @@
                 var L = { s: 0.7, fill: race.querySelector('[data-fill-lupo]'), time: race.querySelector('[data-time-lupo]'), tag: race.querySelector('[data-tag-lupo]') };
                 var F = { s: 9.3, fill: race.querySelector('[data-fill-fin]'),  time: race.querySelector('[data-time-fin]'),  tag: race.querySelector('[data-tag-fin]') };
                 var DOTS = '<span class="race-dots" aria-label="typing"><i></i><i></i><i></i></span>';
-                var SCALE = 0.5; /* real seconds = displayed seconds * SCALE -> snappy loop, same ratio */
+                var SCALE = 1.0; /* real seconds = displayed seconds * SCALE -> real-time: Fin bar genuinely takes 9.3s (was 0.5 = 2x compressed) */
                 var rafId = null, loopTimer = null, t0 = 0, visible = false;
 
                 function paint(lane, disp) {
