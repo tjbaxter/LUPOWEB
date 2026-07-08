@@ -2382,7 +2382,7 @@
         /* Mobile: the comparison's 4 stacked feature cards read as a wall of text on a
            phone. Hide them on mobile (they only match here while #chat-it is relocated
            into the mobile track). The drag-compare + speed race carry the section.
-           Keep the footnote: it substantiates the "7x faster than Fin" claim.
+           Keep the footnote: it substantiates the "up to 13x faster than Fin" claim.
            Desktop keeps the full set. */
         #lupo-mobile .cben-grid { display: none !important; }
         #lupo-mobile .chat-foot { font-size: 11px; margin-top: 18px; }
@@ -3776,8 +3776,8 @@
     <!-- chat-band: the chat channel showcase. Chat is ONE of four channels
          (web form, email, chat, phone) - never "LUPO is a chatbot". This
          section makes the point that our chat is the fastest + most premium
-         on the market: a draggable LUPO-vs-typical-bot wipe, a 7x-faster-than-
-         Fin speed race (Fin's own published ~7s median, cited), and four
+         on the market: a draggable LUPO-vs-typical-bot wipe, an up-to-13x-faster-
+         than-Fin speed race (measured live: LUPO ~0.7s vs Fin ~9.3s, time to first reply), and four
          proof points. No competitor named on the slider; no Groq mentioned. -->
     <section class="chat-band" id="chat-it">
         <style>
@@ -3981,10 +3981,10 @@
                     </div>
                 </div>
 
-                <!-- PANEL 2: speed race vs Fin (7x, measured live by Tom: same question, time to first reply) -->
+                <!-- PANEL 2: speed race vs Fin (up to 13x, measured live by Tom: same question, time to first reply) -->
                 <div class="chat-panel">
                     <div class="chat-panel-head">
-                        <div class="chat-panel-title">7&times; faster than Fin.</div>
+                        <div class="chat-panel-title">Up to 13&times; faster than Fin.</div>
                         <div class="chat-panel-sub">Same question, same instant. LUPO replies before Fin finishes typing.</div>
                     </div>
                     <!-- DROP-IN: to swap in a real side-by-side screen recording later,
@@ -3998,14 +3998,14 @@
                              throttled/off); the script resets to 0 and replays the race for
                              visible users with motion enabled. -->
                         <div class="race-lane">
-                            <div class="race-top"><span class="race-name"><i class="lupo"></i>LUPO</span><span class="race-time" data-time-lupo>0.9s</span></div>
+                            <div class="race-top"><span class="race-name"><i class="lupo"></i>LUPO</span><span class="race-time" data-time-lupo>0.7s</span></div>
                             <div class="race-track"><div class="race-fill lupo" data-fill-lupo style="width:100%"></div></div>
-                            <div class="race-tag done" data-tag-lupo>Replied in 0.9s</div>
+                            <div class="race-tag done" data-tag-lupo>Replied in 0.7s</div>
                         </div>
                         <div class="race-lane">
-                            <div class="race-top"><span class="race-name"><i class="fin"></i>Fin</span><span class="race-time" data-time-fin>7.0s</span></div>
+                            <div class="race-top"><span class="race-name"><i class="fin"></i>Fin</span><span class="race-time" data-time-fin>9.3s</span></div>
                             <div class="race-track"><div class="race-fill fin" data-fill-fin style="width:100%"></div></div>
-                            <div class="race-tag" data-tag-fin>Replied in 7.0s</div>
+                            <div class="race-tag" data-tag-fin>Replied in 9.3s</div>
                         </div>
                     </div>
                     <div class="race-foot">Measured live, same inbound question. Time to first reply.</div>
@@ -4020,7 +4020,7 @@
                 </div>
                 <div class="cben">
                     <div class="cben-t">Fastest inbound chat</div>
-                    <div class="cben-d">First reply in about a second, 7&times; faster than Fin.<sup>1</sup></div>
+                    <div class="cben-d">First reply in about a second, up to 13&times; faster than Fin.<sup>1</sup></div>
                 </div>
                 <div class="cben">
                     <div class="cben-t">Self-learning</div>
@@ -4298,11 +4298,11 @@
                 } else { convoVisible = true; runConvo(); }
             }
 
-            /* ---- speed race (LUPO 0.9s vs Fin 7.0s; ratio preserved, time-compressed) ---- */
+            /* ---- speed race (LUPO 0.7s vs Fin 9.3s; ratio preserved, time-compressed) ---- */
             var race = band.querySelector('[data-race]');
             if (race) {
-                var L = { s: 0.9, fill: race.querySelector('[data-fill-lupo]'), time: race.querySelector('[data-time-lupo]'), tag: race.querySelector('[data-tag-lupo]') };
-                var F = { s: 7.0, fill: race.querySelector('[data-fill-fin]'),  time: race.querySelector('[data-time-fin]'),  tag: race.querySelector('[data-tag-fin]') };
+                var L = { s: 0.7, fill: race.querySelector('[data-fill-lupo]'), time: race.querySelector('[data-time-lupo]'), tag: race.querySelector('[data-tag-lupo]') };
+                var F = { s: 9.3, fill: race.querySelector('[data-fill-fin]'),  time: race.querySelector('[data-time-fin]'),  tag: race.querySelector('[data-tag-fin]') };
                 var DOTS = '<span class="race-dots" aria-label="typing"><i></i><i></i><i></i></span>';
                 var SCALE = 0.5; /* real seconds = displayed seconds * SCALE -> snappy loop, same ratio */
                 var rafId = null, loopTimer = null, t0 = 0, visible = false;
@@ -4313,21 +4313,21 @@
                 }
                 function finalState() {
                     paint(L, L.s); paint(F, F.s);
-                    L.tag.textContent = 'Replied in 0.9s'; L.tag.className = 'race-tag done';
-                    F.tag.textContent = 'Replied in 7.0s'; F.tag.className = 'race-tag';
+                    L.tag.textContent = 'Replied in 0.7s'; L.tag.className = 'race-tag done';
+                    F.tag.textContent = 'Replied in 9.3s'; F.tag.className = 'race-tag';
                 }
                 function frame(now) {
                     rafId = null;
                     var el = Math.max(0, (now - t0) / 1000 / SCALE);
                     paint(L, Math.min(el, L.s));
                     paint(F, Math.min(el, F.s));
-                    L.tag.textContent = el >= L.s ? 'Replied in 0.9s' : ' ';
+                    L.tag.textContent = el >= L.s ? 'Replied in 0.7s' : ' ';
                     L.tag.className = el >= L.s ? 'race-tag done' : 'race-tag';
                     // Fin still "typing": leave the pulsing dots (set once in runCycle)
                     // alone so the CSS animation isn't restarted every frame; swap to the
                     // reply line only once, at the moment it finishes.
                     if (el >= F.s && (!F.tag.firstChild || F.tag.firstChild.nodeType === 1)) {
-                        F.tag.textContent = 'Replied in 7.0s'; F.tag.className = 'race-tag';
+                        F.tag.textContent = 'Replied in 9.3s'; F.tag.className = 'race-tag';
                     }
                     if (el < F.s) { rafId = requestAnimationFrame(frame); }
                     else { loopTimer = setTimeout(runCycle, 1600); }
