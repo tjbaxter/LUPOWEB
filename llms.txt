@@ -62,7 +62,7 @@ GDPR compliant; DPA at https://lupolabs.ai/dpa.html. Encryption in transit; conv
 
 ## About the team
 
-LUPO was founded in 2025 by Tom Baxter and is a product of Flair Technologies Ltd. Tom holds an MPhil in Physics from the University of Cambridge and runs every pilot personally. LUPO is an ElevenLabs Grant recipient. LinkedIn: https://www.linkedin.com/company/luposales/
+LUPO was founded in 2025 and is a product of Flair Technologies Ltd. LUPO is an ElevenLabs Grant recipient. LinkedIn: https://www.linkedin.com/company/luposales/
 
 ## Frequently asked questions
 
