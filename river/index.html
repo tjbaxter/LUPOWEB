@@ -528,18 +528,30 @@
         .rw-scene-un .rw-mid i::after { opacity: 0; animation-duration: 2.3s; box-shadow: 0 0 4px 1px rgba(191, 233, 255, 0.35); background: linear-gradient(90deg, transparent, rgba(213, 241, 255, 0.5) 50%, transparent); }
         .rw-node {
             position: relative; width: 74px; height: 74px; flex: none;
+            display: flex; align-items: center; justify-content: center;
             border: 1px solid rgba(198, 224, 240, 0.30);
             background: rgba(8, 13, 18, 0.55);
             -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
         }
-        .rw-node::before, .rw-node::after { content: ""; position: absolute; background: rgba(198, 224, 240, 0.45); }
-        .rw-node::before { left: 50%; top: 9px; bottom: 9px; width: 1px; transform: translateX(-0.5px); }
-        .rw-node::after { top: 50%; left: 9px; right: 9px; height: 1px; transform: translateY(-0.5px); }
-        .rw-node b {
-            position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; border-radius: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--water); box-shadow: 0 0 14px rgba(159, 214, 230, 0.85);
+        /* The waterfall: four streams fall (dash flow), three pool waves bob.
+           Line-art in the water cyan, nothing else. */
+        .rw-wf {
+            width: 72%; height: 72%; display: block;
+            filter: drop-shadow(0 0 6px rgba(159, 214, 230, 0.30));
         }
+        .rw-wf-streams path {
+            stroke-dasharray: 7 5;
+            animation: rwFall 1.15s linear infinite;
+        }
+        .rw-wf-streams path:nth-child(2) { animation-delay: -0.29s; }
+        .rw-wf-streams path:nth-child(3) { animation-delay: -0.58s; }
+        .rw-wf-streams path:nth-child(4) { animation-delay: -0.86s; }
+        @keyframes rwFall { to { stroke-dashoffset: -12; } }
+        .rw-wf-pool path { animation: rwBob 3s ease-in-out infinite alternate; }
+        .rw-wf-pool path:nth-child(2) { animation-delay: -1s; opacity: 0.72; }
+        .rw-wf-pool path:nth-child(3) { animation-delay: -2s; opacity: 0.5; }
+        @keyframes rwBob { from { transform: translateY(0); } to { transform: translateY(1.6px); } }
+        .rw-scene-un .rw-wf { opacity: 0.65; }
         /* staggered reveal inside the active scene */
         .rw-rev { opacity: 0; transform: translateY(6px); transition: opacity 0.5s ease, transform 0.5s ease; transition-delay: calc(var(--i) * 0.3s + 0.4s); }
         .rw-scene.rw-on .rw-rev { opacity: 1; transform: none; }
@@ -563,6 +575,8 @@
             .rw-rev { opacity: 1; transform: none; transition: none; }
             .rw-mid i::after { animation: none; opacity: 0; }
             .rw-scene { transition: none; }
+            .rw-wf-streams path { animation: none; stroke-dasharray: none; }
+            .rw-wf-pool path { animation: none; }
         }
 
 
@@ -886,7 +900,7 @@
                         <div class="rw-row rw-co"><span class="rw-q">?</span><span class="rw-dim">Company</span></div>
                         <div class="rw-row"><span class="rw-q">?</span><span class="rw-dim">Role &middot; Size &middot; Location</span></div>
                     </div>
-                    <div class="rw-mid"><i></i><i></i><i></i><span class="rw-node"><b></b></span></div>
+                    <div class="rw-mid"><i></i><i></i><i></i><span class="rw-node"><svg class="rw-wf" viewBox="0 0 48 48" fill="none" stroke="#9fd6e6" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><g class="rw-wf-streams"><path d="M8 7 C12 7 13 10 13 14 L13 27"/><path d="M15 7 C19 7 20 10 20 14 L20 27"/><path d="M22 7 C26 7 27 10 27 14 L27 27"/><path d="M29 7 C33 7 34 10 34 14 L34 27"/></g><g class="rw-wf-pool"><path d="M6 33 q4.5 -3 9 0 t9 0 t9 0 t9 0"/><path d="M6 38.5 q4.5 -3 9 0 t9 0 t9 0 t9 0"/><path d="M6 44 q4.5 -3 9 0 t9 0 t9 0 t9 0"/></g></svg></span></div>
                     <div class="rw-card rw-after">
                         <div class="rw-head rw-rev" style="--i:0"><span class="rw-ava">AM</span><span><span class="rw-name">Alex Mercer</span><div class="rw-role">Platform Engineer</div></span></div>
                         <div class="rw-row rw-co rw-rev" style="--i:1"><span class="rw-k">&#10003;</span><span><b>Northbank Financial</b> &middot; Banking</span></div>
@@ -904,7 +918,7 @@
                         <div class="rw-row rw-co"><span class="rw-q">?</span><span class="rw-dim">Company</span></div>
                         <div class="rw-row"><span class="rw-q">?</span><span class="rw-dim">Role &middot; Size &middot; Location</span></div>
                     </div>
-                    <div class="rw-mid"><i></i><i></i><i></i><span class="rw-node"><b></b></span></div>
+                    <div class="rw-mid"><i></i><i></i><i></i><span class="rw-node"><svg class="rw-wf" viewBox="0 0 48 48" fill="none" stroke="#9fd6e6" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><g class="rw-wf-streams"><path d="M8 7 C12 7 13 10 13 14 L13 27"/><path d="M15 7 C19 7 20 10 20 14 L20 27"/><path d="M22 7 C26 7 27 10 27 14 L27 27"/><path d="M29 7 C33 7 34 10 34 14 L34 27"/></g><g class="rw-wf-pool"><path d="M6 33 q4.5 -3 9 0 t9 0 t9 0 t9 0"/><path d="M6 38.5 q4.5 -3 9 0 t9 0 t9 0 t9 0"/><path d="M6 44 q4.5 -3 9 0 t9 0 t9 0 t9 0"/></g></svg></span></div>
                     <div class="rw-card rw-after">
                         <div class="rw-head rw-rev" style="--i:0"><span class="rw-ava rw-ava-un">?</span><span><span class="rw-name">Unresolved</span><div class="rw-role">No verdict written</div></span></div>
                         <div class="rw-row rw-co rw-rev" style="--i:1"><span class="rw-q">?</span><span>Two candidate companies &middot; neither clears the tier</span></div>
