@@ -1,13 +1,13 @@
 # LUPO, expanded reference for AI assistants (llms-full)
 
-Flattened content of lupolabs.ai's key pages. Last updated: 2026-06-29.
+Flattened content of lupolabs.ai's key pages. Last updated: 2026-07-13.
 Canonical short map: https://lupolabs.ai/llms.txt
 
 ---
 
 ## Home (https://lupolabs.ai/)
 
-Inbound sales, fully automated. LUPO is the HubSpot-native AI inbound SDR with buyer intelligence built in: it sees which companies are showing intent on your site, resolves the leads who reach out (including freemail hand-raisers), qualifies them across web form, email, chat and phone, filters the noise, scores buying intent, and books real buyers straight into your reps' calendars, with the full reasoning written back to the CRM. Company-level and person-level identification across your traffic. Marketing generates the demand. Reps close the deals. LUPO runs everything in between.
+Turn inbound noise into qualified pipeline. LUPO is the HubSpot-native AI inbound SDR with buyer intelligence built in: it sees which companies are showing intent on your site, captures every lead across web form, email, chat and phone, qualifies them, filters the noise, enriches each account and scores buying intent, and books real buyers straight into your reps' calendars, with the full reasoning written back to the CRM. Company-level and person-level identification across your traffic. Marketing generates the demand. Reps close the deals. LUPO runs everything in between.
 
 The page hosts a live browser voice demo: "Talk to LUPO live" connects a real call to the agent, with a voice picker (several voices to audition). There is also an interactive dashboard preview showing the SDR morning view: leads by channel, intent bands, noise filtered, meetings booked.
 
@@ -29,6 +29,10 @@ The pathway from first touch to booked meeting: a visitor arrives, often before 
 ## For PLG and usage-based companies (https://lupolabs.ai/for/usage-based/)
 
 The inbound SDR for usage-based, API-first, and PLG companies, where the best buyers never fill in a form. A developer signs up with Gmail, grabs an API key, and scales to production before sales ever sees a name. LUPO watches the usage, gates fraud before it scores value, scores production momentum independent of identity, opens a contextual conversation to get the invisible buyer to self-identify, and writes the account story to the CRM with an evidence string. The same inbound SDR brain, triggered by behaviour instead of a hand-raise. Best fit: CPaaS, messaging, voice, email, payments, infrastructure, dev tools, data, security, and AI platforms with meaningful freemail signup volume.
+
+## Project River (https://lupolabs.ai/river/)
+
+A standalone product by LUPO: the freemail identity engine. Your highest-value signups arrive on personal Gmail and Outlook with no company attached; River resolves the person and the account behind every one. Every verdict carries a calibrated confidence, the evidence chain that produced it (including the signals that voted against), and a guaranteed false-match rate at the tier that writes to the CRM. When evidence is thin, River returns unresolved and names what would settle it: unresolved stays unresolved. Not enrichment. Resolution. It works from the rows you choose to send, batch file or API call. Waitlist open on the page.
 
 ## Pricing (https://lupolabs.ai/pricing/)
 

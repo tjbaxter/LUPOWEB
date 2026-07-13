@@ -5,8 +5,8 @@
    confirmed live on a call; plus the person, on US traffic) -> qualifies -> scores
    fit and intent -> books -> writes to the CRM. Capture comes BEFORE identify on
    purpose: a phone call is answered first and enriched from what the caller
-   confirms, never the other way round. One loop in four is a freemail signup the
-   agent resolves by asking; junk loops are caught at Qualified and exit amber to
+   confirms, never the other way round. One loop in four surfaces the live buying
+   signals behind the score; junk loops are caught at Qualified and exit amber to
    the filtered terminal. The loop is junk-dominant and opens on junk on purpose:
    most inbound is noise, so the filter is the visible headline.
    No dependencies. Pauses off-screen. Reduced motion = static labelled diagram. */
@@ -36,7 +36,7 @@
     var STAGE_X = [70, 250, 430, 615, 800, 985, 1140];
     /* Loop order: junk-dominant AND junk-first on purpose. Most inbound is noise, so the
        very first thing shown is a lead being filtered out, and the filter stays the visible
-       headline. Real buyers (0 company, 1 person-US, 3 freemail) interleave with junk (2):
+       headline. Real buyers (0 company, 1 person-US, 3 buying signals) interleave with junk (2):
        four filtered to three booked per cycle. */
     var SEQ = [2, 0, 2, 1, 2, 3, 2];
 
@@ -141,13 +141,13 @@
 
         /* Timeline. Loop order is SEQ (junk-dominant: most inbound is noise, so the filter
            is the visible headline). Variants: 0 company reveal, 1 person (US), 2 junk
-           (filtered), 3 freemail resolved by asking. Tally accumulates filtered vs booked. */
+           (filtered), 3 buying signals surfaced. Tally accumulates filtered vs booked. */
         var loopIdx = 0, qCount = 0, jCount = 0, cCount = 0, bookedN = 0, filteredN = 0;
         function buildSteps() {
             var variant = SEQ[loopIdx % SEQ.length];
             var isJunk = variant === 2;
-            var isFree = variant === 3;
-            var chan = isFree ? 'Web form' : CHANNELS[loopIdx % 4];
+            var isSig = variant === 3;
+            var chan = isSig ? 'Web form' : CHANNELS[loopIdx % 4];
             var company = IDENT[cCount % IDENT.length];
             var junk = isJunk ? JUNK[jCount % JUNK.length] : null;
             var steps = [];
@@ -176,21 +176,20 @@
             steps.push({ seg: [1, 2], ms: 1000 });
 
             /* Beat 2 - identify & enrich from what the channel gave us (company
-               always; person only on US; freemail resolved by asking) */
+               always; person only on US; one loop surfaces the live buying signals) */
             steps.push({ fn: function () {
                 light('2');
-                if (isFree) { chipCompany.classList.add('lf-ghost'); setChip(chipCompany, 'jane@gmail.com'); }
-                else if (isJunk) { setChip(chipCompany, junk.who); }
+                if (isJunk) { setChip(chipCompany, junk.who); }
                 else { setChip(chipCompany, company); }
             } });
             steps.push({ ms: 820 });
             steps.push({ fn: function () {
-                if (isFree) { chipCompany.classList.remove('lf-ghost'); setChip(chipCompany, 'LUPO asks who they work with'); }
+                if (isSig) { setChip(chipCompany, 'Buying signals found'); }
                 else if (variant === 1) { setChip(chipCompany, '+ person-level · US'); }
             } });
-            steps.push({ ms: isFree ? 880 : 560 });
-            if (isFree) {
-                steps.push({ fn: function () { setChip(chipCompany, 'Resolved · Acme Brands'); } });
+            steps.push({ ms: isSig ? 880 : 560 });
+            if (isSig) {
+                steps.push({ fn: function () { setChip(chipCompany, 'Series B raised · hiring SDRs'); } });
                 steps.push({ ms: 760 });
             }
             steps.push({ seg: [2, 3], ms: 1000 });
@@ -209,7 +208,7 @@
                 steps.push({ ms: 560 });
                 steps.push({ seg: [5, 6], ms: 1000 });
                 /* Beat 6 written to CRM */
-                steps.push({ fn: function () { light('6'); dotg.classList.remove('lf-show'); qCount++; if (!isFree) cCount++; bookedN++; renderTally(filteredN, bookedN); } });
+                steps.push({ fn: function () { light('6'); dotg.classList.remove('lf-show'); qCount++; cCount++; bookedN++; renderTally(filteredN, bookedN); } });
                 steps.push({ ms: 1700 });
             } else {
                 /* Junk: identified, then caught at Qualified and filtered out */

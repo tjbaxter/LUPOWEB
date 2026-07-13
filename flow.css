@@ -39,9 +39,6 @@
 .lf-stage[data-s="7"] .lf-pill { border-color: rgba(255, 159, 10, 0.30); }
 .lf-stage[data-s="7"] .lf-pin { background: rgba(255, 159, 10, 0.55); }
 
-/* Freemail signup before the agent resolves it: the email other tools give up on */
-.lf-chip.lf-ghost { color: #6f6f76; text-decoration: line-through; text-decoration-color: rgba(255, 159, 10, 0.55); }
-
 /* Lit: qualified path */
 .lf-stage.on .lf-pill { transform: scale(1.04); border-color: rgba(41, 151, 255, 0.65); background: rgba(41, 151, 255, 0.13); box-shadow: 0 0 26px rgba(41, 151, 255, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
 .lf-stage.on .lf-pin { background: #2997ff; box-shadow: 0 0 10px rgba(41, 151, 255, 0.8); }

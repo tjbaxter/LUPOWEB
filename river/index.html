@@ -171,7 +171,9 @@
         html.rv-leaving .rv-bg,
         html.rv-leaving .rv-bgvideo,
         html.rv-leaving .rv-fireflies .rv-fly { animation: none !important; transition: none !important; }
-        html.rv-leaving .rv-field { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+        html.rv-leaving .rv-field,
+        html.rv-leaving .rw-card,
+        html.rv-leaving .rw-node { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
         /* Drop the live video + firefly GPU textures and de-promote the scaled photo
            so the frame Chrome holds during teardown is just the static still + scrim. */
         html.rv-leaving .rv-bgvideo,
@@ -371,7 +373,8 @@
         .rv-more:hover, .rv-more:focus-visible { color: rgba(226, 240, 250, 0.95); }
         .rv-why {
             position: relative; z-index: 1;
-            background: linear-gradient(to bottom, rgba(5, 9, 13, 0.55), rgba(5, 9, 13, 0.92) 120px, rgba(4, 7, 10, 0.97));
+            /* rv-how above carries the terrain-to-dark entry; continue near-solid */
+            background: linear-gradient(to bottom, rgba(4, 7, 10, 0.94), rgba(4, 7, 10, 0.97));
             padding: 88px 32px 96px;
         }
         .rv-why-inner { max-width: 880px; margin: 0 auto; }
@@ -428,6 +431,133 @@
         @media (max-width: 760px) {
             .rv-why { padding: 64px 22px 72px; }
             .rv-pillars, .rv-bench-stats { grid-template-columns: 1fr; }
+        }
+
+        /* ---- How River works (below-the-fold section, above Why River) ----
+           The resolver, shown working: glass cards over the terrain, evidence
+           beams between them. Two scenes alternate: a resolution that clears
+           the tier, then a refusal. Both are verdicts. */
+        .rv-how {
+            position: relative; z-index: 1;
+            background: linear-gradient(to bottom, rgba(5, 9, 13, 0.55), rgba(5, 9, 13, 0.90) 140px, rgba(4, 7, 10, 0.94));
+            padding: 88px 32px 84px;
+        }
+        .rv-how-inner { max-width: 1020px; margin: 0 auto; }
+        .rv-how-title {
+            margin: 10px 0 18px; font-size: clamp(28px, 4.4vw, 44px);
+            line-height: 1.06; letter-spacing: -0.015em; color: #eef6fb; font-weight: 400;
+        }
+        .rv-how-lead {
+            max-width: 66ch; font-size: 16.5px; line-height: 1.65;
+            color: rgba(214, 230, 240, 0.86);
+        }
+        .rw-stage { display: grid; margin-top: 48px; }
+        .rw-scene {
+            grid-area: 1 / 1;
+            display: grid; grid-template-columns: 1fr 132px 1.18fr; align-items: center; gap: 0;
+            opacity: 0; transition: opacity 0.6s ease; pointer-events: none;
+        }
+        .rw-scene.rw-on { opacity: 1; pointer-events: auto; }
+        .rw-card {
+            border: 1px solid rgba(198, 224, 240, 0.16); border-radius: 16px;
+            background: rgba(8, 13, 18, 0.72);
+            -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+            box-shadow: 0 28px 70px -46px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(198, 224, 240, 0.06);
+            padding: 22px 24px;
+        }
+        .rw-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .rw-ava {
+            width: 38px; height: 38px; border-radius: 50%; flex: none;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(198, 224, 240, 0.06); border: 1px solid rgba(198, 224, 240, 0.14);
+            color: rgba(198, 224, 240, 0.45); font-size: 14px; font-weight: 500;
+        }
+        .rw-after .rw-ava { background: rgba(127, 211, 255, 0.10); border-color: rgba(127, 211, 255, 0.28); color: #bfe9ff; }
+        .rw-after .rw-ava.rw-ava-un { background: rgba(198, 224, 240, 0.06); border-color: rgba(198, 224, 240, 0.18); color: rgba(198, 224, 240, 0.5); }
+        .rw-name { font-size: 15.5px; font-weight: 500; color: #eef6fb; letter-spacing: -0.01em; line-height: 1.2; }
+        .rw-before .rw-name { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace; font-size: 13.5px; font-weight: 400; color: rgba(222, 236, 245, 0.72); overflow-wrap: anywhere; }
+        .rw-role { font-size: 12px; color: rgba(198, 224, 240, 0.5); margin-top: 3px; }
+        .rw-row {
+            display: flex; align-items: center; gap: 10px; padding: 9px 0;
+            border-top: 1px solid rgba(198, 224, 240, 0.08);
+            font-size: 13px; line-height: 1.45; color: rgba(214, 230, 240, 0.82);
+        }
+        .rw-row b { color: #eef6fb; font-weight: 500; }
+        .rw-q, .rw-k {
+            width: 18px; height: 18px; border-radius: 5px; font-size: 10.5px; flex: none;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .rw-q { border: 1px dashed rgba(198, 224, 240, 0.28); color: rgba(198, 224, 240, 0.38); }
+        .rw-k { background: rgba(127, 211, 255, 0.09); color: #9fd6e6; border: 1px solid rgba(127, 211, 255, 0.24); }
+        .rw-dim { color: rgba(198, 224, 240, 0.42); }
+        .rw-co { background: rgba(198, 224, 240, 0.045); margin: 0 -24px; padding: 10px 24px; border-top: 1px solid rgba(198, 224, 240, 0.10); border-bottom: 1px solid rgba(198, 224, 240, 0.10); }
+        .rw-co + .rw-row { border-top: 0; }
+        .rw-pillrow { border-top: 0; padding-top: 11px; gap: 8px; }
+        .rw-pill {
+            font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+            font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+            padding: 3px 10px; border-radius: 999px;
+            border: 1px solid rgba(167, 227, 193, 0.35); color: #a7e3c1;
+        }
+        .rw-pill-un { border-color: rgba(198, 224, 240, 0.30); color: rgba(205, 222, 233, 0.72); }
+        .rw-ev { margin-top: 9px; padding-top: 11px; border-top: 1px solid rgba(198, 224, 240, 0.08); font-size: 11.5px; color: rgba(198, 224, 240, 0.52); line-height: 1.55; }
+        /* the evidence beams + reticle node between the cards */
+        .rw-mid { position: relative; display: flex; align-items: center; justify-content: center; height: 100%; min-height: 150px; color: rgba(198, 224, 240, 0.16); }
+        .rw-mid i { position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, currentColor 0%, transparent 26%, transparent 74%, currentColor 100%); overflow: visible; }
+        .rw-mid i:nth-child(1) { top: calc(50% - 16px); }
+        .rw-mid i:nth-child(2) { top: 50%; }
+        .rw-mid i:nth-child(3) { top: calc(50% + 16px); }
+        .rw-mid i::after {
+            content: ""; position: absolute; top: 50%; left: 0; width: 26px; height: 2px;
+            margin-top: -1px; margin-left: -13px; border-radius: 2px;
+            background: linear-gradient(90deg, transparent, #d5f1ff 36%, #ffffff 50%, #d5f1ff 64%, transparent);
+            box-shadow: 0 0 6px 1px rgba(191, 233, 255, 0.9), 0 0 14px 3px rgba(127, 211, 255, 0.5);
+            opacity: 0; pointer-events: none; animation: rwStreamX 1.15s linear infinite;
+        }
+        .rw-mid i:nth-child(1)::after { animation-delay: 0s; }
+        .rw-mid i:nth-child(2)::after { animation-delay: 0.38s; }
+        .rw-mid i:nth-child(3)::after { animation-delay: 0.76s; }
+        @keyframes rwStreamX { 0% { left: 0; opacity: 0; } 7% { opacity: 1; } 45% { left: 100%; opacity: 1; } 54% { left: 100%; opacity: 0; } 100% { left: 100%; opacity: 0; } }
+        /* refusal scene: the beams carry less light */
+        .rw-scene-un .rw-mid { color: rgba(198, 224, 240, 0.10); }
+        .rw-scene-un .rw-mid i::after { opacity: 0; animation-duration: 2.3s; box-shadow: 0 0 4px 1px rgba(191, 233, 255, 0.35); background: linear-gradient(90deg, transparent, rgba(213, 241, 255, 0.5) 50%, transparent); }
+        .rw-node {
+            position: relative; width: 74px; height: 74px; flex: none;
+            border: 1px solid rgba(198, 224, 240, 0.30);
+            background: rgba(8, 13, 18, 0.55);
+            -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
+        }
+        .rw-node::before, .rw-node::after { content: ""; position: absolute; background: rgba(198, 224, 240, 0.45); }
+        .rw-node::before { left: 50%; top: 9px; bottom: 9px; width: 1px; transform: translateX(-0.5px); }
+        .rw-node::after { top: 50%; left: 9px; right: 9px; height: 1px; transform: translateY(-0.5px); }
+        .rw-node b {
+            position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; border-radius: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--water); box-shadow: 0 0 14px rgba(159, 214, 230, 0.85);
+        }
+        /* staggered reveal inside the active scene */
+        .rw-rev { opacity: 0; transform: translateY(6px); transition: opacity 0.5s ease, transform 0.5s ease; transition-delay: calc(var(--i) * 0.3s + 0.4s); }
+        .rw-scene.rw-on .rw-rev { opacity: 1; transform: none; }
+        .rw-caption {
+            margin: 34px 0 0; text-align: center;
+            font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+            color: rgba(198, 224, 240, 0.5);
+        }
+        @media (max-width: 760px) {
+            .rv-how { padding: 64px 22px 64px; }
+            .rw-scene { grid-template-columns: 1fr; }
+            .rw-mid { min-height: 96px; }
+            .rw-mid i { left: 50%; right: auto; width: 1px; height: auto; top: 0; bottom: 0; background: linear-gradient(180deg, currentColor 0%, transparent 26%, transparent 74%, currentColor 100%); }
+            .rw-mid i:nth-child(1) { margin-left: -16px; }
+            .rw-mid i:nth-child(3) { margin-left: 16px; }
+            .rw-mid i::after { width: 2px; height: 26px; top: 0; left: 50%; margin-top: -13px; margin-left: -1px; background: linear-gradient(180deg, transparent, #d5f1ff 36%, #ffffff 50%, #d5f1ff 64%, transparent); animation-name: rwStreamY; }
+            @keyframes rwStreamY { 0% { top: 0; opacity: 0; } 7% { opacity: 1; } 45% { top: 100%; opacity: 1; } 54% { top: 100%; opacity: 0; } 100% { top: 100%; opacity: 0; } }
+            .rw-node { width: 58px; height: 58px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .rw-rev { opacity: 1; transform: none; transition: none; }
+            .rw-mid i::after { animation: none; opacity: 0; }
+            .rw-scene { transition: none; }
         }
 
 
@@ -720,7 +850,7 @@
                 </div>
 
                 <!-- Polite screen-reader announcements -->
-                <a class="rv-more rv-mono" href="#why">Why River is different <span aria-hidden="true">&darr;</span></a>
+                <a class="rv-more rv-mono" href="#how">See how it works <span aria-hidden="true">&darr;</span></a>
 
                 <div class="sr-only" id="rvLive" aria-live="polite"></div>
             </div>
@@ -730,9 +860,93 @@
         <footer class="rv-footer">
             <span class="rv-foot-l">&copy; 2026 LUPO</span>
             <span class="rv-foot-c rv-mono" aria-hidden="true">51.5074&deg; N / 0.1278&deg; W</span>
-            <a class="rv-foot-r" href="/">lupolabs.ai</a>
+            <span class="rv-foot-r"><a href="/privacy.html">Privacy</a> &middot; <a href="/terms.html">Terms</a> &middot; <a href="/">lupolabs.ai</a></span>
         </footer>
     </div>
+
+    <!-- How River works: the resolver shown working. Scene 1 resolves a freemail
+         with confidence and evidence; scene 2 refuses one. Both are verdicts. -->
+    <section class="rv-how" id="how" aria-labelledby="rvHowTitle">
+        <div class="rv-how-inner">
+            <p class="rv-eyebrow rv-mono">How River works</p>
+            <h2 class="rv-how-title" id="rvHowTitle">A personal Gmail goes in.<br>A named account comes out.</h2>
+            <p class="rv-how-lead">River weighs the evidence for every candidate company and scores its own confidence. A verdict that clears your tier writes to the CRM with the evidence chain attached. When the evidence is thin, River refuses to guess.</p>
+
+            <div class="rw-stage" id="rwStage" role="img" aria-label="Example: River resolves alex.dev@gmail.com into Alex Mercer, platform engineer at Northbank Financial, at 0.96 confidence with the evidence chain attached. A second signup, jordan.k@gmail.com, comes back unresolved: two candidate companies, neither clears the tier, so no verdict is written.">
+                <div class="rw-scene rw-on" aria-hidden="true">
+                    <div class="rw-card rw-before">
+                        <div class="rw-head"><span class="rw-ava">?</span><span><span class="rw-name">alex.dev@gmail.com</span><div class="rw-role">Signup &middot; no company attached</div></span></div>
+                        <div class="rw-row"><span class="rw-k">&#10003;</span><span><b>Sent with the row:</b> plan &middot; region &middot; signup date</span></div>
+                        <div class="rw-row"><span class="rw-q">?</span><span class="rw-dim">Person</span></div>
+                        <div class="rw-row rw-co"><span class="rw-q">?</span><span class="rw-dim">Company</span></div>
+                        <div class="rw-row"><span class="rw-q">?</span><span class="rw-dim">Role &middot; Size &middot; Location</span></div>
+                    </div>
+                    <div class="rw-mid"><i></i><i></i><i></i><span class="rw-node"><b></b></span></div>
+                    <div class="rw-card rw-after">
+                        <div class="rw-head rw-rev" style="--i:0"><span class="rw-ava">AM</span><span><span class="rw-name">Alex Mercer</span><div class="rw-role">Platform Engineer</div></span></div>
+                        <div class="rw-row rw-co rw-rev" style="--i:1"><span class="rw-k">&#10003;</span><span><b>Northbank Financial</b> &middot; Banking</span></div>
+                        <div class="rw-row rw-rev" style="--i:2"><span class="rw-k">&#10003;</span><span>Confidence 0.96 &middot; clears your auto tier</span></div>
+                        <div class="rw-row rw-rev" style="--i:3"><span class="rw-k">&#10003;</span><span>2,400 employees &middot; New York, NY</span></div>
+                        <div class="rw-row rw-pillrow rw-rev" style="--i:4"><span class="rw-pill">Resolved</span><span class="rw-pill">Evidence attached</span></div>
+                        <div class="rw-ev rw-rev" style="--i:5">The full evidence chain on every verdict, including the signals that voted against.</div>
+                    </div>
+                </div>
+                <div class="rw-scene rw-scene-un" aria-hidden="true">
+                    <div class="rw-card rw-before">
+                        <div class="rw-head"><span class="rw-ava">?</span><span><span class="rw-name">jordan.k@gmail.com</span><div class="rw-role">Signup &middot; no company attached</div></span></div>
+                        <div class="rw-row"><span class="rw-k">&#10003;</span><span><b>Sent with the row:</b> plan &middot; region &middot; signup date</span></div>
+                        <div class="rw-row"><span class="rw-q">?</span><span class="rw-dim">Person</span></div>
+                        <div class="rw-row rw-co"><span class="rw-q">?</span><span class="rw-dim">Company</span></div>
+                        <div class="rw-row"><span class="rw-q">?</span><span class="rw-dim">Role &middot; Size &middot; Location</span></div>
+                    </div>
+                    <div class="rw-mid"><i></i><i></i><i></i><span class="rw-node"><b></b></span></div>
+                    <div class="rw-card rw-after">
+                        <div class="rw-head rw-rev" style="--i:0"><span class="rw-ava rw-ava-un">?</span><span><span class="rw-name">Unresolved</span><div class="rw-role">No verdict written</div></span></div>
+                        <div class="rw-row rw-co rw-rev" style="--i:1"><span class="rw-q">?</span><span>Two candidate companies &middot; neither clears the tier</span></div>
+                        <div class="rw-row rw-rev" style="--i:2"><span class="rw-q">?</span><span>Confidence 0.41 &middot; held below your threshold</span></div>
+                        <div class="rw-row rw-rev" style="--i:3"><span class="rw-k">&#10003;</span><span>River names what would settle it</span></div>
+                        <div class="rw-row rw-pillrow rw-rev" style="--i:4"><span class="rw-pill rw-pill-un">Unresolved &middot; held</span></div>
+                        <div class="rw-ev rw-rev" style="--i:5">A wrong company in your CRM costs more than a missing one. Unresolved stays unresolved.</div>
+                    </div>
+                </div>
+            </div>
+            <p class="rw-caption rv-mono" aria-hidden="true">A resolution, then a refusal. Both are verdicts.</p>
+        </div>
+    </section>
+    <script>
+    (function () {
+        // Alternate the two verdict scenes while the stage is on screen. The
+        // reveal stagger replays on every flip; reduced motion holds scene one.
+        var stage = document.getElementById('rwStage');
+        if (!stage) return;
+        var scenes = stage.querySelectorAll('.rw-scene');
+        if (scenes.length < 2) return;
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var idx = 0, timer = null, entered = false;
+        function flip() {
+            scenes[idx].classList.remove('rw-on');
+            idx = (idx + 1) % scenes.length;
+            void stage.offsetWidth;
+            scenes[idx].classList.add('rw-on');
+        }
+        function replayCurrent() {
+            scenes[idx].classList.remove('rw-on');
+            void stage.offsetWidth;
+            setTimeout(function () { scenes[idx].classList.add('rw-on'); }, 60);
+        }
+        if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function (es) {
+                if (es[0].isIntersecting) {
+                    if (!entered) { entered = true; replayCurrent(); }
+                    if (!timer) timer = setInterval(flip, 8200);
+                } else if (timer) { clearInterval(timer); timer = null; }
+            }, { threshold: 0.25 });
+            io.observe(stage);
+        } else {
+            timer = setInterval(flip, 8200);
+        }
+    })();
+    </script>
 
     <section class="rv-why" id="why" aria-labelledby="rvWhyTitle">
         <div class="rv-why-inner">
@@ -1166,7 +1380,7 @@
                 ta.setSelectionRange(0, ta.value.length);
                 document.execCommand('copy');
                 document.body.removeChild(ta);
-                flash('Link copied — paste it anywhere');
+                flash('Link copied. Paste it anywhere.');
             } catch (e) {
                 flash('Copy this page link to share');
             }
@@ -1175,7 +1389,7 @@
         function copyLink() {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(shareUrl).then(function () {
-                    flash('Link copied — paste it anywhere');
+                    flash('Link copied. Paste it anywhere.');
                 }, legacyCopy);
             } else {
                 legacyCopy();
