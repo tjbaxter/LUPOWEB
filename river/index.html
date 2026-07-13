@@ -214,7 +214,12 @@
         /* Instrument layer (Variant C only): coordinate readouts + reticle */
         /* fixed layer above the content so the marks can receive hover; the layer
            itself is click-through, only the marks below are interactive */
-        .rv-instruments { position: fixed; inset: 0; pointer-events: none; z-index: 2; display: none; }
+        .rv-instruments { position: fixed; inset: 0; pointer-events: none; z-index: 2; display: none; transition: opacity 0.45s ease; }
+        /* The instruments belong to the hero's terrain. Once the visitor scrolls
+           into the dark sections they fade out entirely (they read as clutter
+           floating over solid panels), and return with the hero. */
+        html.rv-scrolled .rv-instruments { opacity: 0; }
+        html.rv-scrolled .rv-tick, html.rv-scrolled .rv-reticle { pointer-events: none; }
         .rv-tick {
             position: absolute; font-size: 10px; letter-spacing: 0.12em;
             color: rgba(198, 224, 240, 0.5);
@@ -870,7 +875,7 @@
         <div class="rv-how-inner">
             <p class="rv-eyebrow rv-mono">How River works</p>
             <h2 class="rv-how-title" id="rvHowTitle">A personal Gmail goes in.<br>A named account comes out.</h2>
-            <p class="rv-how-lead">River weighs the evidence for every candidate company and scores its own confidence. A verdict that clears your tier writes to the CRM with the evidence chain attached. When the evidence is thin, River refuses to guess.</p>
+            <p class="rv-how-lead">River weighs the evidence, scores its own confidence, and writes to your CRM only when the verdict clears your tier. Thin evidence gets a refusal, not a guess.</p>
 
             <div class="rw-stage" id="rwStage" role="img" aria-label="Example: River resolves alex.dev@gmail.com into Alex Mercer, platform engineer at Northbank Financial, at 0.96 confidence with the evidence chain attached. A second signup, jordan.k@gmail.com, comes back unresolved: two candidate companies, neither clears the tier, so no verdict is written.">
                 <div class="rw-scene rw-on" aria-hidden="true">
@@ -946,26 +951,40 @@
             timer = setInterval(flip, 8200);
         }
     })();
+    (function () {
+        // Coordinate ticks + reticle live on the hero terrain only: fade them
+        // out once the visitor scrolls into the sections, back in at the top.
+        var root = document.documentElement;
+        var on = false, raf = 0;
+        function check() {
+            raf = 0;
+            var next = window.scrollY > window.innerHeight * 0.4;
+            if (next !== on) { on = next; root.classList.toggle('rv-scrolled', on); }
+        }
+        function onScroll() { if (!raf) raf = requestAnimationFrame(check); }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        check();
+    })();
     </script>
 
     <section class="rv-why" id="why" aria-labelledby="rvWhyTitle">
         <div class="rv-why-inner">
             <p class="rv-eyebrow rv-mono">Why River</p>
             <h2 class="rv-why-title" id="rvWhyTitle">Not enrichment. Resolution.</h2>
-            <p class="rv-why-lead">Enrichment tools look an email up in a rented database and return their best guess. River works like a fraud engine instead: it weighs evidence from the data you choose to send and from public registries, scores every candidate company, and refuses to answer when the evidence is thin.</p>
+            <p class="rv-why-lead">Enrichment tools look an email up in a rented database and return their best guess. River works like a fraud engine: it weighs the evidence, scores every candidate, and refuses to answer when the evidence is thin.</p>
 
             <div class="rv-pillars">
                 <div class="rv-pillar">
                     <h3>It tells you how often it is wrong</h3>
-                    <p>Every verdict carries a calibrated confidence and a guaranteed false-match rate at the tier that writes to your CRM. No other freemail tool will quote you that number.</p>
+                    <p>A calibrated confidence and a guaranteed false-match rate on every verdict.</p>
                 </div>
                 <div class="rv-pillar">
                     <h3>It shows its working</h3>
-                    <p>Every verdict ships with the evidence chain that produced it, including the signals that voted against. Auditable by your team, defensible to your DPO.</p>
+                    <p>The full evidence chain on every verdict, including the signals that voted against.</p>
                 </div>
                 <div class="rv-pillar">
                     <h3>It refuses to guess</h3>
-                    <p>A wrong company in your CRM costs more than a missing one. When evidence is thin, River returns unresolved and names what would settle it.</p>
+                    <p>A wrong company costs more than a missing one, so thin evidence stays unresolved.</p>
                 </div>
             </div>
 
