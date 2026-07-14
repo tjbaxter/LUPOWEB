@@ -10,3 +10,4 @@
 /demo                /                    301!
 /demo/*              /                    301!
 /                    /index.html          200
+/clicksend           /clicksend.html      200

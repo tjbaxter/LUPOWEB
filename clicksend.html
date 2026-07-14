@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#e7e9e4">
+<title>River — identity resolution for ClickSend</title>
+<meta name="description" content="A live freemail resolution for ClickSend, with the full evidence chain.">
+<link rel="icon" type="image/png" href="/lupo-icon-180.png">
+<link rel="apple-touch-icon" href="/lupo-icon-180.png">
+<style>
+  :root {
+    --ground: #e7e9e4;
+    --sheet: #fbfbf9;
+    --ink: #14181b;
+    --muted: #5b6167;
+    --faint: #8b9097;
+    --hair: #dbddd6;
+    --hair-strong: #c7cabf;
+    --steel: #23566f;
+    --steel-deep: #173f53;
+    --resolved: #2f6b57;
+    --resolved-bg: #e7efe9;
+    --dropped: #9a4b3f;
+    --dropped-bg: #f1e7e4;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --mono: "SF Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  .page {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+    padding: clamp(18px, 4vw, 52px) 16px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .sheet {
+    width: 100%;
+    max-width: 1080px;
+    background: var(--sheet);
+    border: 1px solid var(--hair-strong);
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(20,24,27,.04), 0 24px 60px -32px rgba(20,24,27,.30);
+    padding: clamp(24px, 5vw, 54px);
+    animation: rise .5s cubic-bezier(.2,.7,.3,1) both;
+  }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .sheet { animation: none; } }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--steel);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--hair); }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(26px, 4.6vw, 38px);
+    line-height: 1.12;
+    letter-spacing: -.01em;
+    text-wrap: balance;
+    margin: 20px 0 0;
+    max-width: 22ch;
+  }
+  h1 em { font-style: italic; color: var(--steel-deep); }
+
+  .lede {
+    margin: 16px 0 0;
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 62ch;
+  }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  .band-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .band-label .when { letter-spacing: .06em; text-transform: none; }
+
+  /* ---- the manual version ---- */
+  .ask-panel { margin-top: 30px; }
+  .askcard { border: 1px solid var(--hair-strong); border-radius: 3px; overflow: hidden; }
+  .askcard-head {
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+    padding: 12px 18px; background: #f3f4f0; border-bottom: 1px solid var(--hair);
+    font-family: var(--mono); font-size: 11px;
+  }
+  .askcard-head .from { color: var(--muted); font-weight: 400; }
+  .askcard-head .from .subj { display: block; color: var(--ink); font-weight: 600; margin-bottom: 3px; }
+  .askcard-head .aged { color: var(--muted); white-space: nowrap; }
+  .email-body { padding: 14px 18px 16px; font-size: 14px; color: var(--ink); line-height: 1.6; }
+  .email-body p { margin: 0 0 10px; }
+  .email-body p:last-child { margin-bottom: 0; }
+  .email-body ul { margin: 4px 0 12px; padding: 0 0 0 18px; }
+  .email-body li { margin: 4px 0; font-family: var(--mono); font-size: 13px; color: var(--ink); }
+  .ask-note { margin-top: 14px; font-size: 14px; color: var(--muted); max-width: 76ch; }
+  .ask-note strong { color: var(--ink); font-weight: 600; }
+
+  /* ---- verdict record ---- */
+  .record {
+    margin-top: 30px;
+    border: 1px solid var(--hair-strong);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .rec-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 13px 18px;
+    background: #f3f4f0;
+    border-bottom: 1px solid var(--hair);
+  }
+  .rec-head .label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .rec-head .subject { font-family: var(--mono); font-size: 14px; color: var(--ink); font-weight: 500; }
+
+  .rec-body { padding: 6px 18px 4px; }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px 16px;
+    align-items: baseline;
+    padding: 11px 0;
+    border-bottom: 1px dashed var(--hair);
+  }
+  .row:last-child { border-bottom: 0; }
+  .row .claim { font-family: var(--mono); font-size: 13px; color: var(--ink); }
+  .row .claim .k { color: var(--steel); }
+  .row .src {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .04em;
+    color: var(--faint);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .row.integrity .claim, .row.integrity .claim .k { color: var(--dropped); }
+
+  .verdicts {
+    border-top: 1px solid var(--hair);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #fcfcfa;
+  }
+  .verdict { display: flex; align-items: center; gap: 14px; }
+  .stamp {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    width: 92px;
+    text-align: center;
+  }
+  .stamp.ok { color: var(--resolved); background: var(--resolved-bg); border: 1px solid #cfe0d5; }
+  .stamp.no { color: var(--dropped); background: var(--dropped-bg); border: 1px solid #e4cdc7; }
+  .verdict .entity { font-size: 15px; }
+  .verdict .entity strong { font-weight: 600; }
+  .verdict .entity .meta { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+  .rec-foot {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    border-top: 1px solid var(--hair);
+    background: #f3f4f0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .tier {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    color: #fff;
+    background: var(--steel-deep);
+    padding: 3px 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ---- mechanic ---- */
+  .mechanic { margin-top: 34px; }
+  .flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: stretch;
+    gap: 14px;
+  }
+  .cell {
+    border: 1px solid var(--hair-strong);
+    border-radius: 3px;
+    padding: 15px 16px;
+    background: #fcfcfa;
+  }
+  .cell h3 { margin: 0 0 8px; font-size: 13px; font-weight: 600; letter-spacing: .01em; }
+  .cell ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .cell li { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-left: 14px; position: relative; }
+  .cell li::before { content: "·"; position: absolute; left: 2px; color: var(--steel); font-weight: 700; }
+  .cell .sub { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--steel); margin: 12px 0 6px; }
+  .arrow { align-self: center; font-family: var(--mono); color: var(--steel); font-size: 20px; padding: 0 2px; }
+  .fuse {
+    text-align: center;
+    background: var(--steel-deep);
+    color: #eef3f5;
+    border-color: var(--steel-deep);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .fuse h3 { color: #fff; }
+  .fuse p { margin: 0; font-size: 12px; color: #c3d2d9; font-family: var(--mono); }
+  .mech-note { margin-top: 12px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); letter-spacing: .02em; max-width: 76ch; }
+
+  footer {
+    margin-top: 26px;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.5;
+    border-top: 1px solid var(--hair);
+    padding-top: 16px;
+    max-width: 82ch;
+  }
+
+  @media (max-width: 640px) {
+    .flow { grid-template-columns: 1fr; }
+    .arrow { transform: rotate(90deg); justify-self: center; }
+    .rec-head { flex-direction: column; gap: 4px; }
+    .verdict { align-items: flex-start; }
+  }
+</style>
+
+<div class="page">
+  <article class="sheet">
+
+    <div class="eyebrow">River · Identity Resolution</div>
+    <h1>Who else is hiding behind your freemail signups? <em>River names them, with proof.</em></h1>
+    <p class="lede">River fuses the signals you already hold on a signup with <strong>13 million registered legal entities</strong>, then returns the brand your team would recognize and the legal entity behind it, with calibrated confidence, or returns unresolved when the evidence is short. Below: the email a bare gmail signup triggered, the same account resolved by River from data ClickSend already holds, and how it works.</p>
+
+    <section class="ask-panel" aria-label="The email a freemail signup triggered">
+      <div class="band-label"><span>What a freemail signup triggers</span> <span class="when">the email ClickSend sent this account</span></div>
+      <div class="askcard">
+        <div class="askcard-head">
+          <span class="from"><strong class="subj">ClickSend Pricing</strong>Dave Regala &lt;dave.regala@clicksend.com&gt; &rarr; hdepayns2@gmail.com</span>
+          <span class="aged">7 Jul 2026, 09:15</span>
+        </div>
+        <div class="email-body">
+          <p>Hello Hugues,</p>
+          <p>I hope you are well.</p>
+          <p>Thanks for your inquiry about the pricing. May we ask for the following details below:</p>
+          <ul>
+            <li>Business Email:</li>
+            <li>Target Country:</li>
+            <li>Expected Volume per Month:</li>
+            <li>Company Website:</li>
+            <li>What's your use case?</li>
+            <li>Do you need it for one way or two way messaging?</li>
+          </ul>
+          <p>I hope to hear from you soon.</p>
+          <p>All the best,<br>Dave Regala<br>Sales Development Representative</p>
+        </div>
+      </div>
+      <p class="ask-note">A bare gmail signed up, so your team had to email it to find out who it was. River answers the identity half of this email (which company, which country, which website) from data ClickSend already holds. Here is that same signup, resolved:</p>
+    </section>
+
+    <section class="record" aria-label="Resolution record">
+      <div class="rec-head">
+        <span class="label">Signup · live run 11 July 2026</span>
+        <span class="subject">hdepayns2@gmail.com</span>
+      </div>
+
+      <div class="rec-body">
+        <div class="row">
+          <span class="claim"><span class="k">config</span> webhook on the account points at app.lupolabs.ai</span>
+          <span class="src">first-party config</span>
+        </div>
+        <div class="row">
+          <span class="claim"><span class="k">disclosure</span> legal notice published on lupolabs.ai names "Flair Technologies Ltd"</span>
+          <span class="src">fetched live</span>
+        </div>
+        <div class="row">
+          <span class="claim"><span class="k">register</span> FLAIR TECHNOLOGIES LTD · #16493840 · active</span>
+          <span class="src">companies house</span>
+        </div>
+        <div class="row">
+          <span class="claim"><span class="k">brand</span> "© 2026 LUPO, a product of Flair Technologies Ltd." ties the brand to the entity</span>
+          <span class="src">site disclosure</span>
+        </div>
+        <div class="row">
+          <span class="claim"><span class="k">jurisdiction</span> declared GB, signup IP US: resolved under UK rules, zero personal-data vendor calls</span>
+          <span class="src">first-party</span>
+        </div>
+        <div class="row integrity">
+          <span class="claim"><span class="k">dropped</span> sender tag "LUPO" failed ClickSend vetting: River discarded the claim. A rejected claim is not evidence.</span>
+          <span class="src">integrity</span>
+        </div>
+      </div>
+
+      <div class="verdicts">
+        <div class="verdict">
+          <span class="stamp ok">Resolved</span>
+          <span class="entity"><strong>LUPO · lupolabs.ai</strong> <span class="meta">· operated by FLAIR TECHNOLOGIES LTD, Companies House #16493840 · confidence: high, auto tier · score 9.10 vs threshold 7.50</span></span>
+        </div>
+        <div class="verdict">
+          <span class="stamp no">Outscored</span>
+          <span class="entity"><span class="meta">20 register neighbours considered and beaten on evidence: ESPIRE INFOLABS, SINTECH TECHNOLOGIES, MONOLABS, 17 more</span></span>
+        </div>
+      </div>
+
+      <div class="rec-foot">
+        <span class="tier">AUTO</span>
+        <span>Decided by river-1, LUPO's resolution model, calibrated so the measured false-match bound at the auto tier is 2.4% against a 5% ceiling. No message content was read.</span>
+      </div>
+    </section>
+
+    <section class="mechanic">
+      <div class="band-label">How it resolves</div>
+      <div class="flow">
+        <div class="cell">
+          <h3>What River reads</h3>
+          <p class="sub">From you, first-party</p>
+          <ul>
+            <li>the address + signup IP</li>
+            <li>config the account created: sender IDs, webhook domains, declared country</li>
+          </ul>
+          <p class="sub">Public, River fetches it</p>
+          <ul>
+            <li>the company's own published legal notice</li>
+            <li>developer footprint: GitHub, Gravatar, Keybase, GitLab, Hacker News, DEV.to</li>
+          </ul>
+        </div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell fuse">
+          <h3>river-1</h3>
+          <p>fuse → verdict or unresolved</p>
+        </div>
+        <div class="arrow" aria-hidden="true">←</div>
+        <div class="cell">
+          <h3>13M+ legal entities</h3>
+          <ul>
+            <li>Companies House (UK)</li>
+            <li>Australian Business Register</li>
+            <li>GLEIF global LEI system</li>
+            <li>SEC EDGAR (US)</li>
+          </ul>
+        </div>
+      </div>
+      <p class="mech-note">Plumbing: the pilot is a CSV with three columns. Live, River connects the way this demo ran: a read-only API connection or an event feed from your platform. Nothing embeds on your website, no pixel, no change to your signup flow. Verdicts write back to your CRM with the evidence chain attached.</p>
+    </section>
+
+    <footer>
+      Every verdict traces to named public sources: platform configuration the account created, the company's own published legal notice, the official register. When the evidence is short, River returns unresolved with the reason, so you never act on a bad match.
+    </footer>
+
+  </article>
+</div>
+</body>
+</html>
