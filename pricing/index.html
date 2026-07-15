@@ -628,6 +628,10 @@
                     <summary class="faq-q">What about security and compliance?</summary>
                     <p class="faq-a">Encryption in transit and controlled access to customer data. Conversations are never used to train external AI models. A signed Data Processing Agreement is available on request.</p>
                 </details>
+                <details class="faq-item">
+                    <summary class="faq-q">Is Project River included in this plan?</summary>
+                    <p class="faq-a">No. Project River, our freemail identity engine, is a standalone product with its own pilot. It names the company behind personal-email signups, with the evidence attached. If unmasking freemail signups is the problem you came here for, see <a href="/river/">Project River</a>, or raise it on the call and we scope both together.</p>
+                </details>
             </div>
         </section>
 
@@ -644,6 +648,59 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                         Talk to LUPO live
                     </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project River doorway: standalone product, one bridge from this page.
+             Same component as the homepage band: deliberately dark in BOTH themes,
+             every color hardcoded, no aurora overrides needed. One card, one line,
+             one CTA. -->
+        <section class="rvd-band">
+            <style>
+            .rvd-band{position:relative;z-index:1;padding:10px 24px 96px;}
+            .rvd-band,.rvd-band *{box-sizing:border-box;}
+            .rvd-card{position:relative;max-width:1080px;margin:0 auto;border-radius:22px;overflow:hidden;
+                background:
+                    radial-gradient(120% 170% at 84% -30%, rgba(41,151,255,0.16) 0%, transparent 56%),
+                    radial-gradient(90% 120% at 8% 118%, rgba(159,214,230,0.10) 0%, transparent 52%),
+                    linear-gradient(180deg, #070b10 0%, #04070a 100%);
+                border:1px solid rgba(159,214,230,0.16);
+                box-shadow:0 42px 96px -52px rgba(0,0,0,0.9), inset 0 1px 0 rgba(198,224,240,0.08);
+                padding:56px 60px 54px;}
+            .rvd-grid{position:absolute;inset:0;pointer-events:none;
+                background-image:linear-gradient(rgba(194,226,242,0.10) 1px,transparent 1px),linear-gradient(90deg,rgba(194,226,242,0.10) 1px,transparent 1px);
+                background-size:76px 76px,76px 76px;
+                -webkit-mask-image:radial-gradient(130% 130% at 28% 38%, transparent 18%, #000 80%);
+                mask-image:radial-gradient(130% 130% at 28% 38%, transparent 18%, #000 80%);}
+            .rvd-tick{position:absolute;font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.12em;color:rgba(198,224,240,0.40);pointer-events:none;}
+            .rvd-tick::after{content:"";position:absolute;left:3px;top:15px;width:1px;height:14px;background:linear-gradient(to bottom,rgba(198,224,240,0.40),transparent);}
+            .rvd-water-line{position:absolute;left:8%;right:8%;bottom:34px;height:1px;background:linear-gradient(90deg,transparent,rgba(159,214,230,0.22) 22%,rgba(159,214,230,0.22) 78%,transparent);pointer-events:none;overflow:visible;}
+            .rvd-water-line::after{content:"";position:absolute;top:-1px;left:0;width:90px;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,rgba(159,214,230,0.85),transparent);filter:blur(0.4px);animation:rvdGlint 7.5s cubic-bezier(0.45,0,0.55,1) infinite;}
+            @keyframes rvdGlint{0%{left:-8%;opacity:0;}12%{opacity:1;}88%{opacity:1;}100%{left:100%;opacity:0;}}
+            @media (prefers-reduced-motion: reduce){.rvd-water-line::after{animation:none;opacity:0;}}
+            .rvd-inner{position:relative;max-width:660px;}
+            .rvd-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,monospace;font-size:11px;font-weight:500;letter-spacing:0.30em;text-transform:uppercase;color:rgba(159,214,230,0.66);margin:0 0 18px;}
+            .rvd-eyebrow::before{content:"";width:22px;height:1px;background:rgba(159,214,230,0.45);}
+            .rvd-title{font-size:42px;font-weight:300;letter-spacing:-0.025em;line-height:1.04;color:rgba(255,255,255,0.97);margin:0 0 16px;}
+            .rvd-title .rvd-water{background:linear-gradient(180deg,#ffffff 0%,#9fd6e6 118%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+            .rvd-copy{font-size:16.5px;line-height:1.62;color:rgba(214,230,240,0.80);margin:0 0 28px;max-width:58ch;}
+            .rvd-copy b{color:rgba(238,246,251,0.96);font-weight:500;}
+            .rvd-cta{display:inline-flex;align-items:center;gap:9px;font-size:14.5px;font-weight:600;letter-spacing:-0.01em;color:#cfeaf5;text-decoration:none;border:1px solid rgba(159,214,230,0.32);border-radius:999px;padding:12px 24px;background:rgba(159,214,230,0.07);transition:background 0.25s ease,border-color 0.25s ease,color 0.25s ease;}
+            .rvd-cta:hover{background:rgba(159,214,230,0.14);border-color:rgba(159,214,230,0.55);color:#ffffff;}
+            .rvd-cta:focus-visible{outline:2px solid #9fd6e6;outline-offset:3px;}
+            @media(max-width:860px){.rvd-card{padding:44px 30px 46px;}.rvd-title{font-size:33px;}.rvd-band{padding:0 22px 64px;}.rvd-tick{display:none;}}
+            </style>
+            <div class="rvd-card">
+                <div class="rvd-grid" aria-hidden="true"></div>
+                <span class="rvd-tick" style="right:7%;top:24%;" aria-hidden="true">51.5074</span>
+                <span class="rvd-tick" style="right:16%;bottom:22%;" aria-hidden="true">0.1278</span>
+                <div class="rvd-water-line" aria-hidden="true"></div>
+                <div class="rvd-inner">
+                    <p class="rvd-eyebrow">A LUPO Project</p>
+                    <h2 class="rvd-title">Project <span class="rvd-water">River</span></h2>
+                    <p class="rvd-copy"><b>The freemail identity engine.</b> River names the company behind personal-email signups, with the evidence attached. A standalone product with its own pilot, scoped separately from the plan above.</p>
+                    <a class="rvd-cta" href="/river/">Meet Project River <span aria-hidden="true">&rarr;</span></a>
                 </div>
             </div>
         </section>
