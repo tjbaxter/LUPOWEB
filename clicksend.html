@@ -269,13 +269,76 @@
     .rec-head { flex-direction: column; gap: 4px; }
     .verdict { align-items: flex-start; }
   }
+
+  /* ---- LUPO / River masthead (dark brand hero into light proof) ---- */
+  .mh { position:relative; overflow:hidden;
+    background:
+      radial-gradient(120% 170% at 84% -20%, rgba(41,151,255,0.18) 0%, transparent 56%),
+      radial-gradient(90% 130% at 6% 120%, rgba(159,214,230,0.10) 0%, transparent 52%),
+      linear-gradient(180deg,#070b10 0%,#04070a 100%);
+    border-bottom:1px solid rgba(159,214,230,0.14);
+    padding: clamp(30px,5vw,54px) 0 clamp(40px,6vw,70px); }
+  .mh-grid { position:absolute; inset:0; pointer-events:none;
+    background-image:linear-gradient(rgba(194,226,242,0.09) 1px,transparent 1px),linear-gradient(90deg,rgba(194,226,242,0.09) 1px,transparent 1px);
+    background-size:76px 76px,76px 76px;
+    -webkit-mask-image:radial-gradient(130% 130% at 26% 34%, transparent 16%, #000 82%);
+    mask-image:radial-gradient(130% 130% at 26% 34%, transparent 16%, #000 82%); }
+  .mh-line { position:absolute; left:6%; right:6%; bottom:26px; height:1px; overflow:visible; pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(159,214,230,0.22) 22%,rgba(159,214,230,0.22) 78%,transparent); }
+  .mh-line::after { content:""; position:absolute; top:-1px; left:0; width:90px; height:3px; border-radius:3px;
+    background:linear-gradient(90deg,transparent,rgba(159,214,230,0.85),transparent); filter:blur(0.4px);
+    animation:mhGlint 7.5s cubic-bezier(0.45,0,0.55,1) infinite; }
+  @keyframes mhGlint { 0%{left:-8%;opacity:0;} 12%{opacity:1;} 88%{opacity:1;} 100%{left:100%;opacity:0;} }
+  @media (prefers-reduced-motion: reduce){ .mh-line::after{ animation:none; opacity:0; } }
+  .mh-inner { position:relative; max-width:1080px; margin:0 auto; padding:0 clamp(24px,5vw,54px); }
+  .mh-tick { position:absolute; font-family:var(--mono); font-size:10px; letter-spacing:.12em; color:rgba(198,224,240,0.38); pointer-events:none; }
+  .mh-brand { display:flex; align-items:center; gap:11px; margin:0 0 clamp(22px,4vw,34px); }
+  .mh-brand img { height:34px; width:auto; display:block; }
+  .mh-brand .wm { font-family:var(--sans); font-size:21px; font-weight:600; letter-spacing:-.01em; color:#f4f8fb; }
+  .mh-eyebrow { display:inline-flex; align-items:center; gap:10px; font-family:var(--mono); font-size:11px; font-weight:500; letter-spacing:.30em; text-transform:uppercase; color:rgba(159,214,230,0.68); margin:0 0 16px; }
+  .mh-eyebrow::before { content:""; width:22px; height:1px; background:rgba(159,214,230,0.45); }
+  .mh-title { font-family:var(--sans); font-size:clamp(34px,6vw,52px); font-weight:300; letter-spacing:-.025em; line-height:1.04; color:rgba(255,255,255,0.97); margin:0 0 16px; max-width:none; }
+  .mh-title .water { background:linear-gradient(180deg,#ffffff 0%,#9fd6e6 120%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  .mh-sub { font-size:clamp(16px,2.4vw,19px); line-height:1.5; color:rgba(224,236,244,0.92); margin:0 0 14px; max-width:52ch; }
+  .mh-sub b { color:#eaf4fa; font-weight:600; }
+  .mh-body { font-size:15px; line-height:1.62; color:rgba(196,214,226,0.78); margin:0; max-width:56ch; }
+  .mh-body b { color:rgba(234,244,250,0.95); font-weight:500; }
+  @media (max-width:860px){ .mh-tick{ display:none; } }
+
+  /* demoted document headline (masthead now carries the page h1) */
+  .doc-title { font-family:var(--serif); font-weight:600; font-size:clamp(26px,4.6vw,38px); line-height:1.12; letter-spacing:-.01em; text-wrap:balance; margin:20px 0 0; max-width:24ch; }
+  .doc-title em { font-style:italic; color:var(--steel-deep); }
+
+  /* LUPO sign-off in the footer */
+  .brand-signoff { display:flex; align-items:center; gap:10px; margin-top:18px; padding-top:15px; border-top:1px solid var(--hair); }
+  .brand-signoff img { height:24px; width:auto; display:block; border-radius:5px; }
+  .brand-signoff span { font-family:var(--sans); font-size:13px; color:var(--muted); }
+  .brand-signoff b { color:var(--ink); font-weight:600; }
+  .brand-signoff a { color:var(--steel); text-decoration:none; }
 </style>
+
+<header class="mh">
+  <div class="mh-grid" aria-hidden="true"></div>
+  <div class="mh-line" aria-hidden="true"></div>
+  <div class="mh-inner">
+    <span class="mh-tick" style="right:8%;top:6%;" aria-hidden="true">51.5074</span>
+    <span class="mh-tick" style="right:15%;top:20%;" aria-hidden="true">0.1278</span>
+    <div class="mh-brand">
+      <img src="/lupo-head-nav.png" alt="LUPO" width="34" height="34" decoding="async">
+      <span class="wm">LUPO</span>
+    </div>
+    <p class="mh-eyebrow">A LUPO Project</p>
+    <h1 class="mh-title">Project <span class="water">River</span></h1>
+    <p class="mh-sub"><b>LUPO's freemail identity engine.</b> It names the company behind a personal-email signup, with the evidence attached.</p>
+    <p class="mh-body">This is the cutting-edge work I mentioned when we spoke. Below, River resolves one of your own ClickSend signups end to end, in eight seconds, from data you already hold.</p>
+  </div>
+</header>
 
 <div class="page">
   <article class="sheet">
 
-    <div class="eyebrow">River · Identity Resolution</div>
-    <h1>Who else is hiding behind your freemail signups? <em>River names them, with proof.</em></h1>
+    <div class="eyebrow">The proof · one live resolution</div>
+    <h2 class="doc-title">Who else is hiding behind your freemail signups? <em>River names them, with proof.</em></h2>
     <p class="lede">River fuses the signals you already hold on a signup with <strong>13 million registered legal entities</strong>, then returns the brand your team would recognize and the legal entity behind it, with calibrated confidence, or returns unresolved when the evidence is short. Below: the email a bare gmail signup triggered, the same account resolved by River from data ClickSend already holds, and how it works.</p>
 
     <section class="ask-panel" aria-label="The email a freemail signup triggered">
@@ -391,6 +454,10 @@
 
     <footer>
       Every verdict traces to named public sources: platform configuration the account created, the company's own published legal notice, the official register. When the evidence is short, River returns unresolved with the reason, so you never act on a bad match.
+      <div class="brand-signoff">
+        <img src="/lupo-icon-180.png" alt="" width="24" height="24" decoding="async">
+        <span><b>LUPO</b> &middot; Project River &middot; <a href="https://lupolabs.ai">lupolabs.ai</a></span>
+      </div>
     </footer>
 
   </article>
