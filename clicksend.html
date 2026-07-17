@@ -334,7 +334,7 @@
     </div>
     <p class="mh-eyebrow">A LUPO Project</p>
     <h1 class="mh-title">Project <span class="water">River</span></h1>
-    <p class="mh-sub"><b>LUPO's freemail identity engine.</b> It names the company behind a personal-email signup, with the evidence attached.</p>
+    <p class="mh-sub"><b>LUPO's freemail identity engine.</b> When the evidence supports it, it names the company behind a personal-email signup, with the chain attached; when it does not, it returns unresolved.</p>
     <p class="mh-body">Below: one signup resolved end to end, so you can see exactly what a River verdict looks like and how every step is evidenced. Then how we build and prove the same thing on ClickSend's own signups.</p>
   </div>
 </header>
@@ -365,7 +365,7 @@
           <p>All the best,<br>Dave Regala<br>Sales Development Representative</p>
         </div>
       </div>
-      <p class="ask-note">A bare gmail signed up, and ClickSend's follow-up had to ask the account to identify itself. River answers the identity half of that email automatically (which company, which country, which website), fusing first-party account data against LUPO's identity graph. Here is that same signup, resolved:</p>
+      <p class="ask-note">A bare gmail signed up, and ClickSend's follow-up had to ask the account to identify itself. River answers the identity half of that email automatically (the company, its website, its registered legal entity), fusing first-party account data against LUPO's identity graph. Here is that same signup, resolved:</p>
     </section>
 
     <section class="record" aria-label="Resolution record">
@@ -392,7 +392,7 @@
           <span class="src">site disclosure</span>
         </div>
         <div class="row">
-          <span class="claim"><span class="k">jurisdiction</span> declared GB, signup IP US: resolved under UK rules, zero personal-data vendor calls</span>
+          <span class="claim"><span class="k">jurisdiction</span> declared GB, signup IP US: neither treated as proof of company identity, and no personal-data vendor was called</span>
           <span class="src">first-party</span>
         </div>
         <div class="row integrity">
@@ -408,7 +408,7 @@
         </div>
         <div class="verdict">
           <span class="stamp no">Ruled out</span>
-          <span class="entity"><span class="meta">20 more name-matches were generated (ESPIRE INFOLABS, SINTECH TECHNOLOGIES, MONOLABS, 17 more). None carried any confirming evidence, so River discarded them rather than pick a runner-up.</span></span>
+          <span class="entity"><span class="meta">River also generated name-similar entities, but none carried evidence connecting them to the account, so they were discarded before scoring.</span></span>
         </div>
       </div>
 
@@ -430,7 +430,7 @@
             <li>the address + signup IP</li>
             <li>config the account created: sender IDs, webhook domains, declared country</li>
           </ul>
-          <p class="sub">Sourced &amp; verified by LUPO</p>
+          <p class="sub">Sources River also checks</p>
           <ul>
             <li>the company's own published legal notice</li>
             <li>developer footprint: GitHub, Gravatar, Keybase, GitLab, Hacker News, DEV.to</li>
@@ -457,7 +457,7 @@
     </section>
 
     <section class="mechanic">
-      <div class="band-label">How we build and prove this on your signups <span class="when">two steps, your data stays yours</span></div>
+      <div class="band-label">How we build and prove this on your signups <span class="when">two steps, starting small</span></div>
       <div class="flow flow-2">
         <div class="cell">
           <h3>Step one: build it on your mix</h3>
@@ -471,7 +471,7 @@
         </div>
         <div class="arrow" aria-hidden="true">→</div>
         <div class="cell">
-          <h3>Step two: prove it cannot be fitted</h3>
+          <h3>Step two: prove it on signups it never saw</h3>
           <p class="sub">A fresh batch, answers withheld</p>
           <ul>
             <li>the model frozen after step one</li>
@@ -500,11 +500,11 @@
           </ul>
         </div>
       </div>
-      <p class="mech-note">Your data: only the rows you send. They build River for your signups, and, like any identity graph, what River resolves becomes part of what LUPO knows, so the engine keeps sharpening. I will not pretend otherwise. Your raw file and your answers are never sold or published, access stays with authorised LUPO people and the named providers doing the work, and the raw records are deleted on a date we agree, or sooner if you ask. A quick NDA or a short data agreement whenever you want one.</p>
+      <p class="mech-note">The pilot is a file: send only the rows you choose, under a quick NDA whenever you want one, and the raw records deleted whenever you say.</p>
     </section>
 
     <footer>
-      Every verdict traces to named, checkable sources: the account's own configuration, the company's published legal notice, the official company register. The resolution model and the identity graph are LUPO's; the sources it cites are authoritative, so any verdict can be checked. When the evidence is short, River returns unresolved with the reason, so you never act on a bad match.
+      Every verdict separates the strong evidence, the account's own configuration, the company's published legal notice and the official company register, from weaker signals like developer profiles, which are shown rather than treated as fact. The resolution model and the identity graph are LUPO's; the strong sources can each be checked by hand. When the evidence is short, River returns unresolved with the reason rather than forcing a match.
       <div class="brand-signoff">
         <img src="/lupo-icon-180.png" alt="" width="24" height="24" decoding="async">
         <span><b>LUPO</b> &middot; <a href="https://lupolabs.ai/river/">Project River</a> &middot; <a href="https://lupolabs.ai">lupolabs.ai</a></span>
