@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="theme-color" content="#e7e9e4">
-<title>River — identity resolution for ClickSend</title>
+<title>River: identity resolution for ClickSend</title>
 <meta name="description" content="A live freemail resolution for ClickSend, with the full evidence chain.">
 <link rel="icon" type="image/png" href="/lupo-icon-180.png">
 <link rel="apple-touch-icon" href="/lupo-icon-180.png">
@@ -251,7 +251,11 @@
   }
   .fuse h3 { color: #fff; }
   .fuse p { margin: 0; font-size: 12px; color: #c3d2d9; font-family: var(--mono); }
-  .mech-note { margin-top: 12px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); letter-spacing: .02em; max-width: 76ch; }
+  .mech-note { margin-top: 12px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); letter-spacing: .02em; max-width: 82ch; }
+
+  .flow.flow-2 { grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); }
+  .cell-note { font-family: var(--sans); font-size: 12.5px; color: var(--muted); margin: 10px 0 0; line-height: 1.5; }
+  .need-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
 
   footer {
     margin-top: 26px;
@@ -265,6 +269,7 @@
 
   @media (max-width: 640px) {
     .flow { grid-template-columns: 1fr; }
+    .need-grid { grid-template-columns: 1fr; }
     .arrow { transform: rotate(90deg); justify-self: center; }
     .rec-head { flex-direction: column; gap: 4px; }
     .verdict { align-items: flex-start; }
@@ -330,7 +335,7 @@
     <p class="mh-eyebrow">A LUPO Project</p>
     <h1 class="mh-title">Project <span class="water">River</span></h1>
     <p class="mh-sub"><b>LUPO's freemail identity engine.</b> It names the company behind a personal-email signup, with the evidence attached.</p>
-    <p class="mh-body">Below, one ClickSend signup resolved end to end in eight seconds, from first-party account data fused against LUPO's identity graph, with every step of the evidence shown.</p>
+    <p class="mh-body">Below: one signup resolved end to end, so you can see exactly what a River verdict looks like and how every step is evidenced. Then how we build and prove the same thing on ClickSend's own signups.</p>
   </div>
 </header>
 
@@ -365,7 +370,7 @@
 
     <section class="record" aria-label="Resolution record">
       <div class="rec-head">
-        <span class="label">Signup · live run 11 July 2026</span>
+        <span class="label">Illustrative · live run 11 July 2026</span>
         <span class="subject">hdepayns2@gmail.com</span>
       </div>
 
@@ -399,19 +404,21 @@
       <div class="verdicts">
         <div class="verdict">
           <span class="stamp ok">Resolved</span>
-          <span class="entity"><strong>LUPO · lupolabs.ai</strong> <span class="meta">· operated by FLAIR TECHNOLOGIES LTD, Companies House #16493840 · confidence: high, auto tier · score 9.10 vs threshold 7.50</span></span>
+          <span class="entity"><strong>LUPO · lupolabs.ai</strong> <span class="meta">· operated by FLAIR TECHNOLOGIES LTD, Companies House #16493840 · confidence: high, auto tier · the one candidate carrying confirming evidence</span></span>
         </div>
         <div class="verdict">
-          <span class="stamp no">Outscored</span>
-          <span class="entity"><span class="meta">20 look-alike companies considered and beaten on evidence: ESPIRE INFOLABS, SINTECH TECHNOLOGIES, MONOLABS, 17 more</span></span>
+          <span class="stamp no">Ruled out</span>
+          <span class="entity"><span class="meta">20 more name-matches were generated (ESPIRE INFOLABS, SINTECH TECHNOLOGIES, MONOLABS, 17 more). None carried any confirming evidence, so River discarded them rather than pick a runner-up.</span></span>
         </div>
       </div>
 
       <div class="rec-foot">
         <span class="tier">AUTO</span>
-        <span>Decided by river-1, LUPO's resolution model. The auto tier is calibrated so wrong answers stay under a 5% ceiling; measured 2.4% on held-out tests. No message content was read.</span>
+        <span>Decided by river-1, LUPO's resolution model. The auto tier commits only when the evidence clears a high bar; below it, River returns unresolved with the reason instead of guessing. No message content was read.</span>
       </div>
     </section>
+
+    <p class="ask-note"><strong>This is the format, not the benchmark.</strong> I picked the clearest possible case on purpose: this account's own configuration named the company, so the chain is short and you can read every link yourself. It shows you the shape of a River verdict and how it refuses when the evidence is thin. It does not tell you how River does on the signups where nothing in the config gives the company away, and those are the ones worth money. Only your data settles those. Here is how we get there.</p>
 
     <section class="mechanic">
       <div class="band-label">How it resolves</div>
@@ -437,7 +444,7 @@
         <div class="arrow" aria-hidden="true">←</div>
         <div class="cell">
           <h3>LUPO identity graph</h3>
-          <p class="sub">13M+ entities, from official registers</p>
+          <p class="sub">13M+ entities, from these registers today</p>
           <ul>
             <li>Companies House (UK)</li>
             <li>Australian Business Register</li>
@@ -446,7 +453,54 @@
           </ul>
         </div>
       </div>
-      <p class="mech-note">Plumbing: the pilot is a CSV with three columns (email address, signup IP with timestamp, the config the account created). Live, River connects the way this demo ran: a read-only API connection or an event feed from your platform. Nothing embeds on your website, no pixel, no change to your signup flow. Verdicts write back to Salesforce with the evidence chain attached.</p>
+      <p class="mech-note">Nothing embeds on your site: no pixel, no SDK, no change to your signup flow. River reads only the rows you hand it and the company's own published disclosures. A verdict can carry its full evidence chain into Salesforce, but that is later; the first step is a file.</p>
+    </section>
+
+    <section class="mechanic">
+      <div class="band-label">How we build and prove this on your signups <span class="when">two steps, your data stays yours</span></div>
+      <div class="flow flow-2">
+        <div class="cell">
+          <h3>Step one: build it on your mix</h3>
+          <p class="sub">A small batch, with answers</p>
+          <ul>
+            <li>past freemail signups</li>
+            <li>the signup-time inputs on each</li>
+            <li>and the company each turned out to be</li>
+          </ul>
+          <p class="cell-note">River is built and tuned against how ClickSend's signups actually look: candidate generation, the evidence probes, the refusal bar. You see, row by row, what it resolved, what it refused, and why. The answers are not us grading ourselves; they are what fits River to your real mix. Send whatever mix you like: rows you already cracked fit River to yours, and rows you never could are welcome too, where River resolves them with the evidence chain and your team checks the chain instead of an answer. Those are where you watch it earn its keep.</p>
+        </div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell">
+          <h3>Step two: prove it cannot be fitted</h3>
+          <p class="sub">A fresh batch, answers withheld</p>
+          <ul>
+            <li>the model frozen after step one</li>
+            <li>a new batch, outcomes held back</li>
+            <li>River commits every verdict first</li>
+          </ul>
+          <p class="cell-note">Then you reveal the answers and score it yourself. Because the model is already frozen, nothing was tuned to that batch, so the number is real. You score two numbers, not one: how often River is wrong when it commits, and how often it commits at all. A tool that refuses everything is safe and useless, so the resolve rate sits right next to the error rate.</p>
+        </div>
+      </div>
+      <div class="need-grid">
+        <div class="cell">
+          <p class="sub">What step one needs, per row</p>
+          <ul>
+            <li>the freemail address</li>
+            <li>signup IP with timestamp</li>
+            <li>config the account created: sender IDs, webhook or callback domains, declared country</li>
+            <li>the company it turned out to be</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <p class="sub">What it never needs</p>
+          <ul>
+            <li>message content or recipient numbers</li>
+            <li>API keys or production access</li>
+            <li>any change to your signup flow</li>
+          </ul>
+        </div>
+      </div>
+      <p class="mech-note">Your data: only the rows you send. They build River for your signups, and, like any identity graph, what River resolves becomes part of what LUPO knows, so the engine keeps sharpening. I will not pretend otherwise. Your raw file and your answers are never sold or published, access stays with authorised LUPO people and the named providers doing the work, and the raw records are deleted on a date we agree, or sooner if you ask. A quick NDA or a short data agreement whenever you want one.</p>
     </section>
 
     <footer>
