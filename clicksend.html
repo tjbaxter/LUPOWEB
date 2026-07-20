@@ -255,7 +255,6 @@
 
   .flow.flow-2 { grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); }
   .cell-note { font-family: var(--sans); font-size: 12.5px; color: var(--muted); margin: 10px 0 0; line-height: 1.5; }
-  .need-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
 
   footer {
     margin-top: 26px;
@@ -269,7 +268,6 @@
 
   @media (max-width: 640px) {
     .flow { grid-template-columns: 1fr; }
-    .need-grid { grid-template-columns: 1fr; }
     .arrow { transform: rotate(90deg); justify-self: center; }
     .rec-head { flex-direction: column; gap: 4px; }
     .verdict { align-items: flex-start; }
@@ -481,26 +479,7 @@
           <p class="cell-note">You reveal the answers and score it cold, on two numbers: how often it is wrong, and how often it commits at all.</p>
         </div>
       </div>
-      <div class="need-grid">
-        <div class="cell">
-          <p class="sub">What step one needs, per row</p>
-          <ul>
-            <li>the freemail address</li>
-            <li>signup IP with timestamp</li>
-            <li>config the account created: sender IDs, webhook or callback domains, declared country</li>
-            <li>the company it turned out to be</li>
-          </ul>
-        </div>
-        <div class="cell">
-          <p class="sub">What it never needs</p>
-          <ul>
-            <li>message content or recipient numbers</li>
-            <li>API keys or production access</li>
-            <li>any change to your signup flow</li>
-          </ul>
-        </div>
-      </div>
-      <p class="mech-note">The pilot is a file: send only the rows you choose, under a quick NDA whenever you want one, and the raw records deleted whenever you say.</p>
+      <p class="mech-note">The pilot is a file: just the rows you choose, never message content, API keys or production access. Quick NDA whenever you want one, and the raw records deleted whenever you say.</p>
     </section>
 
     <footer>
